@@ -76,6 +76,23 @@ void Renderer5_BeginFrame_SW_FS_Hi(int flag, int *out_a, int *out_b, int *out_c)
 void BuildSortKeyLUT(void);                              /* 0x004bf290 */
 extern u16 g_zSortKeyLUT[65536];                         /* 0x00b0d008 */
 
+/* === Engine init ============================================== */
+
+/* Bring up the renderer pipeline. Returns 1 on success, 0 on
+ * failure (after invoking ShowErrorMessage). Tries hwnd-driven
+ * SW-windowed init (mode 4) by default. */
+s32 Gfx_Init(HWND hwnd);                                 /* 0x004b4370 */
+
+/* Sub-helpers used by Gfx_Init and called from a few other places. */
+s32  Helper_GfxInit2(HWND hwnd);                         /* 0x004b2950 */
+void Helper_GfxCleanup(void);                            /* 0x004b4410 */
+
+extern s32  g_gfxInited;        /* 0x007afa08 */
+extern HWND g_gfxHwnd;          /* 0x007afa04 */
+extern s32  g_gfxFlagA;         /* 0x007afa0c */
+extern s32  g_gfxFlagB;         /* 0x007afa10 */
+extern s32  g_gfxFlagC;         /* 0x007afa14 */
+
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */

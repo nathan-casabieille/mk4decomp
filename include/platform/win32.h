@@ -72,6 +72,10 @@ void Timer_Init(void);                                   /* 0x004c4470 */
  * timeGetTime() * 1000. Result is a 32-bit unsigned int. */
 u32 QueryMicroTimer(void);                               /* 0x004c4510 */
 
+/* Pop up an error MessageBox-and-exit. Used by subsystem init paths
+ * that can't recover. */
+void ShowErrorMessage(const char *msg);                  /* 0x004c48c0 */
+
 extern s32 g_timerInitedSkip;       /* 0x00f9f008 - non-zero = skip init */
 
 #ifdef _WIN32

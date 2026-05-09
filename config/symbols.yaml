@@ -405,8 +405,9 @@ functions:
   - addr: 0x004b4370
     name: Gfx_Init
     size: 149
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/gfx_init.c
   - addr: 0x004b46a0
     name: Renderer1_EndScene_Glide
     size: 38
