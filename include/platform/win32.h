@@ -61,4 +61,17 @@ void AppShutdown(void);                                  /* 0x004b2690 */
  * single-instance handle, and exits the process. */
 void ExitGame(void);                                     /* 0x004c4870 */
 
+/* Initialise the high-resolution wall-clock timer. Reads the QPC
+ * frequency, stashes "ticks per microsecond" into g_qpcUsPerTick,
+ * and primes g_qpcStart with the current QPC value. Skipped (no-op)
+ * when g_timerInitedSkip is set. */
+void Timer_Init(void);                                   /* 0x004c4470 */
+
+extern s32 g_timerInitedSkip;       /* 0x00f9f008 - non-zero = skip init */
+
+#ifdef _WIN32
+extern double         g_qpcUsPerTick;   /* 0x00f9f010 - QPC freq / 1e6 */
+extern LARGE_INTEGER  g_qpcStart;        /* 0x00f9f018 - prime QPC reading */
+#endif
+
 #endif /* MK4_PLATFORM_WIN32_H */
