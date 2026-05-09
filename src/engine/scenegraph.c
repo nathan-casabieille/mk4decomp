@@ -348,6 +348,129 @@ __declspec(naked) void NodeApplyTransform_C(void)
     }
 }
 
+/*
+ * Push the current entity + pending-node-type onto the matrix stack,
+ * swap three "chain" entries through the walk-callback scratch slot,
+ * call NodeApplyTransform_B, then pop the stack. If the frame pause
+ * flag is set after the inner call, the function exits without
+ * popping (leaving the stack one-deep, which the caller is expected
+ * to clean up before resuming).
+ *
+ * @addr 0x004be130
+ */
+__declspec(naked) void NodeApplyTransform_B_Swapped(void)
+{
+    __asm {
+        mov     eax, [g_matrixStackTop]
+        mov     ecx, [g_xformEntityIdx]
+        sub     esp, 0Ch
+        inc     eax
+        mov     [g_matrixStackTop], eax
+        mov     dword ptr [eax*4 + g_matrixStackA], ecx
+        mov     eax, [g_matrixStackTop]
+        mov     edx, [g_pendingNodeType]
+        inc     eax
+        mov     [g_matrixStackTop], eax
+        mov     dword ptr [eax*4 + g_matrixStackB], edx
+        mov     ecx, [g_xformEntityIdx]
+        ; Force lea eax, [esp+0] with disp8 to match the original
+        ; encoding (MASM normally optimises away the +0).
+        _emit   8Dh
+        _emit   44h
+        _emit   24h
+        _emit   00h
+        sar     eax, 2
+        mov     [g_pendingNodeType], eax
+        mov     ecx, dword ptr [ecx*4 + g_xformChainTable]
+        mov     [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + g_xformChainTable], ecx
+        mov     edx, [g_xformEntityIdx]
+        mov     ecx, [g_pendingNodeType]
+        mov     eax, dword ptr [edx*4 + g_xformChainTable+4]
+        mov     [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + g_xformChainTable+8], eax
+        mov     edx, [g_xformEntityIdx]
+        mov     ecx, [g_pendingNodeType]
+        mov     eax, dword ptr [edx*4 + g_xformChainTable+8]
+        mov     [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + g_xformChainTable+4], eax
+        mov     edx, [g_pendingNodeType]
+        mov     [g_xformEntityIdx], edx
+        call    NodeApplyTransform_B
+        mov     eax, [g_framePauseFlag]
+        test    eax, eax
+        jne     paused
+        mov     eax, [g_matrixStackTop]
+        mov     ecx, dword ptr [eax*4 + g_matrixStackA]
+        dec     eax
+        mov     [g_pendingNodeType], ecx
+        mov     [g_matrixStackTop], eax
+        mov     edx, dword ptr [eax*4 + g_matrixStackB]
+        dec     eax
+        mov     [g_xformEntityIdx], edx
+        mov     [g_matrixStackTop], eax
+paused:
+        add     esp, 0Ch
+        ret
+    }
+}
+
+/*
+ * Like NodeApplyTransform_C but without the per-axis negation
+ * (so the resulting rotation matrix is the inverse).
+ *
+ * @addr 0x004bdfb0
+ */
+__declspec(naked) void NodeApplyTransform_C_Inverse(void)
+{
+    __asm {
+        mov     ecx, [g_xformEntityIdx]
+        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable]
+        sar     eax, 2
+        mov     edx, eax
+        shl     edx, 6
+        add     edx, eax
+        lea     edx, [eax + edx*8]
+        lea     eax, [eax + edx*2]
+        lea     eax, [eax + eax*4]
+        shl     eax, 1
+        sar     eax, 12h
+        mov     word ptr [g_xformTempAngles], ax
+        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+4]
+        sar     eax, 2
+        mov     edx, eax
+        shl     edx, 6
+        add     edx, eax
+        lea     edx, [eax + edx*8]
+        lea     eax, [eax + edx*2]
+        lea     eax, [eax + eax*4]
+        shl     eax, 1
+        sar     eax, 12h
+        mov     word ptr [g_xformTempAngles+2], ax
+        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+8]
+        sar     eax, 2
+        mov     ecx, eax
+        shl     ecx, 6
+        add     ecx, eax
+        lea     edx, [eax + ecx*8]
+        mov     ecx, [g_currentNodeIdx]
+        lea     eax, [eax + edx*2]
+        lea     edx, [ecx*4 + g_nodeMatrixTable]
+        push    edx
+        push    offset g_xformTempAngles
+        lea     eax, [eax + eax*4]
+        shl     eax, 1
+        sar     eax, 12h
+        mov     word ptr [g_xformTempAngles+4], ax
+        call    BuildRotMatrix_OrderC
+        mov     eax, [g_xformDirtyFlags]
+        add     esp, 8
+        or      al, 30h
+        mov     [g_xformDirtyFlags], eax
+        ret
+    }
+}
+
 __declspec(naked) void NodeApplyTransform_B_Direct(void)
 {
     __asm {

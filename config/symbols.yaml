@@ -495,8 +495,9 @@ functions:
   - addr: 0x004bdfb0
     name: NodeApplyTransform_C_Inverse
     size: 157
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004be050
     name: NodeApplyMatrix
     size: 214
@@ -507,7 +508,8 @@ functions:
     name: NodeApplyTransform_B_Swapped
     size: 224
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bf290
     name: BuildSortKeyLUT
     size: 130
