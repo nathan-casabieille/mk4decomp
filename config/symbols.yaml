@@ -79,7 +79,8 @@ functions:
     name: ESF_DecodeADPCM
     size: 279
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/adpcm.c
   - addr: 0x004ac4b0
     name: Audio_TimerTick
     size: 104

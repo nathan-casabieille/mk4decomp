@@ -80,6 +80,17 @@ void Helper_AuxAudio_PostInit(void);                    /* 0x004ac320 */
 void DebugStub_NoOp_B(void);                             /* 0x004a4150 */
 void DebugStub_NoOp_A(void);                             /* 0x004a4170 */
 
+/* === IMA ADPCM decoder ====================================== */
+
+/* 4-bit IMA ADPCM → 16-bit PCM decoder. State packs (predictor << 8)
+ * | step_index in 32 bits at *state. */
+void ESF_DecodeADPCM(const u8 *src, s16 *dst, s32 sample_count,
+                     u32 *state);                       /* 0x004ac200 */
+
+/* IMA step-size and index-adjustment LUTs (in .rdata). */
+extern s32 g_imaStepTable[89];   /* 0x004f4520 */
+extern s32 g_imaIndexTable[16];  /* 0x004f44e0 */
+
 /* === EXE-integrity check (audio install gate) =============== */
 
 /* Pulls the EXE path with GetModuleFileNameA, reads the file in
