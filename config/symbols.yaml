@@ -134,7 +134,13 @@ functions:
   - addr: 0x004adc20
     name: Renderer2_EndScene_D3D
     size: 63
-    group: engine.install
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
+  - addr: 0x004adc60
+    name: Renderer2_FlushBatch_D3D
+    size: 57
+    group: engine.render
     status: stub
   - addr: 0x004af880
     name: Renderer3_EndScene_SW_FS

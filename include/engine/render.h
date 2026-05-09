@@ -108,6 +108,30 @@ extern int       g_renderer5_active;     /* 0x0058c8f4 */
 extern int       g_renderer5_present_rc; /* 0x0058c8f8 */
 extern int       g_renderer5_surface;    /* 0x0058c900 */
 
+/* Renderer 2 (Direct3D) holds a COM-like object whose vtable method
+ * at slot 11 (offset 0x2c) is invoked each EndScene with no extra
+ * args - likely IDirect3DDevice2::EndScene or an IDirectDrawSurface
+ * Flip variant on the Direct3D back buffer. */
+typedef struct D3DObj D3DObj;
+typedef long (__stdcall *D3DObj_Method)(D3DObj *self);
+typedef struct D3DObjVtbl {
+    void *m_0_to_10[11];               /* unused-by-us slots 0..10 */
+    D3DObj_Method method11;            /* slot 11 = offset 0x2c */
+} D3DObjVtbl;
+struct D3DObj {
+    D3DObjVtbl *vtbl;
+};
+
+extern D3DObj *g_renderer2_obj;          /* 0x0058c7c0 */
+extern int    g_renderer2_present_rc;    /* 0x0058c7dc */
+extern int    g_renderer2_active;        /* 0x0058c7e0 */
+extern int    g_renderer2_surface;       /* 0x0058c7e4 */
+extern int    g_renderer2_paused;        /* 0x0058c7ec - skip flag */
+
+/* Submit any pending D3D primitive batch and reset the queued
+ * vertex counter. Called from Renderer2_EndScene_D3D. */
+void Renderer2_FlushBatch_D3D(void);                    /* 0x004adc60 */
+
 extern u32  g_drawQueueSize;         /* 0x00f85b40 */
 extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */
 extern u32  g_drawQueueBuckets[DRAW_QUEUE_BUCKETS];       /* 0x00f6d050 */

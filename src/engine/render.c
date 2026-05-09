@@ -105,6 +105,30 @@ void SetViewport(int x, int y, int w, int h)
 }
 
 /*
+ * Direct3D renderer EndScene: when the renderer is presenting and
+ * not paused, flush the queued D3D primitive batch and call vtable
+ * method 11 (likely Flip / EndScene) on the D3D back buffer object,
+ * saving the HRESULT.
+ *
+ * @addr 0x004adc20
+ */
+void Renderer2_EndScene_D3D(void)
+{
+    if (g_renderer2_active != 0) {
+        if (g_renderer2_surface != 0) {
+            if (g_renderer2_paused == 0) {
+                Renderer2_FlushBatch_D3D();
+                if (g_renderer2_obj != 0) {
+                    g_renderer2_present_rc =
+                        g_renderer2_obj->vtbl->method11(g_renderer2_obj);
+                }
+                g_renderer2_surface = 0;
+            }
+        }
+    }
+}
+
+/*
  * Software-windowed renderer EndScene: drop the latched surface
  * if the renderer was actually presenting this frame.
  *
