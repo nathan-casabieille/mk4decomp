@@ -20,10 +20,12 @@ matching, the C source is the canonical representation of the game.
 
 ```
 $ make progress
-Functions identified : 104 (~6.1% of estimated total)
-matched (byte-perfect)  :     0
+Functions identified    :   107 (~6.3% of estimated total)
+matched (byte-perfect)  :    61
 drafted (functional)    :     0
-stub (asm-only)         :   104
+stub (asm-only)         :    46
+
+Bytes of .text covered  :  5992 / 32699 (18.3% of identified)
 ```
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
@@ -36,8 +38,6 @@ subsystem of the engine is documented at a high level.
 |---|---|
 | `src/` | Reconstructed C source, organized by subsystem |
 | `include/` | Reconstructed headers |
-| `asm/` | Disassembly of functions not yet decompiled |
-| `data/` | Raw binary data sections (split out of the original) |
 | `config/` | Symbol map (`symbols.yaml`), linker script, splits |
 | `tools/decomp/` | Diff, progress, build pipeline |
 | `tools/ghidra_scripts/` | Jython scripts for Ghidra automation |
@@ -49,28 +49,18 @@ subsystem of the engine is documented at a high level.
 
 ## Build (matching)
 
-The matching build needs MSVC 5.0 + LINK 5.10. I run it under Wine
-on macOS via Whisky.
+The matching build needs MSVC 5.0 SP3 (cl 11.00.7022, link 5.00.7022).
+I run it under Wine on macOS via Whisky.
 
 ```sh
 ./tools/setup-macos.sh                # first-time setup
-./tools/decomp/setup-msvc50.sh        # install MSVC 5.0 in a Whisky bottle (TODO)
-make matching                         # rebuild byte-identical MK4.EXE
+./tools/decomp/setup-msvc50.sh        # install MSVC 5.0 in a Whisky bottle
+make matching                         # rebuild MK4.EXE (byte-identical once all functions are matched)
 make diff                             # compare each function vs original
 ```
 
 When a function matches byte-for-byte, mark it `matched` in
 `config/symbols.yaml`.
-
-## Build (portable)
-
-For day-to-day development without Wine. Uses MinGW-w64 (cross-compile)
-or native clang on macOS. Produces a non-matching binary that runs
-natively.
-
-```sh
-make portable
-```
 
 ## Contributing
 
@@ -100,8 +90,7 @@ cd /tmp && bchunk -w \
 
 - **Ghidra** - disassembly + interactive decompilation
 - **Whisky** - Wine wrapper used to run MSVC 5.0 and the original `MK4.EXE`
-- **MinGW-w64** - for the portable build
-- **MSVC 5.0** (under Wine) - for the matching build
+- **MSVC 5.0 SP3** (under Wine) - for the matching build
 - **Python 3 + pyyaml** - for tooling
 
 ## Credits
