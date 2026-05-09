@@ -115,6 +115,19 @@ extern HWND g_gfxHwnd;          /* 0x007afa04 */
 extern s32  g_gfxFlagA;         /* 0x007afa0c */
 extern s32  g_gfxFlagB;         /* 0x007afa10 */
 extern s32  g_gfxFlagC;         /* 0x007afa14 */
+extern s32  g_gfxFlagD;         /* 0x007afa18 */
+extern s32  g_gfxSavedMode;     /* 0x00543aa4 - mode in effect before switch */
+extern s32  g_gfxPostInitArg;   /* 0x00543a94 - last arg passed to Helper_GfxFlush */
+
+/* TryInitRenderer attempts to bring up the renderer corresponding
+ * to g_clampedRendererMode (1..5), with mid-function helpers and
+ * a final pixel-test pass. Returns -mode on success, -1 on no-op
+ * skip, or 0 on failure. */
+s32  TryInitRenderer(void);                              /* 0x004b3ed0 */
+
+/* Inner helpers called by TryInitRenderer (anonymous). */
+void Helper_RendererPreInit(void);                       /* 0x004b5120 */
+void Helper_RendererPostInit(s32 arg);                   /* 0x004b3e20 */
 
 /* === Vertex transform state ================================== */
 

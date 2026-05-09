@@ -397,8 +397,9 @@ functions:
   - addr: 0x004b3ed0
     name: TryInitRenderer
     size: 429
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/try_init_renderer.c
   - addr: 0x004b40a0
     name: SetRendererMode
     size: 34
