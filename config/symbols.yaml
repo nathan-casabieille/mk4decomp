@@ -322,8 +322,9 @@ functions:
   - addr: 0x004b2fa0
     name: AdvanceTriStripRing
     size: 80
-    group: engine.app
-    status: stub
+    group: engine.tristrip
+    status: matched
+    file: src/engine/tristrip.c
   - addr: 0x004b3310
     name: TransformVertex
     size: 383
