@@ -308,7 +308,8 @@ functions:
     name: GameLogicStep
     size: 113
     group: engine.app
-    status: stub
+    status: matched
+    file: src/game/tick.c
   - addr: 0x004b2750
     name: MainLoopStep
     size: 234

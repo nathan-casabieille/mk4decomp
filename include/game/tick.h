@@ -42,6 +42,19 @@ extern u32        g_eventQueueActive;   /* 0x0053a31c */
 extern u32        g_framePauseFlag;     /* 0x00541e6c (non-zero = skip) */
 extern u32        g_logicFrameCounter;  /* 0x0053a79c */
 
+/* Mode-4 (SW Windowed) pause / single-step gate. When non-zero,
+ * GameLogicStep skips the special SW-Win StateMachine(8) path. */
+extern u32        g_mode4PauseGate;     /* 0x004ffd78 */
+
+/* Set to 0 at the end of every GameLogicStep iteration. */
+extern u32        g_logicStepFlag;      /* 0x0054381c */
+
+/* Helpers called from GameLogicStep that aren't in render.h /
+ * scenegraph.h yet. */
+int  Renderer_GetMode(void);             /* 0x004b3db0 - tiny getter */
+void GameStateMachineMaybeRebuild(void); /* 0x004b5850 */
+void XformChainAdvance(void);            /* 0x004bd990 */
+
 extern packed_ptr g_player1NodeIdx;   /* 0x00538158 */
 extern packed_ptr g_player2NodeIdx;   /* 0x0053815c */
 extern packed_ptr g_player3NodeIdx;   /* 0x00538160 */
