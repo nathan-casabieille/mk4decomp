@@ -366,7 +366,8 @@ functions:
     name: TransformVertex
     size: 383
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/transform_vertex.c
   - addr: 0x004b36c0
     name: BuildRotMatrix_OrderC
     size: 310

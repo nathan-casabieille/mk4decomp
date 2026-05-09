@@ -149,6 +149,35 @@ extern s16  g_vtxScreenY;       /* 0x007af9be */
  * into g_vtxScreen{X,Y}. */
 void ProjectVertex(void);                                /* 0x004b2e80 */
 
+/* Apply vertex-light shading on the working RGB555 color in
+ * g_vtxColor. Uses two light directions (g_vtxLight0/1) and per-
+ * channel intensities g_vtxRGBScale0/1; result is clamped to 5
+ * bits per channel and stored back to g_vtxColor. */
+void TransformVertex(s16 x, s16 y, s16 z);              /* 0x004b3310 */
+
+/* Light directions and per-channel scale bytes used by
+ * TransformVertex - layout is two adjacent (s32 x, y, z) blocks
+ * followed by 6 per-channel byte intensities, then the working
+ * RGB555 color. */
+extern s32 g_vtxLight0_x;       /* 0x007af9d8 */
+extern s32 g_vtxLight0_y;       /* 0x007af9dc */
+extern s32 g_vtxLight0_z;       /* 0x007af9e0 */
+extern s32 g_vtxLight1_x;       /* 0x007af9e4 */
+extern s32 g_vtxLight1_z;       /* 0x007af9e8 */
+extern s32 g_vtxLight1_y;       /* 0x007af9ec */
+
+/* Working color (RGB555). Read at 0x7af9fc, copy at 0x7af9f8. */
+extern u32 g_vtxColorPrev;      /* 0x007af9f0 */
+extern u8  g_vtxRGBScale1_b;    /* 0x007af9f2 */
+extern u8  g_vtxRGBScale1_g;    /* 0x007af9f3 */
+extern u8  g_vtxRGBScale0_g;    /* 0x007af9f4 */
+extern u8  g_vtxRGBScale1_r;    /* 0x007af9f5 */
+extern u8  g_vtxRGBScale0_r;    /* 0x007af9f6 */
+extern u8  g_vtxRGBScale0_b;    /* 0x007af9f7 */
+extern u16 g_vtxColorCopy;      /* 0x007af9f8 */
+extern u16 g_vtxColorSaved;     /* 0x007af9fa */
+extern u16 g_vtxColor;          /* 0x007af9fc */
+
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */
