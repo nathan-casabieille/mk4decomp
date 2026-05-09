@@ -375,8 +375,9 @@ functions:
   - addr: 0x004b4200
     name: BeginFrame
     size: 204
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004b42e0
     name: DrawScene
     size: 121

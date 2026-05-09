@@ -53,6 +53,14 @@ void Renderer3_PresentFrame(void);                       /* 0x004af690 */
 void Renderer4_PresentFrame(void);                       /* 0x004b2840 */
 void Renderer5_PresentFrame(void);                       /* 0x004afec0 */
 
+/* BeginFrame fan-out. Cases 3 / 4 / 5 receive output args for the
+ * computed viewport rect; cases 1 / 2 take just the flag. */
+void Renderer1_BeginFrame_Glide(int flag);                                            /* 0x004b4650 */
+void Renderer2_BeginFrame_D3D(int flag);                                              /* 0x004ada10 */
+void Renderer3_BeginFrame_SW_FS(int flag, int *out_a, int *out_b, int *out_c);        /* 0x004af730 */
+void Renderer4_BeginFrame_SW_Win(int flag, int *out_a, int *out_b, int *out_c);       /* 0x004aff60 */
+void Renderer5_BeginFrame_SW_FS_Hi(int flag, int *out_a, int *out_b, int *out_c);     /* 0x004b28a0 */
+
 /* === Sort key LUT (z-bucketing) ============================== */
 
 /* 128 KB sort-key lookup. Built once at startup by BuildSortKeyLUT.

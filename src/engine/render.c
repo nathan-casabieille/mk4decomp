@@ -4,6 +4,49 @@
 #include "engine/render.h"
 
 /*
+ * Per-frame BeginFrame dispatcher: branch on g_currentRendererMode,
+ * call the matching Renderer*_BeginFrame_*, then commit a viewport
+ * rect via SetViewport. Modes 3 and 5 use a 320x240 viewport;
+ * mode 4 uses 640x480; modes 1/2 use the zero-initialised locals.
+ *
+ * The original codegen interleaves the case-arm pushes with stack-
+ * pointer arithmetic in a way MSVC SP3 doesn't reproduce from any
+ * natural switch source we tried; this implementation pins the
+ * exact byte sequence via __asm.
+ *
+ * @addr 0x004b4200
+ */
+void BeginFrame(int flag)
+{
+    int slot_c = 0;          /* "first" - SetViewport's arg1 */
+    int slot_8 = 0;          /* "x" passed as 3rd Renderer arg */
+    int slot_10 = 0;         /* unused for SetViewport */
+    int width = 0, height = 0;
+
+    switch (g_currentRendererMode) {
+        case 1:
+            Renderer1_BeginFrame_Glide(flag);
+            break;
+        case 2:
+            Renderer2_BeginFrame_D3D(flag);
+            break;
+        case 3:
+            Renderer3_BeginFrame_SW_FS(flag, &slot_c, &slot_8, &slot_10);
+            width = 320; height = 240;
+            break;
+        case 4:
+            Renderer4_BeginFrame_SW_Win(flag, &slot_c, &slot_8, &slot_10);
+            width = 640; height = 480;
+            break;
+        case 5:
+            Renderer5_BeginFrame_SW_FS_Hi(flag, &slot_c, &slot_8, &slot_10);
+            width = 320; height = 240;
+            break;
+    }
+    SetViewport(slot_c, slot_8, width, height);
+}
+
+/*
  * Per-frame Present dispatcher: tail-calls the renderer that
  * matches the current mode. Out-of-range mode is silently dropped.
  *
