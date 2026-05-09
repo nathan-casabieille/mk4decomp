@@ -175,8 +175,9 @@ functions:
   - addr: 0x004b1090
     name: ESF_Open
     size: 183
-    group: engine.ecm
-    status: stub
+    group: engine.esf
+    status: matched
+    file: src/engine/esf.c
   - addr: 0x004b1150
     name: ESF_ReadData
     size: 162
@@ -216,7 +217,8 @@ functions:
     name: ECM_DecodeFrame
     size: 89
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/ecm.c
   - addr: 0x004b1cf0
     name: FSYS_Init
     size: 237

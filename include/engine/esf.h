@@ -45,13 +45,15 @@ void ESF_DecodeADPCM(const u8 *src, u8 *dst, u32 decoded_byte_count, u32 *state)
 extern const s32 g_imaIndexTable[16];   /* 0x004f44e0 */
 extern const s32 g_imaStepTable[89];    /* 0x004f4520 */
 
+/* 8-byte file header read at Open() time:
+ *   magic   = ESF_MAGIC                (0x06465345 = "ESF\x06")
+ *   state   = packed PCM-format word
+ * Both reads happen at offset 0..7 of the file. */
+extern u32 g_esf_magic;                 /* 0x007ab088 */
+extern u32 g_esf_state;                 /* 0x007ab08c */
+
 /* Currently-open ESF file handle (FSYS handle id, 0 = closed). */
 extern int g_esf_handle;                /* 0x007ab090 */
-
-/* Packed-flag word read after Open. Bit 29 = ADPCM-vs-raw select.
- * Low 29 bits = byte count. Mid bits 2..28 = (after >> 2) some
- * count related to ADPCM block size. */
-extern u32 g_esf_state;                 /* 0x007ab08c */
 
 #ifdef __cplusplus
 }
