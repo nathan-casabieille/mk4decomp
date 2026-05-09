@@ -249,6 +249,11 @@ extern u32  g_drawQueueSize;         /* 0x00f85b40 */
 extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */
 extern u32  g_drawQueueBuckets[DRAW_QUEUE_BUCKETS];       /* 0x00f6d050 */
 
+/* Per-frame clip-rect scratch reused by SubmitDrawEntry's two
+ * bounds-loops (X then Y). */
+extern s32  g_clipMinScratch;        /* 0x00f70f70 */
+extern s32  g_clipMaxScratch;        /* 0x00f70f78 */
+
 extern u32  g_drawSceneTimeMs;       /* 0x007afa00 - profiling */
 
 /* The DAT_*  references above use VAs - the matching build pulls

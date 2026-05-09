@@ -565,7 +565,8 @@ functions:
     name: SubmitDrawEntry
     size: 300
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/submit_draw.c
   - addr: 0x004c37f0
     name: Audio_UpdateChannels
     size: 220
