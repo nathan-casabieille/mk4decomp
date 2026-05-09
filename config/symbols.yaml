@@ -612,7 +612,8 @@ functions:
     name: WinMain
     size: 151
     group: boot
-    status: stub
+    status: matched
+    file: src/boot/winmain.c
   - addr: 0x004c6cb0
     name: entry
     size: 391
