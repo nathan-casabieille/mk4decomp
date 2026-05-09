@@ -476,7 +476,8 @@ functions:
     name: Tex_DecodeRLE16
     size: 211
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/tex_rle.c
   - addr: 0x004bd6e0
     name: LoadGeoAsset_Textures
     size: 353

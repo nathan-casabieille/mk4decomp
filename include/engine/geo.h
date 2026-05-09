@@ -67,6 +67,21 @@ void LoadGeoAsset_Default(void);                         /* 0x004bd5b0 */
  * texture-load behavior; LoadGeoAsset_Default passes 0. */
 void LoadGeoAsset_Textures(s32 flag);                    /* 0x004bd6e0 */
 
+/* Decode a RLE-555 texture block into the staging buffer at
+ * 0xf4d050. row_width is clamped to 14 (or kept at <=14) and
+ * passed to the upload helper at the end. */
+void Tex_DecodeRLE16(s32 row_width, s32 row_pixels, s32 row_count,
+                     const u8 *src, s32 arg5);           /* 0x004bd5f0 */
+
+/* Upload helper invoked by Tex_DecodeRLE16 once the staging buffer
+ * is filled - 5-arg cdecl wrapper. */
+void Helper_TexUpload(s32 a, s32 b, s32 c, s32 d, s32 e);/* 0x004bf370 */
+
+/* Texture stripe staging area (64 KB at 0xf4d050) and the XOR key
+ * applied to RLE codes when their masked value is non-zero. */
+extern u16 g_texStripeBuf[];                             /* 0x00f4d050 */
+extern u32 g_texXorKey;                                   /* 0x007af91c */
+
 /* === Mem heap allocator ===================================== */
 
 /* First-fit splitting allocator over the [g_memHeapStart..g_memHeapEnd)
