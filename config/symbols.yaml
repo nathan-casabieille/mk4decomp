@@ -111,7 +111,8 @@ functions:
     name: CheckInstallPath
     size: 129
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/install_path.c
   - addr: 0x004acf90
     name: ResetConfigToDefaults
     size: 634

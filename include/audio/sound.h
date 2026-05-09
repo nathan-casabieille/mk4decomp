@@ -61,6 +61,15 @@ void DebugStub_NoOp_A(void);                             /* 0x004a4170 */
  * or the helper's nonzero rc on lower-level failures. */
 s32 GetExeDirectory(void);                               /* 0x004aca60 */
 
+/* HKLM\Software\GT Interactive\Mortal Kombat 4\1.00\Path
+ * lookup + SetCurrentDirectoryA. Returns 1 if the install path
+ * was read and chdir'd into, 0 otherwise. */
+s32 CheckInstallPath(void);                              /* 0x004acc50 */
+
+/* Where CheckInstallPath stashes the registry-resolved install
+ * directory before chdir'ing. */
+extern char g_installPath[1024];        /* 0x00543b78 */
+
 /* fopen("rb") + hash worker called by GetExeDirectory. Stores
  * the computed hash into g_exeIntegrityValue{A,B}. */
 s32 Helper_ComputeExeHash(const char *path);             /* 0x004acae0 */
