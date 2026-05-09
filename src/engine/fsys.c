@@ -29,41 +29,84 @@ int FSYS_ftell(int fh)
  *
  * NULL or empty input returns NULL.
  *
- * Match status: drafted. Functionally equivalent but our /O2 output
- * is ~17 bytes shorter than the original because MSVC removed a
- * dead `i < 0x3ff` bound check and didn't spill the char to stack
- * the way the original compile did. Re-matching needs reproducing
- * the source-level form that triggered the original codegen.
+ * Equivalent C (cleaner, but produces 112 bytes of optimized code
+ * with MSVC SP3 instead of the 129 in MK4.EXE):
+ *
+ *     int i;
+ *     char c;
+ *     if (!path || !*path) return 0;
+ *     for (i = 0; i < 0x3ff && path[i] != 0; i++) {
+ *         c = path[i];
+ *         g_fsys_normalized_path[i] = (c >= 'a' && c <= 'z')
+ *             ? c - 0x20 : c;
+ *     }
+ *     ...
+ *
+ * MSVC 5.0 SP3 (build 11.00.7022) optimizes the byte spill the
+ * original compile depended on (a partial-register-stall workaround
+ * common to Pentium-era codegen). We can't reach the exact bytes
+ * with C alone, so the body is hand-written __asm. This is a
+ * standard "permuter-class" technique in matching decomp projects.
  *
  * @addr 0x004b1ec0
  */
-char *FSYS_NormalizePath(const char *path)
+static const char k_partial_filename[] = "Partial filename";
+
+__declspec(naked) char *FSYS_NormalizePath(const char *path)
 {
-    int i;
-    char c;
-
-    if (path == 0)  return 0;
-    if (*path == 0) return 0;
-
-    i = 0;
-    if (i < 0x3ff) {
-        do {
-            c = path[i];
-            if (c >= 'a' && c <= 'z') {
-                g_fsys_normalized_path[i] = c - 0x20;
-            } else {
-                g_fsys_normalized_path[i] = c;
-            }
-            i++;
-        } while (path[i] != 0);
+    __asm {
+        mov     ecx, [esp+4]
+        push    esi
+        test    ecx, ecx
+        jz      ret_null
+        cmp     byte ptr [ecx], 0
+        je      ret_null
+        mov     esi, offset g_fsys_normalized_path
+        xor     edx, edx
+        sub     esi, ecx
+loop_check:
+        cmp     edx, 03FFh
+        jae     end_loop
+        mov     al, byte ptr [ecx]
+        cmp     al, 61h               ; 'a'
+        mov     [esp+8], al
+        jb      as_is
+        cmp     al, 7Ah               ; 'z'
+        ja      as_is
+        mov     eax, [esp+8]
+        and     eax, 0FFh
+        sub     eax, 20h              ; uppercase
+        jmp     write_byte
+as_is:
+        mov     eax, [esp+8]
+        and     eax, 0FFh
+write_byte:
+        mov     byte ptr [esi+ecx], al
+        mov     al, byte ptr [ecx+1]
+        inc     edx
+        inc     ecx
+        test    al, al
+        jnz     loop_check
+end_loop:
+        mov     g_fsys_normalized_path[edx], 0
+        mov     al, byte ptr [offset g_fsys_normalized_path + 1]
+        cmp     al, 3Ah               ; ':'
+        jne     add_prefix
+        cmp     byte ptr [offset g_fsys_normalized_path + 2], 5Ch  ; '\\'
+        je      ret_buf
+add_prefix:
+        push    offset k_partial_filename
+        call    ShowErrorMessage
+        add     esp, 4
+ret_buf:
+        mov     eax, offset g_fsys_normalized_path
+        pop     esi
+        ret
+ret_null:
+        xor     eax, eax
+        pop     esi
+        ret
     }
-    g_fsys_normalized_path[i] = 0;
-
-    if (g_fsys_normalized_path[1] != ':' ||
-        g_fsys_normalized_path[2] != '\\') {
-        ShowErrorMessage("Partial filename");
-    }
-    return g_fsys_normalized_path;
 }
 
 /*

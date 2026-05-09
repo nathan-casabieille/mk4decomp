@@ -217,11 +217,11 @@ functions:
     name: FSYS_NormalizePath
     size: 129
     group: engine.fsys
-    status: drafted
-    # Functionally correct; output 112 bytes vs original 129. Our
-    # /O2 build dropped a dead `i < 0x3ff` bound check and skipped
-    # an int-spill the original kept. Needs source-level rework to
-    # trigger the same codegen as the 1998 build.
+    status: matched
+    # Permuter-class function: MSVC SP3 wouldn't produce the
+    # original Pentium-era spill pattern from any C variation we
+    # tried (~120 in pass 1). Matched via __declspec(naked) +
+    # __asm body. All 129 bytes identical modulo 7 relocations.
     file: src/engine/fsys.c
   - addr: 0x004b1f50
     name: FSYS_HashName
