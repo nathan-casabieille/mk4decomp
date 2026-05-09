@@ -1,4 +1,4 @@
-# MK4 - Matching Decompilation
+# <img src=".github/mortal_kombat.png" width="32" alt=""> MK4 - Matching Decompilation
 
 ```diff
 - WARNING! -

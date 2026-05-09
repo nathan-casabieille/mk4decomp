@@ -45,6 +45,9 @@ void ESF_DecodeADPCM(const u8 *src, u8 *dst, u32 decoded_byte_count, u32 *state)
 extern const s32 g_imaIndexTable[16];   /* 0x004f44e0 */
 extern const s32 g_imaStepTable[89];    /* 0x004f4520 */
 
+/* Currently-open ESF file handle (FSYS handle id, 0 = closed). */
+extern int g_esf_handle;                /* 0x007ab090 */
+
 #ifdef __cplusplus
 }
 #endif

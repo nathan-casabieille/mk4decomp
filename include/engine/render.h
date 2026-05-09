@@ -39,7 +39,7 @@ void SetViewport(int x, int y, int w, int h);            /* 0x004bf330 */
 
 /* === Renderer init / dispatch ================================ */
 
-void SetRendererMode(int mode);                          /* 0x004b40a0 */
+int  SetRendererMode(int mode);                          /* 0x004b40a0 */
 int  TryInitRenderer(void);                              /* 0x004b3ed0 */
 
 int Renderer1_Init_Glide(HWND hwnd);                     /* 0x004b49a0 */
@@ -58,8 +58,18 @@ extern u16 g_zSortKeyLUT[65536];                         /* 0x00b0d008 */
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */
+extern int g_clampedRendererMode;    /* 0x004f4b38 */
 extern int g_viewportX, g_viewportY; /* 0x00f85b50, 0x00f85b54 */
 extern int g_viewportW, g_viewportH; /* 0x004ffd44, 0x004ffd48 */
+
+/* Per-renderer state. Each EndScene_* checks "is this renderer
+ * active and does it own a presentable surface" before clearing. */
+extern int g_renderer4_active;       /* 0x007af940 */
+extern int g_renderer4_surface;      /* 0x007af948 */
+
+extern int g_renderer1_active;       /* 0x007affe4 */
+extern int g_renderer1_busy;         /* 0x007afff0 */
+extern int g_renderer1_surface;      /* 0x007afff4 */
 
 extern u32  g_drawQueueSize;         /* 0x00f85b40 */
 extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */

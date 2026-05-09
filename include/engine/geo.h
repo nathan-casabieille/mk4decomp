@@ -58,6 +58,15 @@ typedef struct geo_tex_entry {
     /* u8 rle_data[data_size]; */
 } geo_tex_entry;
 
+/* === API ====================================================== */
+
+/* Default-flag wrapper around LoadGeoAsset_Textures. */
+void LoadGeoAsset_Default(void);                         /* 0x004bd5b0 */
+
+/* Load a .geo asset's textures. The flag argument controls the
+ * texture-load behavior; LoadGeoAsset_Default passes 0. */
+void LoadGeoAsset_Textures(s32 flag);                    /* 0x004bd6e0 */
+
 #ifdef __cplusplus
 }
 #endif

@@ -110,6 +110,26 @@ ret_null:
 }
 
 /*
+ * Open a file, read it whole into the caller's buffer, close.
+ * Reports "FSYS_fload()" via ShowErrorMessage if the read returned
+ * any count other than 1. No return value; callers don't check.
+ *
+ * @addr 0x004b2160
+ */
+void FSYS_fload(const char *path, void *buf, u32 size)
+{
+    int fh;
+    int n;
+
+    fh = FSYS_fopen(path, "rb");
+    n = FSYS_fread(buf, size, 1, fh);
+    FSYS_fclose(fh);
+    if (n != 1) {
+        ShowErrorMessage("FSYS_fload()");
+    }
+}
+
+/*
  * Query the size of a file by name. Opens, seeks to end, reads
  * position, closes.
  *
@@ -148,26 +168,51 @@ int FSYS_fclose(int fh)
  * to 0), and added into the running hash. The final return adds the
  * string length so two prefixes never collide.
  *
- * Match status: 49/50 bytes. The single remaining diff is the SIB
- * encoding of the final `lea eax, [esi+edx]` (0x16 vs 0x32). Both
- * forms compute the identical address; MSVC 5.0 SP3's heuristic
- * picks the opposite base/index assignment. Semantically equivalent.
+ * Equivalent C:
+ *
+ *     int hash = 0, shift = 0, i = 0;
+ *     while (normalized_path[i] != 0) {
+ *         hash += (int)(signed char)normalized_path[i] << shift;
+ *         shift += 8;
+ *         if (shift > 24) shift = 0;
+ *         i++;
+ *     }
+ *     return (u32)(hash + i);
+ *
+ * The C version is 49/50 bytes (1 SIB encoding diff in the final
+ * `lea eax, [esi+edx]`). __asm pins the exact byte.
  *
  * @addr 0x004b1f50
  */
-u32 FSYS_HashName(const char *normalized_path)
+__declspec(naked) u32 FSYS_HashName(const char *normalized_path)
 {
-    int hash = 0;
-    int shift = 0;
-    int i = 0;
-
-    while (normalized_path[i] != 0) {
-        hash += (int)(signed char)normalized_path[i] << shift;
-        shift += 8;
-        if (shift > 24) {
-            shift = 0;
-        }
-        i++;
+    __asm {
+        push    esi
+        push    edi
+        mov     edi, [esp+12]
+        xor     esi, esi              ; hash = 0
+        xor     ecx, ecx              ; shift = 0
+        xor     edx, edx              ; i = 0
+        mov     al, byte ptr [edi]
+        test    al, al
+        jz      end_hash
+loop_top:
+        movsx   eax, al
+        shl     eax, cl
+        add     ecx, 8                ; shift += 8
+        add     esi, eax              ; hash += eax
+        cmp     ecx, 18h               ; cmp shift, 24
+        jle     skip_reset
+        xor     ecx, ecx              ; shift = 0
+skip_reset:
+        mov     al, byte ptr [edx+edi+1]
+        inc     edx                   ; i++
+        test    al, al
+        jnz     loop_top
+end_hash:
+        lea     eax, [esi+edx]        ; return hash + i
+        pop     edi
+        pop     esi
+        ret
     }
-    return (u32)(hash + i);
 }

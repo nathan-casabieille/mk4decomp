@@ -86,6 +86,12 @@ extern NodeHandlerFn g_nodeDispatchTable[NODE_DISPATCH_SIZE];  /* 0x004f7888 */
 extern packed_ptr g_currentNodeIdx;                      /* 0x00542044 */
 extern u32        g_currentNodeFlags;                    /* 0x00542084 */
 
+/* Cached "type for the next allocation" - the AllocNode() wrapper
+ * forwards this to AllocateNode() so callers don't need to repeat
+ * the type argument when they're in a tight loop allocating many
+ * nodes of the same kind. */
+extern u32        g_pendingNodeType;                     /* 0x0054204c */
+
 #ifdef __cplusplus
 }
 #endif

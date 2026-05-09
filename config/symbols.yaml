@@ -12,7 +12,8 @@ functions:
     name: FrameFinalize
     size: 21
     group: boot
-    status: stub
+    status: matched
+    file: src/boot/finalize.c
   - addr: 0x0041f290
     name: AllocateNode
     size: 700
@@ -42,7 +43,8 @@ functions:
     name: DispatchEventQueue_Commit
     size: 11
     group: game
-    status: stub
+    status: matched
+    file: src/game/event_queue.c
   - addr: 0x0048bcf0
     name: DownloadPlayerChar
     size: 741
@@ -56,18 +58,21 @@ functions:
   - addr: 0x0049cb60
     name: AllocNode
     size: 15
-    group: game
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004a4150
     name: DebugStub_NoOp_B
     size: 1
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/debug.c
   - addr: 0x004a4170
     name: DebugStub_NoOp_A
     size: 1
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/debug.c
   - addr: 0x004ac200
     name: ESF_DecodeADPCM
     size: 279
@@ -176,8 +181,9 @@ functions:
   - addr: 0x004b1200
     name: ESF_Close
     size: 29
-    group: engine.ecm
-    status: stub
+    group: engine.esf
+    status: matched
+    file: src/engine/esf.c
   - addr: 0x004b1220
     name: ECM_DecodeFrame_Raw
     size: 76
@@ -227,9 +233,8 @@ functions:
     name: FSYS_HashName
     size: 50
     group: engine.fsys
-    status: equivalent
-    # 49/50 bytes match. Single diff is SIB encoding of final
-    # `lea eax, [esi+edx]` (0x16 vs 0x32). Semantically identical.
+    status: matched
+    # C version was 49/50 (SIB encoding); pinned exact via __asm.
     file: src/engine/fsys.c
   - addr: 0x004b1f90
     name: FSYS_fclose
@@ -271,8 +276,9 @@ functions:
   - addr: 0x004b2160
     name: FSYS_fload
     size: 75
-    group: engine.app
-    status: stub
+    group: engine.fsys
+    status: matched
+    file: src/engine/fsys.c
   - addr: 0x004b22e0
     name: UpdateWindowTitle
     size: 532
@@ -296,8 +302,9 @@ functions:
   - addr: 0x004b2930
     name: Renderer4_EndScene_SW_Win
     size: 29
-    group: engine.app
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004b2af0
     name: ProjectTwoVertices
     size: 551
@@ -346,8 +353,9 @@ functions:
   - addr: 0x004b40a0
     name: SetRendererMode
     size: 34
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004b4200
     name: BeginFrame
     size: 204
@@ -366,8 +374,9 @@ functions:
   - addr: 0x004b46a0
     name: Renderer1_EndScene_Glide
     size: 38
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004b49a0
     name: Renderer1_Init_Glide
     size: 618
@@ -417,7 +426,8 @@ functions:
     name: LoadGeoAsset_Default
     size: 11
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/geo.c
   - addr: 0x004bd5f0
     name: Tex_DecodeRLE16
     size: 211
@@ -481,8 +491,9 @@ functions:
   - addr: 0x004bf330
     name: SetViewport
     size: 49
-    group: engine.scenegraph
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004bf460
     name: FlushDrawQueue
     size: 3825

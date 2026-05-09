@@ -21,6 +21,10 @@ void AuxAudio_SetVolume(u32 vol);                        /* 0x004aca10 */
 void Audio_TimerTick(void);                              /* 0x004ac4b0 */
 void Audio_UpdateChannels(u32 param);                    /* 0x004c37f0 */
 
+/* === Debug placeholders (empty; compiled-out hooks) =========== */
+void DebugStub_NoOp_B(void);                             /* 0x004a4150 */
+void DebugStub_NoOp_A(void);                             /* 0x004a4170 */
+
 #ifdef __cplusplus
 }
 #endif

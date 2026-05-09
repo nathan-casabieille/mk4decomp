@@ -32,6 +32,16 @@ extern u32        g_frameCounter;     /* 0x007af930 */
 extern s32        g_gameStateResult;  /* 0x007af918 */
 extern s32        g_gameMode;         /* 0x00543800 - 0 = active fight */
 
+/* Event-queue ping-pong. The dispatcher writes a fresh value into
+ * g_eventQueuePending each tick; Commit() promotes it to
+ * g_eventQueueActive when the frame is done. */
+extern u32        g_eventQueuePending;  /* 0x00542048 */
+extern u32        g_eventQueueActive;   /* 0x0053a31c */
+
+/* End-of-frame state. */
+extern u32        g_framePauseFlag;     /* 0x00541e6c (non-zero = skip) */
+extern u32        g_logicFrameCounter;  /* 0x0053a79c */
+
 extern packed_ptr g_player1NodeIdx;   /* 0x00538158 */
 extern packed_ptr g_player2NodeIdx;   /* 0x0053815c */
 extern packed_ptr g_player3NodeIdx;   /* 0x00538160 */

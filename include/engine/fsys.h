@@ -59,8 +59,9 @@ int  FSYS_fseek(int fh, u32 off, int whence);            /* 0x004b2070 */
 int  FSYS_ftell(int fh);                                 /* 0x004b2100 */
 int  FSYS_fclose(int fh);                                /* 0x004b1f90 */
 
-/* Convenience: open + read entire file + close. */
-int  FSYS_fload(const char *path, void *buf, u32 size);  /* 0x004b2160 */
+/* Convenience: open + read entire file + close. Reports
+ * "FSYS_fload()" on read mismatch but does not return a status. */
+void FSYS_fload(const char *path, void *buf, u32 size);  /* 0x004b2160 */
 
 /* Query: file size by name. */
 u32  FSYS_fsize(const char *path);                       /* 0x004b2120 */
