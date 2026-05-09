@@ -32,7 +32,25 @@ extern AuxChannel  g_auxChannels[];   /* 0x005438a8 */
 /* === Per-frame ticks (called from GameLogicStep) ============== */
 
 void Audio_TimerTick(void);                              /* 0x004ac4b0 */
-void Audio_UpdateChannels(u32 param);                    /* 0x004c37f0 */
+void Audio_UpdateChannels(void);                         /* 0x004c37f0 */
+
+/* Active-channel queue iterated by Audio_UpdateChannels: 16
+ * entries of (u16 channel_id, u16 owner_id), terminated by an
+ * entry with channel_id = 0xffff. */
+extern u16 g_audioChannelQueue[32]; /* 0x00f9eb80 */
+
+/* 28-bytes-per-entry state table indexed by channel_id from the
+ * queue. Field +0x16 (= 0xf8fade) is a flags byte; bit 1 means
+ * "needs release". */
+extern u8  g_audioChannelTable[];   /* 0x00f8fac8 */
+
+/* Global "audio fully active" flag - when 0, the channel update
+ * keeps walking; when set, certain branches abort early. */
+extern u8  g_audioMute;             /* 0x00f9efd4 */
+
+/* Inner helpers invoked by Audio_UpdateChannels per channel. */
+void Helper_AudioStop(s32 ch);                          /* 0x004c3710 */
+void Helper_AudioRelease(s32 ch);                       /* 0x004c3490 */
 
 /* Re-arms the audio timer: stores arg1..arg4 into the four
  * timer-state globals (active, start_sec, end_sec, handle). */

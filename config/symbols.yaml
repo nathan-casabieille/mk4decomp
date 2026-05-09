@@ -563,8 +563,9 @@ functions:
   - addr: 0x004c37f0
     name: Audio_UpdateChannels
     size: 220
-    group: engine.render
-    status: stub
+    group: audio
+    status: matched
+    file: src/audio/channels.c
   - addr: 0x004c3ef0
     name: DSound_Init
     size: 530
