@@ -64,6 +64,33 @@ void Boot(void);                                         /* 0x004c5070 */
 /* High-level app init invoked by WinMain after Boot. */
 void AppInit(HWND hwnd);                                 /* 0x004b2500 */
 
+/* Sub-helpers called by AppInit (mostly anonymous - their internal
+ * structure isn't reverse-engineered yet, but the matching diff
+ * just needs REL32 relocations to point at named symbols). */
+void AppInit_PostJoy(void);                              /* 0x004b5a10 */
+void AppInit_PreInstall(void);                           /* 0x004b1cf0 */
+void AuxAudio_SetMasterVol(s32 vol);                     /* 0x004ac9c0 */
+void AppInit_AudioPostInit(s32 flag);                    /* 0x004c3eb0 */
+void AppInit_PostDSound(void);                           /* 0x004b21b0 */
+void AppInit_Misc1(void);                                /* 0x004b6180 */
+void AppInit_Misc2(void);                                /* 0x004b5a80 */
+void AppInit_Misc3(void);                                /* 0x004b2ac0 */
+void AppInit_Misc4(void);                                /* 0x004bd960 */
+void AppInit_Misc5(void);                                /* 0x004054c0 */
+void AppInit_Misc6(void);                                /* 0x00418f10 */
+void AppInit_Misc7(void);                                /* 0x00464830 */
+void AppInit_Misc8(void);                                /* 0x004c51f0 */
+s32  AppInit_Probe(void);                                /* 0x004ac060 */
+void Crt_srand(u32 seed);                                /* 0x004c6500 */
+s32  Crt_rand(void);                                     /* 0x004c6510 */
+
+extern HWND g_appInitHwnd;       /* 0x007af924 */
+extern u32  g_appInitFlag1;      /* 0x007af920 */
+extern u32  g_appInitFlag2;      /* 0x007af91c */
+extern u8   g_audioMasterVol;    /* 0x00543a88 */
+extern u8   g_audioPostFlag;     /* 0x00543a90 */
+extern u32  g_demoModeFlag;      /* 0x004ffd7c */
+
 /* Per-frame engine step (60 Hz). */
 void MainLoopStep(void);                                 /* 0x004b2750 */
 

@@ -325,8 +325,9 @@ functions:
   - addr: 0x004b2500
     name: AppInit
     size: 385
-    group: engine.app
-    status: stub
+    group: boot
+    status: matched
+    file: src/boot/app_init.c
   - addr: 0x004b26d0
     name: GameLogicStep
     size: 113
