@@ -118,12 +118,17 @@ extern int       g_renderer5_surface;    /* 0x0058c900 */
 /* Renderer 2 (Direct3D) holds a COM-like object whose vtable method
  * at slot 11 (offset 0x2c) is invoked each EndScene with no extra
  * args - likely IDirect3DDevice2::EndScene or an IDirectDrawSurface
- * Flip variant on the Direct3D back buffer. */
+ * Flip variant on the Direct3D back buffer. Slot 29 is the
+ * primitive-draw call invoked by FlushBatch. */
 typedef struct D3DObj D3DObj;
 typedef long (__stdcall *D3DObj_Method)(D3DObj *self);
+typedef long (__stdcall *D3DObj_DrawMethod)(D3DObj *self, u32 ptype, u32 vtype,
+                                            void *verts, u32 count, u32 flags);
 typedef struct D3DObjVtbl {
     void *m_0_to_10[11];               /* unused-by-us slots 0..10 */
     D3DObj_Method method11;            /* slot 11 = offset 0x2c */
+    void *m_12_to_28[17];              /* unused-by-us slots 12..28 */
+    D3DObj_DrawMethod method29;        /* slot 29 = offset 0x74 */
 } D3DObjVtbl;
 struct D3DObj {
     D3DObjVtbl *vtbl;
@@ -134,6 +139,10 @@ extern int    g_renderer2_present_rc;    /* 0x0058c7dc */
 extern int    g_renderer2_active;        /* 0x0058c7e0 */
 extern int    g_renderer2_surface;       /* 0x0058c7e4 */
 extern int    g_renderer2_paused;        /* 0x0058c7ec - skip flag */
+extern s32    g_renderer2_batchCount;    /* 0x0058c7f0 - queued tris (count) */
+
+/* Buffer of pending D3D primitives flushed by Renderer2_FlushBatch_D3D. */
+extern u8     g_renderer2_vertexBatch[]; /* 0x00544718 */
 
 /* Submit any pending D3D primitive batch and reset the queued
  * vertex counter. Called from Renderer2_EndScene_D3D. */

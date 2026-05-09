@@ -150,7 +150,8 @@ functions:
     name: Renderer2_FlushBatch_D3D
     size: 57
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004af880
     name: Renderer3_EndScene_SW_FS
     size: 54

@@ -105,6 +105,28 @@ void SetViewport(int x, int y, int w, int h)
 }
 
 /*
+ * Submit a queued D3D primitive batch via vtable method 29 (likely
+ * IDirect3DDevice2::DrawPrimitive). Called from Renderer2_EndScene
+ * before the EndScene/Flip vtbl call. count is in triangles - the
+ * D3D call wants vertices, hence the count*3.
+ *
+ * @addr 0x004adc60
+ */
+void Renderer2_FlushBatch_D3D(void)
+{
+    s32 count;
+
+    count = g_renderer2_batchCount;
+    if (count >= 1) {
+        if (g_renderer2_obj != NULL) {
+            g_renderer2_present_rc = g_renderer2_obj->vtbl->method29(
+                g_renderer2_obj, 4, 3, g_renderer2_vertexBatch, count * 3, 12);
+        }
+        g_renderer2_batchCount = 0;
+    }
+}
+
+/*
  * Direct3D renderer EndScene: when the renderer is presenting and
  * not paused, flush the queued D3D primitive batch and call vtable
  * method 11 (likely Flip / EndScene) on the D3D back buffer object,
