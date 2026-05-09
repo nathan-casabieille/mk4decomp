@@ -52,6 +52,14 @@ extern fsys_entry g_fsys_entries[1024];
  * Lives at 0x7af4e4. */
 extern int g_fsys_entry_count;
 
+/* CRT FILE* for the open FILESYS.DAT archive. Lives at 0x7af4e0. */
+extern void *g_fsys_archive;
+
+/* Cache of the file handle for which the CRT seek pointer is
+ * currently positioned. fread skips its initial seek when this
+ * matches and the file is mid-read. Lives at 0x4f4a50. */
+extern int g_fsys_lastSeekFh;
+
 /* === Public API ============================================== */
 
 /* Open the archive and load its header table. */

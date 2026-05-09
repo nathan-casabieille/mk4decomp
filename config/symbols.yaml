@@ -218,8 +218,9 @@ functions:
   - addr: 0x004b1cf0
     name: FSYS_Init
     size: 237
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: matched
+    file: src/engine/fsys.c
   - addr: 0x004b1e00
     name: FSYS_fopen
     size: 177
@@ -255,13 +256,15 @@ functions:
   - addr: 0x004b1fb0
     name: FSYS_fread
     size: 184
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: matched
+    file: src/engine/fsys.c
   - addr: 0x004b2070
     name: FSYS_fseek
     size: 133
     group: engine.fsys
-    status: stub
+    status: matched
+    file: src/engine/fsys.c
   - addr: 0x004b2100
     name: FSYS_ftell
     size: 23

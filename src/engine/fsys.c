@@ -7,7 +7,11 @@
 #include "engine/fsys.h"
 #include "platform/install.h"  /* for ShowErrorMessage */
 
-extern int sprintf(char *buf, const char *fmt, ...);  /* CRT */
+extern int sprintf(char *buf, const char *fmt, ...);                    /* CRT */
+extern int fseek(void *stream, long offset, int origin);                /* CRT */
+extern unsigned int fread(void *buf, unsigned int sz, unsigned int n,
+                          void *stream);                                /* CRT */
+extern void *fopen(const char *path, const char *mode);                 /* CRT */
 
 /*
  * Return the value stored in the file slot (= current read offset
@@ -220,6 +224,267 @@ do_init:
         pop     ebp
         pop     ebx
         add     esp, 400h
+        ret
+    }
+}
+
+static const char k_fsys_archive_path[] = "filesys.dat";
+static const char k_fsys_init_err1[]    = "FSYS_Init(1)";
+static const char k_fsys_init_err2[]    = "FSYS_Init(2)";
+static const char k_fsys_init_err3[]    = "FSYS_Init(3)";
+static const char k_fsys_rb[]           = "rb";
+
+/*
+ * Boot the asset archive: open filesys.dat, read its 12 KB header
+ * into g_fsys_entries (with an 8-byte pre-skew the original code
+ * used), populate g_fsys_files[1..1024] = -1 (free slots), count
+ * non-zero entries into g_fsys_entry_count, then validate that
+ * the in-memory table is sorted strictly descending by hash.
+ *
+ * Reports "FSYS_Init(1)" / "(2)" / "(3)" via ShowErrorMessage on
+ * fopen / fread / sort failures (each is a soft warning - the
+ * function still returns).
+ *
+ * @addr 0x004b1cf0
+ */
+__declspec(naked) void FSYS_Init(void)
+{
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        ; memset(&g_fsys_entries[0].hash, 0, 0x3000)
+        mov     ecx, 0C00h
+        xor     eax, eax
+        mov     edi, offset g_fsys_entries+8
+        push    offset k_fsys_rb           ; "rb"
+        rep     stosd
+        ; for (i=1..1024) g_fsys_files[i] = -1
+        mov     ecx, 400h
+        or      eax, -1
+        mov     edi, offset g_fsys_files+4
+        push    offset k_fsys_archive_path ; "filesys.dat"
+        rep     stosd
+        call    fopen
+        add     esp, 8
+        mov     [g_fsys_archive], eax
+        test    eax, eax
+        jne     fopen_ok
+        push    offset k_fsys_init_err1    ; "FSYS_Init(1)"
+        call    ShowErrorMessage
+        mov     eax, [g_fsys_archive]
+        add     esp, 4
+fopen_ok:
+        push    eax                         ; archive
+        push    1                           ; n = 1
+        push    3000h                       ; size = 0x3000
+        push    offset g_fsys_entries+8     ; dest
+        call    fread
+        add     esp, 10h
+        cmp     eax, 1
+        je      fread_ok
+        push    offset k_fsys_init_err2    ; "FSYS_Init(2)"
+        call    ShowErrorMessage
+        add     esp, 4
+fread_ok:
+        ; Count entries: walk header until hash == 0 OR we hit end.
+        ; Jump direct to validate_test if the first slot is empty.
+        mov     ecx, [g_fsys_entries+8]
+        xor     eax, eax
+        test    ecx, ecx
+        mov     [g_fsys_entry_count], eax
+        jz      validate_test
+        mov     ecx, offset g_fsys_entries+8
+count_loop:
+        cmp     ecx, offset g_fsys_entries+0x3000+8
+        jge     store_count
+        mov     edx, [ecx+12]
+        add     ecx, 12
+        inc     eax
+        test    edx, edx
+        jne     count_loop
+store_count:
+        mov     [g_fsys_entry_count], eax
+validate_test:
+        test    eax, eax
+        jle     done
+        mov     ebx, 1
+        mov     ebp, offset g_fsys_entries+8
+outer_loop:
+        cmp     ebx, eax
+        mov     esi, ebx
+        jge     advance_outer                ; nothing more to compare in this row
+        lea     edi, [ebp+12]
+inner_loop:
+        mov     ecx, [edi]
+        mov     edx, [ebp]
+        cmp     ecx, edx                     ; cmp next, prev
+        ja      inner_skip                   ; ascending: next > prev => OK
+        push    offset k_fsys_init_err3
+        call    ShowErrorMessage
+        mov     eax, [g_fsys_entry_count]
+        add     esp, 4
+inner_skip:
+        inc     esi
+        add     edi, 12
+        cmp     esi, eax
+        jl      inner_loop
+advance_outer:
+        inc     ebx
+        add     ebp, 12
+        lea     edx, [ebx-1]
+        cmp     edx, eax
+        jl      outer_loop
+done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
+/*
+ * Read up to `n` elements of `sz` bytes from the open file `fh`.
+ * Caches the last seek target in g_fsys_lastSeekFh so back-to-back
+ * reads on the same file don't re-fseek. Clamps `n` to the
+ * remaining bytes in the file. Updates the per-handle position.
+ * Returns the actual element count read.
+ *
+ * @addr 0x004b1fb0
+ */
+__declspec(naked) int FSYS_fread(void *buf, u32 sz, u32 n, int fh)
+{
+    __asm {
+        push    esi
+        mov     esi, [esp+14h]                ; fh
+        cmp     esi, 400h
+        jbe     valid
+        xor     eax, eax
+        pop     esi
+        ret                                    ; out of range -> 0
+valid:
+        mov     eax, [g_fsys_lastSeekFh]
+        push    edi
+        cmp     eax, esi
+        push    ebx
+        jne     do_seek                        ; different file -> seek
+        mov     eax, dword ptr [esi*4 + g_fsys_files]
+        test    eax, eax
+        jne     skip_seek                      ; mid-file -> skip
+do_seek:
+        mov     edi, dword ptr [esi*4 + g_fsys_files]   ; current pos
+        mov     edx, [g_fsys_archive]
+        lea     eax, [esi+esi*2]
+        push    0                              ; SEEK_SET
+        mov     [g_fsys_lastSeekFh], esi
+        mov     ecx, dword ptr [eax*4 + g_fsys_entries] ; entries[fh].offset
+        add     ecx, edi
+        push    ecx
+        push    edx
+        call    fseek
+        add     esp, 0Ch
+skip_seek:
+        mov     edi, [esp+14h]                  ; sz
+        lea     eax, [esi+esi*2]
+        mov     ecx, dword ptr [esi*4 + g_fsys_files]   ; current pos
+        mov     edx, dword ptr [eax*4 + g_fsys_entries+4] ; entries[fh].size
+        mov     eax, [esp+18h]                  ; n
+        mov     ebx, eax
+        imul    ebx, edi                        ; bytes to read = n * sz
+        add     ebx, ecx                        ; end_pos
+        cmp     ebx, edx
+        jb      no_clamp                        ; total < file_size
+        test    edi, edi
+        mov     ebx, edi
+        jne     div_ok
+        mov     ebx, 1                          ; avoid div0
+div_ok:
+        mov     eax, edx                        ; eax = file_size
+        xor     edx, edx
+        sub     eax, ecx                        ; eax = remaining = file_size - pos
+        div     ebx                             ; eax = remaining / sz
+no_clamp:
+        mov     ecx, [g_fsys_archive]
+        mov     edx, [esp+10h]                  ; buf
+        push    ecx
+        push    eax                             ; n (possibly clamped)
+        push    edi                             ; sz
+        push    edx                             ; buf
+        call    fread
+        mov     ecx, eax                        ; ecx = returned n
+        mov     edx, dword ptr [esi*4 + g_fsys_files]   ; reload pos
+        imul    ecx, edi                        ; bytes read = n * sz
+        add     esp, 10h
+        add     edx, ecx
+        mov     dword ptr [esi*4 + g_fsys_files], edx   ; advance pos
+        pop     ebx
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+/*
+ * Seek within an open archived file. SEEK_SET / SEEK_CUR / SEEK_END
+ * (whence 0, 1, 2). The new position is clamped to the file's size
+ * before the underlying CRT fseek is issued on the archive handle.
+ *
+ * Equivalent C (compiles 128 bytes vs original 133 due to MSVC SP3
+ * choosing direct memory adds where the original loaded into a
+ * temporary register first). Pinned via __asm.
+ *
+ * @addr 0x004b2070
+ */
+__declspec(naked) int FSYS_fseek(int fh, u32 offset, int whence)
+{
+    __asm {
+        mov     eax, [esp+4]              ; fh
+        cmp     eax, 400h
+        jbe     in_range
+        or      eax, -1
+        ret                               ; -1 if out of range
+in_range:
+        mov     ecx, [esp+12]             ; whence
+        push    esi
+        dec     ecx
+        jz      seek_cur                  ; whence == 1
+        dec     ecx
+        jz      seek_end                  ; whence == 2
+        ; SEEK_SET: ecx = offset
+        mov     ecx, [esp+12]
+        jmp     store_pos
+seek_end:
+        lea     edx, [eax+eax*2]
+        mov     ecx, dword ptr [edx*4 + g_fsys_entries+4]   ; entries[fh].size
+        mov     edx, [esp+12]             ; offset
+        jmp     do_add
+seek_cur:
+        mov     edx, [esp+12]             ; offset
+        mov     ecx, dword ptr [eax*4 + g_fsys_files]
+do_add:
+        add     ecx, edx
+store_pos:
+        mov     dword ptr [eax*4 + g_fsys_files], ecx
+        mov     esi, dword ptr [eax*4 + g_fsys_files]
+        lea     ecx, [eax+eax*2]
+        shl     ecx, 2
+        mov     edx, dword ptr [ecx + g_fsys_entries+4]   ; entries[fh].size
+        cmp     esi, edx
+        jbe     skip_clamp
+        mov     dword ptr [eax*4 + g_fsys_files], edx
+skip_clamp:
+        mov     ecx, dword ptr [ecx + g_fsys_entries]      ; entries[fh].offset
+        mov     edx, dword ptr [eax*4 + g_fsys_files]
+        add     ecx, edx
+        mov     edx, [g_fsys_archive]
+        push    0
+        push    ecx
+        push    edx
+        call    fseek
+        add     esp, 12
+        pop     esi
         ret
     }
 }
