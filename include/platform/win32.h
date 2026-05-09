@@ -67,6 +67,12 @@ void AppInit(HWND hwnd);                                 /* 0x004b2500 */
 /* Per-frame engine step (60 Hz). */
 void MainLoopStep(void);                                 /* 0x004b2750 */
 
+extern u8  g_appFlags;            /* 0x00f9f714 - bit 0 = first-frame done */
+extern u32 g_lastFrameTime;       /* 0x00f9f708 - QueryMicroTimer baseline */
+extern u32 g_loopCounter;         /* 0x00f9f70c - per-step counter */
+extern u32 g_sleepBudgetMs;       /* 0x00f9f710 - cumulative Sleep ms */
+extern u32 g_inLoopStep;          /* 0x00f9f72c - 1 while inside the body */
+
 /* Drain pending Win32 messages. */
 void PumpMessages(void);                                 /* 0x004c52a0 */
 
