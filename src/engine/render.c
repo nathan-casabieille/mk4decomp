@@ -77,6 +77,46 @@ void Renderer4_EndScene_SW_Win(void)
 }
 
 /*
+ * Software-fullscreen renderer EndScene: when this frame was
+ * actually presented and we own a DDraw surface, call the surface's
+ * vtable method 32 (Flip / Present) with arg 0, save the HRESULT
+ * in g_renderer3_present_rc, and clear the surface latch.
+ *
+ * @addr 0x004af880
+ */
+void Renderer3_EndScene_SW_FS(void)
+{
+    if (g_renderer3_active != 0) {
+        if (g_renderer3_surface != 0) {
+            if (g_renderer3_obj != 0) {
+                g_renderer3_present_rc =
+                    g_renderer3_obj->vtbl->method32(g_renderer3_obj, 0);
+            }
+            g_renderer3_surface = 0;
+        }
+    }
+}
+
+/*
+ * Software-fullscreen Hi-res renderer EndScene: same pattern as
+ * Renderer3, just on the Hi-res slot.
+ *
+ * @addr 0x004b00b0
+ */
+void Renderer5_EndScene_SW_FS_Hi(void)
+{
+    if (g_renderer5_active != 0) {
+        if (g_renderer5_surface != 0) {
+            if (g_renderer5_obj != 0) {
+                g_renderer5_present_rc =
+                    g_renderer5_obj->vtbl->method32(g_renderer5_obj, 0);
+            }
+            g_renderer5_surface = 0;
+        }
+    }
+}
+
+/*
  * Glide renderer EndScene: drop the latched surface only when
  * the GPU isn't currently busy with the previous frame.
  *

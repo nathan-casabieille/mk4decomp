@@ -77,6 +77,29 @@ extern int g_renderer1_active;       /* 0x007affe4 */
 extern int g_renderer1_busy;         /* 0x007afff0 */
 extern int g_renderer1_surface;      /* 0x007afff4 */
 
+/* Renderer 3 (Software Fullscreen) holds an IDirectDrawSurface*-like
+ * COM object whose vtable method at slot 32 (offset 0x80) is invoked
+ * each EndScene with arg=0. Likely IDirectDrawSurface::Flip(NULL). */
+typedef struct DDSurface DDSurface;
+typedef long (__stdcall *DDSurface_Method)(DDSurface *self, int flags);
+typedef struct DDSurfaceVtbl {
+    void *m_0_to_31[32];               /* unused-by-us slots 0..31 */
+    DDSurface_Method method32;         /* slot 32 = offset 0x80 */
+} DDSurfaceVtbl;
+struct DDSurface {
+    DDSurfaceVtbl *vtbl;
+};
+
+extern DDSurface *g_renderer3_obj;       /* 0x0058c868 */
+extern int       g_renderer3_active;     /* 0x0058c874 */
+extern int       g_renderer3_present_rc; /* 0x0058c878 (last Flip return) */
+extern int       g_renderer3_surface;    /* 0x0058c880 */
+
+extern DDSurface *g_renderer5_obj;       /* 0x0058c8e8 */
+extern int       g_renderer5_active;     /* 0x0058c8f4 */
+extern int       g_renderer5_present_rc; /* 0x0058c8f8 */
+extern int       g_renderer5_surface;    /* 0x0058c900 */
+
 extern u32  g_drawQueueSize;         /* 0x00f85b40 */
 extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */
 extern u32  g_drawQueueBuckets[DRAW_QUEUE_BUCKETS];       /* 0x00f6d050 */
