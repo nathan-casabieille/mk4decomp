@@ -53,6 +53,13 @@ void Renderer3_PresentFrame(void);                       /* 0x004af690 */
 void Renderer4_PresentFrame(void);                       /* 0x004b2840 */
 void Renderer5_PresentFrame(void);                       /* 0x004afec0 */
 
+/* Per-renderer EndScene (called from DrawScene per the active mode). */
+void Renderer1_EndScene_Glide(void);                     /* 0x004b46a0 */
+void Renderer2_EndScene_D3D(void);                       /* 0x004adc20 */
+void Renderer3_EndScene_SW_FS(void);                     /* 0x004af880 */
+void Renderer4_EndScene_SW_Win(void);                    /* 0x004b2930 */
+void Renderer5_EndScene_SW_FS_Hi(void);                  /* 0x004b00b0 */
+
 /* BeginFrame fan-out. Cases 3 / 4 / 5 receive output args for the
  * computed viewport rect; cases 1 / 2 take just the flag. */
 void Renderer1_BeginFrame_Glide(int flag);                                            /* 0x004b4650 */
