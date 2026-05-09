@@ -208,10 +208,34 @@ struct D3DObj {
 };
 
 extern D3DObj *g_renderer2_obj;          /* 0x0058c7c0 */
+extern u32    g_renderer2_hwnd;          /* 0x0058c7d8 */
 extern int    g_renderer2_present_rc;    /* 0x0058c7dc */
 extern int    g_renderer2_active;        /* 0x0058c7e0 */
 extern int    g_renderer2_surface;       /* 0x0058c7e4 */
+extern int    g_renderer2_initOk;        /* 0x0058c7e8 */
 extern int    g_renderer2_paused;        /* 0x0058c7ec - skip flag */
+
+extern u8     g_renderer2_buf1[64];      /* 0x0058c768 */
+extern u8     g_renderer2_buf2[64];      /* 0x0058c720 */
+extern u8     g_renderer2_buf3[64];      /* 0x00544258 */
+extern f32    g_renderer2_lutTable[];    /* 0x00544308 - 256 floats */
+
+/* The increment constant for filling g_renderer2_lutTable. */
+extern f32    g_renderer2_lutStep;       /* 0x004d2960 */
+
+/* Renderer 2 sub-helpers (matched stubs). */
+s32  R2_Init1(void);                     /* 0x004adde0 */
+s32  R2_Init2(void);                     /* 0x004aef00 */
+s32  R2_Init3(void);                     /* 0x004ae990 */
+s32  R2_Init4(s32 mode);                 /* 0x004aeae0 */
+s32  R2_Init5(void);                     /* 0x004af250 */
+s32  R2_Init6(void);                     /* 0x004aef50 */
+s32  R2_Init7(void);                     /* 0x004af480 */
+s32  R2_Init8(void);                     /* 0x004aec90 */
+s32  R2_Init9(void);                     /* 0x004af190 */
+void R2_Init10(void);                    /* 0x004aedb0 */
+s32  R2_Init11(s32 idx);                 /* 0x004af020 */
+void R2_Cleanup(void);                   /* 0x004ad7c0 */
 extern s32    g_renderer2_batchCount;    /* 0x0058c7f0 - queued tris (count) */
 
 /* Buffer of pending D3D primitives flushed by Renderer2_FlushBatch_D3D. */

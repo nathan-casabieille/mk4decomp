@@ -141,8 +141,9 @@ functions:
   - addr: 0x004ad6a0
     name: Renderer2_Init_D3D
     size: 286
-    group: engine.install
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/renderer2_init.c
   - addr: 0x004adc20
     name: Renderer2_EndScene_D3D
     size: 63
