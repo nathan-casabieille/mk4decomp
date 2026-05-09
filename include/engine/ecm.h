@@ -50,6 +50,42 @@ void ECM_Cleanup(void);                                  /* 0x004b0cb0 */
 /* Worker thread function (passed to CreateThread). */
 DWORD __stdcall ECM_PlayThread(LPVOID param);            /* 0x004b0a50 */
 
+/* === Globals touched by ECM_Cleanup ========================== */
+
+/* DirectSound buffer object used for the cinematic audio track.
+ * Vtable methods invoked by ECM_Cleanup (offsets in bytes):
+ *   +0x08 = IUnknown::Release
+ *   +0x3c = IDirectSoundBuffer::SetVolume
+ *   +0x48 = IDirectSoundBuffer::Stop
+ */
+typedef struct DSBuf DSBuf;
+typedef long (__stdcall *DSBuf_Release)(DSBuf *self);
+typedef long (__stdcall *DSBuf_SetVolume)(DSBuf *self, s32 vol);
+typedef long (__stdcall *DSBuf_Stop)(DSBuf *self);
+typedef struct DSBufVtbl {
+    void           *m_0_to_1[2];           /* QueryInterface, AddRef */
+    DSBuf_Release   Release;               /* slot 2 = offset 0x08 */
+    void           *m_3_to_14[12];         /* unused-by-us */
+    DSBuf_SetVolume SetVolume;             /* slot 15 = offset 0x3c */
+    void           *m_16_to_17[2];         /* unused-by-us */
+    DSBuf_Stop      Stop;                  /* slot 18 = offset 0x48 */
+} DSBufVtbl;
+struct DSBuf {
+    DSBufVtbl *vtbl;
+};
+
+extern void  *g_ecmFile;          /* 0x007ab04c - FILE* (or HANDLE) */
+extern DSBuf *g_ecmDSBuffer;      /* 0x007ab05c */
+extern HANDLE g_ecmThread;        /* 0x007ab06c */
+extern u32    g_ecmThreadStatus;  /* 0x007ab078 - non-zero while thread alive */
+extern u32    g_ecmHeaderBuf[902];/* 0x007aa230 - 3608 bytes scratch */
+
+/* Inner helper called by ECM_Cleanup to flush internal state. */
+void Helper_ECM_PostCleanup(s32 zero_arg);              /* 0x004b09a0 */
+
+/* CRT-style fclose used by ECM_Cleanup. */
+void Helper_FClose(void *file);                          /* 0x004c5800 */
+
 /* === Internal ================================================ */
 
 s32  ECM_DecodeFrame(const void *src, void *dst);        /* 0x004b1c90 */

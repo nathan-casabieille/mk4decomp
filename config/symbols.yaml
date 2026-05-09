@@ -191,7 +191,8 @@ functions:
     name: ECM_Cleanup
     size: 199
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/ecm_cleanup.c
   - addr: 0x004b1090
     name: ESF_Open
     size: 183
