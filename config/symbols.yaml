@@ -585,7 +585,8 @@ functions:
     name: ShowErrorMessage
     size: 144
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/platform/error.c
   - addr: 0x004c49b0
     name: WndProc
     size: 1275

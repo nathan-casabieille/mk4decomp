@@ -76,6 +76,8 @@ u32 QueryMicroTimer(void);                               /* 0x004c4510 */
  * that can't recover. */
 void ShowErrorMessage(const char *msg);                  /* 0x004c48c0 */
 
+extern u8 g_inErrorHandler;     /* 0x00f9f7f4 - set while ShowErrorMessage runs */
+
 extern s32 g_timerInitedSkip;       /* 0x00f9f008 - non-zero = skip init */
 
 #ifdef _WIN32
