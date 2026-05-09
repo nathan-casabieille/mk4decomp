@@ -2,6 +2,7 @@
  * Scene-graph allocator wrappers.
  */
 #include "engine/scenegraph.h"
+#include "game/tick.h"   /* g_framePauseFlag */
 
 /*
  * Convenience: allocate a node using the type cached in
@@ -12,6 +13,70 @@
 void *AllocNode(void)
 {
     return AllocateNode(g_pendingNodeType);
+}
+
+/*
+ * Walk the scene-graph siblings of g_currentNodeIdx, invoking the
+ * caller-supplied g_walkCallback on each. Each sibling entry has
+ * three packed fields at byte offsets +0, +4, +8 (interpreted by
+ * the table base relocations).
+ *
+ * The function pauses if g_framePauseFlag becomes non-zero mid
+ * walk, and ORs 4 into g_xformDirtyFlags / clears it via XOR
+ * depending on whether the walk completed.
+ *
+ * @addr 0x004ba130
+ */
+__declspec(naked) void WalkSceneGraphSiblings(void)
+{
+    __asm {
+        mov     ecx, [g_currentNodeIdx]
+        push    ebx
+        mov     ebx, [g_walkCallback]
+        push    ebp
+        mov     eax, dword ptr [ecx*4 + g_siblingTable+4]
+        push    esi
+        push    edi
+        mov     [g_walkCallback], eax
+        mov     edi, dword ptr [ecx*4 + g_siblingTable+8]
+        mov     ebp, eax
+        add     edi, 2
+        test    eax, eax
+        jz      post_walk
+walk_loop:
+        lea     ecx, [edi+eax]
+        mov     [g_currentNodeIdx], ecx
+        mov     esi, dword ptr [ecx*4 + g_siblingTable]
+        mov     [g_currentNodeIdx], eax
+        call    ebx
+        mov     eax, [g_framePauseFlag]
+        test    eax, eax
+        jne     done
+        test    byte ptr [g_xformDirtyFlags], 1
+        jne     post_walk
+        mov     eax, esi
+        mov     ebp, esi
+        test    esi, esi
+        mov     [g_walkCallback], eax
+        jne     walk_loop
+post_walk:
+        mov     edx, [g_xformDirtyFlags]
+        mov     eax, 4
+        or      edx, eax
+        mov     [g_currentNodeIdx], ebp
+        test    ebp, ebp
+        mov     [g_xformDirtyFlags], edx
+        jz      done
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     [g_xformDirtyFlags], ecx
+done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
 }
 
 /*

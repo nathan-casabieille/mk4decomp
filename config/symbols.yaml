@@ -426,8 +426,9 @@ functions:
   - addr: 0x004ba130
     name: WalkSceneGraphSiblings
     size: 142
-    group: engine.render
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004ba720
     name: RenderSceneNode
     size: 1899

@@ -113,6 +113,16 @@ extern s16        g_nodeMatrixTable[];                   /* base 0x00ab5210 area
  * fills with negated angles before calling BuildRotMatrix_Order*. */
 extern s16        g_xformTempAngles[3];                  /* 0x00ab5208 */
 
+/* Per-walk callback function pointer (caller sets this before
+ * invoking WalkSceneGraphSiblings, the function loads it into a
+ * register and tail-calls per-sibling). The slot is reused as a
+ * "current sibling" scratch during the walk. */
+extern void     (*g_walkCallback)(void);                 /* 0x0054206c */
+
+/* Sibling table read by WalkSceneGraphSiblings; entries are 4-byte
+ * stride and accessed at offsets [idx], [idx+1], [idx+2]. */
+extern u32        g_siblingTable[];                       /* base offset varies */
+
 #ifdef __cplusplus
 }
 #endif
