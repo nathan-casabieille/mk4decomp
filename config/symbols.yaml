@@ -36,9 +36,10 @@ functions:
     status: stub
   - addr: 0x0045c820
     name: DispatchEventQueue
-    size: 167
+    size: 170
     group: game
-    status: stub
+    status: matched
+    file: src/game/event_queue.c
   - addr: 0x0045c8d0
     name: DispatchEventQueue_Commit
     size: 11

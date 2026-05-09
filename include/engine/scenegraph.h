@@ -135,6 +135,13 @@ extern u32        g_matrixStackA[];                       /* RELOC base */
 extern u32        g_matrixStackB[];                       /* RELOC base */
 extern u32        g_xformChainTable[];                    /* RELOC base */
 
+/* DispatchEventQueue cursor + bounds. The dispatcher walks
+ * g_eventQueueHead until it reaches the cached g_eventQueueEnd. */
+extern u32        g_eventQueueHead;                       /* 0x0053a2f0 */
+extern u32        g_eventQueueEnd;                        /* 0x00542054 */
+extern u32        g_eventQueueTotal;                      /* 0x00542050 */
+extern u32        g_eventQueueWorkType;                   /* 0x00542074 */
+
 #ifdef __cplusplus
 }
 #endif
