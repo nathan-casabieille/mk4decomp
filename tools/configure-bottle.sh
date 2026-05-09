@@ -4,7 +4,7 @@
 # "Mortal Kombat 4 is not installed. Run SETUP from the CD." popup.
 #
 # What this does (discovered by reverse-engineering the binary):
-#   1. Sets Win98 compatibility on MK4.EXE and SETUP.EXE — the 1998
+#   1. Sets Win98 compatibility on MK4.EXE and SETUP.EXE - the 1998
 #      InstallShield SETUP refuses post-NT versions, and several startup
 #      paths in MK4.EXE behave better in Win98 mode.
 #   2. Writes the registry state MK4.EXE checks at startup. Two values are
@@ -15,7 +15,7 @@
 #                                 pass the existence check; in-game settings
 #                                 will fall back to defaults.
 #      MK4.EXE is a 32-bit binary; on wine64, HKLM\Software\* is redirected
-#      to HKLM\Software\Wow6432Node\* for 32-bit processes — that's where we
+#      to HKLM\Software\Wow6432Node\* for 32-bit processes - that's where we
 #      write. HKCU is also written defensively.
 #
 # Assumes:

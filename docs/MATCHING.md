@@ -35,7 +35,7 @@ Decide which `src/<group>/<file>.c` it lives in (consult
 
 Write idiomatic C in the chosen file. Include the address comment,
 match the function signature exactly. For globals, use the names
-already in `include/<group>/*.h` — add new ones there if needed.
+already in `include/<group>/*.h` - add new ones there if needed.
 
 Set status to `drafted` in `symbols.yaml`.
 
@@ -73,20 +73,20 @@ Iterate until the diff is empty for that function. Set status to
 
 ## 5. Common matching tricks (MSVC 5.0)
 
-- **Variable declaration order** matters — MSVC 5.0 lays out locals
+- **Variable declaration order** matters - MSVC 5.0 lays out locals
   on the stack in declaration order. Match the original's stack
   layout.
-- **`int` vs `long`** — they're both 32-bit on Win32 but the
+- **`int` vs `long`** - they're both 32-bit on Win32 but the
   compiler may emit different instructions. Check what the original
   used.
-- **Loop styles** — `do/while` vs `while` vs `for` can produce
+- **Loop styles** - `do/while` vs `while` vs `for` can produce
   different jump structures. Match the original.
-- **Inline functions** — MSVC 5.0 has limited inlining; if the
+- **Inline functions** - MSVC 5.0 has limited inlining; if the
   original has a tiny helper, it's usually not inlined.
 - **`__forceinline`** doesn't exist in MSVC 5.0; use `__inline`.
-- **Inline asm** — `__asm { ... }` blocks compile through. Use
+- **Inline asm** - `__asm { ... }` blocks compile through. Use
   sparingly when the compiler can't generate the exact instruction.
-- **Static functions** — `static` in C is the same; helps MSVC pick
+- **Static functions** - `static` in C is the same; helps MSVC pick
   better calling conventions.
 
 ## 6. Mark it matched
@@ -119,11 +119,11 @@ Keep new globals + strings in the same source files as the original
 
 ## Tips
 
-- Work bottom-up (leaves first) — if `A` calls `B`, get `B` matching
+- Work bottom-up (leaves first) - if `A` calls `B`, get `B` matching
   first
 - Small functions (< 100 bytes) are great practice for getting
   comfortable with MSVC 5.0's quirks
 - The same C source MUST produce identical bytes EVERY time, so once
-  you've matched, the function is done — no maintenance burden
+  you've matched, the function is done - no maintenance burden
 - If a function seems impossible to match, leave a comment in the
   source explaining what you tried, and move on. Come back later.

@@ -1,4 +1,4 @@
-# MK4 — Matching Decompilation
+# MK4 - Matching Decompilation
 
 A **matching decompilation** of **Mortal Kombat 4** (PC, Midway /
 Eurocom, 1998), in the spirit of [zeldaret/oot](https://github.com/zeldaret/oot)
@@ -22,7 +22,7 @@ stub (asm-only)         :   104
 ```
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
-for the architectural map already produced by static RE — every
+for the architectural map already produced by static RE - every
 subsystem of the engine is documented at a high level.
 
 ## Repo layout
@@ -69,12 +69,12 @@ make portable
 
 ## Reading order for new contributors
 
-1. [analysis/notes/architecture.md](analysis/notes/architecture.md) —
+1. [analysis/notes/architecture.md](analysis/notes/architecture.md) -
    what the engine does, subsystem-by-subsystem
-2. [CONVENTIONS.md](CONVENTIONS.md) — naming, header layout, matching rules
-3. [docs/MATCHING.md](docs/MATCHING.md) — workflow for claiming a function
+2. [CONVENTIONS.md](CONVENTIONS.md) - naming, header layout, matching rules
+3. [docs/MATCHING.md](docs/MATCHING.md) - workflow for claiming a function
    and getting it byte-perfect
-4. [config/symbols.yaml](config/symbols.yaml) — find a `stub` function to
+4. [config/symbols.yaml](config/symbols.yaml) - find a `stub` function to
    work on
 
 ## Regenerating `game/` from the CD image
@@ -90,17 +90,17 @@ cd /tmp && bchunk -w \
 
 ## Toolchain
 
-- **Ghidra** — disassembly + interactive decompilation
-- **Whisky** — Wine wrapper used to run MSVC 5.0 and the original `MK4.EXE`
-- **MinGW-w64** — for the portable build
-- **MSVC 5.0** (under Wine) — for the matching build
-- **Python 3 + pyyaml** — for tooling
+- **Ghidra** - disassembly + interactive decompilation
+- **Whisky** - Wine wrapper used to run MSVC 5.0 and the original `MK4.EXE`
+- **MinGW-w64** - for the portable build
+- **MSVC 5.0** (under Wine) - for the matching build
+- **Python 3 + pyyaml** - for tooling
 
 ## Credits
 
 Reverse engineering, decomp infrastructure: see git log.
 
 The engine is © 1998 Eurocom Entertainment Software / Midway. This
-project distributes ZERO original game assets — the `original/` and
+project distributes ZERO original game assets - the `original/` and
 `game/` paths are git-ignored. To run the result, you provide your
 own copy of MK4.

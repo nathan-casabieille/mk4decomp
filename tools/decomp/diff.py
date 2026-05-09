@@ -25,7 +25,7 @@ def load_symbols():
     try:
         import yaml
     except ImportError:
-        print("ERROR: install pyyaml — `pip install pyyaml`", file=sys.stderr)
+        print("ERROR: install pyyaml - `pip install pyyaml`", file=sys.stderr)
         sys.exit(1)
     with open(SYMBOLS_FILE) as f:
         data = yaml.safe_load(f)
@@ -99,7 +99,7 @@ def main():
 
     if args.addr:
         addr = int(args.addr, 16)
-        # We don't know size without symbols.yaml — print 256 bytes.
+        # We don't know size without symbols.yaml - print 256 bytes.
         size = 256
         orig = fetch_bytes(original, addr, size)
         rebuilt_bytes = fetch_bytes(rebuilt, addr, size)

@@ -18,7 +18,7 @@ def build_index(filesys_dat: Path):
 
 
 def gen_pcmk_sounds():
-    """c:\\source\\mk4\\win\\sound\\pcmkNNNN.esf — try 0..9999"""
+    """c:\\source\\mk4\\win\\sound\\pcmkNNNN.esf - try 0..9999"""
     for n in range(10000):
         yield f"c:\\source\\mk4\\win\\sound\\pcmk{n:04d}.esf"
 
@@ -130,7 +130,7 @@ def main():
     print(f"\n\nTotal hits found: {len(all_hits)}")
     print(f"Coverage: {len(all_hits)} / {len(table)} = {100*len(all_hits)/len(table):.1f}%")
 
-    # List unmatched entries (sorted by size, smallest first — fonts/palettes)
+    # List unmatched entries (sorted by size, smallest first - fonts/palettes)
     matched_hashes = set()
     for path, _, _, _ in all_hits:
         matched_hashes.add(fsys_hash(path))

@@ -2,8 +2,8 @@
 """FILESYS.DAT hash function and asset table reader.
 
 Reverse-engineered from MK4.EXE:
-- FSYS_NormalizePath @ 0x004b1ec0 — uppercase the path; require X:\\ prefix
-- FSYS_HashName     @ 0x004b1f50 — sum chars shifted into byte positions 0/1/2/3 cycling
+- FSYS_NormalizePath @ 0x004b1ec0 - uppercase the path; require X:\\ prefix
+- FSYS_HashName     @ 0x004b1f50 - sum chars shifted into byte positions 0/1/2/3 cycling
 
 Usage:
     python3 tools/fsys_hash.py hash 'c:\\source\\mk4\\win\\menu.tga'

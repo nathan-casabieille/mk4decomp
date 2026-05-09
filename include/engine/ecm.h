@@ -1,5 +1,5 @@
 /**
- * ECM — Eurocom Custom Movie.
+ * ECM - Eurocom Custom Movie.
  *
  * Cinematic container format (intro, character bios, endings).
  * Combines IMA ADPCM audio (22050 Hz mono) with Huffman-compressed
@@ -17,11 +17,11 @@
 extern "C" {
 #endif
 
-#define ECM_MAGIC      0x024D4345   /* 'E','C','M',0x02 — file magic */
-#define ECM_GROUP_MAGIC 0x00434553   /* 'S','E','C',0x00 — per-group magic */
-#define ECM_FRAME_MAGIC_EDL  0x004C4445  /* 'E','D','L',0    — per-frame magic */
+#define ECM_MAGIC      0x024D4345   /* 'E','C','M',0x02 - file magic */
+#define ECM_GROUP_MAGIC 0x00434553   /* 'S','E','C',0x00 - per-group magic */
+#define ECM_FRAME_MAGIC_EDL  0x004C4445  /* 'E','D','L',0    - per-frame magic */
 
-#define ECM_HEADER_SIZE     0x0E18  /* 3608 bytes — magic+count+900 offsets */
+#define ECM_HEADER_SIZE     0x0E18  /* 3608 bytes - magic+count+900 offsets */
 #define ECM_FRAMES_PER_GROUP 15
 #define ECM_AUDIO_BYTES_PER_GROUP  0xAC44  /* 44100 = 1 sec @ 22050 Hz mono */
 

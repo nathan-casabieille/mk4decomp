@@ -1,5 +1,5 @@
 /**
- * FSYS — asset archive subsystem.
+ * FSYS - asset archive subsystem.
  *
  * The game's bulk assets live in a single archive file (filesys.dat)
  * indexed by hashed filename. This header exposes the public API:

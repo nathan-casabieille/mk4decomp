@@ -1,5 +1,5 @@
 /**
- * Audio subsystem — DirectSound + AuxAudio + ESF/ECM playback.
+ * Audio subsystem - DirectSound + AuxAudio + ESF/ECM playback.
  */
 #ifndef MK4_AUDIO_SOUND_H
 #define MK4_AUDIO_SOUND_H

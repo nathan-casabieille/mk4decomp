@@ -30,7 +30,7 @@ void DispatchEventQueue_Commit(void);                    /* 0x0045c8d0 */
 
 extern u32        g_frameCounter;     /* 0x007af930 */
 extern s32        g_gameStateResult;  /* 0x007af918 */
-extern s32        g_gameMode;         /* 0x00543800 — 0 = active fight */
+extern s32        g_gameMode;         /* 0x00543800 - 0 = active fight */
 
 extern packed_ptr g_player1NodeIdx;   /* 0x00538158 */
 extern packed_ptr g_player2NodeIdx;   /* 0x0053815c */

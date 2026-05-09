@@ -22,7 +22,7 @@ def extract(filesys_dat: Path, asset_path: str, out_path: Path):
             out_path.write_bytes(data)
             print(f"OK  entry {i}  off=0x{off:08x}  size={size}  -> {out_path}")
             return
-    raise SystemExit(f"hash 0x{target:08x} not in table — name {asset_path!r} not in archive")
+    raise SystemExit(f"hash 0x{target:08x} not in table - name {asset_path!r} not in archive")
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 /**
- * GEO — Eurocom geometry + texture format.
+ * GEO - Eurocom geometry + texture format.
  *
  * .geo files are scene-graph + texture archives. Each contains:
  *   - 12-byte header (magic "0.1v" + tex_offset + file_size)
@@ -27,7 +27,7 @@ typedef struct geo_header {
     u32 file_size;
 } geo_header;
 
-/* Mesh block header — one per submesh / skeleton joint, 16 bytes.
+/* Mesh block header - one per submesh / skeleton joint, 16 bytes.
  * `ofs_a`, `ofs_b`, `ofs_c` are RELATIVE offsets from the field they
  * occupy: data_a is at &block.ofs_a + ofs_a, etc. */
 typedef struct geo_block {

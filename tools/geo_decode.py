@@ -43,7 +43,7 @@ def parse_geo_header(data):
 def parse_tex_entries(data, tex_table_offset):
     """Yield (w, h, data_offset, data_size) for each texture.
 
-    The 4 bytes at tex_table_offset are a chunk sub-header (purpose unclear —
+    The 4 bytes at tex_table_offset are a chunk sub-header (purpose unclear -
     differs per file; might be CRC or compile timestamp). The actual table
     starts 4 bytes later. The loader skips them via `*(int *)(buffer+4) + 4`.
     """

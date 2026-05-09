@@ -6,7 +6,7 @@ table of 16-byte block headers, each:
 
     struct geo_block {
         uint16_t type;        // observed: always 1 in character files
-        uint16_t count;       // varies per block — per-block element count
+        uint16_t count;       // varies per block - per-block element count
         uint32_t ofs_a;       // offset into the file
         uint32_t ofs_b;       // offset into the file (slightly less than ofs_a)
         uint32_t ofs_c;       // offset into the file (between ofs_a and ofs_a + work_size)
@@ -14,7 +14,7 @@ table of 16-byte block headers, each:
 
 The block table runs until ofs_b crosses past the start of meaningful
 data (heuristic: until ofs_b would land inside the table itself). The
-exact terminator is not yet known — we walk until we hit an entry whose
+exact terminator is not yet known - we walk until we hit an entry whose
 ofs values are >= tex_table_offset or ofs_b < current_block_offset.
 
 Element semantics (count, ofs_a, ofs_b, ofs_c) are NOT yet decoded;

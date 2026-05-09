@@ -1,6 +1,6 @@
 # MK4 matching-decomp symbol map.
 # Auto-generated from Ghidra (tools/ghidra_scripts/export_symbols.py).
-# Edit by re-running the export — manual changes are clobbered.
+# Edit by re-running the export - manual changes are clobbered.
 #
 # Status: stub | drafted | matched
 #  - stub:    asm-only, not yet decompiled

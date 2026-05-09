@@ -1,5 +1,5 @@
 /**
- * Scene graph — dynamic node tree, transform stack, render walker.
+ * Scene graph - dynamic node tree, transform stack, render walker.
  *
  * The engine maintains a hierarchical scene graph of up to 63
  * dynamically-allocated nodes (each 232 bytes), plus static fixed
@@ -41,7 +41,7 @@ extern "C" {
 /* === Allocator ============================================== */
 
 void *AllocateNode(u32 type);                            /* 0x0041f290 */
-void *AllocNode(void);                                   /* 0x0049cb60 — 15-byte wrapper */
+void *AllocNode(void);                                   /* 0x0049cb60 - 15-byte wrapper */
 
 /* === Walker / dispatch ====================================== */
 

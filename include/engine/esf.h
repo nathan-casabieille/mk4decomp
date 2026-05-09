@@ -1,5 +1,5 @@
 /**
- * ESF — Eurocom Sound Format.
+ * ESF - Eurocom Sound Format.
  *
  * Game audio container. Two variants:
  *   - 8-bit raw unsigned PCM (centered at 0x80)
@@ -34,10 +34,10 @@ void ESF_Close(void);                                    /* 0x004b1200 */
 /* === Internal ================================================ */
 
 /* IMA ADPCM decoder. Args:
- *   src                 — encoded nibble stream
- *   dst                 — output buffer (16-bit PCM LE)
- *   decoded_byte_count  — how many bytes to write to dst
- *   state               — packed (predictor << 8 | step_index), in/out
+ *   src                 - encoded nibble stream
+ *   dst                 - output buffer (16-bit PCM LE)
+ *   decoded_byte_count  - how many bytes to write to dst
+ *   state               - packed (predictor << 8 | step_index), in/out
  */
 void ESF_DecodeADPCM(const u8 *src, u8 *dst, u32 decoded_byte_count, u32 *state);  /* 0x004ac200 */
 

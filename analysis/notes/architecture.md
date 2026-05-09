@@ -1,4 +1,4 @@
-# MK4.EXE — Architecture (live document)
+# MK4.EXE - Architecture (live document)
 
 Living high-level map of the binary, updated as reverse engineering progresses.
 Every claim should be backed by concrete evidence noted in the prose.
@@ -15,20 +15,20 @@ Suspicions that haven't been verified are tagged **(suspected)**.
 | `.text` | ~830 KiB code |
 | `.data` | ~314 KiB writable globals |
 | Date | 1998-07-09 |
-| Compiler | MSVC 5 / 6 era (suspected — VC SEH idioms, MSVC strcpy/memcpy inlining) |
+| Compiler | MSVC 5 / 6 era (suspected - VC SEH idioms, MSVC strcpy/memcpy inlining) |
 | Original source path | `C:\source\mk4\win\` (leaked debug string in `FUN_004b6180`) |
 
 **Imports (7 DLLs)**
-- `KERNEL32`, `USER32`, `GDI32`, `ADVAPI32` — Win32 base
-- `WINMM` — multimedia + CD audio (CD-DA + auxGetVolume + joy*)
-- `DDRAW` — DirectDraw (2D + Direct3D 5/6 era)
-- `DSOUND` — DirectSound
+- `KERNEL32`, `USER32`, `GDI32`, `ADVAPI32` - Win32 base
+- `WINMM` - multimedia + CD audio (CD-DA + auxGetVolume + joy*)
+- `DDRAW` - DirectDraw (2D + Direct3D 5/6 era)
+- `DSOUND` - DirectSound
 
 Notably absent: `DINPUT.DLL`. Input via:
 - Keyboard: `WM_KEYDOWN`/`WM_KEYUP` in WndProc, decoded via `MapVirtualKeyA`
 - Joystick: WINMM legacy `joyGetDevCapsA` / `joyGetPos`
 
-`glide2x.dll` referenced as a string — possibly an optional 3dfx Glide path.
+`glide2x.dll` referenced as a string - possibly an optional 3dfx Glide path.
 
 **In-game render-mode hotkeys** (from strings):
 | Key | Mode |
@@ -52,7 +52,7 @@ entry  (CRT MSVC)                                     0x004c6cb0
     │   ├── CreateWindowExA  → g_hMainWindow
     │   └── Show/UpdateWindow
     ├── AppInit(g_hMainWindow)                        0x004b2500
-    │   └── [27 init helpers — see Subsystem map]
+    │   └── [27 init helpers - see Subsystem map]
     └── do { MainLoopStep × 2 ; PumpMessages } while(true)
 ```
 
@@ -61,7 +61,7 @@ entry  (CRT MSVC)                                     0x004c6cb0
 ## Subsystem map (from AppInit, in call order)
 
 `AppInit` is the master initializer, called from WinMain after window creation.
-It calls 27 helpers — the order itself reveals the boot sequence.
+It calls 27 helpers - the order itself reveals the boot sequence.
 
 | # | Function | VA | Subsystem | Evidence |
 |---|---|---|---|---|
@@ -69,13 +69,13 @@ It calls 27 helpers — the order itself reveals the boot sequence.
 | 2 | `Joystick_Init` | `0x004b5230` | Joystick input | imports `joyGetDevCapsA`, `joyGetPos` |
 | 3 | `ValidateInstall` | `0x004ad270` | Install / registry check | (see chain below) |
 | 4 | `FUN_004b5a10` | `0x004b5a10` | ? | small, no signal yet |
-| 5 | **`FSYS_Init`** | `0x004b1cf0` | **Asset archive (filesys.dat)** | strings `'filesys.dat'`, `'FSYS_Init(1..3)'` — name preserved by devs |
+| 5 | **`FSYS_Init`** | `0x004b1cf0` | **Asset archive (filesys.dat)** | strings `'filesys.dat'`, `'FSYS_Init(1..3)'` - name preserved by devs |
 | 6 | **`Gfx_Init`** | `0x004b4370` | **Graphics base** | string `'Gfx_Init()'` |
 | 7 | `AuxAudio_Init` | `0x004ac8f0` | CD-DA mixer / aux line | imports `auxGetDevCapsA`, `auxGetNumDevs`, `auxGetVolume` |
 | 8 | `AuxAudio_SetVolume` | `0x004aca10` | (sets volume from Config) | import `auxSetVolume` |
 | 9 | **`DSound_Init`** | `0x004c3ef0` | **DirectSound (SFX)** | import `DirectSoundCreate` |
 | 10 | `FUN_004c3eb0` | `0x004c3eb0` | (suspected) DSound volume | called immediately after DSound_Init with `DAT_00543a90` (Config-derived) |
-| 11 | `FUN_004b21b0` | `0x004b21b0` | tiny stub | 8 bytes, 0 callees — likely a flag init |
+| 11 | `FUN_004b21b0` | `0x004b21b0` | tiny stub | 8 bytes, 0 callees - likely a flag init |
 | 12 | `FUN_004b6180` | `0x004b6180` | (suspected) Menu / TGA loader | imports `MapVirtualKeyA`; string `'c:\source\mk4\win\menu.tga'` |
 | 13 | `FUN_004b5a80` | `0x004b5a80` | ? | small |
 | 14 | `FUN_004b2ac0` | `0x004b2ac0` | tiny stub | 17 bytes |
@@ -86,7 +86,7 @@ It calls 27 helpers — the order itself reveals the boot sequence.
 | 19 | `FUN_0041fd10` | `0x0041fd10` | ? | small with 7 callees |
 | 20 | `FUN_00464830` | `0x00464830` | ? | tiny (18 bytes) |
 | 21 | `FUN_004c51f0` | `0x004c51f0` | ? | moderate (171 bytes) |
-| 22 | `FUN_004b6340(7)` | `0x004b6340` | (conditional, fallback) | called only if `DAT_004ffd7c == 0`; 18 callees — likely a UI/menu setup |
+| 22 | `FUN_004b6340(7)` | `0x004b6340` | (conditional, fallback) | called only if `DAT_004ffd7c == 0`; 18 callees - likely a UI/menu setup |
 | 23 | `GetExeDirectory` | `0x004aca60` | Path resolution | imports `GetModuleFileNameA`, `GetModuleHandleA` |
 | 24 | `FUN_004c6500(timeGetTime())` | `0x004c6500` | (suspected) RNG seed |  |
 | 25 | `FUN_004c6510` | `0x004c6510` | (suspected) RNG read | result OR'd with `0x1881` flag mask |
@@ -131,7 +131,7 @@ WM_KEYDOWN switch) and via fallback chain in AppInit (modes 1, 2, 3, 5).
 | **1** | F5 | **3dfx Glide** (CONFIRMED) | `Renderer1_Init_Glide` (`0x004b49a0`) | `DAT_00f9f7d8` |
 | **2** | F6 | Direct3D card (suspected) | `Renderer2_Init_D3D` (`0x004ad6a0`) | `DAT_00f9f7dc` |
 | **3** | F7 | Software fullscreen (suspected) | `Renderer3_Init_SW_FS` (`0x004af8c0`) | `DAT_00f9f7e0` |
-| **4** | F8 | Software windowed | _none — unconditional fallback_ | _always_ |
+| **4** | F8 | Software windowed | _none - unconditional fallback_ | _always_ |
 | **5** | F9 | Software fullscreen hi-res (suspected) | `Renderer5_Init_SW_FS_Hi` (`0x004b00f0`) | `DAT_00f9f7e4` |
 
 Glide confirmed via:
@@ -141,7 +141,7 @@ Glide confirmed via:
 - `glide2x.dll` literal in `.data`
 
 The Render2/3/5 mappings are deduced from the F-key UI strings + the
-key binding switch + AppInit's fallback order — not yet decompiled in detail.
+key binding switch + AppInit's fallback order - not yet decompiled in detail.
 
 `SetRendererMode(N)` (`0x004b40a0`) just stores the requested mode in a global.
 `TryInitRenderer()` (`0x004b3ed0`) reads that global and dispatches to the
@@ -182,7 +182,7 @@ The window procedure at `0x004c49b0` handles these messages:
 
 The popup that says "Mortal Kombat 4 Error" (from `ShowErrorMessage`) is
 drained here through `PeekMessageA` flush (up to 1000 messages) before
-being shown — so it doesn't pile up behind a stuck input queue.
+being shown - so it doesn't pile up behind a stuck input queue.
 
 ---
 
@@ -213,19 +213,19 @@ Entry 0 from the actual file:
 ```
 hash=0x2da2df95   offset=0x00003000   size=0x00000b94
 ```
-0x3000 = end-of-header — entry 0 starts immediately after, confirming the
+0x3000 = end-of-header - entry 0 starts immediately after, confirming the
 layout. Subsequent entries are sorted by hash but their payload offsets are
-NOT sequential — the archive is essentially a hash-indexed flat directory.
+NOT sequential - the archive is essentially a hash-indexed flat directory.
 
-A secondary 1024-DWORD buffer at `DAT_007ae0e0` is initialized to `-1` —
+A secondary 1024-DWORD buffer at `DAT_007ae0e0` is initialized to `-1` -
 likely a per-slot cache of FILE handles or unpacked-data pointers.
 
 **Init failure messages** (debug strings in the binary):
-- `FSYS_Init(1)` — fopen failed
-- `FSYS_Init(2)` — fread failed
-- `FSYS_Init(3)` — sort-order violation in header
+- `FSYS_Init(1)` - fopen failed
+- `FSYS_Init(2)` - fread failed
+- `FSYS_Init(3)` - sort-order violation in header
 
-**Asset open API** — `FSYS_fopen` (`0x004b1e00`) is the public API. Logic:
+**Asset open API** - `FSYS_fopen` (`0x004b1e00`) is the public API. Logic:
 
 ```c
 int FSYS_fopen(char *filename) {
@@ -245,7 +245,7 @@ int FSYS_fopen(char *filename) {
 ### Path normalization (FSYS_NormalizePath @ 0x004b1ec0)
 
 Just uppercases ASCII a-z to A-Z. **Crucially: NO prefix stripping.** Asserts
-that the result is a fully-qualified Windows path (`X:\...`) — emits
+that the result is a fully-qualified Windows path (`X:\...`) - emits
 `"Partial filename"` fatal error otherwise. Therefore asset names in the hash
 table are the **full dev-machine paths**, e.g. `C:\SOURCE\MK4\WIN\MENU.TGA`.
 
@@ -289,7 +289,7 @@ Brute-forcing all combinations against the 799-entry table yielded:
   `forest_g`, `ice_pit_`, `lair_geo`, `theatre_`, `shaolin_`, ...)
 - `menu.tga` (256×256 16-bit TGA, 131 KB)
 
-**Coverage: 797 / 799 = 99.7%**. Two entries (0, 1) remain unidentified —
+**Coverage: 797 / 799 = 99.7%**. Two entries (0, 1) remain unidentified -
 hashes `0x2da2df95` (small, 2964 B) and `0x2da3df95` (1.1 MB). The
 1-char-off pattern in their hashes suggests they're a numbered pair or
 a base/data pair (e.g. `*idx.bin` + `*data.bin`). Not in any of the
@@ -308,14 +308,14 @@ Decoded from the recovered `.geo` names:
 | `sc_*` | Scorpion | `_geo` | base mesh |
 | `sz_*` | Sub-Zero | `_a_geo` | animations? |
 | `lk_*` | Liu Kang | `_g_geo` | additional geometry |
-| `jc_*` | Johnny Cage | `_m_geo` | (unknown — moves?) |
+| `jc_*` | Johnny Cage | `_m_geo` | (unknown - moves?) |
 | `jx_*` | Jax | `_e_geo` | endings? |
 | `ja_*` | Jarek | `_fat_g` | fatality |
 | `me_*` | Mileena? | | |
 | `ki_*` | Kitana? | | |
 | `fj_*` | Fujin | | |
 | `ta_*` | Tanya | | |
-| `wg_*` | (unknown — Goro? "Winged"?) | | |
+| `wg_*` | (unknown - Goro? "Winged"?) | | |
 | `sh_*` | Shinnok? | | |
 | `re_*` | Reptile? | | |
 | `ra_*` | Raiden? | | |
@@ -332,7 +332,7 @@ Decoded from the recovered `.geo` names:
 
 `CreateMainWindow` registers a class named `"Mortal Kombat 4"` with:
 - `style = 0x102b` (CS_VREDRAW|HREDRAW|DBLCLKS|OWNDC|BYTEALIGNCLIENT)
-- `lpfnWndProc = WndProc` (`0x004c49b0`) — yet to be decompiled
+- `lpfnWndProc = WndProc` (`0x004c49b0`) - yet to be decompiled
 - icon resource id 128, `IDC_ARROW`, `BLACK_BRUSH`
 
 Window dimensions: `(0x140 + extraW) × (0xf0 + extraH)` = base 320×240.
@@ -340,7 +340,7 @@ Strongly suggests the game runs at a multiple of 320×240 (likely 640×480).
 
 ---
 
-## Render pipeline (MAPPED — queue-based architecture)
+## Render pipeline (MAPPED - queue-based architecture)
 
 The render pipeline turns out NOT to be a direct mesh-walking renderer.
 It's a **queue-based architecture** with counting sort:
@@ -381,7 +381,7 @@ It's a **queue-based architecture** with counting sort:
 | `g_drawQueueBuckets` | `0x00f6d050` | 1024-dword histogram for counting sort |
 
 Each queue entry is 28 bytes (14 `ushort`). The **first ushort is the sort
-key** (range 0..1023, used as a bucket index — probably a quantized z-depth
+key** (range 0..1023, used as a bucket index - probably a quantized z-depth
 or material id). The remaining 26 bytes contain triangle data: short
 coordinates + a flag byte at index 13 (`psVar14[0xd]`). Full layout TBD.
 
@@ -399,7 +399,7 @@ intermediate function that:
 3. Computes per-triangle screen-space coordinates (camera transform applied)
 4. Adds the resulting triangles to `g_drawQueue`
 
-This "submitter" function is the next target — it's the bridge between
+This "submitter" function is the next target - it's the bridge between
 the static `.geo` data and the runtime draw queue. It probably lives in
 the game-logic layer (called from `GameLogicStep` or its callees).
 
@@ -421,12 +421,12 @@ do {
 
 `MainLoopStep` (`0x004b2750`) is the frame-rate-limited tick. Each invocation:
 - Runs **4 helpers** unconditionally:
-  - `FUN_004b4200(1)` — graphics, also called by Gfx_Init priming (suspected: render-begin / input-poll)
-  - **`GameLogicStep`** (`0x004b26d0`) — fixed-step game logic, **CONFIRMED**:
+  - `FUN_004b4200(1)` - graphics, also called by Gfx_Init priming (suspected: render-begin / input-poll)
+  - **`GameLogicStep`** (`0x004b26d0`) - fixed-step game logic, **CONFIRMED**:
     - only callee re-run by the catch-up loop
     - NOT called by Gfx_Init (the other 3 are)
-  - `FUN_004b42e0` — graphics, also Gfx_Init (suspected: scene draw)
-  - `FUN_004b3e90` — graphics, also Gfx_Init (suspected: present/flip)
+  - `FUN_004b42e0` - graphics, also Gfx_Init (suspected: scene draw)
+  - `FUN_004b3e90` - graphics, also Gfx_Init (suspected: present/flip)
 - Catch-up loop (max 3 extra ticks): re-runs only `GameLogicStep` if delta > 20 ms,
   advancing virtual time by `0x411b µs = 16 667 µs = 1/60 s` per iteration
 - Throttle: `Sleep(min(needed_ms, 16))`
@@ -435,7 +435,7 @@ do {
 (asm-verified at `0x004c5446` and `0x004c544b`). Working theory: call#1 does
 the work; call#2 (delta ≈ 0) skips catch-up but still runs the 4 helpers AND
 sleeps until the next 60 Hz tick. The 4 helpers running twice per real frame
-is a real side-effect — possibly intentional, possibly vestigial.
+is a real side-effect - possibly intentional, possibly vestigial.
 
 `QueryMicroTimer` (`0x004c4510`) is the time base: `QueryPerformanceCounter`
 + `__ftol`, with `timeGetTime` fallback.
@@ -476,7 +476,7 @@ At `tex_table_offset` in the file:
 
 ```c
 struct geo_tex_chunk {
-    uint8_t  sub_header[4];      // unknown — pair of WORDs that look related
+    uint8_t  sub_header[4];      // unknown - pair of WORDs that look related
                                  // per file (e.g. midway: 38b1 38b1, sz: 9e01 a201).
                                  // Possibly chunk_id + crc16, possibly two version
                                  // tags. Not used by Tex_DecodeRLE16.
@@ -492,7 +492,7 @@ struct geo_tex_entry {
 };
 ```
 
-### Mesh portion (MOSTLY MAPPED — vertex format and walker found)
+### Mesh portion (MOSTLY MAPPED - vertex format and walker found)
 
 The bytes from `0x0C` to `tex_table_offset` are mesh data. The first part
 of the mesh region is a **block-header table**: an array of 16-byte
@@ -538,13 +538,13 @@ console-derived 3D engines (and matches MK4's PSX/N64 release timeline).
 
 #### HEADER stream (at block+8+ofs_b)
 
-A flat array of `(uint16 flag, int16 count)` pairs — one pair per
+A flat array of `(uint16 flag, int16 count)` pairs - one pair per
 "strip" of triangles in the block. Iteration sentinel: when
 `(int16)count < 0`, stop. Each pair drives:
-- `flag` — bit 0 negotiates with `param_2` (probably culling/flip mode)
-- `count` — number of additional vertices in this strip
+- `flag` - bit 0 negotiates with `param_2` (probably culling/flip mode)
+- `count` - number of additional vertices in this strip
 
-#### Render flow (per block) — TRIANGLE STRIP, refined
+#### Render flow (per block) - TRIANGLE STRIP, refined
 
 ```c
 void DrawMeshBlock(block_t *block, int mode_param, ...) {
@@ -593,9 +593,9 @@ void DrawMeshBlock(block_t *block, int mode_param, ...) {
 ```c
 struct geo_vertex {
     int16 pos_x, pos_y, pos_z;        // bytes 0-5: model-space position
-    int16 nrm_x, nrm_y, nrm_z;        // bytes 6-11: 3-vector — likely normal
+    int16 nrm_x, nrm_y, nrm_z;        // bytes 6-11: 3-vector - likely normal
                                        // (transformed by TransformVertex,
-                                       // which is rotation — normals rotate
+                                       // which is rotation - normals rotate
                                        // but UVs don't, hence "normal" guess)
 };
 ```
@@ -611,7 +611,7 @@ struct geo_strip_hdr {
 };
 ```
 
-The data is **triangle-strip-encoded**, not arbitrary triangle list — much
+The data is **triangle-strip-encoded**, not arbitrary triangle list - much
 more compact (each triangle after the first 2 base vertices only adds 1
 new vertex of 12 bytes instead of 36).
 
@@ -644,7 +644,7 @@ struct draw_entry {                  // 28 bytes
 then remaps the sort key through a 65 KB lookup table at
 `DAT_00b0d008`.
 
-### Outer walker — RenderSceneNode (ASM-VERIFIED)
+### Outer walker - RenderSceneNode (ASM-VERIFIED)
 
 `DrawMeshBlock`'s only caller is `RenderSceneNode` (`0x004ba720`,
 1899 bytes, recursive). After ASM-level review the architecture is
@@ -681,14 +681,14 @@ into a 16-entry function-pointer table.
 | 1/0 | `0x004bde90` | 0xa3 | FUN_004b36c0 (transform C) |
 | 2/0 | `0x004bdca0` | 0xa3 | FUN_004b3940 (transform B) |
 | 3/0 | `0x004bdfb0` | 0x9d | FUN_004b36c0 (transform C) |
-| 4/0, 4/1 | `0x004be050` | 0xd6 | (no callee — special) |
+| 4/0, 4/1 | `0x004be050` | 0xd6 | (no callee - special) |
 | 5/0, 5/1 | `0x004be130` | 0xe0 | wraps 0x004bdca0 |
 | 0/1, 3/1, 6/1, 7/1 | `0x004bdc00` | 0x62 | FUN_004b3800 (transform A small) |
 | 1/1 | `0x004bdf40` | 0x62 | FUN_004b36c0 (transform C small) |
 | 2/1 | `0x004bdd50` | 0x62 | FUN_004b3940 (transform B small) |
 
 The "small" mode-1 variants (0x62 bytes vs 0xa3 in mode 0) suggest a
-simpler render path — maybe alpha-blended polygons or no Z-buffer.
+simpler render path - maybe alpha-blended polygons or no Z-buffer.
 
 #### Node descriptor layout (deduced from RenderSceneNode reads)
 
@@ -700,7 +700,7 @@ Each scene-graph node has a descriptor of at least 0x48 bytes
 | `+0x00` | (DWORD, dword index 0) |
 | `+0x0c` | (dword index 3) |
 | `+0x10` | (dword index 4) |
-| `+0x20` | **flag word** (`g_currentNodeFlags`) — encodes type, mode, and other bits |
+| `+0x20` | **flag word** (`g_currentNodeFlags`) - encodes type, mode, and other bits |
 | `+0x24` | (dword index 9) |
 | `+0x3c..0x44` | child references (3 dwords, can all be zero) |
 
@@ -714,14 +714,14 @@ each dispatched to one of 9 different render handlers based on
 its type/mode bits. The recursion in `RenderSceneNode` walks the
 hierarchy through the `+0x3c..0x44` child fields.
 
-### The 9 handlers ARE NOT renderers — they're TRANSFORM SETTERS
+### The 9 handlers ARE NOT renderers - they're TRANSFORM SETTERS
 
 After decompiling all 9 handlers (post-RenderSceneNode dispatch), a
 clearer picture emerges: **none of them call DrawMeshBlock or any
 draw routine directly**. They all manipulate the transform stack:
 
 ```c
-// Generic mode-0 handler (0xa3 bytes — types 0, 1, 2, 3 / mode 0):
+// Generic mode-0 handler (0xa3 bytes - types 0, 1, 2, 3 / mode 0):
 void NodeApplyTransform_X(void) {
     // Read 3 components from node descriptor, scale 16.16 radians → 12-bit BAM
     short angles[3] = {
@@ -760,7 +760,7 @@ Instead of using one universal Euler order, MK4 has three distinct
 Each builds a 3×3 rotation matrix from 3 Euler angles, but with
 different multiplication orderings. The exact axis sequences (XYZ,
 ZYX, YXZ, ...) are recoverable from the matrix-element formulas
-in each function — a future pass can decode this.
+in each function - a future pass can decode this.
 
 ### The sin lookup table
 
@@ -786,7 +786,7 @@ share the same table for both sin and cos via offset.
   for rest-poses or pre-baked transforms.
 - **`NodeApplyTransform_B_Swapped`** (`0x004be130`, types 5): reorders
   the 3-vector `[a,b,c] → [a,c,b]` (swaps Y/Z) before delegating to
-  `NodeApplyTransform_B`. Coordinate-system flip — common when
+  `NodeApplyTransform_B`. Coordinate-system flip - common when
   importing from a tool with different axis conventions.
 
 ### Implication for the .geo file format
@@ -805,7 +805,7 @@ A character `.geo` is now understood as a **skeleton + mesh archive**:
    transform handler from `g_nodeDispatchTable`, which sets the
    joint's local rotation onto the transform stack. After all
    transforms are applied, leaf meshes call `DrawMeshBlock` (which
-   we already decoded — short-int vertex stream + sentinel face
+   we already decoded - short-int vertex stream + sentinel face
    stream + back-face cull → SubmitDrawEntry).
 
 This is a **standard skeletal-animation format** in late-90s console
@@ -814,25 +814,25 @@ Euler orderings for flexibility, fixed-point math throughout.
 
 ### What's still open
 
-- **The full node format** — per-type layout of the 12-20 byte
+- **The full node format** - per-type layout of the 12-20 byte
   sub-header between `ofs_b` and `ofs_a`. Likely contains the node's
   local transform (matrix or quaternion) plus child references.
-- **Outer walker decompilation** — `FUN_004ba720` needs ASM-level
+- **Outer walker decompilation** - `FUN_004ba720` needs ASM-level
   review of the dispatch site to understand the indirect call.
-- **Per-primitive draw routines** — 12 functions call
+- **Per-primitive draw routines** - 12 functions call
   `SubmitDrawEntry`, each presumably handles a specific node-type.
   Cataloging them would reveal all the .geo node variants.
-- **UV coordinates and texture-slot reference per triangle** — must
+- **UV coordinates and texture-slot reference per triangle** - must
   be in either the VERTEX stream or the HEADER stream (`flag` byte).
-- **Skinning** (joint weights) — for animated characters, vertices
+- **Skinning** (joint weights) - for animated characters, vertices
   must be associated with bones. Probably in `ofs_c`.
-- **Sort key LUT at `DAT_00b0d008`** — 64 KB lookup, probably remaps
+- **Sort key LUT at `DAT_00b0d008`** - 64 KB lookup, probably remaps
   z-bucket (0..65535) to bucket-id (0..1023).
 
 ### RLE-16 stream
 
 Per-scanline 16-bit RLE format. Pixel format is **RGB-555**
-(top bit = unused or alpha, then 5/5/5 BGR or RGB — observed BGR is
+(top bit = unused or alpha, then 5/5/5 BGR or RGB - observed BGR is
 correct). Decoder writes into a fixed 256-pixel-stride destination buffer.
 
 ```
@@ -862,7 +862,7 @@ g_xorKey = uVar3 | 0x1881;
 ```
 
 So in 75% of runs, `g_xorKey == 0` and textures decode as plain RLE-555.
-The other 25% would produce scrambled colors — purpose unclear (possibly
+The other 25% would produce scrambled colors - purpose unclear (possibly
 a developer flag for a build mode that was left in).
 
 ### Decoder & verification
@@ -903,7 +903,7 @@ Each character has 4-5 `.geo` files in `c:\source\mk4\win\geogfx\`:
 | `<char>_geo.geo` | Default in-game model + texture atlas | Sub-Zero blue ninja, Liu Kang red, Scorpion yellow |
 | `<char>_a_geo.geo` | **Alternate skin / costume** (same skeleton, different texture/colors) | Scorpion in orange instead of yellow |
 | `<char>_g_geo.geo` | **Third skin variant** (often a "demon" / "skeleton" / "alt mask" form) | Scorpion shows skull face; Liu Kang shows black-clothed variant |
-| `<char>_m_geo.geo` | **MOVE LIST screen** (texture-only, 256x256) — UI overlay listing inputs | "SCORPION / WEAPON F.F.HK / SPEAR B.B.LP / ..." text decoded ✓ |
+| `<char>_m_geo.geo` | **MOVE LIST screen** (texture-only, 256x256) - UI overlay listing inputs | "SCORPION / WEAPON F.F.HK / SPEAR B.B.LP / ..." text decoded ✓ |
 | `<char>_e_geo.geo` | (suspected) **Ending screen** | Some chars only |
 | `<char>_fat<N>_.geo` | Fatality-specific mesh | Scorpion has `sc_fat2_.geo` for FATALITY II |
 
@@ -915,7 +915,7 @@ Plus shared assets:
 | `font3d_g.geo` | 3D font glyph atlas |
 | `MKlogo_g.geo`, `midway_g.geo` | Logos |
 
-### Sort key LUT (DECODED — hyperbolic z-bucketing)
+### Sort key LUT (DECODED - hyperbolic z-bucketing)
 
 `g_zSortKeyLUT` at `0x00b0d008` is a **128 KB lookup table** (65536 × uint16)
 built once at startup by `BuildSortKeyLUT`. Maps a 16-bit z-value to a
@@ -934,7 +934,7 @@ Sample mappings:
 This is a **hyperbolic 1/z mapping**: more bucket precision near the
 camera, compression at the far plane. The 1024-entry counting-sort
 histogram (`g_drawQueueBuckets`) only uses 1024 of the ~2048-bucket
-range — z values past ~32k are merged into the back of the queue.
+range - z values past ~32k are merged into the back of the queue.
 
 Constants live in `.rdata`:
 - C1 = 31.0 at 0x004d2a50
@@ -954,20 +954,20 @@ differ by ±1 in a single character at position `N % 4 == 2` (i.e. pos
 ```
 records   IDs                         purpose (suspected)
 ─────────────────────────────────────────────────────────
-0..127    all (0x0001, varying)       homogeneous batch — 128 base resources?
+0..127    all (0x0001, varying)       homogeneous batch - 128 base resources?
 128..639  sparse 0x002c..0x024b       512 distinct items (non-sequential IDs)
 640..739  sequential 0x8000..0x8263   100 items in a numbered series (with gaps)
 740       (0xFFFF, 0x0000)            terminator
 ```
 
-The "second short" is small (0x60 to 0x2640) — looks like sizes or
-counts. **Sum of all 'b' fields = 1,269,068 bytes** — does NOT match
+The "second short" is small (0x60 to 0x2640) - looks like sizes or
+counts. **Sum of all 'b' fields = 1,269,068 bytes** - does NOT match
 entry 1's size (1,138,516), so the two are not in a simple
 "index → bundle" relationship. They might be unrelated files, or
 the index has a more complex layout.
 
 **Entry 1** (1.1 MB) starts with what looks like an offset table:
-DWORDs `0x3e1, 0xd98, 0x23b0, 0x2d44, 0x8113, 0x614e, ...` — generally
+DWORDs `0x3e1, 0xd98, 0x23b0, 0x2d44, 0x8113, 0x614e, ...` - generally
 increasing then dropping, suggesting a bundled-asset format with TOC.
 
 **What it could be**: a sound/speech bank, an animation database, or a
@@ -992,7 +992,7 @@ Identifying the EXACT axis sequence (XYZ vs ZYX vs YZX vs ...) requires
 either (a) algebraic comparison against canonical Euler-matrix forms for
 all 6 orderings, or (b) numerical experiments (substituting specific
 angle values and comparing output matrices). Neither is critical for
-understanding the engine — knowing the helper signature and that they
+understanding the engine - knowing the helper signature and that they
 produce valid 3×3 rotation matrices is sufficient for porting.
 
 ---
@@ -1009,7 +1009,7 @@ struct esf_header {
     char     magic[4];      // "ESF\x06"  (= 0x06465345 LE)
     uint32_t format_word;
     //  bits 0..28 : decoded byte count (output buffer size)
-    //  bits 2..28 : encoded byte count (for ADPCM only — bits 0-1 unused)
+    //  bits 2..28 : encoded byte count (for ADPCM only - bits 0-1 unused)
     //  bit 29     : 0 = 8-bit raw, 1 = 16-bit IMA ADPCM
     //  bit 30     : 0 = 11025 Hz,  1 = 22050 Hz
     //  bit 31     : 0 = mono,      1 = stereo
@@ -1021,7 +1021,7 @@ struct esf_header {
 Raw unsigned PCM samples, centered at 0x80, mono 11025 Hz. Trivial to
 wrap in a WAV container. Used for short SFX (punches, kicks, hit sounds).
 
-### 16-bit format (29/385 PCMK files — high quality voices)
+### 16-bit format (29/385 PCMK files - high quality voices)
 
 **MS-IMA ADPCM** at 22050 Hz mono. Encoded data is `(format_word>>2) &
 0x7FFFFFF` bytes (= 4-bit nibbles per sample). Decoder produces signed
@@ -1080,7 +1080,7 @@ The ESF subsystem in MK4.EXE:
 
 ---
 
-## ECM cinematic format (Eurocom Custom Movie) — partially mapped
+## ECM cinematic format (Eurocom Custom Movie) - partially mapped
 
 ECM = Eurocom Custom Movie. Used for the 16 character bios (`B_*.ECM`),
 15 endings (`E_*.ECM`), and 4 large cinematics (`m_intro.ecm`,
@@ -1147,7 +1147,7 @@ video data for 15 frames packed contiguously:
 
 ```
 Offset 0    : "SEC\0" magic (4 bytes)
-Offset 4    : Audio — IMA ADPCM payload
+Offset 4    : Audio - IMA ADPCM payload
               encoded ~11025 bytes → decoded 0xac44 = 44100 bytes
               (= 1 second of 22050 Hz mono 16-bit PCM)
               Decoded by ESF_DecodeADPCM (same as ESF audio).
@@ -1177,7 +1177,7 @@ Full bit-by-bit specification of the Huffman decoder is left for a
 future round (~2400 bytes of carefully reversed asm). For PRACTICAL
 porting purposes, replacing the ECM playback subsystem with a modern
 video container (`.webm` / `.mp4`) is **far** simpler than re-
-implementing the codec — re-encoding the cinematics by capture is a
+implementing the codec - re-encoding the cinematics by capture is a
 one-time job; preserving the codec implementation is recurring
 maintenance.
 
@@ -1189,7 +1189,7 @@ group → **15 fps for video, audio sample-perfect at 22050 Hz**.
 
 The DirectSound buffer is treated as a 4-slot ring (`slot = (frame_idx
 + 1) & 3`). The thread Locks the next slot, decodes audio into it,
-Unlocks, and the buffer plays continuously — classic "streaming PCM"
+Unlocks, and the buffer plays continuously - classic "streaming PCM"
 pattern. On `DSERR_BUFFERLOST` (0x88780096), the thread Restore+Stop+
 re-Lock+zero-fill+Unlock sequence recovers the buffer.
 
@@ -1209,13 +1209,13 @@ re-Lock+zero-fill+Unlock sequence recovers the buffer.
 ### What's still TBD
 
 - **Bit-by-bit Huffman decoder spec** for mode 1 (~2400 bytes asm).
-  Doable but tedious — would yield byte-perfect frame reproduction.
-- **Per-frame video format** — the decoded data layout (size, color
+  Doable but tedious - would yield byte-perfect frame reproduction.
+- **Per-frame video format** - the decoded data layout (size, color
   format, palette ref via the `extra` field). Probably 8-bit
   paletted. The output buffer at offset 0xac44 within a 0x16ad7-byte
   slot suggests video frames are also written into the same big
   staging area as audio.
-- **15 fps timing** — confirmed conceptually but the exact frame
+- **15 fps timing** - confirmed conceptually but the exact frame
   pacing in the playback loop has subtle Sleep/sync logic.
 
 ---
@@ -1225,10 +1225,10 @@ re-Lock+zero-fill+Unlock sequence recovers the buffer.
 **Microsoft Visual C++ 5.0** (released 1997), linker version 5.10.
 
 Evidence:
-- PE `MajorLinkerVersion=5, MinorLinkerVersion=10` — exact MSVC 5.0
+- PE `MajorLinkerVersion=5, MinorLinkerVersion=10` - exact MSVC 5.0
   signature (4.x linker is 3.x; 6.x linker is 6.0+)
-- `MajorSubsystemVersion=4` — targets Win95/NT 4.0
-- CRT R-codes present: `R6002`, `R6016..R6019`, `R6024..R6028` —
+- `MajorSubsystemVersion=4` - targets Win95/NT 4.0
+- CRT R-codes present: `R6002`, `R6016..R6019`, `R6024..R6028` -
   complete MSVC 5.x/6.x runtime error set
 - String `"Microsoft Visual C++ Runtime Library"` + `"Runtime Error!"`
 - Classic SEH-based mainCRTStartup prologue at the entry point:
@@ -1238,13 +1238,13 @@ Evidence:
 - No `MSVCRT.DLL` in imports → **statically-linked CRT** (built
   with `/MT` flag)
 - Rich header is scrubbed (only the resource compiler entry remains
-  intact, with build 0x684 = 1668; the rest XOR'd to zero/padding) —
+  intact, with build 0x684 = 1668; the rest XOR'd to zero/padding) -
   intentional post-processing, was common in 1998 game shipping
 
 ### Bonus discovery: this is a PSX/N64 codebase port
 
 The leaked symbol `_guDrawTriangleWithClip@12` (`@12` = stdcall) uses
-the **`gu_` prefix from libultra** — Nintendo's N64 SDK graphics
+the **`gu_` prefix from libultra** - Nintendo's N64 SDK graphics
 helper namespace. Cross-referenced with all other engine quirks we've
 identified, MK4's PC engine is clearly a port of the N64/PSX
 codebase:
@@ -1255,7 +1255,7 @@ codebase:
 - Packed pointer/4 encoding in `g_currentNodeIdx` (MIPS-style)
 - `>> 12` fixed-point division everywhere (4096 = 1.0 in fixed-point)
 - Triangle-strip mesh encoding with sentinel termination
-- Per-renderer dispatch tables (multiple render backends — N64 had
+- Per-renderer dispatch tables (multiple render backends - N64 had
   multiple ucodes; PC has SW / Glide / D3D / SW-hires)
 
 This is consistent with the cross-platform release strategy: the same
@@ -1267,9 +1267,9 @@ PSX builds to PC via MSVC 5.0 + DirectDraw/DirectSound wrappers.
 To produce a byte-identical `MK4.EXE` from reconstructed C source, the
 matching build chain needs:
 - **Microsoft Visual C++ 5.0** compiler (CL.EXE) and linker (LINK.EXE 5.10)
-  — likely with one of the published Service Packs (SP1-SP3, 1997-1998)
+  - likely with one of the published Service Packs (SP1-SP3, 1997-1998)
 - Compiler flags `/MT /O2 /W3` (typical for MSVC 5.0 game binaries)
-- `RC.EXE` (resource compiler) — though the recovered Rich entry's
+- `RC.EXE` (resource compiler) - though the recovered Rich entry's
   build 0x684 doesn't cleanly match a known SP, so the original
   build probably mixed tools
 - A post-build step that **scrubs/zeroes most of the Rich header**
@@ -1280,7 +1280,7 @@ acquire (MSVC 5.0 archive copies are findable, run under wine64 on
 macOS via Whisky). The post-build Rich scrubbing is a one-line
 hexedit if needed.
 
-For NON-matching (`/portable`) builds, MinGW-w64 is fine — already
+For NON-matching (`/portable`) builds, MinGW-w64 is fine - already
 installed via `tools/setup-macos.sh`.
 
 ---
@@ -1293,7 +1293,7 @@ It's a switch-based FSM driven by a state variable `g_gameState`
 
 ```
                     ┌──────────────────────┐
-                    │  STATE 0 — main menu │
+                    │  STATE 0 - main menu │
                     └─┬─────────────────────┘
                       │ caller passes cmd 1..8
         ┌─────────────┼──────────────┬─────┬─────┬─────┐
@@ -1327,16 +1327,16 @@ It's a switch-based FSM driven by a state variable `g_gameState`
 | 0x19 | `FUN_004b7260` | Character select 2? |
 | 0x1a | `FUN_004b7b10` | Stage select? |
 | 0x1b | `FUN_004b7df0` | Pre-fight intro? |
-| 0x1c | `FUN_004b81f0` | (calls SetRendererMode on exit — graphics options?) |
+| 0x1c | `FUN_004b81f0` | (calls SetRendererMode on exit - graphics options?) |
 
 The 4 callers of `GameStateMachine`:
-- **`AppInit`** — sets initial state during boot
-- **`GameLogicStep`** — per-frame tick (cmd=0)
-- **`WndProc`** — handles key events that map to menu commands
+- **`AppInit`** - sets initial state during boot
+- **`GameLogicStep`** - per-frame tick (cmd=0)
+- **`WndProc`** - handles key events that map to menu commands
   (we already decoded F1/F2 → cmd 1/2 in WndProc)
-- **`PumpMessages`** — on WM_QUIT, signals shutdown
+- **`PumpMessages`** - on WM_QUIT, signals shutdown
 
-## Gameplay architecture (DECODED — corrected model)
+## Gameplay architecture (DECODED - corrected model)
 
 After deeper RE, the gameplay vs menu split is **two parallel systems**,
 not a single FSM:
@@ -1357,7 +1357,7 @@ not a single FSM:
    (the 60Hz tick called from MainLoopStep)
 ```
 
-The FSM (`g_gameState`) is **menu-only** — it dispatches between UI
+The FSM (`g_gameState`) is **menu-only** - it dispatches between UI
 screens. The fight itself runs through `GameTick`, which is gated by
 `g_gameMode = 0`. Both run every frame; their effects are independent.
 
@@ -1433,7 +1433,7 @@ Three of GameLogicStep's auxiliary calls are audio updates:
 The remaining unidentified GameLogicStep helpers (`FUN_004b5850` for
 idle logic when state==0, `FUN_004bd990`) are minor cleanup wrappers.
 
-## GameLogicStep — the per-frame heart of gameplay
+## GameLogicStep - the per-frame heart of gameplay
 
 ```c
 void GameLogicStep(void) {
@@ -1463,15 +1463,15 @@ particle update**. Each could be reverse-engineered in 1-2 sessions if
 gameplay-level RE is wanted.
 
 For PORTING purposes, knowing the FSM exists and dispatches through
-known function pointers is enough — the port can replace each handler
+known function pointers is enough - the port can replace each handler
 with its own UI implementation.
 
 ---
 
-## Fight subsystem (PARTIAL — names corrected after deeper analysis)
+## Fight subsystem (PARTIAL - names corrected after deeper analysis)
 
 After decompiling the gameplay calls in `GameTick`, the picture is
-**not** "physics + collision" as I originally guessed — it's
+**not** "physics + collision" as I originally guessed - it's
 **input pattern matching + event dispatching** built on a
 **dynamic node allocator**.
 
@@ -1499,7 +1499,7 @@ When called:
 
 `AllocNode` (`0x0049cb60`) is a 15-byte wrapper that pulls the type
 from `DAT_0054204c` and calls `AllocateNode`. It has **14 distinct
-callers across the engine** — heavily-used utility for spawning
+callers across the engine** - heavily-used utility for spawning
 projectiles, hit effects, state-transition events, etc.
 
 ### Fight tick pipeline (corrected interpretation)
@@ -1512,9 +1512,9 @@ GameTick
 │   │                    Set 1: indices 0x14e928, 0x14e929, ...
 │   │                    Set 2: indices 0x14e92a, 0x14e92b, ...
 │   │                    Set 3: indices 0x14e92c, 0x14e92d, ...
-│   │                    (Suspected: 3 input/control entities — P1, P2, and
-│   │                    a third — possibly debug controller or shared bus)
-│   └── FightFrameStep_Inner — per-entity state evolution:
+│   │                    (Suspected: 3 input/control entities - P1, P2, and
+│   │                    a third - possibly debug controller or shared bus)
+│   └── FightFrameStep_Inner - per-entity state evolution:
 │       - reads (curr_state, prev_state, expected_mask) from 3 node fields
 │       - XORs to detect changed bits
 │       - shifts state forward (prev := curr)
@@ -1527,7 +1527,7 @@ GameTick
     │                       · sets type=0x11
     │                       · calls AllocNode to spawn the result
     │                     - advances read ptr with wrap
-    └── DispatchEventQueue_Commit — write-back read pointer
+    └── DispatchEventQueue_Commit - write-back read pointer
 ```
 
 Interpretation: this looks very much like **fighting-game input/move
@@ -1538,22 +1538,22 @@ recognition**:
 - A "pattern table" encodes special-move sequences (e.g. "D, D-F, P"
   for a fireball)
 - When a sequence completes, an event is queued
-- The event spawns a new scene-graph node — projectile, hit effect,
+- The event spawns a new scene-graph node - projectile, hit effect,
   pose change, sound trigger, etc.
 
 The 20-slot circular event ring suggests max 20 in-flight actions
-per frame — plenty for fighting-game pace.
+per frame - plenty for fighting-game pace.
 
 ### Important: previous "Physics + Collision" labels were wrong
 
 In a previous session I labeled `FUN_0045c5c0` as "Physics" and
-`FUN_0045c820` as "Collision" based on the active-fight gating —
+`FUN_0045c820` as "Collision" based on the active-fight gating -
 those labels were **wrong**. After decompilation:
 - `FUN_0045c5c0` = `FightFrameStep` (input pattern matching)
 - `FUN_0045c820` = `DispatchEventQueue` (drains action queue, spawns nodes)
 
 Then I guessed `FUN_004a4170` / `FUN_004a4150` as "TickEntity_A/B"
-(per-character ticks). Those were **also wrong** — they're 1-byte
+(per-character ticks). Those were **also wrong** - they're 1-byte
 **no-op stubs** (just `ret`). Stripped debug hooks. Renamed to
 `DebugStub_NoOp_A` / `DebugStub_NoOp_B`.
 
@@ -1577,7 +1577,7 @@ GameTick                                 (FUN_0041fd70)
                         - compares node idx to g_player1NodeIdx /
                           g_player2NodeIdx for player-aware logic
                         - dispatches per-entity behavior
-                        - (full code at LAB_004ba1c0 — large, not yet
+                        - (full code at LAB_004ba1c0 - large, not yet
                           fully decompiled)
 ```
 
@@ -1588,7 +1588,7 @@ So the per-frame loop is:
 4. `TickAllEntities` (walk 6 subtrees → tick each entity via callback)
 5. `FrameFinalize` (counter)
 
-This is an **event-driven, scene-graph callback architecture** — common
+This is an **event-driven, scene-graph callback architecture** - common
 in late-90s game engines that needed to fit a generic "execute action
 sequences" engine on tight memory budgets, with per-character moves /
 behaviors encoded as **data tables** rather than code paths.
@@ -1621,22 +1621,22 @@ doesn't reveal further architectural surprises.
 
 ## Open questions / TODO
 
-- **`.geo` mesh portion** — decode the bytes from `0x0C` to
+- **`.geo` mesh portion** - decode the bytes from `0x0C` to
   `tex_table_offset`. Likely contains vertex positions, indices, UVs, and
   texture-slot references. Look at `LoadGeoAsset_Textures` callers and
   whichever function reads the mesh data.
-- **`.esf` sound format** — magic `'ESF\x06'`, 674 sounds known by name.
+- **`.esf` sound format** - magic `'ESF\x06'`, 674 sounds known by name.
   Worth decoding.
-- **Graphics frame-step trio** — confirm individual roles of `FUN_004b4200`,
+- **Graphics frame-step trio** - confirm individual roles of `FUN_004b4200`,
   `FUN_004b42e0`, `FUN_004b3e90`. One of them is called from WM_PAINT
-  only when in mode 4 — that's likely the blit/present.
-- **Confirm Renderer2/3/5 identities** — decompile to verify suspected
+  only when in mode 4 - that's likely the blit/present.
+- **Confirm Renderer2/3/5 identities** - decompile to verify suspected
   D3D / SW Fullscreen / SW Hi-res mappings.
-- **`FUN_004b6340`** — 18 callees, called from WndProc on F1/F2 keys with
-  args 1/2 — likely a multi-mode menu / pause handler. Worth a look.
-- **Compiler identification** — likely MSVC 5/6, but confirm via Detect It
+- **`FUN_004b6340`** - 18 callees, called from WndProc on F1/F2 keys with
+  args 1/2 - likely a multi-mode menu / pause handler. Worth a look.
+- **Compiler identification** - likely MSVC 5/6, but confirm via Detect It
   Easy or by recognizing CRT signatures.
-- **2 unidentified FILESYS.DAT entries** (entries 0 and 1) — small (3 KB)
+- **2 unidentified FILESYS.DAT entries** (entries 0 and 1) - small (3 KB)
   and large (1.1 MB), with hashes 0x2da2df95 / 0x2da3df95 differing by
   one char. Probably a base/data pair outside the standard `c:\source\mk4\`
   prefix.

@@ -1,5 +1,5 @@
 /**
- * Menu state machine — drives main menu navigation, character select, etc.
+ * Menu state machine - drives main menu navigation, character select, etc.
  *
  * Distinct from the active-fight tick (see game/tick.h). Both run
  * every frame in parallel; only one is "active" depending on
@@ -26,7 +26,7 @@ extern "C" {
 #define GAMESTATE_CREDITS         11  /* 0xb */
 #define GAMESTATE_SETTINGS        12  /* 0xc */
 
-/* Sub-states 0x18..0x1c — reachable from VS state's result codes. */
+/* Sub-states 0x18..0x1c - reachable from VS state's result codes. */
 #define SUBSTATE_CHAR_SELECT_1    0x18
 #define SUBSTATE_CHAR_SELECT_2    0x19
 #define SUBSTATE_STAGE_SELECT     0x1a

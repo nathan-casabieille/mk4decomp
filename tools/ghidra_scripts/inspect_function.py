@@ -5,7 +5,7 @@
 # Comprehensive inspection of one or more functions:
 #   - basic info (name, address, size, signature)
 #   - callers (who calls this function)
-#   - callees (what it calls — both internal and Win32 imports)
+#   - callees (what it calls - both internal and Win32 imports)
 #   - strings it references
 #
 # Use this to triage a function before deciding to decompile + rename.
@@ -42,7 +42,7 @@ def inspect(func):
                 callers.setdefault(cf, []).append(ca)
     print("\nCallers (%d):" % len(callers))
     if not callers:
-        print("  (none — possibly entry point or vtable target)")
+        print("  (none - possibly entry point or vtable target)")
     for cf, sites in sorted(callers.items(), key=lambda kv: kv[0].getEntryPoint().getOffset()):
         print("  %s  %-32s  (%d call site%s)" % (
             cf.getEntryPoint(), cf.getName(),

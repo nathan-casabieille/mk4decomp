@@ -3,7 +3,7 @@
 # @runtime Jython
 #
 # Export all renamed (= USER_DEFINED) functions from the Ghidra DB
-# into config/symbols.yaml — the single source of truth for the
+# into config/symbols.yaml - the single source of truth for the
 # matching-decomp progress tracker and diff tool.
 #
 # Run via:
@@ -16,7 +16,7 @@ OUT_PATH = "/Users/nathan_casab/Documents/MK4/config/symbols.yaml"
 
 
 def group_for_addr(va):
-    """Coarse grouping of functions by VA range — matches our subsystem
+    """Coarse grouping of functions by VA range - matches our subsystem
     organization in src/. Tweak as the codebase fills in."""
     if 0x401000 <= va < 0x420000:    return "boot"
     if 0x420000 <= va < 0x460000:    return "game"
@@ -57,7 +57,7 @@ def main():
     with open(OUT_PATH, "w") as out:
         out.write("# MK4 matching-decomp symbol map.\n")
         out.write("# Auto-generated from Ghidra (tools/ghidra_scripts/export_symbols.py).\n")
-        out.write("# Edit by re-running the export — manual changes are clobbered.\n")
+        out.write("# Edit by re-running the export - manual changes are clobbered.\n")
         out.write("#\n")
         out.write("# Status: stub | drafted | matched\n")
         out.write("#  - stub:    asm-only, not yet decompiled\n")

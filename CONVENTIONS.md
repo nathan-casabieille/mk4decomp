@@ -1,4 +1,4 @@
-# MK4 decomp — coding conventions
+# MK4 decomp - coding conventions
 
 These conventions exist so that contributions stay consistent and so
 that the matching build target keeps producing byte-identical output.
@@ -18,7 +18,7 @@ Read [docs/MATCHING.md](docs/MATCHING.md) before claiming functions.
 
 The engine prefixes match the original Eurocom debug strings we've
 recovered (`FSYS_`, `ESF_`, `Gfx_`, `ECM_`, etc.). Don't invent new
-prefixes — use what the binary's strings already attest to.
+prefixes - use what the binary's strings already attest to.
 
 ## Function-address comments
 
@@ -56,7 +56,7 @@ Each function decl carries its `@addr` as an inline comment.
 
 ```c
 /**
- * <module> — <one-line summary>.
+ * <module> - <one-line summary>.
  *
  * <2-4 line longer description>.
  */
@@ -88,7 +88,7 @@ The matching build target requires:
   matters for cl.exe's instruction selection
 - **Inline assembly** is allowed for things the compiler can't
   generate. Use `__asm` blocks; keep them minimal.
-- **Avoid C99/C++ features** — MSVC 5.0 is C89 only. No `//` line
+- **Avoid C99/C++ features** - MSVC 5.0 is C89 only. No `//` line
   comments, no mixed declarations and code, no VLAs.
 - **Compiler flags** are fixed: `/MT /O2 /W3 /Gz` (stdcall default).
   Don't change them per-file unless the original asm requires it.
@@ -108,7 +108,7 @@ Place the disassembly under `asm/<addr>.s` and add a stub in the
 nearest source file:
 
 ```c
-/* Not yet decompiled — see asm/0045c5c0.s */
+/* Not yet decompiled - see asm/0045c5c0.s */
 extern void FightFrameStep(void);
 ```
 

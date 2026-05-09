@@ -16,7 +16,7 @@
 #include <ddraw.h>
 #include <dsound.h>
 #else
-/* IDE-only shim — these typedefs let clang/IntelliSense parse the
+/* IDE-only shim - these typedefs let clang/IntelliSense parse the
  * source on non-Windows hosts. The matching build uses MSVC 5.0
  * under Wine where _WIN32 is defined and the real Win32 SDK headers
  * supply these types. */
@@ -45,7 +45,7 @@ typedef long LSTATUS;
 typedef void *HRESULT;
 #endif
 
-/* Global Win32 application state — set by WinMain. */
+/* Global Win32 application state - set by WinMain. */
 extern HINSTANCE g_hInstance;       /* DAT_00f9f7c4 */
 extern HWND      g_hMainWindow;     /* DAT_00f9f7c0 */
 extern int       g_nCmdShow;        /* DAT_00f9f7cc */

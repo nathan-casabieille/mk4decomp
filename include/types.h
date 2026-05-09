@@ -12,7 +12,7 @@
 #include <windows.h>
 #endif
 
-/* Fixed-width integers — MSVC 5.0 predates <stdint.h>. */
+/* Fixed-width integers - MSVC 5.0 predates <stdint.h>. */
 typedef signed char         s8;
 typedef unsigned char       u8;
 typedef short               s16;
@@ -33,7 +33,7 @@ typedef s32  fx12;        /* fixed-point .12 */
 typedef u32  rgb555;      /* 16-bit RGB-555 packed */
 
 /* Packed pointer convention: many scene-graph indices in the engine
- * are stored as (pointer / 4) to fit more bits — multiply by 4 to
+ * are stored as (pointer / 4) to fit more bits - multiply by 4 to
  * recover the actual address. PSX/N64 idiom carried over. */
 typedef u32  packed_ptr;
 

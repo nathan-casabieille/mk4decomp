@@ -1,5 +1,5 @@
 /**
- * MK4 main header — pulls in everything the typical translation unit needs.
+ * MK4 main header - pulls in everything the typical translation unit needs.
  */
 #ifndef MK4_H
 #define MK4_H

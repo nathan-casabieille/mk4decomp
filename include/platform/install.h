@@ -1,5 +1,5 @@
 /**
- * Install validation — registry check + Config blob.
+ * Install validation - registry check + Config blob.
  *
  * Reads HKLM\Software\GT Interactive\Mortal Kombat 4\1.00 to confirm
  * the game was installed via SETUP and to load persistent settings
@@ -23,7 +23,7 @@ extern "C" {
 
 #define MK4_REGISTRY_KEY  "Software\\GT Interactive\\Mortal Kombat 4\\1.00"
 #define MK4_CONFIG_SIZE   0x24c     /* 588 bytes */
-#define MK4_CONFIG_SEED   0x43464729 /* 'FCG)' — Eurocom dev tag, hash seed */
+#define MK4_CONFIG_SEED   0x43464729 /* 'FCG)' - Eurocom dev tag, hash seed */
 
 /* g_configBuffer:
  *   [0..3]    stored hash (or 0xFFFFFFFF to skip validation)

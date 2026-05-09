@@ -11,7 +11,7 @@ from ghidra.util.task import ConsoleTaskMonitor
 STRING_VA = 0x004f474c   # "Mortal Kombat 4 is not installed."
 
 print("\n" + "=" * 80)
-print("MK4 install check — decompilation")
+print("MK4 install check - decompilation")
 print("=" * 80)
 
 addr = toAddr(STRING_VA)

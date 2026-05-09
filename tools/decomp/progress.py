@@ -2,8 +2,8 @@
 """Print MK4 matching-decomp progress.
 
 Reads:
-- config/symbols.yaml      — full function inventory + match status
-- src/**/*.c               — written-and-claimed source
+- config/symbols.yaml      - full function inventory + match status
+- src/**/*.c               - written-and-claimed source
 
 Reports:
 - Total functions identified vs total in binary
@@ -27,7 +27,7 @@ def load_symbols():
     try:
         import yaml
     except ImportError:
-        print("ERROR: install pyyaml — `pip install pyyaml`")
+        print("ERROR: install pyyaml - `pip install pyyaml`")
         sys.exit(1)
     with open(SYMBOLS_FILE) as f:
         data = yaml.safe_load(f)
@@ -57,7 +57,7 @@ def main():
     # avg function ~500 bytes → ~1700 fns).
     ESTIMATED_TOTAL_FNS = 1700
 
-    print("MK4 matching decomp — progress")
+    print("MK4 matching decomp - progress")
     print("=" * 58)
     print(f"  Functions identified : {total_known:>5d} "
           f"(~{100*total_known/ESTIMATED_TOTAL_FNS:.1f}% of estimated total)")

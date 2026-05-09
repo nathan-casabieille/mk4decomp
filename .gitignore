@@ -1,13 +1,13 @@
-# Original CD image — copyrighted, large, regenerable from physical disc
+# Original CD image - copyrighted, large, regenerable from physical disc
 /original/
 
-# Extracted game binaries and assets — copyrighted, regenerable from original/
+# Extracted game binaries and assets - copyrighted, regenerable from original/
 /game/
 
-# CD audio tracks — copyrighted, regenerable from original/
+# CD audio tracks - copyrighted, regenerable from original/
 /audio/
 
-# Ghidra project files — large, regenerable, not source
+# Ghidra project files - large, regenerable, not source
 /analysis/ghidra/
 
 # Common junk
@@ -35,3 +35,4 @@ __pycache__/
 *.swp
 .cache/
 compile_commands.json
+config/msvc50.env

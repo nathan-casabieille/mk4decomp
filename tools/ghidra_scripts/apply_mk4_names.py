@@ -53,7 +53,7 @@ FUNCTIONS = [
      "Application/game initializer. Called by WinMain after the main window "
      "is created, before the main loop. Orchestrates 27 internal init "
      "helpers, including ValidateInstall. No Win32 imports except "
-     "timeGetTime — pure subsystem wiring (renderer, audio, input, "
+     "timeGetTime - pure subsystem wiring (renderer, audio, input, "
      "asset manager, etc.)."),
 
     (0x004c5070, "CreateMainWindow",
@@ -79,7 +79,7 @@ FUNCTIONS = [
 
     (0x004c49b0, "WndProc",
      "Main window procedure. Registered via RegisterClassA in "
-     "CreateMainWindow. Handles all messages for the game window — "
+     "CreateMainWindow. Handles all messages for the game window - "
      "WM_PAINT, WM_KEYDOWN/UP, WM_CLOSE, WM_DESTROY, etc. Yet to be "
      "decompiled in detail."),
 
@@ -96,7 +96,7 @@ FUNCTIONS = [
      "FUN_004b3e90; (b) runs a fixed-step catch-up loop (max 3 extra "
      "ticks) recalling FUN_004b26d0 at 0x411b us = 60 Hz; (c) Sleeps "
      "(<=16 ms) to throttle the frame rate. Calling it twice per loop "
-     "yields (work) then (sleep until next 60 Hz tick) — the double-call "
+     "yields (work) then (sleep until next 60 Hz tick) - the double-call "
      "is the frame limiter mechanism. ASM-verified at 0x004c5446 and "
      "0x004c544b."),
 
@@ -107,11 +107,11 @@ FUNCTIONS = [
      "runs auxiliary updates (FUN_004c37f0, FUN_004ac4b0, FUN_004bd990, "
      "FUN_0041fd70), and transitions to state 0xc (= settings/options?) "
      "if a specific condition is met (FUN_004b3db0 == 4 && DAT_004ffd78 "
-     "== 0). NOT called from Gfx_Init priming — pure game state update, "
+     "== 0). NOT called from Gfx_Init priming - pure game state update, "
      "no rendering."),
 
     (0x0041fd70, "GameTick",
-     "The actual gameplay tick — runs every fixed-step frame from "
+     "The actual gameplay tick - runs every fixed-step frame from "
      "GameLogicStep. Distinct from GameStateMachine (which handles "
      "menus). Gated by g_gameMode (DAT_00543800): 0 = active fight, "
      "other = paused/menu. Per call: dispatches per-entity tick "
@@ -148,10 +148,10 @@ FUNCTIONS = [
 
     (0x0045c5c0, "FightFrameStep",
      "Top-level per-frame fight update. Runs FightFrameStep_Inner 3 "
-     "times with 3 different node-context tuples (5 indices each — "
+     "times with 3 different node-context tuples (5 indices each - "
      "g_currentNodeIdx, DAT_00542048, DAT_0054204c, DAT_00542050, "
      "DAT_0054205c). Suspected role: process inputs / state for 3 "
-     "controllable entities (P1, P2, and a third — possibly P3, a "
+     "controllable entities (P1, P2, and a third - possibly P3, a "
      "shared input bus, or a debug controller). Each call's indices "
      "include consecutive pairs (e.g. 0x14e928/0x14e929) suggesting "
      "(prev, curr) state pairs. Called only when g_gameMode == 0 "
@@ -182,7 +182,7 @@ FUNCTIONS = [
      "advanced read pointer)."),
 
     (0x004a4150, "DebugStub_NoOp_B",
-     "1-byte stub (just `ret`). Companion to DebugStub_NoOp_A — also a "
+     "1-byte stub (just `ret`). Companion to DebugStub_NoOp_A - also a "
      "stripped debug hook. Called from GameTick under different submode "
      "flags but does nothing in release builds."),
 
@@ -209,7 +209,7 @@ FUNCTIONS = [
      "the 6 logical subtrees."),
 
     (0x004b65c0, "DrawMenu",
-     "Renders a menu — list of (string, ?) pairs centered on the "
+     "Renders a menu - list of (string, ?) pairs centered on the "
      "screen, with fade-in animation (DAT_00ab4344 ramps 0..100 over "
      "~7 frames). Calls FUN_004b21d0 (draw text) for each item. Used "
      "as a generic UI helper across most game-state handlers."),
@@ -231,7 +231,7 @@ FUNCTIONS = [
      "MK4's main game state machine / menu dispatcher. Reads "
      "g_gameState (DAT_00ab438c) and dispatches to one of 13 per-state "
      "handlers. Param controls transitions from state 0 (idle/main "
-     "menu) to states 5/6/7/8/9/0xa/0xb/0xc — each is a distinct UI "
+     "menu) to states 5/6/7/8/9/0xa/0xb/0xc - each is a distinct UI "
      "screen (arcade/vs/tournament/options/...). Sub-state range "
      "0x18..0x1c are nested screens. State 4 is the active fight. "
      "Called from: GameLogicStep (per-frame tick), AppInit (init), "
@@ -247,7 +247,7 @@ FUNCTIONS = [
 
     (0x004b42e0, "DrawScene",
      "Second phase of the per-frame render pipeline. Wraps the work in "
-     "a timeGetTime accumulator (g_drawSceneTimeMs at DAT_007afa00) — "
+     "a timeGetTime accumulator (g_drawSceneTimeMs at DAT_007afa00) - "
      "this function is profiled because it's the variable-time scene "
      "render. Dispatches to a mode-specific draw function via the "
      "current renderer mode."),
@@ -256,7 +256,7 @@ FUNCTIONS = [
      "Third phase of the per-frame render pipeline. Pure dispatch on "
      "g_currentRendererMode to one of 5 mode-specific present/flip "
      "functions. Also called from WndProc on WM_PAINT (mode 4 only) "
-     "— Windows asks the app to repaint, so this is the present/blit."),
+     "- Windows asks the app to repaint, so this is the present/blit."),
 
     (0x004bf330, "SetViewport",
      "(suspected) Sets the rendering viewport. Called by BeginFrame "
@@ -276,12 +276,12 @@ FUNCTIONS = [
 
     (0x004b2930, "Renderer4_EndScene_SW_Win",
      "Per-mode end-of-scene hook for renderer mode 4 (SW windowed). "
-     "Just toggles a flag — no actual surface work in this mode."),
+     "Just toggles a flag - no actual surface work in this mode."),
 
     (0x004adc20, "Renderer2_EndScene_D3D",
      "Per-mode end-of-scene hook for renderer mode 2 (D3D card). Calls "
      "an internal helper FUN_004adc60 then a COM vtable method at "
-     "offset 0x2C of an IDirect3D-like object — likely EndScene or "
+     "offset 0x2C of an IDirect3D-like object - likely EndScene or "
      "SwapBuffers. Stores the result in DAT_0058c7dc."),
 
     (0x004b46a0, "Renderer1_EndScene_Glide",
@@ -292,7 +292,7 @@ FUNCTIONS = [
     (0x004af880, "Renderer3_EndScene_SW_FS",
      "Per-mode end-of-scene hook for renderer mode 3 (SW fullscreen). "
      "Calls a COM vtable method at offset 0x80 of an IDirectDrawSurface-"
-     "like object — likely Unlock or Flip."),
+     "like object - likely Unlock or Flip."),
 
     (0x004b00b0, "Renderer5_EndScene_SW_FS_Hi",
      "Per-mode end-of-scene hook for renderer mode 5 (SW fullscreen "
@@ -302,7 +302,7 @@ FUNCTIONS = [
      "Submits one polygon (triangle or quad) to g_drawQueue with "
      "frustum culling. Input: a 28-byte entry already in screen space "
      "(3 short XY pairs at offsets 0..10, sort key at offset 0x12, "
-     "flags at offset 0x1a — bit 0x20 toggles tri/quad behavior). "
+     "flags at offset 0x1a - bit 0x20 toggles tri/quad behavior). "
      "Frustum bounds: X in [-100, 740], Y in [-100, 580] (extended "
      "640x480 + slack on each side). Copies 28 bytes into "
      "g_drawQueue[g_drawQueueSize] then remaps the sort key via the "
@@ -333,7 +333,7 @@ FUNCTIONS = [
      "divides (1/z scaled to fixed-point) and scales to screen. Outputs "
      "v0 screen XY at DAT_007af9b4 (= g_triRingScreenXY[0]), v1 at "
      "DAT_007af9b8. Outputs v0/v1 Z at DAT_007af984/988. Viewport "
-     "center is hardcoded 0x140 (320) x 0xf0 (240) — half of 640x480."),
+     "center is hardcoded 0x140 (320) x 0xf0 (240) - half of 640x480."),
 
     (0x004b2e80, "ProjectVertex",
      "Projects ONE model-space vertex (in g_xformBuf at DAT_007af95c/"
@@ -359,7 +359,7 @@ FUNCTIONS = [
     # for different joint types in the skeleton.
 
     (0x004b3800, "BuildRotMatrix_OrderA",
-     "Builds a 3x3 rotation matrix from 3 Euler angles (Order A — exact "
+     "Builds a 3x3 rotation matrix from 3 Euler angles (Order A - exact "
      "axis order TBD). Uses g_sinTable (4096-entry, BAM-indexed). Output: "
      "9 int16 matrix elements in fixed-point (>> 12 for the divisor). "
      "Used by NodeApplyTransform_A and _A_Direct (most common joint type, "
@@ -392,7 +392,7 @@ FUNCTIONS = [
      "thread to exit (3-sec timeout), TerminateThread+CloseHandle as a "
      "fallback. Releases the DirectSound buffer (Stop, IUnknown::Release "
      "via vtable[8]). Zeros the 3608-byte header at DAT_007aa230. "
-     "Closes the file via FUN_004c5800 (fclose). Idempotent — safe to "
+     "Closes the file via FUN_004c5800 (fclose). Idempotent - safe to "
      "call from any error path."),
 
     (0x004b0a50, "ECM_PlayThread",
@@ -437,7 +437,7 @@ FUNCTIONS = [
      "builds a 16-symbol frequency table at stack+0x40, sorts symbols "
      "by frequency, builds a prefix-code table at stack+0x53c, and "
      "decodes state->frame_size bytes to state->dst. Full algorithm "
-     "TBD — see FUN_004b1270 in Ghidra for the bit-twiddling. For "
+     "TBD - see FUN_004b1270 in Ghidra for the bit-twiddling. For "
      "porting, replacing ECM with a modern container (.webm/.mp4) is "
      "more practical than re-implementing this codec."),
 
@@ -500,7 +500,7 @@ FUNCTIONS = [
     # All 9 have the same skeleton: read a 3-vector (x,y,z) from the
     # current node descriptor, apply via one of 3 transform helpers,
     # then mark the transform stack dirty (DAT_0054208c |= 0x30).
-    # They are NOT renderers — they manipulate the transform-stack
+    # They are NOT renderers - they manipulate the transform-stack
     # state. The actual mesh rendering happens later in the recursive
     # descent (eventually reaching DrawMeshBlock / FUN_004bb030 etc.).
     # The 9 handlers correspond to a skeleton/joint hierarchy: each
@@ -509,7 +509,7 @@ FUNCTIONS = [
     (0x004bdb50, "NodeApplyTransform_A",
      "Default node-type handler (idx 0, 6, 7 in g_nodeDispatchTable). "
      "Reads 3 ints from the node descriptor, scales by 0x28BE/0x40000 "
-     "(approx 0.00995 — likely fixed-point angle conversion), negates, "
+     "(approx 0.00995 - likely fixed-point angle conversion), negates, "
      "stores as 3 shorts at DAT_00ab5208/520a/520c, then calls "
      "transform helper FUN_004b3800 (axis A). Sets transform-dirty bits."),
 
@@ -563,7 +563,7 @@ FUNCTIONS = [
      "handles hierarchical descent. The 'current node' is at "
      "g_currentNodeIdx (DAT_00542044), with flags at g_currentNodeFlags "
      "(DAT_00542084). Note: a SECOND indirect call exists at 0x004bab0a "
-     "(via %edx, after reading from a separate node-data structure) — "
+     "(via %edx, after reading from a separate node-data structure) - "
      "this is a different dispatch, used in a deeper code path."),
 
     # ------ FILESYS.DAT asset loader ------
@@ -577,7 +577,7 @@ FUNCTIONS = [
     (0x004b1ec0, "FSYS_NormalizePath",
      "Path normalizer for asset lookup. Uppercases the input in place "
      "(into static buffer DAT_007af0e0). REQUIRES a fully-qualified "
-     "Windows path 'X:\\\\...' — emits 'Partial filename' fatal error "
+     "Windows path 'X:\\\\...' - emits 'Partial filename' fatal error "
      "otherwise. Surprising consequence: assets are hashed by their "
      "FULL dev-machine path including the leaked prefix "
      "'C:\\\\SOURCE\\\\MK4\\\\WIN\\\\'. No prefix stripping."),
@@ -614,7 +614,7 @@ FUNCTIONS = [
      "src). Stream format per scanline: token = uint16; if (token & "
      "0x8000) == 0: literal pixel (2 bytes); else RLE run: pixel = "
      "(token & 0x7fff) ^ g_xorKey, run_length = next byte (3 bytes total). "
-     "Pixel format is RGB-555 (verified visually — Scorpion / Sub-Zero / "
+     "Pixel format is RGB-555 (verified visually - Scorpion / Sub-Zero / "
      "Liu Kang / tomb stage atlases all decode to recognizable images). "
      "Calls FUN_004bf370(slot, 0, 0, w, h) at the end (suspected GPU "
      "upload / DDraw blit)."),
@@ -627,30 +627,30 @@ FUNCTIONS = [
     (0x004b49a0, "Renderer1_Init_Glide",
      "Renderer mode 1 = 3dfx Glide. Confirmed by: (a) ~20 calls "
      "through a global function-pointer table at DAT_007b0008..0070 "
-     "— the classic LoadLibraryA('glide2x.dll')+GetProcAddress pattern; "
+     "- the classic LoadLibraryA('glide2x.dll')+GetProcAddress pattern; "
      "(b) screen dimensions 0x280 x 0x1e0 = 640 x 480, the canonical "
      "Glide resolution; (c) glide2x.dll appears as a string in .data. "
      "Bound to F5 in WndProc. Availability flag: DAT_00f9f7d8."),
 
     (0x004ad6a0, "Renderer2_Init_D3D",
-     "Renderer mode 2 = Direct3D card (HW). SUSPECTED — based on F6 "
+     "Renderer mode 2 = Direct3D card (HW). SUSPECTED - based on F6 "
      "key binding in WndProc and the F-key UI string 'F6 - DIRECT3D "
      "CARD'. AppInit fallback chain tries this after mode 1 (Glide). "
      "12 internal callees, no direct DDRAW imports (likely abstracted "
      "through a state structure). Availability flag: DAT_00f9f7dc."),
 
     (0x004af8c0, "Renderer3_Init_SW_FS",
-     "Renderer mode 3 = software fullscreen. SUSPECTED — F7 binding, "
+     "Renderer mode 3 = software fullscreen. SUSPECTED - F7 binding, "
      "F-key string 'F7 - SOFTWARE'. Takes 2 params (HWND + something). "
-     "Same shape as Renderer5 (SW hires) — likely the resolution "
+     "Same shape as Renderer5 (SW hires) - likely the resolution "
      "differs in the second param. Availability flag: DAT_00f9f7e0."),
 
     (0x004b00f0, "Renderer5_Init_SW_FS_Hi",
-     "Renderer mode 5 = software fullscreen hi-res. SUSPECTED — F9 "
+     "Renderer mode 5 = software fullscreen hi-res. SUSPECTED - F9 "
      "binding, F-key string 'F9 - SOFTWARE HIRES'. Same signature as "
-     "Renderer3 (mode 3) — second param likely controls resolution. "
+     "Renderer3 (mode 3) - second param likely controls resolution. "
      "Availability flag: DAT_00f9f7e4. Note: mode 4 (windowed software) "
-     "has no init function — it's the unconditional fallback."),
+     "has no init function - it's the unconditional fallback."),
 
     # ------ AppInit subsystems ------
     (0x004c4470, "Timer_Init",
@@ -660,12 +660,12 @@ FUNCTIONS = [
 
     (0x004b5230, "Joystick_Init",
      "Initializes joystick input via WINMM (joyGetDevCapsA, joyGetPos). "
-     "Note: the game does NOT use DirectInput — keyboard via USER32 "
+     "Note: the game does NOT use DirectInput - keyboard via USER32 "
      "messages, joystick via the legacy joy* APIs."),
 
     (0x004b1cf0, "FSYS_Init",
      "Initializes the asset archive subsystem. Opens 'filesys.dat' "
-     "(see g_filesys at game/FILESYS.DAT — 24 MB). Function name is "
+     "(see g_filesys at game/FILESYS.DAT - 24 MB). Function name is "
      "preserved verbatim from embedded debug strings 'FSYS_Init(1..3)'."),
 
     (0x004b4370, "Gfx_Init",
@@ -676,14 +676,14 @@ FUNCTIONS = [
     (0x004ac8f0, "AuxAudio_Init",
      "Initializes the auxiliary audio mixer (auxGetDevCapsA, "
      "auxGetNumDevs, auxGetVolume). On a 1998 system this controlled "
-     "the CD-Audio line-in volume — used to play CD-DA tracks 02..15."),
+     "the CD-Audio line-in volume - used to play CD-DA tracks 02..15."),
 
     (0x004aca10, "AuxAudio_SetVolume",
      "Sets the auxiliary audio (CD-DA) volume via auxSetVolume."),
 
     (0x004c3ef0, "DSound_Init",
      "Initializes DirectSound (DirectSoundCreate + secondary buffers). "
-     "Used for in-game SFX (not music — music is CD-DA via WINMM)."),
+     "Used for in-game SFX (not music - music is CD-DA via WINMM)."),
 
     (0x004b22e0, "UpdateWindowTitle",
      "Updates the main window title based on game state via "
@@ -697,7 +697,7 @@ FUNCTIONS = [
 
     (0x004b40a0, "SetRendererMode",
      "Sets the desired renderer mode (1, 2, 3, 5 are tried in order in "
-     "AppInit). Tiny function — likely just stores the parameter in a "
+     "AppInit). Tiny function - likely just stores the parameter in a "
      "global. Mode meanings to be confirmed (D3D card / Glide / "
      "software / hires)."),
 
@@ -716,7 +716,7 @@ FUNCTIONS = [
      "delegates to LoadGeoAsset_Textures."),
 
     (0x0048bff0, "DownloadPlayerChar_Variant",
-     "Variant of DownloadPlayerChar — same DOWNLOAD log strings + same "
+     "Variant of DownloadPlayerChar - same DOWNLOAD log strings + same "
      "per-player lookup but slightly different asset chaining (uses "
      "DAT_00542074 != 0 as an offset). Likely an alternate model for a "
      "special mode (endurance / costume swap)."),
@@ -767,7 +767,7 @@ DATA = [
      "Base of the per-frame draw queue. Each entry is 28 bytes "
      "(14 ushorts). The first ushort of each entry is the sort key "
      "(probably z-depth bucket or material id, range 0..1023). "
-     "Layout of the rest of the entry: TBD — has shorts (vertex coords?) "
+     "Layout of the rest of the entry: TBD - has shorts (vertex coords?) "
      "and is referenced by index 0xd for some flag bits."),
 
     (0x00f6d050, "g_drawQueueBuckets",
@@ -840,7 +840,7 @@ DATA = [
      "and probably as input to the sort-key lookup."),
 
     (0x00b0d008, "g_zSortKeyLUT",
-     "128 KB lookup table (65536 entries x 2 bytes uint16) — "
+     "128 KB lookup table (65536 entries x 2 bytes uint16) - "
      "hyperbolic z → sort bucket mapping. Built by BuildSortKeyLUT "
      "at startup. Used by SubmitDrawEntry to remap a triangle's z "
      "into a coarse 0..2047 bucket index, then by FlushDrawQueue's "
@@ -933,7 +933,7 @@ def main():
         addr = toAddr(va)
         func = fm.getFunctionAt(addr) or fm.getFunctionContaining(addr)
         if not func:
-            # No function yet — common for pointer-only callbacks (e.g. WndProc).
+            # No function yet - common for pointer-only callbacks (e.g. WndProc).
             # Try to create one by disassembling/analyzing from this address.
             cmd = CreateFunctionCmd(addr)
             if cmd.applyTo(currentProgram):

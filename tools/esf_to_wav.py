@@ -42,12 +42,12 @@ assert len(IMA_STEP_TABLE) == 89
 def decode_ima_adpcm(encoded: bytes, output_byte_count: int) -> bytes:
     """Decode MK4's IMA-style ADPCM. Initial state (predictor=0, step_index=0).
 
-    Reverse-engineered from FUN_004ac200 in MK4.EXE — high nibble first, then
+    Reverse-engineered from FUN_004ac200 in MK4.EXE - high nibble first, then
     low nibble. Produces signed 16-bit PCM little-endian.
     """
     out = bytearray(output_byte_count)
     # Cap by the actual encoded bytes (each byte contributes 2 nibbles = 2 samples).
-    # Some files declare a decoded size 1 sample bigger than encoded * 2 — stop short.
+    # Some files declare a decoded size 1 sample bigger than encoded * 2 - stop short.
     max_samples_from_input = len(encoded) * 2
     n_samples = min(output_byte_count // 2, max_samples_from_input)
     predictor = 0

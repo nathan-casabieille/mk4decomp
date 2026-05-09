@@ -1,5 +1,5 @@
 /**
- * Render pipeline — frame phases, draw queue, viewport.
+ * Render pipeline - frame phases, draw queue, viewport.
  *
  * Per-frame structure: BeginFrame → DrawScene → PresentFrame.
  * Draw entries are accumulated into a 28-byte queue and flushed
@@ -65,9 +65,9 @@ extern u32  g_drawQueueSize;         /* 0x00f85b40 */
 extern u8   g_drawQueue[DRAW_QUEUE_MAX * DRAW_QUEUE_SIZE]; /* 0x00f71310 */
 extern u32  g_drawQueueBuckets[DRAW_QUEUE_BUCKETS];       /* 0x00f6d050 */
 
-extern u32  g_drawSceneTimeMs;       /* 0x007afa00 — profiling */
+extern u32  g_drawSceneTimeMs;       /* 0x007afa00 - profiling */
 
-/* The DAT_*  references above use VAs — the matching build pulls
+/* The DAT_*  references above use VAs - the matching build pulls
  * them in via the linker script which places the BSS segments at
  * those exact addresses. Don't change names. */
 

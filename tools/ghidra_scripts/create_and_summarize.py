@@ -67,6 +67,6 @@ for raw in args:
         if cmd.applyTo(currentProgram):
             func = getFunctionAt(addr)
     if not func:
-        print("\n[no function at %s — CreateFunctionCmd failed]" % addr)
+        print("\n[no function at %s - CreateFunctionCmd failed]" % addr)
         continue
     summarize(func)
