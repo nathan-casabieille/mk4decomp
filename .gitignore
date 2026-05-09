@@ -10,6 +10,9 @@
 # Ghidra project files - large, regenerable, not source
 /analysis/ghidra/
 
+# MSVC 5.0 binaries / ISO - Microsoft IP, never versioned
+/tools/msvc50/
+
 # Common junk
 .DS_Store
 *.swp

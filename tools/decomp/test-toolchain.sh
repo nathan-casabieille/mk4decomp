@@ -21,25 +21,42 @@ if [ ! -f "$MSVC50_ROOT/Bin/CL.EXE" ]; then
     exit 1
 fi
 
-TMP="$(mktemp -d /tmp/mk4-toolchain-test.XXXXXX)"
-trap 'rm -rf "$TMP"' EXIT
+# Use a directory under the project root so the wrappers (which cd into
+# the project root inside Wine) can pass relative paths. Absolute Unix
+# paths confuse cl.exe (it sees /tmp as an option flag).
+TEST_DIR="$ROOT/build/toolchain-test"
+mkdir -p "$TEST_DIR"
+trap 'rm -rf "$TEST_DIR"' EXIT
 
-cat > "$TMP/hello.c" <<'EOF'
-/* Smoke test — compiles to a tiny PE main. */
+cat > "$TEST_DIR/hello.c" <<'EOF'
+/* Smoke test - compiles to a tiny PE main. */
 int main(void) {
     return 42;
 }
 EOF
 
+REL="build/toolchain-test"
+
 echo "==> Compile..."
-"$ROOT/tools/decomp/cl.sh" /nologo /c /Fo"$TMP\\hello.obj" "$TMP\\hello.c"
+"$ROOT/tools/decomp/cl.sh" /nologo /c "/Fo${REL}\\hello.obj" "${REL}\\hello.c"
 
 echo "==> Link..."
-"$ROOT/tools/decomp/link.sh" /nologo /SUBSYSTEM:CONSOLE /OUT:"$TMP\\hello.exe" "$TMP\\hello.obj"
+"$ROOT/tools/decomp/link.sh" /nologo /SUBSYSTEM:CONSOLE \
+    "/OUT:${REL}\\hello.exe" "${REL}\\hello.obj" LIBC.LIB
 
-echo "==> Output:"
-ls -la "$TMP/"
-file "$TMP/hello.exe"
+echo "==> Run hello.exe (should exit 42)..."
+eval "$(whisky shellenv "$MSVC50_BOTTLE" 2>/dev/null)"
+set +e
+WINEDEBUG=-all wine64 "$TEST_DIR/hello.exe" 2>/dev/null
+RET=$?
+set -e
+file "$TEST_DIR/hello.exe"
 
-echo
-echo "Toolchain OK."
+if [ "$RET" = "42" ]; then
+    echo
+    echo "Toolchain OK (hello.exe returned 42)."
+else
+    echo
+    echo "FAIL: hello.exe returned $RET, expected 42"
+    exit 1
+fi

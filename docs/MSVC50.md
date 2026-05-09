@@ -1,30 +1,36 @@
 # Acquiring MSVC 5.0 for the matching build
 
-To rebuild MK4.EXE byte-for-byte we need the **exact** toolchain Eurocom
-used in 1998: Microsoft Visual C++ 5.0 (linker version 5.10), most likely
-SP3.
+To rebuild MK4.EXE byte-for-byte we need the exact toolchain Eurocom
+used in 1998: Microsoft Visual C++ 5.0 (linker version 5.10), most
+likely SP3.
 
-This file is a guide — we don't ship Microsoft's binaries here. You
+This file is a guide. We don't ship Microsoft's binaries here. You
 provide your own copy.
 
 ## What you actually need (minimum file set)
 
-For a matching build we don't need the full IDE — just the command-line
+For a matching build we don't need the full IDE, just the command-line
 toolchain. The minimum file set:
 
 ```
 Bin/
-  CL.EXE         — driver
-  C1.EXE         — C front-end  (preprocessing + parsing)
-  C2.EXE         — C back-end   (codegen + optimizer)
-  C1XX.EXE       — C++ front-end (only if any .cpp files)
-  LINK.EXE       — linker (5.10)
-  ML.EXE         — assembler (only if .asm sources)
-  MSPDB50.DLL    — debug-info helper (LINK calls it)
+  CL.EXE         driver
+  C1.DLL         C front-end (note: DLL on the Learning Edition CD)
+  C2.EXE         C back-end / optimizer
+  C1XX.DLL       C++ front-end (only if any .cpp files)
+  LINK.EXE       linker
+  CVTRES.EXE     resource converter (LINK calls it)
+  LIB.EXE        librarian (optional)
+
+  Bin DLL deps (LINK / CL fail to load without these):
+  MSPDB50.DLL    debug-info helper       (in SHAREDIDE/BIN/ on CD)
+  MSDIS100.DLL   disassembler helper     (in SHAREDIDE/BIN/ on CD)
+  MSVCP50.DLL    Visual C++ standard C++ runtime  (in VC/REDIST/)
+  MSVCRT.DLL     Visual C++ C runtime    (in VC/BIN/)
 
 Lib/
   LIBC.LIB       single-threaded CRT
-  LIBCMT.LIB     multi-threaded CRT  (MK4 uses this — built with /MT)
+  LIBCMT.LIB     multi-threaded CRT  (MK4 uses this, built with /MT)
   OLDNAMES.LIB
   KERNEL32.LIB
   USER32.LIB
@@ -44,88 +50,106 @@ The DDraw / DSound .lib + .h files come from the **DirectX 5 SDK**
 (later 5.x SDKs work; 7.0+ may have ABI changes). MK4's ddraw.dll
 imports are DDraw 5-era.
 
+## Linker version caveat (RTM vs 5.10)
+
+MK4.EXE was linked with **LINK.EXE 5.10** (PE header
+MinorLinkerVersion=10), which came with MSVC 5.0 SP3 (1998). The
+Visual C++ Learning Edition CD ships with **LINK.EXE 5.00.7022**
+(RTM, 1997). The compiler is the same major version but the linker
+is older.
+
+In practice this means:
+- Per-function asm produced by CL.EXE should still match (compiler
+  side is the same)
+- The PE header and link-step bytes will differ slightly (linker
+  version field, possibly section-layout details)
+- Our diff tool will count those as mismatches even if the C is
+  correct
+
+For the first matching pass we proceed with whatever LINK we have.
+If final-pass byte parity is needed, swap in LINK.EXE from MSVC 5.0
+SP3 (see "Service pack" below).
+
 ## Where to legally obtain MSVC 5.0
 
-**Option 1 — eBay / used software resellers**
-Visual Studio 5.0 Professional CDs come up regularly. ~$50-100 USD.
-The CD includes everything we need.
+**Option 1: eBay / used software resellers**
+Visual Studio 5.0 Professional CDs come up regularly, around 50-100
+USD. The CD includes everything we need plus the SP3 patches.
 
-**Option 2 — Old MSDN subscription archives**
+**Option 2: Visual C++ Learning Edition CD**
+Cheaper / easier to find. Has the compiler but ships with linker
+5.00 (not 5.10). Good enough to start matching, may need to source
+SP3 LINK.EXE separately later.
+
+**Option 3: Old MSDN subscription archives**
 If you (or your employer) had an MSDN subscription in the late 90s,
-the disc archives include MSVC 5.0. The MSDN Library CDs are usually
-in the back of physical archive shelves at older companies.
+the disc archives include MSVC 5.0 + service packs.
 
-**Option 3 — Internet Archive / abandonware sites**
-MSVC 5.0 has been uploaded to archive.org under various names. Check
-"Visual Studio 97" or "Visual C++ 5.0". Microsoft's stance on this
-era of tools is permissive in practice (they actively encourage moving
-on to modern toolchains and don't pursue old ISO availability).
+**Option 4: Internet Archive**
+MSVC 5.0 has been uploaded to archive.org under various names ("Visual
+Studio 97", "Visual C++ 5.0", "Visual C++ Learning Edition 5.0"). Legally
+the binaries remain Microsoft IP and you should be aware of that.
 
-This is the **practical** route most decomp projects use, but legally
-the binaries remain Microsoft's IP and you should be aware of that.
-
-**Option 4 — Use MSVC 6.0 with caveats**
-MSVC 6.0 is more available. The downside: linker 6.0 produces slightly
-different binaries, and we'd lose byte-matching for sections affected
-by linker output. Our diff tool would show ~5-10% non-matching bytes
-even on perfect C source. Not recommended for the matching target —
-fine for the portable target.
+**Option 5: Use MSVC 6.0 with caveats**
+MSVC 6.0 is more available. Downside: linker 6.0 produces noticeably
+different binaries. Not recommended for the matching target. Fine for
+the portable target.
 
 ## After installation
 
-1. Install the IDE somewhere (anywhere — we only care about the binaries).
-   The default install path is `C:\Program Files\DevStudio\VC`.
+1. Run `./tools/decomp/setup-msvc50.sh` to create the Whisky bottle.
 
-2. Copy the files listed above into the Whisky bottle:
+2. Mount your MSVC 5.0 CD or ISO and copy the files into the bottle.
+   Example for the Learning Edition CD layout (`DEVSTUDIO/`):
 
    ```sh
-   BOTTLE_PREFIX=$(grep MSVC50_PREFIX config/msvc50.env | cut -d'"' -f2)
-   MSVC5_ROOT="$BOTTLE_PREFIX/drive_c/MSVC5"
+   . config/msvc50.env
+   ROOT=$MSVC50_ROOT
 
-   # Adjust to your installation paths.
-   cp /path/to/msvc5/Bin/CL.EXE     "$MSVC5_ROOT/Bin/"
-   cp /path/to/msvc5/Bin/LINK.EXE   "$MSVC5_ROOT/Bin/"
-   cp /path/to/msvc5/Bin/C1.EXE     "$MSVC5_ROOT/Bin/"
-   cp /path/to/msvc5/Bin/C2.EXE     "$MSVC5_ROOT/Bin/"
-   cp /path/to/msvc5/Bin/MSPDB50.DLL "$MSVC5_ROOT/Bin/"
+   # Bin
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/CL.EXE      "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/LINK.EXE    "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/C1.DLL      "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/C1XX.DLL    "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/C2.EXE      "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/CVTRES.EXE  "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/LIB.EXE     "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/BIN/MSVCRT.DLL  "$ROOT/Bin/"
 
-   cp /path/to/msvc5/Lib/*.LIB     "$MSVC5_ROOT/Lib/"
-   cp -R /path/to/msvc5/Include/*  "$MSVC5_ROOT/Include/"
+   # DLL deps from elsewhere on the CD
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/SHAREDIDE/BIN/MSPDB50.DLL  "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/SHAREDIDE/BIN/MSDIS100.DLL "$ROOT/Bin/"
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/REDIST/MSVCP50.DLL      "$ROOT/Bin/"
 
-   # Plus the DDraw / DSound bits from the DirectX 5 SDK:
-   cp /path/to/dx5sdk/lib/DDRAW.LIB  "$MSVC5_ROOT/Lib/"
-   cp /path/to/dx5sdk/lib/DSOUND.LIB "$MSVC5_ROOT/Lib/"
-   cp /path/to/dx5sdk/include/ddraw.h  "$MSVC5_ROOT/Include/"
-   cp /path/to/dx5sdk/include/dsound.h "$MSVC5_ROOT/Include/"
+   # Lib + Include (everything)
+   cp /Volumes/VC50LRNCD1/DEVSTUDIO/VC/LIB/*.LIB    "$ROOT/Lib/"
+   cp -R /Volumes/VC50LRNCD1/DEVSTUDIO/VC/INCLUDE/* "$ROOT/Include/"
    ```
 
 3. Verify:
-
    ```sh
    ./tools/decomp/test-toolchain.sh
    ```
-
-   You should see a tiny `hello.exe` get built without errors.
+   Expect output ending with `Toolchain OK (hello.exe returned 42)`.
 
 ## Service pack
 
 MSVC 5.0 SP3 (1998) is the latest SP. MK4 was released July 1998 so
-likely built against SP3 or possibly SP2.
+likely built against SP3.
 
 You can identify your CL.EXE's exact build by running it with no args:
 
 ```
 $ ./tools/decomp/cl.sh
-Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 11.00.7022 for 80x86
+Microsoft (R) 32-bit C/C++ ... Compiler Version 11.00.0000 for 80x86
                                                        ^^^^^^^^^^^
                                                        this is the build
 ```
 
-Build numbers:
-- `11.00.7022` = SP3
-- `11.00.7016` = SP2
-- `11.00.7011` = SP1
-- `11.00.7022` = RTM (= 11.00.0)
+Compiler build numbers (the third dotted-number group):
+- `11.00.0000` = RTM (Visual C++ 5.0 original)
+- `11.00.7016` = SP1
+- `11.00.7022` = SP2 / SP3 (rebadged)
 
-Try SP3 first; if our diff tool shows a stubborn instruction-selection
-mismatch, downgrade to SP2 or RTM and try again.
+The Learning Edition CD ships RTM. SP3 patches must be applied
+separately if you want exact MK4 toolchain parity.
