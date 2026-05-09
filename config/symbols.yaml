@@ -28,7 +28,8 @@ functions:
     name: FightFrameStep
     size: 243
     group: game
-    status: stub
+    status: matched
+    file: src/game/fight.c
   - addr: 0x0045c6c0
     name: FightFrameStep_Inner
     size: 337

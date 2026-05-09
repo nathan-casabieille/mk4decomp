@@ -60,6 +60,26 @@ extern packed_ptr g_player2NodeIdx;   /* 0x0053815c */
 extern packed_ptr g_player3NodeIdx;   /* 0x00538160 */
 extern packed_ptr g_player4NodeIdx;   /* 0x00538164 */
 
+/* === Fight subsystem groups ================================== */
+
+/* Three entity sub-trees iterated by FightFrameStep. Each row is a
+ * (head_a, head_b) packed-ptr pair into 0x5453a4a0..0x5453a4b7. */
+extern u32 g_fightGroupHeads[6];      /* 0x005453a4a0 (3 pairs of u32) */
+
+/* Three matching arrays indexed by g_fightGroupHeads slot - the
+ * fixed-address sources from .rdata / .data that get packed and
+ * stashed in g_pendingNodeType, g_eventQueueTotal,
+ * g_fightGroupHead respectively. */
+extern u32 g_fightTableA0;            /* 0x004e9250 */
+extern u32 g_fightTableB0;            /* 0x00542948 */
+extern u32 g_fightTableC0;            /* 0x004d50a4 */
+extern u32 g_fightTableA1;            /* 0x004e92c8 */
+extern u32 g_fightTableB1;            /* 0x004e9300 */
+extern u32 g_fightTableC1;            /* 0x004d50a8 */
+extern u32 g_fightTableA2;            /* 0x004e9318 */
+extern u32 g_fightTableB2;            /* 0x0054294c */
+extern u32 g_fightTableC2;            /* 0x004d50b0 */
+
 #ifdef __cplusplus
 }
 #endif

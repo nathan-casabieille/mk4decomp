@@ -142,6 +142,10 @@ extern u32        g_eventQueueEnd;                        /* 0x00542054 */
 extern u32        g_eventQueueTotal;                      /* 0x00542050 */
 extern u32        g_eventQueueWorkType;                   /* 0x00542074 */
 
+/* Per-entity-group state slot used by FightFrameStep when it
+ * primes the entity queue for each of the three sub-trees. */
+extern packed_ptr g_fightGroupHead;                       /* 0x0054205c */
+
 /* === BuildSortKeyLUT support ================================== */
 
 /* The big working buffer cleared by BuildSortKeyLUT (1056 KB at
