@@ -536,7 +536,8 @@ functions:
     name: BuildSortKeyLUT
     size: 130
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/sort_lut.c
   - addr: 0x004bf330
     name: SetViewport
     size: 49

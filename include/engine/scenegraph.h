@@ -142,6 +142,21 @@ extern u32        g_eventQueueEnd;                        /* 0x00542054 */
 extern u32        g_eventQueueTotal;                      /* 0x00542050 */
 extern u32        g_eventQueueWorkType;                   /* 0x00542074 */
 
+/* === BuildSortKeyLUT support ================================== */
+
+/* The big working buffer cleared by BuildSortKeyLUT (1056 KB at
+ * 0xb2d010 - looks like it backs the 24bpp framebuffer / texture
+ * scratch). */
+extern u32        g_paletteScratch[0x108000];              /* 0x00b2d010 */
+
+/* 768-byte i/3 table populated by BuildSortKeyLUT's tail. */
+extern u8         g_div3Table[768];                        /* 0x00f70ff8 */
+
+/* Helper called by BuildSortKeyLUT after clearing the scratch -
+ * does some palette/lighting init, takes one cleared-via-the-call
+ * stack arg. */
+void Helper_PaletteInit(s32 zero_arg);                    /* 0x004bf0c0 */
+
 #ifdef __cplusplus
 }
 #endif
