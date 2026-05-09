@@ -223,8 +223,9 @@ functions:
   - addr: 0x004b1e00
     name: FSYS_fopen
     size: 177
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: matched
+    file: src/engine/fsys.c
   - addr: 0x004b1ec0
     name: FSYS_NormalizePath
     size: 129

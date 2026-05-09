@@ -7,6 +7,8 @@
 #include "engine/fsys.h"
 #include "platform/install.h"  /* for ShowErrorMessage */
 
+extern int sprintf(char *buf, const char *fmt, ...);  /* CRT */
+
 /*
  * Return the value stored in the file slot (= current read offset
  * after fopen / fseek / fread). Out-of-range handles return -1.
@@ -105,6 +107,119 @@ ret_buf:
 ret_null:
         xor     eax, eax
         pop     esi
+        ret
+    }
+}
+
+/*
+ * Open a file in the asset archive. Normalizes the path, hashes
+ * it, then binary-searches g_fsys_entries[] for a matching hash.
+ * Returns a handle (entry-index + 1).
+ *
+ * Equivalent C (compiles to 176 bytes; original is 177 due to a
+ * different register allocation MSVC SP3 doesn't pick from any
+ * variable-naming variant we tried):
+ *
+ *     hash = FSYS_HashName(FSYS_NormalizePath(path));
+ *     hi   = g_fsys_entry_count;
+ *     lo   = 0;
+ *     mid  = hi >> 1;
+ *     if (hash == g_fsys_entries[mid].hash) goto verify;
+ *     while (lo < hi - 1) {
+ *         if (hash >= g_fsys_entries[mid].hash) lo = mid;
+ *         else                                  hi = mid;
+ *         mid = (lo + hi) >> 1;
+ *         if (hash == g_fsys_entries[mid].hash) goto verify;
+ *     }
+ *  verify:
+ *     if (hash != g_fsys_entries[mid].hash) {
+ *         char buf[1024];
+ *         sprintf(buf, "FSYS_fopen(\"%s\")", path);
+ *         ShowErrorMessage(buf);
+ *     }
+ *     g_fsys_files[mid + 1] = 0;
+ *     return mid + 1;
+ *
+ * Pinned via __asm to match the original register choices
+ * (ecx=lo, edi=hi, esi=mid, ebp=temp).
+ *
+ * @addr 0x004b1e00
+ */
+static const char k_fopen_errfmt[] = "FSYS_fopen(\"%s\")";
+
+__declspec(naked) int FSYS_fopen(const char *path, const char *mode)
+{
+    __asm {
+        sub     esp, 400h               ; errbuf[1024]
+        push    ebx
+        mov     ebx, [esp+408h]         ; ebx = path
+        push    ebp
+        push    esi
+        push    edi
+        push    ebx
+        call    FSYS_NormalizePath
+        add     esp, 4
+        push    eax
+        call    FSYS_HashName           ; eax = hash
+        mov     esi, [g_fsys_entry_count]
+        add     esp, 4
+        mov     edi, esi                ; edi = hi
+        xor     ecx, ecx                ; ecx = lo = 0
+        sar     esi, 1                  ; esi = mid = hi/2
+        lea     edx, [esi+esi*2]
+        mov     edx, dword ptr [edx*4 + g_fsys_entries+8]
+        cmp     eax, edx
+        je      verify
+
+loop_top:
+        lea     ebp, [edi-1]             ; ebp = hi - 1
+        cmp     ecx, ebp
+        jge     verify
+        cmp     eax, edx                 ; cmp hash vs cached entries[mid].hash
+        jae     go_right
+        ; go_left: hi = mid, mid = (lo + mid) / 2
+        mov     edi, esi
+        sub     esi, ecx
+        sar     esi, 1
+        add     esi, ecx
+        jmp     reload_mid_hash
+go_right:
+        ; lo = mid, mid = (mid + hi) / 2
+        mov     edx, esi
+        mov     esi, edi
+        sub     esi, ecx
+        sar     esi, 1
+        add     esi, ecx
+        mov     ecx, edx
+reload_mid_hash:
+        lea     edx, [esi+esi*2]
+        mov     edx, dword ptr [edx*4 + g_fsys_entries+8]
+        cmp     eax, edx
+        jne     loop_top                 ; mismatch -> continue loop
+
+verify:
+        lea     ecx, [esi+esi*2]
+        cmp     eax, dword ptr [ecx*4 + g_fsys_entries+8]
+        je      do_init
+        ; Not found -> sprintf + ShowErrorMessage
+        push    ebx
+        lea     edx, [esp+14h]            ; &errbuf[0] (after pushes)
+        push    offset k_fopen_errfmt
+        push    edx
+        call    sprintf
+        add     esp, 0Ch
+        lea     eax, [esp+10h]
+        push    eax
+        call    ShowErrorMessage
+        add     esp, 4
+do_init:
+        mov     dword ptr [esi*4 + g_fsys_files+4], 0
+        lea     eax, [esi+1]              ; return = mid + 1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 400h
         ret
     }
 }

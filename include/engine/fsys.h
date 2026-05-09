@@ -44,6 +44,14 @@ extern int g_fsys_files[];
  * uppercased + drive-prefixed result. Lives at 0x7af0e0. */
 extern char g_fsys_normalized_path[FSYS_PATH_MAX];
 
+/* In-memory copy of the FILESYS.DAT header table (1024 entries
+ * x 12 bytes = 0x3000 bytes). Sorted by hash. Lives at 0x7ab0d8. */
+extern fsys_entry g_fsys_entries[1024];
+
+/* Number of populated entries in g_fsys_entries (set by FSYS_Init).
+ * Lives at 0x7af4e4. */
+extern int g_fsys_entry_count;
+
 /* === Public API ============================================== */
 
 /* Open the archive and load its header table. */
