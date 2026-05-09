@@ -100,6 +100,12 @@ functions:
     name: GetExeDirectory
     size: 113
     group: audio
+    status: matched
+    file: src/audio/integrity.c
+  - addr: 0x004acae0
+    name: Helper_ComputeExeHash
+    size: 368
+    group: audio
     status: stub
   - addr: 0x004acc50
     name: CheckInstallPath

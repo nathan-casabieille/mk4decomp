@@ -52,6 +52,24 @@ extern u32 g_timerFlag;       /* 0x00543904 */
 void DebugStub_NoOp_B(void);                             /* 0x004a4150 */
 void DebugStub_NoOp_A(void);                             /* 0x004a4170 */
 
+/* === EXE-integrity check (audio install gate) =============== */
+
+/* Pulls the EXE path with GetModuleFileNameA, reads the file in
+ * binary mode, and computes a hash that must match the two
+ * compile-time constants in .rdata. Returns 0 if both halves
+ * match, -1 if GetModuleFileNameA failed, -10 on hash mismatch,
+ * or the helper's nonzero rc on lower-level failures. */
+s32 GetExeDirectory(void);                               /* 0x004aca60 */
+
+/* fopen("rb") + hash worker called by GetExeDirectory. Stores
+ * the computed hash into g_exeIntegrityValue{A,B}. */
+s32 Helper_ComputeExeHash(const char *path);             /* 0x004acae0 */
+
+extern u32 g_exeIntegrityValueA;    /* 0x00543920 - computed lo */
+extern u32 g_exeIntegrityValueB;    /* 0x00543924 - computed hi */
+extern u32 g_exeIntegrityRefA;      /* 0x004f4698 - expected lo */
+extern u32 g_exeIntegrityRefB;      /* 0x004f469c - expected hi */
+
 #ifdef __cplusplus
 }
 #endif
