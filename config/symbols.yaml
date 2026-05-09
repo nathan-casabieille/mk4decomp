@@ -370,8 +370,9 @@ functions:
   - addr: 0x004b36c0
     name: BuildRotMatrix_OrderC
     size: 310
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/rot_matrix_c.c
   - addr: 0x004b3800
     name: BuildRotMatrix_OrderA
     size: 318
