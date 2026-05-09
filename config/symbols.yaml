@@ -611,7 +611,8 @@ functions:
     name: PumpMessages
     size: 265
     group: boot
-    status: stub
+    status: matched
+    file: src/boot/pump_messages.c
   - addr: 0x004c53c0
     name: WinMain
     size: 151
