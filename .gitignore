@@ -1,0 +1,37 @@
+# Original CD image — copyrighted, large, regenerable from physical disc
+/original/
+
+# Extracted game binaries and assets — copyrighted, regenerable from original/
+/game/
+
+# CD audio tracks — copyrighted, regenerable from original/
+/audio/
+
+# Ghidra project files — large, regenerable, not source
+/analysis/ghidra/
+
+# Common junk
+.DS_Store
+*.swp
+*~
+
+# Tool output / scratch
+*.log
+/tmp/
+out/
+build/
+*.obj
+*.exp
+*.ilk
+*.pdb
+
+# Python cache (tools/)
+__pycache__/
+*.pyc
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+.cache/
+compile_commands.json

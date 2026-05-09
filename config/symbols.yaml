@@ -1,0 +1,530 @@
+# MK4 matching-decomp symbol map.
+# Auto-generated from Ghidra (tools/ghidra_scripts/export_symbols.py).
+# Edit by re-running the export — manual changes are clobbered.
+#
+# Status: stub | drafted | matched
+#  - stub:    asm-only, not yet decompiled
+#  - drafted: C source written, not yet byte-matching
+#  - matched: C source compiles to byte-identical asm
+
+functions:
+  - addr: 0x00405400
+    name: FrameFinalize
+    size: 21
+    group: boot
+    status: stub
+  - addr: 0x0041f290
+    name: AllocateNode
+    size: 700
+    group: boot
+    status: stub
+  - addr: 0x0041fd70
+    name: GameTick
+    size: 792
+    group: boot
+    status: stub
+  - addr: 0x0045c5c0
+    name: FightFrameStep
+    size: 243
+    group: game
+    status: stub
+  - addr: 0x0045c6c0
+    name: FightFrameStep_Inner
+    size: 337
+    group: game
+    status: stub
+  - addr: 0x0045c820
+    name: DispatchEventQueue
+    size: 167
+    group: game
+    status: stub
+  - addr: 0x0045c8d0
+    name: DispatchEventQueue_Commit
+    size: 11
+    group: game
+    status: stub
+  - addr: 0x0048bcf0
+    name: DownloadPlayerChar
+    size: 741
+    group: game
+    status: stub
+  - addr: 0x0048bff0
+    name: DownloadPlayerChar_Variant
+    size: 405
+    group: game
+    status: stub
+  - addr: 0x0049cb60
+    name: AllocNode
+    size: 15
+    group: game
+    status: stub
+  - addr: 0x004a4150
+    name: DebugStub_NoOp_B
+    size: 1
+    group: audio
+    status: stub
+  - addr: 0x004a4170
+    name: DebugStub_NoOp_A
+    size: 1
+    group: audio
+    status: stub
+  - addr: 0x004ac200
+    name: ESF_DecodeADPCM
+    size: 279
+    group: audio
+    status: stub
+  - addr: 0x004ac4b0
+    name: Audio_TimerTick
+    size: 104
+    group: audio
+    status: stub
+  - addr: 0x004ac8f0
+    name: AuxAudio_Init
+    size: 184
+    group: audio
+    status: stub
+  - addr: 0x004aca10
+    name: AuxAudio_SetVolume
+    size: 76
+    group: audio
+    status: stub
+  - addr: 0x004aca60
+    name: GetExeDirectory
+    size: 113
+    group: audio
+    status: stub
+  - addr: 0x004acc50
+    name: CheckInstallPath
+    size: 129
+    group: audio
+    status: stub
+  - addr: 0x004acf90
+    name: ResetConfigToDefaults
+    size: 634
+    group: audio
+    status: stub
+  - addr: 0x004ad210
+    name: ComputeConfigHash
+    size: 52
+    group: engine.install
+    status: stub
+  - addr: 0x004ad250
+    name: DeobfuscateConfig
+    size: 32
+    group: engine.install
+    status: stub
+  - addr: 0x004ad270
+    name: ValidateInstall
+    size: 402
+    group: engine.install
+    status: stub
+  - addr: 0x004ad6a0
+    name: Renderer2_Init_D3D
+    size: 286
+    group: engine.install
+    status: stub
+  - addr: 0x004adc20
+    name: Renderer2_EndScene_D3D
+    size: 63
+    group: engine.install
+    status: stub
+  - addr: 0x004af880
+    name: Renderer3_EndScene_SW_FS
+    size: 54
+    group: engine.install
+    status: stub
+  - addr: 0x004af8c0
+    name: Renderer3_Init_SW_FS
+    size: 149
+    group: engine.install
+    status: stub
+  - addr: 0x004b00b0
+    name: Renderer5_EndScene_SW_FS_Hi
+    size: 54
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b00f0
+    name: Renderer5_Init_SW_FS_Hi
+    size: 149
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b06f0
+    name: ECM_Open
+    size: 687
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b0a50
+    name: ECM_PlayThread
+    size: 608
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b0cb0
+    name: ECM_Cleanup
+    size: 199
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1090
+    name: ESF_Open
+    size: 183
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1150
+    name: ESF_ReadData
+    size: 162
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1200
+    name: ESF_Close
+    size: 29
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1220
+    name: ECM_DecodeFrame_Raw
+    size: 76
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1270
+    name: ECM_DecodeFrame_Huffman
+    size: 2423
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1bf0
+    name: ECM_DecodeFrameDispatch
+    size: 54
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1c30
+    name: ECM_ParseFrameHeader
+    size: 87
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1c90
+    name: ECM_DecodeFrame
+    size: 89
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1cf0
+    name: FSYS_Init
+    size: 237
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1e00
+    name: FSYS_fopen
+    size: 177
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1ec0
+    name: FSYS_NormalizePath
+    size: 129
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1f50
+    name: FSYS_HashName
+    size: 50
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1f90
+    name: FSYS_fclose
+    size: 25
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b1fb0
+    name: FSYS_fread
+    size: 184
+    group: engine.ecm
+    status: stub
+  - addr: 0x004b2070
+    name: FSYS_fseek
+    size: 133
+    group: engine.app
+    status: stub
+  - addr: 0x004b2120
+    name: FSYS_fsize
+    size: 60
+    group: engine.app
+    status: stub
+  - addr: 0x004b2160
+    name: FSYS_fload
+    size: 75
+    group: engine.app
+    status: stub
+  - addr: 0x004b22e0
+    name: UpdateWindowTitle
+    size: 532
+    group: engine.app
+    status: stub
+  - addr: 0x004b2500
+    name: AppInit
+    size: 385
+    group: engine.app
+    status: stub
+  - addr: 0x004b26d0
+    name: GameLogicStep
+    size: 113
+    group: engine.app
+    status: stub
+  - addr: 0x004b2750
+    name: MainLoopStep
+    size: 234
+    group: engine.app
+    status: stub
+  - addr: 0x004b2930
+    name: Renderer4_EndScene_SW_Win
+    size: 29
+    group: engine.app
+    status: stub
+  - addr: 0x004b2af0
+    name: ProjectTwoVertices
+    size: 551
+    group: engine.app
+    status: stub
+  - addr: 0x004b2e80
+    name: ProjectVertex
+    size: 273
+    group: engine.app
+    status: stub
+  - addr: 0x004b2fa0
+    name: AdvanceTriStripRing
+    size: 80
+    group: engine.app
+    status: stub
+  - addr: 0x004b3310
+    name: TransformVertex
+    size: 383
+    group: engine.app
+    status: stub
+  - addr: 0x004b36c0
+    name: BuildRotMatrix_OrderC
+    size: 310
+    group: engine.geo
+    status: stub
+  - addr: 0x004b3800
+    name: BuildRotMatrix_OrderA
+    size: 318
+    group: engine.geo
+    status: stub
+  - addr: 0x004b3940
+    name: BuildRotMatrix_OrderB
+    size: 324
+    group: engine.geo
+    status: stub
+  - addr: 0x004b3e90
+    name: PresentFrame
+    size: 44
+    group: engine.geo
+    status: stub
+  - addr: 0x004b3ed0
+    name: TryInitRenderer
+    size: 429
+    group: engine.geo
+    status: stub
+  - addr: 0x004b40a0
+    name: SetRendererMode
+    size: 34
+    group: engine.geo
+    status: stub
+  - addr: 0x004b4200
+    name: BeginFrame
+    size: 204
+    group: engine.geo
+    status: stub
+  - addr: 0x004b42e0
+    name: DrawScene
+    size: 121
+    group: engine.geo
+    status: stub
+  - addr: 0x004b4370
+    name: Gfx_Init
+    size: 149
+    group: engine.geo
+    status: stub
+  - addr: 0x004b46a0
+    name: Renderer1_EndScene_Glide
+    size: 38
+    group: engine.geo
+    status: stub
+  - addr: 0x004b49a0
+    name: Renderer1_Init_Glide
+    size: 618
+    group: engine.geo
+    status: stub
+  - addr: 0x004b5230
+    name: Joystick_Init
+    size: 319
+    group: engine.geo
+    status: stub
+  - addr: 0x004b5bc0
+    name: Mem_Malloc
+    size: 195
+    group: engine.geo
+    status: stub
+  - addr: 0x004b6340
+    name: GameStateMachine
+    size: 509
+    group: game.menu
+    status: stub
+  - addr: 0x004b65c0
+    name: DrawMenu
+    size: 691
+    group: game.menu
+    status: stub
+  - addr: 0x004b9e50
+    name: TickAllEntities
+    size: 486
+    group: engine.render
+    status: stub
+  - addr: 0x004ba130
+    name: WalkSceneGraphSiblings
+    size: 142
+    group: engine.render
+    status: stub
+  - addr: 0x004ba720
+    name: RenderSceneNode
+    size: 1899
+    group: engine.render
+    status: stub
+  - addr: 0x004bb250
+    name: DrawMeshBlock
+    size: 1070
+    group: engine.render
+    status: stub
+  - addr: 0x004bd5b0
+    name: LoadGeoAsset_Default
+    size: 11
+    group: engine.geo
+    status: stub
+  - addr: 0x004bd5f0
+    name: Tex_DecodeRLE16
+    size: 211
+    group: engine.geo
+    status: stub
+  - addr: 0x004bd6e0
+    name: LoadGeoAsset_Textures
+    size: 353
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdb50
+    name: NodeApplyTransform_A
+    size: 163
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdc00
+    name: NodeApplyTransform_A_Direct
+    size: 98
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdca0
+    name: NodeApplyTransform_B
+    size: 163
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdd50
+    name: NodeApplyTransform_B_Direct
+    size: 98
+    group: engine.geo
+    status: stub
+  - addr: 0x004bde90
+    name: NodeApplyTransform_C
+    size: 163
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdf40
+    name: NodeApplyTransform_C_Direct
+    size: 98
+    group: engine.geo
+    status: stub
+  - addr: 0x004bdfb0
+    name: NodeApplyTransform_C_Inverse
+    size: 157
+    group: engine.geo
+    status: stub
+  - addr: 0x004be050
+    name: NodeApplyMatrix
+    size: 214
+    group: engine.scenegraph
+    status: stub
+  - addr: 0x004be130
+    name: NodeApplyTransform_B_Swapped
+    size: 224
+    group: engine.scenegraph
+    status: stub
+  - addr: 0x004bf290
+    name: BuildSortKeyLUT
+    size: 130
+    group: engine.scenegraph
+    status: stub
+  - addr: 0x004bf330
+    name: SetViewport
+    size: 49
+    group: engine.scenegraph
+    status: stub
+  - addr: 0x004bf460
+    name: FlushDrawQueue
+    size: 3825
+    group: engine.scenegraph
+    status: stub
+  - addr: 0x004c3360
+    name: SubmitDrawEntry
+    size: 300
+    group: engine.render
+    status: stub
+  - addr: 0x004c37f0
+    name: Audio_UpdateChannels
+    size: 220
+    group: engine.render
+    status: stub
+  - addr: 0x004c3ef0
+    name: DSound_Init
+    size: 530
+    group: engine.render
+    status: stub
+  - addr: 0x004c4470
+    name: Timer_Init
+    size: 118
+    group: platform.win32
+    status: stub
+  - addr: 0x004c4510
+    name: QueryMicroTimer
+    size: 120
+    group: platform.win32
+    status: stub
+  - addr: 0x004c4870
+    name: ExitGame
+    size: 64
+    group: platform.win32
+    status: stub
+  - addr: 0x004c48c0
+    name: ShowErrorMessage
+    size: 144
+    group: platform.win32
+    status: stub
+  - addr: 0x004c49b0
+    name: WndProc
+    size: 1275
+    group: platform.win32
+    status: stub
+  - addr: 0x004c5070
+    name: CreateMainWindow
+    size: 371
+    group: boot
+    status: stub
+  - addr: 0x004c52a0
+    name: PumpMessages
+    size: 265
+    group: boot
+    status: stub
+  - addr: 0x004c53c0
+    name: WinMain
+    size: 151
+    group: boot
+    status: stub
+  - addr: 0x004c6cb0
+    name: entry
+    size: 391
+    group: boot
+    status: stub
+  - addr: 0x004f44e0
+    name: g_imaIndexTable
+    size: 1
+    group: other
+    status: stub
