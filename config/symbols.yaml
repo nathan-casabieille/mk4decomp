@@ -180,8 +180,9 @@ functions:
   - addr: 0x004b1150
     name: ESF_ReadData
     size: 162
-    group: engine.ecm
-    status: stub
+    group: engine.esf
+    status: matched
+    file: src/engine/esf.c
   - addr: 0x004b1200
     name: ESF_Close
     size: 29
@@ -192,7 +193,8 @@ functions:
     name: ECM_DecodeFrame_Raw
     size: 76
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/ecm.c
   - addr: 0x004b1270
     name: ECM_DecodeFrame_Huffman
     size: 2423
@@ -458,8 +460,9 @@ functions:
   - addr: 0x004bdc00
     name: NodeApplyTransform_A_Direct
     size: 98
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdca0
     name: NodeApplyTransform_B
     size: 163
@@ -468,8 +471,9 @@ functions:
   - addr: 0x004bdd50
     name: NodeApplyTransform_B_Direct
     size: 98
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bde90
     name: NodeApplyTransform_C
     size: 163
@@ -478,8 +482,9 @@ functions:
   - addr: 0x004bdf40
     name: NodeApplyTransform_C_Direct
     size: 98
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdfb0
     name: NodeApplyTransform_C_Inverse
     size: 157

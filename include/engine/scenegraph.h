@@ -92,6 +92,27 @@ extern u32        g_currentNodeFlags;                    /* 0x00542084 */
  * nodes of the same kind. */
 extern u32        g_pendingNodeType;                     /* 0x0054204c */
 
+/* Index of the entity whose transform is currently being computed
+ * (NodeApplyTransform_*_Direct family loads it as a packed_ptr).
+ * Not the same slot as g_currentNodeIdx (= 0x542044). */
+extern packed_ptr g_xformEntityIdx;                      /* 0x00542048 */
+
+/* Sticky dirty flags ORed into by every NodeApplyTransform_*_Direct
+ * call (low byte gets 0x30 set). */
+extern u32        g_xformDirtyFlags;                     /* 0x0054208c */
+
+/* 16-bit angle table read by the *_Direct transforms with a 4-byte
+ * stride per entry. */
+extern s16        g_nodeAngleTable[];                    /* base offset varies per axis */
+
+/* 16-bit matrix table the second arg of BuildRotMatrix_Order* points
+ * into (4-byte stride per entry, indexed by g_currentNodeIdx*2). */
+extern s16        g_nodeMatrixTable[];                   /* base 0x00ab5210 area */
+
+/* 6-byte scratch buffer (3 packed s16 angles) the *_Direct family
+ * fills with negated angles before calling BuildRotMatrix_Order*. */
+extern s16        g_xformTempAngles[3];                  /* 0x00ab5208 */
+
 #ifdef __cplusplus
 }
 #endif
