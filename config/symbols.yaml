@@ -89,7 +89,8 @@ functions:
     name: AuxAudio_Init
     size: 184
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/aux_init.c
   - addr: 0x004aca10
     name: AuxAudio_SetVolume
     size: 76

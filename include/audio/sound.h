@@ -5,6 +5,7 @@
 #define MK4_AUDIO_SOUND_H
 
 #include "../types.h"
+#include "../platform/win32.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,7 +14,7 @@ extern "C" {
 /* === Init ==================================================== */
 
 void DSound_Init(void *hwnd);                            /* 0x004c3ef0 */
-void AuxAudio_Init(void *hwnd);                          /* 0x004ac8f0 */
+s32  AuxAudio_Init(HWND hwnd);                           /* 0x004ac8f0 */
 void AuxAudio_SetVolume(s32 vol);                        /* 0x004aca10 */
 
 /* Aux-out (Windows multimedia) channel inventory. AuxAudio_Init
@@ -41,12 +42,21 @@ void Audio_TimerSet(u32 active, u32 start_sec,
 /* Audio timer state - watched by Audio_TimerTick each frame.
  * When timeGetTime() - lastNow >= (end - start) * 1000 the timer
  * fires Audio_TimerSet to re-seed itself. */
+extern u32 g_audioPreState;   /* 0x005438e8 */
 extern u32 g_timerActive;     /* 0x005438ec */
 extern u32 g_timerStartSec;   /* 0x005438f0 */
 extern u32 g_timerEndSec;     /* 0x005438f4 */
 extern u32 g_timerHandle;     /* 0x005438f8 */
 extern u32 g_timerLastNow;    /* 0x005438fc - last timeGetTime() in ms */
+extern u32 g_audioState00;    /* 0x00543900 */
 extern u32 g_timerFlag;       /* 0x00543904 */
+extern u32 g_audioState08;    /* 0x00543908 */
+extern u32 g_audioState0C;    /* 0x0054390c */
+extern HWND g_auxAudioHwnd;   /* 0x00543910 */
+
+/* Sub-helper called at the end of AuxAudio_Init - probably installs
+ * a multimedia timer callback. */
+void Helper_AuxAudio_PostInit(void);                    /* 0x004ac320 */
 
 /* === Debug placeholders (empty; compiled-out hooks) =========== */
 void DebugStub_NoOp_B(void);                             /* 0x004a4150 */
