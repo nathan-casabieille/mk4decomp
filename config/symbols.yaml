@@ -161,8 +161,9 @@ functions:
   - addr: 0x004af8c0
     name: Renderer3_Init_SW_FS
     size: 149
-    group: engine.install
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/renderer3_init.c
   - addr: 0x004b00b0
     name: Renderer5_EndScene_SW_FS_Hi
     size: 54
@@ -172,8 +173,9 @@ functions:
   - addr: 0x004b00f0
     name: Renderer5_Init_SW_FS_Hi
     size: 149
-    group: engine.ecm
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/renderer5_init.c
   - addr: 0x004b06f0
     name: ECM_Open
     size: 687

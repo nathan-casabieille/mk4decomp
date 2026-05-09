@@ -44,8 +44,31 @@ int  TryInitRenderer(void);                              /* 0x004b3ed0 */
 
 int Renderer1_Init_Glide(HWND hwnd);                     /* 0x004b49a0 */
 int Renderer2_Init_D3D(HWND hwnd);                       /* 0x004ad6a0 */
-int Renderer3_Init_SW_FS(HWND hwnd, void *param);        /* 0x004af8c0 */
-int Renderer5_Init_SW_FS_Hi(HWND hwnd, void *param);     /* 0x004b00f0 */
+int Renderer3_Init_SW_FS(HWND hwnd, char *param);        /* 0x004af8c0 */
+int Renderer5_Init_SW_FS_Hi(HWND hwnd, char *param);     /* 0x004b00f0 */
+
+/* Renderer 3 / 5 sub-helpers (DDraw fullscreen path). */
+s32  DDraw3_Create(void);                                /* 0x004afb30 */
+void DDraw3_PostCreate(void);                            /* 0x004af960 */
+s32  DDraw3_CreateSurface(s32 mode);                     /* 0x004afd10 */
+s32  DDraw3_SetCooperativeLevel(void);                   /* 0x004afb70 */
+void DDraw3_GetSurface(void);                            /* 0x004afb00 */
+void DDraw3_Cleanup(void);                               /* 0x004afa10 */
+
+s32  DDraw5_Create(void);                                /* 0x004b0360 */
+void DDraw5_PostCreate(void);                            /* 0x004b0190 */
+s32  DDraw5_CreateSurface(s32 mode);                     /* 0x004b0540 */
+s32  DDraw5_SetCooperativeLevel(void);                   /* 0x004b03a0 */
+void DDraw5_GetSurface(void);                            /* 0x004b0330 */
+void DDraw5_Cleanup(void);                               /* 0x004b0240 */
+
+extern u32 g_renderer3_hwnd_obj;        /* 0x0058c87c */
+extern s32 g_renderer3_surface_active;  /* 0x0058c884 */
+extern u8  g_renderer3_initByte;        /* 0x004f47a4 */
+
+extern u32 g_renderer5_hwnd_obj;        /* 0x0058c8fc */
+extern s32 g_renderer5_surface_active;  /* 0x0058c904 */
+extern u8  g_renderer5_initByte;        /* 0x004f47ac */
 
 void Renderer1_PresentFrame(void);                       /* 0x004b46d0 */
 void Renderer2_PresentFrame(void);                       /* 0x004ae950 */
