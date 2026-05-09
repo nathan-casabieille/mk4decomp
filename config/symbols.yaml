@@ -93,7 +93,8 @@ functions:
     name: AuxAudio_SetVolume
     size: 76
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/auxout.c
   - addr: 0x004aca60
     name: GetExeDirectory
     size: 113

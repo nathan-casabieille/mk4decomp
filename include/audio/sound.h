@@ -14,7 +14,19 @@ extern "C" {
 
 void DSound_Init(void *hwnd);                            /* 0x004c3ef0 */
 void AuxAudio_Init(void *hwnd);                          /* 0x004ac8f0 */
-void AuxAudio_SetVolume(u32 vol);                        /* 0x004aca10 */
+void AuxAudio_SetVolume(s32 vol);                        /* 0x004aca10 */
+
+/* Aux-out (Windows multimedia) channel inventory. AuxAudio_Init
+ * populates this with the system's available auxiliary devices and
+ * stores how many were found. Each entry is the device id + a
+ * 4-byte pad (caps slot or similar). */
+typedef struct AuxChannel {
+    u32 deviceId;
+    u32 _pad;
+} AuxChannel;
+
+extern s32         g_auxCount;        /* 0x005438a0 */
+extern AuxChannel  g_auxChannels[];   /* 0x005438a8 */
 
 /* === Per-frame ticks (called from GameLogicStep) ============== */
 
