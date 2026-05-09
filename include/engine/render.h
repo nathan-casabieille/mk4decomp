@@ -47,6 +47,12 @@ int Renderer2_Init_D3D(HWND hwnd);                       /* 0x004ad6a0 */
 int Renderer3_Init_SW_FS(HWND hwnd, void *param);        /* 0x004af8c0 */
 int Renderer5_Init_SW_FS_Hi(HWND hwnd, void *param);     /* 0x004b00f0 */
 
+void Renderer1_PresentFrame(void);                       /* 0x004b46d0 */
+void Renderer2_PresentFrame(void);                       /* 0x004ae950 */
+void Renderer3_PresentFrame(void);                       /* 0x004af690 */
+void Renderer4_PresentFrame(void);                       /* 0x004b2840 */
+void Renderer5_PresentFrame(void);                       /* 0x004afec0 */
+
 /* === Sort key LUT (z-bucketing) ============================== */
 
 /* 128 KB sort-key lookup. Built once at startup by BuildSortKeyLUT.

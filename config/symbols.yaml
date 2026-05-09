@@ -111,13 +111,15 @@ functions:
   - addr: 0x004ad210
     name: ComputeConfigHash
     size: 52
-    group: engine.install
-    status: stub
+    group: platform.install
+    status: matched
+    file: src/platform/install.c
   - addr: 0x004ad250
     name: DeobfuscateConfig
     size: 32
-    group: engine.install
-    status: stub
+    group: platform.install
+    status: matched
+    file: src/platform/install.c
   - addr: 0x004ad270
     name: ValidateInstall
     size: 402
@@ -343,8 +345,9 @@ functions:
   - addr: 0x004b3e90
     name: PresentFrame
     size: 44
-    group: engine.geo
-    status: stub
+    group: engine.render
+    status: matched
+    file: src/engine/render.c
   - addr: 0x004b3ed0
     name: TryInitRenderer
     size: 429

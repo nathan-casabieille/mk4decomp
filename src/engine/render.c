@@ -4,6 +4,29 @@
 #include "engine/render.h"
 
 /*
+ * Per-frame Present dispatcher: tail-calls the renderer that
+ * matches the current mode. Out-of-range mode is silently dropped.
+ *
+ * Note: in the source order below, case 5 sits BEFORE case 4 -
+ * Eurocom apparently added Renderer5 (SW_FS_Hi) before Renderer4
+ * (SW_Win) in the codebase. Matching this exactly requires the
+ * compiler to emit the case bodies in source order so that the
+ * jump table at the end shuffles indices accordingly.
+ *
+ * @addr 0x004b3e90
+ */
+void PresentFrame(void)
+{
+    switch (g_currentRendererMode) {
+        case 1: Renderer1_PresentFrame(); break;
+        case 2: Renderer2_PresentFrame(); break;
+        case 3: Renderer3_PresentFrame(); break;
+        case 5: Renderer5_PresentFrame(); break;
+        case 4: Renderer4_PresentFrame(); break;
+    }
+}
+
+/*
  * Validate and store the requested renderer mode in
  * g_clampedRendererMode. Out-of-range modes are clamped to 4
  * (software-windowed). Returns the *current* mode (not the new
