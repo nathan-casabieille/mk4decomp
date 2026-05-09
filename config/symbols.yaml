@@ -459,8 +459,9 @@ functions:
   - addr: 0x004bdb50
     name: NodeApplyTransform_A
     size: 163
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdc00
     name: NodeApplyTransform_A_Direct
     size: 98
@@ -470,8 +471,9 @@ functions:
   - addr: 0x004bdca0
     name: NodeApplyTransform_B
     size: 163
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdd50
     name: NodeApplyTransform_B_Direct
     size: 98
@@ -481,8 +483,9 @@ functions:
   - addr: 0x004bde90
     name: NodeApplyTransform_C
     size: 163
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdf40
     name: NodeApplyTransform_C_Direct
     size: 98
