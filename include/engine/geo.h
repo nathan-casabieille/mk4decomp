@@ -67,6 +67,22 @@ void LoadGeoAsset_Default(void);                         /* 0x004bd5b0 */
  * texture-load behavior; LoadGeoAsset_Default passes 0. */
 void LoadGeoAsset_Textures(s32 flag);                    /* 0x004bd6e0 */
 
+/* === Mem heap allocator ===================================== */
+
+/* First-fit splitting allocator over the [g_memHeapStart..g_memHeapEnd)
+ * region. Each block has a 12-byte header:
+ *   +0x00 (header)  - high bit = "free" flag, top byte = tag, low 24 bits = size
+ *   +0x04 (caller)  - caller-supplied output pointer or metadata
+ *   +0x08 (prev)    - back-link used to walk the heap
+ * User data lives at &block + 0x0c. */
+s32  Mem_Malloc(void **out_ptr, s32 size, s32 tag);     /* 0x004b5bc0 */
+
+/* Post-allocation hook (rebuilds free-list shadow caches). */
+void Helper_MemMalloc_Post(void);                        /* 0x004b5ad0 */
+
+extern u8  g_memHeapStart[];     /* 0x007b41a0 */
+extern u8  g_memHeapEnd[];       /* 0x00ab4194 - one past last byte */
+
 #ifdef __cplusplus
 }
 #endif

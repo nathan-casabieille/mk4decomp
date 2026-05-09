@@ -433,7 +433,8 @@ functions:
     name: Mem_Malloc
     size: 195
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/mem_alloc.c
   - addr: 0x004b6340
     name: GameStateMachine
     size: 509
