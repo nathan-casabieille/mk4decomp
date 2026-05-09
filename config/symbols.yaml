@@ -83,7 +83,8 @@ functions:
     name: Audio_TimerTick
     size: 104
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/timer.c
   - addr: 0x004ac8f0
     name: AuxAudio_Init
     size: 184
