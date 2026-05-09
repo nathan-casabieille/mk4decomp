@@ -67,6 +67,11 @@ void ExitGame(void);                                     /* 0x004c4870 */
  * when g_timerInitedSkip is set. */
 void Timer_Init(void);                                   /* 0x004c4470 */
 
+/* Returns wall-clock microseconds since Timer_Init, using QPC if it
+ * was successfully initialised, otherwise falling back to
+ * timeGetTime() * 1000. Result is a 32-bit unsigned int. */
+u32 QueryMicroTimer(void);                               /* 0x004c4510 */
+
 extern s32 g_timerInitedSkip;       /* 0x00f9f008 - non-zero = skip init */
 
 #ifdef _WIN32

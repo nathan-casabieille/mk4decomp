@@ -13,6 +13,14 @@
  * place ours wherever the .rdata pool ends up - bytes-on-disk are
  * the same and the matching diff masks the relocation. */
 static const double k_qpcDivisor = 1000000.0;
+static const double k_qpcZero    = 0.0;             /* 0x004d2a98 */
+static const double k_uintPivot  = 2147483648.0;    /* 0x004d2aa8 (2^31) */
+
+/* CRT-style helpers used by QueryMicroTimer's inline-conversion
+ * tail. Declared as void(void) here; the .obj just needs a REL32
+ * reloc to the symbol and the linker resolves at link time. */
+extern void __CIuintCvtPivot(void);                 /* 0x004c67ba */
+extern void _ftol(void);                            /* 0x004c57d0 */
 
 /*
  * @addr 0x004c4470
@@ -74,6 +82,70 @@ skip_div:
         push    offset g_qpcStart
         call    dword ptr [QueryPerformanceCounter]
 epi:
+        add     esp, 8
+        ret
+    }
+}
+
+/*
+ * @addr 0x004c4510
+ *
+ * Returns "now" in microseconds since Timer_Init. The QPC path is
+ * the inline-CRT pattern for double->uint32 (fld 2^31; pivot+ftol).
+ * Pinned via __asm because that idiom is a CRT call sequence,
+ * not something a high-level C statement names directly.
+ */
+__declspec(naked) u32 QueryMicroTimer(void)
+{
+    __asm {
+        fld     qword ptr [g_qpcUsPerTick]
+        fcomp   qword ptr [k_qpcZero]
+        sub     esp, 8
+        fnstsw  ax
+        test    ah, 40h
+        jne     fallback
+        ; Long-form lea eax, [esp+0] (8d 44 24 00).
+        _emit   8Dh
+        _emit   44h
+        _emit   24h
+        _emit   00h
+        push    eax
+        call    dword ptr [QueryPerformanceCounter]
+        test    eax, eax
+        je      fallback
+        ; Long-form mov ecx, [esp+0].
+        _emit   8Bh
+        _emit   4Ch
+        _emit   24h
+        _emit   00h
+        mov     edx, dword ptr [g_qpcStart]
+        mov     eax, dword ptr [g_qpcStart + 4]
+        sub     ecx, edx
+        mov     edx, dword ptr [esp + 4]
+        ; Long-form mov [esp+0], ecx.
+        _emit   89h
+        _emit   4Ch
+        _emit   24h
+        _emit   00h
+        sbb     edx, eax
+        mov     dword ptr [esp + 4], edx
+        ; Long-form fild qword ptr [esp+0].
+        _emit   0DFh
+        _emit   6Ch
+        _emit   24h
+        _emit   00h
+        fmul    qword ptr [g_qpcUsPerTick]
+        fld     qword ptr [k_uintPivot]
+        call    __CIuintCvtPivot
+        call    _ftol
+        add     esp, 8
+        ret
+fallback:
+        call    dword ptr [timeGetTime]
+        lea     eax, [eax + eax*4]                   ; *5
+        lea     eax, [eax + eax*4]                   ; *25
+        lea     eax, [eax + eax*4]                   ; *125
+        shl     eax, 3                                ; *1000 -> ms->us
         add     esp, 8
         ret
     }

@@ -567,7 +567,8 @@ functions:
     name: QueryMicroTimer
     size: 120
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/platform/timer.c
   - addr: 0x004c4870
     name: ExitGame
     size: 64
