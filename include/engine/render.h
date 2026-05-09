@@ -149,6 +149,35 @@ extern s16  g_vtxScreenY;       /* 0x007af9be */
  * into g_vtxScreen{X,Y}. */
 void ProjectVertex(void);                                /* 0x004b2e80 */
 
+/* Two-vertex variant - reads (g_vtxIn1_*, g_vtxIn2_*), writes the
+ * world-space output pairs to g_vtxOut1/2 and the screen coords
+ * to (g_vtxScreenP1{X,Y}, g_vtxScreenP2{X,Y}), then tail-calls
+ * the line-emit helper with arg=2. */
+void ProjectTwoVertices(void);                           /* 0x004b2af0 */
+
+/* Inputs / outputs for ProjectTwoVertices. */
+extern s16 g_vtxIn2_x;          /* 0x007af95a */
+extern s16 g_vtxIn2_z;          /* 0x007af960 */
+extern s16 g_vtxIn1_y;          /* 0x007af95e */
+extern s16 g_vtxIn2_y;          /* 0x007af964 */
+extern s16 g_vtxIn1_z;          /* 0x007af966 */
+
+extern s32 g_vtxOut1_x;         /* 0x007af96c */
+extern s32 g_vtxOut2_x;         /* 0x007af970 */
+extern s32 g_vtxOut1_y;         /* 0x007af978 */
+extern s32 g_vtxOut2_y;         /* 0x007af97c */
+extern s32 g_vtxOut1_z;         /* 0x007af984 */
+extern s32 g_vtxOut2_z;         /* 0x007af988 */
+
+extern s16 g_vtxScreenP1X;      /* 0x007af9b4 */
+extern s16 g_vtxScreenP1Y;      /* 0x007af9b6 */
+extern s16 g_vtxScreenP2X;      /* 0x007af9b8 */
+extern s16 g_vtxScreenP2Y;      /* 0x007af9ba */
+
+/* Line-emit helper called by ProjectTwoVertices with the vertex
+ * count (always 2). */
+void Helper_EmitLine(s32 count);                        /* 0x004b2d20 */
+
 /* Apply vertex-light shading on the working RGB555 color in
  * g_vtxColor. Uses two light directions (g_vtxLight0/1) and per-
  * channel intensities g_vtxRGBScale0/1; result is clamped to 5
