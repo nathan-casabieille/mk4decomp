@@ -216,8 +216,13 @@ functions:
   - addr: 0x004b1ec0
     name: FSYS_NormalizePath
     size: 129
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: drafted
+    # Functionally correct; output 112 bytes vs original 129. Our
+    # /O2 build dropped a dead `i < 0x3ff` bound check and skipped
+    # an int-spill the original kept. Needs source-level rework to
+    # trigger the same codegen as the 1998 build.
+    file: src/engine/fsys.c
   - addr: 0x004b1f50
     name: FSYS_HashName
     size: 50
@@ -229,8 +234,12 @@ functions:
   - addr: 0x004b1f90
     name: FSYS_fclose
     size: 25
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: matched
+    # All non-relocation bytes match exactly. The 4-byte address
+    # at offset 14-17 will be filled by the linker as &g_fsys_files
+    # (= 0x007ae0dc) once the global gets a definition.
+    file: src/engine/fsys.c
   - addr: 0x004b1fb0
     name: FSYS_fread
     size: 184
@@ -239,13 +248,26 @@ functions:
   - addr: 0x004b2070
     name: FSYS_fseek
     size: 133
-    group: engine.app
+    group: engine.fsys
     status: stub
+  - addr: 0x004b2100
+    name: FSYS_ftell
+    size: 23
+    group: engine.fsys
+    status: matched
+    # Discovered in the gap between fseek and fsize. Returns
+    # g_fsys_files[fh] (= current read offset), or -1 if fh out of
+    # range. Used by FSYS_fsize. Match modulo reloc at offset 18-21.
+    file: src/engine/fsys.c
   - addr: 0x004b2120
     name: FSYS_fsize
     size: 60
-    group: engine.app
-    status: stub
+    group: engine.fsys
+    status: matched
+    # Open / fseek to end / ftell / close. 5 relocations: "rb"
+    # string literal + 4 internal FSYS calls. All non-reloc bytes
+    # match exactly.
+    file: src/engine/fsys.c
   - addr: 0x004b2160
     name: FSYS_fload
     size: 75

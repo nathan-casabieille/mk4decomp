@@ -34,17 +34,29 @@ typedef struct fsys_entry {
     u32 size;
 } fsys_entry;
 
+/* === Internal state ============================================ */
+
+/* Open-file table indexed by file handle. -1 means slot is free.
+ * 0x401 entries (handles 0..0x400 inclusive). Lives at 0x7ae0dc. */
+extern int g_fsys_files[];
+
+/* Static scratch buffer used by FSYS_NormalizePath to return the
+ * uppercased + drive-prefixed result. Lives at 0x7af0e0. */
+extern char g_fsys_normalized_path[FSYS_PATH_MAX];
+
 /* === Public API ============================================== */
 
 /* Open the archive and load its header table. */
 void FSYS_Init(void);                                    /* 0x004b1cf0 */
 
-/* Open one asset by its full path (e.g. "c:\\source\\mk4\\..."). */
-int  FSYS_fopen(const char *path);                       /* 0x004b1e00 */
+/* Open one asset by its full path (e.g. "c:\\source\\mk4\\...").
+ * Mode follows fopen() conventions; the engine only ever uses "rb". */
+int  FSYS_fopen(const char *path, const char *mode);     /* 0x004b1e00 */
 
 /* Sequential I/O on an open asset. */
 int  FSYS_fread(void *buf, u32 size, u32 count, int fh); /* 0x004b1fb0 */
 int  FSYS_fseek(int fh, u32 off, int whence);            /* 0x004b2070 */
+int  FSYS_ftell(int fh);                                 /* 0x004b2100 */
 int  FSYS_fclose(int fh);                                /* 0x004b1f90 */
 
 /* Convenience: open + read entire file + close. */
