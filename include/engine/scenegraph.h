@@ -123,6 +123,18 @@ extern void     (*g_walkCallback)(void);                 /* 0x0054206c */
  * stride and accessed at offsets [idx], [idx+1], [idx+2]. */
 extern u32        g_siblingTable[];                       /* base offset varies */
 
+/* Matrix-stack pointer (counter increased by NodeApplyMatrix). */
+extern int        g_matrixStackTop;                       /* 0x004d57ac */
+
+/* Per-walk loop counter used by NodeApplyMatrix's outer iteration. */
+extern int        g_xformLoopCounter;                     /* 0x0053a1ac */
+
+/* Two parallel matrix stacks (keys + values) read/written by
+ * NodeApplyMatrix. */
+extern u32        g_matrixStackA[];                       /* RELOC base */
+extern u32        g_matrixStackB[];                       /* RELOC base */
+extern u32        g_xformChainTable[];                    /* RELOC base */
+
 #ifdef __cplusplus
 }
 #endif

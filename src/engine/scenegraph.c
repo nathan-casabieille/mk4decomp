@@ -16,6 +16,68 @@ void *AllocNode(void)
 }
 
 /*
+ * Apply a matrix from the per-node matrix stack to the current
+ * transform chain. Pushes the current node + chain head onto two
+ * parallel matrix stacks, walks down 8 children of the chain
+ * starting at offset 0x28 of the entity table, then pops back.
+ *
+ * @addr 0x004be050
+ */
+__declspec(naked) void NodeApplyMatrix(void)
+{
+    __asm {
+        mov     eax, [g_matrixStackTop]
+        mov     ecx, [g_currentNodeIdx]
+        inc     eax
+        mov     [g_matrixStackTop], eax
+        mov     dword ptr [eax*4 + g_matrixStackA], ecx
+        mov     eax, [g_matrixStackTop]
+        mov     edx, [g_xformLoopCounter]
+        inc     eax
+        mov     [g_matrixStackTop], eax
+        mov     dword ptr [eax*4 + g_matrixStackB], edx
+        mov     eax, [g_xformEntityIdx]
+        sub     eax, 0Fh
+        mov     [g_xformLoopCounter], 8
+        mov     [g_xformEntityIdx], eax
+        mov     eax, dword ptr [eax*4 + 28h]
+        add     eax, 6
+        mov     [g_xformEntityIdx], eax
+        mov     ecx, dword ptr [eax*4 + g_xformChainTable]
+        inc     eax
+        mov     [g_walkCallback], ecx
+        mov     [g_xformEntityIdx], eax
+        jmp     loop_entry
+loop_top:
+        mov     eax, [g_xformEntityIdx]
+loop_entry:
+        mov     ecx, dword ptr [eax*4 + g_xformChainTable]
+        mov     edx, [g_currentNodeIdx]
+        inc     eax
+        mov     [g_walkCallback], ecx
+        mov     [g_xformEntityIdx], eax
+        mov     dword ptr [edx*4 + g_xformChainTable], ecx
+        mov     ecx, [g_currentNodeIdx]
+        mov     eax, [g_xformLoopCounter]
+        inc     ecx
+        dec     eax
+        mov     [g_currentNodeIdx], ecx
+        mov     [g_xformLoopCounter], eax
+        jns     loop_top
+        mov     eax, [g_matrixStackTop]
+        mov     ecx, dword ptr [eax*4 + g_matrixStackB]
+        dec     eax
+        mov     [g_xformLoopCounter], ecx
+        mov     [g_matrixStackTop], eax
+        mov     edx, dword ptr [eax*4 + g_matrixStackA]
+        dec     eax
+        mov     [g_currentNodeIdx], edx
+        mov     [g_matrixStackTop], eax
+        ret
+    }
+}
+
+/*
  * Walk the scene-graph siblings of g_currentNodeIdx, invoking the
  * caller-supplied g_walkCallback on each. Each sibling entry has
  * three packed fields at byte offsets +0, +4, +8 (interpreted by

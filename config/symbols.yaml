@@ -497,7 +497,8 @@ functions:
     name: NodeApplyMatrix
     size: 214
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004be130
     name: NodeApplyTransform_B_Swapped
     size: 224
