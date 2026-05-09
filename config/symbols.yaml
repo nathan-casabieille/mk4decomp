@@ -353,7 +353,8 @@ functions:
     name: ProjectVertex
     size: 273
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/project_vertex.c
   - addr: 0x004b2fa0
     name: AdvanceTriStripRing
     size: 80

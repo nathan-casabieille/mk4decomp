@@ -116,6 +116,39 @@ extern s32  g_gfxFlagA;         /* 0x007afa0c */
 extern s32  g_gfxFlagB;         /* 0x007afa10 */
 extern s32  g_gfxFlagC;         /* 0x007afa14 */
 
+/* === Vertex transform state ================================== */
+
+/* Input local-space coords (16-bit, packed at +0x6 stride to match
+ * the orig - actually they're at base + 0, +6, +12 because the
+ * struct layout interleaves with another field). */
+extern s16  g_vtxIn_x;          /* 0x007af95c */
+extern s16  g_vtxIn_y;          /* 0x007af962 */
+extern s16  g_vtxIn_z;          /* 0x007af968 */
+
+/* Camera/object matrix. 3 rows of 3 s16 columns; column-major or
+ * row-major depending on the mul order in ProjectVertex. */
+extern s16  g_vtxMat[9];        /* 0x007af990 */
+
+/* Translation (s32 each). */
+extern s32  g_vtxTransX;        /* 0x007af9a4 */
+extern s32  g_vtxTransY;        /* 0x007af9a8 */
+extern s32  g_vtxTransZ;        /* 0x007af9ac */
+
+/* Output world-space coords (s32 each). */
+extern s32  g_vtxOut_x;         /* 0x007af974 */
+extern s32  g_vtxOut_y;         /* 0x007af980 */
+extern s32  g_vtxOut_z;         /* 0x007af98c */
+
+/* "Vertex valid" flag and projected screen coords (s16 each). */
+extern s32  g_vtxValid;         /* 0x007af9b0 */
+extern s16  g_vtxScreenX;       /* 0x007af9bc */
+extern s16  g_vtxScreenY;       /* 0x007af9be */
+
+/* Project g_vtxIn_* through g_vtxMat / g_vtxTrans*, store the
+ * world coords to g_vtxOut_*, then perspective-divide and scale
+ * into g_vtxScreen{X,Y}. */
+void ProjectVertex(void);                                /* 0x004b2e80 */
+
 /* === Globals ================================================= */
 
 extern int g_currentRendererMode;    /* 0x004f4b3c */
