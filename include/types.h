@@ -19,8 +19,13 @@ typedef short               s16;
 typedef unsigned short      u16;
 typedef int                 s32;
 typedef unsigned int        u32;
+#if defined(_MSC_VER) && _MSC_VER < 1300
+typedef __int64             s64;
+typedef unsigned __int64    u64;
+#else
 typedef long long           s64;
 typedef unsigned long long  u64;
+#endif
 
 typedef float               f32;
 typedef double              f64;

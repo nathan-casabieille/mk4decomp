@@ -7,7 +7,7 @@
 # Setup is one-time:
 #   ./tools/setup-macos.sh                  install Whisky, mingw, ghidra
 #   ./tools/decomp/setup-msvc50.sh          create the MSVC 5.0 bottle
-#   (manually copy MSVC 5.0 binaries into the bottle — see docs/MSVC50.md)
+#   (manually copy MSVC 5.0 binaries into the bottle - see docs/MSVC50.md)
 #   ./tools/decomp/test-toolchain.sh        verify cl/link work
 
 ORIGINAL_EXE := game/MK4.EXE
@@ -27,9 +27,11 @@ LINK := tools/decomp/link.sh
 #  /MT      - statically linked multi-threaded CRT (matches MK4)
 #  /O2      - default release optimization
 #  /W3      - moderate warning level
-#  /Gz      - __stdcall as default calling convention
 #  /Iinclude - include path
-CFLAGS_MATCHING := /nologo /MT /O2 /W3 /Gz /Iinclude
+# Calling convention left at default (/Gd = __cdecl). The original
+# binary uses cdecl for internal helpers; Win32 API stdcall is handled
+# via the WINAPI/__stdcall annotations in the headers.
+CFLAGS_MATCHING := /nologo /MT /O2 /W3 /Iinclude
 
 # Linker flags. Subsystem 4.0 = Win95/NT 4.0 (matches MK4).
 LDFLAGS_MATCHING := /nologo /SUBSYSTEM:WINDOWS,4.0 /MACHINE:IX86 \
@@ -65,7 +67,7 @@ help:
 	@echo "Setup (run once):"
 	@echo "  ./tools/setup-macos.sh"
 	@echo "  ./tools/decomp/setup-msvc50.sh"
-	@echo "  (then place MSVC 5.0 binaries — see docs/MSVC50.md)"
+	@echo "  (then place MSVC 5.0 binaries - see docs/MSVC50.md)"
 	@echo "  ./tools/decomp/test-toolchain.sh"
 
 all: matching
@@ -79,7 +81,7 @@ check-msvc:
 	fi
 	@. config/msvc50.env && \
 	    if [ ! -f "$$MSVC50_ROOT/Bin/CL.EXE" ]; then \
-	        echo "ERROR: place MSVC 5.0 binaries — see docs/MSVC50.md"; \
+	        echo "ERROR: place MSVC 5.0 binaries - see docs/MSVC50.md"; \
 	        exit 1; \
 	    fi
 
@@ -95,7 +97,7 @@ $(OBJ_DIR)/%.obj: src/%.c | $(BUILD_DIR)
 	@echo "  CL      $<"
 	@$(CL) $(CFLAGS_MATCHING) /c /Fo$@ $<
 
-# Pattern: asm/foo.s -> build/obj/asm/foo.obj  (assembler — TODO)
+# Pattern: asm/foo.s -> build/obj/asm/foo.obj  (assembler - TODO)
 $(OBJ_DIR)/asm/%.obj: asm/%.s | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	@echo "  ML      $<"
@@ -105,7 +107,7 @@ $(OBJ_DIR)/asm/%.obj: asm/%.s | $(BUILD_DIR)
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR) $(OBJ_DIR)
 
-# === Portable build (MinGW-w64) — TODO ==================================
+# === Portable build (MinGW-w64) - TODO ==================================
 
 portable: $(PORT_EXE)
 

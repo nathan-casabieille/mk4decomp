@@ -221,8 +221,11 @@ functions:
   - addr: 0x004b1f50
     name: FSYS_HashName
     size: 50
-    group: engine.ecm
-    status: stub
+    group: engine.fsys
+    status: equivalent
+    # 49/50 bytes match. Single diff is SIB encoding of final
+    # `lea eax, [esi+edx]` (0x16 vs 0x32). Semantically identical.
+    file: src/engine/fsys.c
   - addr: 0x004b1f90
     name: FSYS_fclose
     size: 25

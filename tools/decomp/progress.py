@@ -44,14 +44,17 @@ def count_lines_of_c():
 def main():
     syms = load_symbols()
 
-    total_known   = len(syms)
-    total_matched = sum(1 for s in syms if s.get("status") == "matched")
-    total_drafted = sum(1 for s in syms if s.get("status") == "drafted")
-    total_stub    = sum(1 for s in syms if s.get("status") == "stub")
-    total_unknown = total_known - total_matched - total_drafted - total_stub
+    total_known      = len(syms)
+    total_matched    = sum(1 for s in syms if s.get("status") == "matched")
+    total_equivalent = sum(1 for s in syms if s.get("status") == "equivalent")
+    total_drafted    = sum(1 for s in syms if s.get("status") == "drafted")
+    total_stub       = sum(1 for s in syms if s.get("status") == "stub")
+    total_unknown    = (total_known - total_matched - total_equivalent
+                        - total_drafted - total_stub)
 
     bytes_total   = sum(s.get("size", 0) for s in syms)
-    bytes_matched = sum(s.get("size", 0) for s in syms if s.get("status") == "matched")
+    bytes_matched = sum(s.get("size", 0) for s in syms
+                        if s.get("status") in ("matched", "equivalent"))
 
     # Estimate of total functions in MK4.EXE (.text = 0xd02e4 bytes,
     # avg function ~500 bytes → ~1700 fns).
@@ -63,11 +66,12 @@ def main():
           f"(~{100*total_known/ESTIMATED_TOTAL_FNS:.1f}% of estimated total)")
     print(f"  Status:")
     print(f"    matched (byte-perfect)  : {total_matched:>5d}")
+    print(f"    equivalent (sem. ident) : {total_equivalent:>5d}")
     print(f"    drafted (functional)    : {total_drafted:>5d}")
     print(f"    stub (asm-only)         : {total_stub:>5d}")
     print(f"    unimplemented           : {total_unknown:>5d}")
     print()
-    print(f"  Bytes of .text matched   : {bytes_matched:>7d} / {bytes_total:>7d} "
+    print(f"  Bytes of .text covered   : {bytes_matched:>7d} / {bytes_total:>7d} "
           f"({100*bytes_matched/(bytes_total or 1):.1f}% of identified)")
     print()
     print(f"  Lines of C source        : {count_lines_of_c():>5d}")
@@ -79,7 +83,7 @@ def main():
         g = s.get("group", "ungrouped")
         by_group.setdefault(g, [0, 0])
         by_group[g][0] += 1
-        if s.get("status") == "matched":
+        if s.get("status") in ("matched", "equivalent"):
             by_group[g][1] += 1
     if by_group:
         print("  Per-subsystem:")

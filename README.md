@@ -1,15 +1,20 @@
 # MK4 - Matching Decompilation
 
+```diff
+- WARNING! -
+
+This repository is a work in progress, and while it can be used to make certain changes, it's still
+constantly evolving. If you use it for modding purposes in its current state, please be aware that
+the codebase can drastically change at any time. Also note that some parts of the ROM may not be
+'shiftable' yet, so modifying them could be difficult at this point.
+```
+
 A **matching decompilation** of **Mortal Kombat 4** (PC, Midway /
-Eurocom, 1998), in the spirit of [zeldaret/oot](https://github.com/zeldaret/oot)
-and [n64decomp/sm64](https://github.com/n64decomp/sm64).
+Eurocom, 1998).
 
 Goal: reproduce `MK4.EXE` **byte-for-byte** from reconstructed C source,
 compiled with the original toolchain (Microsoft Visual C++ 5.0). Once
 matching, the C source is the canonical representation of the game.
-
-A **portable build** target (SDL2 / Metal on macOS) is maintained in
-parallel for development convenience.
 
 ## Status
 
@@ -44,7 +49,7 @@ subsystem of the engine is documented at a high level.
 
 ## Build (matching)
 
-The matching build needs MSVC 5.0 + LINK 5.10. We run it under Wine
+The matching build needs MSVC 5.0 + LINK 5.10. I run it under Wine
 on macOS via Whisky.
 
 ```sh
@@ -67,7 +72,10 @@ natively.
 make portable
 ```
 
-## Reading order for new contributors
+## Contributing
+
+All contributions are welcome. This is a group effort, and even small contributions can make a difference.
+Some tasks also don't require much knowledge to get started.
 
 1. [analysis/notes/architecture.md](analysis/notes/architecture.md) -
    what the engine does, subsystem-by-subsystem
