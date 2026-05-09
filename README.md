@@ -112,3 +112,9 @@ The engine is © 1998 Eurocom Entertainment Software / Midway. This
 project distributes ZERO original game assets - the `original/` and
 `game/` paths are git-ignored. To run the result, you provide your
 own copy of MK4.
+
+---
+
+<p align="center">
+  <img src=".github/continue.gif" alt="Mortal Kombat 4 - Continue">
+</p>
