@@ -563,7 +563,8 @@ functions:
     name: ExitGame
     size: 64
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/platform/exit.c
   - addr: 0x004c48c0
     name: ShowErrorMessage
     size: 144

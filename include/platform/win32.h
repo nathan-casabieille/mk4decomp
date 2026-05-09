@@ -49,5 +49,16 @@ typedef void *HRESULT;
 extern HINSTANCE g_hInstance;       /* DAT_00f9f7c4 */
 extern HWND      g_hMainWindow;     /* DAT_00f9f7c0 */
 extern int       g_nCmdShow;        /* DAT_00f9f7cc */
+extern HANDLE    g_hAppMutex;       /* DAT_00f9f7d0 - single-instance handle, CloseHandle'd on exit */
+
+/* === API ==================================================== */
+
+/* Tear-down of subsystems (renderer/audio/input/etc). Called from
+ * ExitGame and from WM_DESTROY. */
+void AppShutdown(void);                                  /* 0x004b2690 */
+
+/* Best-effort shutdown: notifies the main window, releases the
+ * single-instance handle, and exits the process. */
+void ExitGame(void);                                     /* 0x004c4870 */
 
 #endif /* MK4_PLATFORM_WIN32_H */
