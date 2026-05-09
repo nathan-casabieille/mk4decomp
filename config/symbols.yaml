@@ -382,8 +382,9 @@ functions:
   - addr: 0x004b3940
     name: BuildRotMatrix_OrderB
     size: 324
-    group: engine.geo
-    status: stub
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/rot_matrix_b.c
   - addr: 0x004b3e90
     name: PresentFrame
     size: 44
