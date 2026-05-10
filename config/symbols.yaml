@@ -1065,20 +1065,22 @@ functions:
     group: boot
     status: stub
   - addr: 0x00413360
-    name: func_00413360
+    name: Push8d_Push413490_00413360
     size: 19
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00413380
     name: func_00413380
     size: 472
     group: boot
     status: stub
   - addr: 0x00413560
-    name: func_00413560
+    name: Push8e_Push413690_00413560
     size: 19
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00413580
     name: func_00413580
     size: 472
@@ -1382,10 +1384,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041d550
-    name: func_0041d550
+    name: Push0_Push41d7d0_0041d550
     size: 16
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x0041d560
     name: func_0041d560
     size: 519
@@ -1592,10 +1595,11 @@ functions:
     status: matched
     file: src/engine/misc_matches.c
   - addr: 0x00421c40
-    name: func_00421c40
+    name: Push71_Push48caa0_00421c40
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00421c50
     name: func_00421c50
     size: 68
@@ -4185,10 +4189,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043d580
-    name: func_0043d580
+    name: PushCallRetNopJmp_0043d580
     size: 21
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x0043d5a0
     name: func_0043d5a0
     size: 123
@@ -6118,10 +6123,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00463070
-    name: func_00463070
+    name: Push0_Push463220_Jmp_00463070
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00463090
     name: func_00463090
     size: 763
@@ -7405,10 +7411,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00478120
-    name: func_00478120
+    name: TwoCallJmp_00478120
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00478140
     name: func_00478140
     size: 515
@@ -8589,10 +8596,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489220
-    name: func_00489220
+    name: Push267_Push44eb60_Jmp_00489220
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x00489240
     name: func_00489240
     size: 1535
@@ -10545,10 +10553,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049cb40
-    name: func_0049cb40
+    name: StoreTwoCall_0049cb40
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x0049cb60
     name: AllocNode
     size: 15
@@ -11654,10 +11663,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab670
-    name: func_004ab670
+    name: CallPauseInc_004ab670
     size: 21
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x004ab690
     name: func_004ab690
     size: 110
@@ -11704,10 +11714,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004abfc0
-    name: func_004abfc0
+    name: SplitHi8Lo24_004abfc0
     size: 27
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x004abfe0
     name: func_004abfe0
     size: 38
@@ -12751,10 +12762,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5450
-    name: func_004b5450
+    name: CallShrAnd_004b5450
     size: 18
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x004b5470
     name: func_004b5470
     size: 475
@@ -13141,20 +13153,22 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bd510
-    name: func_004bd510
+    name: LeaScaledCall_004bd510
     size: 22
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x004bd530
     name: func_004bd530
     size: 56
     group: engine.geo
     status: stub
   - addr: 0x004bd570
-    name: func_004bd570
+    name: TwoArgCallSeq_004bd570
     size: 21
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matches8.c
   - addr: 0x004bd590
     name: func_004bd590
     size: 30
