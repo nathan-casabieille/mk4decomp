@@ -1480,10 +1480,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041f7d0
-    name: func_0041f7d0
+    name: ScenegraphWalk_0041f7d0
     size: 61
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x0041f810
     name: LoadShlDerefCallSkip_0041f810
     size: 28
@@ -1614,10 +1615,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421be0
-    name: func_00421be0
+    name: DecBoundCheckCallJmp_00421be0
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x00421c20
     name: ZeroTriple_00421c20
     size: 18
@@ -2638,10 +2640,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042afc0
-    name: func_0042afc0
+    name: ModuloMagic_0042afc0
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x0042b000
     name: func_0042b000
     size: 749
@@ -4247,10 +4250,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043c350
-    name: func_0043c350
+    name: CallPauseScaledByteSet_0043c350
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x0043c390
     name: func_0043c390
     size: 104
@@ -4619,10 +4623,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446000
-    name: func_00446000
+    name: SpecialInitDirtyJmp_00446000
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x00446040
     name: func_00446040
     size: 118
@@ -6033,10 +6038,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00460c60
-    name: func_00460c60
+    name: CallPauseCallTestStackPushJmp_00460c60
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x00460ca0
     name: GuardedDispatch_00460ca0
     size: 34
@@ -13938,10 +13944,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004c3eb0
-    name: func_004c3eb0
+    name: VtableArgClamp_004c3eb0
     size: 60
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x004c3ef0
     name: DSound_Init
     size: 530
@@ -14535,10 +14542,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8ae0
-    name: func_004c8ae0
+    name: BitTestFreeClear_004c8ae0
     size: 51
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x004c8b20
     name: func_004c8b20
     size: 115
@@ -14923,10 +14931,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cd320
-    name: func_004cd320
+    name: DivMod32IAT_004cd320
     size: 34
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x004cd350
     name: func_004cd350
     size: 921
@@ -14999,10 +15008,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004ce1f0
-    name: func_004ce1f0
+    name: AddOverflowCheck_004ce1f0
     size: 35
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesFF.c
   - addr: 0x004ce220
     name: func_004ce220
     size: 104
