@@ -4610,10 +4610,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00444db0
-    name: func_00444db0
+    name: DoublePushScaledInitJmp_00444db0
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00444e00
     name: func_00444e00
     size: 226
@@ -5016,10 +5017,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044d1e0
-    name: func_0044d1e0
+    name: PushPopXformEntityCall_0044d1e0
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0044d230
     name: MStackCall_0044d230
     size: 75
@@ -5998,10 +6000,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00460260
-    name: func_00460260
+    name: GuardedDoubleCallSetJmp_00460260
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004602b0
     name: func_004602b0
     size: 323
@@ -6014,10 +6017,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesC.c
   - addr: 0x00460420
-    name: func_00460420
+    name: PushCallStoreClearJmp_00460420
     size: 68
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00460470
     name: func_00460470
     size: 308
@@ -7917,10 +7921,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047dee0
-    name: func_0047dee0
+    name: GuardedSetCallSetCall_0047dee0
     size: 67
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0047df30
     name: func_0047df30
     size: 610
@@ -9543,10 +9548,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x0048e7d0
-    name: func_0048e7d0
+    name: WalkCallbackSetClearDirty_0048e7d0
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048e820
     name: func_0048e820
     size: 205
@@ -9558,10 +9564,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ea40
-    name: func_0048ea40
+    name: GuardedWalkSwitchDirty_0048ea40
     size: 67
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048ea90
     name: func_0048ea90
     size: 131
@@ -9830,10 +9837,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048fee0
-    name: func_0048fee0
+    name: GuardedTripleCallSwapJmp_0048fee0
     size: 68
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048ff30
     name: Wrapper_0048ff30
     size: 14
@@ -11326,10 +11334,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1740
-    name: func_004a1740
+    name: TestEqJmpInitFightGroup_004a1740
     size: 68
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a1790
     name: SetWorkType02CountFFB_004a1790
     size: 54
@@ -12146,10 +12155,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac3a0
-    name: func_004ac3a0
+    name: DSoundQueryProperty_004ac3a0
     size: 68
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004ac3f0
     name: func_004ac3f0
     size: 189
@@ -13069,10 +13079,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesCC.c
   - addr: 0x004b4650
-    name: func_004b4650
+    name: SoundDisableIfActive_004b4650
     size: 68
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b46a0
     name: Renderer1_EndScene_Glide
     size: 38
@@ -13439,10 +13450,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004ba0e0
-    name: func_004ba0e0
+    name: ClampMulShiftStore_004ba0e0
     size: 66
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004ba130
     name: WalkSceneGraphSiblings
     size: 142
@@ -14170,10 +14182,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c54d0
-    name: func_004c54d0
+    name: TryAllocWithHandler_004c54d0
     size: 68
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004c5520
     name: func_004c5520
     size: 85
@@ -14518,10 +14531,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c82b0
-    name: func_004c82b0
+    name: WriteCharBuffered_004c82b0
     size: 66
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004c8300
     name: PaddedLoopFunc_004c8300
     size: 57
