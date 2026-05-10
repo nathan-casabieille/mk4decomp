@@ -168,171 +168,50 @@ void NodeApplyTransform_A_Direct(void)
 }
 
 /*
- * Non-Direct variant of NodeApplyTransform_A: same structure as the
- * _Direct family but each angle is pre-scaled (multiply-by-magic
- * for X >> 2 * 10430 >> 18, ~ X/100) and negated before being
- * stored into g_xformTempAngles. Likely converts "centi-degrees"
- * into BAM units before BuildRotMatrix.
+ * Non-Direct variant of NodeApplyTransform_A: same shape as the
+ * _Direct family but each s32 angle is first pre-scaled by the
+ *
+ *     y = ((x >> 2) * 10430) >> 18    (~ x / 100.58)
+ *
+ * magic before being negated and truncated to 16 bits. Likely
+ * converts an internal "centi-degrees"-ish unit before handing it
+ * to BuildRotMatrix.
+ *
+ * MSVC SP3 lowers the * 10430 multiplication into a strength-
+ * reduced lea/shl/add chain (10430 = 2 * 5 * 1043 = 2 * 5 * (1 +
+ * 521*2) = 2 * (5215)); reproduced by writing the multiplication
+ * directly as `* 10430` in source.
  *
  * @addr 0x004bdb50 / 0x004bdca0 / 0x004bde90
  */
-__declspec(naked) void NodeApplyTransform_A(void)
+void NodeApplyTransform_A(void)
 {
-    __asm {
-        mov     ecx, [g_xformEntityIdx]
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+4]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+2], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+8]
-        sar     eax, 2
-        mov     ecx, eax
-        shl     ecx, 6
-        add     ecx, eax
-        lea     edx, [eax + ecx*8]
-        mov     ecx, [g_currentNodeIdx]
-        lea     eax, [eax + edx*2]
-        lea     edx, [ecx*4 + g_nodeMatrixTable]
-        push    edx
-        push    offset g_xformTempAngles
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+4], ax
-        call    BuildRotMatrix_OrderA
-        mov     eax, [g_xformDirtyFlags]
-        add     esp, 8
-        or      al, 30h
-        mov     [g_xformDirtyFlags], eax
-        ret
-    }
+    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
+    g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
+    g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
+    BuildRotMatrix_OrderA(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    g_xformDirtyFlags |= 0x30;
 }
 
-__declspec(naked) void NodeApplyTransform_B(void)
+void NodeApplyTransform_B(void)
 {
-    __asm {
-        mov     ecx, [g_xformEntityIdx]
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+4]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+2], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+8]
-        sar     eax, 2
-        mov     ecx, eax
-        shl     ecx, 6
-        add     ecx, eax
-        lea     edx, [eax + ecx*8]
-        mov     ecx, [g_currentNodeIdx]
-        lea     eax, [eax + edx*2]
-        lea     edx, [ecx*4 + g_nodeMatrixTable]
-        push    edx
-        push    offset g_xformTempAngles
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+4], ax
-        call    BuildRotMatrix_OrderB
-        mov     eax, [g_xformDirtyFlags]
-        add     esp, 8
-        or      al, 30h
-        mov     [g_xformDirtyFlags], eax
-        ret
-    }
+    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
+    g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
+    g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
+    BuildRotMatrix_OrderB(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    g_xformDirtyFlags |= 0x30;
 }
 
-__declspec(naked) void NodeApplyTransform_C(void)
+void NodeApplyTransform_C(void)
 {
-    __asm {
-        mov     ecx, [g_xformEntityIdx]
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+4]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+2], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+8]
-        sar     eax, 2
-        mov     ecx, eax
-        shl     ecx, 6
-        add     ecx, eax
-        lea     edx, [eax + ecx*8]
-        mov     ecx, [g_currentNodeIdx]
-        lea     eax, [eax + edx*2]
-        lea     edx, [ecx*4 + g_nodeMatrixTable]
-        push    edx
-        push    offset g_xformTempAngles
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        neg     eax
-        mov     word ptr [g_xformTempAngles+4], ax
-        call    BuildRotMatrix_OrderC
-        mov     eax, [g_xformDirtyFlags]
-        add     esp, 8
-        or      al, 30h
-        mov     [g_xformDirtyFlags], eax
-        ret
-    }
+    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
+    g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
+    g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
+    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    g_xformDirtyFlags |= 0x30;
 }
 
 /*
