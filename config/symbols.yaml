@@ -1717,10 +1717,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422880
-    name: func_00422880
+    name: CallPauseEvtPushJmp_00422880
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x004228b0
     name: func_004228b0
     size: 1061
@@ -2493,10 +2494,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004297d0
-    name: func_004297d0
+    name: ScaledIncCmpJmp_004297d0
     size: 45
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00429800
     name: func_00429800
     size: 52
@@ -2696,10 +2698,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042c9c0
-    name: func_0042c9c0
+    name: PushCallPauseDirtyClear_0042c9c0
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x0042c9f0
     name: func_0042c9f0
     size: 205
@@ -2820,10 +2823,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042ee10
-    name: func_0042ee10
+    name: Cmp7DirtyToggle_0042ee10
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x0042ee40
     name: func_0042ee40
     size: 370
@@ -3115,10 +3119,11 @@ functions:
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x004338e0
-    name: func_004338e0
+    name: Cmp3JmpOrPushCall_004338e0
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00433910
     name: CallPauseDirtyLit_00433910
     size: 42
@@ -3194,15 +3199,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00433e50
-    name: func_00433e50
+    name: ShrShrStoreJmp_00433e50
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00433e70
-    name: func_00433e70
+    name: AddDerefJmp_00433e70
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00433e90
     name: func_00433e90
     size: 181
@@ -3762,10 +3769,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438e70
-    name: func_00438e70
+    name: MStackPushPtr1Jmp_00438e70
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00438ea0
     name: func_00438ea0
     size: 46
@@ -3784,15 +3792,17 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00438ef0
-    name: func_00438ef0
+    name: MStackPushPtr1Jmp_00438ef0
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00438f20
-    name: func_00438f20
+    name: PushCallPauseSet1Jmp_00438f20
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesF.c
   - addr: 0x00438f50
     name: SetJmp_00438f50
     size: 15
