@@ -11237,10 +11237,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a12e0
-    name: func_004a12e0
+    name: PushCallPauseStorePushDispatch_004a12e0
     size: 63
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004a1320
     name: func_004a1320
     size: 169
@@ -11262,10 +11263,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1790
-    name: func_004a1790
+    name: SetWorkType02CountFFB_004a1790
     size: 54
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004a17d0
     name: func_004a17d0
     size: 245
@@ -11293,10 +11295,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1a10
-    name: func_004a1a10
+    name: PushCallTestByte4Jmp_004a1a10
     size: 55
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004a1a50
     name: func_004a1a50
     size: 106
@@ -11388,10 +11391,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004a1d50
-    name: func_004a1d50
+    name: AndNotLoop_004a1d50
     size: 48
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004a1d80
     name: func_004a1d80
     size: 61
@@ -11505,10 +11509,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a30f0
-    name: func_004a30f0
+    name: TableWalkChainCall_004a30f0
     size: 48
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004a3120
     name: func_004a3120
     size: 320
@@ -11941,10 +11946,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004ab630
-    name: func_004ab630
+    name: StorePauseImulShr16_004ab630
     size: 53
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004ab670
     name: CallPauseInc_004ab670
     size: 21
@@ -11962,10 +11968,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab750
-    name: func_004ab750
+    name: StoreDoubleNegPauseSubStore_004ab750
     size: 62
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004ab790
     name: func_004ab790
     size: 193
@@ -12015,10 +12022,11 @@ functions:
     status: matched
     file: src/engine/zero_three_slots.c
   - addr: 0x004ac040
-    name: func_004ac040
+    name: ScaledTripleCopy54_004ac040
     size: 54
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004ac080
     name: func_004ac080
     size: 126
@@ -12237,10 +12245,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004ae950
-    name: func_004ae950
+    name: QuadTestVtableCall_004ae950
     size: 57
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004ae990
     name: DSoundCreateBuffer170_004ae990
     size: 170
@@ -12347,10 +12356,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004af650
-    name: func_004af650
+    name: DualVtable8Call_004af650
     size: 56
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesBB.c
   - addr: 0x004af690
     name: ComTwoGateCall_004af690
     size: 39
