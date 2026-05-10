@@ -434,10 +434,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004066f0
-    name: func_004066f0
+    name: MStackPushZeroCallPop_004066f0
     size: 73
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_zero_call_pop.c
   - addr: 0x00406740
     name: MStackCall_00406740
     size: 75
@@ -578,10 +579,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00407d00
-    name: func_00407d00
+    name: MStackPushZeroCallPop_00407d00
     size: 73
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_zero_call_pop.c
   - addr: 0x00407d50
     name: func_00407d50
     size: 1085
@@ -8537,10 +8539,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489cd0
-    name: func_00489cd0
+    name: DualInstallCallSwap_00489cd0
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_install_call_swap.c
   - addr: 0x00489d10
     name: func_00489d10
     size: 380
@@ -9670,10 +9673,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00490c80
-    name: func_00490c80
+    name: DualInstallCallSwap_00490c80
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_install_call_swap.c
   - addr: 0x00490cc0
     name: func_00490cc0
     size: 315
