@@ -124,7 +124,8 @@ functions:
     name: ResetConfigToDefaults
     size: 634
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/reset_config.c
   - addr: 0x004ad210
     name: ComputeConfigHash
     size: 52

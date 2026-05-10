@@ -138,6 +138,14 @@ extern s32  g_validInstall;     /* 0x00543f78 */
 extern u8   g_configBuffer[588];/* 0x00543928 */
 extern u32  g_configChecksum;   /* 0x0054392c */
 
+/* Default-config table read by ResetConfigToDefaults (26 dwords
+ * from .rdata, copied into the live config region in pairs). */
+extern const u32 g_resetCfgDefaults[26];   /* 0x004f46a0 */
+
+/* Live config region populated/touched by ResetConfigToDefaults. The
+ * function writes 58 dwords from base (0x00543a84) to +0xe8. */
+extern u32  g_resetCfgRegion[58];          /* 0x00543a84 */
+
 /* Where CheckInstallPath stashes the registry-resolved install
  * directory before chdir'ing. */
 extern char g_installPath[1024];        /* 0x00543b78 */
