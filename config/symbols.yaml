@@ -11864,10 +11864,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004aea40
-    name: func_004aea40
+    name: DSoundBufferInit146_004aea40
     size: 146
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004aeae0
     name: func_004aeae0
     size: 297
@@ -12005,10 +12006,11 @@ functions:
     status: matched
     file: src/engine/com_init_sequence.c
   - addr: 0x004afa60
-    name: func_004afa60
+    name: DSoundBufferInit146_004afa60
     size: 146
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004afb00
     name: Helper_InstallStub_AFB00
     size: 1
@@ -12095,10 +12097,11 @@ functions:
     status: matched
     file: src/engine/com_init_sequence.c
   - addr: 0x004b0290
-    name: func_004b0290
+    name: DSoundBufferInit146_004b0290
     size: 146
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004b0330
     name: Helper_EcmStub_0330
     size: 1
@@ -12629,10 +12632,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5190
-    name: func_004b5190
+    name: DSoundBufferInit146_004b5190
     size: 146
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004b5230
     name: Joystick_Init
     size: 319
