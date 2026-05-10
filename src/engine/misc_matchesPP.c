@@ -1260,6 +1260,254 @@ __declspec(naked) void CRTHandleLookup_004cd260(void) {
     }
 }
 
+/* @addr 0x00431d50 (74b)
+ *   walk = 0x1921f - walk; mov g_eventQueueWorkType = walk; call F1;
+ *   pause → ret; g_acc_00542078 = walk; call F2; pause → ret;
+ *   g_eventQueueWorkType = walk; ret.
+ */
+extern void func_00424410(void);
+extern void func_00424350(void);
+__declspec(naked) void TimeBudgetSubCallChain_00431d50(void) {
+    __asm {
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     eax, 0x0001921f
+        sub     eax, ecx
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
+        call    func_00424410
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_acc_00542078], eax
+        call    func_00424350
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   0ch
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [g_eventQueueWorkType], ecx
+        ret
+    }
+}
+
+/* @addr 0x00433c10 (74b)
+ *   Dual scaled-init helper: stores 0x53a1a0>>2 into g_scaledInit
+ *   and 0x53a518>>2 into g_xformEntityIdx; if g_fightGroupHead !=
+ *   [0x538158], also overrides g_scaledInit with the second value.
+ *   Then clears g_walkCallback and the indexed slot.
+ */
+__declspec(naked) void DualScaledInitClear_00433c10(void) {
+    __asm {
+        mov     edx, dword ptr [g_fightGroupHead]
+        push    esi
+        mov     esi, dword ptr [g_data_00538158]
+        mov     eax, 0x0053a1a0
+        mov     ecx, 0x0053a518
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [eax*4 + 0], 0
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00434ec0 (74b)
+ *   push lit; call F; if pause → ret;
+ *   eax = [0x535ddc]; mov walk = eax; 4-way range dispatch:
+ *   if eax > 0x20000 → jmp T1, > 0x18000 → T2, > 0x10000 → T3,
+ *   else → T4.
+ */
+extern unsigned int g_data_004e4a04;
+extern unsigned int g_data_00535ddc;
+extern void func_0043a950(void);
+extern void func_00434f90(void);
+extern void func_00435030(void);
+extern void func_00434f10(void);
+extern void func_004390f0(void);
+__declspec(naked) void RangeDispatch4_00434ec0(void) {
+    __asm {
+        push    OFFSET g_data_004e4a04
+        call    func_0043a950
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   33h
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7eh
+        _emit   05h
+        jmp     func_00434f90
+        cmp     eax, 0x18000
+        _emit   7eh
+        _emit   05h
+        jmp     func_00435030
+        cmp     eax, 0x10000
+        _emit   7eh
+        _emit   05h
+        jmp     func_00434f10
+        jmp     func_004390f0
+        ret
+    }
+}
+
+/* @addr 0x00489030 (74b)
+ *   Save fightGroupHead → g_pendingNodeType (used as scratch);
+ *   load [baseSel*4+0x38] → fightGroupHead; walk = 0x10000;
+ *   eventQueueCurrent = 0x3c; call F; if !pause: restore
+ *   fightGroupHead from g_pendingNodeType; ret.
+ */
+extern void func_0048fb40(void);
+__declspec(naked) void SaveSwapCallRestore_00489030(void) {
+    __asm {
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     edx, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_walkCallback], 0x10000
+        mov     dword ptr [g_fightGroupHead], edx
+        mov     dword ptr [g_eventQueueCurrent], 0x3c
+        call    func_0048fb40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     dword ptr [g_fightGroupHead], eax
+        ret
+    }
+}
+
+/* @addr 0x004a19c0 (74b)
+ *   walk = g_eventQueueEnd; if non-zero: push 0x25b, call F1;
+ *   if (dirty & 4): jmp T1; else
+ *   ecx = g_scaledInit; walk = 0x50000; [ecx*4+0x6c] = 0x50000;
+ *   jmp T2.  If walk was 0: jmp T3.
+ */
+extern void func_004a1a10(void);
+extern void func_00404a00(int);
+extern void func_004a1a50(void);
+__declspec(naked) void GuardedCallDirtyJmpInit_004a19c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_eventQueueEnd]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   05h
+        jmp     func_004a1a10
+        push    0x25b
+        call    func_00404a00
+        mov     al, byte ptr [g_xformDirtyFlags]
+        add     esp, 4
+        test    al, 4
+        _emit   74h
+        _emit   05h
+        jmp     func_0041f780_pp
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x00050000
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        jmp     func_004a1a50
+    }
+}
+
+/* @addr 0x004a1b00 (74b)
+ *   Input poll: if (byte_4d50b8 & 0x02) → 1;
+ *               if (byte_4d50b4 & 0x40) → 1;
+ *               if (byte_4d50b8 & 0x01) → 1;
+ *               if (byte_4d50b4 & 0x10) → 1;
+ *               if (byte_4d50b4 & 0x20) → 1;
+ *               else (byte_4d50b8 & 0x04) >> 2 (0 or 1).
+ */
+extern unsigned char g_byte_004d50b8;
+extern unsigned char g_byte_004d50b4;
+__declspec(naked) void InputPollFlagBits_004a1b00(void) {
+    __asm {
+        mov     al, byte ptr [g_byte_004d50b8]
+        test    al, 2
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        mov     cl, byte ptr [g_byte_004d50b4]
+        test    cl, 0x40
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    al, 1
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    cl, 0x10
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    cl, 0x20
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        movsx   eax, al
+        and     eax, 4
+        shr     eax, 2
+        ret
+    }
+}
+
+/* @addr 0x004b2840 (74b)
+ *   if [0x7af940] != 0: call helper; load 3 globals as args;
+ *   push 9 fixed-args + 3 globals (DirectDraw Blt-style call);
+ *   IAT call; tail-jmp to second IAT slot. Else: ret.
+ */
+extern unsigned int g_data_007af940;
+extern unsigned int g_data_007af934;
+extern unsigned int g_data_007af94c;
+extern unsigned int g_data_007af938;
+extern void *g_iat_004d2034;
+extern void *g_iat_004d2040;
+extern void func_004b2930(void);
+__declspec(naked) void DDrawBltJmp_004b2840(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_007af940]
+        test    eax, eax
+        _emit   74h
+        _emit   40h
+        call    func_004b2930
+        mov     eax, dword ptr [g_data_007af934]
+        mov     ecx, dword ptr [g_data_007af94c]
+        push    0
+        push    eax
+        mov     edx, dword ptr [g_data_007af938]
+        push    ecx
+        push    0xf0
+        push    0
+        push    0
+        push    0
+        push    0xf0
+        push    0x140
+        push    0
+        push    0
+        push    edx
+        call    dword ptr [g_iat_004d2034]
+        jmp     dword ptr [g_iat_004d2040]
+        ret
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value

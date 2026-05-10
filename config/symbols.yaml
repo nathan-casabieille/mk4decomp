@@ -3121,10 +3121,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00431d50
-    name: func_00431d50
+    name: TimeBudgetSubCallChain_00431d50
     size: 74
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00431da0
     name: AddStoreCallPauseJmp_00431da0
     size: 47
@@ -3254,10 +3255,11 @@ functions:
     status: matched
     file: src/engine/misc_matches2.c
   - addr: 0x00433c10
-    name: func_00433c10
+    name: DualScaledInitClear_00433c10
     size: 74
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00433c60
     name: func_00433c60
     size: 197
@@ -3392,10 +3394,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00434ec0
-    name: func_00434ec0
+    name: RangeDispatch4_00434ec0
     size: 74
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00434f10
     name: func_00434f10
     size: 128
@@ -8844,10 +8847,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00489030
-    name: func_00489030
+    name: SaveSwapCallRestore_00489030
     size: 74
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00489080
     name: GuardedDispatch4_00489080
     size: 34
@@ -11384,10 +11388,11 @@ functions:
     status: matched
     file: src/engine/copy_call_pause_jmp.c
   - addr: 0x004a19c0
-    name: func_004a19c0
+    name: GuardedCallDirtyJmpInit_004a19c0
     size: 74
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a1a10
     name: PushCallTestByte4Jmp_004a1a10
     size: 55
@@ -11418,10 +11423,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x004a1b00
-    name: func_004a1b00
+    name: InputPollFlagBits_004a1b00
     size: 74
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a1b50
     name: func_004a1b50
     size: 76
@@ -12849,10 +12855,11 @@ functions:
     status: matched
     file: src/boot/main_loop.c
   - addr: 0x004b2840
-    name: func_004b2840
+    name: DDrawBltJmp_004b2840
     size: 74
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b2890
     name: Helper_AppStub_2890
     size: 1
