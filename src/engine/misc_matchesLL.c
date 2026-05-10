@@ -1,0 +1,353 @@
+/**
+ * Forty-seventh batch of one-off matches.
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueNotMask;
+
+/* @addr 0x00473070 (73b)
+ *   Push g_eventQueueCurrent on stack[idx*4]; set g_eventQueueCurrent = -1;
+ *   call F; pause-test → ret; pop stack value back into g_eventQueueCurrent.
+ */
+extern void func_0049cbe0(void);
+__declspec(naked) void PushPopCurrentSetFFFFFFFF_00473070(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     dword ptr [g_eventQueueCurrent], 0xffffffff
+        call    func_0049cbe0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_eventQueueCurrent], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x0047d510 (73b)
+ *   Push g_eventQueueNotMask on stack[idx*4]; set g_walkCallback = 0xc;
+ *   call F; pause-test → ret; pop stack value back into g_eventQueueNotMask.
+ */
+extern void func_0048a150(void);
+__declspec(naked) void PushPopNotMaskSetWalk0xc_0047d510(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     dword ptr [g_walkCallback], 0x0c
+        call    func_0048a150
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_eventQueueNotMask], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x0041aa80 (70b)
+ *   set workType = 2; pendingNodeType = 0x4d7b28>>2; call F;
+ *   pause → ret; testb 4,[dirty] → ret;
+ *   load g_xformEntityIdx; set walk = 0x14ccc and store at [ecx*4 + 0x48]; ret.
+ */
+extern unsigned int g_data_004d7b28;
+extern void func_00419190(void);
+__declspec(naked) void SetWorkTypeScaledCallStoreCcc_0041aa80(void) {
+    __asm {
+        mov     eax, OFFSET g_data_004d7b28
+        mov     dword ptr [g_eventQueueWorkType], 2
+        shr     eax, 2
+        mov     dword ptr [g_pendingNodeType], eax
+        call    func_00419190
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        test    byte ptr [g_xformDirtyFlags], 4
+        _emit   75h
+        _emit   17h
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        mov     eax, 0x14ccc
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x48], eax
+        ret
+    }
+}
+
+/* @addr 0x00445fb0 (70b)
+ *   load g_eventQueueIdx; set walk=0xa, store eax → g_fightGroupHead;
+ *   call F; pause → ret;
+ *   copy g_scaledInit → g_xformEntityIdx; baseSel*4 + 0x5c → g_scaledInit; jmp T.
+ */
+extern void func_00408c98(void);
+extern void func_004084d0(void);
+__declspec(naked) void SetWalk0xaCrossStore_00445fb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_walkCallback], 0xa
+        mov     dword ptr [g_fightGroupHead], eax
+        call    func_00408c98
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     eax, dword ptr [edx*4 + 0x5c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_004084d0
+        ret
+    }
+}
+
+/* @addr 0x00482e60 (70b)
+ *   3 calls + pause-test chain; testb 1,[dirty] → ret;
+ *   push 0x4ee2f0; call F4; add esp 4; ret.
+ */
+extern void func_00488f00(void);
+extern void func_00484572(void);
+extern void func_004ae794(void);
+extern int func_00409400(void *);
+extern void *g_data_004ee2f0;
+__declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
+    __asm {
+        call    func_00488f00
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        call    func_00484572
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    func_004ae794
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        test    byte ptr [g_xformDirtyFlags], 1
+        _emit   74h
+        _emit   05h
+        _emit   0e9h
+        _emit   18h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    OFFSET g_data_004ee2f0
+        call    func_00409400
+        add     esp, 4
+        ret
+    }
+}
+
+/* @addr 0x004839d0 (70b)
+ *   call F1; pause-test → ret; call F2; pause → ret;
+ *   testb 4,[dirty]; jz +0x1b →ret; inc g_state_004d57ac;
+ *   push 0x00483a20 onto stack[idx*4]; jmp T.
+ */
+extern void func_0047f860(void);
+extern void func_00484342(void);
+extern void func_00483a20(void);
+extern void func_0042b988(void);
+__declspec(naked) void CallPauseDirty4StackPushFn_004839d0(void) {
+    __asm {
+        call    func_0047f860
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        call    func_00484342
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        test    byte ptr [g_xformDirtyFlags], 4
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], OFFSET func_00483a20
+        jmp     func_0042b988
+        _emit   0e9h
+        _emit   0bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x00489e90 (70b)
+ *   copy g_scaledInit → g_pendingNodeType; load g_state_0052d74c;
+ *   if non-neg call F1; pause → ret; load g_state_00538068 → g_xformEntityIdx;
+ *   if signed: jmp T1.
+ */
+extern unsigned int g_state_0052d74c;
+extern unsigned int g_state_00538068;
+extern void func_00489c60(void);
+extern void func_00489c30(void);
+__declspec(naked) void ScaledStateNegCallPauseLoad_00489e90(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     eax, dword ptr [g_state_0052d74c]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7dh
+        _emit   0eh
+        call    func_00489c60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1fh
+        mov     eax, dword ptr [g_state_00538068]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        test    eax, eax
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00489c30
+        ret
+    }
+}
+
+/* @addr 0x0048e330 (70b)
+ *   load g_fightGroupHead, g_state_00538158; cmp; load g_state_00537f48;
+ *   jne skip; load g_state_005380e0 → walk;
+ *   load dirty | 4; cmp eax,6; if eq: dirty stays; else: dirty ^= 4;
+ *   ret.
+ */
+extern unsigned int g_state_00538158_ll;
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+__declspec(naked) void LoadCmpStateOrDirtyToggle_0048e330(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_state_00538158_ll]
+        mov     eax, dword ptr [g_state_00537f48]
+        cmp     ecx, edx
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_state_005380e0]
+        mov     dword ptr [g_walkCallback], eax
+        mov     edx, dword ptr [g_xformDirtyFlags]
+        mov     ecx, 4
+        or      edx, ecx
+        cmp     eax, 6
+        mov     dword ptr [g_xformDirtyFlags], edx
+        _emit   74h
+        _emit   09h
+        mov     eax, edx
+        xor     eax, ecx
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+    }
+}
+
+/* @addr 0x004a98f0 (70b)
+ *   load g_state_00537f94; cmp 1; if !=, load g_state_00537f48 → walk;
+ *   else load walk; cmp 2; jne skip; load g_state_005380e0 → walk;
+ *   if walk==7 set byte g_byte_0054372c=dl; if walk==6 set g_byte_00543724=dl.
+ */
+extern unsigned int g_state_00537f94;
+extern unsigned int g_state_00537f48_ll;
+extern unsigned int g_state_005380e0_ll;
+extern unsigned char g_byte_0054372c;
+extern unsigned char g_byte_00543724;
+__declspec(naked) void StateCmpAndStoreByte_004a98f0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_state_00537f94]
+        mov     edx, 1
+        cmp     ecx, edx
+        _emit   75h
+        _emit   0ch
+        mov     eax, dword ptr [g_state_00537f48_ll]
+        mov     dword ptr [g_walkCallback], eax
+        _emit   0ebh
+        _emit   05h
+        mov     eax, dword ptr [g_walkCallback]
+        cmp     ecx, 2
+        _emit   75h
+        _emit   0ah
+        mov     eax, dword ptr [g_state_005380e0_ll]
+        mov     dword ptr [g_walkCallback], eax
+        cmp     eax, 7
+        _emit   75h
+        _emit   06h
+        mov     byte ptr [g_byte_0054372c], dl
+        cmp     eax, 6
+        _emit   75h
+        _emit   06h
+        mov     byte ptr [g_byte_00543724], dl
+        ret
+    }
+}
+
+/* @addr 0x004ac520 (70b)
+ *   if g_state_00543904 != 0:
+ *     call F; if ret == 0:
+ *       load g_state_005438e8; push 0,2,0x808,it,IAT;
+ *     if g_state_00543900 == 0: clear via IAT [g_iat_00...4022240];
+ *     g_state_00543900 = ret; clear g_state_00543904.
+ */
+extern unsigned int g_state_00543904;
+extern unsigned int g_state_00543900;
+extern unsigned int g_state_005438e8;
+extern int func_004ac318(void);
+extern void *g_iat_004d2244;
+extern void *g_iat_004d2240;
+__declspec(naked) void CallTestStateClearReg_004ac520(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00543904]
+        test    eax, eax
+        _emit   74h
+        _emit   1eh
+        call    func_004ac318
+        test    eax, eax
+        _emit   74h
+        _emit   15h
+        mov     eax, dword ptr [g_state_005438e8]
+        push    0
+        push    2
+        push    0x808
+        push    eax
+        call    dword ptr [g_iat_004d2244]
+        mov     eax, dword ptr [g_state_00543900]
+        test    eax, eax
+        _emit   75h
+        _emit   0bh
+        call    dword ptr [g_iat_004d2240]
+        mov     dword ptr [g_state_00543900], eax
+        mov     dword ptr [g_state_00543904], 0
+        ret
+    }
+}

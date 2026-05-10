@@ -1382,10 +1382,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesS.c
   - addr: 0x0041aa80
-    name: func_0041aa80
+    name: SetWorkTypeScaledCallStoreCcc_0041aa80
     size: 70
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x0041aad0
     name: GuardedSeq_0041aad0
     size: 20
@@ -4647,10 +4648,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00445fb0
-    name: func_00445fb0
+    name: SetWalk0xaCrossStore_00445fb0
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x00446000
     name: SpecialInitDirtyJmp_00446000
     size: 61
@@ -7145,10 +7147,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00473070
-    name: func_00473070
+    name: PushPopCurrentSetFFFFFFFF_00473070
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x004730c0
     name: func_004730c0
     size: 347
@@ -7853,10 +7856,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047d510
-    name: func_0047d510
+    name: PushPopNotMaskSetWalk0xc_0047d510
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x0047d560
     name: func_0047d560
     size: 231
@@ -8293,10 +8297,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482e60
-    name: func_00482e60
+    name: TripleCallPauseTestPush_00482e60
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x00482eb0
     name: DualPushCallPause_00482eb0
     size: 53
@@ -8350,10 +8355,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004839d0
-    name: func_004839d0
+    name: CallPauseDirty4StackPushFn_004839d0
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x00483a20
     name: func_00483a20
     size: 82
@@ -8877,10 +8883,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489e90
-    name: func_00489e90
+    name: ScaledStateNegCallPauseLoad_00489e90
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x00489ee0
     name: func_00489ee0
     size: 100
@@ -9410,10 +9417,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesZ.c
   - addr: 0x0048e330
-    name: func_0048e330
+    name: LoadCmpStateOrDirtyToggle_0048e330
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x0048e380
     name: func_0048e380
     size: 84
@@ -11880,10 +11888,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a98f0
-    name: func_004a98f0
+    name: StateCmpAndStoreByte_004a98f0
     size: 70
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x004a9940
     name: func_004a9940
     size: 2736
@@ -12136,10 +12145,11 @@ functions:
     status: matched
     file: src/audio/timer.c
   - addr: 0x004ac520
-    name: func_004ac520
+    name: CallTestStateClearReg_004ac520
     size: 70
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesLL.c
   - addr: 0x004ac570
     name: func_004ac570
     size: 116
