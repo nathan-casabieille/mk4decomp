@@ -287,54 +287,14 @@ paused:
  *
  * @addr 0x004bdfb0
  */
-__declspec(naked) void NodeApplyTransform_C_Inverse(void)
+void NodeApplyTransform_C_Inverse(void)
 {
-    __asm {
-        mov     ecx, [g_xformEntityIdx]
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        mov     word ptr [g_xformTempAngles], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+4]
-        sar     eax, 2
-        mov     edx, eax
-        shl     edx, 6
-        add     edx, eax
-        lea     edx, [eax + edx*8]
-        lea     eax, [eax + edx*2]
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        mov     word ptr [g_xformTempAngles+2], ax
-        mov     eax, dword ptr [ecx*4 + g_nodeAngleTable+8]
-        sar     eax, 2
-        mov     ecx, eax
-        shl     ecx, 6
-        add     ecx, eax
-        lea     edx, [eax + ecx*8]
-        mov     ecx, [g_currentNodeIdx]
-        lea     eax, [eax + edx*2]
-        lea     edx, [ecx*4 + g_nodeMatrixTable]
-        push    edx
-        push    offset g_xformTempAngles
-        lea     eax, [eax + eax*4]
-        shl     eax, 1
-        sar     eax, 12h
-        mov     word ptr [g_xformTempAngles+4], ax
-        call    BuildRotMatrix_OrderC
-        mov     eax, [g_xformDirtyFlags]
-        add     esp, 8
-        or      al, 30h
-        mov     [g_xformDirtyFlags], eax
-        ret
-    }
+    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    g_xformTempAngles[0] = (s16)(((angles[0] >> 2) * 10430) >> 18);
+    g_xformTempAngles[1] = (s16)(((angles[1] >> 2) * 10430) >> 18);
+    g_xformTempAngles[2] = (s16)(((angles[2] >> 2) * 10430) >> 18);
+    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    g_xformDirtyFlags |= 0x30;
 }
 
 void NodeApplyTransform_B_Direct(void)
