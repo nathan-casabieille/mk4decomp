@@ -11084,10 +11084,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1080
-    name: func_004a1080
+    name: Push15PushDataCallWordCallJmp_004a1080
     size: 35
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a10b0
     name: func_004a10b0
     size: 97
@@ -11214,15 +11215,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1c50
-    name: func_004a1c50
+    name: TripleByteCheck_004a1c50
     size: 38
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a1c80
-    name: func_004a1c80
+    name: TripleByteCheck20_004a1c80
     size: 45
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a1cb0
     name: func_004a1cb0
     size: 45
@@ -11247,10 +11250,11 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x004a1d20
-    name: func_004a1d20
+    name: Test4StatesAny_004a1d20
     size: 45
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a1d50
     name: func_004a1d50
     size: 48
@@ -11307,10 +11311,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a22c0
-    name: func_004a22c0
+    name: DualScaledStoreConst_004a22c0
     size: 44
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a22f0
     name: func_004a22f0
     size: 207
@@ -11608,10 +11613,11 @@ functions:
     status: matched
     file: src/engine/dec_or_dirty.c
   - addr: 0x004a7db0
-    name: func_004a7db0
+    name: IncBoundedDirty_004a7db0
     size: 38
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004a7de0
     name: DecOrDirty_004a7de0
     size: 29
@@ -11753,10 +11759,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab270
-    name: func_004ab270
+    name: MarkSlot_004ab270
     size: 34
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004ab2a0
     name: func_004ab2a0
     size: 89
@@ -11769,10 +11776,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x004ab320
-    name: func_004ab320
+    name: DivLongPushCall_004ab320
     size: 33
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004ab350
     name: func_004ab350
     size: 40
@@ -11794,10 +11802,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab600
-    name: func_004ab600
+    name: DualAddSar_004ab600
     size: 39
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004ab630
     name: func_004ab630
     size: 53
@@ -11861,10 +11870,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x004abfe0
-    name: func_004abfe0
+    name: ZeroThreeFields6c_004abfe0
     size: 38
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004ac010
     name: ZeroThreeSlots_004ac010
     size: 41
@@ -11882,10 +11892,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac100
-    name: func_004ac100
+    name: CmpP1ScaledInitB_004ac100
     size: 31
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004ac120
     name: CondPlayerLookup_004ac120
     size: 38
@@ -12418,10 +12429,11 @@ functions:
     status: matched
     file: src/engine/ecm_cleanup.c
   - addr: 0x004b0d80
-    name: func_004b0d80
+    name: IncCallVtablePushCall_004b0d80
     size: 39
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004b0db0
     name: func_004b0db0
     size: 721
@@ -13142,10 +13154,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b8f20
-    name: func_004b8f20
+    name: ZeroEightFields_004b8f20
     size: 43
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004b8f50
     name: func_004b8f50
     size: 70
@@ -13385,10 +13398,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bd960
-    name: func_004bd960
+    name: TripleStosd_004bd960
     size: 45
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004bd990
     name: CallJmp_004bd990
     size: 10
@@ -13565,10 +13579,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004bea50
-    name: func_004bea50
+    name: TestPushPushCall_004bea50
     size: 42
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesM.c
   - addr: 0x004bea80
     name: func_004bea80
     size: 429
