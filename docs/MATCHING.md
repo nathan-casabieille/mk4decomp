@@ -518,3 +518,105 @@ Pick more functions from `config/symbols.yaml`; extend the symbol
 list with `python3 tools/decomp/discover_functions.py --write`
 when you've named enough new helpers that more CALL targets
 become reachable.
+
+---
+
+## Batch matching: clusters of identical-shape stubs
+
+Many functions in the binary are auto-generated wrappers — empty
+debug stubs (`c3` only), state-setters (mov+mov+ret), tail-call
+trampolines (`jmp Other`), guarded-sequel chains (`call A; if !pause:
+jmp B`), and so on. Each variant has a fixed opcode shape with only
+the relocation targets/constants differing. Matching them one at
+a time is wasteful — they can be matched **in batches of 10–50**
+once you've identified the recurring shape.
+
+### Tools
+
+`tools/decomp/batch_match.py` finds clusters of stubs that share
+the same opcode "signature" — bytes-with-reloc-positions-nulled.
+It bootstraps from one template stub:
+
+```sh
+# Pick a stub VA you've already decoded by hand
+python3 tools/decomp/batch_match.py --template 0x00461860
+# → "found 13 stubs matching this signature"
+
+# After writing a generator that emits all 13 in one .c file:
+python3 tools/decomp/batch_match.py --template 0x00461860 \
+    --name-prefix Helper_SetState \
+    --mark src/game/state_setters.c
+# → marks all 13 as matched in symbols.yaml
+```
+
+### Recipe
+
+1. **Identify a template.** Find a small stub you understand.
+2. **Find the cluster.** Run `batch_match.py --template VA` to
+   count how many other stubs share the shape.
+3. **Write a generator.** A short Python script that, for each
+   cluster member, extracts the call/data targets and emits a
+   `__declspec(naked) __asm` wrapper. Batch-emit them all into one
+   `.c` file. Use the per-shape examples below.
+4. **Compile & verify.** `cl.sh /O2 /Gy /c <file.c>` (the `/Gy`
+   gives each function its own COMDAT `.text$<funcname>` section
+   so each can be reloc-aware-diff'd independently).
+5. **Mark them.** `batch_match.py --template VA --mark <file>`.
+6. **Commit.** `git commit -m "Match N <pattern-name> stubs (X -> Y)"`.
+
+### Recurring patterns we've already harvested
+
+(Keep this list up to date — each entry below was an independent
+batch in `git log`. Pattern bytes shown stripped of relocations.)
+
+| Pattern | Bytes (mask) | Count matched | Source file |
+|---|---|---:|---|
+| Empty-stub (`ret` only) | `c3` | 16 | `src/audio/empty_stubs.c` |
+| State-setter (mov+mov+ret) | `b8 ?? ?? ?? ?? a3 ?? ?? ?? ?? a3 ?? ?? ?? ?? c3` | 13 | `src/game/state_setters.c` |
+| Global-getter (mov eax,[m]; ret) | `a1 ?? ?? ?? ?? c3` | 3 | `src/engine/getters.c` |
+| Jump thunk (`jmp Other`) | `e9 ?? ?? ?? ??` | 33 | `src/engine/thunks.c` |
+| Push-call-ret wrapper | `68 ?? ?? ?? ?? e8 ?? ?? ?? ?? 83 c4 04 c3` | 43 | `src/engine/wrappers.c` |
+| Guarded sequel (call+test+jmp) | `e8 ?? ?? ?? ?? a1 6c 1e 54 00 85 c0 75 05 e9 ?? ?? ?? ?? c3` | 38 | `src/engine/guarded_sequels.c` |
+| Set-and-jmp (mov+jmp) | `c7 05 ?? ?? ?? ?? ?? ?? ?? ?? e9 ?? ?? ?? ??` | 47 | `src/engine/setjmp_wrappers.c` |
+| Scaled-base init+jmp | `b8 ?? ?? ?? ?? c1 e8 02 a3 ?? ?? ?? ?? e9 ?? ?? ?? ??` | 12 | `src/engine/scaled_init.c` |
+| Guarded scaled-init | (33-byte combo of above) | 7 | `src/engine/guarded_scaled.c` |
+| Matrix-stack push+call+pop | (75-byte fixed shape) | 11 | `src/engine/mstack_calls.c` |
+
+Total batch-matched so far: **223** functions across 10 clusters.
+Each cluster took ~30 minutes from "I've spotted a shape" to PR.
+
+### Hand-rolling a new cluster
+
+When `batch_match.py` finds a cluster, write a small Python
+generator like:
+
+```python
+# tools/decomp/.local/gen_NEW_PATTERN.py
+import struct, sys
+sys.path.insert(0, 'tools/decomp')
+from discover_functions import parse_symbols
+# (boilerplate to load PE.text, parse symbols.yaml)
+
+# 1. Pattern-detect:
+matches = []
+for r in rows:
+    if r.get('status') != 'stub' or r.get('size', 0) == 0: continue
+    body = fetch(...)
+    while body and body[-1] == 0x90: body = body[:-1]
+    if len(body) != EXPECTED_SIZE: continue
+    if body[0:N] != EXPECTED_PREFIX: continue
+    # ... extract per-instance fields
+    matches.append((r['addr'], extracted_field, ...))
+
+# 2. Emit a single .c with extern decls + naked __asm wrappers
+print('#include "engine/scenegraph.h"')
+print('extern void func_TARGET(void);')
+print()
+for src, tgt in matches:
+    print(f'__declspec(naked) void Wrapper_{src:08x}(void) {{')
+    print(f'    __asm jmp func_TARGET')
+    print(f'}}')
+```
+
+Then verify (build, reloc-aware diff each instance, mark them
+all).

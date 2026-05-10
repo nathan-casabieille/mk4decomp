@@ -464,10 +464,11 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406ba0
-    name: func_00406ba0
+    name: CopyJmp_00406ba0
     size: 15
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x00406bb0
     name: func_00406bb0
     size: 94
@@ -3935,10 +3936,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043a620
-    name: func_0043a620
+    name: CopyJmp_0043a620
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x0043a630
     name: func_0043a630
     size: 58
@@ -4391,10 +4393,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00445ec0
-    name: func_00445ec0
+    name: CopyJmp_00445ec0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x00445ed0
     name: func_00445ed0
     size: 34
@@ -4441,10 +4444,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446180
-    name: func_00446180
+    name: CopyJmp_00446180
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x00446190
     name: func_00446190
     size: 121
@@ -9132,10 +9136,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ee80
-    name: func_0048ee80
+    name: CopyJmp_0048ee80
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x0048ee90
     name: func_0048ee90
     size: 39
@@ -9147,10 +9152,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ef90
-    name: func_0048ef90
+    name: CopyJmp_0048ef90
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_jmp.c
   - addr: 0x0048efa0
     name: func_0048efa0
     size: 128
