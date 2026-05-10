@@ -1293,10 +1293,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041aad0
-    name: func_0041aad0
+    name: GuardedSeq_0041aad0
     size: 20
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0041aaf0
     name: func_0041aaf0
     size: 152
@@ -1482,10 +1483,11 @@ functions:
     status: matched
     file: src/game/game_tick.c
   - addr: 0x004200b0
-    name: func_004200b0
+    name: GuardedSeq_004200b0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004200d0
     name: func_004200d0
     size: 200
@@ -2098,10 +2100,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428350
-    name: func_00428350
+    name: GuardedSeq_00428350
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00428370
     name: func_00428370
     size: 51
@@ -2113,10 +2116,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428480
-    name: func_00428480
+    name: GuardedSeq_00428480
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004284a0
     name: func_004284a0
     size: 69
@@ -2384,10 +2388,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004297b0
-    name: func_004297b0
+    name: GuardedSeq_004297b0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004297d0
     name: func_004297d0
     size: 45
@@ -2759,15 +2764,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0042fb80
-    name: func_0042fb80
+    name: GuardedSeq_0042fb80
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0042fba0
-    name: func_0042fba0
+    name: GuardedSeq_0042fba0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0042fbc0
     name: func_0042fbc0
     size: 116
@@ -2964,10 +2971,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004335d0
-    name: func_004335d0
+    name: GuardedSeq_004335d0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004335f0
     name: func_004335f0
     size: 682
@@ -3021,15 +3029,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00433bb0
-    name: func_00433bb0
+    name: GuardedSeq_00433bb0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00433bd0
-    name: func_00433bd0
+    name: GuardedSeq_00433bd0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00433bf0
     name: func_00433bf0
     size: 19
@@ -3537,10 +3547,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438630
-    name: func_00438630
+    name: GuardedSeq_00438630
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00438650
     name: func_00438650
     size: 58
@@ -4612,20 +4623,22 @@ functions:
     group: game
     status: stub
   - addr: 0x0044ba10
-    name: func_0044ba10
+    name: GuardedSeq_0044ba10
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0044ba30
     name: func_0044ba30
     size: 67
     group: game
     status: stub
   - addr: 0x0044ba80
-    name: func_0044ba80
+    name: GuardedSeq_0044ba80
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0044baa0
     name: func_0044baa0
     size: 2434
@@ -4817,10 +4830,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004515a0
-    name: func_004515a0
+    name: GuardedSeq_004515a0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004515c0
     name: func_004515c0
     size: 540
@@ -5007,10 +5021,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00453780
-    name: func_00453780
+    name: GuardedSeq_00453780
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004537a0
     name: func_004537a0
     size: 560
@@ -5639,10 +5654,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004605b0
-    name: func_004605b0
+    name: GuardedSeq_004605b0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004605d0
     name: func_004605d0
     size: 405
@@ -6123,20 +6139,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00467c10
-    name: func_00467c10
+    name: GuardedSeq_00467c10
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00467c30
     name: func_00467c30
     size: 67
     group: game
     status: stub
   - addr: 0x00467c80
-    name: func_00467c80
+    name: GuardedSeq_00467c80
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00467ca0
     name: func_00467ca0
     size: 136
@@ -6609,10 +6627,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00471670
-    name: func_00471670
+    name: GuardedSeq_00471670
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00471690
     name: func_00471690
     size: 118
@@ -6654,15 +6673,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00472820
-    name: func_00472820
+    name: GuardedSeq_00472820
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00472840
-    name: func_00472840
+    name: GuardedSeq_00472840
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00472860
     name: func_00472860
     size: 36
@@ -6764,30 +6785,35 @@ functions:
     group: game
     status: stub
   - addr: 0x00473ef0
-    name: func_00473ef0
+    name: GuardedSeq_00473ef0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00473f10
-    name: func_00473f10
+    name: GuardedSeq_00473f10
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00473f30
-    name: func_00473f30
+    name: GuardedSeq_00473f30
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00473f50
-    name: func_00473f50
+    name: GuardedSeq_00473f50
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00473f70
-    name: func_00473f70
+    name: GuardedSeq_00473f70
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00473f90
     name: func_00473f90
     size: 120
@@ -7049,10 +7075,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00476de0
-    name: func_00476de0
+    name: GuardedSeq_00476de0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00476e00
     name: func_00476e00
     size: 32
@@ -7074,20 +7101,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00476f10
-    name: func_00476f10
+    name: GuardedSeq_00476f10
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00476f30
     name: func_00476f30
     size: 144
     group: game
     status: stub
   - addr: 0x00476fc0
-    name: func_00476fc0
+    name: GuardedSeq_00476fc0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00476fe0
     name: func_00476fe0
     size: 32
@@ -7410,10 +7439,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047d980
-    name: func_0047d980
+    name: GuardedSeq_0047d980
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0047d9a0
     name: func_0047d9a0
     size: 544
@@ -7999,10 +8029,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00485ca0
-    name: func_00485ca0
+    name: GuardedSeq_00485ca0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00485cc0
     name: func_00485cc0
     size: 151
@@ -8130,10 +8161,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004871b0
-    name: func_004871b0
+    name: GuardedSeq_004871b0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004871d0
     name: func_004871d0
     size: 19
@@ -8215,10 +8247,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488890
-    name: func_00488890
+    name: GuardedSeq_00488890
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x004888b0
     name: func_004888b0
     size: 752
@@ -8236,10 +8269,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00488be0
-    name: func_00488be0
+    name: GuardedSeq_00488be0
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00488c00
     name: func_00488c00
     size: 37
@@ -9450,10 +9484,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490c60
-    name: func_00490c60
+    name: GuardedSeq_00490c60
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00490c80
     name: func_00490c80
     size: 64
@@ -9960,10 +9995,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00497450
-    name: func_00497450
+    name: GuardedSeq_00497450
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x00497470
     name: func_00497470
     size: 794
@@ -10065,10 +10101,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049a650
-    name: func_0049a650
+    name: GuardedSeq_0049a650
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0049a670
     name: func_0049a670
     size: 2176
@@ -10160,10 +10197,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049c340
-    name: func_0049c340
+    name: GuardedSeq_0049c340
     size: 20
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_sequels.c
   - addr: 0x0049c360
     name: func_0049c360
     size: 108
