@@ -3055,10 +3055,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00433910
-    name: func_00433910
+    name: CallPauseDirtyLit_00433910
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_dirty_lit.c
   - addr: 0x00433940
     name: Wrapper_00433940
     size: 14
@@ -3578,10 +3579,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438440
-    name: func_00438440
+    name: ScaledPopSaveJmp_00438440
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_pop_save_jmp.c
   - addr: 0x00438470
     name: func_00438470
     size: 53
@@ -4065,10 +4067,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043bb20
-    name: func_0043bb20
+    name: ScaledPopSaveJmp_0043bb20
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_pop_save_jmp.c
   - addr: 0x0043bb50
     name: func_0043bb50
     size: 96
@@ -5422,15 +5425,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045c020
-    name: func_0045c020
+    name: ScaledIterStep_0045c020
     size: 45
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_iter_step.c
   - addr: 0x0045c050
-    name: func_0045c050
+    name: ScaledIterStep_0045c050
     size: 45
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_iter_step.c
   - addr: 0x0045c080
     name: func_0045c080
     size: 1336
@@ -5510,15 +5515,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045da80
-    name: func_0045da80
+    name: TripleInstallJmp_0045da80
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/triple_install_jmp.c
   - addr: 0x0045dab0
-    name: func_0045dab0
+    name: TripleInstallJmp_0045dab0
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/triple_install_jmp.c
   - addr: 0x0045dae0
     name: Thunk_0045dae0
     size: 5
@@ -6276,10 +6283,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00467d30
-    name: func_00467d30
+    name: CallJmp_00467d30
     size: 10
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_jmp.c
   - addr: 0x00467d40
     name: func_00467d40
     size: 280
@@ -7668,10 +7676,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047ef40
-    name: func_0047ef40
+    name: DirtyGuardLitOrJmp_0047ef40
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dirty_guard_lit_or_jmp.c
   - addr: 0x0047ef60
     name: func_0047ef60
     size: 144
@@ -8425,10 +8434,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00488c70
-    name: func_00488c70
+    name: CallPauseDirtyLit_00488c70
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_dirty_lit.c
   - addr: 0x00488ca0
     name: func_00488ca0
     size: 256
@@ -9114,15 +9124,17 @@ functions:
     status: matched
     file: src/engine/iter_load.c
   - addr: 0x0048e6b0
-    name: func_0048e6b0
+    name: StateInstallOrForward_0048e6b0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/state_install_or_forward.c
   - addr: 0x0048e6e0
-    name: func_0048e6e0
+    name: StateInstallOrForward_0048e6e0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/state_install_or_forward.c
   - addr: 0x0048e710
     name: func_0048e710
     size: 40
@@ -9591,10 +9603,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490780
-    name: func_00490780
+    name: ZeroThreeSlots_00490780
     size: 41
     group: game
-    status: stub
+    status: matched
+    file: src/engine/zero_three_slots.c
   - addr: 0x004907b0
     name: func_004907b0
     size: 81
@@ -10126,10 +10139,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00496940
-    name: func_00496940
+    name: DirtyGuardLitOrJmp_00496940
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dirty_guard_lit_or_jmp.c
   - addr: 0x00496960
     name: func_00496960
     size: 357
@@ -11571,10 +11585,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac010
-    name: func_004ac010
+    name: ZeroThreeSlots_004ac010
     size: 41
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/zero_three_slots.c
   - addr: 0x004ac040
     name: func_004ac040
     size: 54
@@ -11907,10 +11922,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004af690
-    name: func_004af690
+    name: ComTwoGateCall_004af690
     size: 39
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_two_gate_call.c
   - addr: 0x004af6c0
     name: func_004af6c0
     size: 102
@@ -11961,10 +11977,11 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004afb30
-    name: func_004afb30
+    name: ComCreateCheck_004afb30
     size: 28
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_create_check.c
   - addr: 0x004afb50
     name: ComReleaseCapture_004afb50
     size: 31
@@ -11993,10 +12010,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004afec0
-    name: func_004afec0
+    name: ComTwoGateCall_004afec0
     size: 39
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_two_gate_call.c
   - addr: 0x004afef0
     name: func_004afef0
     size: 102
@@ -12047,10 +12065,11 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004b0360
-    name: func_004b0360
+    name: ComCreateCheck_004b0360
     size: 28
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/com_create_check.c
   - addr: 0x004b0380
     name: ComReleaseCapture_004b0380
     size: 31
@@ -13056,10 +13075,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bd990
-    name: func_004bd990
+    name: CallJmp_004bd990
     size: 10
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/call_jmp.c
   - addr: 0x004bd9a0
     name: func_004bd9a0
     size: 208
@@ -13826,20 +13846,22 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c7030
-    name: func_004c7030
+    name: TwoPathIATDispatch_004c7030
     size: 40
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/two_path_iat_dispatch.c
   - addr: 0x004c7060
     name: func_004c7060
     size: 54
     group: crt
     status: stub
   - addr: 0x004c70a0
-    name: func_004c70a0
+    name: TwoPathIATDispatch_004c70a0
     size: 40
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/two_path_iat_dispatch.c
   - addr: 0x004c70d0
     name: func_004c70d0
     size: 354
