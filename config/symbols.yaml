@@ -4655,15 +4655,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00447890
-    name: func_00447890
+    name: DispatcherComplex249_00447890
     size: 249
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_249.c
   - addr: 0x00447990
-    name: func_00447990
+    name: DispatcherComplex249_00447990
     size: 249
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_249.c
   - addr: 0x00447a90
     name: func_00447a90
     size: 3258
