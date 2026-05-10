@@ -11960,10 +11960,11 @@ functions:
     status: matched
     file: src/engine/com_two_gate_call.c
   - addr: 0x004af6c0
-    name: func_004af6c0
+    name: ComSoundSetup_004af6c0
     size: 102
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_sound_setup.c
   - addr: 0x004af730
     name: func_004af730
     size: 333
@@ -12049,10 +12050,11 @@ functions:
     status: matched
     file: src/engine/com_two_gate_call.c
   - addr: 0x004afef0
-    name: func_004afef0
+    name: ComSoundSetup_004afef0
     size: 102
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_sound_setup.c
   - addr: 0x004aff60
     name: func_004aff60
     size: 333
