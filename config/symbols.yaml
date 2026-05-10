@@ -1578,10 +1578,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0041fd10
-    name: func_0041fd10
+    name: Set2FiveCallPauseJmp_0041fd10
     size: 91
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x0041fd70
     name: GameTick
     size: 792
@@ -3823,10 +3824,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438b90
-    name: func_00438b90
+    name: PushPop84TripleCall_00438b90
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x00438bf0
     name: func_00438bf0
     size: 72
@@ -9259,10 +9261,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048c210
-    name: func_0048c210
+    name: ScaledIncLoopState3_0048c210
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x0048c260
     name: func_0048c260
     size: 138
@@ -10252,10 +10255,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesAA.c
   - addr: 0x004923f0
-    name: func_004923f0
+    name: PushPopWalkDecMod_004923f0
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x00492450
     name: func_00492450
     size: 187
@@ -11027,10 +11031,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d8e0
-    name: func_0049d8e0
+    name: SixCrossStores_0049d8e0
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x0049d940
     name: func_0049d940
     size: 673
@@ -11959,10 +11964,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004ab2a0
-    name: func_004ab2a0
+    name: RangeMulMod_004ab2a0
     size: 89
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x004ab300
     name: DivBy_004ab300
     size: 31
@@ -13736,10 +13742,11 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x004be630
-    name: func_004be630
+    name: SixDoublePushCall_004be630
     size: 91
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesMM.c
   - addr: 0x004be690
     name: func_004be690
     size: 197
