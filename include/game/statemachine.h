@@ -69,6 +69,30 @@ extern s32 g_dlNalt4;           /* 0x0053a250 - P4 nalt */
  * indexed by [char + nalt*4 + base]. */
 extern s8  g_dlVariantTable[];  /* 0x004d5718 */
 
+/* Full DownloadPlayerChar (the 4-player superset that handles the
+ * "p2/p4 char auto-bump" cases the _Variant skips). */
+void DownloadPlayerChar(void);                            /* 0x0048bcf0 */
+
+/* Per-frame "is the download workflow active" flag - skips out
+ * immediately if zero. */
+extern u8  g_dlEnabledFlag;     /* 0x0054371c */
+
+/* Selects which player's variant pass to run on this entry
+ * (0..3). Persists across frames so consecutive frames can chain. */
+extern u32 g_dlMode;            /* 0x00542004 */
+
+/* Sticky scratch flags read on each "edi" reload (nalt fallback). */
+extern u32 g_dlSomeFlag1;       /* 0x0053a510 */
+extern u32 g_dlSomeFlag2;       /* 0x0052aafc */
+
+/* Two more sticky bookkeeping slots reset each call. */
+extern u32 g_dlState;           /* 0x00541e34 */
+extern u32 g_dlAux;             /* 0x00541e38 */
+
+/* Four "saved current-node-index" slots, written before each
+ * LoadGeoAsset_Textures call so the cleanup tail can restore. */
+extern u32 g_dlSavedNodeIdx[4]; /* 0x00541ed4 .. 0x00541ee0 */
+
 #ifdef __cplusplus
 }
 #endif

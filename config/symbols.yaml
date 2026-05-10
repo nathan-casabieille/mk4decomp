@@ -53,7 +53,8 @@ functions:
     name: DownloadPlayerChar
     size: 741
     group: game
-    status: stub
+    status: matched
+    file: src/game/download_player.c
   - addr: 0x0048bff0
     name: DownloadPlayerChar_Variant
     size: 405
