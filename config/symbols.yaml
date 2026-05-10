@@ -6562,10 +6562,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046a1e0
-    name: func_0046a1e0
+    name: Set0xaCmpEqSet0x26Jmp_0046a1e0
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x0046a230
     name: func_0046a230
     size: 367
@@ -9600,10 +9601,11 @@ functions:
     status: matched
     file: src/engine/cond_player_lookup.c
   - addr: 0x0048f2a0
-    name: func_0048f2a0
+    name: ScaledLoadCmpStoreXfm_0048f2a0
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x0048f2e0
     name: func_0048f2e0
     size: 111
@@ -9949,10 +9951,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00490740
-    name: func_00490740
+    name: ScaledZeroFour_00490740
     size: 51
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x00490780
     name: ZeroThreeSlots_00490780
     size: 41
@@ -10075,10 +10078,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x004911f0
-    name: func_004911f0
+    name: ScaledChainDouble_004911f0
     size: 57
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x00491230
     name: func_00491230
     size: 81
@@ -10137,10 +10141,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x00491950
-    name: func_00491950
+    name: Set5CallPauseTestByteJmpCall_00491950
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x00491990
     name: TwoCallStatePauseJmp_00491990
     size: 44
@@ -10189,10 +10194,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004923b0
-    name: func_004923b0
+    name: Push1eCallTestDirtyLoop_004923b0
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x004923f0
     name: func_004923f0
     size: 91
@@ -10348,10 +10354,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00494140
-    name: func_00494140
+    name: ArgScaledTestStore_00494140
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x00494180
     name: func_00494180
     size: 129
@@ -10404,10 +10411,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004949b0
-    name: func_004949b0
+    name: ArgScaledChain_004949b0
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x004949f0
     name: func_004949f0
     size: 102
@@ -10922,10 +10930,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d2d0
-    name: func_0049d2d0
+    name: ScaledTripleCopy4_0049d2d0
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x0049d310
     name: ScaledStoreThree_0049d310
     size: 42
@@ -10933,10 +10942,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x0049d340
-    name: func_0049d340
+    name: ScaledTripleCopy10_0049d340
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesAA.c
   - addr: 0x0049d380
     name: func_0049d380
     size: 174
