@@ -35,11 +35,8 @@ __declspec(naked) void IncJmp_0045e1d0(void) {
  *   ret
  */
 extern unsigned int g_state_00541fa4;
-__declspec(naked) void ZeroState_0048a1b0(void) {
-    __asm {
-        mov     dword ptr [g_state_00541fa4], 0
-        ret
-    }
+void ZeroState_0048a1b0(void) {
+    g_state_00541fa4 = 0;
 }
 
 /* @addr 0x0048bad0 (11b)
@@ -48,14 +45,9 @@ __declspec(naked) void ZeroState_0048a1b0(void) {
  *   add     esp, 4
  *   ret
  */
-extern int func_004887ff(int);
-__declspec(naked) void PushZeroCallRet_0048bad0(void) {
-    __asm {
-        push    0
-        call    func_004887ff
-        add     esp, 4
-        ret
-    }
+extern int __cdecl func_004887ff(int);
+void PushZeroCallRet_0048bad0(void) {
+    func_004887ff(0);
 }
 
 /* @addr 0x004ac1f0 (11b)
@@ -64,12 +56,8 @@ __declspec(naked) void PushZeroCallRet_0048bad0(void) {
  *   ret
  */
 extern unsigned int g_target_0053a6fc;
-__declspec(naked) void CopyGlobal_004ac1f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_target_0053a6fc], eax
-        ret
-    }
+void CopyGlobal_004ac1f0(void) {
+    g_target_0053a6fc = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x004b21b0 (8b)
@@ -77,11 +65,8 @@ __declspec(naked) void CopyGlobal_004ac1f0(void) {
  *   ret
  */
 extern unsigned char g_byte_007af508;
-__declspec(naked) void ZeroByte_004b21b0(void) {
-    __asm {
-        mov     byte ptr [g_byte_007af508], 0
-        ret
-    }
+void ZeroByte_004b21b0(void) {
+    g_byte_007af508 = 0;
 }
 
 /* @addr 0x004b5840 (11b)
@@ -89,11 +74,8 @@ __declspec(naked) void ZeroByte_004b21b0(void) {
  *   ret
  */
 extern unsigned int g_state_004f4e98;
-__declspec(naked) void SetState1_004b5840(void) {
-    __asm {
-        mov     dword ptr [g_state_004f4e98], 1
-        ret
-    }
+void SetState1_004b5840(void) {
+    g_state_004f4e98 = 1;
 }
 
 /* @addr 0x004b5ae0 (29b)
@@ -127,13 +109,8 @@ __declspec(naked) void SetHi6_004b5ae0(void) {
  *   mov     [ecx-8], eax
  *   ret
  */
-__declspec(naked) void StoreAtMinus8_004b5b00(void) {
-    __asm {
-        mov     ecx, dword ptr [esp + 4]
-        mov     eax, dword ptr [esp + 8]
-        mov     dword ptr [ecx - 8], eax
-        ret
-    }
+void StoreAtMinus8_004b5b00(int *p, int v) {
+    p[-2] = v;
 }
 
 /* @addr 0x004c4360 (13b)
@@ -143,12 +120,9 @@ __declspec(naked) void StoreAtMinus8_004b5b00(void) {
  */
 extern void func_004c42f0(void);
 extern unsigned char g_byte_00f9efd4;
-__declspec(naked) void CallSetByte1_004c4360(void) {
-    __asm {
-        call    func_004c42f0
-        mov     byte ptr [g_byte_00f9efd4], 1
-        ret
-    }
+void CallSetByte1_004c4360(void) {
+    func_004c42f0();
+    g_byte_00f9efd4 = 1;
 }
 
 /* @addr 0x004c4450 (24b)
@@ -193,13 +167,10 @@ __declspec(naked) void Loop1cBitMask_004c4450(void) {
  *   ret
  */
 extern void *func_004c9df0(void);
-__declspec(naked) void CallStoreField14_004c6500(void) {
-    __asm {
-        call    func_004c9df0
-        mov     ecx, dword ptr [esp + 4]
-        mov     dword ptr [eax + 0x14], ecx
-        ret
-    }
+struct s_field14 { char _pad[0x14]; int v; };
+void CallStoreField14_004c6500(int x) {
+    struct s_field14 *s = (struct s_field14 *)func_004c9df0();
+    s->v = x;
 }
 
 /* @addr 0x004c8ba0 (9b)
@@ -208,12 +179,8 @@ __declspec(naked) void CallStoreField14_004c6500(void) {
  *   ret
  */
 extern int *func_004c9df0_b(void);
-__declspec(naked) void CallAdd8_004c8ba0(void) {
-    __asm {
-        call    func_004c9df0_b
-        add     eax, 8
-        ret
-    }
+void *CallAdd8_004c8ba0(void) {
+    return (char *)func_004c9df0_b() + 8;
 }
 
 /* @addr 0x004c8bb0 (9b)
@@ -221,12 +188,8 @@ __declspec(naked) void CallAdd8_004c8ba0(void) {
  *   add     eax, 0xc
  *   ret
  */
-__declspec(naked) void CallAddC_004c8bb0(void) {
-    __asm {
-        call    func_004c9df0_b
-        add     eax, 0x0c
-        ret
-    }
+void *CallAddC_004c8bb0(void) {
+    return (char *)func_004c9df0_b() + 0xc;
 }
 
 /* @addr 0x004c9a20 (11b)
@@ -235,14 +198,9 @@ __declspec(naked) void CallAddC_004c8bb0(void) {
  *   add     esp, 4
  *   ret
  */
-extern int func_004c951e(int);
-__declspec(naked) void PushNeg3CallRet_004c9a20(void) {
-    __asm {
-        push    -3
-        call    func_004c951e
-        add     esp, 4
-        ret
-    }
+extern int __cdecl func_004c951e(int);
+void PushNeg3CallRet_004c9a20(void) {
+    func_004c951e(-3);
 }
 
 /* @addr 0x004cca30 (29b): linear search a 4-stride array

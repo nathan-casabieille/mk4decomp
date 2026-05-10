@@ -29,13 +29,8 @@ __declspec(naked) void Mul10Tail_00404af0(void) {
  *   mov     [ecx*4 + 0xe0], eax
  *   ret
  */
-__declspec(naked) void ScaledStoreE0_0041f550(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [esp + 4]
-        mov     dword ptr [ecx*4 + 0xe0], eax
-        ret
-    }
+void ScaledStoreE0_0041f550(int x) {
+    *(int *)(g_baseSel_00542060 * 4 + 0xe0) = x;
 }
 
 /* @addr 0x0041f810 (28b)

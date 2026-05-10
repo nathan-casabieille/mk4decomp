@@ -172,10 +172,7 @@ __declspec(naked) void ConstStoreCallJmp_0046ff60(void) {
  *   ret
  */
 extern void func_0041f840(void);
-__declspec(naked) void CallSetPause_0041f830(void) {
-    __asm {
-        call    func_0041f840
-        mov     dword ptr [g_framePauseFlag], 1
-        ret
-    }
+void CallSetPause_0041f830(void) {
+    func_0041f840();
+    g_framePauseFlag = 1;
 }

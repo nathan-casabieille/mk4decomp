@@ -243,14 +243,10 @@ __declspec(naked) void Memset18Step_004a56a0(void) {
 extern void func_004be370(void);
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_zero_00541fa4;
-__declspec(naked) void CallZero2_004be610(void) {
-    __asm {
-        call    func_004be370
-        xor     eax, eax
-        mov     dword ptr [g_zero_00541fa8], eax
-        mov     dword ptr [g_zero_00541fa4], eax
-        ret
-    }
+void CallZero2_004be610(void) {
+    func_004be370();
+    g_zero_00541fa8 = 0;
+    g_zero_00541fa4 = 0;
 }
 
 /* @addr 0x004be790 (16b)
@@ -261,16 +257,9 @@ __declspec(naked) void CallZero2_004be610(void) {
  *   add     esp, 8
  *   ret
  */
-extern int func_004c1ac8(int, int);
-__declspec(naked) void PushArgPushNeg1Call_004be790(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    eax
-        push    -1
-        call    func_004c1ac8
-        add     esp, 8
-        ret
-    }
+extern int __cdecl func_004c1ac8(int, int);
+int PushArgPushNeg1Call_004be790(int x) {
+    return func_004c1ac8(-1, x);
 }
 
 /* @addr 0x004bea30 (16b)
@@ -280,12 +269,9 @@ __declspec(naked) void PushArgPushNeg1Call_004be790(void) {
  */
 extern void func_004bdcb0(void);
 extern unsigned int g_state_00ab5748;
-__declspec(naked) void CallZero_004bea30(void) {
-    __asm {
-        call    func_004bdcb0
-        mov     dword ptr [g_state_00ab5748], 0
-        ret
-    }
+void CallZero_004bea30(void) {
+    func_004bdcb0();
+    g_state_00ab5748 = 0;
 }
 
 /* @addr 0x004c44f0 (18b)

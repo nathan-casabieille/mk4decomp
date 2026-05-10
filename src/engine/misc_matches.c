@@ -32,13 +32,8 @@ __declspec(naked) void MStackPackedInit_004049c0(void) {
  *   mov     [eax*4 + 0x24], ecx
  *   ret
  */
-__declspec(naked) void ScaledStoreIdx24_00406ce0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x24], ecx
-        ret
-    }
+void ScaledStoreIdx24_00406ce0(void) {
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x24) = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x004296c0 (17b)
@@ -66,14 +61,10 @@ __declspec(naked) void DirtyOrJmp_004296c0(void) {
  */
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
-__declspec(naked) void ZeroTriple_00421c20(void) {
-    __asm {
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_zerotriple_00541de8], eax
-        mov     dword ptr [g_zerotriple_00541dec], eax
-        ret
-    }
+void ZeroTriple_00421c20(void) {
+    g_walkCallback        = 0;
+    g_zerotriple_00541de8 = 0;
+    g_zerotriple_00541dec = 0;
 }
 
 /* @addr 0x0044ccd0 (18b)
@@ -116,10 +107,6 @@ __declspec(naked) void Push16Call_00489f50(void) {
  *   and     dword ptr [eax*4 + 0x34], -5     ; clear bit 2
  *   ret
  */
-__declspec(naked) void ClearBit2x34_00490130(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        and     dword ptr [eax*4 + 0x34], -5
-        ret
-    }
+void ClearBit2x34_00490130(void) {
+    *(int *)(g_fightGroupHead * 4 + 0x34) &= ~4;
 }

@@ -8,54 +8,30 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00413360 (19b): push 0x8d; push DATA_PTR; call F; add esp,8; ret */
-extern int func_0049cb38(int, void *);
+extern int __cdecl func_0049cb38(void *, int);
 extern void *g_data_00413490;
-__declspec(naked) void Push8d_Push413490_00413360(void) {
-    __asm {
-        push    0x8d
-        push    OFFSET g_data_00413490
-        call    func_0049cb38
-        add     esp, 8
-        ret
-    }
+void Push8d_Push413490_00413360(void) {
+    func_0049cb38(&g_data_00413490, 0x8d);
 }
 
 /* @addr 0x00413560 (19b): push 0x8e; push DATA_PTR; call F; add esp,8; ret */
 extern void *g_data_00413690;
-__declspec(naked) void Push8e_Push413690_00413560(void) {
-    __asm {
-        push    0x8e
-        push    OFFSET g_data_00413690
-        call    func_0049cb38
-        add     esp, 8
-        ret
-    }
+void Push8e_Push413690_00413560(void) {
+    func_0049cb38(&g_data_00413690, 0x8e);
 }
 
 /* @addr 0x0041d550 (16b): push 0; push DATA_PTR; call F; add esp,8; ret */
-extern int func_0049eb40(int, void *);
+extern int __cdecl func_0049eb40(void *, int);
 extern void *g_data_0041d7d0;
-__declspec(naked) void Push0_Push41d7d0_0041d550(void) {
-    __asm {
-        push    0
-        push    OFFSET g_data_0041d7d0
-        call    func_0049eb40
-        add     esp, 8
-        ret
-    }
+void Push0_Push41d7d0_0041d550(void) {
+    func_0049eb40(&g_data_0041d7d0, 0);
 }
 
 /* @addr 0x00421c40 (16b): push 0x71; push DATA_PTR; call F; add esp,8; ret */
-extern int func_0049cb40(int, void *);
+extern int __cdecl func_0049cb40(void *, int);
 extern void *g_data_0048caa0;
-__declspec(naked) void Push71_Push48caa0_00421c40(void) {
-    __asm {
-        push    0x71
-        push    OFFSET g_data_0048caa0
-        call    func_0049cb40
-        add     esp, 8
-        ret
-    }
+void Push71_Push48caa0_00421c40(void) {
+    func_0049cb40(&g_data_0048caa0, 0x71);
 }
 
 /* @addr 0x00463070 (20b): push 0; push 0x00463220; call F; add esp,8; jmp +0x0c */

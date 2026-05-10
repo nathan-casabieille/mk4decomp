@@ -157,13 +157,8 @@ __declspec(naked) void LoadStoreRetNopJmp_004bf090(void) {
  *   ret
  */
 extern unsigned int g_state_00f4d028;
-__declspec(naked) void AddStore_004bf0b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f85b38]
-        add     eax, 0x00200000
-        mov     dword ptr [g_state_00f4d028], eax
-        ret
-    }
+void AddStore_004bf0b0(void) {
+    g_state_00f4d028 = g_state_00f85b38 + 0x00200000;
 }
 
 /* @addr 0x004c4370 (22b)
