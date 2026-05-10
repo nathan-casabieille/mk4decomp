@@ -5840,10 +5840,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045fa90
-    name: func_0045fa90
+    name: ZeroScaledZeroCallPauseJmp_0045fa90
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0045fac0
     name: func_0045fac0
     size: 473
@@ -6512,10 +6513,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046a520
-    name: func_0046a520
+    name: CallPauseCmpStateJmp_0046a520
     size: 50
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0046a560
     name: GuardedPushCall_0046a560
     size: 28
@@ -6737,15 +6739,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0046fbe0
-    name: func_0046fbe0
+    name: CallPauseDirtyTwoSetsJmp_0046fbe0
     size: 49
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0046fc20
-    name: func_0046fc20
+    name: CallPauseDirtyTwoSetsJmp_0046fc20
     size: 49
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0046fc60
     name: func_0046fc60
     size: 164
@@ -8472,10 +8476,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486fc0
-    name: func_00486fc0
+    name: DualCallPauseDirtyDoubleJmp_00486fc0
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x00486ff0
     name: func_00486ff0
     size: 298
@@ -8494,10 +8499,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00487150
-    name: func_00487150
+    name: ScaledTestCallPauseJmpFar_00487150
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x00487180
     name: ScaledTestCallPauseJmp_00487180
     size: 41
@@ -8821,10 +8827,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048a220
-    name: func_0048a220
+    name: AndStorePushCallZero_0048a220
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0048a250
     name: Wrapper_0048a250
     size: 14
@@ -9196,10 +9203,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048d0c0
-    name: func_0048d0c0
+    name: ScaledOrAh8CallPauseJmp_0048d0c0
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0048d0f0
     name: func_0048d0f0
     size: 818
@@ -9590,10 +9598,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f8e0
-    name: func_0048f8e0
+    name: ScaledChainCallPauseSetJmp_0048f8e0
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x0048f910
     name: ScaledChain3c74_0048f910
     size: 31
@@ -9930,10 +9939,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490e00
-    name: func_00490e00
+    name: ScaledLoadJmpIfNonzero_00490e00
     size: 49
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x00490e40
     name: func_00490e40
     size: 68
@@ -11252,10 +11262,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004a1cb0
-    name: func_004a1cb0
+    name: DualCallSetByte_004a1cb0
     size: 45
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesP.c
   - addr: 0x004a1ce0
     name: MovsxAnd4Shr_004a1ce0
     size: 14
