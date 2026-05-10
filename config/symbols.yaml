@@ -109,7 +109,8 @@ functions:
     name: Helper_ComputeExeHash
     size: 368
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/integrity.c
   - addr: 0x004acc50
     name: CheckInstallPath
     size: 129

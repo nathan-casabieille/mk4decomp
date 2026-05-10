@@ -125,6 +125,15 @@ void Helper_StrCopy(char *dst, s32 size);                /* 0x004c499d */
 void Helper_SplitPath(char *path, char *drv, char *dir,
                       char *fname, char *ext);            /* 0x004c5dfe */
 
+/* CRT helpers used by Helper_ComputeExeHash. */
+void Helper_ChkStk(void);                                /* 0x004c5dd0 */
+void *Helper_FOpen(const char *path, const char *mode);  /* 0x004c5db0 */
+s32  Helper_FRead(void *buf, u32 sz, u32 n, void *fp);   /* 0x004c5b70 */
+s32  Helper_FSeek(void *fp, s32 off, s32 whence);        /* 0x004c5a90 */
+s32  Helper_FTell(void *fp);                             /* 0x004c58b0 */
+void Helper_FOpenPostInit(void *fp);                     /* 0x004c5cf0 */
+extern void Helper_FClose(void *file);                   /* 0x004c5800 */
+
 extern s32  g_validInstall;     /* 0x00543f78 */
 extern u8   g_configBuffer[588];/* 0x00543928 */
 extern u32  g_configChecksum;   /* 0x0054392c */
@@ -139,8 +148,9 @@ s32 Helper_ComputeExeHash(const char *path);             /* 0x004acae0 */
 
 extern u32 g_exeIntegrityValueA;    /* 0x00543920 - computed lo */
 extern u32 g_exeIntegrityValueB;    /* 0x00543924 - computed hi */
-extern u32 g_exeIntegrityRefA;      /* 0x004f4698 - expected lo */
-extern u32 g_exeIntegrityRefB;      /* 0x004f469c - expected hi */
+extern u32 g_exeIntegrityRefA;      /* 0x004f4690 - expected lo */
+extern u32 g_exeIntegrityRefB;      /* 0x004f4694 - expected hi */
+extern u32 g_exeIntegrityFoundPos;  /* 0x00543918 - file pos where sig was found (0 = not yet) */
 
 #ifdef __cplusplus
 }
