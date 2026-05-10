@@ -3410,10 +3410,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004353f0
-    name: func_004353f0
+    name: DualCallTestPauseRange_004353f0
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00435440
     name: func_00435440
     size: 423
@@ -3884,10 +3885,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x004390f0
-    name: func_004390f0
+    name: CallPauseTestByteJmpCalls_004390f0
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00439130
     name: func_00439130
     size: 90
@@ -4745,10 +4747,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x00446640
-    name: func_00446640
+    name: ScaledLoad1cZeroAndFE_00446640
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00446680
     name: func_00446680
     size: 272
@@ -4760,10 +4763,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446880
-    name: func_00446880
+    name: ScaledLoadJmpPauseSetMax_00446880
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x004468c0
     name: func_004468c0
     size: 116
@@ -5012,10 +5016,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044ef10
-    name: func_0044ef10
+    name: ScaledInitOrSelfPtr_0044ef10
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x0044ef50
     name: func_0044ef50
     size: 1372
@@ -5101,10 +5106,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00451a60
-    name: func_00451a60
+    name: CallPauseTestByte4ZeroCB_00451a60
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00451aa0
     name: SetJmp_00451aa0
     size: 15
@@ -5901,10 +5907,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045fca0
-    name: func_0045fca0
+    name: CallPauseScaledStorePushCall_0045fca0
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x0045fcf0
     name: CallPauseMStackPushSet0Jmp_0045fcf0
     size: 52
@@ -6053,10 +6060,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x00460d80
-    name: func_00460d80
+    name: NotShrCmp1Store_00460d80
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00460dd0
     name: func_00460dd0
     size: 97
@@ -6389,10 +6397,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00466090
-    name: func_00466090
+    name: DecCallPushCall_00466090
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x004660d0
     name: func_004660d0
     size: 518
@@ -7183,10 +7192,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00474010
-    name: func_00474010
+    name: DoubleStackPushAndJmp_00474010
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesY.c
   - addr: 0x00474050
     name: func_00474050
     size: 63
