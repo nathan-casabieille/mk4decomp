@@ -11985,10 +11985,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004afa10
-    name: func_004afa10
+    name: ComInitSequence_004afa10
     size: 77
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_init_sequence.c
   - addr: 0x004afa60
     name: func_004afa60
     size: 146
@@ -12073,10 +12074,11 @@ functions:
     group: engine.ecm
     status: stub
   - addr: 0x004b0240
-    name: func_004b0240
+    name: ComInitSequence_004b0240
     size: 77
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/com_init_sequence.c
   - addr: 0x004b0290
     name: func_004b0290
     size: 146
