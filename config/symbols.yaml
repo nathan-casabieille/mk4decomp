@@ -3870,10 +3870,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004390b0
-    name: func_004390b0
+    name: CmpccccCallPauseDirtyJmp_004390b0
     size: 56
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x004390f0
     name: func_004390f0
     size: 62
@@ -3959,10 +3960,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x004396c0
-    name: func_004396c0
+    name: StoreCallPauseDirtyStoreJmp_004396c0
     size: 51
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x00439700
     name: func_00439700
     size: 87
@@ -3979,10 +3981,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004398b0
-    name: func_004398b0
+    name: Cmp2CallDirtyCall_004398b0
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x004398f0
     name: ScaledCmp200eCallBool_004398f0
     size: 38
@@ -4114,10 +4117,11 @@ functions:
     status: matched
     file: src/engine/copy_jmp.c
   - addr: 0x0043a630
-    name: func_0043a630
+    name: DirtyToggleScaledTest_0043a630
     size: 58
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0043a670
     name: func_0043a670
     size: 436
@@ -5888,10 +5892,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045fcf0
-    name: func_0045fcf0
+    name: CallPauseMStackPushSet0Jmp_0045fcf0
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0045fd30
     name: func_0045fd30
     size: 379
@@ -5903,10 +5908,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045ffc0
-    name: func_0045ffc0
+    name: CallPauseMStackPushSet9Jmp_0045ffc0
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x00460000
     name: func_00460000
     size: 396
@@ -6021,15 +6027,17 @@ functions:
     status: matched
     file: src/engine/guarded_dispatch.c
   - addr: 0x00460d00
-    name: func_00460d00
+    name: CallPauseMStackPushSet3Jmp_00460d00
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x00460d40
-    name: func_00460d40
+    name: CallPauseMStackPushSet4Jmp_00460d40
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x00460d80
     name: func_00460d80
     size: 65
@@ -6313,10 +6321,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00464240
-    name: func_00464240
+    name: StoreCallPauseCmpDirty_00464240
     size: 60
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x00464280
     name: func_00464280
     size: 145
@@ -6592,10 +6601,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046b630
-    name: func_0046b630
+    name: DualEntryPushCall_0046b630
     size: 59
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0046b670
     name: func_0046b670
     size: 2084
@@ -6612,10 +6622,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046c520
-    name: func_0046c520
+    name: CallPauseTripleScaledJmp_0046c520
     size: 51
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0046c560
     name: func_0046c560
     size: 104
@@ -6689,10 +6700,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046e2a0
-    name: func_0046e2a0
+    name: CallPauseDirtyMStackPushFn_0046e2a0
     size: 56
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0046e2e0
     name: func_0046e2e0
     size: 1723
@@ -6867,10 +6879,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470980
-    name: func_00470980
+    name: CmpP1GTSetup_00470980
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x004709c0
     name: CmpP1ScaledInit_004709c0
     size: 31
@@ -7715,10 +7728,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047c5e0
-    name: func_0047c5e0
+    name: Set200dCallPauseJmp_0047c5e0
     size: 57
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesV.c
   - addr: 0x0047c620
     name: func_0047c620
     size: 92
