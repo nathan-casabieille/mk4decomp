@@ -2915,10 +2915,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042fc40
-    name: func_0042fc40
+    name: SubCmpCallPauseJmp_0042fc40
     size: 50
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x0042fc80
     name: func_0042fc80
     size: 544
@@ -3063,10 +3064,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00431da0
-    name: func_00431da0
+    name: AddStoreCallPauseJmp_00431da0
     size: 47
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00431dd0
     name: func_00431dd0
     size: 179
@@ -3457,10 +3459,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004362b0
-    name: func_004362b0
+    name: Cmp30000And18000_004362b0
     size: 49
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x004362f0
     name: func_004362f0
     size: 149
@@ -3548,10 +3551,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00436ff0
-    name: func_00436ff0
+    name: Set14CallAddJmp_00436ff0
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00437020
     name: func_00437020
     size: 183
@@ -3728,10 +3732,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004389b0
-    name: func_004389b0
+    name: DecJneSetCallSetJmp_004389b0
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x004389e0
     name: CmpJmpConstStoreJmp_004389e0
     size: 44
@@ -3792,10 +3797,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesF.c
   - addr: 0x00438ea0
-    name: func_00438ea0
+    name: TripleStubPushCall_00438ea0
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00438ed0
     name: Wrapper_00438ed0
     size: 14
@@ -5927,10 +5933,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00460910
-    name: func_00460910
+    name: CallPauseTriCmpJmp_00460910
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00460940
     name: func_00460940
     size: 120
@@ -6031,10 +6038,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461220
-    name: func_00461220
+    name: CallPauseScaledStoreCopyJmp_00461220
     size: 50
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00461260
     name: func_00461260
     size: 222
@@ -6304,10 +6312,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00464800
-    name: func_00464800
+    name: DualScaledLitInitJmp_00464800
     size: 47
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00464830
     name: func_00464830
     size: 5812
@@ -6774,10 +6783,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470310
-    name: func_00470310
+    name: ScaledChainNegStore_00470310
     size: 46
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00470340
     name: func_00470340
     size: 76
@@ -6794,10 +6804,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470500
-    name: func_00470500
+    name: TripleCallPauseJmp_00470500
     size: 48
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00470530
     name: func_00470530
     size: 772
@@ -7996,10 +8007,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00480ef0
-    name: func_00480ef0
+    name: CallPauseDirtyScaledSet7_00480ef0
     size: 47
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesO.c
   - addr: 0x00480f20
     name: func_00480f20
     size: 144
