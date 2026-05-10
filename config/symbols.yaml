@@ -1416,10 +1416,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041f270
-    name: func_0041f270
+    name: ZeroLargeBlock_0041f270
     size: 27
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0041f290
     name: AllocateNode
     size: 700
@@ -2804,10 +2805,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042f4d0
-    name: func_0042f4d0
+    name: ScaledStoreCallEpilogue_0042f4d0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0042f4f0
     name: func_0042f4f0
     size: 75
@@ -2966,10 +2968,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004314d0
-    name: func_004314d0
+    name: LoadStoreScaled58_004314d0
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x004314f0
     name: func_004314f0
     size: 53
@@ -5278,10 +5281,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004578e0
-    name: func_004578e0
+    name: StrLen_004578e0
     size: 21
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x00457900
     name: func_00457900
     size: 462
@@ -5620,15 +5624,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045e0b0
-    name: func_0045e0b0
+    name: ConditionalAcc4or3_0045e0b0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0045e0d0
-    name: func_0045e0d0
+    name: ConditionalAcc3or4_0045e0d0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0045e0f0
     name: Thunk_0045e0f0
     size: 5
@@ -9018,10 +9024,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048cc20
-    name: func_0048cc20
+    name: DualConstJmpNeg1_0048cc20
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0048cc40
     name: func_0048cc40
     size: 95
@@ -9485,10 +9492,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048fbd0
-    name: func_0048fbd0
+    name: DualConstJmpBig_0048fbd0
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x0048fbf0
     name: func_0048fbf0
     size: 142
@@ -9554,10 +9562,11 @@ functions:
     status: matched
     file: src/engine/scaled_xor_store.c
   - addr: 0x00490110
-    name: func_00490110
+    name: ScaledOr4Store_00490110
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x00490130
     name: ClearBit2x34_00490130
     size: 14
@@ -9605,20 +9614,23 @@ functions:
     group: game
     status: stub
   - addr: 0x004902d0
-    name: func_004902d0
+    name: ScaledAndAh_004902d0
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x004902f0
-    name: func_004902f0
+    name: ScaledAndAl7f_004902f0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x00490310
-    name: func_00490310
+    name: ScaledAndAlf7_00490310
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches5.c
   - addr: 0x00490330
     name: func_00490330
     size: 28
