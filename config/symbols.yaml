@@ -162,10 +162,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404af0
-    name: func_00404af0
+    name: Mul10Tail_00404af0
     size: 18
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x00404b10
     name: func_00404b10
     size: 125
@@ -1428,10 +1429,11 @@ functions:
     status: matched
     file: src/engine/allocate_node.c
   - addr: 0x0041f550
-    name: func_0041f550
+    name: ScaledStoreE0_0041f550
     size: 18
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0041f570
     name: func_0041f570
     size: 408
@@ -1453,10 +1455,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041f810
-    name: func_0041f810
+    name: LoadShlDerefCallSkip_0041f810
     size: 28
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0041f830
     name: CallSetPause_0041f830
     size: 16
@@ -10509,15 +10512,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0049c6d0
-    name: func_0049c6d0
+    name: ArgSar_Set1_Jmp_0049c6d0
     size: 27
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049c6f0
-    name: func_0049c6f0
+    name: ArgSar_Set0_Jmp_0049c6f0
     size: 27
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049c710
     name: func_0049c710
     size: 305
@@ -10611,10 +10616,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cc10
-    name: func_0049cc10
+    name: AndStoreJmp_0049cc10
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049cc30
     name: func_0049cc30
     size: 267
@@ -10636,10 +10642,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d080
-    name: func_0049d080
+    name: CmpDivJmp_0049d080
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049d0a0
     name: func_0049d0a0
     size: 166
@@ -10676,10 +10683,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d430
-    name: func_0049d430
+    name: ScaledZeroIfNonzero_0049d430
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049d450
     name: func_0049d450
     size: 248
@@ -10809,10 +10817,11 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_115.c
   - addr: 0x0049fa00
-    name: func_0049fa00
+    name: StateAdd5Capped_0049fa00
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x0049fa20
     name: func_0049fa20
     size: 36
@@ -11078,15 +11087,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1ce0
-    name: func_004a1ce0
+    name: MovsxAnd4Shr_004a1ce0
     size: 14
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x004a1cf0
-    name: func_004a1cf0
+    name: MovsxAnd20Shr5_004a1cf0
     size: 14
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x004a1d00
     name: func_004a1d00
     size: 27
@@ -11283,10 +11294,11 @@ functions:
     status: matched
     file: src/audio/debug.c
   - addr: 0x004a4180
-    name: func_004a4180
+    name: CmpByteJmp_004a4180
     size: 19
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x004a41a0
     name: func_004a41a0
     size: 182
@@ -11298,10 +11310,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a42b0
-    name: func_004a42b0
+    name: TestZeroJmp_004a42b0
     size: 25
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x004a42d0
     name: func_004a42d0
     size: 1262
@@ -11353,10 +11366,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a5660
-    name: func_004a5660
+    name: ZeroNDwords_004a5660
     size: 19
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches7.c
   - addr: 0x004a5680
     name: func_004a5680
     size: 28
