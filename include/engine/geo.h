@@ -67,6 +67,23 @@ void LoadGeoAsset_Default(void);                         /* 0x004bd5b0 */
  * texture-load behavior; LoadGeoAsset_Default passes 0. */
 void LoadGeoAsset_Textures(s32 flag);                    /* 0x004bd6e0 */
 
+/* Pre/post hooks invoked by LoadGeoAsset_Textures. The "pre" pair
+ * frees a couple of memory tags (4 and 2); the "post" hook is empty
+ * in the shipping build (a single ret). */
+void Helper_GeoLoadPre(void);                            /* 0x004bd570 */
+void Helper_GeoLoadPost(void);                           /* 0x004bd6d0 */
+
+/* sprintf wrapper used by LoadGeoAsset_Textures to build the
+ * "c:\\source\\mk4\\win\\geogfx\\<name>" path. */
+s32  Helper_Sprintf(char *buf, const char *fmt, ...);    /* 0x004c5580 */
+
+/* Static path/asset-table state used by LoadGeoAsset_Textures: */
+extern char g_geoAssetPath[1024];                         /* 0x00ab43d8 */
+extern u32  g_curTexSlot;                                 /* 0x00ab4e74 */
+extern u16  g_texSlots[16];                               /* 0x00ab4e00 */
+extern u32  g_texNodeIdx[];                               /* 0x00ab4e78 */
+extern u32  g_texCount[];                                 /* 0x00ab5038 */
+
 /* Decode a RLE-555 texture block into the staging buffer at
  * 0xf4d050. row_width is clamped to 14 (or kept at <=14) and
  * passed to the upload helper at the end. */

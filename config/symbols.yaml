@@ -497,7 +497,8 @@ functions:
     name: LoadGeoAsset_Textures
     size: 353
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/geo.c
   - addr: 0x004bdb50
     name: NodeApplyTransform_A
     size: 163

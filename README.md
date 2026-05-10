@@ -21,11 +21,11 @@ matching, the C source is the canonical representation of the game.
 ```
 $ make progress
 Functions identified    :   107 (~6.3% of estimated total)
-matched (byte-perfect)  :    86
+matched (byte-perfect)  :    87
 drafted (functional)    :     0
-stub (asm-only)         :    21
+stub (asm-only)         :    20
 
-Bytes of .text covered  : 13529 / 32699 (41.4% of identified)
+Bytes of .text covered  : 13882 / 32699 (42.5% of identified)
 ```
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
