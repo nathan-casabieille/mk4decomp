@@ -7758,15 +7758,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0047fec0
-    name: func_0047fec0
+    name: FourConstCallLitCallJmp_0047fec0
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/four_const_call_lit_call_jmp.c
   - addr: 0x0047ff20
-    name: func_0047ff20
+    name: FourConstCallLitCallJmp_0047ff20
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/four_const_call_lit_call_jmp.c
   - addr: 0x0047ff80
     name: func_0047ff80
     size: 540
@@ -14350,15 +14352,17 @@ functions:
     status: matched
     file: src/engine/forward_with_literal.c
   - addr: 0x004ccd20
-    name: func_004ccd20
+    name: SevenArgThenTwoArg_004ccd20
     size: 56
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/seven_arg_then_two_arg.c
   - addr: 0x004ccd60
-    name: func_004ccd60
+    name: SevenArgThenTwoArg_004ccd60
     size: 56
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/seven_arg_then_two_arg.c
   - addr: 0x004ccda0
     name: func_004ccda0
     size: 145
