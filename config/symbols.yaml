@@ -176,20 +176,22 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404bd0
-    name: func_00404bd0
+    name: ScaledDecPop_00404bd0
     size: 35
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/scaled_dec_pop.c
   - addr: 0x00404c00
     name: func_00404c00
     size: 52
     group: boot
     status: stub
   - addr: 0x00404c40
-    name: func_00404c40
+    name: ScaledDecPop_00404c40
     size: 35
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/scaled_dec_pop.c
   - addr: 0x00404c70
     name: func_00404c70
     size: 66
@@ -2198,20 +2200,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00428820
-    name: func_00428820
+    name: CallPauseScaledStoreJmp_00428820
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_scaled_store_jmp.c
   - addr: 0x00428850
     name: func_00428850
     size: 84
     group: game
     status: stub
   - addr: 0x004288b0
-    name: func_004288b0
+    name: CallPauseScaledStoreJmp_004288b0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_scaled_store_jmp.c
   - addr: 0x004288e0
     name: func_004288e0
     size: 106
@@ -2360,10 +2364,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00429470
-    name: func_00429470
+    name: ScaledChainJmp_00429470
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_chain_jmp.c
   - addr: 0x004294a0
     name: func_004294a0
     size: 129
@@ -2459,10 +2464,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004298e0
-    name: func_004298e0
+    name: ScaledChainJmp_004298e0
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_chain_jmp.c
   - addr: 0x00429910
     name: ScaledArrStore_00429910
     size: 23
@@ -2554,10 +2560,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042b690
-    name: func_0042b690
+    name: TwoCallTail_0042b690
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/two_call_tail.c
   - addr: 0x0042b6c0
     name: GuardedDispatch_0042b6c0
     size: 34
@@ -3065,15 +3072,17 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00433960
-    name: func_00433960
+    name: ScaledLoadInstallOrCall_00433960
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_install_or_call.c
   - addr: 0x00433990
-    name: func_00433990
+    name: ScaledLoadInstallOrCall_00433990
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_install_or_call.c
   - addr: 0x004339c0
     name: func_004339c0
     size: 482
@@ -4432,10 +4441,11 @@ functions:
     status: matched
     file: src/engine/copy_jmp.c
   - addr: 0x00445ed0
-    name: func_00445ed0
+    name: CopyLoadInstallJmp_00445ed0
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_load_install_jmp.c
   - addr: 0x00445f00
     name: func_00445f00
     size: 56
@@ -4488,10 +4498,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446210
-    name: func_00446210
+    name: CopyLoadInstallJmp_00446210
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_load_install_jmp.c
   - addr: 0x00446240
     name: func_00446240
     size: 56
@@ -6173,10 +6184,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00466460
-    name: func_00466460
+    name: ScaledDecBranch_00466460
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_dec_branch.c
   - addr: 0x00466490
     name: func_00466490
     size: 285
@@ -6188,10 +6200,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00466770
-    name: func_00466770
+    name: ScaledDecBranch_00466770
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_dec_branch.c
   - addr: 0x004667a0
     name: func_004667a0
     size: 69
@@ -7836,10 +7849,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00481380
-    name: func_00481380
+    name: TwoCallTail_00481380
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/two_call_tail.c
   - addr: 0x004813b0
     name: func_004813b0
     size: 790
@@ -8110,10 +8124,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484b40
-    name: func_00484b40
+    name: GuardedDispatch4_00484b40
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch_4.c
   - addr: 0x00484b70
     name: func_00484b70
     size: 284
@@ -8456,10 +8471,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489080
-    name: func_00489080
+    name: GuardedDispatch4_00489080
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch_4.c
   - addr: 0x004890b0
     name: func_004890b0
     size: 124
@@ -8765,15 +8781,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0048b480
-    name: func_0048b480
+    name: CallPauseAddDualStore_0048b480
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_add_dual_store.c
   - addr: 0x0048b4b0
-    name: func_0048b4b0
+    name: CallPauseAddDualStore_0048b4b0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/call_pause_add_dual_store.c
   - addr: 0x0048b4e0
     name: CopyCallPauseJmp_0048b4e0
     size: 30
@@ -10679,15 +10697,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0049fb10
-    name: func_0049fb10
+    name: Cmp2DirtySetOrClear_0049fb10
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cmp2_dirty_set_or_clear.c
   - addr: 0x0049fb40
-    name: func_0049fb40
+    name: Cmp2DirtySetOrClear_0049fb40
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cmp2_dirty_set_or_clear.c
   - addr: 0x0049fb70
     name: func_0049fb70
     size: 473
