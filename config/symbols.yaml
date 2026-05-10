@@ -12045,10 +12045,11 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004afb70
-    name: func_004afb70
+    name: DSoundModeInit342_004afb70
     size: 342
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_mode_init_342.c
   - addr: 0x004afcd0
     name: ComReleasePair_004afcd0
     size: 56
@@ -12137,10 +12138,11 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004b03a0
-    name: func_004b03a0
+    name: DSoundModeInit342_004b03a0
     size: 342
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/dsound_mode_init_342.c
   - addr: 0x004b0500
     name: ComReleasePair_004b0500
     size: 56
