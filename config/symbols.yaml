@@ -57,7 +57,8 @@ functions:
     name: DownloadPlayerChar_Variant
     size: 405
     group: game
-    status: stub
+    status: matched
+    file: src/game/download_variant.c
   - addr: 0x0049cb60
     name: AllocNode
     size: 15
