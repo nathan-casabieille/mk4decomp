@@ -315,10 +315,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004059a0
-    name: func_004059a0
+    name: PushPopScaled18_004059a0
     size: 90
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00405a00
     name: ScaledAndMaskInitJmp_00405a00
     size: 59
@@ -337,10 +338,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00405ad0
-    name: func_00405ad0
+    name: PushPopScaled14_00405ad0
     size: 90
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00405b30
     name: MStackPushCallCallPop_00405b30
     size: 77
@@ -596,10 +598,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00407c00
-    name: func_00407c00
+    name: ExtractBitsToVec3_00407c00
     size: 88
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00407c60
     name: func_00407c60
     size: 152
@@ -632,15 +635,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x004084b0
-    name: func_004084b0
+    name: ScaledLoadCallSet1c_004084b0
     size: 81
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00408510
-    name: func_00408510
+    name: PushPopScaled1cDoubleCall_00408510
     size: 99
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00408580
     name: func_00408580
     size: 120
@@ -834,10 +839,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040a7e0
-    name: func_0040a7e0
+    name: StackPushAdd15CallPop_0040a7e0
     size: 69
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x0040a830
     name: MStackPushCallPop_0040a830
     size: 54
@@ -892,10 +898,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040bf20
-    name: func_0040bf20
+    name: PushCallScaledClearJmp_0040bf20
     size: 66
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x0040bf70
     name: func_0040bf70
     size: 400
@@ -1159,10 +1166,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004147b0
-    name: func_004147b0
+    name: SetDirty4XorScaledLoad_004147b0
     size: 87
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00414810
     name: func_00414810
     size: 263
@@ -1276,10 +1284,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004196c0
-    name: func_004196c0
+    name: CallPauseDirty4ScaledSet_004196c0
     size: 83
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesII.c
   - addr: 0x00419720
     name: func_00419720
     size: 95
