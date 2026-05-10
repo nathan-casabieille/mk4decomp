@@ -3003,15 +3003,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004338a0
-    name: func_004338a0
+    name: GuardedPushCall_004338a0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x004338c0
-    name: func_004338c0
+    name: GuardedPushCall_004338c0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x004338e0
     name: func_004338e0
     size: 34
@@ -4009,10 +4011,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043b980
-    name: func_0043b980
+    name: GuardedPushCall_0043b980
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x0043b9a0
     name: func_0043b9a0
     size: 236
@@ -6293,10 +6296,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046a560
-    name: func_0046a560
+    name: GuardedPushCall_0046a560
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x0046a580
     name: func_0046a580
     size: 96
@@ -7866,10 +7870,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482990
-    name: func_00482990
+    name: GuardedPushCall_00482990
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x004829b0
     name: func_004829b0
     size: 256
@@ -10266,10 +10271,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049c200
-    name: func_0049c200
+    name: GuardedPushCall_0049c200
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_push.c
   - addr: 0x0049c220
     name: func_0049c220
     size: 274
