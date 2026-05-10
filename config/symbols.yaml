@@ -307,10 +307,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00405ac0
-    name: func_00405ac0
+    name: Thunk_00405ac0
     size: 5
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00405ad0
     name: func_00405ad0
     size: 90
@@ -2009,10 +2010,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00427460
-    name: func_00427460
+    name: Thunk_00427460
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00427470
     name: func_00427470
     size: 126
@@ -2349,10 +2351,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004296e0
-    name: func_004296e0
+    name: Thunk_004296e0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004296f0
     name: func_004296f0
     size: 31
@@ -2994,10 +2997,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00433950
-    name: func_00433950
+    name: Thunk_00433950
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00433960
     name: func_00433960
     size: 35
@@ -3074,10 +3078,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004344a0
-    name: func_004344a0
+    name: Thunk_004344a0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004344b0
     name: func_004344b0
     size: 114
@@ -3134,10 +3139,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00434c00
-    name: func_00434c00
+    name: Thunk_00434c00
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00434c10
     name: func_00434c10
     size: 329
@@ -3154,10 +3160,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00434eb0
-    name: func_00434eb0
+    name: Thunk_00434eb0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00434ec0
     name: func_00434ec0
     size: 74
@@ -3204,10 +3211,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00435330
-    name: func_00435330
+    name: Thunk_00435330
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00435340
     name: func_00435340
     size: 165
@@ -3249,10 +3257,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00435de0
-    name: func_00435de0
+    name: Thunk_00435de0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00435df0
     name: func_00435df0
     size: 302
@@ -3334,15 +3343,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004368d0
-    name: func_004368d0
+    name: Thunk_004368d0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004368e0
-    name: func_004368e0
+    name: Thunk_004368e0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004368f0
     name: func_004368f0
     size: 18
@@ -3769,10 +3780,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004399b0
-    name: func_004399b0
+    name: Thunk_004399b0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004399c0
     name: func_004399c0
     size: 114
@@ -3804,10 +3816,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439c20
-    name: func_00439c20
+    name: Thunk_00439c20
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00439c30
     name: func_00439c30
     size: 15
@@ -3834,10 +3847,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439e30
-    name: func_00439e30
+    name: Thunk_00439e30
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00439e40
     name: func_00439e40
     size: 113
@@ -3864,10 +3878,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043a540
-    name: func_0043a540
+    name: Thunk_0043a540
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0043a550
     name: func_0043a550
     size: 194
@@ -5373,10 +5388,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045dae0
-    name: func_0045dae0
+    name: Thunk_0045dae0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0045daf0
     name: func_0045daf0
     size: 125
@@ -5423,10 +5439,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045e0f0
-    name: func_0045e0f0
+    name: Thunk_0045e0f0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0045e100
     name: func_0045e100
     size: 201
@@ -5578,10 +5595,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00460250
-    name: func_00460250
+    name: Thunk_00460250
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00460260
     name: func_00460260
     size: 66
@@ -5986,10 +6004,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004647f0
-    name: func_004647f0
+    name: Thunk_004647f0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x00464800
     name: func_00464800
     size: 47
@@ -10165,55 +10184,64 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x0049cb70
-    name: func_0049cb70
+    name: Thunk_0049cb70
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cb80
-    name: func_0049cb80
+    name: Thunk_0049cb80
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cb90
     name: func_0049cb90
     size: 15
     group: game
     status: stub
   - addr: 0x0049cba0
-    name: func_0049cba0
+    name: Thunk_0049cba0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cbb0
-    name: func_0049cbb0
+    name: Thunk_0049cbb0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cbc0
-    name: func_0049cbc0
+    name: Thunk_0049cbc0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cbd0
-    name: func_0049cbd0
+    name: Thunk_0049cbd0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cbe0
-    name: func_0049cbe0
+    name: Thunk_0049cbe0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cbf0
-    name: func_0049cbf0
+    name: Thunk_0049cbf0
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cc00
-    name: func_0049cc00
+    name: Thunk_0049cc00
     size: 5
     group: game
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x0049cc10
     name: func_0049cc10
     size: 24
@@ -12131,10 +12159,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b3db0
-    name: func_004b3db0
+    name: Renderer_GetMode
     size: 6
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/getters.c
   - addr: 0x004b3dc0
     name: func_004b3dc0
     size: 96
@@ -12332,10 +12361,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5ac0
-    name: func_004b5ac0
+    name: Thunk_004b5ac0
     size: 5
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004b5ad0
     name: Helper_MemMalloc_Post
     size: 1
@@ -12706,10 +12736,11 @@ functions:
     status: matched
     file: src/engine/geo.c
   - addr: 0x004bd5c0
-    name: func_004bd5c0
+    name: Thunk_004bd5c0
     size: 5
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004bd5d0
     name: func_004bd5d0
     size: 17
@@ -12744,10 +12775,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bd8d0
-    name: func_004bd8d0
+    name: Thunk_004bd8d0
     size: 5
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004bd8e0
     name: func_004bd8e0
     size: 127
@@ -12969,10 +13001,11 @@ functions:
     status: matched
     file: src/engine/sort_lut.c
   - addr: 0x004bf320
-    name: func_004bf320
+    name: Thunk_004bf320
     size: 5
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004bf330
     name: SetViewport
     size: 49
@@ -13071,10 +13104,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004c37e0
-    name: func_004c37e0
+    name: DSound_GetContext
     size: 6
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/getters.c
   - addr: 0x004c37f0
     name: Audio_UpdateChannels
     size: 220
@@ -13211,10 +13245,11 @@ functions:
     status: matched
     file: src/platform/exit.c
   - addr: 0x004c48b0
-    name: func_004c48b0
+    name: Thunk_004c48b0
     size: 5
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/thunks.c
   - addr: 0x004c48c0
     name: ShowErrorMessage
     size: 144
@@ -13227,10 +13262,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c49a0
-    name: func_004c49a0
+    name: Win32_GetHInstance
     size: 6
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/getters.c
   - addr: 0x004c49b0
     name: WndProc
     size: 1275
