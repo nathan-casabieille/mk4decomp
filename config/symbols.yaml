@@ -124,10 +124,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404680
-    name: func_00404680
+    name: ZeroMultiGlobalsCmp_00404680
     size: 71
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004046d0
     name: func_004046d0
     size: 474
@@ -156,10 +157,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x00404a00
-    name: func_00404a00
+    name: SaveCallRestoreOrXor_00404a00
     size: 77
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x00404a50
     name: func_00404a50
     size: 156
@@ -201,10 +203,11 @@ functions:
     status: matched
     file: src/engine/scaled_dec_pop.c
   - addr: 0x00404c70
-    name: func_00404c70
+    name: SetWalkCurCallPauseDirty_00404c70
     size: 66
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x00404cc0
     name: func_00404cc0
     size: 142
@@ -649,10 +652,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00408860
-    name: func_00408860
+    name: ScaledTestPauseStore_00408860
     size: 68
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004088b0
     name: func_004088b0
     size: 268
@@ -1076,10 +1080,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesD.c
   - addr: 0x00413070
-    name: func_00413070
+    name: PushStackCallPauseSet0xa_00413070
     size: 68
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004130c0
     name: func_004130c0
     size: 661
@@ -1925,10 +1930,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x00424ba0
-    name: func_00424ba0
+    name: ScaledTestChainDispatch_00424ba0
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x00424bf0
     name: func_00424bf0
     size: 1277
@@ -10571,10 +10577,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00497b10
-    name: func_00497b10
+    name: CallPauseJmpThenSetChild_00497b10
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x00497b50
     name: func_00497b50
     size: 815
@@ -14135,10 +14142,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5740
-    name: func_004c5740
+    name: UllShlAndInit_004c5740
     size: 65
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004c5790
     name: SetVtable5Slots_004c5790
     size: 56
@@ -14152,10 +14160,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004c5800
-    name: func_004c5800
+    name: TestBitClearOrCallTriple_004c5800
     size: 61
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004c5840
     name: func_004c5840
     size: 101
@@ -14977,10 +14986,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cde40
-    name: func_004cde40
+    name: PackDoubleFromInts_004cde40
     size: 57
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesHH.c
   - addr: 0x004cde80
     name: func_004cde80
     size: 92
