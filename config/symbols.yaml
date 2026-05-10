@@ -231,10 +231,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404ed0
-    name: func_00404ed0
+    name: ZeroThreeFields_00404ed0
     size: 26
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x00404ef0
     name: func_00404ef0
     size: 33
@@ -433,10 +434,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004066d0
-    name: func_004066d0
+    name: ScaledLoadGuardedJmp_004066d0
     size: 27
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x004066f0
     name: MStackPushZeroCallPop_004066f0
     size: 73
@@ -698,10 +700,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00409280
-    name: func_00409280
+    name: AndShlStore_00409280
     size: 22
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x004092a0
     name: func_004092a0
     size: 116
@@ -823,10 +826,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040a8b0
-    name: func_0040a8b0
+    name: ZeroThreeFields_0040a8b0
     size: 26
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x0040a8d0
     name: func_0040a8d0
     size: 1864
@@ -1627,10 +1631,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422080
-    name: func_00422080
+    name: IncOrZero9_00422080
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x004220a0
     name: func_004220a0
     size: 99
@@ -2429,10 +2434,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429710
-    name: func_00429710
+    name: ScaledLoadDecJmp_00429710
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x00429730
     name: func_00429730
     size: 31
@@ -2444,10 +2450,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429790
-    name: func_00429790
+    name: ScaledLoadJmp_24_00429790
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x004297b0
     name: GuardedSeq_004297b0
     size: 20
@@ -6558,10 +6565,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046eaa0
-    name: func_0046eaa0
+    name: ScaledMove74to70_0046eaa0
     size: 26
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x0046eac0
     name: func_0046eac0
     size: 339
@@ -7334,10 +7342,11 @@ functions:
     status: matched
     file: src/engine/misc_matches2.c
   - addr: 0x004774d0
-    name: func_004774d0
+    name: ScaledMaskByte_004774d0
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x004774f0
     name: func_004774f0
     size: 440
@@ -8243,10 +8252,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00485d70
-    name: func_00485d70
+    name: DualLoadDualStoreJmp_00485d70
     size: 27
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x00485d90
     name: func_00485d90
     size: 214
@@ -8910,10 +8920,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048bb40
-    name: func_0048bb40
+    name: ScaledShrAnd_0048bb40
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x0048bb60
     name: func_0048bb60
     size: 139
@@ -9143,10 +9154,11 @@ functions:
     status: matched
     file: src/engine/or_dual_store.c
   - addr: 0x0048e4d0
-    name: func_0048e4d0
+    name: LeaPlus22StoreSelf_0048e4d0
     size: 22
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x0048e4f0
     name: func_0048e4f0
     size: 84
@@ -9211,10 +9223,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e7b0
-    name: func_0048e7b0
+    name: ScaledLoadJmp_74_0048e7b0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x0048e7d0
     name: func_0048e7d0
     size: 66
@@ -9515,10 +9528,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490070
-    name: func_00490070
+    name: ScaledLoadJmp_38_00490070
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches3.c
   - addr: 0x00490090
     name: func_00490090
     size: 88
