@@ -5412,10 +5412,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004594f0
-    name: func_004594f0
+    name: ArgSarStoreJmp_004594f0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00459510
     name: func_00459510
     size: 2728
@@ -8974,10 +8975,11 @@ functions:
     status: matched
     file: src/game/download_variant.c
   - addr: 0x0048c190
-    name: func_0048c190
+    name: ScaledSet1OnNonZero_0048c190
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x0048c1b0
     name: func_0048c1b0
     size: 86
@@ -9109,10 +9111,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048de00
-    name: func_0048de00
+    name: DirtyFlagsManip_0048de00
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x0048de20
     name: func_0048de20
     size: 177
@@ -9632,25 +9635,29 @@ functions:
     status: matched
     file: src/engine/misc_matches5.c
   - addr: 0x00490330
-    name: func_00490330
+    name: ScaledAndAldf_00490330
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00490350
-    name: func_00490350
+    name: ScaledAndAlbf_00490350
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00490370
-    name: func_00490370
+    name: ScaledAndAlfb_00490370
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00490390
-    name: func_00490390
+    name: ScaledAndAlfe_00490390
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x004903b0
     name: ScaledXorStore_004903b0
     size: 29
@@ -9689,10 +9696,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490720
-    name: func_00490720
+    name: ScaledMove48to58_00490720
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00490740
     name: func_00490740
     size: 51
@@ -9838,10 +9846,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00491500
-    name: func_00491500
+    name: ScaledZero44_00491500
     size: 21
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00491520
     name: func_00491520
     size: 205
@@ -9888,10 +9897,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00491e50
-    name: func_00491e50
+    name: ZeroTripleJmp_00491e50
     size: 22
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00491e70
     name: func_00491e70
     size: 80
@@ -10008,10 +10018,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004930e0
-    name: func_004930e0
+    name: ScaledLoadCmp0fJmp_004930e0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00493100
     name: func_00493100
     size: 674
@@ -10206,10 +10217,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00495da0
-    name: func_00495da0
+    name: Const111ScaledStoreJmp_00495da0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x00495dc0
     name: func_00495dc0
     size: 788
@@ -10389,10 +10401,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049afe0
-    name: func_0049afe0
+    name: Const7cCallJmp_0049afe0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches6.c
   - addr: 0x0049b000
     name: func_0049b000
     size: 276
