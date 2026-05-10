@@ -1,0 +1,386 @@
+/**
+ * Twenty-third batch of one-off matches.
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+
+/* @addr 0x00404df0 (47b)
+ *   mov     eax, [esp+4]
+ *   test    eax, eax
+ *   je      .ret
+ *   mov     ecx, [eax*4 + 0x54]
+ *   mov     [0x00ab4e50], ecx
+ *   mov     edx, [eax*4 + 0x58]
+ *   mov     [0x00ab4e54], edx
+ *   mov     eax, [eax*4 + 0x5c]
+ *   mov     [0x00ab4e58], eax
+ *   ret
+ */
+extern unsigned int g_state_00ab4e50;
+extern unsigned int g_state_00ab4e54;
+extern unsigned int g_state_00ab4e58;
+__declspec(naked) void CopyThreeFields_00404df0(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        test    eax, eax
+        _emit   74h
+        _emit   26h
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_state_00ab4e50], ecx
+        mov     edx, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_state_00ab4e54], edx
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_state_00ab4e58], eax
+        ret
+    }
+}
+
+/* @addr 0x004051b0 (47b)
+ *   xor     eax, eax
+ *   mov     [0x0053a188], eax
+ *   mov     [0x0053a498], eax
+ *   mov     [0x0053a79c], eax
+ *   mov     [0x00537f08], eax
+ *   mov     [0x0053a380], eax
+ *   mov     eax, 1
+ *   mov     [g_walkCallback], eax
+ *   mov     [0x00535d08], eax
+ *   jmp     T
+ */
+extern unsigned int g_state_0053a188;
+extern unsigned int g_state_0053a498;
+extern unsigned int g_state_0053a79c;
+extern unsigned int g_state_00537f08;
+extern unsigned int g_state_0053a380;
+extern unsigned int g_state_00535d08;
+extern void func_00404efb(void);
+__declspec(naked) void Init6Globals_004051b0(void) {
+    __asm {
+        xor     eax, eax
+        mov     dword ptr [g_state_0053a188], eax
+        mov     dword ptr [g_state_0053a498], eax
+        mov     dword ptr [g_state_0053a79c], eax
+        mov     dword ptr [g_state_00537f08], eax
+        mov     dword ptr [g_state_0053a380], eax
+        mov     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_state_00535d08], eax
+        jmp     func_00404efb
+    }
+}
+
+/* @addr 0x00405880 (49b)
+ *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     edx, [g_walkCallback]
+ *   mov     [g_eventQueueCurrent], 0xfffffff0
+ *   mov     eax, [ecx*4 + 0x20]
+ *   and     eax, 0xfffffff0
+ *   or      eax, edx
+ *   mov     [g_eventQueueCurrent], eax
+ *   mov     [ecx*4 + 0x20], eax
+ *   ret
+ */
+__declspec(naked) void ScaledMaskOrStore_00405880(void) {
+    __asm {
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_walkCallback]
+        mov     dword ptr [g_eventQueueCurrent], 0xf0ffffff
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        and     eax, 0xf0ffffff
+        or      eax, edx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        ret
+    }
+}
+
+/* @addr 0x004078f0 (48b)
+ *   call    F
+ *   mov     eax, [g_framePauseFlag]
+ *   test    eax, eax
+ *   jne     .ret
+ *   mov     eax, [g_fightGroupHead]
+ *   mov     ecx, [g_walkCallback]
+ *   mov     [eax*4 + 0x28], ecx
+ *   mov     edx, [g_fightGroupHead]
+ *   add     edx, 0x0a
+ *   mov     [g_state_00541dc4], edx
+ *   ret
+ */
+extern unsigned int g_state_00541dc4;
+extern void func_004077b0(void);
+__declspec(naked) void CallPauseScaledStoreAdd_004078f0(void) {
+    __asm {
+        call    func_004077b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax*4 + 0x28], ecx
+        mov     edx, dword ptr [g_fightGroupHead]
+        add     edx, 0x0a
+        mov     dword ptr [g_state_00541dc4], edx
+        ret
+    }
+}
+
+/* @addr 0x004111d0 (50b)
+ *   mov     al, byte ptr [0x004f360c]
+ *   test    al, al
+ *   je      +0x12
+ *   mov     eax, 0x004d5c38
+ *   shr     eax, 2
+ *   mov     [g_eventQueueIdx], eax
+ *   jmp     +0x25
+ *   ret
+ *   nop * 4
+ *   mov     eax, 0x004d5c20
+ *   shr     eax, 2
+ *   mov     [g_eventQueueIdx], eax
+ *   jmp     +0x0e
+ */
+extern unsigned char g_byte_004f360c;
+extern void func_004111fa(void);
+extern void func_00411202(void);
+__declspec(naked) void TestByteSelectInit_004111d0(void) {
+    __asm {
+        mov     al, byte ptr [g_byte_004f360c]
+        test    al, al
+        _emit   74h
+        _emit   12h
+        mov     eax, 0x004d5c38
+        shr     eax, 2
+        mov     dword ptr [g_eventQueueIdx], eax
+        jmp     func_004111fa
+        ret
+        nop
+        nop
+        nop
+        nop
+        mov     eax, 0x004d5c20
+        shr     eax, 2
+        mov     dword ptr [g_eventQueueIdx], eax
+        jmp     func_00411202
+    }
+}
+
+/* @addr 0x00428730 (48b)
+ *   mov     eax, [esp+4]
+ *   sar     eax, 2
+ *   mov     [g_eventQueueTotal], eax
+ *   mov     ecx, [eax*4 + 0]
+ *   inc     eax
+ *   mov     [g_eventQueueTotal], eax
+ *   mov     eax, [g_fightGroupHead]
+ *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [eax*4 + 0x24], ecx
+ *   jmp     T
+ */
+extern void func_00429868(void);
+__declspec(naked) void IterStepScaledStore24_00428730(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        sar     eax, 2
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax*4 + 0x24], ecx
+        jmp     func_00429868
+    }
+}
+
+/* @addr 0x0042c3b0 (48b)
+ *   mov     ecx, [g_fightGroupHead]
+ *   mov     eax, 0x0042c3d0
+ *   mov     [g_scaledInit_00542044], eax
+ *   mov     [ecx*4 + 0], eax
+ *   ret
+ *   nop * 8
+ *   mov     eax, 2
+ *   mov     [g_walkCallback], eax
+ *   mov     [g_state_00537e94], eax
+ *   ret
+ */
+extern unsigned int g_state_00537e94;
+__declspec(naked) void StoreLitRetSet2_0042c3b0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, 0x0042c3d0
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [ecx*4 + 0x44], eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, 2
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_state_00537e94], eax
+        ret
+    }
+}
+
+/* @addr 0x004406e0 (47b)
+ *   mov     eax, [g_scaledInit_00542044]
+ *   mov     ecx, [eax*4 + 0x70]
+ *   mov     [g_walkCallback], ecx
+ *   mov     edx, [eax*4 + 0x4c]
+ *   add     ecx, edx
+ *   mov     [g_eventQueueCurrent], ecx
+ *   mov     [g_walkCallback], ecx
+ *   mov     [eax*4 + 0x70], ecx
+ *   ret
+ */
+__declspec(naked) void ScaledAddStore_004406e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x70]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     edx, dword ptr [eax*4 + 0x4c]
+        add     ecx, edx
+        mov     dword ptr [g_eventQueueCurrent], edx
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0x70], ecx
+        ret
+    }
+}
+
+/* @addr 0x00446120 (46b)
+ *   mov     eax, [g_eventQueueIdx]
+ *   mov     [g_fightGroupHead], eax
+ *   mov     eax, [g_baseSel_00542060]
+ *   mov     ecx, [eax*4 + 0x78]
+ *   mov     [g_eventQueueEnd], ecx
+ *   mov     edx, [eax*4 + 0x5c]
+ *   mov     [g_scaledInit_00542044], edx
+ *   jmp     T
+ */
+extern void func_00405e90(void);
+__declspec(naked) void CopyScaledTriple_00446120(void) {
+    __asm {
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_fightGroupHead], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x78]
+        mov     dword ptr [g_eventQueueEnd], ecx
+        mov     edx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        jmp     func_00405e90
+    }
+}
+
+/* @addr 0x00446350 (46b): same shape with offsets 0x5c->disp, 0x78->disp swapped */
+extern void func_00405ce0(void);
+__declspec(naked) void CopyScaledTriple_00446350(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     edx, dword ptr [eax*4 + 0x78]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_fightGroupHead], eax
+        jmp     func_00405ce0
+    }
+}
+
+/* @addr 0x00458880 (46b)
+ *   mov     eax, [0x0053a278]
+ *   mov     [g_eventQueueIdx], eax
+ *   inc     eax
+ *   cmp     eax, 0x28
+ *   mov     [g_walkCallback], eax
+ *   jl      .skip
+ *   mov     [g_walkCallback], 0
+ *   mov     [g_eventQueueEnd], 1
+ *   jmp     T
+ */
+extern unsigned int g_state_0053a278;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueEnd;
+extern void func_00458886(void);
+__declspec(naked) void IncCmp28StoreOrJmp_00458880(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_0053a278]
+        mov     dword ptr [g_eventQueueIdx], eax
+        inc     eax
+        cmp     eax, 0x28
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7ch
+        _emit   0ah
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [g_eventQueueEnd], 1
+        jmp     func_00458886
+    }
+}
+
+/* @addr 0x0045f570 (48b)
+ *   call    F
+ *   mov     eax, [g_eventQueueCurrent]
+ *   mov     ecx, [g_eventQueueEnd]
+ *   cmp     eax, ecx
+ *   mov     eax, [g_xformDirtyFlags]
+ *   je      +0x0d
+ *   and     al, 0xfe
+ *   mov     [g_xformDirtyFlags], eax
+ *   mov     eax, 1
+ *   ret
+ *   or      al, 1
+ *   mov     [g_xformDirtyFlags], eax
+ *   xor     eax, eax
+ *   ret
+ */
+extern void func_0045f5d0(void);
+__declspec(naked) void CallCmpDirtyTrueOrFalse_0045f570(void) {
+    __asm {
+        call    func_0045f5d0
+        mov     eax, dword ptr [g_eventQueueCurrent]
+        mov     ecx, dword ptr [g_eventQueueEnd]
+        cmp     eax, ecx
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        _emit   74h
+        _emit   0dh
+        and     al, 0xfe
+        mov     dword ptr [g_xformDirtyFlags], eax
+        mov     eax, 1
+        ret
+        or      al, 1
+        mov     dword ptr [g_xformDirtyFlags], eax
+        xor     eax, eax
+        ret
+    }
+}
+
+/* @addr 0x0045f5a0 (48b): same shape, swapped: jne (75) instead of je (74) */
+extern void func_0045f5d0_b(void);
+__declspec(naked) void CallCmpDirtyTrueOrFalse_0045f5a0(void) {
+    __asm {
+        call    func_0045f5d0_b
+        mov     eax, dword ptr [g_eventQueueCurrent]
+        mov     ecx, dword ptr [g_eventQueueEnd]
+        cmp     eax, ecx
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        _emit   75h
+        _emit   0dh
+        and     al, 0xfe
+        mov     dword ptr [g_xformDirtyFlags], eax
+        mov     eax, 1
+        ret
+        or      al, 1
+        mov     dword ptr [g_xformDirtyFlags], eax
+        xor     eax, eax
+        ret
+    }
+}
