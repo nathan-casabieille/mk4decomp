@@ -4641,10 +4641,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446380
-    name: func_00446380
+    name: CallPauseDirtyScaledStore_00446380
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004463b0
     name: func_004463b0
     size: 75
@@ -5234,10 +5235,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00453750
-    name: func_00453750
+    name: CallPauseScaledStoreXJmp_00453750
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00453780
     name: GuardedSeq_00453780
     size: 20
@@ -5773,10 +5775,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045f440
-    name: func_0045f440
+    name: NotMaskStorePair_0045f440
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x0045f470
     name: func_0045f470
     size: 251
@@ -6645,10 +6648,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046ea70
-    name: func_0046ea70
+    name: DirtyTestScaledCmpJmp_0046ea70
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x0046eaa0
     name: ScaledMove74to70_0046eaa0
     size: 26
@@ -6792,10 +6796,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004708a0
-    name: func_004708a0
+    name: ScaledStoreCSet58Jmp_004708a0
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004708c0
     name: func_004708c0
     size: 186
@@ -6849,10 +6854,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00470f60
-    name: func_00470f60
+    name: ScaledAndCheckJmp_00470f60
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00470f90
     name: func_00470f90
     size: 122
@@ -6948,15 +6954,17 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00472860
-    name: func_00472860
+    name: Set2CallIncJmp_00472860
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00472890
-    name: func_00472890
+    name: Set4CallAddJmp_00472890
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004728c0
     name: func_004728c0
     size: 460
@@ -7016,10 +7024,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00473450
-    name: func_00473450
+    name: ScaledLoadDirtyOrSetJmp_00473450
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00473480
     name: func_00473480
     size: 438
@@ -7261,10 +7270,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00475790
-    name: func_00475790
+    name: DualScaledLoadStoreJmp_00475790
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004757c0
     name: func_004757c0
     size: 462
@@ -7359,10 +7369,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00476e00
-    name: func_00476e00
+    name: ScaledOr4Jmp_00476e00
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00476e20
     name: CondInstallDispatch_00476e20
     size: 58
@@ -7398,10 +7409,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00476fe0
-    name: func_00476fe0
+    name: ScaledAndFBJmp_00476fe0
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00477000
     name: CondInstallDispatch_00477000
     size: 58
@@ -7933,10 +7945,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004809b0
-    name: func_004809b0
+    name: Set1dCallSet16Jmp_004809b0
     size: 40
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004809e0
     name: func_004809e0
     size: 210
@@ -7958,10 +7971,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00480d20
-    name: func_00480d20
+    name: ScaledChainTwoStores_00480d20
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00480d50
     name: func_00480d50
     size: 416
@@ -8175,10 +8189,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004838d0
-    name: func_004838d0
+    name: Set1f4CallDirtyJmp_004838d0
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00483900
     name: func_00483900
     size: 205
@@ -8211,10 +8226,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00483b50
-    name: func_00483b50
+    name: ScaledDecOrZero_00483b50
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00483b80
     name: func_00483b80
     size: 264
@@ -8456,10 +8472,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487180
-    name: func_00487180
+    name: ScaledTestCallPauseJmp_00487180
     size: 41
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x004871b0
     name: GuardedSeq_004871b0
     size: 20
@@ -8539,10 +8556,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004887d0
-    name: func_004887d0
+    name: TwoCallsPushCall_004887d0
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesI.c
   - addr: 0x00488800
     name: func_00488800
     size: 142
