@@ -11818,10 +11818,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004ab350
-    name: func_004ab350
+    name: FpuSqrtMul_004ab350
     size: 40
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004ab380
     name: func_004ab380
     size: 191
@@ -12196,10 +12197,11 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004aef00
-    name: func_004aef00
+    name: ComCallSetne_004aef00
     size: 43
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004aef30
     name: ComRelease_004aef30
     size: 26
@@ -13567,10 +13569,11 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004be760
-    name: func_004be760
+    name: TableSearch_004be760
     size: 46
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004be790
     name: PushArgPushNeg1Call_004be790
     size: 16
@@ -13826,10 +13829,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c4210
-    name: func_004c4210
+    name: IterateCallSkip_004c4210
     size: 37
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004c4240
     name: func_004c4240
     size: 168
@@ -13887,15 +13891,17 @@ functions:
     status: matched
     file: src/platform/timer.c
   - addr: 0x004c45a0
-    name: func_004c45a0
+    name: CallTwoSumShl_004c45a0
     size: 37
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004c45d0
-    name: func_004c45d0
+    name: CallThreeSumLea_004c45d0
     size: 35
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004c4600
     name: func_004c4600
     size: 617
@@ -13985,10 +13991,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5660
-    name: func_004c5660
+    name: Sar64_004c5660
     size: 48
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004c5690
     name: func_004c5690
     size: 176
@@ -14005,10 +14012,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c57d0
-    name: func_004c57d0
+    name: DoubleToInt64_004c57d0
     size: 48
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQ.c
   - addr: 0x004c5800
     name: func_004c5800
     size: 61
