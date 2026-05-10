@@ -1968,20 +1968,23 @@ functions:
     group: game
     status: stub
   - addr: 0x00426310
-    name: func_00426310
+    name: DispatcherComplex181_00426310
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_181.c
   - addr: 0x004263d0
-    name: func_004263d0
+    name: DispatcherComplex181_004263d0
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_181.c
   - addr: 0x00426490
-    name: func_00426490
+    name: DispatcherComplex181_00426490
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_181.c
   - addr: 0x00426550
     name: func_00426550
     size: 75
