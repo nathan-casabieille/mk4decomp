@@ -11876,10 +11876,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004aec10
-    name: func_004aec10
+    name: DSoundSetAxisPan123_004aec10
     size: 123
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_set_axis_pan_123.c
   - addr: 0x004aec90
     name: func_004aec90
     size: 274
@@ -12626,10 +12627,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b50a0
-    name: func_004b50a0
+    name: DSoundSetAxisPan123_004b50a0
     size: 123
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/dsound_set_axis_pan_123.c
   - addr: 0x004b5120
     name: func_004b5120
     size: 97
