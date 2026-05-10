@@ -2249,10 +2249,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00428d00
-    name: func_00428d00
+    name: ScaledLoadIncJmp_00428d00
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_inc_jmp.c
   - addr: 0x00428d20
     name: ScaledLoadJmp_00428d20
     size: 23
@@ -2441,10 +2442,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429840
-    name: func_00429840
+    name: ScaledLoadIncJmp_00429840
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_inc_jmp.c
   - addr: 0x00429860
     name: func_00429860
     size: 82
@@ -6826,10 +6828,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00472fc0
-    name: func_00472fc0
+    name: ScaledLoadJmp30_00472fc0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_jmp_30.c
   - addr: 0x00472fe0
     name: func_00472fe0
     size: 137
@@ -8558,10 +8561,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048a190
-    name: func_0048a190
+    name: OrDualStore_0048a190
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/or_dual_store.c
   - addr: 0x0048a1b0
     name: func_0048a1b0
     size: 11
@@ -8771,10 +8775,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048b4e0
-    name: func_0048b4e0
+    name: CopyCallPauseJmp_0048b4e0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/copy_call_pause_jmp.c
   - addr: 0x0048b500
     name: func_0048b500
     size: 271
@@ -8801,10 +8806,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048bac0
-    name: func_0048bac0
+    name: PushConstCall_0048bac0
     size: 11
     group: game
-    status: stub
+    status: matched
+    file: src/engine/push_const_call.c
   - addr: 0x0048bad0
     name: func_0048bad0
     size: 11
@@ -9043,10 +9049,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e4b0
-    name: func_0048e4b0
+    name: OrDualStore_0048e4b0
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/or_dual_store.c
   - addr: 0x0048e4d0
     name: func_0048e4d0
     size: 22
@@ -9428,10 +9435,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004900f0
-    name: func_004900f0
+    name: ScaledXorStore_004900f0
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_xor_store.c
   - addr: 0x00490110
     name: func_00490110
     size: 28
@@ -9518,10 +9526,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004903b0
-    name: func_004903b0
+    name: ScaledXorStore_004903b0
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_xor_store.c
   - addr: 0x004903d0
     name: ScaledOrStore_004903d0
     size: 28
@@ -9926,10 +9935,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00493eb0
-    name: func_00493eb0
+    name: ScaledLoadJmp30_00493eb0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_jmp_30.c
   - addr: 0x00493ed0
     name: func_00493ed0
     size: 29
@@ -10694,10 +10704,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004a0110
-    name: func_004a0110
+    name: SetOnePairJmp_004a0110
     size: 20
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/set_one_pair_jmp.c
   - addr: 0x004a0130
     name: func_004a0130
     size: 83
@@ -10719,10 +10730,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a0420
-    name: func_004a0420
+    name: SetOnePairJmp_004a0420
     size: 20
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/set_one_pair_jmp.c
   - addr: 0x004a0440
     name: func_004a0440
     size: 83
@@ -10839,10 +10851,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a19a0
-    name: func_004a19a0
+    name: CopyCallPauseJmp_004a19a0
     size: 30
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/copy_call_pause_jmp.c
   - addr: 0x004a19c0
     name: func_004a19c0
     size: 74
@@ -11281,20 +11294,22 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a7d90
-    name: func_004a7d90
+    name: DecOrDirty_004a7d90
     size: 29
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/dec_or_dirty.c
   - addr: 0x004a7db0
     name: func_004a7db0
     size: 38
     group: audio
     status: stub
   - addr: 0x004a7de0
-    name: func_004a7de0
+    name: DecOrDirty_004a7de0
     size: 29
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/dec_or_dirty.c
   - addr: 0x004a7e00
     name: func_004a7e00
     size: 333
@@ -13702,15 +13717,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6920
-    name: func_004c6920
+    name: PushConstCall_004c6920
     size: 11
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/push_const_call.c
   - addr: 0x004c6930
-    name: func_004c6930
+    name: PushConstCall_004c6930
     size: 11
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/push_const_call.c
   - addr: 0x004c6940
     name: func_004c6940
     size: 32
@@ -13727,10 +13744,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6a10
-    name: func_004c6a10
+    name: PushConstCall_004c6a10
     size: 11
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/push_const_call.c
   - addr: 0x004c6a20
     name: func_004c6a20
     size: 187
@@ -14243,15 +14261,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004ccce0
-    name: func_004ccce0
+    name: ForwardWithLiteral_004ccce0
     size: 24
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/forward_with_literal.c
   - addr: 0x004ccd00
-    name: func_004ccd00
+    name: ForwardWithLiteral_004ccd00
     size: 24
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/forward_with_literal.c
   - addr: 0x004ccd20
     name: func_004ccd20
     size: 56
