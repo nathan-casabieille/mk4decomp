@@ -238,10 +238,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x00404ef0
-    name: func_00404ef0
+    name: StoreLoadJmp_00404ef0
     size: 33
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00404f20
     name: func_00404f20
     size: 649
@@ -468,10 +469,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00406b20
-    name: func_00406b20
+    name: ScaledLoadOrSetJmp_00406b20
     size: 34
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00406b50
     name: MStackCall_00406b50
     size: 75
@@ -697,10 +699,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00409260
-    name: func_00409260
+    name: ScaledStoreThree_00409260
     size: 32
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00409280
     name: AndShlStore_00409280
     size: 22
@@ -713,15 +716,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x00409320
-    name: func_00409320
+    name: ScaledOr4DirtyClear_00409320
     size: 40
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00409350
-    name: func_00409350
+    name: ScaledAnd4InvDirtyClear_00409350
     size: 35
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00409380
     name: LoadSetFpJmp_00409380
     size: 25
@@ -1050,10 +1055,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00413040
-    name: func_00413040
+    name: MStackPushSet9Jmp_00413040
     size: 39
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00413070
     name: func_00413070
     size: 68
@@ -1636,10 +1642,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422050
-    name: func_00422050
+    name: TwoPushCallSetDirty_00422050
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00422080
     name: IncOrZero9_00422080
     size: 29
@@ -2148,10 +2155,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428300
-    name: func_00428300
+    name: ScaledStoreIdxZeroJmp_00428300
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00428330
     name: ScaledArrStore_00428330
     size: 23
@@ -2207,10 +2215,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428650
-    name: func_00428650
+    name: CallPauseDecScaled_00428650
     size: 41
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00428680
     name: func_00428680
     size: 174
@@ -2314,10 +2323,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428e40
-    name: func_00428e40
+    name: ScaledStoreEntZeroJmp_00428e40
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00428e70
     name: ScaledArrStore_00428e70
     size: 23
@@ -2439,10 +2449,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004296f0
-    name: func_004296f0
+    name: ScaledStoreCurDirtyClear_004296f0
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00429710
     name: ScaledLoadDecJmp_00429710
     size: 24
@@ -2450,10 +2461,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x00429730
-    name: func_00429730
+    name: ScaledStoreCurDirtyOr1_00429730
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x00429750
     name: func_00429750
     size: 56
@@ -2622,10 +2634,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042c390
-    name: func_0042c390
+    name: ScaledStore501Set8Jmp_0042c390
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesD.c
   - addr: 0x0042c3b0
     name: func_0042c3b0
     size: 48
