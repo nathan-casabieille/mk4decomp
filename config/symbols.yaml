@@ -443,7 +443,8 @@ functions:
     name: Renderer1_Init_Glide
     size: 618
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/renderer1_init_glide.c
   - addr: 0x004b5230
     name: Joystick_Init
     size: 319

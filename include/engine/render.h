@@ -327,6 +327,43 @@ extern s32  g_clipMaxScratch;        /* 0x00f70f78 */
 
 extern u32  g_drawSceneTimeMs;       /* 0x007afa00 - profiling */
 
+/* === Renderer1_Init_Glide state ============================= */
+
+/* Half a dozen "video mode" globals re-initialised on each
+ * Renderer1_Init_Glide call. */
+extern u32  g_glideD0;               /* 0x007affd0 */
+extern u32  g_glideD4;               /* 0x007affd4 */
+extern u32  g_glideD8;               /* 0x007affd8 (= 3) */
+extern u32  g_glideDC;               /* 0x007affdc (= 0xa) */
+extern u32  g_glideE0;               /* 0x007affe0 */
+extern u8   g_glideE8;               /* 0x007affe8 */
+extern HWND g_glideHwnd;             /* 0x007affec */
+extern u32  g_glideF8;               /* 0x007afff8 (= 1) */
+extern u32  g_glideContext;          /* 0x007afffc */
+
+/* Two float tables filled inline before the Glide-context-open
+ * call. Table1 is 256 floats (0..255), table3 is 32 floats with a
+ * bit-pattern. Table2 (8 dwords starting 0x7afa28) is filled from
+ * grTexCalcMemRequired-style queries. */
+extern f32  g_glideTable1[256];      /* 0x007afaa8 */
+extern f32  g_glideTable2[8];        /* 0x007afa28 */
+extern f32  g_glideTable3[];         /* 0x007aff50 */
+
+/* Adapter-info struct grEnumerate fills out (0x25 dwords). */
+extern u32  g_glideAdapterInfo[37];  /* 0x007afeb0 */
+
+/* Glide function-pointer table (initialised once at startup; each
+ * 4-byte slot holds a function pointer). The function dispatches
+ * via `call dword ptr [g_glideFnTable + N]` for various Glide API
+ * entry points. */
+extern void *g_glideFnTable[];        /* 0x007b0000 */
+
+/* Inline helpers (direct calls). */
+s32  Helper_GlideOpen(void);                            /* 0x004b4c10 */
+void Helper_GlideMode(void);                            /* 0x004b4f60 */
+void Helper_GlideError(void);                           /* 0x004b5120 */
+void Helper_GlidePostInit(s32 enable);                  /* 0x004b5010 */
+
 /* The DAT_*  references above use VAs - the matching build pulls
  * them in via the linker script which places the BSS segments at
  * those exact addresses. Don't change names. */
