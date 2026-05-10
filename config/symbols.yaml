@@ -21,20 +21,22 @@ functions:
     group: boot
     status: stub
   - addr: 0x00401310
-    name: func_00401310
+    name: ListInitLoop_00401310
     size: 33
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00401340
     name: func_00401340
     size: 39
     group: boot
     status: stub
   - addr: 0x00401370
-    name: func_00401370
+    name: Init0AndMax_00401370
     size: 34
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x004013a0
     name: func_004013a0
     size: 1989
@@ -1516,10 +1518,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041fcc0
-    name: func_0041fcc0
+    name: OrListLoop_0041fcc0
     size: 37
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x0041fcf0
     name: Wrapper_0041fcf0
     size: 14
@@ -2029,10 +2032,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004265a0
-    name: func_004265a0
+    name: CopyByteUntilNull_004265a0
     size: 41
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x004265d0
     name: func_004265d0
     size: 249
@@ -3237,10 +3241,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00434530
-    name: func_00434530
+    name: TriBranchJmp_00434530
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00434560
     name: func_00434560
     size: 298
@@ -3868,10 +3873,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00439320
-    name: func_00439320
+    name: PushCallSet2147Jmp_00439320
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00439350
     name: func_00439350
     size: 87
@@ -3938,10 +3944,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004398f0
-    name: func_004398f0
+    name: ScaledCmp200eCallBool_004398f0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00439920
     name: func_00439920
     size: 129
@@ -3969,10 +3976,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439b50
-    name: func_00439b50
+    name: Set258Call_PauseDirtyJmp_00439b50
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00439b80
     name: TwoConditionalJmp_00439b80
     size: 30
@@ -4570,10 +4578,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446150
-    name: func_00446150
+    name: TripleSetCallPauseDirtyJmp_00446150
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00446180
     name: CopyJmp_00446180
     size: 15
@@ -4603,20 +4612,22 @@ functions:
     group: game
     status: stub
   - addr: 0x004462c0
-    name: func_004462c0
+    name: ScaledChainStore_004462c0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x004462f0
     name: func_004462f0
     size: 41
     group: game
     status: stub
   - addr: 0x00446320
-    name: func_00446320
+    name: ScaledStoreConst2_00446320
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesG.c
   - addr: 0x00446350
     name: func_00446350
     size: 46
