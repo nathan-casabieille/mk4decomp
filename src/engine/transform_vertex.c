@@ -12,10 +12,13 @@
 /*
  * @addr 0x004b3310
  *
- * Naked + __asm: complex per-channel mul-add chain interleaved
- * with bit-extraction and clamping. Pure C wouldn't reproduce the
- * `mov [esp+0x18], ebx` save/restore stride or the byte-vs-dword
- * mix on g_vtxRGBScale*.
+ * Naked + __asm: no matching C form found. Patterns look like
+ * hand-written __asm in the original source (common for 1997-era
+ * per-vertex inner loops on MSVC 4.x/5.0):
+ *   - inconsistent scale loads: `xor ebx,ebx; mov bl, [scale_r]`
+ *     vs `mov ebx, [scale_g]; and ebx, 0xff` on same-type globals
+ *   - useless spill/reload of ebx through [esp+0x18]
+ *   - fail-first tail layout with explicit jmp from the success path
  */
 __declspec(naked) void TransformVertex(s16 x, s16 y, s16 z)
 {

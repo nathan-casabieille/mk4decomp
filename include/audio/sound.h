@@ -105,6 +105,30 @@ s32 GetExeDirectory(void);                               /* 0x004aca60 */
  * was read and chdir'd into, 0 otherwise. */
 s32 CheckInstallPath(void);                              /* 0x004acc50 */
 
+/* Cross-checks (1) that CheckInstallPath chdir'd into a valid
+ * directory, (2) that the EXE lives on a fixed-disk drive,
+ * (3) that the saved registry config blob is valid. Caches the
+ * result in g_validInstall. Returns 1 on success, 0 on any
+ * failure. */
+s32 ValidateInstall(void);                               /* 0x004ad270 */
+
+/* Reset the cached config blob to defaults. */
+void ResetConfigToDefaults(void);                        /* 0x004acf90 */
+
+/* Two anonymous helpers between ResetConfigToDefaults and
+ * ValidateInstall (compute config-blob hash / validation). */
+s32  Helper_ValidateA(void);                             /* 0x004ad20e */
+void Helper_ValidateB(void);                             /* 0x004ad24e */
+
+/* CRT-side helpers used by ValidateInstall. */
+void Helper_StrCopy(char *dst, s32 size);                /* 0x004c499d */
+void Helper_SplitPath(char *path, char *drv, char *dir,
+                      char *fname, char *ext);            /* 0x004c5dfe */
+
+extern s32  g_validInstall;     /* 0x00543f78 */
+extern u8   g_configBuffer[588];/* 0x00543928 */
+extern u32  g_configChecksum;   /* 0x0054392c */
+
 /* Where CheckInstallPath stashes the registry-resolved install
  * directory before chdir'ing. */
 extern char g_installPath[1024];        /* 0x00543b78 */

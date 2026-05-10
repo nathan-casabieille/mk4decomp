@@ -137,7 +137,8 @@ functions:
     name: ValidateInstall
     size: 402
     group: engine.install
-    status: stub
+    status: matched
+    file: src/audio/validate_install.c
   - addr: 0x004ad6a0
     name: Renderer2_Init_D3D
     size: 286
