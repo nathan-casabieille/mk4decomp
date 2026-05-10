@@ -108,6 +108,38 @@ extern u32  g_tickFlagZ;             /* 0x00ab4e40 */
 extern u32  g_tickFlagV;             /* 0x00541ec0 */
 extern u32  g_tickFlagF;             /* 0x0052aac4 */
 
+/* === GameTick state ========================================= */
+
+/* Pause/sub-mode counterpart to g_gameMode. */
+extern u32 g_gtPauseMode;            /* 0x00543804 */
+
+/* Various state probes the tick consults. */
+extern u32 g_gtOtherFlag;            /* 0x0054356c */
+extern u8  g_gtModeFlag;             /* 0x00543590 */
+extern u32 g_gtConfig4f;             /* 0x004f3234 */
+extern u32 g_gtState438;             /* 0x00543438 */
+
+/* Per-player overlay pointers used for the "+0x501 vs 4d5714" check. */
+extern u32 g_gtPlayerProbe1;         /* 0x0053803c */
+extern u32 g_gtPlayerProbe2;         /* 0x00538038 */
+extern u8  g_gtPlayerEnabled;        /* 0x004d5714 */
+
+/* Counter incremented once per active-fight tick. */
+extern u32 g_gtFightTickCounter;     /* 0x0053a498 */
+
+/* Three axis sticky-low-pass scratch slots interpolated each frame
+ * (towards 0x8000). */
+extern s16 g_gtAxisX;                /* 0x00ab4e44 */
+extern s16 g_gtAxisY;                /* 0x00ab4e48 */
+extern s16 g_gtAxisZ;                /* 0x00ab4e4c */
+
+/* Helpers GameTick chains through. */
+void Helper_TickFrame_Misc(void);                        /* 0x004a1d50 */
+void Helper_TickFrame_PostFight(void);                   /* 0x0049cbe0 */
+void Helper_PerPlayerTick(void);                         /* 0x00489240 */
+void Helper_PostPlayerTick(void);                        /* 0x004227b0 */
+void Helper_TickFrameTail(void);                         /* 0x004051e0 */
+
 #ifdef __cplusplus
 }
 #endif

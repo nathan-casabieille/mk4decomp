@@ -24,7 +24,8 @@ functions:
     name: GameTick
     size: 792
     group: boot
-    status: stub
+    status: matched
+    file: src/game/game_tick.c
   - addr: 0x0045c5c0
     name: FightFrameStep
     size: 243
