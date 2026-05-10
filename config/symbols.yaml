@@ -327,7 +327,8 @@ functions:
     name: UpdateWindowTitle
     size: 532
     group: engine.app
-    status: stub
+    status: matched
+    file: src/audio/window_title.c
   - addr: 0x004b2500
     name: AppInit
     size: 385

@@ -146,6 +146,52 @@ extern const u32 g_resetCfgDefaults[26];   /* 0x004f46a0 */
  * function writes 58 dwords from base (0x00543a84) to +0xe8. */
 extern u32  g_resetCfgRegion[58];          /* 0x00543a84 */
 
+/* === UpdateWindowTitle state ================================ */
+
+/* Once per frame compares 8 (mode, sub-mode) state pairs - if any
+ * differs from its previous "saved" value, re-issues SetWindowTextA
+ * with the right title and re-syncs the audio/state helpers, then
+ * snapshots the 8 current values back into the "saved" slots. */
+void UpdateWindowTitle(void);                                    /* 0x004b22e0 */
+
+/* The 8 "saved-state" snapshots (compared first thing each call). */
+extern u32  g_titleSaved[8];                                     /* 0x004f4ad0 */
+
+/* Window handle and "audio active" flag the title checks each frame. */
+extern void *g_titleHwnd;                                        /* 0x007af924 */
+extern u32   g_titleAudioFlag;                                   /* 0x007af928 */
+
+/* The 8 "current" state values feeding the comparison (note: NOT
+ * laid out contiguously in memory; the function loads them from
+ * disjoint addresses in this exact order). */
+extern u32 g_titleMode;            /* 0x00f9f7f0 */
+extern u32 g_titleSub;             /* 0x00f9f7ec */
+extern u32 g_titleSlot;            /* 0x00f9f7e8 */
+extern u32 g_titlePauseGate;       /* 0x004ffd7c */
+extern u32 g_titleStateE;          /* 0x00543a8c */
+extern u32 g_titleStateF;          /* 0x00543a84 */
+extern u32 g_titleStateG;          /* 0x00543a90 */
+extern u32 g_titleStateH;          /* 0x00543a88 */
+
+/* Audio-state probe checked late in the function. */
+extern u32 g_titleAudioState;      /* 0x00ab5748 */
+
+/* IAT slot for SetWindowTextA (`call ds:[g_iat_SetWindowTextA]`
+ * forms a single 6-byte instruction with the IAT address). */
+extern void *g_iat_SetWindowTextA;  /* 0x004d21bc */
+
+/* Helper functions invoked by UpdateWindowTitle on the "changed"
+ * path. Each fires under specific state transitions. */
+void Helper_TitleAudioReset(void);                               /* 0x004b5840 */
+void Helper_AudioStart(void);                                    /* 0x004c4390 */
+void Helper_AudioStartFresh(void);                               /* 0x004c4360 */
+void Helper_TitleEnterStateA(void);                              /* 0x004ac780 */
+void Helper_TitleEnterStateB(void);                              /* 0x004ac570 */
+void Helper_TitleEnterStateC(void);                              /* 0x004ac520 */
+void Helper_TitleAudioStop(void);                                /* 0x004c42f0 */
+void Helper_TitleAudioCleanup(void);                             /* 0x004bea40 */
+void Helper_TitleSetMaxVolume(s32 max);                          /* 0x004c3eb0 */
+
 /* Where CheckInstallPath stashes the registry-resolved install
  * directory before chdir'ing. */
 extern char g_installPath[1024];        /* 0x00543b78 */
