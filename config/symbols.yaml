@@ -2833,10 +2833,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042f840
-    name: func_0042f840
+    name: StoreByteJmp_0042f840
     size: 12
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x0042f850
     name: func_0042f850
     size: 69
@@ -5658,10 +5659,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045e1d0
-    name: func_0045e1d0
+    name: IncJmp_0045e1d0
     size: 11
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x0045e1e0
     name: func_0045e1e0
     size: 942
@@ -8693,10 +8695,11 @@ functions:
     status: matched
     file: src/engine/or_dual_store.c
   - addr: 0x0048a1b0
-    name: func_0048a1b0
+    name: ZeroState_0048a1b0
     size: 11
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x0048a1c0
     name: func_0048a1c0
     size: 89
@@ -8940,10 +8943,11 @@ functions:
     status: matched
     file: src/engine/push_const_call.c
   - addr: 0x0048bad0
-    name: func_0048bad0
+    name: PushZeroCallRet_0048bad0
     size: 11
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x0048bae0
     name: func_0048bae0
     size: 96
@@ -11770,10 +11774,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac1f0
-    name: func_004ac1f0
+    name: CopyGlobal_004ac1f0
     size: 11
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004ac200
     name: ESF_DecodeADPCM
     size: 279
@@ -12407,10 +12412,11 @@ functions:
     status: matched
     file: src/engine/fsys.c
   - addr: 0x004b21b0
-    name: func_004b21b0
+    name: ZeroByte_004b21b0
     size: 8
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004b21c0
     name: Helper_AppStub_21C0
     size: 1
@@ -12791,10 +12797,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5840
-    name: func_004b5840
+    name: SetState1_004b5840
     size: 11
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004b5850
     name: func_004b5850
     size: 448
@@ -12829,15 +12836,17 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b5ae0
-    name: func_004b5ae0
+    name: SetHi6_004b5ae0
     size: 29
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004b5b00
-    name: func_004b5b00
+    name: StoreAtMinus8_004b5b00
     size: 12
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004b5b10
     name: func_004b5b10
     size: 174
@@ -13652,10 +13661,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c4360
-    name: func_004c4360
+    name: CallSetByte1_004c4360
     size: 13
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c4370
     name: Loop16Init_004c4370
     size: 22
@@ -13673,10 +13683,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c4450
-    name: func_004c4450
+    name: Loop1cBitMask_004c4450
     size: 24
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c4470
     name: Timer_Init
     size: 118
@@ -13907,10 +13918,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6500
-    name: func_004c6500
+    name: CallStoreField14_004c6500
     size: 13
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c6510
     name: func_004c6510
     size: 45
@@ -14201,15 +14213,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8ba0
-    name: func_004c8ba0
+    name: CallAdd8_004c8ba0
     size: 9
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c8bb0
-    name: func_004c8bb0
+    name: CallAddC_004c8bb0
     size: 9
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c8bc0
     name: func_004c8bc0
     size: 524
@@ -14278,10 +14292,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9a20
-    name: func_004c9a20
+    name: PushNeg3CallRet_004c9a20
     size: 11
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004c9a30
     name: func_004c9a30
     size: 167
@@ -14494,10 +14509,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004cca30
-    name: func_004cca30
+    name: LinearSearchArray_004cca30
     size: 29
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004cca50
     name: func_004cca50
     size: 177
@@ -14628,10 +14644,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cdff0
-    name: func_004cdff0
+    name: RoundDouble_004cdff0
     size: 21
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004ce010
     name: func_004ce010
     size: 155
@@ -14708,15 +14725,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cf710
-    name: func_004cf710
+    name: GetFpuSw_004cf710
     size: 16
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004cf720
-    name: func_004cf720
+    name: GetFpuSwClex_004cf720
     size: 17
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesB.c
   - addr: 0x004cf740
     name: func_004cf740
     size: 40
