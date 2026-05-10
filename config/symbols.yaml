@@ -702,30 +702,35 @@ functions:
     group: boot
     status: stub
   - addr: 0x00409380
-    name: func_00409380
+    name: LoadSetFpJmp_00409380
     size: 25
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/load_setfp_jmp.c
   - addr: 0x004093a0
-    name: func_004093a0
+    name: LoadSetFpJmp_004093a0
     size: 25
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/load_setfp_jmp.c
   - addr: 0x004093c0
-    name: func_004093c0
+    name: LoadSetFpJmp_004093c0
     size: 25
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/load_setfp_jmp.c
   - addr: 0x004093e0
-    name: func_004093e0
+    name: LoadSetFpJmp_004093e0
     size: 25
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/load_setfp_jmp.c
   - addr: 0x00409400
-    name: func_00409400
+    name: LoadSetFpJmp_00409400
     size: 25
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/load_setfp_jmp.c
   - addr: 0x00409420
     name: func_00409420
     size: 167
@@ -11747,10 +11752,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004aedc0
-    name: func_004aedc0
+    name: ComRelease_004aedc0
     size: 26
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release.c
   - addr: 0x004aede0
     name: func_004aede0
     size: 241
@@ -11767,20 +11773,22 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004aef30
-    name: func_004aef30
+    name: ComRelease_004aef30
     size: 26
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release.c
   - addr: 0x004aef50
     name: func_004aef50
     size: 175
     group: engine.install
     status: stub
   - addr: 0x004af000
-    name: func_004af000
+    name: ComRelease_004af000
     size: 26
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release.c
   - addr: 0x004af020
     name: func_004af020
     size: 263
@@ -11865,10 +11873,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004afb10
-    name: func_004afb10
+    name: ComRelease_004afb10
     size: 26
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release.c
   - addr: 0x004afb30
     name: func_004afb30
     size: 28
@@ -11948,10 +11957,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b0340
-    name: func_004b0340
+    name: ComRelease_004b0340
     size: 26
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/com_release.c
   - addr: 0x004b0360
     name: func_004b0360
     size: 28
