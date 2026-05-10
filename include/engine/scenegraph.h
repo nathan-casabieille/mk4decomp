@@ -142,6 +142,16 @@ extern u32        g_eventQueueEnd;                        /* 0x00542054 */
 extern u32        g_eventQueueTotal;                      /* 0x00542050 */
 extern u32        g_eventQueueWorkType;                   /* 0x00542074 */
 
+/* Per-frame iterator state used by FightFrameStep_Inner during the
+ * sibling-walk phase. _Current holds the active head value, _Child
+ * the AND-merged child flags, _Idx the iteration counter (compared
+ * against the eventQueueEnd cursor), _NotMask the negated mask used
+ * to early-out when the predecessor head was already complete. */
+extern u32        g_eventQueueCurrent;                    /* 0x00542070 */
+extern u32        g_eventQueueChild;                      /* 0x00542080 */
+extern u32        g_eventQueueIdx;                        /* 0x00542058 */
+extern u32        g_eventQueueNotMask;                    /* 0x0054207c */
+
 /* Per-entity-group state slot used by FightFrameStep when it
  * primes the entity queue for each of the three sub-trees. */
 extern packed_ptr g_fightGroupHead;                       /* 0x0054205c */

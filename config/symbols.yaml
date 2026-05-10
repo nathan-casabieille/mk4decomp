@@ -34,7 +34,8 @@ functions:
     name: FightFrameStep_Inner
     size: 337
     group: game
-    status: stub
+    status: matched
+    file: src/engine/fight_frame_step.c
   - addr: 0x0045c820
     name: DispatchEventQueue
     size: 170
