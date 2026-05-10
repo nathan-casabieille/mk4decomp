@@ -397,15 +397,17 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406430
-    name: func_00406430
+    name: MStackPushComplexCallPop_00406430
     size: 117
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_complex_call_pop.c
   - addr: 0x004064b0
-    name: func_004064b0
+    name: MStackPushComplexCallPop_004064b0
     size: 117
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_complex_call_pop.c
   - addr: 0x00406530
     name: func_00406530
     size: 118
