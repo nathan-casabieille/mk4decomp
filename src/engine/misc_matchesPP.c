@@ -693,6 +693,97 @@ __declspec(naked) void DispatchSetDirtyToggle_004ac150(void) {
     }
 }
 
+/* @addr 0x004b8f50 (70b)
+ *   ecx = [0xab4e2c]; edx = [0xab4e30]; eax = [0x52aac4];
+ *   if ecx != edx: store ecx → [0xab4e30].
+ *   if eax == 2: eax = [0x53a50c]; eax *= 3; ecx = eax*2 + 0x4f6240;
+ *     store ecx → [0xab4e2c]; ret.
+ *   else: edx = eax*3; eax = edx*2 + 0x4f62a8; store → [0xab4e2c]; ret.
+ */
+extern unsigned int g_data_00ab4e2c;
+extern unsigned int g_data_00ab4e30;
+extern unsigned int g_data_0053a50c;
+__declspec(naked) void DispatchScaledLEA_004b8f50(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_00ab4e2c]
+        mov     edx, dword ptr [g_data_00ab4e30]
+        mov     eax, dword ptr [g_data_0052aac4]
+        cmp     ecx, edx
+        _emit   74h
+        _emit   06h
+        mov     dword ptr [g_data_00ab4e30], ecx
+        cmp     eax, 2
+        _emit   75h
+        _emit   16h
+        mov     eax, dword ptr [g_data_0053a50c]
+        lea     eax, [eax + eax*2]
+        lea     ecx, [eax*2 + 0x004f6240]
+        mov     dword ptr [g_data_00ab4e2c], ecx
+        ret
+        lea     edx, [eax + eax*2]
+        lea     eax, [edx*2 + 0x004f62a8]
+        mov     dword ptr [g_data_00ab4e2c], eax
+        ret
+    }
+}
+
+/* @addr 0x00440990 (71b)
+ *   call F1; if !pause: load g_scaledInit; copy [+0x24]→g_xformEntityIdx,
+ *   [+0x28]→g_eventQueueIdx; eax = g_walkCallback;
+ *   if eax == 2: jmp T (0x407030); else call F2; load pause; ret.
+ */
+extern void func_00408cb0(void);
+extern void func_00407400(void);
+extern void func_00407030(void);
+__declspec(naked) void GuardedCallStoreSlotsCmp_00440990(void) {
+    __asm {
+        call    func_00408cb0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   33h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     edx, dword ptr [eax*4 + 0x28]
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_eventQueueIdx], edx
+        cmp     eax, 2
+        _emit   74h
+        _emit   0bh
+        call    func_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        ret
+        jmp     func_00407030
+    }
+}
+
+/* @addr 0x00470cc0 (71b)
+ *   eax = arg0 >> 2 → g_eventQueueEnd; clears g_currentNodeFlags;
+ *   walks 3 entries through [eax*4+0]: stores them into
+ *   g_eventQueueNotMask, g_xformEntityIdx, and g_walkCallback (1st);
+ *   each step inc eax + restore to g_eventQueueEnd; jmp T.
+ */
+extern void func_00470d10(void);
+__declspec(naked) void PackedLoadAdvanceJmp_00470cc0(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     dword ptr [g_currentNodeFlags], 0
+        sar     eax, 2
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_eventQueueNotMask], ecx
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_walkCallback], ecx
+        jmp     func_00470d10
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value

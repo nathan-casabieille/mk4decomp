@@ -4478,10 +4478,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00440990
-    name: func_00440990
+    name: GuardedCallStoreSlotsCmp_00440990
     size: 71
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004409e0
     name: func_004409e0
     size: 184
@@ -6981,10 +6982,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470cc0
-    name: func_00470cc0
+    name: PackedLoadAdvanceJmp_00470cc0
     size: 71
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00470d10
     name: func_00470d10
     size: 271
@@ -13406,10 +13408,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004b8f50
-    name: func_004b8f50
+    name: DispatchScaledLEA_004b8f50
     size: 70
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b8fa0
     name: func_004b8fa0
     size: 674
