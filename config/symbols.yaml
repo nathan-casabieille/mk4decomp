@@ -1459,15 +1459,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041fcf0
-    name: func_0041fcf0
+    name: Wrapper_0041fcf0
     size: 14
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0041fd00
-    name: func_0041fd00
+    name: Wrapper_0041fd00
     size: 14
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0041fd10
     name: func_0041fd10
     size: 91
@@ -2992,10 +2994,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00433940
-    name: func_00433940
+    name: Wrapper_00433940
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00433950
     name: Thunk_00433950
     size: 5
@@ -3313,10 +3316,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00436490
-    name: func_00436490
+    name: Wrapper_00436490
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x004364a0
     name: func_004364a0
     size: 545
@@ -3328,15 +3332,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00436760
-    name: func_00436760
+    name: Wrapper_00436760
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00436770
-    name: func_00436770
+    name: Wrapper_00436770
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00436780
     name: func_00436780
     size: 325
@@ -3410,10 +3416,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004377c0
-    name: func_004377c0
+    name: Wrapper_004377c0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x004377d0
     name: func_004377d0
     size: 172
@@ -3590,10 +3597,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438c40
-    name: func_00438c40
+    name: Wrapper_00438c40
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00438c50
     name: func_00438c50
     size: 72
@@ -3620,15 +3628,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00438ed0
-    name: func_00438ed0
+    name: Wrapper_00438ed0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00438ee0
-    name: func_00438ee0
+    name: Wrapper_00438ee0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00438ef0
     name: func_00438ef0
     size: 37
@@ -3695,10 +3705,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439310
-    name: func_00439310
+    name: Wrapper_00439310
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00439320
     name: func_00439320
     size: 38
@@ -3924,15 +3935,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0043abf0
-    name: func_0043abf0
+    name: Wrapper_0043abf0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0043ac00
-    name: func_0043ac00
+    name: Wrapper_0043ac00
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0043ac10
     name: func_0043ac10
     size: 700
@@ -6580,10 +6593,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00471340
-    name: func_00471340
+    name: Wrapper_00471340
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00471350
     name: func_00471350
     size: 385
@@ -7385,10 +7399,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047d6d0
-    name: func_0047d6d0
+    name: Wrapper_0047d6d0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0047d6e0
     name: func_0047d6e0
     size: 671
@@ -7480,10 +7495,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047ed80
-    name: func_0047ed80
+    name: Wrapper_0047ed80
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0047ed90
     name: func_0047ed90
     size: 223
@@ -7660,10 +7676,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00481060
-    name: func_00481060
+    name: Wrapper_00481060
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00481070
     name: func_00481070
     size: 750
@@ -7910,10 +7927,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484470
-    name: func_00484470
+    name: Wrapper_00484470
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00484480
     name: func_00484480
     size: 452
@@ -7960,10 +7978,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484d90
-    name: func_00484d90
+    name: Wrapper_00484d90
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00484da0
     name: func_00484da0
     size: 3172
@@ -8095,10 +8114,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487140
-    name: func_00487140
+    name: Wrapper_00487140
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00487150
     name: func_00487150
     size: 46
@@ -8210,10 +8230,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488bd0
-    name: func_00488bd0
+    name: Wrapper_00488bd0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00488be0
     name: func_00488be0
     size: 20
@@ -8230,10 +8251,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488c60
-    name: func_00488c60
+    name: Wrapper_00488c60
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x00488c70
     name: func_00488c70
     size: 42
@@ -8405,95 +8427,112 @@ functions:
     group: game
     status: stub
   - addr: 0x0048a250
-    name: func_0048a250
+    name: Wrapper_0048a250
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a260
-    name: func_0048a260
+    name: Wrapper_0048a260
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a270
-    name: func_0048a270
+    name: Wrapper_0048a270
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a280
-    name: func_0048a280
+    name: Wrapper_0048a280
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a290
     name: func_0048a290
     size: 106
     group: game
     status: stub
   - addr: 0x0048a300
-    name: func_0048a300
+    name: Wrapper_0048a300
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a310
-    name: func_0048a310
+    name: Wrapper_0048a310
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a320
-    name: func_0048a320
+    name: Wrapper_0048a320
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a330
-    name: func_0048a330
+    name: Wrapper_0048a330
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a340
-    name: func_0048a340
+    name: Wrapper_0048a340
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a350
-    name: func_0048a350
+    name: Wrapper_0048a350
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a360
-    name: func_0048a360
+    name: Wrapper_0048a360
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a370
-    name: func_0048a370
+    name: Wrapper_0048a370
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a380
-    name: func_0048a380
+    name: Wrapper_0048a380
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a390
-    name: func_0048a390
+    name: Wrapper_0048a390
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a3a0
-    name: func_0048a3a0
+    name: Wrapper_0048a3a0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a3b0
-    name: func_0048a3b0
+    name: Wrapper_0048a3b0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a3c0
-    name: func_0048a3c0
+    name: Wrapper_0048a3c0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048a3d0
     name: func_0048a3d0
     size: 820
@@ -8958,10 +8997,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ec20
-    name: func_0048ec20
+    name: Wrapper_0048ec20
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048ec30
     name: func_0048ec30
     size: 179
@@ -9158,10 +9198,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048fbc0
-    name: func_0048fbc0
+    name: Wrapper_0048fbc0
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048fbd0
     name: func_0048fbd0
     size: 25
@@ -9198,10 +9239,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ff30
-    name: func_0048ff30
+    name: Wrapper_0048ff30
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0048ff40
     name: func_0048ff40
     size: 239
@@ -10373,10 +10415,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049eb10
-    name: func_0049eb10
+    name: Wrapper_0049eb10
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/wrappers.c
   - addr: 0x0049eb20
     name: func_0049eb20
     size: 216

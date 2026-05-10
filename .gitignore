@@ -36,6 +36,7 @@ __pycache__/
 # Editor / IDE
 .vscode/
 .idea/
+.claude/
 *.swp
 .cache/
 compile_commands.json
