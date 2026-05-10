@@ -120,6 +120,50 @@ void Helper_DrawMenu_PostRender(s32 maxw, s32 cur_x,
                                 s32 cur_y_save,
                                 void *menu_items);        /* 0x004b6880 */
 
+/* === GameStateMachine support =============================== */
+
+/* Switch dispatch tables (data in .text, immediately after the
+ * function's body - 16-byte aligned). MASM emits `8a 81 + reloc`
+ * for `mov al, [ecx + byte_table]` and `ff 24 85 + reloc` for the
+ * `jmp [eax*4 + jump_table]` indirect dispatches. */
+extern u8  g_gsmByteTable[];     /* 0x004b6580 (29 bytes) */
+extern u32 g_gsmJumpTable1[];    /* 0x004b6540 (16 entries) */
+extern u32 g_gsmJumpTable2[];    /* 0x004b65a0 (8 entries) */
+
+/* Sub-state flag the (state,cmd) dispatch checks before re-arming
+ * GAMESTATE_VS. */
+extern u32 g_gsmFlag;            /* 0x00543930 */
+
+/* Various dispatch-output globals written by per-state helpers. */
+extern u32 g_gsmStateAa4;        /* 0x00543aa4 */
+extern u32 g_gsmDirty1;          /* 0x00ab4374 */
+extern u32 g_gsmDirty2;          /* 0x00ab4378 */
+extern u32 g_gsmDirty3;          /* 0x00ab437c */
+extern u32 g_gsmOut1;            /* 0x00543818 */
+extern u32 g_gsmOut2;            /* 0x00543814 */
+extern u32 g_gsmOut3;            /* 0x00543810 */
+extern u32 g_gsmOut4;            /* 0x00543820 */
+extern u32 g_gsmActiveFlag;      /* 0x00ab4334 */
+
+/* Per-state helper functions. */
+void Helper_AudioRelease2(s32 channel);                  /* 0x004c3490 */
+void Helper_AudioStartMusic(s32 a, s32 b, s32 c);        /* 0x004c3960 */
+s32  Helper_GSM_HandleEvent(void);                       /* 0x004b84d0 */
+s32  Helper_GSM_VS(void);                                /* 0x004b6900 */
+s32  Helper_GSM_Tournament(void);                        /* 0x004b7260 */
+s32  Helper_GSM_Practice(void);                          /* 0x004b7b10 */
+s32  Helper_GSM_Options(void);                           /* 0x004b7df0 */
+s32  Helper_GSM_Config(void);                            /* 0x004b81f0 */
+void Helper_GSM_PlayMusic(s32 track);                    /* 0x004b40a0 */
+s32  Helper_GSM_Sub18(s32 cmd);                          /* 0x004b8630 */
+s32  Helper_GSM_Sub19(s32 cmd);                          /* 0x004b8730 */
+s32  Helper_GSM_Sub1A(s32 cmd);                          /* 0x004b8830 */
+s32  Helper_GSM_Sub1B(s32 cmd);                          /* 0x004b8930 */
+s32  Helper_GSM_Sub1C(s32 cmd);                          /* 0x004b8a30 */
+s32  Helper_GSM_Sub_Other1(s32 cmd);                     /* 0x004b8bd0 */
+s32  Helper_GSM_Sub_Other2(s32 cmd);                     /* 0x004b8d70 */
+void Helper_GSM_Reset(void);                             /* 0x004b5840 */
+
 #ifdef __cplusplus
 }
 #endif

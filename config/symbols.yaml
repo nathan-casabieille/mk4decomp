@@ -459,7 +459,8 @@ functions:
     name: GameStateMachine
     size: 509
     group: game.menu
-    status: stub
+    status: matched
+    file: src/game/statemachine.c
   - addr: 0x004b65c0
     name: DrawMenu
     size: 691
