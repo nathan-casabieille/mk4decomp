@@ -10770,10 +10770,11 @@ functions:
     status: matched
     file: src/engine/set_one_pair_jmp.c
   - addr: 0x004a0130
-    name: func_004a0130
+    name: TripleTestInstallJmp_004a0130
     size: 83
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/triple_test_install_jmp.c
   - addr: 0x004a0190
     name: func_004a0190
     size: 120
@@ -10796,10 +10797,11 @@ functions:
     status: matched
     file: src/engine/set_one_pair_jmp.c
   - addr: 0x004a0440
-    name: func_004a0440
+    name: TripleTestInstallJmp_004a0440
     size: 83
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/triple_test_install_jmp.c
   - addr: 0x004a04a0
     name: func_004a04a0
     size: 122
