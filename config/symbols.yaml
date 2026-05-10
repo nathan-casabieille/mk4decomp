@@ -464,7 +464,8 @@ functions:
     name: TickAllEntities
     size: 486
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/tick_all.c
   - addr: 0x004ba130
     name: WalkSceneGraphSiblings
     size: 142

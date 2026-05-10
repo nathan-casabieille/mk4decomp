@@ -80,6 +80,34 @@ extern u32 g_fightTableA2;            /* 0x004e9318 */
 extern u32 g_fightTableB2;            /* 0x0054294c */
 extern u32 g_fightTableC2;            /* 0x004d50b0 */
 
+/* === TickAllEntities state =================================== */
+
+/* TickAllEntities walks 6 fixed entity sub-trees on the first
+ * frame, then a single "main" sub-tree on every subsequent frame.
+ * Per-pass it sets up (g_currentNodeIdx, g_walkCallback, g_curMask)
+ * and calls one of TickInner / TickAlt; g_framePauseFlag aborts the
+ * sequence. */
+void Helper_PreTick(void);                               /* 0x004b9770 */
+void Helper_TickInit(s32 zero);                          /* 0x004b8ec0 */
+void Helper_TickInner(void);                             /* 0x004ba130 */
+void Helper_TickAlt(void);                               /* 0x004bae90 */
+void Helper_TickReinit(void);                            /* 0x004bc7e0 */
+void Helper_FightSceneCallback(void);                    /* 0x004ba1c0 */
+void TickAllEntities(void);                              /* 0x004b9e50 */
+
+extern u32  g_tickX1;                /* 0x00ab4d98 */
+extern u8   g_tickByteFlag;          /* 0x00543720 */
+extern u32  g_tickW1;                /* 0x00543550 */
+extern u32  g_tickX2;                /* 0x00ab51f4 */
+extern u32  g_tickX3;                /* 0x00ab4e68 */
+extern u32  g_tickInitFlag;          /* 0x00ab4e70 */
+extern s32  g_tickDecay;             /* 0x00ab4e64 */
+extern u16  g_tickCurMask;           /* 0x00ab4e20 */
+extern u32 *g_tickCurConfig;         /* 0x00ab4e2c (pointer to a small struct) */
+extern u32  g_tickFlagZ;             /* 0x00ab4e40 */
+extern u32  g_tickFlagV;             /* 0x00541ec0 */
+extern u32  g_tickFlagF;             /* 0x0052aac4 */
+
 #ifdef __cplusplus
 }
 #endif
