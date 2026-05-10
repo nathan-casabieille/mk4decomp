@@ -171,10 +171,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404b90
-    name: func_00404b90
+    name: ScaledPushArg_00404b90
     size: 52
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/scaled_push_arg.c
   - addr: 0x00404bd0
     name: ScaledDecPop_00404bd0
     size: 35
@@ -182,10 +183,11 @@ functions:
     status: matched
     file: src/engine/scaled_dec_pop.c
   - addr: 0x00404c00
-    name: func_00404c00
+    name: ScaledPushArg_00404c00
     size: 52
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/scaled_push_arg.c
   - addr: 0x00404c40
     name: ScaledDecPop_00404c40
     size: 35
@@ -1650,15 +1652,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004226a0
-    name: func_004226a0
+    name: ClampTwoToMax_004226a0
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/clamp_two_to_max.c
   - addr: 0x004226e0
-    name: func_004226e0
+    name: ClampTwoToMax_004226e0
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/clamp_two_to_max.c
   - addr: 0x00422720
     name: func_00422720
     size: 142
@@ -6465,10 +6469,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046dbd0
-    name: func_0046dbd0
+    name: DualScaledInitCmp_0046dbd0
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init_cmp.c
   - addr: 0x0046dc10
     name: func_0046dc10
     size: 240
@@ -6485,10 +6490,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046df50
-    name: func_0046df50
+    name: DualScaledInitCmp_0046df50
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init_cmp.c
   - addr: 0x0046df90
     name: func_0046df90
     size: 782
@@ -6839,15 +6845,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00472f40
-    name: func_00472f40
+    name: ScaledSaveCallRestoreJmp_00472f40
     size: 50
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_save_call_restore_jmp.c
   - addr: 0x00472f80
-    name: func_00472f80
+    name: ScaledSaveCallRestoreJmp_00472f80
     size: 50
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_save_call_restore_jmp.c
   - addr: 0x00472fc0
     name: ScaledLoadJmp30_00472fc0
     size: 23
@@ -7832,15 +7840,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00480fe0
-    name: func_00480fe0
+    name: ScaledLitLoadCall_00480fe0
     size: 53
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_lit_load_call.c
   - addr: 0x00481020
-    name: func_00481020
+    name: ScaledLitLoadCall_00481020
     size: 53
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_lit_load_call.c
   - addr: 0x00481060
     name: Wrapper_00481060
     size: 14
@@ -13662,10 +13672,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5b70
-    name: func_004c5b70
+    name: WrapThreeDispatch_004c5b70
     size: 55
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/wrap_three_dispatch.c
   - addr: 0x004c5bb0
     name: func_004c5bb0
     size: 316
@@ -13697,10 +13708,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5f80
-    name: func_004c5f80
+    name: WrapThreeDispatch_004c5f80
     size: 55
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/wrap_three_dispatch.c
   - addr: 0x004c5fc0
     name: func_004c5fc0
     size: 326
@@ -13841,10 +13853,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6ff0
-    name: func_004c6ff0
+    name: RangePathIATDispatch_004c6ff0
     size: 54
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/range_path_iat_dispatch.c
   - addr: 0x004c7030
     name: TwoPathIATDispatch_004c7030
     size: 40
@@ -13852,10 +13865,11 @@ functions:
     status: matched
     file: src/engine/two_path_iat_dispatch.c
   - addr: 0x004c7060
-    name: func_004c7060
+    name: RangePathIATDispatch_004c7060
     size: 54
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/range_path_iat_dispatch.c
   - addr: 0x004c70a0
     name: TwoPathIATDispatch_004c70a0
     size: 40
