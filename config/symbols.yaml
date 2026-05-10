@@ -3939,10 +3939,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439b80
-    name: func_00439b80
+    name: TwoConditionalJmp_00439b80
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x00439ba0
     name: func_00439ba0
     size: 128
@@ -4129,10 +4130,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043bd30
-    name: func_0043bd30
+    name: Cmp200Jmp_0043bd30
     size: 27
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x0043bd50
     name: func_0043bd50
     size: 123
@@ -8318,10 +8320,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486510
-    name: func_00486510
+    name: Const20cFae2Jmp_00486510
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x00486530
     name: func_00486530
     size: 68
@@ -10040,10 +10043,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004933b0
-    name: func_004933b0
+    name: TestStoreConstJmp_004933b0
     size: 30
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004933d0
     name: func_004933d0
     size: 789
@@ -10091,10 +10095,11 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp_30.c
   - addr: 0x00493ed0
-    name: func_00493ed0
+    name: LoadCmpAddrJmp_00493ed0
     size: 29
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x00493ef0
     name: func_00493ef0
     size: 578
@@ -11108,10 +11113,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x004a1d00
-    name: func_004a1d00
+    name: IsNonzeroBoolFlagged_004a1d00
     size: 27
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004a1d20
     name: func_004a1d20
     size: 45
@@ -11381,15 +11387,17 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x004a5680
-    name: func_004a5680
+    name: MemcpyByteN_004a5680
     size: 28
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004a56a0
-    name: func_004a56a0
+    name: Memset18Step_004a56a0
     size: 25
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004a56c0
     name: func_004a56c0
     size: 2011
@@ -13346,10 +13354,11 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004be610
-    name: func_004be610
+    name: CallZero2_004be610
     size: 18
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004be630
     name: func_004be630
     size: 91
@@ -13366,10 +13375,11 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004be790
-    name: func_004be790
+    name: PushArgPushNeg1Call_004be790
     size: 16
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004be7a0
     name: func_004be7a0
     size: 85
@@ -13396,10 +13406,11 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004bea30
-    name: func_004bea30
+    name: CallZero_004bea30
     size: 16
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004bea40
     name: SetJmp_004bea40
     size: 15
@@ -13660,10 +13671,11 @@ functions:
     status: matched
     file: src/platform/timer.c
   - addr: 0x004c44f0
-    name: func_004c44f0
+    name: TestCallIat_004c44f0
     size: 18
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matches9.c
   - addr: 0x004c4510
     name: QueryMicroTimer
     size: 120
