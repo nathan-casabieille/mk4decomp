@@ -2,54 +2,34 @@
  * ECM (Eurocom Custom Movie) per-frame dispatcher.
  */
 #include "engine/ecm.h"
+#include <string.h>
 
 /*
  * One-shot decode: zero a stack-local ecm_state, plug in src/dst,
  * dispatch, return state.offset_b on success or 0 on a null arg
  * or parser failure.
  *
+ * The redundant `state._14 = 0` after memset reproduces an explicit
+ * field init the original C source emitted; without it MSVC SP3
+ * schedules the buffer/dst stores around the call-arg push differently.
+ *
  * @addr 0x004b1c90
  */
-__declspec(naked) s32 ECM_DecodeFrame(const void *src, void *dst)
+s32 ECM_DecodeFrame(const void *src, void *dst)
 {
-    __asm {
-        sub     esp, 20h                  ; ecm_state local
-        push    esi
-        mov     esi, [esp+28h]            ; src arg
-        test    esi, esi
-        push    edi
-        je      ret_zero
-        mov     edx, [esp+30h]            ; dst arg
-        test    edx, edx
-        je      ret_zero
-        mov     ecx, 8
-        xor     eax, eax
-        lea     edi, [esp+8]              ; &state
-        rep     stosd                     ; zero 32 bytes
-        mov     [esp+1Ch], eax            ; state.status = 0 (redundant but emitted)
-        lea     eax, [esp+8]
-        push    eax                       ; arg = &state
-        mov     [esp+10h], esi            ; state.buffer = src
-        mov     [esp+0Ch], edx            ; state.dst = dst
-        call    ECM_DecodeFrameDispatch
-        mov     eax, [esp+28h]            ; reload state.status (= [esp+0x1c] before push, so [esp+0x20] after push, so... let me recount
-        mov     ecx, [esp+18h]            ; reload state.offset_b
-        add     esp, 4
-        neg     eax
-        sbb     eax, eax
-        not     eax
-        and     eax, ecx
-        pop     edi
-        pop     esi
-        add     esp, 20h
-        ret
-ret_zero:
-        pop     edi
-        xor     eax, eax
-        pop     esi
-        add     esp, 20h
-        ret
+    ecm_state state;
+
+    if (src) {
+        if (dst) {
+            memset(&state, 0, sizeof(state));
+            state._14 = 0;
+            state.buffer = (u8 *)src;
+            state.dst = dst;
+            ECM_DecodeFrameDispatch(&state);
+            return state.status == 0 ? state.offset_b : 0;
+        }
     }
+    return 0;
 }
 
 /*

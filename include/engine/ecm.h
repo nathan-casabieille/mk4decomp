@@ -33,7 +33,7 @@ typedef struct ecm_state {
     s32 offset_a;        /* +0x08 - copied from buffer[4..7] */
     s32 offset_b;        /* +0x0c - copied from buffer[8..11] (decoded byte count) */
     s32 mode;            /* +0x10 - 0=raw, 1=huffman, else=skip */
-    u8  _14[4];
+    u32 _14;             /* +0x14 - reserved/scratch (zero-init by ECM_DecodeFrame) */
     s32 flag;            /* +0x18 - high bit of magic byte 3 */
     s32 status;          /* +0x1c - 0=ok, -3=bad magic, -4=bad mode */
 } ecm_state;
