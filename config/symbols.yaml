@@ -2116,10 +2116,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428330
-    name: func_00428330
+    name: ScaledArrStore_00428330
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00428350
     name: GuardedSeq_00428350
     size: 20
@@ -2158,10 +2159,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004285c0
-    name: func_004285c0
+    name: ScaledArrStore_004285c0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x004285e0
     name: func_004285e0
     size: 99
@@ -2274,10 +2276,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428e70
-    name: func_00428e70
+    name: ScaledArrStore_00428e70
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00428e90
     name: func_00428e90
     size: 25
@@ -2330,20 +2333,22 @@ functions:
     group: game
     status: stub
   - addr: 0x004293b0
-    name: func_004293b0
+    name: ScaledArrStore_004293b0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x004293d0
     name: func_004293d0
     size: 115
     group: game
     status: stub
   - addr: 0x00429450
-    name: func_00429450
+    name: ScaledArrStore_00429450
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00429470
     name: func_00429470
     size: 36
@@ -2437,25 +2442,28 @@ functions:
     group: game
     status: stub
   - addr: 0x004298c0
-    name: func_004298c0
+    name: ScaledArrStore_004298c0
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x004298e0
     name: func_004298e0
     size: 36
     group: game
     status: stub
   - addr: 0x00429910
-    name: func_00429910
+    name: ScaledArrStore_00429910
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00429930
-    name: func_00429930
+    name: ScaledArrStore_00429930
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00429950
     name: SetJmp_00429950
     size: 15
@@ -2463,15 +2471,17 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00429960
-    name: func_00429960
+    name: ScaledArrStore_00429960
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x00429980
-    name: func_00429980
+    name: ScaledArrStore_00429980
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_array_store.c
   - addr: 0x004299a0
     name: func_004299a0
     size: 160
