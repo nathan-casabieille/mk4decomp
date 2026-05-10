@@ -1501,10 +1501,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041f780
-    name: func_0041f780
+    name: StackPopDispatchTagged_0041f780
     size: 77
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0041f7d0
     name: ScenegraphWalk_0041f7d0
     size: 61
@@ -2355,10 +2356,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428bd0
-    name: func_00428bd0
+    name: GuardedClampStoreJmp_00428bd0
     size: 77
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00428c20
     name: func_00428c20
     size: 195
@@ -5571,10 +5573,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00458c70
-    name: func_00458c70
+    name: SetTagsCallCmpToggleDirty_00458c70
     size: 77
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00458cc0
     name: func_00458cc0
     size: 638
@@ -6928,10 +6931,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00470340
-    name: func_00470340
+    name: DualFieldAddSubStore_00470340
     size: 76
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00470390
     name: func_00470390
     size: 232
@@ -7970,10 +7974,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x0047e640
-    name: func_0047e640
+    name: NotMaskCallStore70_0047e640
     size: 77
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0047e690
     name: func_0047e690
     size: 354
@@ -11434,10 +11439,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004a1b50
-    name: func_004a1b50
+    name: InputPollFlagBitsHalf_004a1b50
     size: 76
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a1ba0
     name: TestQueueGateState_004a1ba0
     size: 69
@@ -11986,10 +11992,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004aa940
-    name: func_004aa940
+    name: PushPopScaledInit343c_004aa940
     size: 76
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004aa990
     name: TableLookupCallJmp_004aa990
     size: 41
@@ -14730,10 +14737,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9750
-    name: func_004c9750
+    name: CRTSignalDispatch_004c9750
     size: 77
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004c97a0
     name: func_004c97a0
     size: 95

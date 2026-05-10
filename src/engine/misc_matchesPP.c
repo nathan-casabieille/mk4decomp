@@ -1743,6 +1743,256 @@ __declspec(naked) void IATDriverQuery_004c4950(void) {
     }
 }
 
+/* @addr 0x00470340 (76b)
+ *   ecx = [fightGroupHead*4+0x18]; eax = walk + [ecx*4+0x34];
+ *   stores eax both to g_eventQueueCurrent and back to [ecx*4+0x34];
+ *   then eax = [fightGroupHead*4+0x58] - walk; same dual store.
+ */
+__declspec(naked) void DualFieldAddSubStore_00470340(void) {
+    __asm {
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     eax, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [ecx*4 + 0x58]
+        sub     eax, edx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        ret
+    }
+}
+
+/* @addr 0x004a1b50 (76b)
+ *   InputPollFlagBits sibling: same shape but probes different bits
+ *   in [0x4d50b8] / [0x4d50b4]. Tests 0x20 (cl), then loads
+ *   [0x4d50b4] AS a dword (uses ah for 0x40, 0x10, 0x20 high-byte
+ *   tests), then cl bit 0x10. Final fallback: (cl & 0x40) >> 6.
+ */
+__declspec(naked) void InputPollFlagBitsHalf_004a1b50(void) {
+    __asm {
+        mov     cl, byte ptr [g_byte_004d50b8]
+        test    cl, 0x20
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        mov     eax, dword ptr [g_byte_004d50b4]
+        test    ah, 0x40
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    cl, 0x10
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    ah, 0x10
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        test    ah, 0x20
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        movsx   eax, cl
+        and     eax, 0x40
+        shr     eax, 6
+        ret
+    }
+}
+
+/* @addr 0x004aa940 (76b)
+ *   PushPopScaledInit save/restore wrapper around: load [0x54343c]
+ *   into g_scaledInit, call helper, clear [0x54343c]. Standard
+ *   "scoped global swap" pattern.
+ */
+extern unsigned int g_data_0054343c;
+extern void func_00406790(void);
+__declspec(naked) void PushPopScaledInit343c_004aa940(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_data_0054343c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    func_00406790
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054343c], 0
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x0041f780 (77b)
+ *   eax = [g_baseSel*4+4] - 1 → g_scaledInit; edx = [eax*4+0]
+ *   → g_walkCallback; [g_baseSel*4+4] = eax (decrement);
+ *   eax = walk; eax >>= 24; → [g_baseSel*4+0x84];
+ *   eax = walk & 0xffffff → walk; jmp eax.
+ *   Hand-rolled tail-dispatch: pops a 24-bit "next" + 8-bit "tag"
+ *   from a stack-of-callbacks, invokes the next.
+ */
+__declspec(naked) void StackPopDispatchTagged_0041f780(void) {
+    __asm {
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     eax, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        sar     eax, 0x18
+        mov     dword ptr [ecx*4 + 0x84], eax
+        mov     eax, dword ptr [g_walkCallback]
+        and     eax, 0xffffff
+        mov     dword ptr [g_walkCallback], eax
+        jmp     eax
+    }
+}
+
+/* @addr 0x00428bd0 (77b)
+ *   call F1; pause → ret;
+ *   edx = g_fightGroupHead; ecx = [edx*4+0x24] → g_scaledInit;
+ *   eax = [edx*4+0x28] → walk; ecx = [ecx*4+4]; cmp eax, ecx;
+ *   if eax >= ecx: eax = ecx - 1 → walk; store walk → [edx*4+0x28];
+ *   jmp T.
+ */
+extern void func_00406ba0(void);
+__declspec(naked) void GuardedClampStoreJmp_00428bd0(void) {
+    __asm {
+        call    func_00406ba0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [edx*4 + 0x24]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_walkCallback], eax
+        mov     ecx, dword ptr [ecx*4 + 4]
+        cmp     eax, ecx
+        _emit   7ch
+        _emit   08h
+        lea     eax, [ecx - 1]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [edx*4 + 0x28], eax
+        jmp     func_004299a0
+        ret
+    }
+}
+
+/* @addr 0x00458c70 (77b)
+ *   eventQueueCurrent = walk; pendingNodeType = (0x53a53c >> 2) + 0x3b;
+ *   call F; if !pause: cmp g_eventQueueCurrent, walk;
+ *   if jae: dirty |= 1; else: dirty &= ~1; ret.
+ */
+extern void func_004774d0(void);
+__declspec(naked) void SetTagsCallCmpToggleDirty_00458c70(void) {
+    __asm {
+        mov     eax, dword ptr [g_walkCallback]
+        mov     ecx, 0x0053a53c
+        shr     ecx, 2
+        add     ecx, 0x3b
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_pendingNodeType], ecx
+        call    func_004774d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        mov     edx, dword ptr [g_eventQueueCurrent]
+        mov     eax, dword ptr [g_walkCallback]
+        cmp     edx, eax
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        _emit   73h
+        _emit   08h
+        and     al, 0xfe
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+        or      al, 1
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+    }
+}
+
+/* @addr 0x0047e640 (77b)
+ *   walk = g_eventQueueNotMask; call F1; pause → ret;
+ *   load g_fightGroupHead; eax = [head*4+0x70];
+ *   push eax, push notMask; walk = eax; call F2 (mixer-like);
+ *   add esp 8; restore [head*4+0x70] = eax; ret.
+ */
+extern void func_004906b0(void);
+__declspec(naked) void NotMaskCallStore70_0047e640(void) {
+    __asm {
+        mov     eax, dword ptr [g_eventQueueNotMask]
+        mov     dword ptr [g_walkCallback], eax
+        call    func_004906b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueNotMask]
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        push    eax
+        push    edx
+        mov     dword ptr [g_walkCallback], eax
+        call    func_00404af0
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_walkCallback], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x70], eax
+        ret
+    }
+}
+
+/* @addr 0x004c9750 (77b)
+ *   CRT signal/setjmp dispatch: arg = -2 → IAT[0x4d2118],
+ *   -3 → IAT[0x4d2110], -4 → fetch [0xf9fc20] (no IAT call);
+ *   each path sets the [0xf9fadc] flag to 1 first.
+ */
+extern unsigned int g_data_00f9fadc;
+extern unsigned int g_data_00f9fc20;
+extern void *g_iat_004d2118;
+extern void *g_iat_004d2110;
+__declspec(naked) void CRTSignalDispatch_004c9750(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     dword ptr [g_data_00f9fadc], 0
+        cmp     eax, -2
+        _emit   75h
+        _emit   10h
+        mov     dword ptr [g_data_00f9fadc], 1
+        jmp     dword ptr [g_iat_004d2118]
+        cmp     eax, -3
+        _emit   75h
+        _emit   10h
+        mov     dword ptr [g_data_00f9fadc], 1
+        jmp     dword ptr [g_iat_004d2110]
+        cmp     eax, -4
+        _emit   75h
+        _emit   0fh
+        mov     eax, dword ptr [g_data_00f9fc20]
+        mov     dword ptr [g_data_00f9fadc], 1
+        ret
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value
