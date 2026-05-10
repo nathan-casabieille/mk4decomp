@@ -1794,10 +1794,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004235f0
-    name: func_004235f0
+    name: CallPauseLoadAndDispatch_004235f0
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x00423630
     name: func_00423630
     size: 104
@@ -11339,10 +11340,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1bf0
-    name: func_004a1bf0
+    name: TripleCallByteCheck_004a1bf0
     size: 65
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004a1c40
     name: func_004a1c40
     size: 3
@@ -11397,10 +11399,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004a1d80
-    name: func_004a1d80
+    name: SixCallSeqPushImm_004a1d80
     size: 61
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004a1dc0
     name: func_004a1dc0
     size: 120
@@ -11812,10 +11815,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a9230
-    name: func_004a9230
+    name: CallSetMultiGlobalsJmp_004a9230
     size: 64
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004a9270
     name: func_004a9270
     size: 324
@@ -12726,10 +12730,11 @@ functions:
     status: matched
     file: src/boot/app_init.c
   - addr: 0x004b2690
-    name: func_004b2690
+    name: ElevenCallsJmp_004b2690
     size: 60
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b26d0
     name: GameLogicStep
     size: 113
@@ -12810,10 +12815,11 @@ functions:
     status: matched
     file: src/engine/tristrip.c
   - addr: 0x004b2ff0
-    name: func_004b2ff0
+    name: CopyArgs16ToGlobals_004b2ff0
     size: 58
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b3030
     name: func_004b3030
     size: 132
@@ -12940,10 +12946,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b41c0
-    name: func_004b41c0
+    name: JumpTable5Way_004b41c0
     size: 64
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b4200
     name: BeginFrame
     size: 204
@@ -12963,30 +12970,33 @@ functions:
     status: matched
     file: src/engine/gfx_init.c
   - addr: 0x004b4410
-    name: func_004b4410
+    name: Push4MultiCall_004b4410
     size: 51
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b4450
     name: func_004b4450
     size: 146
     group: engine.geo
     status: stub
   - addr: 0x004b44f0
-    name: func_004b44f0
+    name: AbsClampIATCall_004b44f0
     size: 52
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b4530
     name: func_004b4530
     size: 196
     group: engine.geo
     status: stub
   - addr: 0x004b4600
-    name: func_004b4600
+    name: EarlyOutDualPushIATStore_004b4600
     size: 65
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesCC.c
   - addr: 0x004b4650
     name: func_004b4650
     size: 68
