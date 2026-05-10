@@ -354,35 +354,41 @@ functions:
     group: boot
     status: stub
   - addr: 0x00406250
-    name: func_00406250
+    name: MStackCall_00406250
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x004062a0
-    name: func_004062a0
+    name: MStackCall_004062a0
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x004062f0
-    name: func_004062f0
+    name: MStackCall_004062f0
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406340
-    name: func_00406340
+    name: MStackCall_00406340
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406390
-    name: func_00406390
+    name: MStackCall_00406390
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x004063e0
-    name: func_004063e0
+    name: MStackCall_004063e0
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406430
     name: func_00406430
     size: 117
@@ -399,15 +405,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x004065b0
-    name: func_004065b0
+    name: MStackCall_004065b0
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406600
-    name: func_00406600
+    name: MStackCall_00406600
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406650
     name: func_00406650
     size: 115
@@ -424,10 +432,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00406740
-    name: func_00406740
+    name: MStackCall_00406740
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406790
     name: func_00406790
     size: 377
@@ -449,10 +458,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00406b50
-    name: func_00406b50
+    name: MStackCall_00406b50
     size: 75
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x00406ba0
     name: func_00406ba0
     size: 15
@@ -4738,10 +4748,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044d230
-    name: func_0044d230
+    name: MStackCall_0044d230
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_calls.c
   - addr: 0x0044d280
     name: func_0044d280
     size: 767
