@@ -319,10 +319,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00405b30
-    name: func_00405b30
+    name: MStackPushCallCallPop_00405b30
     size: 77
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_call_call_pop.c
   - addr: 0x00405b80
     name: func_00405b80
     size: 281
@@ -334,15 +335,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x00405dd0
-    name: func_00405dd0
+    name: MStackPushCallCallPop_00405dd0
     size: 77
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_call_call_pop.c
   - addr: 0x00405e20
-    name: func_00405e20
+    name: MStackPushCallCallPop_00405e20
     size: 77
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_call_call_pop.c
   - addr: 0x00405e70
     name: func_00405e70
     size: 580
@@ -2257,15 +2260,17 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp.c
   - addr: 0x00428d40
-    name: func_00428d40
+    name: ScaledClearJmp_00428d40
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428d60
-    name: func_00428d60
+    name: ScaledClearJmp_00428d60
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428d80
     name: func_00428d80
     size: 182
@@ -2283,10 +2288,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x00428e90
-    name: func_00428e90
+    name: ScaledClearJmp_00428e90
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428eb0
     name: func_00428eb0
     size: 182
@@ -4295,10 +4301,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00441df0
-    name: func_00441df0
+    name: ScaledOrStore_00441df0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_or_store.c
   - addr: 0x00441e10
     name: ScaledInit_00441e10
     size: 18
@@ -4741,20 +4748,23 @@ functions:
     group: game
     status: stub
   - addr: 0x0044cf50
-    name: func_0044cf50
+    name: MStackPushTyped_0044cf50
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_typed.c
   - addr: 0x0044cf80
-    name: func_0044cf80
+    name: MStackPushTyped_0044cf80
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_typed.c
   - addr: 0x0044cfb0
-    name: func_0044cfb0
+    name: MStackPushTyped_0044cfb0
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_typed.c
   - addr: 0x0044cfe0
     name: func_0044cfe0
     size: 116
@@ -6206,10 +6216,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004677a0
-    name: func_004677a0
+    name: ScaledOrStore_004677a0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_or_store.c
   - addr: 0x004677c0
     name: ScaledAddrInit_004677c0
     size: 18
@@ -7183,20 +7194,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00476e20
-    name: func_00476e20
+    name: CondInstallDispatch_00476e20
     size: 58
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cond_install_dispatch.c
   - addr: 0x00476e60
     name: func_00476e60
     size: 109
     group: game
     status: stub
   - addr: 0x00476ed0
-    name: func_00476ed0
+    name: CondInstallDispatch_00476ed0
     size: 58
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cond_install_dispatch.c
   - addr: 0x00476f10
     name: GuardedSeq_00476f10
     size: 20
@@ -7220,10 +7233,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00477000
-    name: func_00477000
+    name: CondInstallDispatch_00477000
     size: 58
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cond_install_dispatch.c
   - addr: 0x00477040
     name: func_00477040
     size: 689
@@ -9069,10 +9083,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e680
-    name: func_0048e680
+    name: IterLoad_0048e680
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/iter_load.c
   - addr: 0x0048e6b0
     name: func_0048e6b0
     size: 33
@@ -9217,10 +9232,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f270
-    name: func_0048f270
+    name: CondPlayerLookup_0048f270
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cond_player_lookup.c
   - addr: 0x0048f2a0
     name: func_0048f2a0
     size: 63
@@ -9318,10 +9334,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f950
-    name: func_0048f950
+    name: CondPlayerLookup_0048f950
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cond_player_lookup.c
   - addr: 0x0048f980
     name: func_0048f980
     size: 148
@@ -9364,10 +9381,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048fd30
-    name: func_0048fd30
+    name: IterLoad_0048fd30
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/iter_load.c
   - addr: 0x0048fd60
     name: func_0048fd60
     size: 224
@@ -9505,10 +9523,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004903d0
-    name: func_004903d0
+    name: ScaledOrStore_004903d0
     size: 28
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_or_store.c
   - addr: 0x004903f0
     name: func_004903f0
     size: 198
@@ -9636,10 +9655,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00491050
-    name: func_00491050
+    name: IterLoad_00491050
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/iter_load.c
   - addr: 0x00491080
     name: func_00491080
     size: 43
@@ -11536,10 +11556,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac120
-    name: func_004ac120
+    name: CondPlayerLookup_004ac120
     size: 38
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/cond_player_lookup.c
   - addr: 0x004ac150
     name: func_004ac150
     size: 69
@@ -11787,10 +11808,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004aeee0
-    name: func_004aeee0
+    name: ComReleaseCapture_004aeee0
     size: 31
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release_capture.c
   - addr: 0x004aef00
     name: func_004aef00
     size: 43
@@ -11834,10 +11856,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004af440
-    name: func_004af440
+    name: ComReleasePair_004af440
     size: 56
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release_pair.c
   - addr: 0x004af480
     name: func_004af480
     size: 453
@@ -11908,20 +11931,22 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004afb50
-    name: func_004afb50
+    name: ComReleaseCapture_004afb50
     size: 31
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release_capture.c
   - addr: 0x004afb70
     name: func_004afb70
     size: 342
     group: engine.install
     status: stub
   - addr: 0x004afcd0
-    name: func_004afcd0
+    name: ComReleasePair_004afcd0
     size: 56
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/com_release_pair.c
   - addr: 0x004afd10
     name: func_004afd10
     size: 297
@@ -11992,20 +12017,22 @@ functions:
     group: engine.ecm
     status: stub
   - addr: 0x004b0380
-    name: func_004b0380
+    name: ComReleaseCapture_004b0380
     size: 31
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/com_release_capture.c
   - addr: 0x004b03a0
     name: func_004b03a0
     size: 342
     group: engine.ecm
     status: stub
   - addr: 0x004b0500
-    name: func_004b0500
+    name: ComReleasePair_004b0500
     size: 56
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/com_release_pair.c
   - addr: 0x004b0540
     name: func_004b0540
     size: 297
