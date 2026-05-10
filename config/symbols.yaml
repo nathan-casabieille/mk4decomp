@@ -268,10 +268,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00405430
-    name: func_00405430
+    name: ZeroAndDirty4_00405430
     size: 23
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x00405450
     name: func_00405450
     size: 348
@@ -3123,10 +3124,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00433bf0
-    name: func_00433bf0
+    name: ScaledIndirectJmp_00433bf0
     size: 19
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x00433c10
     name: func_00433c10
     size: 74
@@ -5106,20 +5108,23 @@ functions:
     group: game
     status: stub
   - addr: 0x00453480
-    name: func_00453480
+    name: DualConstJmp_00453480
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_const_jmp.c
   - addr: 0x004534a0
-    name: func_004534a0
+    name: DualConstJmp_004534a0
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_const_jmp.c
   - addr: 0x004534c0
-    name: func_004534c0
+    name: DualConstJmp_004534c0
     size: 25
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_const_jmp.c
   - addr: 0x004534e0
     name: func_004534e0
     size: 39
@@ -5956,10 +5961,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461840
-    name: func_00461840
+    name: DualSave_00461840
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x00461860
     name: Helper_SetState_1A
     size: 16
@@ -6944,10 +6950,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00473ed0
-    name: func_00473ed0
+    name: ScaledLoadStore_00473ed0
     size: 19
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x00473ef0
     name: GuardedSeq_00473ef0
     size: 20
@@ -7321,10 +7328,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004774b0
-    name: func_004774b0
+    name: ScaledDerefStore_004774b0
     size: 19
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x004774d0
     name: func_004774d0
     size: 25
@@ -8330,10 +8338,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487120
-    name: func_00487120
+    name: Const0x2005Store_00487120
     size: 24
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x00487140
     name: Wrapper_00487140
     size: 14
@@ -8357,10 +8366,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004871d0
-    name: func_004871d0
+    name: CmpJmpTwoBranch_004871d0
     size: 19
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x004871f0
     name: func_004871f0
     size: 573
@@ -10466,10 +10476,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049c850
-    name: func_0049c850
+    name: ScaledIndirectJmp_0049c850
     size: 19
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches2.c
   - addr: 0x0049c870
     name: func_0049c870
     size: 413
