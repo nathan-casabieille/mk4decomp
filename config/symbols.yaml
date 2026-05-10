@@ -14716,10 +14716,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cba90
-    name: func_004cba90
+    name: ArraySearch_004cba90
     size: 60
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cbad0
     name: Push40ArgCall_004cbad0
     size: 18
@@ -14727,10 +14728,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004cbaf0
-    name: func_004cbaf0
+    name: IndexedBitTest_004cbaf0
     size: 58
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cbb30
     name: func_004cbb30
     size: 238
@@ -14747,10 +14749,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc030
-    name: func_004cc030
+    name: DualCondCleanupCall_004cc030
     size: 61
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cc070
     name: func_004cc070
     size: 470
@@ -14788,10 +14791,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc4c0
-    name: func_004cc4c0
+    name: FpuCwTxn_004cc4c0
     size: 59
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cc500
     name: MaskCall_004cc500
     size: 24
@@ -14947,10 +14951,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cd920
-    name: func_004cd920
+    name: StrNLen_004cd920
     size: 47
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cd950
     name: func_004cd950
     size: 388
@@ -15019,15 +15024,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004ce290
-    name: func_004ce290
+    name: Shl96By1_004ce290
     size: 46
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004ce2c0
-    name: func_004ce2c0
+    name: Shr96By1_004ce2c0
     size: 45
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004ce2f0
     name: func_004ce2f0
     size: 241
@@ -15059,10 +15066,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cf6d0
-    name: func_004cf6d0
+    name: SwitchErrorCode_004cf6d0
     size: 40
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cf700
     name: func_004cf700
     size: 3
@@ -15081,10 +15089,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004cf740
-    name: func_004cf740
+    name: FpuMaskMerge_004cf740
     size: 40
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004cf770
     name: func_004cf770
     size: 270
@@ -15116,10 +15125,11 @@ functions:
     group: other
     status: stub
   - addr: 0x004d03c0
-    name: func_004d03c0
+    name: StringDigitConvert_004d03c0
     size: 51
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesGG.c
   - addr: 0x004d0400
     name: func_004d0400
     size: 1024
