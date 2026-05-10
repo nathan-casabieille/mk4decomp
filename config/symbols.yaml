@@ -3123,10 +3123,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00433d30
-    name: func_00433d30
+    name: CmpP1DualInitStore_00433d30
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cmp_p1_dual_init_store.c
   - addr: 0x00433d80
     name: func_00433d80
     size: 205
@@ -4714,10 +4715,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0044ba30
-    name: func_0044ba30
+    name: ScaledLoadTwoCallDualConst_0044ba30
     size: 67
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_two_call_dual_const.c
   - addr: 0x0044ba80
     name: GuardedSeq_0044ba80
     size: 20
@@ -5037,15 +5039,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00451f20
-    name: func_00451f20
+    name: ScaledLoadTwoCallLit_00451f20
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_two_call_lit.c
   - addr: 0x00451f70
-    name: func_00451f70
+    name: ScaledLoadTwoCallLit_00451f70
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_two_call_lit.c
   - addr: 0x00451fc0
     name: func_00451fc0
     size: 836
@@ -6273,10 +6277,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00467c30
-    name: func_00467c30
+    name: ScaledLoadTwoCallDualConst_00467c30
     size: 67
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_two_call_dual_const.c
   - addr: 0x00467c80
     name: GuardedSeq_00467c80
     size: 20
@@ -7962,10 +7967,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482ab0
-    name: func_00482ab0
+    name: CmpP1DualInitStore_00482ab0
     size: 66
     group: game
-    status: stub
+    status: matched
+    file: src/engine/cmp_p1_dual_init_store.c
   - addr: 0x00482b00
     name: func_00482b00
     size: 89

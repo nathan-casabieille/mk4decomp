@@ -1,0 +1,76 @@
+/**
+ * 2 "compare-with-player1 + dual scaled init + store" helpers (66b).
+ *
+ * Pattern:
+ *   mov     edx, [g_fightGroupHead]
+ *   push    esi
+ *   mov     esi, [g_player1NodeIdx]
+ *   mov     eax, IMM_A
+ *   mov     ecx, IMM_B
+ *   shr     eax, 2
+ *   shr     ecx, 2
+ *   cmp     edx, esi
+ *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_scaledInit_00542048], ecx
+ *   je      .same
+ *   mov     eax, ecx                     ; not p1: A = B
+ *   mov     [g_scaledInit_00542044], eax
+ * .same:
+ *   mov     ecx, [g_walkCallback]
+ *   pop     esi
+ *   mov     [eax*4 + 0], ecx              ; SIB+0 store
+ *   ret
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_scaledInit_00542048;
+
+/* @addr 0x00433d30 */
+__declspec(naked) void CmpP1DualInitStore_00433d30(void) {
+    __asm {
+        mov     edx, dword ptr [g_fightGroupHead]
+        push    esi
+        mov     esi, dword ptr [g_player1NodeIdx]
+        mov     eax, 0x0053a1a0
+        mov     ecx, 0x0053a518
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_scaledInit_00542048], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [g_walkCallback]
+        pop     esi
+        mov     dword ptr [eax*4 + 0], ecx
+        ret
+    }
+}
+
+/* @addr 0x00482ab0 */
+__declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
+    __asm {
+        mov     edx, dword ptr [g_fightGroupHead]
+        push    esi
+        mov     esi, dword ptr [g_player1NodeIdx]
+        mov     eax, 0x0053a3e4
+        mov     ecx, 0x0053a474
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_scaledInit_00542048], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [g_walkCallback]
+        pop     esi
+        mov     dword ptr [eax*4 + 0], ecx
+        ret
+    }
+}
