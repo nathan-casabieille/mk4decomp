@@ -10718,15 +10718,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0049f900
-    name: func_0049f900
+    name: DispatcherComplex115_0049f900
     size: 115
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_115.c
   - addr: 0x0049f980
-    name: func_0049f980
+    name: DispatcherComplex115_0049f980
     size: 115
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_115.c
   - addr: 0x0049fa00
     name: func_0049fa00
     size: 29
