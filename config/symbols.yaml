@@ -2270,10 +2270,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428560
-    name: func_00428560
+    name: ScaledStoreOrFlagXor_00428560
     size: 85
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x004285c0
     name: ScaledArrStore_004285c0
     size: 23
@@ -3514,10 +3515,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00436250
-    name: func_00436250
+    name: CmpRangeJmpStateInit_00436250
     size: 85
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x004362b0
     name: Cmp30000And18000_004362b0
     size: 49
@@ -4667,10 +4669,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004460c0
-    name: func_004460c0
+    name: ScaledClear1cTestWalkCall_004460c0
     size: 85
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x00446120
     name: CopyScaledTriple_00446120
     size: 46
@@ -4830,10 +4833,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446bf0
-    name: func_00446bf0
+    name: PushImmCallSetCallAdjustCall_00446bf0
     size: 85
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x00446c50
     name: func_00446c50
     size: 940
@@ -11337,10 +11341,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1940
-    name: func_004a1940
+    name: ScaledInitOrSelfPtrSetType14_004a1940
     size: 85
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x004a19a0
     name: CopyCallPauseJmp_004a19a0
     size: 30
@@ -13449,10 +13454,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004ba6c0
-    name: func_004ba6c0
+    name: DirtyTestScaledCopy_004ba6c0
     size: 85
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesNN.c
   - addr: 0x004ba720
     name: RenderSceneNode
     size: 1899
