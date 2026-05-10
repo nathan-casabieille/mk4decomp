@@ -2080,10 +2080,11 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_181.c
   - addr: 0x00426550
-    name: func_00426550
+    name: Sprintf2WaySelect_00426550
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004265a0
     name: CopyByteUntilNull_004265a0
     size: 41
@@ -2916,10 +2917,11 @@ functions:
     status: matched
     file: src/engine/misc_matches5.c
   - addr: 0x0042f4f0
-    name: func_0042f4f0
+    name: PushPopPendingTwoCalls_0042f4f0
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0042f540
     name: func_0042f540
     size: 543
@@ -4757,10 +4759,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x004463b0
-    name: func_004463b0
+    name: SlotFieldSwap3c_004463b0
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00446400
     name: func_00446400
     size: 111
@@ -7209,10 +7212,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00473d50
-    name: func_00473d50
+    name: GuardedDirty4ScaledJmp_00473d50
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00473da0
     name: func_00473da0
     size: 291
@@ -9519,10 +9523,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x0048e630
-    name: func_0048e630
+    name: PackedAdvanceCallContinue_0048e630
     size: 75
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048e680
     name: IterLoad_0048e680
     size: 36
@@ -11694,10 +11699,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a4260
-    name: func_004a4260
+    name: InitDispatchersJmp_004a4260
     size: 75
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a42b0
     name: TestZeroJmp_004a42b0
     size: 25
@@ -14166,10 +14172,11 @@ functions:
     status: matched
     file: src/platform/error.c
   - addr: 0x004c4950
-    name: func_004c4950
+    name: IATDriverQuery_004c4950
     size: 75
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004c49a0
     name: Win32_GetHInstance
     size: 6

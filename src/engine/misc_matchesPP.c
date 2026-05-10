@@ -1508,6 +1508,241 @@ __declspec(naked) void DDrawBltJmp_004b2840(void) {
     }
 }
 
+/* @addr 0x00426550 (75b)
+ *   eax = 0x53a1c0 >> 2 → g_scaledInit; eax = g_currentNodeFlags;
+ *   if eax == 2: sprintf-style 3-arg call with format 0x4d56c8
+ *   else format 0x4d56d0; both use 0x53a1c0 as buffer.
+ */
+extern unsigned int g_data_004d56c8;
+extern unsigned int g_data_004d56d0;
+extern unsigned int g_data_0053a1c0;
+extern void func_004c5580(void *buf, void *fmt, unsigned int arg);
+__declspec(naked) void Sprintf2WaySelect_00426550(void) {
+    __asm {
+        mov     eax, 0x0053a1c0
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
+        cmp     eax, 2
+        _emit   75h
+        _emit   1ah
+        mov     ecx, dword ptr [g_walkCallback]
+        push    ecx
+        push    OFFSET g_data_004d56c8
+        push    OFFSET g_data_0053a1c0
+        call    func_004c5580
+        add     esp, 0x0c
+        ret
+        mov     edx, dword ptr [g_walkCallback]
+        push    edx
+        push    OFFSET g_data_004d56d0
+        push    OFFSET g_data_0053a1c0
+        call    func_004c5580
+        add     esp, 0x0c
+        ret
+    }
+}
+
+/* @addr 0x0042f4f0 (75b)
+ *   PushPop save/restore of g_pendingNodeType across two
+ *   push-arg calls (0x249, 0x24a) to func_004049d0.
+ */
+extern void func_004049d0(int);
+__declspec(naked) void PushPopPendingTwoCalls_0042f4f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_pendingNodeType]
+        inc     eax
+        push    0x249
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    func_004049d0
+        add     esp, 4
+        push    0x24a
+        call    func_004049d0
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     esp, 4
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_pendingNodeType], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x004463b0 (75b)
+ *   Slot field swap: copies [g_baseSel*4+0x4c]→g_scaledInit;
+ *   [g_eventQueueIdx*4+0x3c]→walk; copies into eax-slot+0x3c.
+ *   Then re-reads idx slot's +0x3c → walk and back into ecx-slot.
+ */
+__declspec(naked) void SlotFieldSwap3c_004463b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_eventQueueIdx]
+        mov     eax, dword ptr [eax*4 + 0x4c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [ecx*4 + 0x3c]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0x3c], ecx
+        mov     edx, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x3c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        ret
+    }
+}
+
+/* @addr 0x00473d50 (75b)
+ *   call F1; pause → ret; if (dirty & 4) jmp T1; call F2;
+ *   pause → ret; call F3; pause → ret; walk = 0x4ec9e8 >> 2;
+ *   jmp T2.
+ */
+extern void func_00405420(void);
+extern void func_00473ed0(void);
+extern void func_00473da0(void);
+__declspec(naked) void GuardedDirty4ScaledJmp_00473d50(void) {
+    __asm {
+        call    func_00405420
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3ch
+        test    byte ptr [g_xformDirtyFlags], 4
+        _emit   75h
+        _emit   05h
+        jmp     func_00473ed0
+        call    func_004089e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     eax, 0x004ec9e8
+        shr     eax, 2
+        mov     dword ptr [g_walkCallback], eax
+        jmp     func_00473da0
+        ret
+    }
+}
+
+/* @addr 0x0048e630 (75b)
+ *   eax = arg0 >> 2 → g_eventQueueTotal; ecx = [eax*4+0];
+ *   walk = ecx; inc eax → g_eventQueueTotal; call F; pause → ret;
+ *   load eax again, edx = [eax*4+0]; xformEntityIdx = edx;
+ *   inc eax → g_eventQueueTotal; jmp T.
+ */
+extern void func_0049cb90(void);
+extern void func_0049cbd0(void);
+__declspec(naked) void PackedAdvanceCallContinue_0048e630(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        sar     eax, 2
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_eventQueueTotal], eax
+        call    func_0049cb90
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     dword ptr [g_eventQueueTotal], eax
+        jmp     func_0049cbd0
+        ret
+    }
+}
+
+/* @addr 0x004a4260 (75b)
+ *   pendingNodeType = 0x4200b0 (a func ptr stored as data);
+ *   eventQueueWorkType = 0x1000; call F; pause → ret;
+ *   eax = 2; [0x543800] = -1; walk = eax; [0x52aac4] = eax;
+ *   eventQueueWorkType = 0; jmp T.
+ */
+extern unsigned int g_data_00543800;
+extern void func_0049cb60(void);
+extern void func_00489f50(void);
+__declspec(naked) void InitDispatchersJmp_004a4260(void) {
+    __asm {
+        mov     dword ptr [g_pendingNodeType], 0x004200b0
+        mov     dword ptr [g_eventQueueWorkType], 0x1000
+        call    func_0049cb60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   28h
+        mov     eax, 2
+        mov     dword ptr [g_data_00543800], 0xffffffff
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_data_0052aac4], eax
+        mov     dword ptr [g_eventQueueWorkType], 0
+        jmp     func_00489f50
+        ret
+    }
+}
+
+/* @addr 0x004c4950 (75b)
+ *   IAT-driven driver query: call IAT[0x4d21b8](0); if 0 → ret.
+ *   Else: load IAT[0x4d203c]; query (handle, 0xc) >= 0xf?
+ *   if so query (handle, 0xe) == 1; if so call IAT[0x4d21a8](0,handle).
+ *   Returns either 1 or 0 in eax.
+ */
+extern void *g_iat_004d21b8;
+extern void *g_iat_004d203c;
+extern void *g_iat_004d21a8;
+__declspec(naked) void IATDriverQuery_004c4950(void) {
+    __asm {
+        push    esi
+        push    0
+        call    dword ptr [g_iat_004d21b8]
+        mov     esi, eax
+        test    esi, esi
+        _emit   75h
+        _emit   02h
+        pop     esi
+        ret
+        push    edi
+        mov     edi, dword ptr [g_iat_004d203c]
+        push    0x0c
+        push    esi
+        call    edi
+        cmp     eax, 0x0f
+        _emit   7ch
+        _emit   1ah
+        push    0x0e
+        push    esi
+        call    edi
+        cmp     eax, 1
+        _emit   75h
+        _emit   10h
+        push    esi
+        push    0
+        mov     edi, eax
+        call    dword ptr [g_iat_004d21a8]
+        mov     eax, edi
+        pop     edi
+        pop     esi
+        ret
+        xor     edi, edi
+        push    esi
+        push    edi
+        call    dword ptr [g_iat_004d21a8]
+        mov     eax, edi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value
