@@ -13542,10 +13542,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x004bd890
-    name: func_004bd890
+    name: TableWalkBoundedCmp_004bd890
     size: 58
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004bd8d0
     name: Thunk_004bd8d0
     size: 5
@@ -14192,10 +14193,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5d70
-    name: func_004c5d70
+    name: WrapperCallSelf_004c5d70
     size: 55
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c5db0
     name: Push3ArgsCall_004c5db0
     size: 21
@@ -14241,10 +14243,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004c6510
-    name: func_004c6510
+    name: CallShiftLea_004c6510
     size: 45
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c6540
     name: func_004c6540
     size: 544
@@ -14256,10 +14259,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c67f0
-    name: func_004c67f0
+    name: CallIfPushPushCall_004c67f0
     size: 48
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c6820
     name: PushZ2ArgCall_004c6820
     size: 18
@@ -14296,10 +14300,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesR.c
   - addr: 0x004c6960
-    name: func_004c6960
+    name: CallTestPushSubCall_004c6960
     size: 53
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c69a0
     name: func_004c69a0
     size: 110
@@ -14334,10 +14339,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x004c6e90
-    name: func_004c6e90
+    name: CmpCallPushIATCall2_004c6e90
     size: 39
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c6ec0
     name: IndirectCall_004c6ec0
     size: 32
@@ -14345,10 +14351,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesR.c
   - addr: 0x004c6ee0
-    name: func_004c6ee0
+    name: CallIATIfThenCall_004c6ee0
     size: 55
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c6f20
     name: FourIndirectCalls_004c6f20
     size: 43
@@ -14441,15 +14448,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8300
-    name: func_004c8300
+    name: PaddedLoopFunc_004c8300
     size: 57
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c8340
-    name: func_004c8340
+    name: PaddedLoopByteFunc_004c8340
     size: 61
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesEE.c
   - addr: 0x004c8380
     name: StreamReadDword_004c8380
     size: 17
