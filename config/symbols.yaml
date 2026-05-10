@@ -10519,10 +10519,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049a620
-    name: func_0049a620
+    name: Set43DualCallJmp_0049a620
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x0049a650
     name: GuardedSeq_0049a650
     size: 20
@@ -10805,10 +10806,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d310
-    name: func_0049d310
+    name: ScaledStoreThree_0049d310
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x0049d340
     name: func_0049d340
     size: 52
@@ -10960,10 +10962,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0049fa20
-    name: func_0049fa20
+    name: Cmp3DirtyToggle_0049fa20
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x0049fa50
     name: func_0049fa50
     size: 186
@@ -11091,10 +11094,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1120
-    name: func_004a1120
+    name: IncWrap0fJmp_004a1120
     size: 36
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004a1150
     name: func_004a1150
     size: 393
@@ -11179,10 +11183,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004a1ae0
-    name: func_004a1ae0
+    name: TestByteOrAndCheck_004a1ae0
     size: 32
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004a1b00
     name: func_004a1b00
     size: 74
@@ -11694,15 +11699,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004aa3f0
-    name: func_004aa3f0
+    name: ShiftDownThreeAndAppend_004aa3f0
     size: 32
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004aa410
-    name: func_004aa410
+    name: SplitInt32_004aa410
     size: 32
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004aa430
     name: func_004aa430
     size: 226
@@ -11729,15 +11736,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004aa990
-    name: func_004aa990
+    name: TableLookupCallJmp_004aa990
     size: 41
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004aa9c0
-    name: func_004aa9c0
+    name: TableLookupCallJmp_004aa9c0
     size: 41
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004aa9f0
     name: func_004aa9f0
     size: 2164
@@ -11754,10 +11763,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab300
-    name: func_004ab300
+    name: DivBy_004ab300
     size: 31
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesL.c
   - addr: 0x004ab320
     name: func_004ab320
     size: 33
