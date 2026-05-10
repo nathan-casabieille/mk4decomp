@@ -595,7 +595,8 @@ functions:
     name: DSound_Init
     size: 530
     group: engine.render
-    status: stub
+    status: matched
+    file: src/audio/dsound_init.c
   - addr: 0x004c4470
     name: Timer_Init
     size: 118

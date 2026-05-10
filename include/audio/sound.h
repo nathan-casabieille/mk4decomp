@@ -13,7 +13,7 @@ extern "C" {
 
 /* === Init ==================================================== */
 
-void DSound_Init(void *hwnd);                            /* 0x004c3ef0 */
+/* DSound_Init declared further below (returns s32). */
 s32  AuxAudio_Init(HWND hwnd);                           /* 0x004ac8f0 */
 void AuxAudio_SetVolume(s32 vol);                        /* 0x004aca10 */
 
@@ -179,6 +179,46 @@ extern u32 g_titleAudioState;      /* 0x00ab5748 */
 /* IAT slot for SetWindowTextA (`call ds:[g_iat_SetWindowTextA]`
  * forms a single 6-byte instruction with the IAT address). */
 extern void *g_iat_SetWindowTextA;  /* 0x004d21bc */
+
+/* === DSound_Init state ====================================== */
+
+/* Direct-sound init: builds a per-channel volume curve table
+ * (256x256 .word entries, two pointers per (i,j)), zero-clears the
+ * audio channel queue, calls DirectSoundCreate, then sets the
+ * cooperative level + creates the primary buffer. */
+s32  DSound_Init(void *hwnd);                            /* 0x004c3ef0 */
+
+/* DSound init globals. */
+extern void *g_dsoundHwnd;       /* 0x00f9efd0 */
+extern u32   g_dsoundFieldE0;    /* 0x00f9efe0 */
+extern u32   g_dsoundFieldE4;    /* 0x00f9efe4 */
+extern u32   g_dsoundFieldE8;    /* 0x00f9efe8 */
+extern void *g_dsoundContext;    /* 0x00f9efc8 (IDirectSound*) */
+extern void *g_dsoundPrimary;    /* 0x00f9efcc (LPDIRECTSOUNDBUFFER) */
+extern u8    g_dsoundFieldDc;    /* 0x00f9efdc */
+
+/* Constants (qword/doubles in .rdata) used by the volume-curve
+ * inner loop. */
+extern double k_dsoundC1;    /* 0x004d2a68 */
+extern double k_dsoundC2;    /* 0x004d2a70 */
+extern double k_dsoundC3;    /* 0x004d2a78 */
+extern double k_dsoundC4;    /* 0x004d2a80 */
+extern double k_dsoundC5;    /* 0x004d2a88 */
+extern double k_dsoundC6;    /* 0x004d2a90 */
+
+/* Big working scratch the function zero-clears. */
+extern u8 g_dsoundScratch[];  /* 0x00f8fac8 (0x3c28 dwords) */
+
+/* CRT _ftol used inside the FP loop. */
+s32  _ftol(void);                                          /* 0x004c57d0 */
+
+/* DirectSoundCreate import thunk. */
+s32  DirectSoundCreate_thunk(void *guid, void **ppDS,
+                             void *unused);                 /* 0x004d12d8 */
+
+/* Two post-init helpers + the volume-set helper. */
+void Helper_DSI_post1(s32 a);                              /* 0x004c4110 */
+void Helper_DSI_post2(s32 a);                              /* 0x004c3e30 */
 
 /* Helper functions invoked by UpdateWindowTitle on the "changed"
  * path. Each fires under specific state transitions. */
