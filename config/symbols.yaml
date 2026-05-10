@@ -27,10 +27,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x00401340
-    name: func_00401340
+    name: OnceCall_00401340
     size: 39
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00401370
     name: Init0AndMax_00401370
     size: 34
@@ -3355,10 +3356,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00435230
-    name: func_00435230
+    name: CallPauseCmpDoubleJmp_00435230
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00435260
     name: func_00435260
     size: 203
@@ -3422,10 +3424,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00435f20
-    name: func_00435f20
+    name: DualCallPauseDirtyJmp_00435f20
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00435f50
     name: func_00435f50
     size: 209
@@ -3723,10 +3726,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004389e0
-    name: func_004389e0
+    name: CmpJmpConstStoreJmp_004389e0
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00438a10
     name: func_00438a10
     size: 134
@@ -3764,10 +3768,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438ca0
-    name: func_00438ca0
+    name: CallPauseDirtyConstJmp_00438ca0
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00438cd0
     name: func_00438cd0
     size: 408
@@ -4094,10 +4099,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043aa80
-    name: func_0043aa80
+    name: MStackPush5Func_0043aa80
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x0043aab0
     name: func_0043aab0
     size: 313
@@ -4618,10 +4624,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x004462f0
-    name: func_004462f0
+    name: ScaledChainOrAh1_004462f0
     size: 41
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00446320
     name: ScaledStoreConst2_00446320
     size: 36
@@ -4654,10 +4661,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004464f0
-    name: func_004464f0
+    name: ScaledLoadZeroStore_004464f0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00446520
     name: func_00446520
     size: 89
@@ -5155,10 +5163,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00452740
-    name: func_00452740
+    name: DualScaledStore_00452740
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00452770
     name: func_00452770
     size: 2548
@@ -5198,15 +5207,17 @@ functions:
     status: matched
     file: src/engine/dual_const_jmp.c
   - addr: 0x004534e0
-    name: func_004534e0
+    name: Const5Call_PauseDirty4_Jmp_004534e0
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00453510
-    name: func_00453510
+    name: Const6Call_PauseDirty4_Jmp_00453510
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00453540
     name: func_00453540
     size: 159
@@ -6014,10 +6025,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461340
-    name: func_00461340
+    name: Set1JmpSet2Jmp_00461340
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00461360
     name: func_00461360
     size: 79
@@ -6254,10 +6266,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00464320
-    name: func_00464320
+    name: Cmp9DirtyToggle_00464320
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00464350
     name: func_00464350
     size: 781
@@ -6794,10 +6807,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004709c0
-    name: func_004709c0
+    name: CmpP1ScaledInit_004709c0
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x004709e0
     name: func_004709e0
     size: 425
@@ -6829,10 +6843,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470f30
-    name: func_00470f30
+    name: CallDirty4DualJmp_00470f30
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesH.c
   - addr: 0x00470f60
     name: func_00470f60
     size: 35
