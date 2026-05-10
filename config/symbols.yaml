@@ -18,7 +18,8 @@ functions:
     name: AllocateNode
     size: 700
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/allocate_node.c
   - addr: 0x0041fd70
     name: GameTick
     size: 792

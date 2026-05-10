@@ -156,6 +156,33 @@ extern u32        g_eventQueueNotMask;                    /* 0x0054207c */
  * primes the entity queue for each of the three sub-trees. */
 extern packed_ptr g_fightGroupHead;                       /* 0x0054205c */
 
+/* Sticky scratch slot read+stored by AllocateNode tail (between the
+ * working-state copy and `inc edx` of g_nodeAllocCounter). */
+extern u32        g_xformScratch2088;                     /* 0x00542088 */
+
+/* Per-allocation counter incremented by AllocateNode at the tail. */
+extern u32        g_nodeAllocCounter;                     /* 0x00541e64 */
+
+/* Tail-pointer of the current node-allocation linked list (each
+ * node's +0xe4 slot points to the next; AllocateNode walks until
+ * +0xe4 is null and appends there). */
+extern u32        g_nodeListTail;                          /* 0x0052ab3c */
+
+/* 64 × 0xe8-byte node slot area. The first 0xd8 bytes are user
+ * "data", followed by a 16-byte header at +0xd8..+0xe7 (ptr_field,
+ * type_word, worktype, next_link). AllocateNode scans this array
+ * looking for an empty slot (header.ptr_field == 0). The per-field
+ * extern aliases below are slot[0]; AllocateNode indexes them with
+ * a `[edx + g_nodeSlotN_*]` (edx = idx*0xe8) addressing form. */
+extern u8         g_nodeSlotsArea[];                      /* 0x0053e368 (size 64*0xe8) */
+extern u32        g_nodeSlotsHdr_ptrField;                /* 0x0053e440 */
+extern u16        g_nodeSlotsHdr_typeWord;                /* 0x0053e444 */
+extern u32        g_nodeSlotsHdr_workType;                /* 0x0053e448 */
+extern u32        g_nodeSlotsHdr_nextLink;                /* 0x0053e44c */
+extern u32        g_nodeSlotsHdr_magic;                   /* 0x0053e43c */
+extern u32        g_nodeSlotsHdr_end;                     /* 0x00541e40 */
+
+
 /* === BuildSortKeyLUT support ================================== */
 
 /* The big working buffer cleared by BuildSortKeyLUT (1056 KB at
