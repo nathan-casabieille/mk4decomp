@@ -1435,15 +1435,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x0041f1f0
-    name: func_0041f1f0
+    name: RandSarMod0xFFFSub400_0041f1f0
     size: 54
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x0041f230
-    name: func_0041f230
+    name: RandSarMod0xFFF_0041f230
     size: 49
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x0041f270
     name: ZeroLargeBlock_0041f270
     size: 27
@@ -1650,10 +1652,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421f00
-    name: func_00421f00
+    name: ScaledInitOrSelfPtr_00421f00
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00421f40
     name: func_00421f40
     size: 160
@@ -1929,15 +1932,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004250f0
-    name: func_004250f0
+    name: TripleSubVec3_004250f0
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00425130
-    name: func_00425130
+    name: TripleAddVec3_00425130
     size: 61
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00425170
     name: func_00425170
     size: 120
@@ -2297,10 +2302,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428950
-    name: func_00428950
+    name: ScaledInitOrSelfPtr_00428950
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00428990
     name: func_00428990
     size: 399
@@ -2466,10 +2472,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429680
-    name: func_00429680
+    name: ScaledInitOrSelfPtr_00429680
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x004296c0
     name: DirtyOrJmp_004296c0
     size: 17
@@ -3940,10 +3947,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439520
-    name: func_00439520
+    name: IncStoreCallIATDec_00439520
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00439560
     name: func_00439560
     size: 97
@@ -4512,10 +4520,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00442d90
-    name: func_00442d90
+    name: ScaledInitOrSelfPtr_00442d90
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00442dd0
     name: func_00442dd0
     size: 176
@@ -5438,10 +5447,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00457ff0
-    name: func_00457ff0
+    name: QuadCallPauseJmp_00457ff0
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesX.c
   - addr: 0x00458030
     name: func_00458030
     size: 104
