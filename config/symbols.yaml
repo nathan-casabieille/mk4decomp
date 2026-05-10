@@ -7169,15 +7169,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00476060
-    name: func_00476060
+    name: DispatcherComplex138_00476060
     size: 138
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_138.c
   - addr: 0x004760f0
-    name: func_004760f0
+    name: DispatcherComplex138_004760f0
     size: 138
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_138.c
   - addr: 0x00476180
     name: func_00476180
     size: 401
