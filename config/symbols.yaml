@@ -9570,15 +9570,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f910
-    name: func_0048f910
+    name: ScaledChain3c74_0048f910
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x0048f930
-    name: func_0048f930
+    name: ScaledChain3c7c_0048f930
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x0048f950
     name: CondPlayerLookup_0048f950
     size: 38
@@ -9591,10 +9593,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048fa20
-    name: func_0048fa20
+    name: StoreCallPauseCallPauseJmp_0048fa20
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x0048fa50
     name: func_0048fa50
     size: 236
@@ -9694,40 +9697,47 @@ functions:
     status: matched
     file: src/engine/misc_matches.c
   - addr: 0x00490140
-    name: func_00490140
+    name: MStackPushSet0200_00490140
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490170
-    name: func_00490170
+    name: MStackPushSet0080_00490170
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x004901a0
-    name: func_004901a0
+    name: MStackPushSet0008_004901a0
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x004901d0
-    name: func_004901d0
+    name: MStackPushSet0020_004901d0
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490200
-    name: func_00490200
+    name: MStackPushSet0040_00490200
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490230
-    name: func_00490230
+    name: MStackPushSet0004_00490230
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490260
-    name: func_00490260
+    name: MStackPushSet0001_00490260
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490290
     name: func_00490290
     size: 55
@@ -9855,25 +9865,28 @@ functions:
     group: game
     status: stub
   - addr: 0x00490b10
-    name: func_00490b10
+    name: IterStepNegStore_00490b10
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490b40
-    name: func_00490b40
+    name: IterStepDualStore_00490b40
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490b70
     name: func_00490b70
     size: 191
     group: game
     status: stub
   - addr: 0x00490c30
-    name: func_00490c30
+    name: DualCallPauseDirtyJmp_00490c30
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490c60
     name: GuardedSeq_00490c60
     size: 20
@@ -9902,10 +9915,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490e90
-    name: func_00490e90
+    name: InitThreeFields_00490e90
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00490ec0
     name: func_00490ec0
     size: 247
@@ -9923,20 +9937,22 @@ functions:
     status: matched
     file: src/engine/iter_load.c
   - addr: 0x00491080
-    name: func_00491080
+    name: DualScaledStoreZero_00491080
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x004910b0
     name: func_004910b0
     size: 259
     group: game
     status: stub
   - addr: 0x004911c0
-    name: func_004911c0
+    name: SwapTwoGlobals_004911c0
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x004911f0
     name: func_004911f0
     size: 57
@@ -9994,20 +10010,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00491920
-    name: func_00491920
+    name: IncCapped3e7_00491920
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00491950
     name: func_00491950
     size: 54
     group: game
     status: stub
   - addr: 0x00491990
-    name: func_00491990
+    name: TwoCallStatePauseJmp_00491990
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x004919c0
     name: func_004919c0
     size: 1155
@@ -10254,10 +10272,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00494800
-    name: func_00494800
+    name: ScaledAddDeref_00494800
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00494830
     name: func_00494830
     size: 376
@@ -10326,10 +10345,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00495cf0
-    name: func_00495cf0
+    name: Const0303InitJmp_00495cf0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesK.c
   - addr: 0x00495d20
     name: func_00495d20
     size: 124
