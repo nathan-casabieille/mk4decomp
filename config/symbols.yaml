@@ -3836,10 +3836,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesMM.c
   - addr: 0x00438bf0
-    name: func_00438bf0
+    name: DispatchSwitchWalkCmp_00438bf0
     size: 72
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00438c40
     name: Wrapper_00438c40
     size: 14
@@ -3847,10 +3848,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00438c50
-    name: func_00438c50
+    name: GuardedDirtyDispatch_00438c50
     size: 72
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00438ca0
     name: CallPauseDirtyConstJmp_00438ca0
     size: 44
@@ -4883,10 +4885,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x00448fc0
-    name: func_00448fc0
+    name: LoadStoreDoubleCallSet_00448fc0
     size: 72
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00449010
     name: func_00449010
     size: 732
@@ -5613,10 +5616,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00459fc0
-    name: func_00459fc0
+    name: GuardedTwiceLoopback_00459fc0
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0045a010
     name: func_0045a010
     size: 360
@@ -6998,10 +7002,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470ee0
-    name: func_00470ee0
+    name: PushPopWalkSet1006_00470ee0
     size: 72
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00470f30
     name: CallDirty4DualJmp_00470f30
     size: 34
@@ -8261,10 +8266,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004826f0
-    name: func_004826f0
+    name: TwoEntryWrapperGuarded_004826f0
     size: 72
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00482740
     name: ScaledChainCmp61_00482740
     size: 62
@@ -9239,10 +9245,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048bbf0
-    name: func_0048bbf0
+    name: SentinelInitTripleCall_0048bbf0
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048bc40
     name: func_0048bc40
     size: 174
@@ -9730,10 +9737,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f6d0
-    name: func_0048f6d0
+    name: GuardedDirtyXformFromTable_0048f6d0
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048f720
     name: ScaledInit_0048f720
     size: 18
@@ -10326,10 +10334,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00492870
-    name: func_00492870
+    name: DispatchGuardedDirtyTest_00492870
     size: 73
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004928c0
     name: func_004928c0
     size: 82
@@ -11530,10 +11539,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a2270
-    name: func_004a2270
+    name: ClearTwoCallSetStore_004a2270
     size: 72
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a22c0
     name: DualScaledStoreConst_004a22c0
     size: 44
@@ -12054,10 +12064,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab700
-    name: func_004ab700
+    name: AudioMixerStep_004ab700
     size: 73
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004ab750
     name: StoreDoubleNegPauseSubStore_004ab750
     size: 62
@@ -13306,10 +13317,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b7160
-    name: func_004b7160
+    name: StringSubstituteAfterColon_004b7160
     size: 73
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b71b0
     name: func_004b71b0
     size: 176
@@ -15017,10 +15029,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cd260
-    name: func_004cd260
+    name: CRTHandleLookup_004cd260
     size: 73
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004cd2b0
     name: func_004cd2b0
     size: 101

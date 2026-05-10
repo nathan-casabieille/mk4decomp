@@ -784,6 +784,482 @@ __declspec(naked) void PackedLoadAdvanceJmp_00470cc0(void) {
     }
 }
 
+/* @addr 0x00438bf0 (72b)
+ *   eax = baseSel*4+0x34; walk = eax;
+ *   if eax == 0x10: walk = 2; if eax == 0x11: walk = 7;
+ *   if eax == 5 or 6: jmp T1; else jmp T2.
+ *   The `if==X then walk=N` arms keep eax intact for next cmp.
+ */
+extern void func_00438c40(void);
+extern void func_00438ee0(void);
+__declspec(naked) void DispatchSwitchWalkCmp_00438bf0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        cmp     eax, 0x10
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, 2
+        mov     dword ptr [g_walkCallback], eax
+        cmp     eax, 0x11
+        _emit   75h
+        _emit   0ah
+        mov     eax, 7
+        mov     dword ptr [g_walkCallback], eax
+        cmp     eax, 5
+        _emit   75h
+        _emit   05h
+        jmp     func_00438c40
+        cmp     eax, 6
+        _emit   75h
+        _emit   05h
+        jmp     func_00438c40
+        jmp     func_00438ee0
+    }
+}
+
+/* @addr 0x00438c50 (72b)
+ *   call F1; pause → ret;
+ *   if (dirty & 1): jmp T1.
+ *   call F2; pause → ret;
+ *   if (dirty & 1): jmp T2;
+ *   else: walk = 9; jmp T3.
+ */
+extern void func_0048eec0(void);
+extern void func_00438f60(void);
+extern void func_0048e780(void);
+extern void func_00438ca0(void);
+extern void func_00471190(void);
+__declspec(naked) void GuardedDirtyDispatch_00438c50(void) {
+    __asm {
+        call    func_0048eec0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        test    byte ptr [g_xformDirtyFlags], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00438f60
+        call    func_0048e780
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        test    byte ptr [g_xformDirtyFlags], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00438ca0
+        mov     dword ptr [g_walkCallback], 9
+        jmp     func_00471190
+        ret
+    }
+}
+
+/* @addr 0x00448fc0 (72b)
+ *   ecx = [baseSel*4+0x4c]; mov fightGroupHead = ecx;
+ *   call F1; pause → ret; call F2; pause → ret;
+ *   walk = 2; g_acc_00542078 = 4; jmp T.
+ */
+extern unsigned int g_acc_00542078;
+extern void func_004089e0(void);
+extern void func_004b8fa0(void);
+extern void func_00473f50(void);
+__declspec(naked) void LoadStoreDoubleCallSet_00448fc0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x4c]
+        mov     dword ptr [g_fightGroupHead], ecx
+        call    func_004089e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [g_walkCallback], 2
+        mov     dword ptr [g_acc_00542078], 4
+        jmp     func_00473f50
+        ret
+    }
+}
+
+/* @addr 0x00470ee0 (72b)
+ *   PushPopWalk save/restore around setting walk = 0x1006 and
+ *   storing it into g_baseSel[+0x74]. Symmetric stack frame.
+ */
+__declspec(naked) void PushPopWalkSet1006_00470ee0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_walkCallback]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x1006
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [edx*4 + 0x74], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x004826f0 (72b)
+ *   Two-entry block: 9-byte mini-wrapper at 0x4826f0
+ *   (push lit; call F; add esp, 4; ret) + 2 NOPs +
+ *   the main 56-byte body at 0x482700: call F1, pause→ret,
+ *   call F2, pause→ret, push lit, call F3, pause→jmp T.
+ */
+extern unsigned int g_data_004edf38;
+extern unsigned int g_data_004edf68;
+extern void func_00494580(void);
+extern void func_00482740(void);
+extern void func_00488c00(void);
+__declspec(naked) void TwoEntryWrapperGuarded_004826f0(void) {
+    __asm {
+        push    OFFSET g_data_004edf38
+        call    func_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        call    func_00494580
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    func_00482740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        push    OFFSET g_data_004edf68
+        call    func_004594f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00488c00
+        ret
+    }
+}
+
+/* @addr 0x004a2270 (72b)
+ *   walk = 0; [0x541dc0] = 0; call F1; pause → ret;
+ *   call F2; pause → ret; walk = 0x1000;
+ *   store walk → [baseSel*4 + 0xc]; ret.
+ */
+extern unsigned int g_data_00541dc0;
+extern void func_004265d0(void);
+extern void func_00404680(void);
+__declspec(naked) void ClearTwoCallSetStore_004a2270(void) {
+    __asm {
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [g_data_00541dc0], 0
+        call    func_004265d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        call    func_00404680
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x1000
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x0c], eax
+        ret
+    }
+}
+
+/* @addr 0x00459fc0 (73b)
+ *   Inc g_state_004d57ac, push 0x459fe0 onto stack[idx*4], jmp T;
+ *   5 nops align; tail at 0x459fe0:
+ *   double "dec g_eventQueueChild; if zero jmp T1" with same target,
+ *   else jmp 0x459fc0 (loop back to entry).
+ */
+extern void func_0045a010(void);
+extern void func_00459510(void);
+__declspec(naked) void GuardedTwiceLoopback_00459fc0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], 0x00459fe0
+        jmp     func_0045a010
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, dword ptr [g_eventQueueChild]
+        dec     eax
+        mov     dword ptr [g_eventQueueChild], eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00459510
+        mov     eax, dword ptr [g_eventQueueChild]
+        dec     eax
+        mov     dword ptr [g_eventQueueChild], eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00459510
+        _emit   0e9h
+        _emit   0b7h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+    }
+}
+
+/* @addr 0x0048bbf0 (73b)
+ *   eax = 0x8a9dcbef; [0x53e35c] = 0xfedcba98; walk = eax;
+ *   [0x541dbc] = eax. Then 3 chained calls with pause-test → ret;
+ *   final call → jmp T.
+ */
+extern unsigned int g_data_0053e35c;
+extern unsigned int g_data_00541dbc;
+extern void func_00425b20(void);
+extern void func_0049cbf0(void);
+extern void func_004051b0(void);
+extern void func_0045c8e0(void);
+__declspec(naked) void SentinelInitTripleCall_0048bbf0(void) {
+    __asm {
+        mov     eax, 0x8a9dcbef
+        mov     dword ptr [g_data_0053e35c], 0xfedcba98
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_data_00541dbc], eax
+        call    func_00425b20
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        call    func_0049cbf0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    func_004051b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_0045c8e0
+        ret
+    }
+}
+
+/* @addr 0x0048f6d0 (73b)
+ *   call F; pause → ret; if (dirty & 4) → ret;
+ *   ecx = fightGroupHead; edx = [0x538158]; eax = [0x542038];
+ *   xformEntityIdx = eax; cmp ecx,edx; if !=, eax = [0x54203c],
+ *   xformEntityIdx = eax; edx = g_scaledInit_00542044;
+ *   [eax*4+0] = edx; ret.
+ */
+extern unsigned int g_data_00542038;
+extern unsigned int g_data_0054203c;
+extern void func_0048f350(void);
+__declspec(naked) void GuardedDirtyXformFromTable_0048f6d0(void) {
+    __asm {
+        call    func_0048f350
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3ah
+        test    byte ptr [g_xformDirtyFlags], 4
+        _emit   75h
+        _emit   31h
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_data_00538158]
+        mov     eax, dword ptr [g_data_00542038]
+        cmp     ecx, edx
+        mov     dword ptr [g_xformEntityIdx], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_data_0054203c]
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [eax*4 + 0], edx
+        ret
+    }
+}
+
+/* @addr 0x00492870 (73b)
+ *   if [0x54356c] != 0 → ret;
+ *   eax = [0x53a404]; mov walk = eax; if eax != 0 → ret;
+ *   mov g_eventQueueCurrent = eax (=0); call F; pause → ret;
+ *   cl = byte dirty; eax = 1; if (al & cl) == 0, jmp store-tail;
+ *   eventQueueCurrent = 1; walk = 1; jmp T.
+ */
+extern unsigned int g_data_0054356c;
+extern unsigned int g_data_0053a404;
+extern void func_004929e0(void);
+extern void func_004928c0(void);
+__declspec(naked) void DispatchGuardedDirtyTest_00492870(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0054356c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        mov     eax, dword ptr [g_data_0053a404]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   31h
+        mov     dword ptr [g_eventQueueCurrent], eax
+        call    func_004929e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1eh
+        mov     cl, byte ptr [g_xformDirtyFlags]
+        mov     eax, 1
+        test    cl, al
+        _emit   74h
+        _emit   05h
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_walkCallback], eax
+        jmp     func_004928c0
+        ret
+    }
+}
+
+/* @addr 0x004ab700 (73b)
+ *   Audio mixer step: eax = [0x4d5100] + [0x4d5104]; sar 31 (sign);
+ *   eax % 0x10000; pushes ecx, eax; calls helper. Stores running
+ *   sum back, low-16 to walk.
+ */
+extern unsigned int g_data_004d5100;
+extern unsigned int g_data_004d5104;
+extern unsigned int g_data_0053814c;
+extern void func_00404af0(int, int);
+__declspec(naked) void AudioMixerStep_004ab700(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_004d5100]
+        mov     edx, dword ptr [g_data_004d5104]
+        mov     ecx, dword ptr [g_walkCallback]
+        add     eax, edx
+        push    esi
+        mov     esi, eax
+        sar     esi, 0x1f
+        mov     dword ptr [g_data_004d5100], eax
+        add     esi, eax
+        and     eax, 0xffff
+        add     edx, esi
+        push    eax
+        push    ecx
+        mov     dword ptr [g_data_0053814c], ecx
+        mov     dword ptr [g_data_004d5104], edx
+        mov     dword ptr [g_walkCallback], eax
+        call    func_00404af0
+        add     esp, 8
+        mov     dword ptr [g_walkCallback], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004b7160 (73b)
+ *   Tokenizer: walks string at *arg0, finds first ':' (sets flag),
+ *   then for each char after the ':', writes the next char from
+ *   arg1 (or ' ' if arg1 is empty). Effectively a one-shot
+ *   substitute-after-delim helper.
+ */
+__declspec(naked) void StringSubstituteAfterColon_004b7160(void) {
+    __asm {
+        push    ebp
+        mov     ebp, dword ptr [esp + 8]
+        push    esi
+        xor     esi, esi
+        mov     ecx, dword ptr [ebp + 0]
+        xor     eax, eax
+        cmp     byte ptr [ecx], 0
+        _emit   74h
+        _emit   34h
+        push    edi
+        mov     edi, dword ptr [esp + 0x14]
+loop_top:
+        cmp     byte ptr [eax + ecx*1], 0x3a
+        _emit   75h
+        _emit   0ch
+        test    esi, esi
+        _emit   75h
+        _emit   0ch
+        mov     esi, 1
+        inc     eax
+        _emit   0ebh
+        _emit   12h
+        test    esi, esi
+        _emit   74h
+        _emit   0eh
+        mov     dl, byte ptr [edi]
+        test    dl, dl
+        _emit   74h
+        _emit   03h
+        inc     edi
+        _emit   0ebh
+        _emit   02h
+        mov     dl, 0x20
+        mov     byte ptr [eax + ecx*1], dl
+        mov     ecx, dword ptr [ebp + 0]
+        inc     eax
+        cmp     byte ptr [eax + ecx*1], 0
+        jne     loop_top
+        pop     edi
+        pop     esi
+        pop     ebp
+        ret
+    }
+}
+
+/* @addr 0x004cd260 (73b)
+ *   CRT _osfile / _osfhnd handle lookup. Returns a pointer or
+ *   sets errno/EBADF on out-of-range / closed handle. The byte
+ *   table at +4 records FOPEN bit (0x01).
+ */
+extern unsigned int g_data_00fa0ee0;
+extern void *g_data_00fa0de0;
+extern int *func_004c8ba0(void);
+extern int *func_004c8bb0(void);
+__declspec(naked) void CRTHandleLookup_004cd260(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [g_data_00fa0ee0]
+        cmp     eax, ecx
+        _emit   73h
+        _emit   21h
+        mov     ecx, eax
+        and     eax, 0x1f
+        sar     ecx, 5
+        lea     edx, [eax + eax*8]
+        mov     eax, dword ptr [ecx*4 + g_data_00fa0de0]
+        mov     cl, byte ptr [eax + edx*4 + 4]
+        lea     eax, [eax + edx*4]
+        test    cl, 1
+        _emit   74h
+        _emit   03h
+        mov     eax, dword ptr [eax]
+        ret
+        call    func_004c8ba0
+        mov     dword ptr [eax], 9
+        call    func_004c8bb0
+        mov     dword ptr [eax], 0
+        or      eax, 0xffffffff
+        ret
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value
