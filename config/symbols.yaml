@@ -7652,10 +7652,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004779d0
-    name: func_004779d0
+    name: MultiGateDispatchCallJmp_004779d0
     size: 80
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00477a20
     name: func_00477a20
     size: 432
@@ -9376,10 +9377,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048d070
-    name: func_0048d070
+    name: GuardedSelfRefSet_0048d070
     size: 80
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048d0c0
     name: ScaledOrAh8CallPauseJmp_0048d0c0
     size: 48
@@ -10273,15 +10275,17 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00491e70
-    name: func_00491e70
+    name: RemapWalkAndJmp_00491e70
     size: 80
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00491ec0
-    name: func_00491ec0
+    name: RemapWalkAndJmp_00491ec0
     size: 80
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00491f10
     name: func_00491f10
     size: 547
@@ -11867,10 +11871,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a7d40
-    name: func_004a7d40
+    name: ScaledChainStore24_004a7d40
     size: 80
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a7d90
     name: DecOrDirty_004a7d90
     size: 29
@@ -12184,10 +12189,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004ac1a0
-    name: func_004ac1a0
+    name: ThreeStageDirtyToggle_004ac1a0
     size: 80
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004ac1f0
     name: CopyGlobal_004ac1f0
     size: 11
@@ -13290,10 +13296,11 @@ functions:
     status: matched
     file: src/engine/mem_alloc.c
   - addr: 0x004b5c90
-    name: func_004b5c90
+    name: PackedListVisitor_004b5c90
     size: 80
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b5ce0
     name: func_004b5ce0
     size: 1171
@@ -14630,10 +14637,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c8400
-    name: func_004c8400
+    name: FPUPrecisionCheck_004c8400
     size: 80
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004c8450
     name: func_004c8450
     size: 370
