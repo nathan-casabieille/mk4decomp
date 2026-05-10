@@ -5763,70 +5763,83 @@ functions:
     group: game
     status: stub
   - addr: 0x00461860
-    name: func_00461860
+    name: Helper_SetState_1A
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461870
-    name: func_00461870
+    name: Helper_SetState_10
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461880
-    name: func_00461880
+    name: Helper_SetState_0F
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461890
-    name: func_00461890
+    name: Helper_SetState_0E
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618a0
-    name: func_004618a0
+    name: Helper_SetState_0C
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618b0
-    name: func_004618b0
+    name: Helper_SetState_0B
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618c0
-    name: func_004618c0
+    name: Helper_SetState_09
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618d0
-    name: func_004618d0
+    name: Helper_SetState_07
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618e0
-    name: func_004618e0
+    name: Helper_SetState_06
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x004618f0
-    name: func_004618f0
+    name: Helper_SetState_05
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461900
-    name: func_00461900
+    name: Helper_SetState_04
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461910
-    name: func_00461910
+    name: Helper_SetState_03
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461920
-    name: func_00461920
+    name: Helper_SetState_02
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/game/state_setters.c
   - addr: 0x00461930
     name: func_00461930
     size: 300

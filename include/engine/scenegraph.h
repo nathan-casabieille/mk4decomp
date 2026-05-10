@@ -119,6 +119,10 @@ extern s16        g_xformTempAngles[3];                  /* 0x00ab5208 */
  * "current sibling" scratch during the walk. */
 extern void     (*g_walkCallback)(void);                 /* 0x0054206c */
 
+/* Per-state index slot the SetState_XX helpers write alongside
+ * g_walkCallback. */
+extern u32       g_walkStateIndex;                        /* 0x0053a748 */
+
 /* Sibling table read by WalkSceneGraphSiblings; entries are 4-byte
  * stride and accessed at offsets [idx], [idx+1], [idx+2]. */
 extern u32        g_siblingTable[];                       /* base offset varies */
