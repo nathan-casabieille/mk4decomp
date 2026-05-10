@@ -11859,10 +11859,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004ae990
-    name: func_004ae990
+    name: DSoundCreateBuffer170_004ae990
     size: 170
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004aea40
     name: DSoundBufferInit146_004aea40
     size: 146
@@ -11995,10 +11996,11 @@ functions:
     status: matched
     file: src/engine/renderer3_init.c
   - addr: 0x004af960
-    name: func_004af960
+    name: DSoundCreateBuffer170_004af960
     size: 170
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004afa10
     name: ComInitSequence_004afa10
     size: 77
@@ -12086,10 +12088,11 @@ functions:
     status: matched
     file: src/engine/renderer5_init.c
   - addr: 0x004b0190
-    name: func_004b0190
+    name: DSoundCreateBuffer170_004b0190
     size: 170
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004b0240
     name: ComInitSequence_004b0240
     size: 77
@@ -12612,10 +12615,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b4f60
-    name: func_004b4f60
+    name: DSoundCreateBuffer170_004b4f60
     size: 170
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004b5010
     name: func_004b5010
     size: 134
