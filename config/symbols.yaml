@@ -2957,15 +2957,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00431530
-    name: func_00431530
+    name: DispatcherComplex131_00431530
     size: 131
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_131.c
   - addr: 0x004315c0
-    name: func_004315c0
+    name: DispatcherComplex131_004315c0
     size: 131
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_131.c
   - addr: 0x00431650
     name: func_00431650
     size: 720
