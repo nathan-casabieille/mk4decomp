@@ -2250,6 +2250,209 @@ __declspec(naked) void DispatchSetWalk2_00492820(void) {
     }
 }
 
+/* @addr 0x00428760 (79b)
+ *   call F1; if !pause: load arg0>>2 → g_eventQueueTotal;
+ *   ecx = [eax*4+0]; inc eax → g_eventQueueTotal;
+ *   eax = g_fightGroupHead; g_scaledInit = ecx; [eax*4+0x24] = ecx;
+ *   ecx = g_fightGroupHead; walk = 0; [ecx*4+0x28] = 0; ret.
+ */
+__declspec(naked) void GuardedPackedSlotInit_00428760(void) {
+    __asm {
+        call    func_00406ba0
+        mov     eax, dword ptr [g_framePauseFlag]
+        xor     edx, edx
+        cmp     eax, edx
+        _emit   75h
+        _emit   3eh
+        mov     eax, dword ptr [esp + 4]
+        sar     eax, 2
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax*4 + 0x24], ecx
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [ecx*4 + 0x28], edx
+        ret
+    }
+}
+
+/* @addr 0x0042c790 (79b)
+ *   Loop wrapper with internal counter [g_baseSel*4+0x5c]:
+ *   stores walk into counter, calls F, pause → ret;
+ *   else pushes 0x4e37d0 + calls F2; ret;
+ *   2 nops align; tail re-loads counter, decrements, if non-zero
+ *   jmp back to loop top, else jmp T2.
+ */
+extern unsigned int g_data_004e37d0;
+extern void func_0048fa50(void);
+extern void func_0042c7e0(void);
+__declspec(naked) void LoopGuardedDecJmp_0042c790(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax*4 + 0x5c], ecx
+        call    func_0048fa50
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    OFFSET g_data_004e37d0
+        call    func_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x5c]
+        dec     ecx
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   74h
+        _emit   05h
+        _emit   0e9h
+        _emit   0b6h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        jmp     func_0042c7e0
+    }
+}
+
+/* @addr 0x00439c60 (79b)
+ *   if g_fightGroupHead == [0x538158]: walk = 0x46; else walk = 0x45.
+ *   call F; pause → ret;
+ *   if (dirty & 4): set bit 0 of dirty → ret; else clear bit 0 → ret.
+ */
+__declspec(naked) void CmpEqWalkSetCallToggleDirty_00439c60(void) {
+    __asm {
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_data_00538158]
+        cmp     eax, ecx
+        mov     dword ptr [g_walkCallback], 0x46
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_walkCallback], 0x45
+        call    func_0049cb90
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        test    byte ptr [g_xformDirtyFlags], 4
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        _emit   74h
+        _emit   08h
+        or      al, 1
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+        and     al, 0xfe
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+    }
+}
+
+/* @addr 0x00461360 (79b)
+ *   Five 15-byte mini-stubs concatenated, each "set walk = N;
+ *   jmp T". N = 4, 8, 0x10, 0x20, 0x80. Single nop pad between
+ *   each entry (total 79 = 5*15 + 4 nops).
+ */
+extern void func_0048e4b0(void);
+__declspec(naked) void FiveSetWalkJmp_00461360(void) {
+    __asm {
+        mov     dword ptr [g_walkCallback], 4
+        jmp     func_0048e4b0
+        nop
+        mov     dword ptr [g_walkCallback], 8
+        jmp     func_0048e4b0
+        nop
+        mov     dword ptr [g_walkCallback], 0x10
+        jmp     func_0048e4b0
+        nop
+        mov     dword ptr [g_walkCallback], 0x20
+        jmp     func_0048e4b0
+        nop
+        mov     dword ptr [g_walkCallback], 0x80
+        jmp     func_0048e4b0
+    }
+}
+
+/* @addr 0x004b3b30 (79b)
+ *   Reorder-copy 9 16-bit words from arg0 to arg1 with a fixed
+ *   permutation: src offsets 0,6,12,2,8,14,4,10,16 →
+ *   dst offsets 0,2,4,6,8,10,12,14,16. Looks like a quat or
+ *   matrix-row swizzle.
+ */
+__declspec(naked) void Word9Reorder_004b3b30(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [esp + 8]
+        mov     dx, word ptr [eax]
+        mov     word ptr [ecx], dx
+        mov     dx, word ptr [eax + 6]
+        mov     word ptr [ecx + 2], dx
+        mov     dx, word ptr [eax + 0x0c]
+        mov     word ptr [ecx + 4], dx
+        mov     dx, word ptr [eax + 2]
+        mov     word ptr [ecx + 6], dx
+        mov     dx, word ptr [eax + 8]
+        mov     word ptr [ecx + 8], dx
+        mov     dx, word ptr [eax + 0x0e]
+        mov     word ptr [ecx + 0x0a], dx
+        mov     dx, word ptr [eax + 4]
+        mov     word ptr [ecx + 0x0c], dx
+        mov     dx, word ptr [eax + 0x0a]
+        mov     word ptr [ecx + 0x0e], dx
+        mov     ax, word ptr [eax + 0x10]
+        mov     word ptr [ecx + 0x10], ax
+        ret
+    }
+}
+
+/* @addr 0x004bdb00 (79b)
+ *   Two-entry: [4bdb00 +30b] init g_scaledInit slot
+ *   ((eax<<2) → ptr): writes [ptr]=0x1000, [+4]=0, [+8]=0x1000,
+ *   [+0xc]=0, [+0x10]=word(0x1000); ret. nop align;
+ *   [4bdb20 +49b] tail at 0x4bdb20: g_xformEntityIdx-indexed
+ *   "all-zero" check across +0/+4/+8; if any non-zero jmp T,
+ *   else loop back to entry.
+ */
+extern void func_004bdb50(void);
+__declspec(naked) void InitOrAllZeroLoopback_004bdb00(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, 0x1000
+        shl     eax, 2
+        xor     ecx, ecx
+        mov     dword ptr [eax], edx
+        mov     dword ptr [eax + 4], ecx
+        mov     dword ptr [eax + 8], edx
+        mov     dword ptr [eax + 0x0c], ecx
+        mov     word ptr [eax + 0x10], dx
+        ret
+        nop
+        mov     eax, dword ptr [g_xformEntityIdx]
+        cmp     dword ptr [eax*4 + 0], 0
+        _emit   75h
+        _emit   1bh
+        mov     ecx, dword ptr [eax*4 + 4]
+        test    ecx, ecx
+        _emit   75h
+        _emit   10h
+        mov     ecx, dword ptr [eax*4 + 8]
+        test    ecx, ecx
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   0b6h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        jmp     func_004bdb50
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value

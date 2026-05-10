@@ -2307,10 +2307,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesN.c
   - addr: 0x00428760
-    name: func_00428760
+    name: GuardedPackedSlotInit_00428760
     size: 79
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004287b0
     name: func_004287b0
     size: 109
@@ -2757,10 +2758,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042c790
-    name: func_0042c790
+    name: LoopGuardedDecJmp_0042c790
     size: 79
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0042c7e0
     name: func_0042c7e0
     size: 218
@@ -4118,10 +4120,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x00439c60
-    name: func_00439c60
+    name: CmpEqWalkSetCallToggleDirty_00439c60
     size: 79
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00439cb0
     name: func_00439cb0
     size: 103
@@ -6188,10 +6191,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00461360
-    name: func_00461360
+    name: FiveSetWalkJmp_00461360
     size: 79
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004613b0
     name: func_004613b0
     size: 647
@@ -13014,10 +13018,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b3b30
-    name: func_004b3b30
+    name: Word9Reorder_004b3b30
     size: 79
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004b3b80
     name: func_004b3b80
     size: 481
@@ -13720,10 +13725,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004bdb00
-    name: func_004bdb00
+    name: InitOrAllZeroLoopback_004bdb00
     size: 79
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004bdb50
     name: NodeApplyTransform_A
     size: 163
