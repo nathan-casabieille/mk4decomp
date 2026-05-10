@@ -192,7 +192,8 @@ functions:
     name: ECM_Open
     size: 687
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/ecm_open.c
   - addr: 0x004b0a50
     name: ECM_PlayThread
     size: 608

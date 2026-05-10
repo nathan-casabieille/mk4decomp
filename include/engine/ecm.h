@@ -80,6 +80,44 @@ extern HANDLE g_ecmThread;        /* 0x007ab06c */
 extern u32    g_ecmThreadStatus;  /* 0x007ab078 - non-zero while thread alive */
 extern u32    g_ecmHeaderBuf[902];/* 0x007aa230 - 3608 bytes scratch */
 
+/* === ECM_Open state ========================================= */
+
+/* Sticky play state - 0=running, -1/-2=error sentinels read by
+ * ECM_PlayThread to short-circuit. */
+extern u32 g_ecmPlayState;        /* 0x007ab074 */
+
+/* Opaque DSound context handed in via ECM_Open's 2nd arg, used to
+ * call CreateSoundBuffer in the (vtbl)[+0x0c] slot. */
+extern void *g_ecmDsContext;      /* 0x007ab058 */
+
+/* Frame-size-divided-by-8 (= start_frame * magic / 8) cached for
+ * ECM_PlayThread. */
+extern u32 g_ecmFrameSizeDiv8;    /* 0x007ab050 */
+
+/* "Run flag" + reserved + thread-id-out filled by ECM_Open before
+ * CreateThread. */
+extern u32 g_ecmRunFlag;          /* 0x007ab060 (= 1 set by ECM_Open) */
+extern u32 g_ecmReserved;         /* 0x007ab064 */
+extern u32 g_ecmThreadIdOut;      /* 0x007ab068 (CreateThread out param) */
+
+/* Cached _ftol(volume_db) the function passes to SetVolume. */
+extern u32 g_ecmVolumeFromFtol;   /* 0x007ab070 */
+
+/* Frame index (-1 == not yet) and total-frame-count cache used by
+ * the play thread. */
+extern u32 g_ecmFrameIdx;         /* 0x004f47b4 */
+extern u32 g_ecmFrameTotal;       /* 0x004f47b8 */
+
+/* Constants (qword/double) used inside ECM_Open's volume curve. */
+extern double k_ecmC1;            /* 0x004d2978 */
+extern double k_ecmC2;            /* 0x004d2980 */
+extern double k_ecmC3;            /* 0x004d2988 (clamp max) */
+extern double k_ecmC4;            /* 0x004d2990 (clamp min) */
+
+/* IAT slots. */
+extern void *g_iat_CreateThread;  /* 0x004d2070 */
+extern void *g_iat_Sleep;         /* 0x004d2074 */
+
 /* Inner helper called by ECM_Cleanup to flush internal state. */
 void Helper_ECM_PostCleanup(s32 zero_arg);              /* 0x004b09a0 */
 
