@@ -5562,15 +5562,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045dcd0
-    name: func_0045dcd0
+    name: DualPlayerSetupCall_0045dcd0
     size: 86
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_player_setup_call.c
   - addr: 0x0045dd30
-    name: func_0045dd30
+    name: DualPlayerSetupCall_0045dd30
     size: 86
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_player_setup_call.c
   - addr: 0x0045dd90
     name: func_0045dd90
     size: 202
