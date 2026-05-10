@@ -2949,10 +2949,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042fea0
-    name: func_0042fea0
+    name: LoadSetCallPauseStoreJmp_0042fea0
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x0042fee0
     name: func_0042fee0
     size: 184
@@ -13114,10 +13115,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b5a80
-    name: func_004b5a80
+    name: RepStosInitState_004b5a80
     size: 52
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004b5ac0
     name: Thunk_004b5ac0
     size: 5
@@ -13175,15 +13177,17 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b62c0
-    name: func_004b62c0
+    name: TableSearchDesc_004b62c0
     size: 55
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004b6300
-    name: func_004b6300
+    name: TableSearchAsc_004b6300
     size: 58
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004b6340
     name: GameStateMachine
     size: 509
@@ -13478,10 +13482,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x004bd530
-    name: func_004bd530
+    name: CleanupCallTwice_004bd530
     size: 56
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004bd570
     name: TwoArgCallSeq_004bd570
     size: 21
@@ -13531,10 +13536,11 @@ functions:
     status: matched
     file: src/engine/geo.c
   - addr: 0x004bd850
-    name: func_004bd850
+    name: TableWalkPause_004bd850
     size: 57
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004bd890
     name: func_004bd890
     size: 58
@@ -13644,10 +13650,11 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004be210
-    name: func_004be210
+    name: ScaledNegThreeWords_004be210
     size: 52
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004be250
     name: func_004be250
     size: 354
@@ -14125,10 +14132,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5790
-    name: func_004c5790
+    name: SetVtable5Slots_004c5790
     size: 56
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004c57d0
     name: DoubleToInt64_004c57d0
     size: 48
@@ -14157,10 +14165,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5a90
-    name: func_004c5a90
+    name: WrapperCallThree_004c5a90
     size: 50
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004c5ad0
     name: func_004c5ad0
     size: 151
@@ -14319,10 +14328,11 @@ functions:
     status: matched
     file: src/boot/entry.c
   - addr: 0x004c6e60
-    name: func_004c6e60
+    name: CmpCallPushIATCall_004c6e60
     size: 42
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesDD.c
   - addr: 0x004c6e90
     name: func_004c6e90
     size: 39
