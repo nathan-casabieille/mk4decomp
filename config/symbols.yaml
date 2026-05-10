@@ -13778,10 +13778,11 @@ functions:
     status: matched
     file: src/audio/channels.c
   - addr: 0x004c38d0
-    name: func_004c38d0
+    name: BuildMaskFromArray_004c38d0
     size: 43
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c3900
     name: func_004c3900
     size: 84
@@ -13862,10 +13863,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c4420
-    name: func_004c4420
+    name: TableSetBit_004c4420
     size: 41
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c4450
     name: Loop1cBitMask_004c4450
     size: 24
@@ -14028,10 +14030,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c58b0
-    name: func_004c58b0
+    name: TripleCallEdiSave_004c58b0
     size: 40
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c58e0
     name: func_004c58e0
     size: 420
@@ -14075,10 +14078,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c5dd0
-    name: func_004c5dd0
+    name: StackChkAlloca_004c5dd0
     size: 48
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c5e00
     name: func_004c5e00
     size: 369
@@ -14161,10 +14165,11 @@ functions:
     status: matched
     file: src/engine/push_const_call.c
   - addr: 0x004c6940
-    name: func_004c6940
+    name: IterFnPtrs_004c6940
     size: 32
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c6960
     name: func_004c6960
     size: 53
@@ -14208,20 +14213,22 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6ec0
-    name: func_004c6ec0
+    name: IndirectCall_004c6ec0
     size: 32
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c6ee0
     name: func_004c6ee0
     size: 55
     group: boot
     status: stub
   - addr: 0x004c6f20
-    name: func_004c6f20
+    name: FourIndirectCalls_004c6f20
     size: 43
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c6f50
     name: func_004c6f50
     size: 118
@@ -14377,10 +14384,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c89b0
-    name: func_004c89b0
+    name: StrSearchCall_004c89b0
     size: 41
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c89e0
     name: func_004c89e0
     size: 104
@@ -14471,10 +14479,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9800
-    name: func_004c9800
+    name: InitGlobalsAndZero_004c9800
     size: 50
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004c9840
     name: func_004c9840
     size: 474
@@ -14610,10 +14619,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc2b0
-    name: func_004cc2b0
+    name: TestHandleBit_004cc2b0
     size: 43
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesR.c
   - addr: 0x004cc2e0
     name: func_004cc2e0
     size: 108

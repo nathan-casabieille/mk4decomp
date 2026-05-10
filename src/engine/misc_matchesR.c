@@ -1,0 +1,431 @@
+/**
+ * Twenty-seventh batch of one-off matches.
+ */
+#include "engine/scenegraph.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+
+/* @addr 0x004c38d0 (43b)
+ *   push    esi
+ *   xor     ecx, ecx
+ *   xor     eax, eax
+ *   mov     esi, 0x00f9eb80
+ * .loop:
+ *   cmp     word ptr [esi], -1
+ *   je      .skip
+ *   mov     edx, 1
+ *   shl     edx, cl
+ *   jmp     .merge
+ * .skip:
+ *   xor     edx, edx
+ * .merge:
+ *   or      eax, edx
+ *   add     esi, 4
+ *   inc     ecx
+ *   cmp     esi, 0x00f9ebc0
+ *   jl      .loop
+ *   pop     esi
+ *   ret
+ */
+__declspec(naked) void BuildMaskFromArray_004c38d0(void) {
+    __asm {
+        push    esi
+        xor     ecx, ecx
+        xor     eax, eax
+        mov     esi, 0x00f9eb80
+        cmp     word ptr [esi], 0xffff
+        _emit   74h
+        _emit   09h
+        mov     edx, 1
+        shl     edx, cl
+        _emit   0ebh
+        _emit   02h
+        xor     edx, edx
+        or      eax, edx
+        add     esi, 4
+        inc     ecx
+        cmp     esi, 0x00f9ebc0
+        _emit   7ch
+        _emit   0e1h
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004c4420 (41b)
+ *   mov     ax, word ptr [esp+4]
+ *   cmp     ax, 0x0898
+ *   jae     +0x1d
+ *   movsx   eax, ax
+ *   mov     ecx, eax
+ *   shl     ecx, 3
+ *   sub     ecx, eax
+ *   lea     eax, [ecx*4 + 0x00f8fade]
+ *   mov     cl, [ecx*4 + 0x00f8fade]
+ *   or      cl, 4
+ *   mov     [eax], cl
+ *   ret
+ */
+__declspec(naked) void TableSetBit_004c4420(void) {
+    __asm {
+        mov     ax, word ptr [esp + 4]
+        cmp     ax, 0x0898
+        _emit   73h
+        _emit   1dh
+        movsx   eax, ax
+        mov     ecx, eax
+        shl     ecx, 3
+        sub     ecx, eax
+        lea     eax, [ecx*4 + 0x00f8fade]
+        mov     cl, byte ptr [ecx*4 + 0x00f8fade]
+        or      cl, 4
+        mov     byte ptr [eax], cl
+        ret
+    }
+}
+
+/* @addr 0x004c58b0 (40b)
+ *   push    esi
+ *   mov     esi, [esp+8]
+ *   push    edi
+ *   push    esi
+ *   call    F1
+ *   add     esp, 4
+ *   push    esi
+ *   call    F2
+ *   add     esp, 4
+ *   mov     edi, eax
+ *   push    esi
+ *   call    F3
+ *   add     esp, 4
+ *   mov     eax, edi
+ *   pop     edi
+ *   pop     esi
+ *   ret
+ */
+extern void func_004c6ff0(int);
+extern int func_004c5b70(int);
+extern void func_004c7060(int);
+__declspec(naked) void TripleCallEdiSave_004c58b0(void) {
+    __asm {
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        push    edi
+        push    esi
+        call    func_004c6ff0
+        add     esp, 4
+        push    esi
+        call    func_004c5b70
+        add     esp, 4
+        mov     edi, eax
+        push    esi
+        call    func_004c7060
+        add     esp, 4
+        mov     eax, edi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004c5dd0 (48b): copy with byte/dword check
+ *   push    ecx
+ *   cmp     eax, 0x1000
+ *   lea     ecx, [esp+8]
+ *   jb      +0x14
+ *   sub     ecx, 0x1000
+ *   sub     eax, 0x1000
+ *   test    [ecx], eax
+ *   cmp     eax, 0x1000
+ *   jae     -0x14
+ *   sub     ecx, eax
+ *   mov     eax, esp
+ *   test    [ecx], eax
+ *   mov     esp, ecx
+ *   mov     ecx, [eax]
+ *   mov     eax, [eax+4]
+ *   push    eax
+ *   ret
+ *   int 3
+ */
+__declspec(naked) void StackChkAlloca_004c5dd0(void) {
+    __asm {
+        push    ecx
+        cmp     eax, 0x1000
+        lea     ecx, [esp + 8]
+        _emit   72h
+        _emit   14h
+        sub     ecx, 0x1000
+        sub     eax, 0x1000
+        test    dword ptr [ecx], eax
+        cmp     eax, 0x1000
+        _emit   73h
+        _emit   0ech
+        sub     ecx, eax
+        mov     eax, esp
+        test    dword ptr [ecx], eax
+        mov     esp, ecx
+        mov     ecx, dword ptr [eax]
+        mov     eax, dword ptr [eax + 4]
+        push    eax
+        ret
+        _emit   0cch
+    }
+}
+
+/* @addr 0x004c6940 (32b)
+ *   push    esi
+ *   mov     esi, [esp+8]
+ *   push    edi
+ *   mov     edi, [esp+0x10]
+ *   cmp     esi, edi
+ *   jae     .ret
+ * .loop:
+ *   mov     eax, [esi]
+ *   test    eax, eax
+ *   je      .skip
+ *   call    eax
+ * .skip:
+ *   add     esi, 4
+ *   cmp     esi, edi
+ *   jb      .loop
+ * .ret:
+ *   pop     edi
+ *   pop     esi
+ *   ret
+ */
+__declspec(naked) void IterFnPtrs_004c6940(void) {
+    __asm {
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        push    edi
+        mov     edi, dword ptr [esp + 0x10]
+        cmp     esi, edi
+        _emit   73h
+        _emit   0fh
+        mov     eax, dword ptr [esi]
+        test    eax, eax
+        _emit   74h
+        _emit   02h
+        call    eax
+        add     esi, 4
+        cmp     esi, edi
+        _emit   72h
+        _emit   0f1h
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004c6ec0 (32b)
+ *   mov     eax, [0x00f9f854]
+ *   test    eax, eax
+ *   je      .skip
+ *   mov     ecx, [esp+4]
+ *   push    ecx
+ *   call    eax
+ *   add     esp, 4
+ *   test    eax, eax
+ *   jne     .ret
+ *   mov     eax, 1
+ *   ret
+ * .ret:
+ *   xor     eax, eax
+ *   ret
+ */
+extern int *g_state_00f9f854;
+__declspec(naked) void IndirectCall_004c6ec0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00f9f854]
+        test    eax, eax
+        _emit   74h
+        _emit   14h
+        mov     ecx, dword ptr [esp + 4]
+        push    ecx
+        call    eax
+        add     esp, 4
+        test    eax, eax
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        xor     eax, eax
+        ret
+    }
+}
+
+/* @addr 0x004c6f20 (43b): four indirect calls
+ *   mov     eax, [g_iat_005200b4]
+ *   push    esi
+ *   mov     esi, [iat]
+ *   push    eax
+ *   call    esi
+ *   mov     ecx, [g_iat_005200a4]
+ *   push    ecx
+ *   call    esi
+ *   mov     edx, [g_iat_00520094]
+ *   push    edx
+ *   call    esi
+ *   mov     eax, [g_iat_00520074]
+ *   push    eax
+ *   call    esi
+ *   pop     esi
+ *   ret
+ */
+extern void *g_iat_005200b4;
+extern void *g_iat_005200a4;
+extern void *g_iat_00520094;
+extern void *g_iat_00520074;
+extern void *g_iat_004d215c;
+__declspec(naked) void FourIndirectCalls_004c6f20(void) {
+    __asm {
+        mov     eax, dword ptr [g_iat_005200b4]
+        push    esi
+        mov     esi, dword ptr [g_iat_004d215c]
+        push    eax
+        call    esi
+        mov     ecx, dword ptr [g_iat_005200a4]
+        push    ecx
+        call    esi
+        mov     edx, dword ptr [g_iat_00520094]
+        push    edx
+        call    esi
+        mov     eax, dword ptr [g_iat_00520074]
+        push    eax
+        call    esi
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004c89b0 (41b): strchr-like search
+ *   push    esi
+ *   mov     esi, [esp+0x0c]
+ *   test    esi, esi
+ *   je      .ret
+ *   mov     edx, [esp+8]
+ *   push    edi
+ *   mov     edi, edx
+ *   or      ecx, -1
+ *   xor     eax, eax
+ *   add     edx, esi
+ *   repne   scasb
+ *   not     ecx
+ *   push    ecx
+ *   push    edx
+ *   push    esi
+ *   call    F
+ *   add     esp, 0x0c
+ *   pop     edi
+ * .ret:
+ *   pop     esi
+ *   ret
+ */
+extern int func_004ca0a0(void *, int, int);
+__declspec(naked) void StrSearchCall_004c89b0(void) {
+    __asm {
+        push    esi
+        mov     esi, dword ptr [esp + 0x0c]
+        test    esi, esi
+        _emit   74h
+        _emit   1eh
+        mov     edx, dword ptr [esp + 8]
+        push    edi
+        mov     edi, edx
+        or      ecx, 0xffffffff
+        xor     eax, eax
+        add     esi, edx
+        repne   scasb
+        not     ecx
+        push    ecx
+        push    edx
+        push    esi
+        call    func_004ca0a0
+        add     esp, 0x0c
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004c9800 (50b)
+ *   push    edi
+ *   mov     ecx, 0x40
+ *   xor     eax, eax
+ *   mov     edi, 0x00f9f8c0
+ *   rep     stosd
+ *   stosb
+ *   xor     eax, eax
+ *   pop     edi
+ *   mov     [0x00f9fac8], eax
+ *   mov     [0x00fa0dc4], eax
+ *   mov     [0x00f9facc], eax
+ *   mov     [0x00f9fad0], eax
+ *   mov     [0x00f9fad4], eax
+ *   mov     [0x00f9fad8], eax
+ *   ret
+ */
+extern unsigned int g_state_00f9fac8;
+extern unsigned int g_state_00fa0dc4;
+extern unsigned int g_state_00f9facc;
+extern unsigned int g_state_00f9fad0;
+extern unsigned int g_state_00f9fad4;
+extern unsigned int g_state_00f9fad8;
+__declspec(naked) void InitGlobalsAndZero_004c9800(void) {
+    __asm {
+        push    edi
+        mov     ecx, 0x40
+        xor     eax, eax
+        mov     edi, 0x00f9f8c0
+        rep     stosd
+        stosb
+        xor     eax, eax
+        pop     edi
+        mov     dword ptr [g_state_00f9fac8], eax
+        mov     dword ptr [g_state_00fa0dc4], eax
+        mov     dword ptr [g_state_00f9facc], eax
+        mov     dword ptr [g_state_00f9fad0], eax
+        mov     dword ptr [g_state_00f9fad4], eax
+        mov     dword ptr [g_state_00f9fad8], eax
+        ret
+    }
+}
+
+/* @addr 0x004cc2b0 (43b)
+ *   mov     eax, [esp+4]
+ *   mov     ecx, [g_state_00fa0ee0]
+ *   cmp     eax, ecx
+ *   jb      +3
+ *   xor     eax, eax
+ *   ret
+ *   mov     ecx, eax
+ *   and     eax, 0x1f
+ *   sar     ecx, 5
+ *   lea     edx, [eax + eax*8]
+ *   mov     eax, [ecx*4 + 0x00fa0de0]
+ *   mov     al, byte ptr [eax + edx + 4]
+ *   and     eax, 0x40
+ *   ret
+ */
+extern unsigned int g_state_00fa0ee0;
+__declspec(naked) void TestHandleBit_004cc2b0(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [g_state_00fa0ee0]
+        cmp     eax, ecx
+        _emit   72h
+        _emit   03h
+        xor     eax, eax
+        ret
+        mov     ecx, eax
+        and     eax, 0x1f
+        sar     ecx, 5
+        lea     edx, [eax + eax*8]
+        mov     eax, dword ptr [ecx*4 + 0x00fa0de0]
+        mov     al, byte ptr [eax + edx*4 + 4]
+        and     eax, 0x40
+        ret
+    }
+}
