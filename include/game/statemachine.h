@@ -52,8 +52,10 @@ extern s32 g_gameState;        /* 0x00ab438c */
  * P2+P4 read g_dlChar24; nalt slots are per-player. */
 void DownloadPlayerChar_Variant(void);                   /* 0x0048bff0 */
 
-/* Per-call printf-like helper used by DownloadPlayerChar_Variant. */
-s32  Helper_DownloadDebugPrint(const char *fmt, ...);    /* 0x0048bfe0 */
+/* Per-call printf-like helper used by DownloadPlayerChar_Variant.
+ * Compiles to a single `ret` in the shipping build (debug callout
+ * compiled out). */
+void Helper_DownloadDebugPrint(const char *fmt, ...);    /* 0x0048bfe0 */
 
 /* Setup helper invoked just before LoadGeoAsset_Textures. */
 void Helper_DownloadSetup(void);                         /* 0x0048bc40 */

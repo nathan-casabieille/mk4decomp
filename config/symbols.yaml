@@ -8619,10 +8619,11 @@ functions:
     status: matched
     file: src/game/download_player.c
   - addr: 0x0048bfe0
-    name: func_0048bfe0
+    name: Helper_DownloadDebugPrint
     size: 1
     group: game
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x0048bff0
     name: DownloadPlayerChar_Variant
     size: 405
@@ -10771,10 +10772,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a2960
-    name: func_004a2960
+    name: Helper_AudioStub_2960
     size: 1
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004a2970
     name: func_004a2970
     size: 94
@@ -10836,10 +10838,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a4140
-    name: func_004a4140
+    name: Helper_AudioStub_4140
     size: 1
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004a4150
     name: DebugStub_NoOp_B
     size: 1
@@ -10847,10 +10850,11 @@ functions:
     status: matched
     file: src/audio/debug.c
   - addr: 0x004a4160
-    name: func_004a4160
+    name: Helper_AudioStub_4160
     size: 1
     group: audio
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004a4170
     name: DebugStub_NoOp_A
     size: 1
@@ -11527,10 +11531,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004aedb0
-    name: func_004aedb0
+    name: R2_Init10
     size: 1
     group: engine.install
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004aedc0
     name: func_004aedc0
     size: 26
@@ -11644,10 +11649,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004afb00
-    name: func_004afb00
+    name: Helper_InstallStub_AFB00
     size: 1
     group: engine.install
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004afb10
     name: func_004afb10
     size: 26
@@ -11726,10 +11732,11 @@ functions:
     group: engine.ecm
     status: stub
   - addr: 0x004b0330
-    name: func_004b0330
+    name: Helper_EcmStub_0330
     size: 1
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b0340
     name: func_004b0340
     size: 26
@@ -11916,10 +11923,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b21c0
-    name: func_004b21c0
+    name: Helper_AppStub_21C0
     size: 1
     group: engine.app
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b21d0
     name: func_004b21d0
     size: 272
@@ -11960,10 +11968,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b2890
-    name: func_004b2890
+    name: Helper_AppStub_2890
     size: 1
     group: engine.app
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b28a0
     name: func_004b28a0
     size: 140
@@ -11991,10 +12000,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b2ae0
-    name: func_004b2ae0
+    name: Helper_AppStub_2AE0
     size: 1
     group: engine.app
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b2af0
     name: ProjectTwoVertices
     size: 551
@@ -12257,10 +12267,11 @@ functions:
     status: matched
     file: src/engine/joystick_init.c
   - addr: 0x004b5370
-    name: func_004b5370
+    name: Helper_GeoStub_5370
     size: 1
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b5380
     name: func_004b5380
     size: 196
@@ -12297,10 +12308,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5a70
-    name: func_004b5a70
+    name: Helper_GeoStub_5A70
     size: 1
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b5a80
     name: func_004b5a80
     size: 52
@@ -12312,10 +12324,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b5ad0
-    name: func_004b5ad0
+    name: Helper_MemMalloc_Post
     size: 1
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b5ae0
     name: func_004b5ae0
     size: 29
@@ -12353,10 +12366,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b62b0
-    name: func_004b62b0
+    name: Helper_MenuStub_62B0
     size: 1
     group: game.menu
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b62c0
     name: func_004b62c0
     size: 55
@@ -12480,10 +12494,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b8eb0
-    name: func_004b8eb0
+    name: Helper_MenuStub_8EB0
     size: 1
     group: game.menu
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004b8ec0
     name: func_004b8ec0
     size: 92
@@ -12694,10 +12709,11 @@ functions:
     status: matched
     file: src/engine/tex_rle.c
   - addr: 0x004bd6d0
-    name: func_004bd6d0
+    name: Helper_GeoLoadPost
     size: 1
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/audio/empty_stubs.c
   - addr: 0x004bd6e0
     name: LoadGeoAsset_Textures
     size: 353
