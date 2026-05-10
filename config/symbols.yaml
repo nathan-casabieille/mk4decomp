@@ -147,10 +147,11 @@ functions:
     status: matched
     file: src/engine/misc_matches.c
   - addr: 0x004049d0
-    name: func_004049d0
+    name: SaveCallRestore_004049d0
     size: 38
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00404a00
     name: func_00404a00
     size: 77
@@ -217,10 +218,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00404e20
-    name: func_00404e20
+    name: Init6Struct_00404e20
     size: 41
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00404e50
     name: func_00404e50
     size: 52
@@ -1123,10 +1125,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004143c0
-    name: func_004143c0
+    name: PushCallScaledStore_004143c0
     size: 37
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x004143f0
     name: func_004143f0
     size: 626
@@ -1163,10 +1166,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00414fe0
-    name: func_00414fe0
+    name: SetCallSetJmp_00414fe0
     size: 40
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00415010
     name: func_00415010
     size: 356
@@ -1476,10 +1480,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x0041f840
-    name: func_0041f840
+    name: ScaledNeg1SetPause_0041f840
     size: 38
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x0041f870
     name: func_0041f870
     size: 121
@@ -1617,10 +1622,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421d20
-    name: func_00421d20
+    name: Init28fDecLoad_00421d20
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00421d50
     name: func_00421d50
     size: 428
@@ -1796,10 +1802,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004238b0
-    name: func_004238b0
+    name: TestCmpZeroFour_004238b0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x004238e0
     name: func_004238e0
     size: 667
@@ -1886,10 +1893,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00424b70
-    name: func_00424b70
+    name: IdentityMatrix_00424b70
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00424ba0
     name: func_00424ba0
     size: 65
@@ -1926,10 +1934,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00425360
-    name: func_00425360
+    name: NegateThree_00425360
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x00425380
     name: func_00425380
     size: 552
@@ -2577,10 +2586,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042ae10
-    name: func_0042ae10
+    name: Init4Globals_0042ae10
     size: 36
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesE.c
   - addr: 0x0042ae40
     name: func_0042ae40
     size: 208
