@@ -257,10 +257,11 @@ functions:
     status: matched
     file: src/boot/finalize.c
   - addr: 0x00405420
-    name: func_00405420
+    name: SetJmp_00405420
     size: 15
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00405430
     name: func_00405430
     size: 23
@@ -528,10 +529,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004078e0
-    name: func_004078e0
+    name: SetJmp_004078e0
     size: 15
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004078f0
     name: func_004078f0
     size: 48
@@ -643,10 +645,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00408d20
-    name: func_00408d20
+    name: SetJmp_00408d20
     size: 15
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00408d30
     name: func_00408d30
     size: 312
@@ -2217,10 +2220,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428cf0
-    name: func_00428cf0
+    name: SetJmp_00428cf0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00428d00
     name: func_00428d00
     size: 24
@@ -2287,10 +2291,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429230
-    name: func_00429230
+    name: SetJmp_00429230
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00429240
     name: func_00429240
     size: 185
@@ -2434,10 +2439,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429950
-    name: func_00429950
+    name: SetJmp_00429950
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00429960
     name: func_00429960
     size: 23
@@ -2629,15 +2635,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0042d070
-    name: func_0042d070
+    name: SetJmp_0042d070
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0042d080
-    name: func_0042d080
+    name: SetJmp_0042d080
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0042d090
     name: func_0042d090
     size: 304
@@ -3661,20 +3669,23 @@ functions:
     group: game
     status: stub
   - addr: 0x00438f50
-    name: func_00438f50
+    name: SetJmp_00438f50
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00438f60
-    name: func_00438f60
+    name: SetJmp_00438f60
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00438f70
-    name: func_00438f70
+    name: SetJmp_00438f70
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00438f80
     name: func_00438f80
     size: 304
@@ -3844,10 +3855,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00439c30
-    name: func_00439c30
+    name: SetJmp_00439c30
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00439c40
     name: func_00439c40
     size: 29
@@ -4193,15 +4205,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00440710
-    name: func_00440710
+    name: SetJmp_00440710
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00440720
-    name: func_00440720
+    name: SetJmp_00440720
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00440730
     name: func_00440730
     size: 324
@@ -4851,80 +4865,95 @@ functions:
     group: game
     status: stub
   - addr: 0x00451aa0
-    name: func_00451aa0
+    name: SetJmp_00451aa0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ab0
-    name: func_00451ab0
+    name: SetJmp_00451ab0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ac0
-    name: func_00451ac0
+    name: SetJmp_00451ac0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ad0
-    name: func_00451ad0
+    name: SetJmp_00451ad0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451ae0
-    name: func_00451ae0
+    name: SetJmp_00451ae0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451af0
-    name: func_00451af0
+    name: SetJmp_00451af0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b00
-    name: func_00451b00
+    name: SetJmp_00451b00
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b10
-    name: func_00451b10
+    name: SetJmp_00451b10
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b20
-    name: func_00451b20
+    name: SetJmp_00451b20
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b30
-    name: func_00451b30
+    name: SetJmp_00451b30
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b40
-    name: func_00451b40
+    name: SetJmp_00451b40
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b50
-    name: func_00451b50
+    name: SetJmp_00451b50
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b60
-    name: func_00451b60
+    name: SetJmp_00451b60
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b70
-    name: func_00451b70
+    name: SetJmp_00451b70
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b80
-    name: func_00451b80
+    name: SetJmp_00451b80
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00451b90
     name: func_00451b90
     size: 904
@@ -5077,20 +5106,23 @@ functions:
     group: game
     status: stub
   - addr: 0x004561c0
-    name: func_004561c0
+    name: SetJmp_004561c0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004561d0
-    name: func_004561d0
+    name: SetJmp_004561d0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004561e0
-    name: func_004561e0
+    name: SetJmp_004561e0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004561f0
     name: func_004561f0
     size: 930
@@ -5503,15 +5535,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045ebf0
-    name: func_0045ebf0
+    name: SetJmp_0045ebf0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0045ec00
-    name: func_0045ec00
+    name: SetJmp_0045ec00
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0045ec10
     name: func_0045ec10
     size: 453
@@ -5680,15 +5714,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004609c0
-    name: func_004609c0
+    name: SetJmp_004609c0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004609d0
-    name: func_004609d0
+    name: SetJmp_004609d0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004609e0
     name: func_004609e0
     size: 383
@@ -6955,10 +6991,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004753a0
-    name: func_004753a0
+    name: SetJmp_004753a0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004753b0
     name: func_004753b0
     size: 221
@@ -7912,10 +7949,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483b40
-    name: func_00483b40
+    name: SetJmp_00483b40
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00483b50
     name: func_00483b50
     size: 36
@@ -7937,10 +7975,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483f20
-    name: func_00483f20
+    name: SetJmp_00483f20
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00483f30
     name: func_00483f30
     size: 196
@@ -8040,10 +8079,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00485d60
-    name: func_00485d60
+    name: SetJmp_00485d60
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00485d70
     name: func_00485d70
     size: 27
@@ -8197,10 +8237,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487910
-    name: func_00487910
+    name: SetJmp_00487910
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00487920
     name: func_00487920
     size: 187
@@ -8326,10 +8367,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489020
-    name: func_00489020
+    name: SetJmp_00489020
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x00489030
     name: func_00489030
     size: 74
@@ -8613,10 +8655,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048acc0
-    name: func_0048acc0
+    name: SetJmp_0048acc0
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0048acd0
     name: func_0048acd0
     size: 384
@@ -10276,10 +10319,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cb90
-    name: func_0049cb90
+    name: SetJmp_0049cb90
     size: 15
     group: game
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x0049cba0
     name: Thunk_0049cba0
     size: 5
@@ -10724,15 +10768,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1ac0
-    name: func_004a1ac0
+    name: SetJmp_004a1ac0
     size: 15
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004a1ad0
-    name: func_004a1ad0
+    name: SetJmp_004a1ad0
     size: 15
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004a1ae0
     name: func_004a1ae0
     size: 32
@@ -13036,10 +13082,11 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004bea40
-    name: func_004bea40
+    name: SetJmp_004bea40
     size: 15
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/setjmp_wrappers.c
   - addr: 0x004bea50
     name: func_004bea50
     size: 42
