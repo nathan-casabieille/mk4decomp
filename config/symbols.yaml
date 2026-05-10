@@ -7224,10 +7224,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004751c0
-    name: func_004751c0
+    name: TestP1ReplaceCurrent_004751c0
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x004751f0
     name: func_004751f0
     size: 188
@@ -7992,10 +7993,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00480fb0
-    name: func_00480fb0
+    name: ScaledLitAddJmp_00480fb0
     size: 38
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00480fe0
     name: ScaledLitLoadCall_00480fe0
     size: 53
@@ -8578,10 +8580,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488ba0
-    name: func_00488ba0
+    name: CallPauseDirtyPushCall_00488ba0
     size: 42
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00488bd0
     name: Wrapper_00488bd0
     size: 14
@@ -8595,15 +8598,17 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00488c00
-    name: func_00488c00
+    name: LiteralPushCallEntZero_00488c00
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00488c30
-    name: func_00488c30
+    name: CallPauseLitInitJmp_00488c30
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00488c60
     name: Wrapper_00488c60
     size: 14
@@ -8638,10 +8643,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488ed0
-    name: func_00488ed0
+    name: ScaledCmpJlJmp_00488ed0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00488f00
     name: func_00488f00
     size: 276
@@ -8733,40 +8739,45 @@ functions:
     status: matched
     file: src/engine/misc_matches.c
   - addr: 0x00489f60
-    name: func_00489f60
+    name: TableLookupCall_00489f60
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x00489f90
     name: func_00489f90
     size: 91
     group: game
     status: stub
   - addr: 0x00489ff0
-    name: func_00489ff0
+    name: TableLookupCall_00489ff0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048a020
-    name: func_0048a020
+    name: GuardedScaledCall_0048a020
     size: 45
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048a050
     name: func_0048a050
     size: 219
     group: game
     status: stub
   - addr: 0x0048a130
-    name: func_0048a130
+    name: TableLookupCall_0048a130
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048a160
-    name: func_0048a160
+    name: TableLookupCall_0048a160
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048a190
     name: OrDualStore_0048a190
     size: 24
@@ -8968,10 +8979,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048b450
-    name: func_0048b450
+    name: StoreCallPauseStore_0048b450
     size: 37
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048b480
     name: CallPauseAddDualStore_0048b480
     size: 38
@@ -9249,10 +9261,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e3e0
-    name: func_0048e3e0
+    name: Cmp2OrSet0b_0048e3e0
     size: 31
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048e400
     name: func_0048e400
     size: 69
@@ -9291,15 +9304,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e5e0
-    name: func_0048e5e0
+    name: IterStepNoSecond_0048e5e0
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048e600
-    name: func_0048e600
+    name: IterStepScaledStore_0048e600
     size: 44
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048e630
     name: func_0048e630
     size: 75
@@ -9324,20 +9339,22 @@ functions:
     status: matched
     file: src/engine/state_install_or_forward.c
   - addr: 0x0048e710
-    name: func_0048e710
+    name: ArgSarAddDerefJmp_0048e710
     size: 40
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048e740
     name: func_0048e740
     size: 62
     group: game
     status: stub
   - addr: 0x0048e780
-    name: func_0048e780
+    name: ScaledChain3c74Jmp_0048e780
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048e7b0
     name: ScaledLoadJmp_74_0048e7b0
     size: 23
@@ -9406,10 +9423,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ee50
-    name: func_0048ee50
+    name: CmpP2P1ScaledJmp_0048ee50
     size: 35
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048ee80
     name: CopyJmp_0048ee80
     size: 15
@@ -9417,10 +9435,11 @@ functions:
     status: matched
     file: src/engine/copy_jmp.c
   - addr: 0x0048ee90
-    name: func_0048ee90
+    name: ScaledSubStore_0048ee90
     size: 39
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048eec0
     name: func_0048eec0
     size: 208
@@ -9479,10 +9498,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f3c0
-    name: func_0048f3c0
+    name: DirtyFlagsManipB_0048f3c0
     size: 43
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesJ.c
   - addr: 0x0048f3f0
     name: func_0048f3f0
     size: 114
