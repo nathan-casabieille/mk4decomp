@@ -2659,15 +2659,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0042cc90
-    name: func_0042cc90
+    name: MStackPushCallPopDirtyJmp_0042cc90
     size: 77
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_call_pop_dirty_jmp.c
   - addr: 0x0042cce0
-    name: func_0042cce0
+    name: MStackPushCallPopDirtyJmp_0042cce0
     size: 77
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_call_pop_dirty_jmp.c
   - addr: 0x0042cd30
     name: func_0042cd30
     size: 294
@@ -4457,10 +4459,11 @@ functions:
     status: matched
     file: src/engine/copy_load_install_jmp.c
   - addr: 0x00445f00
-    name: func_00445f00
+    name: ScaledInitPauseDirtyStore_00445f00
     size: 56
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_init_pause_dirty_store.c
   - addr: 0x00445f40
     name: func_00445f40
     size: 98
@@ -4514,10 +4517,11 @@ functions:
     status: matched
     file: src/engine/copy_load_install_jmp.c
   - addr: 0x00446240
-    name: func_00446240
+    name: ScaledInitPauseDirtyStore_00446240
     size: 56
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_init_pause_dirty_store.c
   - addr: 0x00446280
     name: func_00446280
     size: 56
@@ -7030,15 +7034,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00474e80
-    name: func_00474e80
+    name: MStackPushSwapEqJmp_00474e80
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_swap_eq_jmp.c
   - addr: 0x00474ed0
-    name: func_00474ed0
+    name: MStackPushSwapEqJmp_00474ed0
     size: 70
     group: game
-    status: stub
+    status: matched
+    file: src/engine/mstack_push_swap_eq_jmp.c
   - addr: 0x00474f20
     name: func_00474f20
     size: 162
