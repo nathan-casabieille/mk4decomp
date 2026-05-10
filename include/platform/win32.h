@@ -147,4 +147,52 @@ extern double         g_qpcUsPerTick;   /* 0x00f9f010 - QPC freq / 1e6 */
 extern LARGE_INTEGER  g_qpcStart;        /* 0x00f9f018 - prime QPC reading */
 #endif
 
+/* === CRT entry / startup ==================================== */
+
+/* MSVC 5.0 CRT entry-point. SEH-wrapped: builds an
+ * _except_handler3 frame, calls _heap_init / _ioinit / _setargv /
+ * _setenvp, parses argv[0] (handling quoted+space-separated forms),
+ * fetches the startup-info nShowCmd, then calls WinMain via a
+ * standard cdecl push of (hInstance, hPrevInstance, lpCmdLine,
+ * nShowCmd) and _exit() with WinMain's return value. */
+void entry(void);                                        /* 0x004c6cb0 */
+
+/* SEH scope table and the canonical _except_handler3 - referenced
+ * by the SEH frame the entry function pushes. */
+extern u32 g_seh_scope_table[];                          /* 0x004d2ad0 */
+void _except_handler3(void);                             /* 0x004c6bd8 */
+
+/* IAT slots for kernel32 imports the entry function calls.  The
+ * 6-byte `ff 15 + reloc` indirect-call form addresses these. */
+extern void *g_iat_GetVersion;                           /* 0x004d2164 */
+extern void *g_iat_GetCommandLineA;                      /* 0x004d2160 */
+extern void *g_iat_GetStartupInfoA;                      /* 0x004d2138 */
+extern void *g_iat_GetModuleHandleA;                     /* 0x004d212c */
+
+/* Decomposed Win-version cache populated from GetVersion(). */
+extern u32 g_winverMajor;                                /* 0x00f9f810 */
+extern u32 g_winverMinor;                                /* 0x00f9f80c */
+extern u32 g_winverCombined;                             /* 0x00f9f808 */
+extern u32 g_winverBuild;                                /* 0x00f9f804 */
+
+/* Cached results: lpCmdLine + the value returned by the early
+ * one-arg setup helper. */
+extern char *g_cmdline;                                  /* 0x00fa0ee8 */
+extern u32   g_initRet;                                  /* 0x00f9f844 */
+
+/* CRT private helpers invoked by entry. */
+s32  _heap_init(void);                                   /* 0x004c6ee0 */
+s32  _ioinit(void);                                      /* 0x004c9d70 */
+void _amsg_exit(s32 code);                               /* 0x004c6e90 */
+void _setargv(void);                                     /* 0x004c8bc0 */
+void _setenvp(void);                                     /* 0x004c9a20 */
+s32  _crt_startup_check(void);                           /* 0x004cbed0 */
+void _exit(s32 status);                                  /* 0x004c6820 */
+void _exit_post(s32 status);                             /* 0x004c6840 */
+void _cinit(void);                                       /* 0x004cbc20 */
+void _init_main(void);                                   /* 0x004cbb30 */
+void _init_premain(void);                                /* 0x004c67f0 */
+s32  _isspace_crt(s32 ch);                               /* 0x004cbad0 */
+s32  _XcptFilter(s32 ex_code, void *ex_info);            /* 0x004cb880 */
+
 #endif /* MK4_PLATFORM_WIN32_H */

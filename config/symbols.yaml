@@ -643,9 +643,10 @@ functions:
     file: src/boot/winmain.c
   - addr: 0x004c6cb0
     name: entry
-    size: 391
+    size: 424
     group: boot
-    status: stub
+    status: matched
+    file: src/boot/entry.c
   - addr: 0x004f44e0
     name: g_imaIndexTable
     size: 1
