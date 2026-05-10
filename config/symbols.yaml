@@ -505,10 +505,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00407030
-    name: func_00407030
+    name: DispatcherComplex260_00407030
     size: 260
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_260.c
   - addr: 0x00407140
     name: func_00407140
     size: 95
@@ -525,10 +526,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00407400
-    name: func_00407400
+    name: DispatcherComplex260_00407400
     size: 260
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_260.c
   - addr: 0x00407510
     name: func_00407510
     size: 261
