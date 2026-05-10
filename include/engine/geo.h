@@ -73,6 +73,25 @@ void LoadGeoAsset_Textures(s32 flag);                    /* 0x004bd6e0 */
 void Tex_DecodeRLE16(s32 row_width, s32 row_pixels, s32 row_count,
                      const u8 *src, s32 arg5);           /* 0x004bd5f0 */
 
+/* === Joystick subsystem ===================================== */
+
+/* Joystick / gamepad enumeration + calibration. Iterates up to
+ * 16 joystick devices, calls joyGetPos + joyGetDevCapsA on each,
+ * pre-computes per-device calibration tables (magic-divide-by-50
+ * unsigned division of the (max-min)*33 scaled deltas), and runs
+ * a 256-iteration tail loop for input-mapping initialization. */
+void Joystick_Init(void);                                /* 0x004b5230 */
+
+/* Helper called 256 times in the Joystick_Init tail loop with
+ * the iteration index as the arg. */
+void Helper_JoyButtonInit(s32 idx);                      /* 0x004b5450 */
+
+extern u32 g_joyCalA[16];        /* 0x007b00c8 */
+extern u32 g_joyCalB[16];        /* 0x007b0088 */
+extern u32 g_joyCalC[16];        /* 0x007b0108 */
+extern u8  g_joyButtonState[16]; /* 0x007b0188 */
+extern u32 g_joyCount;           /* 0x007b0198 */
+
 /* Upload helper invoked by Tex_DecodeRLE16 once the staging buffer
  * is filled - 5-arg cdecl wrapper. */
 void Helper_TexUpload(s32 a, s32 b, s32 c, s32 d, s32 e);/* 0x004bf370 */

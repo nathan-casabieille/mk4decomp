@@ -15,7 +15,7 @@
 
 extern void UpdateWindowTitle(void);
 extern s32  ValidateInstall(void);
-extern s32  Joystick_Init(HWND hwnd);
+extern void Joystick_Init(void);
 extern u32  g_pumpFlagD8, g_pumpFlagDC, g_pumpFlagE0, g_pumpFlagE4;
 
 /*

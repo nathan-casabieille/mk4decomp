@@ -439,7 +439,8 @@ functions:
     name: Joystick_Init
     size: 319
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/joystick_init.c
   - addr: 0x004b5bc0
     name: Mem_Malloc
     size: 195
