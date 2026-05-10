@@ -464,7 +464,8 @@ functions:
     name: DrawMenu
     size: 691
     group: game.menu
-    status: stub
+    status: matched
+    file: src/game/draw_menu.c
   - addr: 0x004b9e50
     name: TickAllEntities
     size: 486
