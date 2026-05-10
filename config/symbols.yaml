@@ -866,10 +866,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040cd20
-    name: func_0040cd20
+    name: GuardedScaled_0040cd20
     size: 33
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x0040cd50
     name: func_0040cd50
     size: 1142
@@ -6946,35 +6947,41 @@ functions:
     group: game
     status: stub
   - addr: 0x00474fd0
-    name: func_00474fd0
+    name: GuardedScaled_00474fd0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x00475000
-    name: func_00475000
+    name: GuardedScaled_00475000
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x00475030
-    name: func_00475030
+    name: GuardedScaled_00475030
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x00475060
-    name: func_00475060
+    name: GuardedScaled_00475060
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x00475090
-    name: func_00475090
+    name: GuardedScaled_00475090
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x004750c0
-    name: func_004750c0
+    name: GuardedScaled_004750c0
     size: 33
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_scaled.c
   - addr: 0x004750f0
     name: func_004750f0
     size: 200
