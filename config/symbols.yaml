@@ -2320,10 +2320,11 @@ functions:
     status: matched
     file: src/engine/call_pause_scaled_store_jmp.c
   - addr: 0x00428850
-    name: func_00428850
+    name: CallPauseDirty1JmpDirty4StackPush_00428850
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x004288b0
     name: CallPauseScaledStoreJmp_004288b0
     size: 38
@@ -3624,10 +3625,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004370e0
-    name: func_004370e0
+    name: CallPauseJmpStateInit_004370e0
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x00437140
     name: func_00437140
     size: 433
@@ -8372,10 +8374,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483a80
-    name: func_00483a80
+    name: CallPauseDirty1JmpDirty4StackPush_00483a80
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x00483ae0
     name: func_00483ae0
     size: 92
@@ -9430,10 +9433,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x0048e380
-    name: func_0048e380
+    name: PushCallPauseSetMaxThenCallPauseJmp_0048e380
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x0048e3e0
     name: Cmp2OrSet0b_0048e3e0
     size: 31
@@ -9463,10 +9467,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x0048e4f0
-    name: func_0048e4f0
+    name: ScaledChainCmpDispatch_0048e4f0
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x0048e550
     name: ArgScaledLoadCmpP1_0048e550
     size: 54
@@ -9993,10 +9998,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490650
-    name: func_00490650
+    name: PushPopState70Mask_00490650
     size: 84
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesOO.c
   - addr: 0x004906b0
     name: func_004906b0
     size: 107
