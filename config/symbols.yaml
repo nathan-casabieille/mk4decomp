@@ -7198,15 +7198,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x00474050
-    name: func_00474050
+    name: DoubleStackPushAndJmp7d_00474050
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x00474090
-    name: func_00474090
+    name: DoubleStackPushAndJmp7b_00474090
     size: 63
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x004740d0
     name: func_004740d0
     size: 152
@@ -7243,10 +7245,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00474b10
-    name: func_00474b10
+    name: ScaledInitOrSelfPtr_00474b10
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x00474b50
     name: func_00474b50
     size: 485
@@ -7363,10 +7366,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00475750
-    name: func_00475750
+    name: DoubleScaledCrossStore_00475750
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x00475790
     name: DualScaledLoadStoreJmp_00475790
     size: 36
@@ -8199,10 +8203,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482740
-    name: func_00482740
+    name: ScaledChainCmp61_00482740
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x00482780
     name: func_00482780
     size: 516
@@ -8781,10 +8786,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489130
-    name: func_00489130
+    name: ScaledInitOrSelfPtr_00489130
     size: 64
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x00489170
     name: func_00489170
     size: 166
@@ -9054,10 +9060,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ac70
-    name: func_0048ac70
+    name: InitStateDualCall48ac70_0048ac70
     size: 65
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x0048acc0
     name: SetJmp_0048acc0
     size: 15
@@ -9353,10 +9360,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e2f0
-    name: func_0048e2f0
+    name: PushCallPauseScaledJmpInd_0048e2f0
     size: 60
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x0048e330
     name: func_0048e330
     size: 70
@@ -9453,10 +9461,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x0048e740
-    name: func_0048e740
+    name: ScaledChainAndF000DirtyToggle_0048e740
     size: 62
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x0048e780
     name: ScaledChain3c74Jmp_0048e780
     size: 35
@@ -9849,10 +9858,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x00490290
-    name: func_00490290
+    name: OrStoreDecStackPop_00490290
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesZ.c
   - addr: 0x004902d0
     name: ScaledAndAh_004902d0
     size: 29
