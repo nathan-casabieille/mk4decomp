@@ -12347,10 +12347,11 @@ functions:
     status: matched
     file: src/engine/fsys.c
   - addr: 0x004b1de0
-    name: func_004b1de0
+    name: TestCallZero_004b1de0
     size: 29
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004b1e00
     name: FSYS_fopen
     size: 177
@@ -12483,10 +12484,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b2ac0
-    name: func_004b2ac0
+    name: ZeroBuffer2A_004b2ac0
     size: 17
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004b2ae0
     name: Helper_AppStub_2AE0
     size: 1
@@ -12596,15 +12598,17 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b3d70
-    name: func_004b3d70
+    name: MinOfThree_004b3d70
     size: 30
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004b3d90
-    name: func_004b3d90
+    name: MaxOfThree_004b3d90
     size: 30
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004b3db0
     name: Renderer_GetMode
     size: 6
@@ -12704,10 +12708,11 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004b46d0
-    name: func_004b46d0
+    name: DualTestCallIat_004b46d0
     size: 27
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004b46f0
     name: func_004b46f0
     size: 681
@@ -13136,10 +13141,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004bcc50
-    name: func_004bcc50
+    name: Init16BitFields_004bcc50
     size: 24
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bcc70
     name: func_004bcc70
     size: 750
@@ -13178,10 +13184,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x004bd590
-    name: func_004bd590
+    name: TestCallPush4Zero_004bd590
     size: 30
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bd5b0
     name: LoadGeoAsset_Default
     size: 11
@@ -13195,10 +13202,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004bd5d0
-    name: func_004bd5d0
+    name: TailJmpRetNops_004bd5d0
     size: 17
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bd5f0
     name: Tex_DecodeRLE16
     size: 211
@@ -13260,10 +13268,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bdae0
-    name: func_004bdae0
+    name: Push2GlobalsCall_004bdae0
     size: 22
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bdb00
     name: func_004bdb00
     size: 79
@@ -13433,20 +13442,23 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004bf070
-    name: func_004bf070
+    name: MovAndStoreRetJmp_004bf070
     size: 21
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bf090
-    name: func_004bf090
+    name: LoadStoreRetNopJmp_004bf090
     size: 21
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bf0b0
-    name: func_004bf0b0
+    name: AddStore_004bf0b0
     size: 16
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004bf0c0
     name: func_004bf0c0
     size: 454
@@ -13645,10 +13657,11 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c4370
-    name: func_004c4370
+    name: Loop16Init_004c4370
     size: 22
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c4390
     name: func_004c4390
     size: 133
@@ -13755,10 +13768,11 @@ functions:
     status: matched
     file: src/boot/winmain.c
   - addr: 0x004c54b0
-    name: func_004c54b0
+    name: LoadArgPushCall_004c54b0
     size: 20
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c54d0
     name: func_004c54d0
     size: 68
@@ -13856,10 +13870,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c5db0
-    name: func_004c5db0
+    name: Push3ArgsCall_004c5db0
     size: 21
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c5dd0
     name: func_004c5dd0
     size: 48
@@ -13917,15 +13932,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x004c6820
-    name: func_004c6820
+    name: PushZ2ArgCall_004c6820
     size: 18
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c6840
-    name: func_004c6840
+    name: PushZ1ArgCall_004c6840
     size: 18
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c6860
     name: func_004c6860
     size: 178
@@ -14100,25 +14117,29 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8380
-    name: func_004c8380
+    name: StreamReadDword_004c8380
     size: 17
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c83a0
-    name: func_004c83a0
+    name: StreamReadQword_004c83a0
     size: 18
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c83c0
-    name: func_004c83c0
+    name: StreamReadWord_004c83c0
     size: 18
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c83e0
-    name: func_004c83e0
+    name: Push3000010000Call_004c83e0
     size: 19
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c8400
     name: func_004c8400
     size: 80
@@ -14283,10 +14304,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9dd0
-    name: func_004c9dd0
+    name: InitFields50and14_004c9dd0
     size: 19
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004c9df0
     name: func_004c9df0
     size: 656
@@ -14343,10 +14365,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cbad0
-    name: func_004cbad0
+    name: Push40ArgCall_004cbad0
     size: 18
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004cbaf0
     name: func_004cbaf0
     size: 58
@@ -14413,10 +14436,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc500
-    name: func_004cc500
+    name: MaskCall_004cc500
     size: 24
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004cc520
     name: func_004cc520
     size: 150
@@ -14458,15 +14482,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cca00
-    name: func_004cca00
+    name: Copy3Dwords_004cca00
     size: 29
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004cca20
-    name: func_004cca20
+    name: ZeroThreeFromArg_004cca20
     size: 15
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesA.c
   - addr: 0x004cca30
     name: func_004cca30
     size: 29
