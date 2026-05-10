@@ -14036,10 +14036,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8dd0
-    name: func_004c8dd0
+    name: IOWrapper_004c8dd0
     size: 114
     group: crt
-    status: stub
+    status: matched
+    file: src/crt/io_wrappers.c
   - addr: 0x004c8e50
     name: func_004c8e50
     size: 128
@@ -14051,10 +14052,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8fc0
-    name: func_004c8fc0
+    name: IOWrapper_004c8fc0
     size: 114
     group: crt
-    status: stub
+    status: matched
+    file: src/crt/io_wrappers.c
   - addr: 0x004c9040
     name: func_004c9040
     size: 549
@@ -14106,10 +14108,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9ae0
-    name: func_004c9ae0
+    name: IOWrapper_004c9ae0
     size: 114
     group: crt
-    status: stub
+    status: matched
+    file: src/crt/io_wrappers.c
   - addr: 0x004c9b60
     name: func_004c9b60
     size: 521
