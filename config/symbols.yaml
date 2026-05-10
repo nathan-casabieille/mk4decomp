@@ -11986,10 +11986,11 @@ functions:
     status: matched
     file: src/engine/com_sound_setup.c
   - addr: 0x004af730
-    name: func_004af730
+    name: DSoundQueryCaps333_004af730
     size: 333
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_query_caps_333.c
   - addr: 0x004af880
     name: Renderer3_EndScene_SW_FS
     size: 54
@@ -12079,10 +12080,11 @@ functions:
     status: matched
     file: src/engine/com_sound_setup.c
   - addr: 0x004aff60
-    name: func_004aff60
+    name: DSoundQueryCaps333_004aff60
     size: 333
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/dsound_query_caps_333.c
   - addr: 0x004b00b0
     name: Renderer5_EndScene_SW_FS_Hi
     size: 54
