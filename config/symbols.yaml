@@ -3964,10 +3964,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004392c0
-    name: func_004392c0
+    name: PackedAdvanceCallTailJmp_004392c0
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00439310
     name: Wrapper_00439310
     size: 14
@@ -5764,10 +5765,11 @@ functions:
     status: matched
     file: src/engine/dual_scaled_init.c
   - addr: 0x0045d960
-    name: func_0045d960
+    name: DualSwapTwoCallsJmp_0045d960
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0045d9b0
     name: func_0045d9b0
     size: 194
@@ -9410,10 +9412,11 @@ functions:
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x0048d4b0
-    name: func_0048d4b0
+    name: CmpEqInitCallElseJmp_0048d4b0
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048d500
     name: func_0048d500
     size: 688
@@ -10323,30 +10326,35 @@ functions:
     group: game
     status: stub
   - addr: 0x004926e0
-    name: func_004926e0
+    name: DispatchSetWalk6_004926e0
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00492730
-    name: func_00492730
+    name: DispatchSetWalk5_00492730
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00492780
-    name: func_00492780
+    name: DispatchSetWalk4_00492780
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004927d0
-    name: func_004927d0
+    name: DispatchSetWalk3_004927d0
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00492820
-    name: func_00492820
+    name: DispatchSetWalk2_00492820
     size: 78
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x00492870
     name: DispatchGuardedDirtyTest_00492870
     size: 73
