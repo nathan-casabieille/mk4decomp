@@ -141,10 +141,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004049c0
-    name: func_004049c0
+    name: MStackPackedInit_004049c0
     size: 14
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x004049d0
     name: func_004049d0
     size: 38
@@ -490,10 +491,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00406ce0
-    name: func_00406ce0
+    name: ScaledStoreIdx24_00406ce0
     size: 19
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x00406d00
     name: func_00406d00
     size: 207
@@ -1573,10 +1575,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421c20
-    name: func_00421c20
+    name: ZeroTriple_00421c20
     size: 18
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x00421c40
     name: func_00421c40
     size: 16
@@ -2408,10 +2411,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004296c0
-    name: func_004296c0
+    name: DirtyOrJmp_004296c0
     size: 17
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x004296e0
     name: Thunk_004296e0
     size: 5
@@ -4772,10 +4776,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044ccd0
-    name: func_0044ccd0
+    name: Add0fJmp_0044ccd0
     size: 18
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x0044ccf0
     name: func_0044ccf0
     size: 91
@@ -8591,10 +8596,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489f50
-    name: func_00489f50
+    name: Push16Call_00489f50
     size: 16
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x00489f60
     name: func_00489f60
     size: 33
@@ -9520,10 +9526,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00490130
-    name: func_00490130
+    name: ClearBit2x34_00490130
     size: 14
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matches.c
   - addr: 0x00490140
     name: func_00490140
     size: 39
