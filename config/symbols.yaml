@@ -2260,10 +2260,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004284a0
-    name: func_004284a0
+    name: GuardedLoopWithCallback_004284a0
     size: 69
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004284f0
     name: func_004284f0
     size: 98
@@ -2936,10 +2937,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x0042f850
-    name: func_0042f850
+    name: DispatchOrInitFightGroup_0042f850
     size: 69
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0042f8a0
     name: func_0042f8a0
     size: 355
@@ -6487,10 +6489,11 @@ functions:
     status: matched
     file: src/engine/scaled_dec_branch.c
   - addr: 0x004667a0
-    name: func_004667a0
+    name: StoreFightFieldCallTailJmp_004667a0
     size: 69
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004667f0
     name: func_004667f0
     size: 190
@@ -9450,10 +9453,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x0048e400
-    name: func_0048e400
+    name: ScaledIndexConditionalAdd_0048e400
     size: 69
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048e450
     name: func_0048e450
     size: 88
@@ -9484,10 +9488,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x0048e590
-    name: func_0048e590
+    name: ScaledIndexCondCopy_0048e590
     size: 69
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x0048e5e0
     name: IterStepNoSecond_0048e5e0
     size: 32
@@ -11412,10 +11417,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1ba0
-    name: func_004a1ba0
+    name: TestQueueGateState_004a1ba0
     size: 69
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004a1bf0
     name: TripleCallByteCheck_004a1bf0
     size: 65
@@ -12128,10 +12134,11 @@ functions:
     status: matched
     file: src/engine/cond_player_lookup.c
   - addr: 0x004ac150
-    name: func_004ac150
+    name: DispatchSetDirtyToggle_004ac150
     size: 69
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesPP.c
   - addr: 0x004ac1a0
     name: func_004ac1a0
     size: 80

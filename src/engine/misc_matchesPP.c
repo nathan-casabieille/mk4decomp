@@ -448,6 +448,251 @@ skip_zero:
     }
 }
 
+/* @addr 0x004284a0 (69b)
+ *   inc g_state_004d57ac, push 0x004284c0 onto stack[idx*4],
+ *   jmp T1, 5 nops align;
+ *   tail (at 0x4284c0): test dirty&4; if set, jmp T2;
+ *   else dec g_eventQueueChild, if zero jmp T2, else jmp 0x4284a0
+ *   (loop back to entry).
+ */
+extern void func_00428680(void);
+extern void func_0041f780_pp(void);
+__declspec(naked) void GuardedLoopWithCallback_004284a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], 0x004284c0
+        jmp     func_00428680
+        nop
+        nop
+        nop
+        nop
+        nop
+        test    byte ptr [g_xformDirtyFlags], 4
+        _emit   74h
+        _emit   05h
+        jmp     func_0041f780_pp
+        mov     eax, dword ptr [g_eventQueueChild]
+        dec     eax
+        mov     dword ptr [g_eventQueueChild], eax
+        _emit   74h
+        _emit   05h
+        _emit   0e9h
+        _emit   0c0h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        jmp     func_0041f780_pp
+    }
+}
+
+/* @addr 0x0042f850 (69b)
+ *   eax = [0x52aac4]; cmp eax, 2; mov [walk] = eax; jne +5; jmp T1.
+ *   else: mov fightGroupHead = [0x52ab10]; call F1; pause → ret;
+ *   mov [g_baseSel*4 + 0x64] = walk; jmp T2.
+ */
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_baseSel_00542060;
+extern void func_0042f840(void);
+extern void func_00430e60(void);
+extern void func_0042f8a0(void);
+__declspec(naked) void DispatchOrInitFightGroup_0042f850(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0052aac4]
+        cmp     eax, 2
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   05h
+        jmp     func_0042f840
+        mov     eax, dword ptr [g_data_0052ab10]
+        mov     dword ptr [g_fightGroupHead], eax
+        call    func_00430e60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [edx*4 + 0x64], ecx
+        jmp     func_0042f8a0
+        ret
+    }
+}
+
+/* @addr 0x004667a0 (69b)
+ *   load g_fightGroupHead, g_eventQueueEnd; push 0x4eaa58;
+ *   eax = [fightGroup*4+0x64] - 0x4ccc; mov walk=eax;
+ *   mov [eventQueueEnd*4+0x64]=eax; call F; add esp,4; ret.
+ *   Then 15 NOPs and a tail-jmp (entry at +0x40).
+ */
+extern unsigned int g_data_004eaa58;
+extern void func_0041f830(void);
+__declspec(naked) void StoreFightFieldCallTailJmp_004667a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueEnd]
+        push    OFFSET g_data_004eaa58
+        mov     eax, dword ptr [eax*4 + 0x64]
+        sub     eax, 0x4ccc
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        call    func_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        jmp     func_0041f830
+    }
+}
+
+/* @addr 0x0048e400 (69b)
+ *   ecx = walk; edx = fightGroupHead; eax = 0x541ee8 >> 2;
+ *   eax = eax + ecx*2; if fightGroupHead == [0x538158], ecx=0
+ *   else ecx=1; eax += ecx; store eax→g_scaledInit;
+ *   load ecx=[0x53a498]; store ecx→walk; store ecx→[eax*4+0]; ret.
+ */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053a498;
+__declspec(naked) void ScaledIndexConditionalAdd_0048e400(void) {
+    __asm {
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     eax, 0x00541ee8
+        push    esi
+        mov     esi, dword ptr [g_data_00538158]
+        shr     eax, 2
+        lea     eax, [eax + ecx*2]
+        xor     ecx, ecx
+        cmp     edx, esi
+        _emit   74h
+        _emit   05h
+        mov     ecx, 1
+        add     eax, ecx
+        mov     ecx, dword ptr [g_data_0053a498]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0], ecx
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0048e590 (69b)
+ *   eax = arg0 >> 2 → g_eventQueueTotal; ecx = [eax*4+0] → scaled;
+ *   if g_fightGroupHead != [0x538158]: ecx = [eax*4+4] → scaled;
+ *   eax = [ecx*4+0]; store → walk; ret.
+ */
+extern unsigned int g_eventQueueTotal;
+__declspec(naked) void ScaledIndexCondCopy_0048e590(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     edx, dword ptr [g_fightGroupHead]
+        sar     eax, 2
+        push    esi
+        mov     esi, dword ptr [g_data_00538158]
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   0dh
+        mov     ecx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0]
+        pop     esi
+        mov     dword ptr [g_walkCallback], eax
+        ret
+    }
+}
+
+/* @addr 0x004a1ba0 (69b)
+ *   push 0xd; call helper; if eax == 0 jmp set-zero-tail.
+ *   else: if [0xab4334] != 0: jmp store-1-tail.
+ *   if [0x4f2fc8] != 0: jmp store-1-tail.
+ *   else: store 1 → [0x4f2fc8] (using mov reg form); ret eax=1.
+ *   set-zero-tail: store 0 → [0x4f2fc8]; xor eax,eax; ret.
+ *   store-1-tail: store 1 → [0x4f2fc8] (mov imm32 form); xor eax,eax; ret.
+ */
+extern unsigned int g_data_00ab4334;
+extern unsigned int g_data_004f2fc8;
+extern int func_004b5450(int);
+__declspec(naked) void TestQueueGateState_004a1ba0(void) {
+    __asm {
+        push    0x0d
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        _emit   74h
+        _emit   2ah
+        mov     eax, dword ptr [g_data_00ab4334]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        mov     eax, dword ptr [g_data_004f2fc8]
+        test    eax, eax
+        _emit   75h
+        _emit   0bh
+        mov     eax, 1
+        mov     dword ptr [g_data_004f2fc8], eax
+        ret
+        mov     dword ptr [g_data_004f2fc8], 1
+        xor     eax, eax
+        ret
+        mov     dword ptr [g_data_004f2fc8], 0
+        xor     eax, eax
+        ret
+    }
+}
+
+/* @addr 0x004ac150 (69b)
+ *   ecx = g_fightGroupHead; edx = [0x538158]; eax = [0x53a510];
+ *   walk = eax; if ecx == edx, skip override; else
+ *     eax = [0x52aafc]; walk = eax;
+ *   edx = dirty; ecx = 4; edx |= 4; flag if eax == 0; store edx;
+ *   if eax == 0: ret; else clear bit 4 (xor): store edx ^ 4.
+ */
+extern unsigned int g_data_0052aafc;
+extern unsigned int g_data_0053a510;
+__declspec(naked) void DispatchSetDirtyToggle_004ac150(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_data_00538158]
+        mov     eax, dword ptr [g_data_0053a510]
+        cmp     ecx, edx
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_data_0052aafc]
+        mov     dword ptr [g_walkCallback], eax
+        mov     edx, dword ptr [g_xformDirtyFlags]
+        mov     ecx, 4
+        or      edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_xformDirtyFlags], edx
+        _emit   74h
+        _emit   09h
+        mov     eax, edx
+        xor     eax, ecx
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+    }
+}
+
 /* @addr 0x004c82b0 (66b)
  *   CRT helper: writes a byte to a buffered FILE-like struct.
  *     arg0 (esp+4): char value
