@@ -2251,10 +2251,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428d20
-    name: func_00428d20
+    name: ScaledLoadJmp_00428d20
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_jmp.c
   - addr: 0x00428d40
     name: func_00428d40
     size: 25
@@ -2307,10 +2308,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429210
-    name: func_00429210
+    name: ScaledLoadJmp_00429210
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_jmp.c
   - addr: 0x00429230
     name: SetJmp_00429230
     size: 15
@@ -2328,10 +2330,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429390
-    name: func_00429390
+    name: ScaledLoadJmp_00429390
     size: 23
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_load_jmp.c
   - addr: 0x004293b0
     name: ScaledArrStore_004293b0
     size: 23
@@ -2548,10 +2551,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042b6c0
-    name: func_0042b6c0
+    name: GuardedDispatch_0042b6c0
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch.c
   - addr: 0x0042b6f0
     name: func_0042b6f0
     size: 473
@@ -2593,10 +2597,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042c570
-    name: func_0042c570
+    name: GuardedDispatch_0042c570
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch.c
   - addr: 0x0042c5a0
     name: func_0042c5a0
     size: 495
@@ -3409,10 +3414,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004368f0
-    name: func_004368f0
+    name: ScaledAddrInit_004368f0
     size: 18
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_addr_init.c
   - addr: 0x00436910
     name: func_00436910
     size: 248
@@ -5447,25 +5453,29 @@ functions:
     group: game
     status: stub
   - addr: 0x0045d8e0
-    name: func_0045d8e0
+    name: DualScaledInit_0045d8e0
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init.c
   - addr: 0x0045d900
-    name: func_0045d900
+    name: DualScaledInit_0045d900
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init.c
   - addr: 0x0045d920
-    name: func_0045d920
+    name: DualScaledInit_0045d920
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init.c
   - addr: 0x0045d940
-    name: func_0045d940
+    name: DualScaledInit_0045d940
     size: 32
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dual_scaled_init.c
   - addr: 0x0045d960
     name: func_0045d960
     size: 78
@@ -5785,15 +5795,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00460ca0
-    name: func_00460ca0
+    name: GuardedDispatch_00460ca0
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch.c
   - addr: 0x00460cd0
-    name: func_00460cd0
+    name: GuardedDispatch_00460cd0
     size: 34
     group: game
-    status: stub
+    status: matched
+    file: src/engine/guarded_dispatch.c
   - addr: 0x00460d00
     name: func_00460d00
     size: 52
@@ -6199,15 +6211,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004677c0
-    name: func_004677c0
+    name: ScaledAddrInit_004677c0
     size: 18
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_addr_init.c
   - addr: 0x004677e0
-    name: func_004677e0
+    name: ScaledAddrInit_004677e0
     size: 18
     group: game
-    status: stub
+    status: matched
+    file: src/engine/scaled_addr_init.c
   - addr: 0x00467800
     name: func_00467800
     size: 1033
