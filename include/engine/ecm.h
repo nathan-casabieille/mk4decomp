@@ -117,6 +117,16 @@ extern double k_ecmC4;            /* 0x004d2990 (clamp min) */
 /* IAT slots. */
 extern void *g_iat_CreateThread;  /* 0x004d2070 */
 extern void *g_iat_Sleep;         /* 0x004d2074 */
+extern void *g_iat_SuspendThread; /* 0x004d2090 */
+
+/* Big buffers ECM_PlayThread streams through (the input frame buf,
+ * the per-slot decoded video frames, the per-slot decoded audio
+ * frames, and the working decode scratch). */
+extern u32 g_ecmInputBuf;         /* 0x006f7680 (1st dword: ptr to body) */
+extern u32 g_ecmInputBufBody;     /* 0x006f7684 */
+extern u32 g_ecmDecodeBuf;        /* 0x006fa198 */
+extern u8  g_ecmVideoSlots[];     /* 0x0058c910 (4 × 0x5ab5c-byte slots) */
+extern u8  g_ecmAudioSlots[];     /* 0x0058f428 */
 
 /* Inner helper called by ECM_Cleanup to flush internal state. */
 void Helper_ECM_PostCleanup(s32 zero_arg);              /* 0x004b09a0 */

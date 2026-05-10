@@ -198,7 +198,8 @@ functions:
     name: ECM_PlayThread
     size: 608
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/ecm_play_thread.c
   - addr: 0x004b0cb0
     name: ECM_Cleanup
     size: 199
