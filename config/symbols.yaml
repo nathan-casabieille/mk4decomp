@@ -5431,15 +5431,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0045be40
-    name: func_0045be40
+    name: DispatcherComplex197_0045be40
     size: 197
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_197.c
   - addr: 0x0045bf10
-    name: func_0045bf10
+    name: DispatcherComplex197_0045bf10
     size: 197
     group: game
-    status: stub
+    status: matched
+    file: src/engine/dispatcher_complex_197.c
   - addr: 0x0045bfe0
     name: func_0045bfe0
     size: 60
