@@ -61,6 +61,22 @@ void AppShutdown(void);                                  /* 0x004b2690 */
 /* Boot-time engine startup (CreateMainWindow, parse cmdline, ...). */
 void Boot(void);                                         /* 0x004c5070 */
 
+extern u32 g_wndClassStyle;     /* 0x00f9f790 - WNDCLASS::style */
+extern u32 g_wndClassWndProc;   /* 0x00f9f794 - WNDCLASS::lpfnWndProc */
+extern HWND g_wndClassHInst;    /* 0x00f9f7a0 - WNDCLASS::hInstance */
+extern u32 g_wndClassHIcon;     /* 0x00f9f7a4 - WNDCLASS::hIcon */
+extern u32 g_wndClassHCursor;   /* 0x00f9f7a8 - WNDCLASS::hCursor */
+extern u32 g_wndClassHbrBkgnd;  /* 0x00f9f7ac - WNDCLASS::hbrBackground */
+extern u32 g_wndClassName;      /* 0x00f9f7b4 - WNDCLASS::lpszClassName */
+extern s32 g_clientWidth;       /* 0x00f9f7b8 */
+extern s32 g_clientHeight;      /* 0x00f9f7bc */
+
+extern long __stdcall WndProc(HWND, UINT, WPARAM, LPARAM); /* 0x004c49b0 */
+
+/* Post-window-create helper (sets up DDraw / palette related
+ * state, returns the value stored in g_mode4PauseGate). */
+u32  Helper_PostCreateWindow(void);                      /* 0x004c4950 */
+
 /* High-level app init invoked by WinMain after Boot. */
 void AppInit(HWND hwnd);                                 /* 0x004b2500 */
 

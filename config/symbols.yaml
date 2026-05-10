@@ -616,7 +616,8 @@ functions:
     name: CreateMainWindow
     size: 371
     group: boot
-    status: stub
+    status: matched
+    file: src/boot/create_window.c
   - addr: 0x004c52a0
     name: PumpMessages
     size: 265
