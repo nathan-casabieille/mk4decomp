@@ -228,15 +228,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x00404e50
-    name: func_00404e50
+    name: ScaledChainOr8_00404e50
     size: 52
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00404e90
-    name: func_00404e90
+    name: Copy3Fields3c4044_00404e90
     size: 54
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00404ed0
     name: ZeroThreeFields_00404ed0
     size: 26
@@ -832,15 +834,17 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040a830
-    name: func_0040a830
+    name: MStackPushCallPop_0040a830
     size: 54
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x0040a870
-    name: func_0040a870
+    name: Copy3Fields38_0040a870
     size: 52
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x0040a8b0
     name: ZeroThreeFields_0040a8b0
     size: 26
@@ -1346,10 +1350,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041aa40
-    name: func_0041aa40
+    name: Copy3FieldsNeg_0041aa40
     size: 60
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x0041aa80
     name: func_0041aa80
     size: 70
@@ -1762,10 +1767,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004231b0
-    name: func_004231b0
+    name: DualPushCallStore_004231b0
     size: 53
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x004231f0
     name: func_004231f0
     size: 125
@@ -1807,10 +1813,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00423870
-    name: func_00423870
+    name: Cmp2DirtyToggle_00423870
     size: 55
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x004238b0
     name: TestCmpZeroFour_004238b0
     size: 38
@@ -2140,10 +2147,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00427ea0
-    name: func_00427ea0
+    name: DualTestDirtyToggle_00427ea0
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00427ee0
     name: func_00427ee0
     size: 164
@@ -2170,10 +2178,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004282c0
-    name: func_004282c0
+    name: DualTestDirtyToggle_004282c0
     size: 54
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00428300
     name: ScaledStoreIdxZeroJmp_00428300
     size: 33
@@ -2511,10 +2520,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesF.c
   - addr: 0x00429800
-    name: func_00429800
+    name: ScaledIncCmpDualJmp_00429800
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00429840
     name: ScaledLoadIncJmp_00429840
     size: 24
@@ -3598,10 +3608,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00437930
-    name: func_00437930
+    name: CallPauseMStackPushSet2Jmp_00437930
     size: 52
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesS.c
   - addr: 0x00437970
     name: func_00437970
     size: 273
