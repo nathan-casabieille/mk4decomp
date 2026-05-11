@@ -3951,10 +3951,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x00439130
-    name: func_00439130
+    name: QuadGuardBitGateJmp_00439130
     size: 90
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439190
     name: DualCallPauseJmpDual_00439190
     size: 52
@@ -4341,10 +4342,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043d040
-    name: func_0043d040
+    name: UnlinkChainInstall_0043d040
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d0a0
     name: func_0043d0a0
     size: 1127
@@ -5003,10 +5005,11 @@ functions:
     status: matched
     file: src/engine/misc_matches.c
   - addr: 0x0044ccf0
-    name: func_0044ccf0
+    name: GuardedChainDualAdd_0044ccf0
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cd50
     name: func_0044cd50
     size: 506
@@ -6887,10 +6890,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046f740
-    name: func_0046f740
+    name: BitGateInstallChainJmp_0046f740
     size: 90
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046f7a0
     name: func_0046f7a0
     size: 1088
@@ -7458,10 +7462,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004756f0
-    name: func_004756f0
+    name: DualSlotCopyChain_004756f0
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00475750
     name: DoubleScaledCrossStore_00475750
     size: 62
@@ -8498,10 +8503,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484650
-    name: func_00484650
+    name: EsiAliasInstallSelf_00484650
     size: 90
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004846b0
     name: func_004846b0
     size: 661
@@ -10925,10 +10931,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049c670
-    name: func_0049c670
+    name: CondPickDualStore_0049c670
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c6d0
     name: ArgSar_Set1_Jmp_0049c6d0
     size: 27
@@ -11685,10 +11692,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a3260
-    name: func_004a3260
+    name: ScaledByteIdxDualCopy_004a3260
     size: 91
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a32c0
     name: func_004a32c0
     size: 309
