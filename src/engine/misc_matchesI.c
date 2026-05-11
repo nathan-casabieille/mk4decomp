@@ -78,18 +78,11 @@ __declspec(naked) void CallPauseScaledStoreXJmp_00453750(void) {
  */
 extern unsigned int g_state_004d50a4;
 extern unsigned int g_state_004d50a8;
-__declspec(naked) void NotMaskStorePair_0045f440(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d50a4]
-        mov     ecx, dword ptr [g_state_004d50a8]
-        not     eax
-        not     ecx
-        and     eax, 0xffff
-        and     ecx, 0xffff
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        ret
-    }
+void NotMaskStorePair_0045f440(void) {
+    unsigned int a = ~g_state_004d50a4 & 0xffff;
+    unsigned int b = ~g_state_004d50a8 & 0xffff;
+    g_walkCallback      = (void(*)(void))a;
+    g_eventQueueCurrent = b;
 }
 
 /* @addr 0x0046ea70 (39b)

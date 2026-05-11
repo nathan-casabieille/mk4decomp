@@ -160,18 +160,14 @@ extern unsigned int g_dst_00537f2c;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_loaded_004f3608;
-__declspec(naked) void Init28fDecLoad_00421d20(void) {
-    __asm {
-        mov     eax, 0x028f
-        mov     dword ptr [g_dst_0053a6dc], eax
-        mov     dword ptr [g_dst_00537f2c], eax
-        mov     eax, dword ptr [g_loaded_004f3608]
-        dec     eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_dst_0053a6e0], eax
-        mov     dword ptr [g_dst_00537ea4], eax
-        ret
-    }
+void Init28fDecLoad_00421d20(void) {
+    unsigned int v;
+    g_dst_0053a6dc = 0x028f;
+    g_dst_00537f2c = 0x028f;
+    v = g_loaded_004f3608 - 1;
+    g_walkCallback = (void(*)(void))v;
+    g_dst_0053a6e0 = v;
+    g_dst_00537ea4 = v;
 }
 
 /* @addr 0x00425360 (31b)
@@ -286,15 +282,10 @@ extern unsigned int g_state_004d5308;
 extern unsigned int g_state_004d530c;
 extern unsigned int g_state_004d5300;
 extern unsigned int g_state_004d5304;
-__declspec(naked) void Init4Globals_0042ae10(void) {
-    __asm {
-        mov     eax, 0x00020000
-        mov     dword ptr [g_state_004d5308], eax
-        mov     dword ptr [g_state_004d530c], eax
-        mov     eax, 0x00010000
-        mov     dword ptr [g_state_004d5300], eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_004d5304], eax
-        ret
-    }
+void Init4Globals_0042ae10(void) {
+    g_state_004d5308 = 0x00020000;
+    g_state_004d530c = 0x00020000;
+    g_state_004d5300 = 0x00010000;
+    g_walkCallback   = (void(*)(void))0x00010000;
+    g_state_004d5304 = 0x00010000;
 }

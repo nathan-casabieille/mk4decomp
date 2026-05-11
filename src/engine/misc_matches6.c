@@ -62,14 +62,10 @@ __declspec(naked) void ScaledAndAhfe_00490390(void) {
  *   mov     [ecx*4 + 0x44], eax
  *   ret
  */
-__declspec(naked) void ScaledZero44_00491500(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x44], eax
-        ret
-    }
+void ScaledZero44_00491500(void) {
+    int *p = (int *)(g_fightGroupHead * 4 + 0x44);
+    g_walkCallback = 0;
+    *p = 0;
 }
 
 /* @addr 0x00491e50 (22b)

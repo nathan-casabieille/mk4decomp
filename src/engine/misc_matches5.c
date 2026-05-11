@@ -16,15 +16,11 @@ extern unsigned int g_baseSel_00542060;
  *   ret
  */
 extern unsigned int g_load_0052ab10;
-__declspec(naked) void LoadStoreScaled58_004314d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_load_0052ab10]
-        mov     ecx, 0xfffe8000
-        mov     dword ptr [g_fightGroupHead], eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x58], ecx
-        ret
-    }
+void LoadStoreScaled58_004314d0(void) {
+    unsigned int idx = g_load_0052ab10;
+    g_fightGroupHead = idx;
+    g_walkCallback   = (void(*)(void))0xfffe8000;
+    *(unsigned int *)(idx * 4 + 0x58) = 0xfffe8000;
 }
 
 /* @addr 0x0042f4d0 (28b)
@@ -188,6 +184,54 @@ __declspec(naked) void ScaledAndAlf7_00490310(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x40]
         and     al, 0xf7
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x40], eax
+        ret
+    }
+}
+
+/* @addr 0x00490330 (28b): same shape, and al, 0xdf */
+__declspec(naked) void ScaledAndAldf_00490330(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        and     al, 0xdf
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x40], eax
+        ret
+    }
+}
+
+/* @addr 0x00490350 (28b): same shape, and al, 0xbf */
+__declspec(naked) void ScaledAndAlbf_00490350(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        and     al, 0xbf
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x40], eax
+        ret
+    }
+}
+
+/* @addr 0x00490370 (28b): same shape, and al, 0xfb */
+__declspec(naked) void ScaledAndAlfb_00490370(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        and     al, 0xfb
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [ecx*4 + 0x40], eax
+        ret
+    }
+}
+
+/* @addr 0x00490390 (28b): same shape, and al, 0xfe */
+__declspec(naked) void ScaledAndAlfe_00490390(void) {
+    __asm {
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        and     al, 0xfe
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [ecx*4 + 0x40], eax
         ret

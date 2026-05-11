@@ -224,15 +224,8 @@ __declspec(naked) void LeaScaledCall_004bd510(void) {
  *   add     esp, 4
  *   ret
  */
-extern int func_00444c98(int);
-__declspec(naked) void TwoArgCallSeq_004bd570(void) {
-    __asm {
-        push    4
-        call    func_00444c98
-        add     esp, 4
-        push    2
-        call    func_00444c98
-        add     esp, 4
-        ret
-    }
+extern int __cdecl func_00444c98(int);
+void TwoArgCallSeq_004bd570(void) {
+    func_00444c98(4);
+    func_00444c98(2);
 }

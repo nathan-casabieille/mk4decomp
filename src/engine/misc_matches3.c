@@ -98,14 +98,8 @@ __declspec(naked) void ScaledLoadJmp_24_00429790(void) {
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-__declspec(naked) void ScaledMaskByte_004774d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_pendingNodeType]
-        mov     ecx, dword ptr [eax*4 + 0]
-        and     ecx, 0x000000ff
-        mov     dword ptr [g_walkCallback], ecx
-        ret
-    }
+void ScaledMaskByte_004774d0(void) {
+    g_walkCallback = (void(*)(void))(*(unsigned int *)(g_pendingNodeType * 4) & 0xff);
 }
 
 /* @addr 0x0048bb40 (25b)
@@ -135,14 +129,11 @@ __declspec(naked) void ScaledShrAnd_0048bb40(void) {
  *   ret
  */
 extern unsigned int g_baseSel_00542060;
-__declspec(naked) void ScaledMove74to70_0046eaa0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x74]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x70], ecx
-        ret
-    }
+void ScaledMove74to70_0046eaa0(void) {
+    unsigned int idx = g_baseSel_00542060;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x74);
+    g_walkCallback = (void(*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x70) = v;
 }
 
 /* @addr 0x00490070 (23b)
@@ -236,15 +227,10 @@ __declspec(naked) void IncOrZero9_00422080(void) {
  *   ret
  */
 extern unsigned int g_dest_0053a6e4;
-__declspec(naked) void AndShlStore_00409280(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        and     eax, 0x0f
-        shl     eax, 0x14
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_dest_0053a6e4], eax
-        ret
-    }
+void AndShlStore_00409280(void) {
+    unsigned int v = ((unsigned int)g_walkCallback & 0xf) << 0x14;
+    g_walkCallback  = (void(*)(void))v;
+    g_dest_0053a6e4 = v;
 }
 
 /* @addr 0x0048e4d0 (22b)

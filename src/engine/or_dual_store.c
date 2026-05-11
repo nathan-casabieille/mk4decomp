@@ -18,25 +18,15 @@ extern unsigned int g_or_004d57b0;     /* 0x004d57b0 (mirrors back) */
 extern unsigned int g_or_0052ab40;     /* 0x0052ab40 */
 
 /* @addr 0x0048a190 */
-__declspec(naked) void OrDualStore_0048a190(void) {
-    __asm {
-        mov     eax, dword ptr [g_or_004d57b0]
-        mov     ecx, dword ptr [g_walkCallback]
-        or      eax, ecx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_or_004d57b0], eax
-        ret
-    }
+void OrDualStore_0048a190(void) {
+    unsigned int v = g_or_004d57b0 | (unsigned int)g_walkCallback;
+    g_eventQueueCurrent = v;
+    g_or_004d57b0       = v;
 }
 
 /* @addr 0x0048e4b0 */
-__declspec(naked) void OrDualStore_0048e4b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_or_0052ab40]
-        mov     ecx, dword ptr [g_walkCallback]
-        or      eax, ecx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_or_0052ab40], eax
-        ret
-    }
+void OrDualStore_0048e4b0(void) {
+    unsigned int v = g_or_0052ab40 | (unsigned int)g_walkCallback;
+    g_eventQueueCurrent = v;
+    g_or_0052ab40       = v;
 }

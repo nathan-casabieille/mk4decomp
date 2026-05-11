@@ -249,16 +249,9 @@ __declspec(naked) void ScaledLoadZeroStore_004464f0(void) {
  *   mov     [edx*4 + 0x68], eax
  *   ret
  */
-__declspec(naked) void DualScaledStore_00452740(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     dword ptr [eax*4 + 0x64], ecx
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [edx*4 + 0x68], eax
-        ret
-    }
+void DualScaledStore_00452740(void) {
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64) = g_eventQueueEnd;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68) = g_eventQueueIdx;
 }
 
 /* @addr 0x004534e0 (39b)

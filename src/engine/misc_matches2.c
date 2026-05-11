@@ -43,13 +43,8 @@ __declspec(naked) void ScaledIndirectJmp_0049c850(void) {
  *   mov     [g_fightGroupHead], ecx
  *   ret
  */
-__declspec(naked) void ScaledLoadStore_00473ed0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x68]
-        mov     dword ptr [g_fightGroupHead], ecx
-        ret
-    }
+void ScaledLoadStore_00473ed0(void) {
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68);
 }
 
 /* @addr 0x004774b0 (19b)
@@ -58,13 +53,8 @@ __declspec(naked) void ScaledLoadStore_00473ed0(void) {
  *   mov     [eax*4 + 0], ecx          ; SIB+0 store
  *   ret
  */
-__declspec(naked) void ScaledDerefStore_004774b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_pendingNodeType]
-        mov     ecx, dword ptr [g_eventQueueWorkType]
-        mov     dword ptr [eax*4 + 0], ecx
-        ret
-    }
+void ScaledDerefStore_004774b0(void) {
+    *(unsigned int *)(g_pendingNodeType * 4) = g_eventQueueWorkType;
 }
 
 /* @addr 0x00461840 (23b)
@@ -76,14 +66,11 @@ __declspec(naked) void ScaledDerefStore_004774b0(void) {
  */
 extern unsigned int g_save_0053a7d8;
 extern unsigned int g_save_0053a748;
-__declspec(naked) void DualSave_00461840(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_save_0053a7d8], eax
-        mov     dword ptr [g_save_0053a748], ecx
-        ret
-    }
+void DualSave_00461840(void) {
+    unsigned int a = g_eventQueueCurrent;
+    unsigned int b = (unsigned int)g_walkCallback;
+    g_save_0053a7d8 = a;
+    g_save_0053a748 = b;
 }
 
 /* @addr 0x00487120 (24b)
@@ -93,14 +80,10 @@ __declspec(naked) void DualSave_00461840(void) {
  *   mov     [ecx*4 + 0x74], eax
  *   ret
  */
-__declspec(naked) void Const0x2005Store_00487120(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x2005
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        ret
-    }
+void Const0x2005Store_00487120(void) {
+    unsigned int *p = (unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
+    g_walkCallback = (void(*)(void))0x2005;
+    *p = 0x2005;
 }
 
 /* @addr 0x004871d0 (19b)
@@ -128,12 +111,8 @@ __declspec(naked) void CmpJmpTwoBranch_004871d0(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void ZeroAndDirty4_00405430(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_walkCallback], 0
-        or      al, 4
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void ZeroAndDirty4_00405430(void) {
+    unsigned int v = g_xformDirtyFlags;
+    g_walkCallback = 0;
+    g_xformDirtyFlags = v | 4;
 }

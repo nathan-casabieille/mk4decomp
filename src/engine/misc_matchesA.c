@@ -98,14 +98,10 @@ __declspec(naked) void DualTestCallIat_004b46d0(void) {
 extern unsigned short g_word_00ab47fc;
 extern unsigned short g_word_00ab47f8;
 extern unsigned short g_word_00ab47fa;
-__declspec(naked) void Init16BitFields_004bcc50(void) {
-    __asm {
-        xor     eax, eax
-        mov     word ptr [g_word_00ab47fc], 0x1000
-        mov     word ptr [g_word_00ab47f8], ax
-        mov     word ptr [g_word_00ab47fa], ax
-        ret
-    }
+void Init16BitFields_004bcc50(void) {
+    g_word_00ab47fc = 0x1000;
+    g_word_00ab47f8 = 0;
+    g_word_00ab47fa = 0;
 }
 
 /* @addr 0x004bf070 (21b)
@@ -203,17 +199,9 @@ __declspec(naked) void Loop16Init_004c4370(void) {
  *   ret
  */
 extern unsigned int g_state_00f9f850;
-extern int func_004c54c2(int, int);
-__declspec(naked) void LoadArgPushCall_004c54b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f9f850]
-        mov     ecx, dword ptr [esp + 4]
-        push    eax
-        push    ecx
-        call    func_004c54c2
-        add     esp, 8
-        ret
-    }
+extern int __cdecl func_004c54c2(int, int);
+int LoadArgPushCall_004c54b0(int x) {
+    return func_004c54c2(x, g_state_00f9f850);
 }
 
 /* @addr 0x004c5db0 (21b)
@@ -226,59 +214,26 @@ __declspec(naked) void LoadArgPushCall_004c54b0(void) {
  *   add     esp, 0xc
  *   ret
  */
-extern int func_004c5d68(int, int, int);
-__declspec(naked) void Push3ArgsCall_004c5db0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 8]
-        mov     ecx, dword ptr [esp + 4]
-        push    0x40
-        push    eax
-        push    ecx
-        call    func_004c5d68
-        add     esp, 0x0c
-        ret
-    }
+extern int __cdecl func_004c5d68(int, int, int);
+int Push3ArgsCall_004c5db0(int a, int b) {
+    return func_004c5d68(a, b, 0x40);
 }
 
 /* @addr 0x004c6820 (18b): forwarding wrapper push 0+0+arg+call */
-extern int func_004c6857(int, int, int);
-__declspec(naked) void PushZ2ArgCall_004c6820(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    0
-        push    0
-        push    eax
-        call    func_004c6857
-        add     esp, 0x0c
-        ret
-    }
+extern int __cdecl func_004c6857(int, int, int);
+int PushZ2ArgCall_004c6820(int x) {
+    return func_004c6857(x, 0, 0);
 }
 
 /* @addr 0x004c6840 (18b): same shape, push 0+1+arg+call */
-__declspec(naked) void PushZ1ArgCall_004c6840(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    0
-        push    1
-        push    eax
-        call    func_004c6857
-        add     esp, 0x0c
-        ret
-    }
+int PushZ1ArgCall_004c6840(int x) {
+    return func_004c6857(x, 1, 0);
 }
 
 /* @addr 0x004cbad0 (18b): same shape, push 4+0+arg+call */
-extern int func_004cbae7(int, int, int);
-__declspec(naked) void Push40ArgCall_004cbad0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    4
-        push    0
-        push    eax
-        call    func_004cbae7
-        add     esp, 0x0c
-        ret
-    }
+extern int __cdecl func_004cbae7(int, int, int);
+int Push40ArgCall_004cbad0(int x) {
+    return func_004cbae7(x, 0, 4);
 }
 
 /* @addr 0x004c8380 (17b)
@@ -351,15 +306,9 @@ __declspec(naked) void StreamReadWord_004c83c0(void) {
  *   add     esp, 8
  *   ret
  */
-extern int func_004ccdf6(int, int);
-__declspec(naked) void Push3000010000Call_004c83e0(void) {
-    __asm {
-        push    0x00030000
-        push    0x00010000
-        call    func_004ccdf6
-        add     esp, 8
-        ret
-    }
+extern int __cdecl func_004ccdf6(int, int);
+void Push3000010000Call_004c83e0(void) {
+    func_004ccdf6(0x10000, 0x30000);
 }
 
 /* @addr 0x004c9dd0 (19b)
@@ -369,13 +318,9 @@ __declspec(naked) void Push3000010000Call_004c83e0(void) {
  *   ret
  */
 extern void *g_table_00522880;
-__declspec(naked) void InitFields50and14_004c9dd0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     dword ptr [eax + 0x50], OFFSET g_table_00522880
-        mov     dword ptr [eax + 0x14], 1
-        ret
-    }
+void InitFields50and14_004c9dd0(char *p) {
+    *(void **)(p + 0x50) = &g_table_00522880;
+    *(int  *)(p + 0x14) = 1;
 }
 
 /* @addr 0x004cc500 (24b)
@@ -388,18 +333,9 @@ __declspec(naked) void InitFields50and14_004c9dd0(void) {
  *   add     esp, 8
  *   ret
  */
-extern int func_004cc4af(int, int);
-__declspec(naked) void MaskCall_004cc500(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 8]
-        mov     ecx, dword ptr [esp + 4]
-        and     eax, 0xfff7ffff
-        push    eax
-        push    ecx
-        call    func_004cc4af
-        add     esp, 8
-        ret
-    }
+extern int __cdecl func_004cc4af(int, int);
+int MaskCall_004cc500(int a, int b) {
+    return func_004cc4af(a, b & 0xfff7ffff);
 }
 
 /* @addr 0x004cca00 (29b): copy 3 dwords from src to dst with stride
@@ -484,17 +420,9 @@ __declspec(naked) void ZeroBuffer2A_004b2ac0(void) {
  *   add     esp, 8
  *   ret
  */
-extern int func_004bbb70(int, int);
-__declspec(naked) void Push2GlobalsCall_004bdae0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_pendingNodeType]
-        push    eax
-        push    ecx
-        call    func_004bbb70
-        add     esp, 8
-        ret
-    }
+extern int __cdecl func_004bbb70(unsigned int, unsigned int);
+void Push2GlobalsCall_004bdae0(void) {
+    func_004bbb70(g_pendingNodeType, g_scaledInit_00542044);
 }
 
 /* @addr 0x004bd5d0 (17b)
