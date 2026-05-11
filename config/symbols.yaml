@@ -4146,10 +4146,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00439cb0
-    name: func_00439cb0
+    name: TieredCmpDispatch_00439cb0
     size: 103
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439d20
     name: func_00439d20
     size: 261
@@ -6198,10 +6199,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461020
-    name: func_00461020
+    name: PushFourCallPopBitJmp_00461020
     size: 103
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461090
     name: func_00461090
     size: 389
@@ -6800,10 +6802,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046db60
-    name: func_0046db60
+    name: GuardedChainClearFlagToggle_0046db60
     size: 102
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046dbd0
     name: DualScaledInitCmp_0046dbd0
     size: 54
@@ -8328,10 +8331,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482680
-    name: func_00482680
+    name: TripleGuardSetTailJmp_00482680
     size: 101
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004826f0
     name: TwoEntryWrapperGuarded_004826f0
     size: 72
@@ -10610,10 +10614,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesAA.c
   - addr: 0x004949f0
-    name: func_004949f0
+    name: ScaledLookupGuardJmpIndirect_004949f0
     size: 102
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494a60
     name: func_00494a60
     size: 766

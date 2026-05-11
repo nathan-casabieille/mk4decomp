@@ -1769,6 +1769,18 @@ extern void func_00493a20(void);
 extern void LoadCmpAddrJmp_00493ed0(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 extern void ScaledStoreCSet58Jmp_004708a0(void);
+extern void func_00488f00(void);
+extern void func_00494580(void);
+extern void TwoEntryWrapperGuarded_004826f0(void);
+extern void func_0048fc80(void);
+extern void DualScaledInitCmp_0046dbd0(void);
+extern void func_0048ec30(void);
+extern void func_00494a60(void);
+extern void func_00439760(void);
+extern void func_00438220(void);
+extern void Thunk_00439e30(void);
+extern void func_00471190(void);
+extern unsigned int g_data_0053a478;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_state_00535cfc;
@@ -3080,6 +3092,232 @@ __declspec(naked) void PushBitFieldMergePop_0048bae0(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x00482680 (101b)
+ *   3-call guard cascade (func_00488f00, func_00494580, CopyJmp_0048ef90);
+ *   if (bit0 of g_state_0054208c) != 0:
+ *     eax = g_cj_0054205c; [eax*4 + 0x4c] = 0x28f;
+ *     ecx = g_cj_0054205c; eax = 0x1999; g_walkCallback = eax;
+ *     [ecx*4 + 0x70] = eax; jmp TwoEntryWrapperGuarded_004826f0;
+ *   else: jmp TwoEntryWrapperGuarded_004826f0; ret.
+ */
+__declspec(naked) void TripleGuardSetTailJmp_00482680(void) {
+    __asm {
+        call    func_00488f00
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   56h
+        call    func_00494580
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   48h
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3ah
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     TwoEntryWrapperGuarded_004826f0
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [eax*4 + 0x4c], 0x28f
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x1999
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        jmp     TwoEntryWrapperGuarded_004826f0
+        ret
+    }
+}
+
+/* @addr 0x0046db60 (102b)
+ *   call func_0048fc80; if eax != 0: ret;
+ *   call DualScaledInitCmp_0046dbd0; if pause: ret;
+ *   eax = g_scaledInit; ecx = [eax*4]; g_data_00542070 = 0;
+ *   g_walkCallback = ecx; [eax*4] = 0;
+ *   edx = g_state_0054208c; ecx = g_walkCallback;
+ *   eax = 4; edx |= 4; test ecx,ecx;
+ *   g_state_0054208c = edx; if zero: ret;
+ *   ecx = edx; ecx ^= 4; g_state_0054208c = ecx; ret.
+ */
+__declspec(naked) void GuardedChainClearFlagToggle_0046db60(void) {
+    __asm {
+        call    func_0048fc80
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        call    DualScaledInitCmp_0046dbd0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4eh
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0], 0
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     eax, 4
+        or      edx, eax
+        test    ecx, ecx
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   0ah
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        ret
+    }
+}
+
+/* @addr 0x004949f0 (102b)
+ *   eax = arg0; ecx = g_baseSel; eax >>= 2; g_eventQueueEnd = eax;
+ *   eax += 4; g_scaledInit = eax; eax = [eax*4]; [ecx*4 + 0x6c] = eax;
+ *   edx = g_eventQueueEnd; eax = [edx*4 + 0xc]; g_data_00542050 = eax;
+ *   if zero: jmp end;
+ *   call func_0048ec30; if pause: ret;
+ *   if (bit0 of g_state_0054208c) != 0: jmp dword ptr [g_data_00542050];
+ *   end: jmp func_00494a60.
+ */
+__declspec(naked) void ScaledLookupGuardJmpIndirect_004949f0(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        sar     eax, 2
+        mov     dword ptr [g_eventQueueEnd], eax
+        add     eax, 4
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     eax, dword ptr [edx*4 + 0x0c]
+        test    eax, eax
+        mov     dword ptr [g_data_00542050], eax
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   2dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_0048ec30
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   06h
+        jmp     dword ptr [g_data_00542050]
+        jmp     func_00494a60
+        ret
+    }
+}
+
+/* @addr 0x00439cb0 (103b)
+ *   call func_00439760; if pause: ret;
+ *   al = byte [g_state_0054208c]; ecx = 1; test cl,al;
+ *   if zero: ret;
+ *   eax = g_state_00535ddc; cmp eax,0x30000; g_walkCallback=eax;
+ *   if gt: ret;
+ *   cmp eax, 0x20000; g_data_0053a478 = ecx; if gt: jmp Thunk_00439e30;
+ *   cmp eax, 0x18000; if gt: jmp 0x439e30 (cluster);
+ *   push 0x4e49d0; call func_00438220; pop esp; if pause: ret;
+ *   jmp 0x439e30.
+ */
+__declspec(naked) void TieredCmpDispatch_00439cb0(void) {
+    __asm {
+        call    func_00439760
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   58h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ecx, 1
+        _emit   84h
+        _emit   0c1h
+        _emit   74h
+        _emit   4ah
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x30000
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7fh
+        _emit   39h
+        cmp     eax, 0x20000
+        mov     dword ptr [g_data_0053a478], ecx
+        _emit   7eh
+        _emit   05h
+        _emit   0e9h
+        _emit   31h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     eax, 0x18000
+        _emit   7eh
+        _emit   05h
+        _emit   0e9h
+        _emit   35h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        push    0x004e49d0
+        call    func_00438220
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   1ah
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x00461020 (103b)
+ *   eax = g_state_004d57ac; g_data_00542070 = 4;
+ *   ++eax; g_state_004d57ac = eax; [eax*4] = 4;
+ *   call func_0048ec30; if pause: ret;
+ *   ecx = g_state_004d57ac; eax = [ecx*4]; --ecx;
+ *   g_state_004d57ac = ecx; cl = byte [g_state_0054208c];
+ *   test cl,1; g_data_00542070 = eax;
+ *   if zero: skip; eax = 6; g_data_00542070 = 6;
+ *   skip: g_walkCallback = eax; jmp 0x471190.
+ */
+__declspec(naked) void PushFourCallPopBitJmp_00461020(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_00542070], 4
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], 4
+        call    func_0048ec30
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   38h
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [ecx*4 + 0]
+        dec     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     cl, byte ptr [g_state_0054208c]
+        test    cl, 1
+        mov     dword ptr [g_data_00542070], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, 6
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_walkCallback], eax
+        jmp     func_00471190
         ret
     }
 }
