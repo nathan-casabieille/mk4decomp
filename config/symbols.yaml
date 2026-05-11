@@ -2719,10 +2719,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042b8d0
-    name: func_0042b8d0
+    name: GuardedRangeCmpFpuJmp_0042b8d0
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b930
     name: func_0042b930
     size: 2656
@@ -5521,10 +5522,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00457ad0
-    name: func_00457ad0
+    name: Push70CallScaleArith_00457ad0
     size: 100
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457b40
     name: func_00457b40
     size: 108
@@ -5634,10 +5636,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00459290
-    name: func_00459290
+    name: LinearSearchByEsi_00459290
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004592f0
     name: func_004592f0
     size: 506
@@ -6171,10 +6174,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00460e40
-    name: func_00460e40
+    name: GuardedScaledChainJmpIndirect_00460e40
     size: 100
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460eb0
     name: func_00460eb0
     size: 98
@@ -7564,10 +7568,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004769b0
-    name: func_004769b0
+    name: PushSetAddCallPop_004769b0
     size: 100
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476a20
     name: func_00476a20
     size: 202
@@ -8357,10 +8362,11 @@ functions:
     status: matched
     file: src/engine/cmp_p1_dual_init_store.c
   - addr: 0x00482b00
-    name: func_00482b00
+    name: CmpDualPatchCallJmp_00482b00
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482b60
     name: func_00482b60
     size: 124
@@ -8976,10 +8982,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x00489ee0
-    name: func_00489ee0
+    name: ScaledChainPushCall_00489ee0
     size: 100
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489f50
     name: Push16Call_00489f50
     size: 16
@@ -9536,10 +9543,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0048e450
-    name: func_0048e450
+    name: CmpCondIdxArrLookup_0048e450
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e4b0
     name: OrDualStore_0048e4b0
     size: 24
