@@ -2825,10 +2825,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042d010
-    name: func_0042d010
+    name: DualMul10ChainAcc_0042d010
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042d070
     name: SetJmp_0042d070
     size: 15
@@ -4290,10 +4291,11 @@ functions:
     status: matched
     file: src/engine/scaled_pop_save_jmp.c
   - addr: 0x0043bb50
-    name: func_0043bb50
+    name: Push80TripleCallTailJmp_0043bb50
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bbb0
     name: func_0043bbb0
     size: 379
@@ -9815,10 +9817,11 @@ functions:
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x0048f740
-    name: func_0048f740
+    name: TripleFieldCopyJmpHi_0048f740
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f7b0
     name: TripleFieldCopyHi_0048f7b0
     size: 93
@@ -9826,10 +9829,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f810
-    name: func_0048f810
+    name: TripleFieldCopyJmpLo_0048f810
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f880
     name: TripleFieldCopyLo_0048f880
     size: 93

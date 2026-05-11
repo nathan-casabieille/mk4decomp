@@ -1743,6 +1743,8 @@ extern void func_004071a0(void);
 extern void func_00470480(void);
 extern void func_0048f8e0(void);
 extern void func_00405e70(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_state_00535cfc;
@@ -2196,6 +2198,136 @@ __declspec(naked) void ChainWalkCallCmp_0049b6d0(void) {
         _emit   05h
         _emit   0e9h
         _emit   02h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x0048f740 (97b)
+ *   3-field copy from g_cj_0054205c[+0x6c/0x70/0x74] →
+ *   g_baseSel[+0x5c/0x60/0x64] (each via walkCallback),
+ *   then jmp ScaledZeroFour_00490740.
+ */
+__declspec(naked) void TripleFieldCopyJmpHi_0048f740(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x6c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x70]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x60], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x74]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        jmp     ScaledZeroFour_00490740
+    }
+}
+
+/* @addr 0x0048f810 (97b) - twin of 0x0048f740 with source offsets 0x54/0x58/0x5c. */
+__declspec(naked) void TripleFieldCopyJmpLo_0048f810(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x60], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x5c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        jmp     ScaledZeroFour_00490740
+    }
+}
+
+/* @addr 0x0042d010 (96b)
+ *   ecx = g_cj_0054205c; edx = g_data_00542070;
+ *   eax = [ecx*4+0x54]; g_acc_00542078 = eax;
+ *   ecx = [ecx*4+0x5c]; eax -= edx; edx = g_eventQueueWorkType;
+ *   ecx -= edx; push eax, eax; g_acc_00542078 = eax;
+ *   g_state_0054207c = ecx; call Mul10Tail_00404af0; pop esp*2;
+ *   g_acc_00542078 = eax; eax = g_state_0054207c;
+ *   push eax, eax; call Mul10Tail; ecx = g_acc_00542078;
+ *   pop esp*2; add eax,ecx; g_state_0054207c=eax; ret.
+ */
+__declspec(naked) void DualMul10ChainAcc_0042d010(void) {
+    __asm {
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_acc_00542078], eax
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        sub     eax, edx
+        mov     edx, dword ptr [g_eventQueueWorkType]
+        sub     ecx, edx
+        push    eax
+        push    eax
+        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_state_0054207c], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_acc_00542078], eax
+        mov     eax, dword ptr [g_state_0054207c]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_acc_00542078]
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_state_0054207c], eax
+        ret
+    }
+}
+
+/* @addr 0x0043bb50 (96b)
+ *   Push g_state_00542080 on mstack;
+ *   call DualCallPauseDirtyJmp_00490c30; if pause: ret;
+ *   call ScaledZeroFour_00490740; if pause: ret;
+ *   call CallPauseScaledStoreCopyJmp_00461220; if pause: ret;
+ *   pop g_state_00542080; jmp 0x43bbb0.
+ */
+__declspec(naked) void Push80TripleCallTailJmp_0043bb50(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0e9h
+        _emit   01h
         _emit   00h
         _emit   00h
         _emit   00h
