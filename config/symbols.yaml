@@ -3781,10 +3781,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x00438530
-    name: func_00438530
+    name: CmpDispatchPushCallPop_00438530
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438590
     name: func_00438590
     size: 155
@@ -7868,10 +7869,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x0047c620
-    name: func_0047c620
+    name: OneSetCmpJmpLoadCall_0047c620
     size: 92
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c680
     name: func_0047c680
     size: 504
@@ -8170,15 +8172,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00480ac0
-    name: func_00480ac0
+    name: InstallSelfCmpJgJmp_00480ac0
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480b20
-    name: func_00480b20
+    name: InstallSelfCmpJlJmp_00480b20
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480b80
     name: func_00480b80
     size: 401
@@ -8439,10 +8443,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesOO.c
   - addr: 0x00483ae0
-    name: func_00483ae0
+    name: InstallSelfCallBitGate_00483ae0
     size: 92
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483b40
     name: SetJmp_00483b40
     size: 15
@@ -8937,10 +8942,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489c70
-    name: func_00489c70
+    name: DualSubFromField_00489c70
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489cd0
     name: DualInstallCallSwap_00489cd0
     size: 64
@@ -9808,20 +9814,22 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f7b0
-    name: func_0048f7b0
+    name: TripleFieldCopyHi_0048f7b0
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f810
     name: func_0048f810
     size: 97
     group: game
     status: stub
   - addr: 0x0048f880
-    name: func_0048f880
+    name: TripleFieldCopyLo_0048f880
     size: 93
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f8e0
     name: ScaledChainCallPauseSetJmp_0048f8e0
     size: 48
@@ -11785,10 +11793,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a4880
-    name: func_004a4880
+    name: TripleCallSetCopy_004a4880
     size: 92
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a48e0
     name: func_004a48e0
     size: 803
@@ -13491,10 +13500,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b8ec0
-    name: func_004b8ec0
+    name: SetupBufferOffsets_004b8ec0
     size: 92
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8f20
     name: ZeroEightFields_004b8f20
     size: 43

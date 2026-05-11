@@ -109,6 +109,12 @@ extern void func_0046f7a0(void);
 extern void func_004767e0(void);
 extern void LiteralPushCallEntZero_00488c00(void);
 extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void IterLoad_00491050(void);
+extern void func_0048eba0(void);
+extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void LoadGeoAsset_Default(void);
+extern void DispatcherComplex260_00407400(void);
+extern void func_00406530(void);
 extern unsigned int g_state_0053a3c0;
 extern unsigned int g_state_00538158;
 extern unsigned int g_data_00535cf8;
@@ -1589,6 +1595,347 @@ __declspec(naked) void ScaledByteIdxDualCopy_004a3260(void) {
         mov     edx, dword ptr [g_data_005437f0]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [edx*4 + 0x5c], ecx
+        ret
+    }
+}
+
+/* @addr 0x0047c620 (92b)
+ *   ecx = g_baseSel; eax = 1; g_walkCallback = 1;
+ *   [ecx*4 + 0x68] = 1; edx = g_cj_0054205c;
+ *   eax = 0x4ffe1c >> 2; g_xformEntityIdx = eax;
+ *   ecx = [edx*4 + 0x24]; cmp eax, ecx;
+ *   g_scaledInit = ecx; if eq: jmp end;
+ *   push 0x542b90; call IterLoad_00491050; pop esp;
+ *   if pause: ret; jmp end. (end is a ret).
+ */
+__declspec(naked) void OneSetCmpJmpLoadCall_0047c620(void) {
+    __asm {
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x68], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x004ffe1c
+        shr     eax, 2
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     ecx, dword ptr [edx*4 + 0x24]
+        cmp     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   20h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    0x00542b90
+        call    IterLoad_00491050
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   05h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x00483ae0 (92b)
+ *   eax = g_baseSel<<2; ecx = [eax+0x84]; [eax+0x84] = 0;
+ *   if ecx != 0: call func_0048eba0; if pause: ret;
+ *     if (bit0 of g_state_0054208c) == 0: jmp CallPauseDirty1JmpDirty4StackPush;
+ *     else: jmp CallPauseScaledStorePushCall_0045fca0;
+ *   else: ecx=1; [eax+8]=0x483ae0; [eax+0x84]=1;
+ *         g_pendingNodeType=1; g_framePauseFlag=1; ret.
+ */
+__declspec(naked) void InstallSelfCallBitGate_00483ae0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   21h
+        call    func_0048eba0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   31h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseScaledStorePushCall_0045fca0
+        jmp     CallPauseDirty1JmpDirty4StackPush_00483a80
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], 0x00483ae0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
+        ret
+    }
+}
+
+/* @addr 0x004a4880 (92b)
+ *   g_scaledInit = 0x503308>>2; call LoadGeoAsset_Default;
+ *   if pause: ret; g_xformEntityIdx = 0x506414>>2;
+ *   call DispatcherComplex260_00407400; if pause: ret;
+ *   call func_00406530; if pause: ret;
+ *   g_cj_00542058 = 0; g_eventQueueEnd = g_scaledInit; ret.
+ */
+__declspec(naked) void TripleCallSetCopy_004a4880(void) {
+    __asm {
+        mov     eax, 0x00503308
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        mov     ecx, 0x00506414
+        shr     ecx, 2
+        mov     dword ptr [g_xformEntityIdx], ecx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        call    func_00406530
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   16h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_cj_00542058], 0
+        mov     dword ptr [g_eventQueueEnd], edx
+        ret
+    }
+}
+
+/* @addr 0x004b8ec0 (92b)
+ *   eax = arg0; g_data_00ab4d9c = eax;
+ *   ecx = eax + 0x200; edx = eax + 0x400;
+ *   g_data_00ab4da0 = ecx; g_data_00ab4da4 = edx;
+ *   ecx = eax + 0x580; edx = eax + 0x680;
+ *   g_data_00ab4da8 = ecx; g_data_00ab4dac = edx;
+ *   ecx = eax + 0x720; edx = eax + 0x780;
+ *   eax += 0x7c0; g_data_00ab4db0=ecx; g_data_00ab4db4=edx;
+ *   g_data_00ab4db8=eax; ret.
+ */
+extern unsigned int g_state_00ab4d9c;
+extern unsigned int g_state_00ab4da0;
+extern unsigned int g_state_00ab4da4;
+extern unsigned int g_state_00ab4da8;
+extern unsigned int g_state_00ab4dac;
+extern unsigned int g_state_00ab4db0;
+extern unsigned int g_state_00ab4db4;
+extern unsigned int g_state_00ab4db8;
+__declspec(naked) void SetupBufferOffsets_004b8ec0(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     dword ptr [g_state_00ab4d9c], eax
+        lea     ecx, [eax + 0x200]
+        lea     edx, [eax + 0x400]
+        mov     dword ptr [g_state_00ab4da0], ecx
+        mov     dword ptr [g_state_00ab4da4], edx
+        lea     ecx, [eax + 0x580]
+        lea     edx, [eax + 0x680]
+        mov     dword ptr [g_state_00ab4da8], ecx
+        mov     dword ptr [g_state_00ab4dac], edx
+        lea     ecx, [eax + 0x720]
+        lea     edx, [eax + 0x780]
+        add     eax, 0x7c0
+        mov     dword ptr [g_state_00ab4db0], ecx
+        mov     dword ptr [g_state_00ab4db4], edx
+        mov     dword ptr [g_state_00ab4db8], eax
+        ret
+    }
+}
+
+/* @addr 0x00438530 (93b)
+ *   eax = g_state_00535ddc; ecx = g_data_00542084;
+ *   cmp eax,ecx; g_walkCallback = eax;
+ *   if lt: jmp StackPopDispatchTagged_0041f780;
+ *   else: push g_state_00542080 on mstack;
+ *         call Push80SetWalkDualCallPop_00439350;
+ *         if pause: ret; pop g_state_00542080; jmp 0x438590.
+ *   At 0x438587 we jmp 0x438590 (4 bytes past local end which is itself outside).
+ */
+__declspec(naked) void CmpDispatchPushCallPop_00438530(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_data_00542084]
+        cmp     eax, ecx
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7dh
+        _emit   05h
+        jmp     StackPopDispatchTagged_0041f780
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    Push80SetWalkDualCallPop_00439350
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0e9h
+        _emit   04h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x00480ac0 (93b)
+ *   eax = g_baseSel<<2; ecx = [eax+0x84]; [eax+0x84] = 0;
+ *   if ecx != 0:
+ *     ecx = g_cj_0054205c; edx = g_state_0054207c;
+ *     ecx = [ecx*4 + 0x58]; cmp ecx,edx; g_walkCallback = ecx;
+ *     if gt: jmp install;
+ *     jmp StackPopDispatchTagged_0041f780;
+ *   install: ecx=1; [eax+8]=0x480ac0; [eax+0x84]=1;
+ *            g_pendingNodeType=1; g_framePauseFlag=1; ret.
+ */
+__declspec(naked) void InstallSelfCmpJgJmp_00480ac0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   22h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [ecx*4 + 0x58]
+        cmp     ecx, edx
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   7fh
+        _emit   05h
+        jmp     StackPopDispatchTagged_0041f780
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], 0x00480ac0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
+        ret
+    }
+}
+
+/* @addr 0x00480b20 (93b) - twin of 0x00480ac0 with `jl` instead of `jg`. */
+__declspec(naked) void InstallSelfCmpJlJmp_00480b20(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   22h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [ecx*4 + 0x58]
+        cmp     ecx, edx
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   7ch
+        _emit   05h
+        jmp     StackPopDispatchTagged_0041f780
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], 0x00480b20
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
+        ret
+    }
+}
+
+/* @addr 0x0048f7b0 (93b)
+ *   3-field copy: g_baseSel[*4+0x5c/0x60/0x64] →
+ *                 g_cj_0054205c[*4+0x6c/0x70/0x74] (via walkCallback).
+ */
+__declspec(naked) void TripleFieldCopyHi_0048f7b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x60]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x64]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        ret
+    }
+}
+
+/* @addr 0x0048f880 (93b) - twin of 0x0048f7b0 mapping to 0x54/0x58/0x5c. */
+__declspec(naked) void TripleFieldCopyLo_0048f880(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x60]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x64]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        ret
+    }
+}
+
+/* @addr 0x00489c70 (93b)
+ *   eax = g_pendingNodeType; ecx = [eax*4 + 0x54];
+ *   g_walkCallback = ecx; edx = [eax*4 + 0x6c]; ecx -= edx;
+ *   g_data_00542070 = edx; g_walkCallback = ecx;
+ *   [eax*4 + 0x54] = ecx; eax = g_pendingNodeType;
+ *   ecx = [eax*4 + 0x5c]; g_walkCallback = ecx;
+ *   edx = [eax*4 + 0x74]; ecx -= edx; g_data_00542070 = edx;
+ *   g_walkCallback = ecx; [eax*4 + 0x5c] = ecx; ret.
+ */
+__declspec(naked) void DualSubFromField_00489c70(void) {
+    __asm {
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     edx, dword ptr [eax*4 + 0x6c]
+        sub     ecx, edx
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     ecx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     edx, dword ptr [eax*4 + 0x74]
+        sub     ecx, edx
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [eax*4 + 0x5c], ecx
         ret
     }
 }
