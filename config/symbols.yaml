@@ -2018,10 +2018,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00425900
-    name: func_00425900
+    name: PushStackAllocCall_00425900
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425970
     name: func_00425970
     size: 269
@@ -4688,10 +4689,11 @@ functions:
     status: matched
     file: src/engine/scaled_init_pause_dirty_store.c
   - addr: 0x00445f40
-    name: func_00445f40
+    name: InitZeroSixFields_00445f40
     size: 98
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00445fb0
     name: SetWalk0xaCrossStore_00445fb0
     size: 70
@@ -6180,10 +6182,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00460eb0
-    name: func_00460eb0
+    name: DualCmpSetFlagBitToggle_00460eb0
     size: 98
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460f20
     name: func_00460f20
     size: 119
@@ -6698,10 +6701,11 @@ functions:
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x0046a580
-    name: func_0046a580
+    name: PushArgClearSetCallJmp_0046a580
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046a5e0
     name: ScaledInitOrSelfPtrSetType_0046a5e0
     size: 68
@@ -6998,10 +7002,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470840
-    name: func_00470840
+    name: DualPickDecJmp_00470840
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004708a0
     name: ScaledStoreCSet58Jmp_004708a0
     size: 31
@@ -9299,10 +9304,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x0048bae0
-    name: func_0048bae0
+    name: PushBitFieldMergePop_0048bae0
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048bb40
     name: ScaledShrAnd_0048bb40
     size: 25
@@ -10518,10 +10524,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00493e40
-    name: func_00493e40
+    name: PushSetCallTailJmp_00493e40
     size: 98
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493eb0
     name: ScaledLoadJmp30_00493eb0
     size: 23

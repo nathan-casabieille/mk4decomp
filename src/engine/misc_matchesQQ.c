@@ -1759,6 +1759,16 @@ extern void Wrapper_0048a350(void);
 extern void func_0042b930(void);
 extern void FpuSqrtMul_004ab350(void);
 extern unsigned int g_data_0053a498;
+extern unsigned int g_state_004d50a8;
+extern unsigned int g_dualB_00538038;
+extern unsigned int g_dualB_0053803c;
+extern unsigned int g_state_00541dc4;
+extern void TripleSubVec3_004250f0(void);
+extern void func_00425830(void);
+extern void func_00493a20(void);
+extern void LoadCmpAddrJmp_00493ed0(void);
+extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
+extern void ScaledStoreCSet58Jmp_004708a0(void);
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_state_00535cfc;
@@ -2811,6 +2821,265 @@ __declspec(naked) void GuardedScaledChainJmpIndirect_00460e40(void) {
         _emit   74h
         _emit   02h
         jmp     eax
+        ret
+    }
+}
+
+/* @addr 0x00425900 (97b)
+ *   Push g_scaledInit on mstack; sub esp,0xc; lea edx,[esp];
+ *   edx >>= 2; g_scaledInit = edx; call TripleSubVec3_004250f0;
+ *   if pause: skip; eax = g_scaledInit; g_xformEntityIdx = eax;
+ *   pop g_scaledInit; call func_00425830; add esp,0xc; ret.
+ */
+__declspec(naked) void PushStackAllocCall_00425900(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        sub     esp, 0x0c
+        inc     eax
+        _emit   8dh
+        _emit   54h
+        _emit   24h
+        _emit   00h
+        mov     dword ptr [g_state_004d57ac], eax
+        sar     edx, 2
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    TripleSubVec3_004250f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    func_00425830
+        add     esp, 0x0c
+        ret
+    }
+}
+
+/* @addr 0x00445f40 (98b)
+ *   eax = g_baseSel[*4+0x5c]; g_scaledInit = eax;
+ *   ecx = 0; [eax*4+0x1c] = 0; edx = g_scaledInit;
+ *   g_walkCallback = 0; [edx*4+0x30] = 0;
+ *   ecx = g_walkCallback; lea eax,[edx*4]; [eax+0x34]=ecx;
+ *   edx=g_walkCallback; [eax+0x38]=edx;
+ *   ecx=g_walkCallback; [eax+0x3c]=ecx;
+ *   edx=g_walkCallback; [eax+0x40]=edx;
+ *   ecx=g_walkCallback; [eax+0x44]=ecx; ret.
+ */
+__declspec(naked) void InitZeroSixFields_00445f40(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     ecx, ecx
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0x1c], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [edx*4 + 0x30], ecx
+        mov     ecx, dword ptr [g_walkCallback]
+        lea     eax, [edx*4 + 0]
+        mov     dword ptr [eax + 0x34], ecx
+        mov     edx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax + 0x38], edx
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax + 0x3c], ecx
+        mov     edx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax + 0x40], edx
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     dword ptr [eax + 0x44], ecx
+        ret
+    }
+}
+
+/* @addr 0x00460eb0 (98b)
+ *   ecx = g_state_00538158; edx = g_cj_0054205c; eax = 4;
+ *   cmp edx,ecx; g_data_00542070 = eax; g_scaledInit = ecx;
+ *   if eq: skip; eax = 0x40; g_data_00542070 = 0x40;
+ *   skip: ecx = g_state_004d50a8; edx = g_state_0054208c;
+ *   ~ecx; edx &= 0xfffffffe; eax &= ecx;
+ *   g_state_00542094 = eax; g_walkCallback = ecx;
+ *   g_state_0054208c = edx; eax = edx;
+ *   if (not equal flag): jmp clear;
+ *   eax |= 4; g_state_0054208c = eax; ret;
+ *   clear: eax &= 0xfb; g_state_0054208c = eax; ret.
+ */
+__declspec(naked) void DualCmpSetFlagBitToggle_00460eb0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, 4
+        cmp     edx, ecx
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, 0x40
+        mov     dword ptr [g_data_00542070], eax
+        mov     ecx, dword ptr [g_state_004d50a8]
+        mov     edx, dword ptr [g_state_0054208c]
+        not     ecx
+        and     edx, 0xfffffffe
+        and     eax, ecx
+        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_state_0054208c], edx
+        mov     eax, edx
+        _emit   75h
+        _emit   08h
+        or      al, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        and     al, 0xfb
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+/* @addr 0x00493e40 (98b)
+ *   Push g_xformEntityIdx on mstack; edx = g_cj_0054205c;
+ *   eax = [edx*4+0x30]; g_walkCallback = eax;
+ *   call func_00493a20; if pause: ret;
+ *   ecx = g_xformEntityIdx; eax = g_state_004d57ac;
+ *   g_walkCallback = ecx; edx = [eax*4]; --eax;
+ *   g_xformEntityIdx = edx; g_state_004d57ac = eax;
+ *   jmp LoadCmpAddrJmp_00493ed0.
+ */
+__declspec(naked) void PushSetCallTailJmp_00493e40(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        mov     dword ptr [g_walkCallback], eax
+        call    func_00493a20
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     LoadCmpAddrJmp_00493ed0
+        ret
+    }
+}
+
+/* @addr 0x0046a580 (96b)
+ *   eax = g_baseSel; g_walkCallback = 0; push 0x542a64;
+ *   [eax*4+0x80] = 0; edx = g_baseSel; ecx = g_walkCallback;
+ *   eax = 0x1009; [edx*4+0x7c] = ecx; ecx = g_baseSel;
+ *   g_walkCallback = 0x1009; [ecx*4+0x74] = 0x1009;
+ *   call IterLoad_00491050; pop esp; if pause: ret;
+ *   jmp ScaledInitOrSelfPtrSetType_0046a5e0.
+ */
+__declspec(naked) void PushArgClearSetCallJmp_0046a580(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_walkCallback], 0
+        push    0x00542a64
+        mov     dword ptr [eax*4 + 0x80], 0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     eax, 0x1009
+        mov     dword ptr [edx*4 + 0x7c], ecx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    IterLoad_00491050
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledInitOrSelfPtrSetType_0046a5e0
+        ret
+    }
+}
+
+/* @addr 0x00470840 (96b)
+ *   eax = g_state_00538158; edx = g_cj_0054205c;
+ *   ecx = g_dualB_00538038; cmp edx,eax; g_xformEntityIdx = ecx;
+ *   g_scaledInit = eax; if eq: skip;
+ *   ecx = g_dualB_0053803c; g_xformEntityIdx = ecx;
+ *   skip: eax = [ecx*4+0x5c]; dec eax;
+ *   g_walkCallback = eax; g_state_00541dc4 = eax;
+ *   if jns: skip2; eax=1; g_walkCallback=1;
+ *   skip2: [ecx*4+0x5c] = eax;
+ *   eax = g_state_00541dc4; if zero: jmp 0x4708a0; else ret.
+ */
+__declspec(naked) void DualPickDecJmp_00470840(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_dualB_00538038]
+        cmp     edx, eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   0ch
+        mov     ecx, dword ptr [g_dualB_0053803c]
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     eax, dword ptr [ecx*4 + 0x5c]
+        dec     eax
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_state_00541dc4], eax
+        _emit   79h
+        _emit   0ah
+        mov     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_state_00541dc4]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledStoreCSet58Jmp_004708a0
+        ret
+    }
+}
+
+/* @addr 0x0048bae0 (96b)
+ *   Push g_scaledInit on mstack;
+ *   eax = g_walkCallback & 3; eax <<= 0xc; g_walkCallback = eax;
+ *   ecx = [g_cj_0054205c*4 + 0x40]; ch &= 0xcf; ecx |= eax;
+ *   g_scaledInit = ecx; [g_cj_0054205c*4 + 0x40] = ecx;
+ *   pop g_scaledInit; ret.
+ */
+__declspec(naked) void PushBitFieldMergePop_0048bae0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_cj_0054205c]
+        and     eax, 3
+        shl     eax, 0x0c
+        mov     dword ptr [g_walkCallback], eax
+        mov     ecx, dword ptr [edx*4 + 0x40]
+        and     ch, 0xcf
+        or      ecx, eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [edx*4 + 0x40], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
         ret
     }
 }
