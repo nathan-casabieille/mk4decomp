@@ -109,10 +109,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00403c20
-    name: func_00403c20
+    name: RegistryPushBindPop_00403c20
     size: 102
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00403c90
     name: func_00403c90
     size: 196
@@ -135,10 +136,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x004048b0
-    name: func_004048b0
+    name: InstallSelfPairedGate_004048b0
     size: 106
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00404920
     name: func_00404920
     size: 160
@@ -327,10 +329,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x00405a40
-    name: func_00405a40
+    name: ChainWalkPushPop_00405a40
     size: 114
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00405ac0
     name: Thunk_00405ac0
     size: 5
@@ -696,10 +699,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00408cb0
-    name: func_00408cb0
+    name: DirtyDoubleDeref_00408cb0
     size: 105
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00408d20
     name: SetJmp_00408d20
     size: 15
@@ -1058,10 +1062,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00412450
-    name: func_00412450
+    name: GatedDoubleSetupJmp_00412450
     size: 111
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004124c0
     name: func_004124c0
     size: 276
@@ -1230,10 +1235,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00416db0
-    name: func_00416db0
+    name: TwinTagClear_00416db0
     size: 110
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00416e20
     name: func_00416e20
     size: 2590
@@ -1498,10 +1504,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041f710
-    name: func_0041f710
+    name: NodeUnlink_0041f710
     size: 106
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041f780
     name: StackPopDispatchTagged_0041f780
     size: 77
@@ -1696,10 +1703,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421fe0
-    name: func_00421fe0
+    name: GuardedChainDispatch_00421fe0
     size: 108
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422050
     name: TwoPushCallSetDirty_00422050
     size: 43
@@ -1729,10 +1737,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422380
-    name: func_00422380
+    name: StateInitShuffle_00422380
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004223e0
     name: func_004223e0
     size: 523
@@ -1767,10 +1776,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00422810
-    name: func_00422810
+    name: CountdownClampWalk_00422810
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422880
     name: CallPauseEvtPushJmp_00422880
     size: 44
@@ -1819,10 +1829,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00423270
-    name: func_00423270
+    name: DoublePushCallDualPopJmp_00423270
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004232e0
     name: func_004232e0
     size: 778
@@ -1835,10 +1846,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesCC.c
   - addr: 0x00423630
-    name: func_00423630
+    name: InstallSelfPause2_00423630
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004236a0
     name: func_004236a0
     size: 125
@@ -1898,10 +1910,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00424170
-    name: func_00424170
+    name: TripleArgScaledShiftCall_00424170
     size: 132
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424200
     name: func_00424200
     size: 321
@@ -1938,15 +1951,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00424990
-    name: func_00424990
+    name: TripleMul10VecJmpFpu_00424990
     size: 132
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424a20
-    name: func_00424a20
+    name: Triple3VecMul10Tail_00424a20
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424a90
     name: func_00424a90
     size: 223
@@ -2105,15 +2120,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004266d0
-    name: func_004266d0
+    name: Eleven404b90_404c00_004266d0
     size: 162
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426780
-    name: func_00426780
+    name: Ten404c40_404bd0_00426780
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004267f0
     name: func_004267f0
     size: 563
@@ -2162,10 +2179,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00427470
-    name: func_00427470
+    name: AllocSlotPushTripleGlobals_00427470
     size: 126
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004274f0
     name: func_004274f0
     size: 208
@@ -2187,10 +2205,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00427ad0
-    name: func_00427ad0
+    name: Push48PreSetTwoStores_00427ad0
     size: 138
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427b60
     name: func_00427b60
     size: 830
@@ -2203,10 +2222,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesS.c
   - addr: 0x00427ee0
-    name: func_00427ee0
+    name: DualPushCallBitDispatch_00427ee0
     size: 164
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427f90
     name: func_00427f90
     size: 156
@@ -2294,10 +2314,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004285e0
-    name: func_004285e0
+    name: CallDualStoreXorBit_004285e0
     size: 99
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428650
     name: CallPauseDecScaled_00428650
     size: 41
@@ -2305,10 +2326,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesD.c
   - addr: 0x00428680
-    name: func_00428680
+    name: EsiInstallChainCallIndirect_00428680
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428730
     name: IterStepScaledStore24_00428730
     size: 48
@@ -2322,10 +2344,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004287b0
-    name: func_004287b0
+    name: ScaledDualPropagateJmp_004287b0
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428820
     name: CallPauseScaledStoreJmp_00428820
     size: 38
@@ -2345,10 +2368,11 @@ functions:
     status: matched
     file: src/engine/call_pause_scaled_store_jmp.c
   - addr: 0x004288e0
-    name: func_004288e0
+    name: DualGuardPushInstallJmp_004288e0
     size: 106
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428950
     name: ScaledInitOrSelfPtr_00428950
     size: 64
@@ -2467,10 +2491,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429300
-    name: func_00429300
+    name: EsiInstallChainCmpDualCall_00429300
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429390
     name: ScaledLoadJmp_00429390
     size: 23
@@ -2484,10 +2509,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004293d0
-    name: func_004293d0
+    name: EsiInstallDecCallChain_004293d0
     size: 115
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429450
     name: ScaledArrStore_00429450
     size: 23
@@ -2501,25 +2527,29 @@ functions:
     status: matched
     file: src/engine/scaled_chain_jmp.c
   - addr: 0x004294a0
-    name: func_004294a0
+    name: EsiInstallDecCallChain_004294a0
     size: 129
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429530
-    name: func_00429530
+    name: EsiInstallBitCallChain_00429530
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004295a0
-    name: func_004295a0
+    name: EsiInstallBitCallChain_004295a0
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429610
-    name: func_00429610
+    name: EsiInstallBitCallChain_00429610
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429680
     name: ScaledInitOrSelfPtr_00429680
     size: 64
@@ -2641,10 +2671,11 @@ functions:
     status: matched
     file: src/engine/scaled_array_store.c
   - addr: 0x004299a0
-    name: func_004299a0
+    name: GuardedChainCmpDualBitXor_004299a0
     size: 160
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429a40
     name: func_00429a40
     size: 128
@@ -2682,10 +2713,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042af10
-    name: func_0042af10
+    name: TripleVecModClamp_0042af10
     size: 164
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042afc0
     name: ModuloMagic_0042afc0
     size: 64
@@ -2972,10 +3004,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042fad0
-    name: func_0042fad0
+    name: EsiInstallChainCallCmpThreshold_0042fad0
     size: 163
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042fb80
     name: GuardedSeq_0042fb80
     size: 20
@@ -3021,10 +3054,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00430020
-    name: func_00430020
+    name: DualMul10ChainAcc7C_00430020
     size: 115
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004300a0
     name: func_004300a0
     size: 312
@@ -3061,10 +3095,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004310c0
-    name: func_004310c0
+    name: TimerWindowWrap_004310c0
     size: 96
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431120
     name: func_00431120
     size: 177
@@ -3086,15 +3121,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004313d0
-    name: func_004313d0
+    name: TripleScaledChainStore54_004313d0
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431450
-    name: func_00431450
+    name: TripleScaledChainStore60_00431450
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004314d0
     name: LoadStoreScaled58_004314d0
     size: 29
@@ -3130,10 +3167,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00431c80
-    name: func_00431c80
+    name: DualChainSubCallSubLoad_00431c80
     size: 112
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431cf0
     name: GuardedTimeBudgetDualMul10_00431cf0
     size: 81
@@ -3158,10 +3196,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00431e90
-    name: func_00431e90
+    name: GuardedArithDualCallChain_00431e90
     size: 170
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431f40
     name: func_00431f40
     size: 178
@@ -3356,15 +3395,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004347f0
-    name: func_004347f0
+    name: InstallSelfChainSet80Call_004347f0
     size: 138
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434880
-    name: func_00434880
+    name: ChainDecCondStoreCallJmp_00434880
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004348f0
     name: func_004348f0
     size: 148
@@ -3420,15 +3461,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00434f10
-    name: func_00434f10
+    name: InstallSelfChainExtendCall_00434f10
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434f90
-    name: func_00434f90
+    name: InstallSelfChainSet84_80Call_00434f90
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435030
     name: func_00435030
     size: 178
@@ -3446,10 +3489,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004351b0
-    name: func_004351b0
+    name: InstallSelfChainExtendCall_004351b0
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435230
     name: CallPauseCmpDoubleJmp_00435230
     size: 37
@@ -3564,10 +3608,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004363f0
-    name: func_004363f0
+    name: InstallSelfChainSet84_80CallW_004363f0
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436490
     name: Wrapper_00436490
     size: 14
@@ -3756,10 +3801,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00438340
-    name: func_00438340
+    name: ThreeStageGateCascade_00438340
     size: 108
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004383b0
     name: func_004383b0
     size: 139
@@ -3845,15 +3891,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00438aa0
-    name: func_00438aa0
+    name: InstallSelfBitGate_00438aa0
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438b10
-    name: func_00438b10
+    name: EsiInstallTwoCallCmpInstall_00438b10
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438b90
     name: PushPop84TripleCall_00438b90
     size: 91
@@ -3973,15 +4021,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x004391d0
-    name: func_004391d0
+    name: InstallSelfDecBitCheck_004391d0
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439250
-    name: func_00439250
+    name: InstallSelfNoCheck_00439250
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004392c0
     name: PackedAdvanceCallTailJmp_004392c0
     size: 78
@@ -4013,10 +4063,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439410
-    name: func_00439410
+    name: InstallSelfDecCmpGate_00439410
     size: 135
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004394a0
     name: func_004394a0
     size: 123
@@ -4057,10 +4108,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439760
-    name: func_00439760
+    name: IdCascadeBitSet_00439760
     size: 107
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004397d0
     name: func_004397d0
     size: 221
@@ -4090,20 +4142,22 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x004399c0
-    name: func_004399c0
+    name: CmpDualPatchScaledRangeJmp_004399c0
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439a40
     name: func_00439a40
     size: 152
     group: game
     status: stub
   - addr: 0x00439ae0
-    name: func_00439ae0
+    name: TwoStageWalkGate_00439ae0
     size: 107
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439b50
     name: Set258Call_PauseDirtyJmp_00439b50
     size: 39
@@ -4163,10 +4217,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00439e40
-    name: func_00439e40
+    name: InstallSelfSetTagJmp_00439e40
     size: 113
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439ec0
     name: func_00439ec0
     size: 171
@@ -4285,10 +4340,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043ba90
-    name: func_0043ba90
+    name: EsiInstallPushDecPopJmp_0043ba90
     size: 136
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bb20
     name: ScaledPopSaveJmp_0043bb20
     size: 44
@@ -4329,10 +4385,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesFF.c
   - addr: 0x0043c390
-    name: func_0043c390
+    name: TriCmpOrFinal_0043c390
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043c400
     name: func_0043c400
     size: 1782
@@ -4482,10 +4539,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00440660
-    name: func_00440660
+    name: EsiTripleMul10Vec_00440660
     size: 120
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004406e0
     name: ScaledAddStore_004406e0
     size: 47
@@ -4708,10 +4766,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesFF.c
   - addr: 0x00446040
-    name: func_00446040
+    name: FourFieldCopyCallSet_00446040
     size: 118
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004460c0
     name: ScaledClear1cTestWalkCall_004460c0
     size: 85
@@ -4737,10 +4796,11 @@ functions:
     status: matched
     file: src/engine/copy_jmp.c
   - addr: 0x00446190
-    name: func_00446190
+    name: GuardedSixFieldCopy_00446190
     size: 121
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446210
     name: CopyLoadInstallJmp_00446210
     size: 34
@@ -4796,15 +4856,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00446400
-    name: func_00446400
+    name: TripleFieldChainSub_00446400
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446470
-    name: func_00446470
+    name: TripleFieldCopyBitMerge_00446470
     size: 117
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004464f0
     name: ScaledLoadZeroStore_004464f0
     size: 33
@@ -4939,20 +5001,22 @@ functions:
     group: game
     status: stub
   - addr: 0x0044a000
-    name: func_0044a000
+    name: GuardedTripleSetTailJmp7_0044a000
     size: 133
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a090
     name: func_0044a090
     size: 1132
     group: game
     status: stub
   - addr: 0x0044a500
-    name: func_0044a500
+    name: GuardedTripleSetTailJmp8_0044a500
     size: 133
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a590
     name: func_0044a590
     size: 608
@@ -5007,10 +5071,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044cc50
-    name: func_0044cc50
+    name: DualPushAddCallDualPopJmp_0044cc50
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044ccd0
     name: Add0fJmp_0044ccd0
     size: 18
@@ -5090,10 +5155,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044dd00
-    name: func_0044dd00
+    name: GuardedDualScaledChainCopy_0044dd00
     size: 119
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044dd80
     name: func_0044dd80
     size: 2508
@@ -5494,20 +5560,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00457240
-    name: func_00457240
+    name: EsiInstallClearTripleFields_00457240
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004572d0
     name: func_004572d0
     size: 1224
     group: game
     status: stub
   - addr: 0x004577a0
-    name: func_004577a0
+    name: PushSearchToggleBit0_004577a0
     size: 140
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457830
     name: func_00457830
     size: 164
@@ -5531,10 +5599,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00457b40
-    name: func_00457b40
+    name: Push70CallScaleArith2_00457b40
     size: 108
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457bb0
     name: func_00457bb0
     size: 342
@@ -5557,10 +5626,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesX.c
   - addr: 0x00458030
-    name: func_00458030
+    name: DualPathCallSetup_00458030
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004580a0
     name: func_004580a0
     size: 185
@@ -5839,10 +5909,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045dc60
-    name: func_0045dc60
+    name: BitSavePushCallMergePop_0045dc60
     size: 108
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045dcd0
     name: DualPlayerSetupCall_0045dcd0
     size: 86
@@ -5988,10 +6059,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045f8d0
-    name: func_0045f8d0
+    name: FiveCallScaledChainTailJmp_0045f8d0
     size: 113
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045f950
     name: func_0045f950
     size: 314
@@ -6103,10 +6175,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00460940
-    name: func_00460940
+    name: Push84CallTestInstallJmp_00460940
     size: 120
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004609c0
     name: SetJmp_004609c0
     size: 15
@@ -6613,10 +6686,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00467ca0
-    name: func_00467ca0
+    name: GuardedTripleCallSetTail_00467ca0
     size: 136
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00467d30
     name: CallJmp_00467d30
     size: 10
@@ -6629,10 +6703,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00467e60
-    name: func_00467e60
+    name: PairedTickGated_00467e60
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00467ed0
     name: func_00467ed0
     size: 1283
@@ -6767,10 +6842,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x0046c560
-    name: func_0046c560
+    name: QuadCmpBitGateJmp_0046c560
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046c5d0
     name: func_0046c5d0
     size: 258
@@ -6908,10 +6984,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046f6b0
-    name: func_0046f6b0
+    name: FiveCallGuardSetTail_0046f6b0
     size: 139
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046f740
     name: BitGateInstallChainJmp_0046f740
     size: 90
@@ -6936,10 +7013,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesP.c
   - addr: 0x0046fc60
-    name: func_0046fc60
+    name: PushCallSignClampDualStore_0046fc60
     size: 164
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046fd10
     name: func_0046fd10
     size: 90
@@ -7078,10 +7156,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x00470f90
-    name: func_00470f90
+    name: GuardedBitChainCmpJmp_00470f90
     size: 122
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471010
     name: func_00471010
     size: 372
@@ -7120,10 +7199,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00471690
-    name: func_00471690
+    name: TripleCallBitJmp_00471690
     size: 118
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471710
     name: func_00471710
     size: 294
@@ -7345,15 +7425,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00474290
-    name: func_00474290
+    name: DualPushSet7dCallPop_00474290
     size: 116
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474310
-    name: func_00474310
+    name: DualPushSet7bCallPop_00474310
     size: 116
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474390
     name: func_00474390
     size: 660
@@ -7381,15 +7463,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00474d40
-    name: func_00474d40
+    name: DualPushCmp12Dispatch_00474d40
     size: 157
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474de0
-    name: func_00474de0
+    name: DualPushCmp12Dispatch68_00474de0
     size: 157
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474e80
     name: MStackPushSwapEqJmp_00474e80
     size: 70
@@ -7556,25 +7640,28 @@ functions:
     group: game
     status: stub
   - addr: 0x00476750
-    name: func_00476750
+    name: PushSearchToggleBit_00476750
     size: 141
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004767e0
     name: func_004767e0
     size: 150
     group: game
     status: stub
   - addr: 0x00476880
-    name: func_00476880
+    name: TripleVecAccCallStore_00476880
     size: 165
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476930
-    name: func_00476930
+    name: DoublePushAddCallDoublePop_00476930
     size: 119
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004769b0
     name: PushSetAddCallPop_004769b0
     size: 100
@@ -7750,10 +7837,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00478d00
-    name: func_00478d00
+    name: PushClampZeroOneCallPop_00478d00
     size: 145
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00478da0
     name: func_00478da0
     size: 3095
@@ -7837,10 +7925,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047aef0
-    name: func_0047aef0
+    name: EsiInstallSetCallChain_0047aef0
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047af70
     name: func_0047af70
     size: 127
@@ -7919,10 +8008,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047cb00
-    name: func_0047cb00
+    name: PopCallBitCmpPushCall_0047cb00
     size: 141
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cb90
     name: func_0047cb90
     size: 180
@@ -7993,10 +8083,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047de60
-    name: func_0047de60
+    name: InstallSelfChainExtendCall_0047de60
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047dee0
     name: GuardedSetCallSetCall_0047dee0
     size: 67
@@ -8046,10 +8137,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047e8a0
-    name: func_0047e8a0
+    name: InstallSelfHelper2_0047e8a0
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e910
     name: func_0047e910
     size: 220
@@ -8155,10 +8247,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004801a0
-    name: func_004801a0
+    name: PushPlayerSwapCallClamp_004801a0
     size: 146
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480240
     name: func_00480240
     size: 810
@@ -8286,10 +8379,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004818e0
-    name: func_004818e0
+    name: CjDispatchCommit_004818e0
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00481950
     name: func_00481950
     size: 798
@@ -8306,10 +8400,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00481eb0
-    name: func_00481eb0
+    name: InstallSelfChainExtendCall_00481eb0
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00481f30
     name: func_00481f30
     size: 199
@@ -8588,10 +8683,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00485a10
-    name: func_00485a10
+    name: ChainedEvent3_00485a10
     size: 104
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00485a80
     name: func_00485a80
     size: 540
@@ -9009,10 +9105,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x00489f90
-    name: func_00489f90
+    name: GatedWordPushCall_00489f90
     size: 91
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489ff0
     name: TableLookupCall_00489ff0
     size: 33
@@ -9091,10 +9188,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a290
-    name: func_0048a290
+    name: DualBranchWordLookup_0048a290
     size: 106
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a300
     name: Wrapper_0048a300
     size: 14
@@ -9179,10 +9277,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048a710
-    name: func_0048a710
+    name: InstallSelfChainCallStateInits_0048a710
     size: 168
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a7c0
     name: ZeroSixStores6c80_0048a7c0
     size: 68
@@ -9190,20 +9289,23 @@ functions:
     status: matched
     file: src/engine/misc_matchesKK.c
   - addr: 0x0048a810
-    name: func_0048a810
+    name: EsiInstallSetCbChainExtend_0048a810
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a8c0
-    name: func_0048a8c0
+    name: EsiInstallSetCbChainExtend_0048a8c0
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a970
-    name: func_0048a970
+    name: EsiInstallSetCbChainExtend_0048a970
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048aa20
     name: func_0048aa20
     size: 444
@@ -9276,10 +9378,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048b610
-    name: func_0048b610
+    name: CmpDirectOrIndirectChain_0048b610
     size: 161
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048b6c0
     name: func_0048b6c0
     size: 114
@@ -9320,10 +9423,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x0048bb60
-    name: func_0048bb60
+    name: PushSarCallBitToggle_0048bb60
     size: 139
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048bbf0
     name: SentinelInitTripleCall_0048bbf0
     size: 73
@@ -9377,10 +9481,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048c2f0
-    name: func_0048c2f0
+    name: PushScaledIdxBitToggle_0048c2f0
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c370
     name: func_0048c370
     size: 144
@@ -9392,10 +9497,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048c480
-    name: func_0048c480
+    name: GuardedChainCopySetFlag_0048c480
     size: 134
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c510
     name: GuardedBitMaskFlagOrClear_0048c510
     size: 83
@@ -9414,10 +9520,11 @@ functions:
     status: matched
     file: src/engine/misc_matches5.c
   - addr: 0x0048cc40
-    name: func_0048cc40
+    name: TripleStateSwapCall_0048cc40
     size: 95
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048cca0
     name: func_0048cca0
     size: 347
@@ -9676,15 +9783,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0048eb20
-    name: func_0048eb20
+    name: GuardedDualConst1AndToggle_0048eb20
     size: 118
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048eba0
-    name: func_0048eba0
+    name: GuardedDualConst2AndToggle_0048eba0
     size: 118
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ec20
     name: Wrapper_0048ec20
     size: 14
@@ -9702,15 +9811,17 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ed70
-    name: func_0048ed70
+    name: DualConstMaskFlagToggle8_0048ed70
     size: 105
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ede0
-    name: func_0048ede0
+    name: DualConstMaskFlagToggle4_0048ede0
     size: 105
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ee50
     name: CmpP2P1ScaledJmp_0048ee50
     size: 35
@@ -9746,10 +9857,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f020
-    name: func_0048f020
+    name: GuardedDualAndFlagToggle_0048f020
     size: 112
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f090
     name: func_0048f090
     size: 203
@@ -9784,10 +9896,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f350
-    name: func_0048f350
+    name: DirtyToggleByGate_0048f350
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f3c0
     name: DirtyFlagsManipB_0048f3c0
     size: 43
@@ -9800,10 +9913,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f470
-    name: func_0048f470
+    name: InstallSelfCmpJmpIndirect_0048f470
     size: 120
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f4f0
     name: func_0048f4f0
     size: 114
@@ -9816,15 +9930,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f5d0
-    name: func_0048f5d0
+    name: InstallSelfPushDualCallCmpLt_0048f5d0
     size: 127
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f650
-    name: func_0048f650
+    name: InstallSelfPushDualCallCmpGt_0048f650
     size: 127
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f6d0
     name: GuardedDirtyXformFromTable_0048f6d0
     size: 73
@@ -9940,10 +10056,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048fe40
-    name: func_0048fe40
+    name: EsiInstallClampAddCall_0048fe40
     size: 158
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fee0
     name: GuardedTripleCallSwapJmp_0048fee0
     size: 68
@@ -10068,25 +10185,25 @@ functions:
     size: 28
     group: game
     status: matched
-    file: src/engine/misc_matches6.c
+    file: src/engine/misc_matches5.c
   - addr: 0x00490350
     name: ScaledAndAlbf_00490350
     size: 28
     group: game
     status: matched
-    file: src/engine/misc_matches6.c
+    file: src/engine/misc_matches5.c
   - addr: 0x00490370
     name: ScaledAndAlfb_00490370
     size: 28
     group: game
     status: matched
-    file: src/engine/misc_matches6.c
+    file: src/engine/misc_matches5.c
   - addr: 0x00490390
     name: ScaledAndAlfe_00490390
     size: 28
     group: game
     status: matched
-    file: src/engine/misc_matches6.c
+    file: src/engine/misc_matches5.c
   - addr: 0x004903b0
     name: ScaledXorStore_004903b0
     size: 29
@@ -10110,10 +10227,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004905e0
-    name: func_004905e0
+    name: DoublePushCallDoublePop_004905e0
     size: 106
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490650
     name: PushPopState70Mask_00490650
     size: 84
@@ -10121,10 +10239,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesOO.c
   - addr: 0x004906b0
-    name: func_004906b0
+    name: EsiEdiAliasDualMul10_004906b0
     size: 107
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490720
     name: ScaledMove48to58_00490720
     size: 30
@@ -10161,10 +10280,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004908f0
-    name: func_004908f0
+    name: TripleScaledChainStore_004908f0
     size: 119
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490970
     name: func_00490970
     size: 412
@@ -10300,15 +10420,17 @@ functions:
     group: game
     status: stub
   - addr: 0x004915f0
-    name: func_004915f0
+    name: StoreGuardedBitInstallJmp_004915f0
     size: 110
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00491660
-    name: func_00491660
+    name: InstallSelfChainCmpDispatch_00491660
     size: 139
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004916f0
     name: func_004916f0
     size: 238
@@ -10518,10 +10640,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00493c80
-    name: func_00493c80
+    name: PushChainAddCallPop_00493c80
     size: 125
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493d00
     name: func_00493d00
     size: 319
@@ -10557,15 +10680,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesAA.c
   - addr: 0x00494180
-    name: func_00494180
+    name: ScaledArgChainCmpCopy_00494180
     size: 129
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494210
-    name: func_00494210
+    name: InitZeroChainLookupJmp_00494210
     size: 120
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494290
     name: func_00494290
     size: 343
@@ -10577,15 +10702,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00494580
-    name: func_00494580
+    name: GateDispatch6c_00494580
     size: 107
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004945f0
-    name: func_004945f0
+    name: InstallSelfChainExtendCall_004945f0
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494670
     name: func_00494670
     size: 219
@@ -10817,10 +10944,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049a050
-    name: func_0049a050
+    name: EsiInstallQuadCallBitDispatch_0049a050
     size: 145
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049a0f0
     name: func_0049a0f0
     size: 122
@@ -10880,10 +11008,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049b120
-    name: func_0049b120
+    name: EsiInstallCounterDispatch_0049b120
     size: 170
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b1d0
     name: func_0049b1d0
     size: 1280
@@ -10896,10 +11025,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b730
-    name: func_0049b730
+    name: GuardedChainCopyJmp_0049b730
     size: 132
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b7c0
     name: func_0049b7c0
     size: 143
@@ -10959,10 +11089,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0049c360
-    name: func_0049c360
+    name: ScaledStackCallPause_0049c360
     size: 108
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c3d0
     name: func_0049c3d0
     size: 457
@@ -11122,10 +11253,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049d150
-    name: func_0049d150
+    name: ChainUnlinkPushFree_0049d150
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d200
     name: func_0049d200
     size: 196
@@ -11479,10 +11611,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a18d0
-    name: func_004a18d0
+    name: InstallSelfChainAddSigned_004a18d0
     size: 98
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a1940
     name: ScaledInitOrSelfPtrSetType14_004a1940
     size: 85
@@ -11508,10 +11641,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004a1a50
-    name: func_004a1a50
+    name: InstallSelfPauseGate_004a1a50
     size: 106
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a1ac0
     name: SetJmp_004a1ac0
     size: 15
@@ -11624,10 +11758,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1ec0
-    name: func_004a1ec0
+    name: DrainQueueCallEach_004a1ec0
     size: 89
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a1f20
     name: func_004a1f20
     size: 118
@@ -11709,10 +11844,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004a2970
-    name: func_004a2970
+    name: ScaledAudioDualShuffle_004a2970
     size: 94
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a29d0
     name: func_004a29d0
     size: 175
@@ -12181,10 +12317,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x004ab690
-    name: func_004ab690
+    name: AudioVolumeRescale_004ab690
     size: 110
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab700
     name: AudioMixerStep_004ab700
     size: 73
@@ -12326,10 +12463,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ac5f0
-    name: func_004ac5f0
+    name: Audio_TimerTeardown_004ac5f0
     size: 85
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac650
     name: func_004ac650
     size: 290
@@ -12347,10 +12485,11 @@ functions:
     status: matched
     file: src/audio/aux_init.c
   - addr: 0x004ac9b0
-    name: func_004ac9b0
+    name: AuxAudio_Teardown_004ac9b0
     size: 96
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aca10
     name: AuxAudio_SetVolume
     size: 76
@@ -12420,10 +12559,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004ad590
-    name: func_004ad590
+    name: VtRelease_Modal_004ad590
     size: 95
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ad5f0
     name: func_004ad5f0
     size: 169
@@ -12558,10 +12698,11 @@ functions:
     group: engine.install
     status: stub
   - addr: 0x004af130
-    name: func_004af130
+    name: ReleaseVtableSlots_004af130
     size: 88
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004af190
     name: func_004af190
     size: 127
@@ -13051,10 +13192,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b30c0
-    name: func_004b30c0
+    name: PackColor_004b30c0
     size: 106
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3130
     name: func_004b3130
     size: 161
@@ -13139,15 +13281,17 @@ functions:
     status: matched
     file: src/engine/getters.c
   - addr: 0x004b3dc0
-    name: func_004b3dc0
+    name: ResolutionLookup_004b3dc0
     size: 96
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3e20
-    name: func_004b3e20
+    name: Switch5Mode_004b3e20
     size: 108
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3e90
     name: PresentFrame
     size: 44
@@ -13275,10 +13419,11 @@ functions:
     status: matched
     file: src/engine/dsound_set_axis_pan_123.c
   - addr: 0x004b5120
-    name: func_004b5120
+    name: DDrawReleaseChain_004b5120
     size: 97
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5190
     name: DSoundBufferInit146_004b5190
     size: 146
@@ -13611,10 +13756,11 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004ba5d0
-    name: func_004ba5d0
+    name: ZBucketClampStore_004ba5d0
     size: 92
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ba630
     name: func_004ba630
     size: 140
@@ -13703,10 +13849,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bd4a0
-    name: func_004bd4a0
+    name: ChainWalkCleanup_004bd4a0
     size: 110
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bd510
     name: LeaScaledCall_004bd510
     size: 22
@@ -13808,10 +13955,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004bda70
-    name: func_004bda70
+    name: WtSnapshotPushCall_004bda70
     size: 98
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bdae0
     name: Push2GlobalsCall_004bdae0
     size: 22
@@ -13944,25 +14092,28 @@ functions:
     group: engine.scenegraph
     status: stub
   - addr: 0x004be800
-    name: func_004be800
+    name: QuadCallPhase2_004be800
     size: 107
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be870
     name: func_004be870
     size: 216
     group: engine.scenegraph
     status: stub
   - addr: 0x004be950
-    name: func_004be950
+    name: RecordIter170_004be950
     size: 99
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be9c0
-    name: func_004be9c0
+    name: ECM_OpenTrack_004be9c0
     size: 104
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bea30
     name: CallZero_004bea30
     size: 16
@@ -14304,7 +14455,7 @@ functions:
     group: platform.win32
     status: stub
   - addr: 0x004c5070
-    name: CreateMainWindow
+    name: Boot
     size: 371
     group: boot
     status: matched
@@ -14389,10 +14540,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesHH.c
   - addr: 0x004c5840
-    name: func_004c5840
+    name: FCloseImpl_004c5840
     size: 101
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c58b0
     name: TripleCallEdiSave_004c58b0
     size: 40
@@ -14545,10 +14697,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesEE.c
   - addr: 0x004c69a0
-    name: func_004c69a0
+    name: FFlushImpl_004c69a0
     size: 110
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6a10
     name: PushConstCall_004c6a10
     size: 11
@@ -14745,10 +14898,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8750
-    name: func_004c8750
+    name: FormatHelper_004c8750
     size: 102
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c87c0
     name: func_004c87c0
     size: 182
@@ -14852,10 +15006,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004c97a0
-    name: func_004c97a0
+    name: TranslateMsgId_004c97a0
     size: 95
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9800
     name: InitGlobalsAndZero_004c9800
     size: 50
@@ -14995,10 +15150,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc250
-    name: func_004cc250
+    name: StreamAllocInit_004cc250
     size: 93
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc2b0
     name: TestHandleBit_004cc2b0
     size: 43
@@ -15063,15 +15219,17 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cc880
-    name: func_004cc880
+    name: BitsetTrailZeroCheck_004cc880
     size: 102
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc8f0
-    name: func_004cc8f0
+    name: BitsetIterClear_004cc8f0
     size: 105
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc960
     name: func_004cc960
     size: 157
@@ -15166,10 +15324,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004cd2b0
-    name: func_004cd2b0
+    name: CritSecLazyEnter_004cd2b0
     size: 101
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cd320
     name: DivMod32IAT_004cd320
     size: 34
