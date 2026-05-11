@@ -4383,10 +4383,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043e270
-    name: func_0043e270
+    name: DualPackedStoreCallSubBack_0043e270
     size: 86
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043e2d0
     name: func_0043e2d0
     size: 259
@@ -9309,10 +9310,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x0048c1b0
-    name: func_0048c1b0
+    name: PushScaledIdxStoreCallPop_0048c1b0
     size: 86
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c210
     name: ScaledIncLoopState3_0048c210
     size: 73
@@ -11567,15 +11569,17 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a1fa0
-    name: func_004a1fa0
+    name: GuardedSetupCallTailJmp_004a1fa0
     size: 86
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2000
-    name: func_004a2000
+    name: GuardedSetupCallTailJmp3_004a2000
     size: 86
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2060
     name: func_004a2060
     size: 221

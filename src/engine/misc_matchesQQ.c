@@ -61,6 +61,13 @@ extern void func_0047a840(void);
 extern void func_0047a950(void);
 extern void CopyJmp_0048ef90(void);
 extern void DualTestDirtyToggle_004282c0(void);
+extern void func_00476880(void);
+extern void Thunk_004bd5c0(void);
+extern void func_00427470(void);
+extern void func_004274f0(void);
+extern void func_00457ad0(void);
+extern void func_00457900(void);
+extern unsigned int g_state_0054207c;
 
 /* @addr 0x00426d30 (81b)
  *   Push g_eventQueueEnd on mstack; replace it with 0x4e2670>>2;
@@ -584,6 +591,131 @@ __declspec(naked) void GuardedCmpDualToggle_0049e360(void) {
         _emit   0ch
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_00537e88], ecx
+        ret
+    }
+}
+
+/* @addr 0x0043e270 (86b)
+ *   [g_scaledInit*4 + 0x74] = 0xffffcccd;
+ *   g_walkCallback = 0xffffd70b; [g_scaledInit*4 + 0x70] = 0xffffd70b;
+ *   g_eventQueueWorkType = 0x3333;
+ *   g_scaledInit += 0x1b; call func_00476880;
+ *   if no pause: g_scaledInit -= 0x1b; ret.
+ */
+__declspec(naked) void DualPackedStoreCallSubBack_0043e270(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [eax*4 + 0x74], 0xffffcccd
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0xffffd70b
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_eventQueueWorkType], 0x3333
+        add     ecx, 0x1b
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    func_00476880
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   07h
+        sub     dword ptr [g_scaledInit_00542044], 0x1b
+        ret
+    }
+}
+
+/* @addr 0x0048c1b0 (86b)
+ *   Push g_data_00542070 on mstack; compute
+ *   g_xformEntityIdx = (g_data_00542070 * 5) << 0x14 + 0x4c00000;
+ *   call Thunk_004bd5c0; if no pause: pop g_data_00542070; ret.
+ */
+__declspec(naked) void PushScaledIdxStoreCallPop_0048c1b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_data_00542070]
+        lea     edx, [eax + eax*4]
+        shl     edx, 0x14
+        add     edx, 0x4c00000
+        mov     dword ptr [g_xformEntityIdx], edx
+        call    Thunk_004bd5c0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x004a1fa0 (86b)
+ *   call func_00427470; if pause: ret;
+ *   eax = arg0 >> 2 → g_xformEntityIdx; ecx = arg1;
+ *   g_walkCallback = 0xa000; g_data_00542070 = 4;
+ *   g_acc_00542078 = 0; g_state_0054207c = ecx;
+ *   call func_00457ad0; if no pause: jmp func_004274f0; else ret.
+ */
+__declspec(naked) void GuardedSetupCallTailJmp_004a1fa0(void) {
+    __asm {
+        call    func_00427470
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   47h
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [esp + 8]
+        shr     eax, 2
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_walkCallback], 0xa000
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_acc_00542078], 0
+        mov     dword ptr [g_state_0054207c], ecx
+        call    func_00457ad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_004274f0
+        ret
+    }
+}
+
+/* @addr 0x004a2000 (86b)
+ *   call func_00427470; if pause: ret;
+ *   eax=arg0, ecx=arg1, edx=arg2;
+ *   g_walkCallback=0xa000; g_xformEntityIdx=arg0>>2;
+ *   g_data_00542070=4; g_acc_00542078=ecx; g_state_0054207c=edx;
+ *   call func_00457900; if no pause: jmp func_004274f0; else ret.
+ */
+__declspec(naked) void GuardedSetupCallTailJmp3_004a2000(void) {
+    __asm {
+        call    func_00427470
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   47h
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [esp + 8]
+        mov     edx, dword ptr [esp + 0x0c]
+        mov     dword ptr [g_walkCallback], 0xa000
+        shr     eax, 2
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_state_0054207c], edx
+        call    func_00457900
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_004274f0
         ret
     }
 }
