@@ -1745,6 +1745,11 @@ extern void func_0048f8e0(void);
 extern void func_00405e70(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void ScaledArrStore_00429980(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern unsigned int g_state_0053a51c;
+extern unsigned int g_state_0052aac4;
+extern unsigned int g_data_00537f30;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
 extern unsigned int g_state_00535cfc;
@@ -2331,6 +2336,146 @@ __declspec(naked) void Push80TripleCallTailJmp_0043bb50(void) {
         _emit   00h
         _emit   00h
         _emit   00h
+        ret
+    }
+}
+
+/* @addr 0x00460dd0 (97b) - unlink-chain install like 0x43d040,
+ *   with extra g_state_0054207c clear and 0x28 pendingNodeType.
+ */
+__declspec(naked) void UnlinkChainInstall_00460dd0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   1eh
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        lea     eax, [ecx*4 + 0]
+        mov     ecx, dword ptr [ecx*4 + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   75h
+        _emit   0e2h
+        mov     ecx, 1
+        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [eax + 8], 0x00460dd0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_pendingNodeType], 0x28
+        mov     dword ptr [g_framePauseFlag], ecx
+        ret
+    }
+}
+
+/* @addr 0x004284f0 (98b) - install-self pattern w/ esi alias and
+ *   dec g_state_00542080 chain: if existing entry, dec global and
+ *   jmp StackPopDispatchTagged when reaches 0; else install self.
+ */
+__declspec(naked) void EsiInstallDecGlobalJmp_004284f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   14h
+        mov     eax, dword ptr [g_state_00542080]
+        dec     eax
+        mov     dword ptr [g_state_00542080], eax
+        _emit   75h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x004284f0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004220a0 (99b)
+ *   ecx = g_state_0053a51c; eax = 0x4dfd18>>2 + ecx;
+ *   g_walkCallback = ecx; g_scaledInit = eax;
+ *   eax = [eax*4]; g_eventQueueWorkType = eax;
+ *   eax = g_state_0052aac4; cmp eax,2; g_walkCallback = eax;
+ *   if ne: jmp branch; else: call Push16Call; load pause; ret;
+ *   branch: ecx = g_data_00537f30; eax = ecx-1; cmp eax,1;
+ *           g_data_00542070 = eax; if gt: clamp eax=1; jmp Push16Call.
+ */
+__declspec(naked) void GuardedScaledLookupCallJmp_004220a0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_state_0053a51c]
+        mov     eax, 0x004dfd18
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     eax, dword ptr [g_state_0052aac4]
+        cmp     eax, 2
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   0bh
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_framePauseFlag]
+        ret
+        mov     ecx, dword ptr [g_data_00537f30]
+        lea     eax, [ecx - 1]
+        cmp     eax, 1
+        mov     dword ptr [g_data_00542070], eax
+        _emit   7eh
+        _emit   0ah
+        mov     dword ptr [g_data_00542070], 1
+        jmp     Push16Call_00489f50
+    }
+}
+
+/* @addr 0x00492210 (99b)
+ *   g_xformEntityIdx = 0x50f408>>2; call DispatcherComplex260_00407400;
+ *   if pause: ret; if (bit2 of g_state_0054208c) != 0: ret;
+ *   ecx = g_scaledInit; eax = 0x1b;
+ *   [ecx*4 + 0x54] = 0; edx = g_scaledInit;
+ *   [edx*4 + 0x58] = 0x760000; ecx = g_scaledInit;
+ *   g_walkCallback = eax; [ecx*4 + 0x30] = eax;
+ *   jmp MStackPushComplexCallPop_00406430.
+ */
+__declspec(naked) void GuardedSetupTailMStackJmp_00492210(void) {
+    __asm {
+        mov     eax, 0x0050f408
+        shr     eax, 2
+        mov     dword ptr [g_xformEntityIdx], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   47h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   3eh
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x1b
+        mov     dword ptr [ecx*4 + 0x54], 0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [edx*4 + 0x58], 0x760000
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        jmp     MStackPushComplexCallPop_00406430
         ret
     }
 }

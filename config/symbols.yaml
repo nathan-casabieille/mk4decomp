@@ -1713,10 +1713,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x004220a0
-    name: func_004220a0
+    name: GuardedScaledLookupCallJmp_004220a0
     size: 99
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422110
     name: func_00422110
     size: 399
@@ -2274,10 +2275,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004284f0
-    name: func_004284f0
+    name: EsiInstallDecGlobalJmp_004284f0
     size: 98
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428560
     name: ScaledStoreOrFlagXor_00428560
     size: 85
@@ -6163,10 +6165,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x00460dd0
-    name: func_00460dd0
+    name: UnlinkChainInstall_00460dd0
     size: 97
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460e40
     name: func_00460e40
     size: 100
@@ -10350,10 +10353,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00492210
-    name: func_00492210
+    name: GuardedSetupTailMStackJmp_00492210
     size: 99
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00492280
     name: func_00492280
     size: 297
