@@ -4797,10 +4797,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00446520
-    name: func_00446520
+    name: InitSlotsWithTag_00446520
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446580
     name: Const4ec8f8DirtyScaledStore_00446580
     size: 56
@@ -5318,20 +5319,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00453170
-    name: func_00453170
+    name: DualGuardedChainJmp_00453170
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004531d0
     name: func_004531d0
     size: 580
     group: game
     status: stub
   - addr: 0x00453420
-    name: func_00453420
+    name: GuardedSetCallOrJmp_00453420
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00453480
     name: DualConstJmp_00453480
     size: 25
@@ -7948,10 +7951,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047dbc0
-    name: func_0047dbc0
+    name: DualSetCallPair_0047dbc0
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047dc20
     name: func_0047dc20
     size: 571
@@ -9012,10 +9016,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x0048a1c0
-    name: func_0048a1c0
+    name: DualBitGateInitCall_0048a1c0
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a220
     name: AndStorePushCallZero_0048a220
     size: 46
@@ -9379,10 +9384,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ce00
-    name: func_0048ce00
+    name: PushCallPopScaledJmpIndirect_0048ce00
     size: 89
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ce60
     name: func_0048ce60
     size: 237
@@ -9923,10 +9929,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x00490090
-    name: func_00490090
+    name: DualMaskCmpJmp_00490090
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004900f0
     name: ScaledXorStore_004900f0
     size: 29
@@ -10850,10 +10857,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049b850
-    name: func_0049b850
+    name: ChainStoreCmpJmp_0049b850
     size: 88
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b8b0
     name: func_0049b8b0
     size: 732
