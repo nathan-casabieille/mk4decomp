@@ -1883,10 +1883,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00424020
-    name: func_00424020
+    name: PushSetCj58CallPopWalk_00424020
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424080
     name: func_00424080
     size: 227
@@ -3989,15 +3990,17 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x00439350
-    name: func_00439350
+    name: Push80SetWalkDualCallPop_00439350
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004393b0
-    name: func_004393b0
+    name: Push80SetWalkNegDualCallPop_004393b0
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439410
     name: func_00439410
     size: 135
@@ -4037,10 +4040,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x00439700
-    name: func_00439700
+    name: WalkCj58Loop43Toggle_00439700
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439760
     name: func_00439760
     size: 107
@@ -5031,10 +5035,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044d060
-    name: func_0044d060
+    name: PushSetXfmCallStoreCopy_0044d060
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044d0c0
     name: func_0044d0c0
     size: 276
@@ -9709,10 +9714,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f210
-    name: func_0048f210
+    name: GuardedRangeCmpToggle_0048f210
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f270
     name: CondPlayerLookup_0048f270
     size: 38
@@ -9757,10 +9763,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f570
-    name: func_0048f570
+    name: InstallSelfOrCmpJmp_0048f570
     size: 87
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f5d0
     name: func_0048f5d0
     size: 127
