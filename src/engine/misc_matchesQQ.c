@@ -1735,6 +1735,18 @@ extern unsigned int g_state_00ab4dac;
 extern unsigned int g_state_00ab4db0;
 extern unsigned int g_state_00ab4db4;
 extern unsigned int g_state_00ab4db8;
+extern void func_00409aa0(void);
+extern void func_00422810(void);
+extern void DownloadPlayerChar(void);
+extern void func_00468440(void);
+extern void func_004071a0(void);
+extern void func_00470480(void);
+extern void func_0048f8e0(void);
+extern void func_00405e70(void);
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+extern unsigned int g_state_00535cfc;
+extern unsigned int g_state_0053a1d0;
 __declspec(naked) void SetupBufferOffsets_004b8ec0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -1936,6 +1948,257 @@ __declspec(naked) void DualSubFromField_00489c70(void) {
         mov     dword ptr [g_data_00542070], edx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x5c], ecx
+        ret
+    }
+}
+
+/* @addr 0x00406bb0 (94b)
+ *   eax = [g_scaledInit*4 + 0x10]; test+store g_walkCallback;
+ *   if zero: ret;
+ *   push g_xformEntityIdx on mstack; g_xformEntityIdx = 3;
+ *   call func_00409aa0; if pause: ret;
+ *   pop g_xformEntityIdx; ret.
+ */
+__declspec(naked) void GuardedChainPushSetCallPop_00406bb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [eax*4 + 0x10]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   48h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     dword ptr [g_xformEntityIdx], 3
+        call    func_00409aa0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x004227b0 (94b)
+ *   g_data_00542070=4; g_scaledInit=0x53a328>>2; g_xformEntityIdx=0x53a788>>2;
+ *   call func_00422810; if pause: ret;
+ *   g_data_00542070=0x40; g_scaledInit=0x53e348>>2; g_xformEntityIdx=0x53e34c>>2;
+ *   jmp func_00422810.
+ */
+__declspec(naked) void DualSetupSameCall_004227b0(void) {
+    __asm {
+        mov     eax, 0x0053a328
+        mov     ecx, 0x0053a788
+        shr     eax, 2
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        call    func_00422810
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2ah
+        mov     edx, 0x0053e348
+        mov     eax, 0x0053e34c
+        shr     edx, 2
+        shr     eax, 2
+        mov     dword ptr [g_data_00542070], 0x40
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_xformEntityIdx], eax
+        jmp     func_00422810
+        ret
+    }
+}
+
+/* @addr 0x00463810 (94b)
+ *   if g_state_0053a408 != 0:
+ *     g_walkCallback = g_state_00537f48; g_eventQueueEnd = 0x535cfc>>2;
+ *     g_data_00542070 = 0; call DownloadPlayerChar;
+ *     g_framePauseFlag = g_framePauseFlag (load); ret;
+ *   else:
+ *     g_walkCallback = g_state_005380e0; g_eventQueueEnd = 0x53a1d0>>2;
+ *     g_data_00542070 = 1; jmp DownloadPlayerChar.
+ */
+__declspec(naked) void DualPathDownloadChar_00463810(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_0053a408]
+        test    eax, eax
+        _emit   74h
+        _emit   2dh
+        mov     eax, dword ptr [g_state_00537f48]
+        mov     ecx, 0x00535cfc
+        shr     ecx, 2
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_eventQueueEnd], ecx
+        mov     dword ptr [g_data_00542070], 0
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_framePauseFlag]
+        ret
+        mov     edx, dword ptr [g_state_005380e0]
+        mov     eax, 0x0053a1d0
+        shr     eax, 2
+        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_data_00542070], 1
+        jmp     DownloadPlayerChar
+    }
+}
+
+/* @addr 0x004683e0 (94b)
+ *   eax = g_baseSel; push esi;
+ *   ecx = [eax*4+0x38]; g_data_00542084 = ecx;
+ *   edx = [eax*4+0x3c]; g_state_00542088 = edx;
+ *   esi = [eax*4+0x30]; ecx += esi; g_data_00542084 = ecx;
+ *   esi = [eax*4+0x34]; edx += esi; g_state_00542088 = edx;
+ *   [eax*4+0x38] = ecx; eax = g_baseSel; ecx = g_state_00542088;
+ *   [eax*4+0x3c] = ecx; call func_00468440; pop esi; ret.
+ */
+__declspec(naked) void DualSlotPropagateCall_004683e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542084], ecx
+        mov     edx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_state_00542088], edx
+        mov     esi, dword ptr [eax*4 + 0x30]
+        add     ecx, esi
+        mov     dword ptr [g_data_00542084], ecx
+        mov     esi, dword ptr [eax*4 + 0x34]
+        add     edx, esi
+        mov     dword ptr [g_state_00542088], edx
+        mov     dword ptr [eax*4 + 0x38], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_state_00542088]
+        mov     dword ptr [eax*4 + 0x3c], ecx
+        call    func_00468440
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00407140 (95b)
+ *   Push g_xformEntityIdx on mstack; eax = g_walkCallback;
+ *   g_xformEntityIdx = eax; edx = [eax*4]; edx >>= 2; edx &= 0x3fffff;
+ *   g_xformEntityIdx = edx; call func_004071a0;
+ *   if pause: ret; pop g_xformEntityIdx; ret.
+ */
+__declspec(naked) void PushSetXfmMaskCallPop_00407140(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_walkCallback]
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        sar     edx, 2
+        and     edx, 0x3fffff
+        mov     dword ptr [g_xformEntityIdx], edx
+        call    func_004071a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x0042c490 (95b)
+ *   eax = g_baseSel; push esi; esi = &[eax*4];
+ *   eax = [eax*4+0x84]; [esi+0x84] = 0;
+ *   if eax != 0: call func_00470480; pop esi; ret;
+ *   else: g_xformEntityIdx = 0x42c550;
+ *     call func_0048f8e0; if pause: ret;
+ *     [esi+8] = 0x42c490; [esi+0x84]=1;
+ *     g_pendingNodeType = 1; g_framePauseFlag = 1; pop esi; ret.
+ */
+__declspec(naked) void EsiAliasInstallChainCall_0042c490(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    func_00470480
+        pop     esi
+        ret
+        mov     dword ptr [g_xformEntityIdx], 0x0042c550
+        call    func_0048f8e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0042c490
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0049b6d0 (95b)
+ *   eax = g_baseSel; eax = [eax*4 + 0x60]; g_scaledInit = eax;
+ *   eax = [eax*4]; test+store g_walkCallback;
+ *   if zero: jmp call;
+ *   loop: g_scaledInit = eax; eax = [eax*4];
+ *         test+store g_walkCallback; if nonzero: jmp loop;
+ *   call: call func_00405e70; if pause: ret;
+ *         edx = g_baseSel; ecx = g_scaledInit;
+ *         cmp ecx, [edx*4+0x60]; if ne: ret;
+ *         else: jmp 0x49b730.
+ */
+__declspec(naked) void ChainWalkCallCmp_0049b6d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x60]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   15h
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   0ebh
+        call    func_00405e70
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ah
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        cmp     ecx, dword ptr [edx*4 + 0x60]
+        _emit   75h
+        _emit   05h
+        _emit   0e9h
+        _emit   02h
+        _emit   00h
+        _emit   00h
+        _emit   00h
         ret
     }
 }
