@@ -44105,3 +44105,101 @@ __declspec(naked) void MStackPush2GuardedFieldClear_0044d0c0(void) {
         ret
     }
 }
+
+extern void ScaledLitLoadCall_00481020(void);
+extern void SetJmp_00489020(void);
+
+/* @addr 0x00488f00 (276b game) - cj table dispatch with threshold checks.
+ *   Read state regs/cj. If cj == g_state_00538158: ecx = g_x_00535d04.
+ *   Threshold compare: ecx vs (g_data_0053a180 + 0xfff60000); if less -> final-ret.
+ *   call MStackPush3CmpCall_0048eec0; if pause? ret. If bit0 of state set? ret.
+ *   If cj[+0x40] bit4 set? ret.
+ *   If baseSel[+0x3c][+0x34] != 0xa: tail-call SetJmp_00489020 then OR bit2 into
+ *     baseSel[+0x38][+0x34]; ret.
+ *   Else: baseSel[+0x38][+0x34] bit2 set? ret. Else: g_x_0054206c=2;
+ *     tail-call ScaledLitLoadCall_00481020; eax=pause; ret.
+ */
+__declspec(naked) void CjTableThresholdDispatch_00488f00(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_x_0053a774]
+        cmp     edx, eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   0ch
+        mov     ecx, dword ptr [g_x_00535d04]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [g_data_0053a180]
+        add     eax, 0xfff60000
+        cmp     ecx, eax
+        mov     dword ptr [g_x_00542070], eax
+        _emit   0fh
+        _emit   8ch
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0beh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   0fh
+        _emit   85h
+        _emit   0b1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        mov     dword ptr [g_x_00542070], eax
+        and     eax, 0x10
+        mov     dword ptr [g_x_00542094], eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        cmp     ecx, 0x0a
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   75h
+        _emit   22h
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_x_0054206c], eax
+        and     eax, 4
+        mov     dword ptr [g_x_00542094], eax
+        _emit   75h
+        _emit   15h
+        mov     dword ptr [g_x_0054206c], 2
+        call    ScaledLitLoadCall_00481020
+        mov     eax, dword ptr [g_pause_00541e6c]
+        ret
+        call    SetJmp_00489020
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   28h
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [edx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        or      al, 4
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        ret
+    }
+}
