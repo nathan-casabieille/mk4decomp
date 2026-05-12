@@ -3810,10 +3810,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00437880
-    name: func_00437880
+    name: InstallSelfChainSet13333_00437880
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437930
     name: CallPauseMStackPushSet2Jmp_00437930
     size: 52
