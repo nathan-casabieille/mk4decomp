@@ -2534,10 +2534,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00429130
-    name: func_00429130
+    name: Install3WayChainStateAdvance_00429130
     size: 211
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429210
     name: ScaledLoadJmp_00429210
     size: 23
@@ -2996,10 +2997,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042e720
-    name: func_0042e720
+    name: MStackPushTableMatch_0042e720
     size: 212
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e800
     name: ScaledChainInit2Phase_0042e800
     size: 206

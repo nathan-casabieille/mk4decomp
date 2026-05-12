@@ -35030,3 +35030,147 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         ret
     }
 }
+
+extern void DirtyOrJmp_004296c0(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+extern void GuardedChainCmpDualBitXor_004299a0(void);
+
+/* @addr 0x00429130 (211b game) - 3-way install-self with chain[+0x84] (0/1/2+) dispatch.
+ *   Value 0 path (jz +0x80 → +0xa7): call GuardedChainCmpDualBitXor; if !pause: install at +0x08=0x00429130,
+ *     chain[+0x84]=1, g_data_0054204c=1, g_pause=1. ret.
+ *   Value 1 path (after dec → 0): scaledInit chain advance:
+ *     ecx=g_x_0054205c; g_x_00542070=[ecx*4+0x28]+1; g_cj_00542054=[ecx*4+0x24]; cmp eax vs [ecx*4+4];
+ *     if <: call DirtyOrJmp, ret; else g_x_0054206c=0x8000; call MStackPushZeroCallPop;
+ *     if !pause: install at +0x08=0x00429130, chain[+0x84]=2, g_data_0054204c=1, g_pause=1. ret.
+ *   Value 2+ path (fall through): clear bit-0 of state, call StackPopDispatchTagged_0041f780. ret.
+ */
+__declspec(naked) void Install3WayChainStateAdvance_00429130(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   0fh
+        _emit   84h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   13h
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        inc     eax
+        mov     dword ptr [g_x_00542070], eax
+        mov     ecx, dword ptr [ecx*4 + 0x24]
+        mov     dword ptr [g_cj_00542054], ecx
+        cmp     eax, dword ptr [ecx*4 + 4]
+        _emit   7ch
+        _emit   07h
+        call    DirtyOrJmp_004296c0
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x00008000
+        call    MStackPushZeroCallPop_00407d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4ch
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x00429130
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        call    GuardedChainCmpDualBitXor_004299a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x00429130
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned int g_data_00541fbc;
+
+/* @addr 0x0042e720 (212b game) - mstack-push 2 (g_scaledInit, g_x_00542048), table-walk from 0x00541fbc
+ *   searching for matching ecx==edx; on miss, advance and continue. Final state: write-back accumulated
+ *   chain. mstack-pop 2. ret.
+ */
+__declspec(naked) void MStackPushTableMatch_0042e720(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_data_00541fbc]
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   57h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        cmp     ecx, edx
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   74h
+        _emit   0ch
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542048], eax
+        _emit   75h
+        _emit   0e5h
+        _emit   0ebh
+        _emit   34h
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   23h
+        mov     dword ptr [eax*4 - 8], ecx
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542048], eax
+        _emit   75h
+        _emit   0ddh
+        mov     dword ptr [eax*4 - 8], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
