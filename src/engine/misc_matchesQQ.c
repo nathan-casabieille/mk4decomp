@@ -37899,3 +37899,44 @@ __declspec(naked) void PauseGuardChainTriple_0042ce60(void) {
         ret
     }
 }
+
+extern void AudioVolumeRescale_004ab690(void);
+extern void QuadGuardBitGateJmp_00439130(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void IdCascadeBitSet_00439760(void);
+
+/* @addr 0x00439f70 (83b game) - dual block.
+ *   Block1 (0..43): store 500 at g_x_0054206c; call audio rescale; if pause? ret;
+ *     else test bit0 of g_state_0054208c: set => jmp QuadGuardBitGateJmp; clear => jmp CallPauseTestByteJmpCalls.
+ *   Block2 (48..82, +4 NOP pad): cmp g_state_00535ddc with 0x13333 and store; if <  clear bit0 of g_state_0054208c, ret; if >= tail-jmp IdCascadeBitSet.
+ */
+__declspec(naked) void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0x000001f4
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     QuadGuardBitGateJmp_00439130
+        jmp     CallPauseTestByteJmpCalls_004390f0
+        ret
+        nop
+        nop
+        nop
+        nop
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00013333
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        jmp     IdCascadeBitSet_00439760
+    }
+}
