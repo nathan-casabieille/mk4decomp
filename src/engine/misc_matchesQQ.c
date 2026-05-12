@@ -27263,6 +27263,60 @@ __declspec(naked) void PaletteRampInit_004ad5f0(void) {
     }
 }
 
+extern void GuardedCallDirtyJmpInit_004a19c0(void);
+
+/* @addr 0x004a1320 (169b audio) - install-self 3-way (sub-then-dec branches).
+ *   eax = base*4; edx=0; flag = [eax+0x84]; clear.
+ *   sub flag, 0; if (==0): go to +0x85 (variant: [eax+0x84]=1, g_x_0054204c=0x1e).
+ *   dec ecx; if (==0, i.e., flag was 1): install-self with [eax+0x84]=2, packed_ptr store,
+ *     call GuardedCallDirtyJmpInit, pause = 1.
+ *   else: call CallSetPause_0041f830; pop esi; ret.
+ */
+__declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        mov     ecx, [eax + 0x84]
+        mov     [eax + 0x84], edx
+        sub     ecx, edx
+        _emit   74h
+        _emit   6ah
+        dec     ecx
+        _emit   74h
+        _emit   07h
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+        mov     dword ptr [eax + 8], 0x004a1320
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 0x004a1320
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, [eax + 4]
+        add     esi, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + 0x84], edx
+        call    GuardedCallDirtyJmpInit_004a19c0
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], 0x004a1320
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_x_0054204c], 0x1e
+        mov     dword ptr [g_framePauseFlag], ecx
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
