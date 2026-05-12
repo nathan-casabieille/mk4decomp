@@ -25708,6 +25708,74 @@ __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
     }
 }
 
+extern void TwinLoopSlotFinder_00429a40(void);
+extern void TailJmpRetNops_004bd5d0(void);
+extern void MStackPop8_004ab860(void);
+
+/* @addr 0x00429e30 (188b game) - push7+TableWalkBoundedCmp + MStackPush8 + 3 calls + MStackPop8 tail.
+ *   push 7; call TableWalkBoundedCmp; add esp,4. call MStackPush8. pause? -> end.
+ *   mstack-push g_x_0054206c. call TwinLoopSlotFinder. pause? -> end.
+ *   g_scaledInit = chain[g_x_00542058+0]; g_x_0054204c = packed_ptr(0x535d64); call TailJmpRetNops.
+ *   pause? -> end.
+ *   g_scaledInit = chain[g_x_00542058+4]; g_x_0054204c = packed_ptr(0x537ee0); call TailJmpRetNops.
+ *   pause? -> end. mstack-pop into g_x_0054206c. jmp MStackPop8.
+ */
+__declspec(naked) void TablePushAccumTailJmp_00429e30(void) {
+    __asm {
+        push    7
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9fh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    TwinLoopSlotFinder_00429a40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, 0x00535d64
+        shr     ecx, 2
+        mov     eax, [edx*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    TailJmpRetNops_004bd5d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4bh
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, 0x00537ee0
+        shr     ecx, 2
+        mov     eax, [edx*4 + 4]
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    TailJmpRetNops_004bd5d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     MStackPop8_004ab860
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
