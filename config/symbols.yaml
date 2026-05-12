@@ -11618,10 +11618,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049cf70
-    name: func_0049cf70
+    name: MStackPush3HelperCondToggle_0049cf70
     size: 259
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d080
     name: CmpDivJmp_0049d080
     size: 25
