@@ -1681,10 +1681,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00421b00
-    name: func_00421b00
+    name: Install3WayCountdownGame_00421b00
     size: 214
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00421be0
     name: DecBoundCheckCallJmp_00421be0
     size: 61

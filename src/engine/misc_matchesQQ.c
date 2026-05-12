@@ -35174,3 +35174,75 @@ __declspec(naked) void MStackPushTableMatch_0042e720(void) {
         ret
     }
 }
+
+extern void DecBoundCheckCallJmp_00421be0(void);
+extern void ScaledStoreE0_0041f550(void);
+extern unsigned int g_data_00543438;
+
+/* @addr 0x00421b00 (214b game) - 3-way install-self with countdown. */
+__declspec(naked) void Install3WayCountdownGame_00421b00(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   63h
+        mov     eax, dword ptr [g_data_00543438]
+        test    eax, eax
+        _emit   75h
+        _emit   06h
+        dec     dword ptr [g_x_00542080]
+        mov     eax, dword ptr [g_x_00542080]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        call    DecBoundCheckCallJmp_00421be0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   88h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        test    eax, eax
+        _emit   75h
+        _emit   11h
+        mov     dword ptr [g_x_00542070], 0
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_00537f94]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   44h
+        mov     dword ptr [g_x_00542070], 1
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        push    0x00001000
+        call    ScaledStoreE0_0041f550
+        mov     eax, dword ptr [g_x_007af91c]
+        add     esp, 4
+        neg     eax
+        sbb     eax, eax
+        mov     dword ptr [g_x_00542080], 0x23
+        and     eax, 0x5a
+        add     eax, 0x18
+        xor     eax, 0x7b
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_0053a718], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x00421b00
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
