@@ -3792,10 +3792,11 @@ functions:
     status: matched
     file: src/engine/scaled_addr_init.c
   - addr: 0x00436910
-    name: func_00436910
+    name: InstallSelfMStackPushDispatch_00436910
     size: 248
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436a10
     name: func_00436a10
     size: 284
