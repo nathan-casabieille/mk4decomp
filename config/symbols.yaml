@@ -4248,10 +4248,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004397d0
-    name: func_004397d0
+    name: MStackChainExtractCall_004397d0
     size: 221
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004398b0
     name: Cmp2CallDirtyCall_004398b0
     size: 54
@@ -7761,10 +7762,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004753b0
-    name: func_004753b0
+    name: InstallSelfChainEsi_004753b0
     size: 221
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00475490
     name: func_00475490
     size: 250
