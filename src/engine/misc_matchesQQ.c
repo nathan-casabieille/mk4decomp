@@ -15202,6 +15202,131 @@ extern void ScaledArrStore_00428e70(void);
 
 extern void PushSetXfmMaskCallPop_00407140(void);
 
+extern unsigned int g_x_0053a718;
+extern void SaveCallRestore_004049d0(int);
+extern void SaveCallRestoreOrXor_00404a00(int);
+
+extern unsigned int g_x_00538090;
+extern unsigned int g_x_00541fc4;
+extern void CallSetPause_0041f830(void);
+extern void GuardedScaledCall_0048a020(void);
+
+/* @addr 0x004a06f0 (165b audio) - install-self with 5x stride:
+ *   chain[sel].slot84 -> eax; clear. If !=0: clear walkCallback/g_x_00538090,
+ *   call CallSetPause; ret.
+ *   else: eax = g_x_00542054 * 5; ecx = g_x_00541fc4; walkCallback=edi=1;
+ *   g_x_00542054 = eax; eax += ecx; g_x_00538090 = 1; g_scaledInit = eax;
+ *   walkCallback = chain[eax].slot4; call GuardedScaledCall; pause? ret;
+ *   install self at +8; chain[sel].slot84 = 1; g_x_0054204c = 0x32; pause=1.
+ */
+__declspec(naked) void InstallSelfStride5_004a06f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   1ch
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [g_x_00538090], 0
+        call    CallSetPause_0041f830
+        pop     edi
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_x_00541fc4]
+        mov     edi, 1
+        lea     eax, [eax + eax*4]
+        mov     dword ptr [g_walkCallback], edi
+        mov     dword ptr [g_x_00542054], eax
+        add     eax, ecx
+        mov     dword ptr [g_x_00538090], edi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_chain_arr_4348f0 + 0x04]
+        mov     dword ptr [g_walkCallback], edx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     dword ptr [esi + 8], offset InstallSelfStride5_004a06f0
+        mov     dword ptr [esi + 0x84], edi
+        mov     dword ptr [g_x_0054204c], 0x32
+        mov     dword ptr [g_framePauseFlag], edi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+extern void func_004275c0(void);
+extern void DispatcherComplex181_004263d0(void);
+extern void func_00427690(void);
+
+/* @addr 0x00477920 (165b game) - poll-then-init pattern:
+ *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
+ *   walkCallback = max(g_x_0053a718, 0); call func_004275c0; pause? ret.
+ *   set fixed state (walkCallback=2, g_x_00542074=0x22, g_data_00542070=2,
+ *   g_x_00542078=0, g_x_0054207c=0xff960000, g_currentNodeFlags=2);
+ *   call DispatcherComplex181; pause? ret; call func_00427690.
+ */
+__declspec(naked) void PollThenInit_00477920(void) {
+    __asm {
+        push    ebx
+        push    0x22
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        push    0x22
+        call    SaveCallRestoreOrXor_00404a00
+        mov     al, byte ptr [g_state_0054208c]
+        mov     bl, 4
+        add     esp, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   1dh
+loopPoll:
+        push    0x22
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        push    0x22
+        call    SaveCallRestoreOrXor_00404a00
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   0e3h
+        mov     eax, dword ptr [g_x_0053a718]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7dh
+        _emit   0ah
+        mov     dword ptr [g_walkCallback], 0
+        call    func_004275c0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        mov     eax, 2
+        mov     dword ptr [g_x_00542074], 0x22
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_acc_00542078], 0
+        mov     dword ptr [g_x_0054207c], 0xff960000
+        mov     dword ptr [g_currentNodeFlags], eax
+        call    DispatcherComplex181_004263d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        call    func_00427690
+        pop     ebx
+        ret
+    }
+}
+
 extern void func_0048e0e0(void);
 extern void StateDispatchTable_00490fc0(void);
 

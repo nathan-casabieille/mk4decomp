@@ -7859,10 +7859,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00477920
-    name: func_00477920
+    name: PollThenInit_00477920
     size: 165
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004779d0
     name: MultiGateDispatchCallJmp_004779d0
     size: 80
@@ -11632,10 +11633,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a06f0
-    name: func_004a06f0
+    name: InstallSelfStride5_004a06f0
     size: 165
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a07a0
     name: func_004a07a0
     size: 196
