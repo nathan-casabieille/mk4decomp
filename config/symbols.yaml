@@ -13668,10 +13668,11 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b5380
-    name: func_004b5380
+    name: AuxCapsBitFlagAggregate_004b5380
     size: 196
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5450
     name: CallShrAnd_004b5450
     size: 18

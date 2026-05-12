@@ -26346,6 +26346,102 @@ __declspec(naked) void WindowsMsgProbe_004b4530(void) {
     }
 }
 
+extern unsigned char g_byte_007b0188;
+extern void (*g_IndirectCall_004d2228)(void);
+extern unsigned int g_table_004f4ea0;
+extern unsigned int g_table_007b0108;
+extern unsigned int g_table_007b00c8;
+extern unsigned int g_table_007b0088;
+extern unsigned int g_table_007b0148;
+
+/* @addr 0x004b5380 (196b engine.geo) - aux/mciSendCommand-like probe with bit-flag aggregation.
+ *   Frame: sub esp, 0x34; push ebx/esi/edi; esi (result) = 0.
+ *   Check [ebx + 0x7b0188]; if 0, fail.
+ *   memset 13 dwords on stack to 0; [esp+0xc] = 0x34 (cb).
+ *   Indirect call [0x4d2228] (cmd, &caps); on failure, return 0.
+ *   Loop 13 entries at 0x4f4ea0..0x4f4f10: if entry & arg[+0x2c]: esi |= (1 << index).
+ *   4 range checks on [esp+0x14], [esp+0x18] against [ebx*4 + 0x7b0108/0xc8/0x88/0x148];
+ *     each sets a high bit (0x10000000 .. 0x80000000) when out of range.
+ *   Return esi (collected flags).
+ */
+__declspec(naked) void AuxCapsBitFlagAggregate_004b5380(void) {
+    __asm {
+        sub     esp, 0x34
+        push    ebx
+        mov     ebx, [esp + 0x3c]
+        push    esi
+        xor     esi, esi
+        mov     al, byte ptr [ebx + g_byte_007b0188]
+        push    edi
+        test    al, al
+        _emit   0fh
+        _emit   84h
+        _emit   0a1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, 0xd
+        xor     eax, eax
+        lea     edi, [esp + 0x0c]
+        rep stosd
+        lea     eax, [esp + 0x0c]
+        mov     dword ptr [esp + 0x0c], 0x34
+        push    eax
+        push    ebx
+        mov     dword ptr [esp + 0x18], 0x00000483
+        call    dword ptr [g_IndirectCall_004d2228]
+        test    eax, eax
+        _emit   75h
+        _emit   74h
+        mov     edx, [esp + 0x2c]
+        xor     ecx, ecx
+        mov     eax, offset g_table_004f4ea0
+        test    [eax], edx
+        _emit   74h
+        _emit   09h
+        mov     edi, 1
+        shl     edi, cl
+        or      esi, edi
+        add     eax, 4
+        inc     ecx
+        cmp     eax, 0x004f4f10
+        _emit   7ch
+        _emit   0e8h
+        mov     eax, [esp + 0x14]
+        mov     ecx, [ebx*4 + g_table_007b0108]
+        cmp     eax, ecx
+        _emit   73h
+        _emit   06h
+        or      esi, 0x10000000
+        cmp     eax, [ebx*4 + g_table_007b00c8]
+        _emit   76h
+        _emit   06h
+        or      esi, 0x20000000
+        mov     eax, [esp + 0x18]
+        mov     ecx, [ebx*4 + g_table_007b0088]
+        cmp     eax, ecx
+        _emit   73h
+        _emit   06h
+        or      esi, 0x40000000
+        cmp     eax, [ebx*4 + g_table_007b0148]
+        _emit   76h
+        _emit   06h
+        or      esi, 0x80000000
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebx
+        add     esp, 0x34
+        ret
+        pop     edi
+        pop     esi
+        xor     eax, eax
+        pop     ebx
+        add     esp, 0x34
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
