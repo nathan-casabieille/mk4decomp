@@ -26155,6 +26155,86 @@ __declspec(naked) void TriStageDispatchTailJmp_00473c90(void) {
     }
 }
 
+extern void ScaledZeroFour_00490740(void);
+extern void BitSavePushCallMergePop_0045dc60(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+
+/* @addr 0x00471190 (187b game) - co-routine/yield with computed-jmp continuation.
+ *   eax = packed_ptr(0x4ebee0) + g_x_0054206c; mstack-push to update g_scaledInit;
+ *   eax = chain[g_scaledInit]; mstack-push eax (saved continuation).
+ *   switch (g_x_0054206c) {
+ *     case 4: case 5: case 8: case 0xb:
+ *       call ScaledZeroFour_00490740; pause? -> ret;
+ *       call BitSavePushCallMergePop_0045dc60; pause? -> ret;
+ *       mstack-pop ecx; jmp ecx (resume continuation).
+ *     default:
+ *       call ScaledZeroFour_00490740; pause? -> ret;
+ *       call FiveCallScaledChainTailJmp_0045f8d0; pause? -> ret;
+ *       mstack-pop ecx; jmp ecx.
+ *   }
+ */
+__declspec(naked) void StateDispatchYield_00471190(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, 0x004ebee0
+        shr     eax, 2
+        add     eax, ecx
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        inc     ecx
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        cmp     eax, 4
+        _emit   74h
+        _emit   0fh
+        cmp     eax, 5
+        _emit   74h
+        _emit   0ah
+        cmp     eax, 8
+        _emit   74h
+        _emit   05h
+        cmp     eax, 0xb
+        _emit   75h
+        _emit   36h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5eh
+        call    BitSavePushCallMergePop_0045dc60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   50h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     ecx
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   28h
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ah
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
