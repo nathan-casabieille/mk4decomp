@@ -59,10 +59,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00402b40
-    name: func_00402b40
+    name: InstallSelfSearchAccum_00402b40
     size: 193
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00402c10
     name: func_00402c10
     size: 461
