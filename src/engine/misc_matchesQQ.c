@@ -40558,3 +40558,94 @@ __declspec(naked) void CdeclArgScaledLookupAndStore_0045f470(void) {
         ret
     }
 }
+
+extern void func_004069b0(void);
+
+/* @addr 0x004334d0 (252b game) - 4-call pattern with bit2 gate.
+ *   For each of 4 g_x_00542058 fields (+0/+4/+8/+0xc): set g_x_0054206c=field;
+ *   call func_004069b0; if pause? final-OR-state-bit0 + copy scaledInit to
+ *   g_x_00542054 + ret. If bit2 of g_state_0054208c set? clear-bit0-ret.
+ *   Save scaledInit to side regs (g_x_00542048/0x4c/g_data_00542050) between calls.
+ */
+__declspec(naked) void FourCallBitGateChain_004334d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542058]
+        push    ebx
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     bl, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_00542058]
+        mov     dword ptr [g_x_00542048], edx
+        mov     ecx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   96h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   68h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_00542058]
+        mov     dword ptr [g_x_0054204c], edx
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   62h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   34h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_00542058]
+        mov     dword ptr [g_data_00542050], edx
+        mov     ecx, dword ptr [eax*4 + 0x0c]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2eh
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   0eh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        or      al, 1
+        mov     dword ptr [g_x_00542054], edx
+        mov     dword ptr [g_state_0054208c], eax
+        pop     ebx
+        ret
+    }
+}
