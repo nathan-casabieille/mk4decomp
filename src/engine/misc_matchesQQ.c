@@ -27990,6 +27990,58 @@ __declspec(naked) void IntToBufBase8_004d0ac0(void) {
     }
 }
 
+extern void func_00423ea0(void);
+
+/* @addr 0x00423b80 (152b game) - 3-call init sequence ending in tail-jmp.
+ *   call func_004265d0; pause? -> ret.
+ *   g_x_0054206c = 0; call CopyGlobal_004ac1f0; pause? -> ret.
+ *   g_x_00542048 = packed_ptr(0x4dedf8); g_x_0054206c = 0xa;
+ *   g_x_00542070 = 4; g_x_00542078 = 0; g_x_0054207c = 0xff9c0000.
+ *   call Push70CallScaleArith; pause? -> ret.
+ *   chain[g_scaledInit + 0x5c] = 0x10000; g_x_00542058 = packed_ptr(0x4dfb50);
+ *   g_x_0054206c = 0x10000. jmp func_00423ea0.
+ */
+__declspec(naked) void ChainInit3CallTailJmp_00423b80(void) {
+    __asm {
+        call    func_004265d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0
+        call    CopyGlobal_004ac1f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   6dh
+        mov     eax, 0x004dedf8
+        mov     dword ptr [g_x_0054206c], 0x0a
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_x_00542070], 4
+        mov     dword ptr [g_x_00542078], 0
+        mov     dword ptr [g_x_0054207c], 0xff9c0000
+        call    Push70CallScaleArith_00457ad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2ah
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x00010000
+        mov     edx, 0x004dfb50
+        mov     dword ptr [g_x_0054206c], eax
+        shr     edx, 2
+        mov     [ecx*4 + 0x5c], eax
+        mov     dword ptr [g_x_00542058], edx
+        jmp     func_00423ea0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
