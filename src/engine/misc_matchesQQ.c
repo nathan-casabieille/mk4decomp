@@ -14579,6 +14579,71 @@ bDone:
     }
 }
 
+extern unsigned int g_x_00543714;
+extern unsigned int g_x_005433ec;
+extern unsigned int g_x_0053a408;
+extern unsigned int g_x_0053a6dc;
+extern unsigned int g_x_0053a328;
+extern unsigned int g_x_00537e88;
+extern unsigned int g_x_00537f2c;
+extern unsigned int g_x_0053e348;
+extern void ClampTwoToMax_004226a0(void);
+extern void ClampTwoToMax_004226e0(void);
+
+/* @addr 0x00422720 (142b game) - 3-branch flag set:
+ *   If g_x_00543714 == 1 && g_x_005433ec == 0:
+ *     if g_x_0053a408: call ClampTwoToMax_004226a0; goto setB.
+ *     else: write 0x10000 to walkCallback/0x53a6dc/0x53a328.
+ *     setB: if g_x_00537e88: call ClampTwoToMax_004226e0; ret.
+ *     else: write 0x10000 to walkCallback/0x537f2c/0x53e348; ret.
+ *   Else: clear g_x_005433ec; write 0x10000 to all 5 globals; ret.
+ */
+__declspec(naked) void TriBranchFlagWrite_00422720(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00543714]
+        push    esi
+        cmp     eax, 1
+        _emit   75h
+        _emit   54h
+        mov     eax, dword ptr [g_x_005433ec]
+        test    eax, eax
+        _emit   75h
+        _emit   4bh
+        mov     eax, dword ptr [g_x_0053a408]
+        mov     esi, 0x10000
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    ClampTwoToMax_004226a0
+        _emit   0ebh
+        _emit   12h
+        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_x_0053a6dc], esi
+        mov     dword ptr [g_x_0053a328], esi
+        mov     eax, dword ptr [g_x_00537e88]
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    ClampTwoToMax_004226e0
+        pop     esi
+        ret
+        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_x_00537f2c], esi
+        mov     dword ptr [g_x_0053e348], esi
+        pop     esi
+        ret
+        mov     esi, 0x10000
+        mov     dword ptr [g_x_005433ec], 0
+        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_x_0053a6dc], esi
+        mov     dword ptr [g_x_0053a328], esi
+        mov     dword ptr [g_x_00537f2c], esi
+        mov     dword ptr [g_x_0053e348], esi
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_0053a2d4;
 extern unsigned int g_x_00501160;
 extern unsigned int g_arr_005d83a4_indexed_24;
@@ -14829,12 +14894,840 @@ __declspec(naked) void TwoStageSelectorInit_00402ed0(void) {
 }
 
 
+/* @addr 0x004ccda0 (145b crt) - fp-to-string formatter with rounding:
+ *   Copies digit string up to n chars, pads with '0', rounds up if next digit >= '5'
+ *   (cascading through trailing 9's), then either increments exponent or strcpys.
+ */
+__declspec(naked) void FpFormatRound_004ccda0(void) {
+    __asm {
+        mov     ecx, dword ptr [esp + 0x0c]
+        push    ebx
+        push    ebp
+        mov     ebp, dword ptr [esp + 0x0c]
+        mov     edx, dword ptr [ecx + 0x0c]
+        push    esi
+        mov     esi, dword ptr [esp + 0x14]
+        push    edi
+        lea     edi, [ebp + 1]
+        mov     byte ptr [ebp], 0x30
+        test    esi, esi
+        mov     eax, edi
+        _emit   7eh
+        _emit   1eh
+loopCopy:
+        mov     ebx, esi
+        mov     cl, byte ptr [edx]
+        test    cl, cl
+        _emit   74h
+        _emit   06h
+        movsx   ecx, cl
+        inc     edx
+        _emit   0ebh
+        _emit   05h
+        mov     ecx, 0x30
+        mov     byte ptr [eax], cl
+        inc     eax
+        dec     esi
+        dec     ebx
+        _emit   75h
+        _emit   0e8h
+        mov     ecx, dword ptr [esp + 0x1c]
+afterCopy:
+        test    esi, esi
+        mov     byte ptr [eax], 0
+        _emit   7ch
+        _emit   1ch
+        cmp     byte ptr [edx], 0x35
+        _emit   7ch
+        _emit   17h
+roundUp:
+        mov     dl, byte ptr [eax - 1]
+        dec     eax
+        cmp     dl, 0x39
+        _emit   75h
+        _emit   0ch
+        mov     byte ptr [eax], 0x30
+        mov     dl, byte ptr [eax - 1]
+        dec     eax
+        cmp     dl, 0x39
+        _emit   74h
+        _emit   0f4h
+        inc     byte ptr [eax]
+        cmp     byte ptr [ebp], 0x31
+        _emit   75h
+        _emit   08h
+        inc     dword ptr [ecx + 4]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+        or      ecx, 0xffffffff
+        xor     eax, eax
+        repne   scasb
+        not     ecx
+        sub     edi, ecx
+        mov     eax, ecx
+        mov     esi, edi
+        mov     edi, ebp
+        shr     ecx, 2
+        rep     movsd
+        mov     ecx, eax
+        and     ecx, 3
+        rep     movsb
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
+extern unsigned int g_x_00520064;
+extern unsigned int g_arr_00fa0de0;
+extern void (*g_iat_004d20d4)();
+
+extern unsigned short* g_x_00522998;
+extern int func_004cdae0(int, int, int, int, int, int, int);
+
+extern unsigned int g_x_00ab51f8;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_chain_arr_4348f0;
+extern void func_00434a30(void);
+
+/* @addr 0x00434990 (148b) - install-self variant of 0x4348f0:
+ *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
+ *   of 0x10042 to g_x_0054207c and installs self at 0x00434990.
+ */
+__declspec(naked) void InstallSelfStatePush_00434990(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00ab51f8], 1
+        shl     eax, 2
+        xor     edx, edx
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   0fh
+        mov     dword ptr [g_x_0054207c], 0x10041
+        jmp     func_0045f650
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_00434990
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, offset InstallSelfStatePush_00434990
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_chain_arr_4348f0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], edx
+        call    func_00434a30
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     edi
+        ret
+    }
+}
+
+extern void func_0045f650(void);
+extern void func_00434a30(void);
+
+/* @addr 0x004348f0 (148b) - install-self with state push:
+ *   g_x_00ab51f8 = 1; if chain[sel].slot84 != 0: g_x_0054207c = 0x10042; jmp F.
+ *   Else: install self at chain[sel]+8, slot84=1, slot4=newIdx; push 0x14348f0
+ *   into mstack-like arr at scaledInit; clear chain[sel].slot84 in g_x array;
+ *   call F2; g_framePauseFlag = 1; ret.
+ */
+__declspec(naked) void InstallSelfStatePush_004348f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00ab51f8], 1
+        shl     eax, 2
+        xor     edx, edx
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   0fh
+        mov     dword ptr [g_x_0054207c], 0x10042
+        jmp     func_0045f650
+        mov     dword ptr [eax + 8], offset InstallSelfStatePush_004348f0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, offset InstallSelfStatePush_004348f0
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_chain_arr_4348f0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], edx
+        call    func_00434a30
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     edi
+        ret
+    }
+}
+
+extern unsigned int g_chain_disp_1c_408c10;
+extern unsigned int g_chain_arr_408c10;
+extern unsigned int g_chain_disp_28_408c10;
+
+/* @addr 0x00408c10 (148b boot) - 3-level chain dirty-bit walker:
+ *   At each level fetch a pointer, set state |= 4, then either set or clear
+ *   based on sign of fetched value. If chain runs out: leave bit 2 set; ret.
+ */
+__declspec(naked) void ChainDirtyBitWalker_00408c10(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, 4
+        mov     eax, [eax*4 + g_chain_disp_1c_408c10]
+        or      edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   0ch
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   7fh
+        _emit   07h
+        or      dword ptr [g_state_0054208c], ecx
+        ret
+        mov     edx, dword ptr [g_walkCallback]
+        add     eax, edx
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_x_00542048], eax
+        or      edx, ecx
+        mov     eax, [eax*4 + g_chain_arr_408c10]
+        mov     dword ptr [g_state_0054208c], edx
+        test    eax, eax
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   2dh
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   7eh
+        _emit   21h
+        mov     eax, [eax*4 + g_chain_disp_28_408c10]
+        or      edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   09h
+        mov     eax, edx
+        xor     eax, ecx
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern unsigned int g_x_00fa0dc0;
+extern unsigned int* g_x_00f9fdb4;
+extern void (*g_iat_004d2170)();
+extern void* TestBitClearOrCallTriple_004c5800(void*);
+extern void FreeImpl_004c55f0(void*);
+extern void TableLookupIatCall_004c6fd0(int);
+
+/* @addr 0x004ce0b0 (147b crt) - stream cleanup loop:
+ *   _lock(2); for (i=3; i < g_x_00fa0dc0; ++i):
+ *     fp = stream_table[i]; if (fp && (fp[+0xc] & 0x83)):
+ *       if (fflush(fp) != -1) ++ebp.
+ *     If (i >= 0x14): call IAT(stream+0x20); free(stream); slot = 0.
+ *   _unlock(2); return ebp.
+ */
+__declspec(naked) int StreamCleanupLoop_004ce0b0(void) {
+    __asm {
+        push    ebp
+        push    esi
+        push    2
+        xor     ebp, ebp
+        call    Lock_004c6f50
+        mov     eax, dword ptr [g_x_00fa0dc0]
+        mov     esi, 3
+        add     esp, 4
+        cmp     eax, esi
+        _emit   7eh
+        _emit   68h
+        push    edi
+        mov     edi, dword ptr [g_iat_004d2170]
+        push    ebx
+        mov     bl, 0x83
+loopCe0b0:
+        mov     eax, dword ptr [g_x_00f9fdb4]
+        mov     eax, [eax + esi*4]
+        test    eax, eax
+        _emit   74h
+        _emit   46h
+        test    byte ptr [eax + 0x0c], bl
+        _emit   74h
+        _emit   0fh
+        push    eax
+        call    TestBitClearOrCallTriple_004c5800
+        add     esp, 4
+        cmp     eax, 0xffffffff
+        _emit   74h
+        _emit   01h
+        inc     ebp
+loopAfter:
+        cmp     esi, 0x14
+        _emit   7ch
+        _emit   2dh
+        mov     ecx, dword ptr [g_x_00f9fdb4]
+        mov     edx, [ecx + esi*4]
+        add     edx, 0x20
+        push    edx
+        call    edi
+        mov     eax, dword ptr [g_x_00f9fdb4]
+        mov     ecx, [eax + esi*4]
+        push    ecx
+        call    FreeImpl_004c55f0
+        mov     edx, dword ptr [g_x_00f9fdb4]
+        add     esp, 4
+        mov     dword ptr [edx + esi*4], 0
+loopNext:
+        mov     eax, dword ptr [g_x_00fa0dc0]
+        inc     esi
+        cmp     esi, eax
+        _emit   7ch
+        _emit   0a4h
+        pop     ebx
+        pop     edi
+        push    2
+        call    TableLookupIatCall_004c6fd0
+        add     esp, 4
+        mov     eax, ebp
+        pop     esi
+        pop     ebp
+        ret
+    }
+}
+
+
+/* @addr 0x004cc650 (149b crt) - _isctype-like char-class check:
+ *   If ch < 0xff: return mask & pctype[ch]. Else if hi-byte is leadbyte:
+ *   convert via MultiByteToWideChar; if ok: return mask & low16 of arg1.
+ */
+__declspec(naked) int IsCType_004cc650(void) {
+    __asm {
+        push    ecx
+        mov     ecx, dword ptr [esp + 8]
+        push    esi
+        lea     eax, [ecx + 1]
+        cmp     eax, 0x100
+        _emit   77h
+        _emit   15h
+        mov     edx, dword ptr [g_x_00522998]
+        xor     eax, eax
+        mov     ax, word ptr [edx + ecx*2]
+        mov     ecx, dword ptr [esp + 0x10]
+        and     eax, ecx
+        pop     esi
+        pop     ecx
+        ret
+        mov     esi, dword ptr [g_x_00522998]
+        mov     eax, ecx
+        sar     eax, 8
+        mov     edx, eax
+        and     edx, 0xff
+        test    byte ptr [esi + edx*2 + 1], 0x80
+        _emit   74h
+        _emit   14h
+        mov     byte ptr [esp + 0x0c], al
+        mov     byte ptr [esp + 0x0d], cl
+        mov     byte ptr [esp + 0x0e], 0
+        mov     eax, 2
+        _emit   0ebh
+        _emit   0eh
+        mov     byte ptr [esp + 0x0c], cl
+        mov     byte ptr [esp + 0x0d], 0
+        mov     eax, 1
+        push    1
+        push    0
+        lea     ecx, [esp + 0x0c]
+        push    0
+        push    ecx
+        lea     edx, [esp + 0x1c]
+        push    eax
+        push    edx
+        push    1
+        call    func_004cdae0
+        add     esp, 0x1c
+        test    eax, eax
+        _emit   75h
+        _emit   03h
+        pop     esi
+        pop     ecx
+        ret
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [esp + 0x10]
+        and     eax, 0xffff
+        pop     esi
+        and     eax, ecx
+        pop     ecx
+        ret
+    }
+}
+
+
+/* @addr 0x004cd1c0 (147b crt) - fd-validate + close-stdio helper:
+ *   if fd >= g_x_00f9efe0: errno=9 (EBADF), doserrno=0, return -1.
+ *   table = arr[fd>>5]; entry = table[+(fd&0x1f)*36+4]; check open bit.
+ *   If invalid: errno path.
+ *   If g_x_00520064 == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
+ *   Mark slot as -1; return 0.
+ */
+__declspec(naked) int CrtFdClose_004cd1c0(void) {
+    __asm {
+        mov     ecx, dword ptr [esp + 4]
+        mov     eax, dword ptr [g_x_00f9efe0]
+        push    ebx
+        push    esi
+        cmp     ecx, eax
+        push    edi
+        _emit   73h
+        _emit   66h
+        mov     eax, ecx
+        sar     eax, 5
+        lea     edi, [eax*4 + g_arr_00fa0de0]
+        mov     eax, ecx
+        and     eax, 0x1f
+        mov     edx, dword ptr [edi]
+        lea     esi, [eax + eax*8]
+        shl     esi, 2
+        mov     bl, byte ptr [edx + esi + 4]
+        lea     eax, [edx + esi]
+        mov     edx, 1
+        _emit   84h
+        _emit   0dah
+        _emit   74h
+        _emit   3dh
+        cmp     dword ptr [eax], 0xffffffff
+        _emit   74h
+        _emit   38h
+        cmp     dword ptr [g_x_00520064], edx
+        _emit   75h
+        _emit   21h
+        sub     ecx, 0
+        _emit   74h
+        _emit   12h
+        dec     ecx
+        _emit   74h
+        _emit   09h
+        dec     ecx
+        _emit   75h
+        _emit   16h
+        push    0
+        push    0xfffffff4
+        _emit   0ebh
+        _emit   0ah
+        push    0
+        push    0xfffffff5
+        _emit   0ebh
+        _emit   04h
+        push    0
+        push    0xfffffff6
+        call    dword ptr [g_iat_004d20d4]
+        mov     eax, dword ptr [edi]
+        mov     dword ptr [eax + esi], 0xffffffff
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 9
+        call    CallAddC_004c8bb0
+        pop     edi
+        mov     dword ptr [eax], 0
+        pop     esi
+        or      eax, 0xffffffff
+        pop     ebx
+        ret
+    }
+}
+
+extern unsigned char g_data_004f7868;
+extern unsigned char g_data_00ab4838;
+extern unsigned int g_arr_4ba040;
+extern void ScaledNegThreeWords_004be210(void);
+
+extern unsigned int g_x_0054207c;
+extern void SwapOrPassSet_0048fbf0(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void func_004265d0(void);
+
+/* @addr 0x00464280 (145b game) - install-self with state-machine:
+ *   chain[sel].slot84 -> eax; clear it; sub eax,0 (test).
+ *   If 0: call func_004265d0; pause? ret; install self; return.
+ *   If 1: call SwapOrPassSet_0048fbf0; pause? ret;
+ *     g_x_0054207c = (g_x_0054204c == g_x_00538158) ? g_x_00537f48 : g_x_005380e0.
+ *   Then call StackPopDispatchTagged; ret.
+ */
+__declspec(naked) void InstallSelfStateMachine_00464280(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   3dh
+        dec     eax
+        _emit   75h
+        _emit   33h
+        call    SwapOrPassSet_0048fbf0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5bh
+        mov     edx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [g_x_00538158]
+        mov     ecx, dword ptr [g_x_00537f48]
+        cmp     edx, eax
+        mov     dword ptr [g_x_0054207c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_x_005380e0]
+        mov     dword ptr [g_x_0054207c], eax
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    func_004265d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset InstallSelfStateMachine_00464280
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0xfa
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned char g_data_00438ef0;
+extern unsigned int g_x_00535ddc;
+extern void func_004339c0(void);
+extern void InstallSelfChainExtendCall_004351b0(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+
+/* @addr 0x00435110 (145b game) - install-self with counter chain:
+ *   chain[sel].slot84 -> ecx; clear chain[sel].slot84;
+ *   if ecx != 0: load g_x_00535ddc, g_walkCallback=it;
+ *     if < 0xe666: jmp InstallSelfChainExtendCall_004351b0.
+ *     else: --g_x_00542080; if != 0: install-self path.
+ *     else: g_walkCallback = ecx_g_x_00535ddc; if < 0x10000: jmp CallPauseTestByteJmpCalls.
+ *     else: mstack-push 0x438ef0; jmp func_004339c0.
+ *   install-self: g_x_0054204c=1, chain[+0x84]=1, install at +8, set framePauseFlag=1.
+ */
+__declspec(naked) void InstallSelfPair_00435110(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   56h
+        mov     ecx, dword ptr [g_x_00535ddc]
+        cmp     ecx, 0xe666
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   7dh
+        _emit   05h
+        jmp     InstallSelfChainExtendCall_004351b0
+        mov     edx, dword ptr [g_state_00542080]
+        dec     edx
+        mov     dword ptr [g_state_00542080], edx
+        _emit   75h
+        _emit   2eh
+        cmp     ecx, 0x10000
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   7dh
+        _emit   05h
+        jmp     CallPauseTestByteJmpCalls_004390f0
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset g_data_00438ef0
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset InstallSelfPair_00435110
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_framePauseFlag], ecx
+        ret
+    }
+}
+
+extern unsigned char g_data_00ab4838;
+extern unsigned int g_arr_4ba040;
+extern void ScaledNegThreeWords_004be210(void);
+
+/* @addr 0x004ba040 (145b engine.render) - vtable dispatch from
+ *   g_currentNodeFlags high nibble: compute table index, fetch fn ptr,
+ *   call via eax. On pause: ret. If low bit of (g_currentNodeFlags|g_cj):
+ *   call ScaledNegThreeWords; pause? ret. Set bits 0x30 of g_state_0054208c.
+ */
+__declspec(naked) void VtableDispatchSetDirty_004ba040(void) {
+    __asm {
+        mov     ecx, dword ptr [g_currentNodeFlags]
+        mov     eax, ecx
+        shr     eax, 0x18
+        and     eax, 0x0f
+        test    ch, 1
+        _emit   74h
+        _emit   06h
+        and     eax, 7
+        add     eax, 0x10
+        mov     edx, dword ptr [esp + 4]
+        mov     ecx, offset g_data_004f7868
+        sar     ecx, 2
+        add     eax, ecx
+        mov     ecx, offset g_data_00ab4838
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x0f
+        mov     eax, [eax*4 + g_arr_4ba040]
+        mov     dword ptr [g_x_00542048], edx
+        sar     ecx, 2
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_x_0054204c], ecx
+        call    eax
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   30h
+        mov     eax, dword ptr [g_currentNodeFlags]
+        mov     edx, dword ptr [g_cj_0054205c]
+        or      eax, edx
+        test    al, 1
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   0eh
+        call    ScaledNegThreeWords_004be210
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   0ch
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 0x30
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void (*g_iat_004d2080)();
+extern unsigned char g_data_0050b4b4;
+extern unsigned int g_chain_disp_64_49b7c0;
+extern unsigned int g_arr_next_49b7c0;
+extern unsigned int g_chain_disp_1c_49b7c0;
+extern unsigned int g_chain_disp_38_49b7c0;
+extern void func_00406c10(void);
+extern void func_00409970(void);
+
+/* @addr 0x0049b7c0 (143b game) - walk linked chain until end:
+ *   g_x_00542048 = (0x50b4b4 >> 2); call F; pause? ret.
+ *   ecx = chain[sel].slot64; g_x_00542048 = ecx;
+ *   while (arr_next[ecx] != 0): ecx = arr_next[ecx]; g_walkCallback = ecx.
+ *   At tail: eax = -0x4ccc; g_x_00542070 = eax;
+ *   ecx = chain[last].slot1c; g_walkCallback = ecx;
+ *   if (ecx == 4): eax = 0xffff6667; g_x_00542070 = eax;
+ *   chain[g_scaledInit].slot38 = eax; jmp F2.
+ */
+__declspec(naked) void ChainWalkInstall_0049b7c0(void) {
+    __asm {
+        mov     eax, offset g_data_0050b4b4
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00406c10
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, [ecx*4 + g_chain_disp_64_49b7c0]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, [ecx*4 + g_arr_next_49b7c0]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   18h
+walkNext:
+        mov     ecx, eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, [eax*4 + g_arr_next_49b7c0]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   75h
+        _emit   0e8h
+        mov     eax, 0xffffb334
+        mov     dword ptr [g_data_00542070], eax
+        mov     ecx, [ecx*4 + g_chain_disp_1c_49b7c0]
+        cmp     ecx, 4
+        mov     dword ptr [g_walkCallback], ecx
+        _emit   75h
+        _emit   0ah
+        mov     eax, 0xffff6667
+        mov     dword ptr [g_data_00542070], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     [edx*4 + g_chain_disp_38_49b7c0], eax
+        jmp     func_00409970
+        ret
+    }
+}
+
+extern void DosMapErr_004c8b20(int);
+extern void func_004cd1c0(int);
+extern unsigned int g_arr_00fa0de0;
+
+/* @addr 0x004c8a50 (144b crt) - _close-style fd close:
+ *   handle = CRTHandleLookup(fd); if -1: err. If fd in {1,2}: check if stdin/stderr alias.
+ *   Else: CloseHandle(handle); on fail GetLastError. Then clear table entry; if err:
+ *   DosMapErr(err), return -1; else return 0.
+ */
+__declspec(naked) int CloseFd_004c8a50(void) {
+    __asm {
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        push    edi
+        push    esi
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        cmp     eax, 0xffffffff
+        _emit   74h
+        _emit   42h
+        cmp     esi, 1
+        _emit   74h
+        _emit   05h
+        cmp     esi, 2
+        _emit   75h
+        _emit   1ah
+        push    1
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        mov     edi, eax
+        push    2
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        cmp     edi, eax
+        _emit   74h
+        _emit   1eh
+        push    esi
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        push    eax
+        call    dword ptr [g_iat_004d2080]
+        test    eax, eax
+        _emit   75h
+        _emit   0ah
+        call    dword ptr [g_iat_004d209c]
+        mov     edi, eax
+        _emit   0ebh
+        _emit   02h
+        xor     edi, edi
+        push    esi
+        call    func_004cd1c0
+        mov     eax, esi
+        and     esi, 0x1f
+        sar     eax, 5
+        lea     ecx, [esi + esi*8]
+        add     esp, 4
+        mov     edx, [eax*4 + g_arr_00fa0de0]
+        test    edi, edi
+        mov     byte ptr [edx + ecx*4 + 4], 0
+        _emit   74h
+        _emit   0fh
+        push    edi
+        call    DosMapErr_004c8b20
+        add     esp, 4
+        or      eax, 0xffffffff
+        pop     edi
+        pop     esi
+        ret
+        pop     edi
+        xor     eax, eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned short g_word_00ab4e44;
 extern unsigned short g_word_00ab4e48;
 extern unsigned short g_word_00ab4e4c;
 extern unsigned int g_x_00ab4e50;
 extern unsigned int g_x_00ab4e54;
 extern unsigned int g_x_00ab4e58;
+
+/* @addr 0x00404d50 (146b boot) - scaled 3-channel pack:
+ *   Multiply 3 byte channels (from arg1 hi byte / mid / low) by g_walkCallback,
+ *   add corresponding word at 0xab4e44/48/4c, clamp each to <=0xfe00, store back.
+ *   Clear 3 dword globals.
+ */
+__declspec(naked) void ScaledThreeChanPack_00404d50(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        push    esi
+        mov     esi, dword ptr [g_walkCallback]
+        mov     ecx, eax
+        sar     ecx, 16
+        imul    ecx, esi
+        xor     edx, edx
+        push    edi
+        mov     dx, word ptr [g_word_00ab4e44]
+        xor     edi, edi
+        add     ecx, edx
+        xor     edx, edx
+        mov     dl, ah
+        and     eax, 0xff
+        imul    edx, esi
+        imul    eax, esi
+        mov     di, word ptr [g_word_00ab4e48]
+        xor     esi, esi
+        mov     si, word ptr [g_word_00ab4e4c]
+        add     edx, edi
+        add     eax, esi
+        cmp     ecx, 0xfe00
+        _emit   76h
+        _emit   05h
+        mov     ecx, 0xfe00
+        cmp     edx, 0xfe00
+        _emit   76h
+        _emit   05h
+        mov     edx, 0xfe00
+        cmp     eax, 0xfe00
+        _emit   76h
+        _emit   05h
+        mov     eax, 0xfe00
+        mov     word ptr [g_word_00ab4e4c], ax
+        xor     eax, eax
+        pop     edi
+        mov     word ptr [g_word_00ab4e44], cx
+        mov     word ptr [g_word_00ab4e48], dx
+        mov     dword ptr [g_x_00ab4e58], eax
+        mov     dword ptr [g_x_00ab4e54], eax
+        mov     dword ptr [g_x_00ab4e50], eax
+        pop     esi
+        ret
+    }
+}
+
 
 /* @addr 0x00404cc0 (142b boot) - 3-channel pack:
  *   Mix arg1 nibbles with 3 word globals, clamp each result to <=0xfe00,
