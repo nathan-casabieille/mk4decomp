@@ -43510,3 +43510,99 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         ret
     }
 }
+
+extern void IterStepScaledStore24_00428730(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void ScaledStoreEntZeroJmp_00428e40(void);
+
+/* @addr 0x0045feb0 (272b game) - install-self with 4-call chain + cj copy.
+ *   baseSel<<2 -> eax; snapshot+clear chain[+0x84].
+ *   If was zero: push 0x0054295c, call IterStepScaledStore24_00428730; if pause? ret.
+ *     call DualCallPauseDirtyJmp_00490c30; if pause? ret.
+ *     push 0x00542960; call ArgScaledTestStore_00494140; if pause? ret.
+ *     call DualScaledStoreZero_00491080; if pause? ret.
+ *     cj[+0x24] = g_x_00542058; tail-jmp StackPopDispatchTagged_0041f780.
+ *   If was nonzero: g_x_00542058 = cj[+0x24]; g_x_00542048 = 0x005009c8>>2;
+ *     install-self at [eax+8]=0x0045feb0; chain[+0x84]=1;
+ *     scaledInit-chain push 0x0045feb0+0x01000000;
+ *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   70h
+        push    0x0054295c
+        call    IterStepScaledStore24_00428730
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    0x00542960
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DualScaledStoreZero_00491080
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     dword ptr [edx*4 + 0x24], ecx
+        jmp     StackPopDispatchTagged_0041f780
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x24]
+        mov     ecx, 0x005009c8
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [eax + 8], 0x0045feb0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, 0x0045feb0
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledStoreEntZeroJmp_00428e40
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}

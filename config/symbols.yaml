@@ -6310,10 +6310,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045feb0
-    name: func_0045feb0
+    name: InstallSelfChainCascade_0045feb0
     size: 272
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045ffc0
     name: CallPauseMStackPushSet9Jmp_0045ffc0
     size: 52
