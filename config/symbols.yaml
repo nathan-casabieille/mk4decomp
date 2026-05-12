@@ -12223,10 +12223,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a7030
-    name: func_004a7030
+    name: InstallChainInitTailJmp_004a7030
     size: 189
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a70f0
     name: func_004a70f0
     size: 1295

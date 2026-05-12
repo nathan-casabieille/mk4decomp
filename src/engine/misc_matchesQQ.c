@@ -23737,6 +23737,70 @@ __declspec(naked) void MStackChainDecodeCall_004936f0(void) {
     }
 }
 
+extern void func_00406dd0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern unsigned int g_x_0053a3a8;
+
+/* @addr 0x004a7030 (189b audio) - packed-ptr install + chain init + tail-jmp.
+ *   g_x_00542048 = packed_ptr(0x50d418); call func_00406dd0; pause? -> end;
+ *   (208c&4)? -> end;
+ *   mstack-push g_scaledInit; [0x53a3a8] = g_scaledInit;
+ *   chain[+0x40] = 0x6487; chain[+0x3c] = 0; chain[+0x44] = 0; chain[+0x30] = 0;
+ *   g_x_0054206c = 9; call DirtyDoubleDeref; pause? -> end;
+ *   g_x_00542048 = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
+ */
+__declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
+    __asm {
+        mov     eax, 0x0050d418
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00406dd0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   90h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_x_0053a3a8], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x40], 0x00006487
+        mov     dword ptr [ecx*4 + 0x3c], 0
+        lea     eax, [ecx*4 + g_data_004d57ac_arr]
+        mov     dword ptr [eax + 0x44], 0
+        mov     dword ptr [eax + 0x30], 0
+        mov     dword ptr [g_x_0054206c], 9
+        call    DirtyDoubleDeref_00408cb0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_00542048], edx
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     PushPopScaled1cDoubleCall_00408510
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
