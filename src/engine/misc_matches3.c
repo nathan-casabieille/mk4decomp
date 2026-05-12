@@ -7,31 +7,21 @@
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00404ed0 (26b): zero 3 fields at offsets 0x60/0x64/0x68 plus walkCallback */
-__declspec(naked) void ZeroThreeFields_00404ed0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        xor     ecx, ecx
-        shl     eax, 2
-        mov     dword ptr [eax + 0x60], ecx
-        mov     dword ptr [eax + 0x64], ecx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x68], ecx
-        ret
-    }
+void ZeroThreeFields_00404ed0(void) {
+    u32 base = g_scaledInit_00542044 << 2;
+    *(u32 *)(base + 0x60) = 0;
+    *(u32 *)(base + 0x64) = 0;
+    g_walkCallback = 0;
+    *(u32 *)(base + 0x68) = 0;
 }
 
 /* @addr 0x0040a8b0 (26b): zero 3 fields at offsets 0x44/0x48/0x4c plus walkCallback */
-__declspec(naked) void ZeroThreeFields_0040a8b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        xor     ecx, ecx
-        shl     eax, 2
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x44], ecx
-        mov     dword ptr [eax + 0x48], ecx
-        mov     dword ptr [eax + 0x4c], ecx
-        ret
-    }
+void ZeroThreeFields_0040a8b0(void) {
+    u32 base = g_scaledInit_00542044 << 2;
+    g_walkCallback = 0;
+    *(u32 *)(base + 0x44) = 0;
+    *(u32 *)(base + 0x48) = 0;
+    *(u32 *)(base + 0x4c) = 0;
 }
 
 /* @addr 0x004066d0 (27b)
@@ -110,15 +100,8 @@ void ScaledMaskByte_004774d0(void) {
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-__declspec(naked) void ScaledShrAnd_0048bb40(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x40]
-        shr     ecx, 0x0c
-        and     ecx, 3
-        mov     dword ptr [g_walkCallback], ecx
-        ret
-    }
+void ScaledShrAnd_0048bb40(void) {
+    g_walkCallback = (NodeHandlerFn)((*(u32 *)(g_fightGroupHead * 4 + 0x40) >> 12) & 3);
 }
 
 /* @addr 0x0046eaa0 (26b)
@@ -240,12 +223,9 @@ void AndShlStore_00409280(void) {
  *   mov     [eax*4 + 4], ecx
  *   ret
  */
-__declspec(naked) void LeaPlus22StoreSelf_0048e4d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        lea     ecx, [eax + 0x22]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 4], ecx
-        ret
-    }
+void LeaPlus22StoreSelf_0048e4d0(void) {
+    u32 base = g_baseSel_00542060;
+    u32 v = base + 0x22;
+    g_walkCallback = (NodeHandlerFn)v;
+    *(u32 *)(base * 4 + 4) = v;
 }

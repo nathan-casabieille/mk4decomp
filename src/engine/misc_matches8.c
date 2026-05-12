@@ -163,16 +163,10 @@ __declspec(naked) void StoreTwoCall_0049cb40(void) {
  *   ret
  */
 extern unsigned int g_xformEntityIdx;
-__declspec(naked) void SplitHi8Lo24_004abfc0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        mov     ecx, eax
-        and     eax, 0x00ffffff
-        shr     ecx, 0x18
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_xformEntityIdx], eax
-        ret
-    }
+void SplitHi8Lo24_004abfc0(void) {
+    unsigned int v = g_eventQueueCurrent;
+    g_eventQueueCurrent = v >> 24;
+    g_xformEntityIdx = v & 0x00ffffff;
 }
 
 /* @addr 0x004b5450 (18b)

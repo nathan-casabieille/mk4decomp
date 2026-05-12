@@ -266,16 +266,10 @@ __declspec(naked) void StreamReadDword_004c8380(void) {
  *   mov     edx, [ecx-4]
  *   ret
  */
-__declspec(naked) void StreamReadQword_004c83a0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [eax]
-        add     ecx, 8
-        mov     dword ptr [eax], ecx
-        mov     eax, dword ptr [ecx - 8]
-        mov     edx, dword ptr [ecx - 4]
-        ret
-    }
+u64 StreamReadQword_004c83a0(u32 *stream) {
+    u32 newpos = *stream + 8;
+    *stream = newpos;
+    return *(u64 *)(newpos - 8);
 }
 
 /* @addr 0x004c83c0 (18b)

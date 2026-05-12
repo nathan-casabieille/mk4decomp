@@ -194,15 +194,10 @@ __declspec(naked) void ScaledSet1OnNonZero_0048c190(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void DirtyFlagsManip_0048de00(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_xformScratch2088], 0
-        and     al, 0xfe
-        or      al, 4
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void DirtyFlagsManip_0048de00(void) {
+    u32 v = g_xformDirtyFlags;
+    g_xformScratch2088 = 0;
+    g_xformDirtyFlags = (v & 0xfffffffe) | 4;
 }
 
 /* @addr 0x0049afe0 (30b)
