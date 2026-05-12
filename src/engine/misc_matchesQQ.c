@@ -34448,3 +34448,133 @@ __declspec(naked) void DualSectionInit_00492140(void) {
         ret
     }
 }
+
+/* @addr 0x004274f0 (208b game) - 4-pop+1-rewrite mstack manipulation. */
+__declspec(naked) void MStackPop4Rewrite_004274f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542078], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 4
+        or      edx, eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        test    ecx, ecx
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   0ah
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        ret
+    }
+}
+
+extern unsigned int g_state_004d5320;
+extern unsigned int g_state_004d532c;
+
+/* @addr 0x0042ae40 (208b game) - 3-element range-clamp loop in-place at arg0 array. */
+__declspec(naked) void RangeClampThree_0042ae40(void) {
+    __asm {
+        mov     edx, dword ptr [g_state_004d5320]
+        mov     ecx, dword ptr [g_state_004d5324]
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        mov     eax, dword ptr [esi*4 + 0]
+        cmp     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0bh
+        sub     eax, ecx
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [g_state_004d532c]
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0bh
+        add     eax, ecx
+        cmp     eax, edx
+        _emit   7eh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi*4 + 0], eax
+        mov     eax, dword ptr [esi*4 + 4]
+        mov     edx, dword ptr [g_state_004d5320]
+        mov     ecx, dword ptr [g_state_004d5324]
+        cmp     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0bh
+        sub     eax, ecx
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [g_state_004d532c]
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0bh
+        add     eax, ecx
+        cmp     eax, edx
+        _emit   7eh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi*4 + 4], eax
+        mov     eax, dword ptr [esi*4 + 8]
+        mov     edx, dword ptr [g_state_004d5320]
+        mov     ecx, dword ptr [g_state_004d5324]
+        cmp     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0bh
+        sub     eax, ecx
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [g_state_004d532c]
+        cmp     eax, edx
+        _emit   7fh
+        _emit   0bh
+        add     eax, ecx
+        cmp     eax, edx
+        _emit   7eh
+        _emit   0fah
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi*4 + 8], eax
+        pop     esi
+        ret
+    }
+}

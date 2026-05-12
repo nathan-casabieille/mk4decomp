@@ -2241,10 +2241,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004274f0
-    name: func_004274f0
+    name: MStackPop4Rewrite_004274f0
     size: 208
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004275c0
     name: StoreIncrMStackPush6_004275c0
     size: 198
@@ -2776,10 +2777,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x0042ae40
-    name: func_0042ae40
+    name: RangeClampThree_0042ae40
     size: 208
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042af10
     name: TripleVecModClamp_0042af10
     size: 164
