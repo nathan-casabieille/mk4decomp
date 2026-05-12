@@ -29962,3 +29962,189 @@ __declspec(naked) void DualScaledChainPush_00466000(void) {
         jmp     DecCallPushCall_00466090
     }
 }
+
+extern void ScaledAndAlfe_00490390(void);
+extern void func_0046dc10(void);
+
+/* @addr 0x0046dd00 (142b game) - 4-entry-point push+ArgSarStoreJmp chain.
+ *   Block A: call ScaledAndAlfe; if !pause: call func_0046dc10; if !pause: chain[*4+0x74]=0x10b,
+ *     chain[*4+0x68]=0x101 via baseSel*4 indirection, push 0x004eb2d8 call ArgSarStoreJmp; ret.
+ *   Blocks B,C,D (+0x60/+0x70/+0x80): push 0x004eb318/0x004eb348/0x004eb398; call ArgSarStoreJmp; ret.
+ */
+__declspec(naked) void QuadEntryChainPush_0046dd00(void) {
+    __asm {
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   42h
+        call    func_0046dc10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    0x004eb2d8
+        mov     dword ptr [eax*4 + 0x74], 0x0000010b
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000101
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x68], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x004eb318
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        push    0x004eb348
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        push    0x004eb398
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
+
+extern void func_00490ec0(void);
+extern void func_00488f00(void);
+extern void func_0040a470(void);
+extern void func_004888b0(void);
+extern void GuardedSeq_00488890(void);
+
+/* @addr 0x00488800 (142b game) - dual-entry state-load + cascade.
+ *   Block A (+0x00): eax = g_load_0052ab10; g_x_00542080 = 0x4ccc; g_cj_00542058 = eax;
+ *     jmp func_00490ec0.
+ *   Block A2 (+0x20): call func_00488f00; if !pause: g_x_0054206c=9; call func_0040a470;
+ *     if !pause: g_x_0054206c=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp func_004888b0.
+ *   Block B (+0x70): g_x_0054206c=0; call func_0040a470; if !pause: jmp GuardedSeq_00488890.
+ */
+__declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
+    __asm {
+        mov     eax, dword ptr [g_load_0052ab10]
+        mov     dword ptr [g_x_00542080], 0x00004ccc
+        mov     dword ptr [g_cj_00542058], eax
+        jmp     func_00490ec0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    func_00488f00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   35h
+        mov     dword ptr [g_x_0054206c], 9
+        call    func_0040a470
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     dword ptr [g_x_0054206c], 0x00006666
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_004888b0
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0
+        call    func_0040a470
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     GuardedSeq_00488890
+        ret
+    }
+}
+
+extern void GuardedSeq_00438630(void);
+
+/* @addr 0x00438190 (144b game) - install-self + countdown wait.
+ *   Block A (+0x00): standard install-self pattern as above; mstack-push 0x004381f0 jmp func_004339c0.
+ *   Block B (+0x60): if g_state_00535ddc > g_x_00542084 jmp GuardedSeq_00438630; else countdown
+ *     g_x_00542080; if not zero, self-jmp; else jmp StackPopDispatchTagged.
+ */
+__declspec(naked) void InstallSelfWaitCmp_00438190(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004381f0
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x00438190
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_x_00542084]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     GuardedSeq_00438630
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfWaitCmp_00438190
+        jmp     StackPopDispatchTagged_0041f780
+    }
+}
