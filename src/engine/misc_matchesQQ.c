@@ -25953,6 +25953,78 @@ __declspec(naked) void AudioInitSequence_004a41a0(void) {
     }
 }
 
+extern void PushZeroCallRet_0048bad0(void);
+extern void PushConstCall_0048bac0(void);
+
+/* @addr 0x0048b740 (192b game) - chain[+0x64]-=0x4b65f, bit-test on chain[+0x34],
+ *   conditional call/neg/call, chain accumulator.
+ *   if (g_scaledInit == 0): ret.
+ *   mstack-push g_x_00542074. g_x_00542074 = chain[g_scaledInit+0x64] - 0x4b65f.
+ *   eax = chain[g_scaledInit+0x34] & 1; g_x_0054206c = eax.
+ *   if (eax != 0): goto neg-path.
+ *   else: call PushZeroCallRet; pause? -> pop+ret; jmp accumulate.
+ *   neg-path: g_x_00542078 = -g_x_00542078; call PushConstCall; pause? -> pop+ret.
+ *   accumulate: g_x_00542078 += chain[g_scaledInit+0x54];
+ *               g_x_0054207c += chain[g_scaledInit+0x5c];
+ *   mstack-pop into g_x_00542074.
+ */
+__declspec(naked) void ChainGatedNegAccum_0048b740(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   0b2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, [eax*4 + 0x64]
+        sub     edx, 0x0004b65f
+        mov     dword ptr [g_x_00542074], edx
+        mov     eax, [eax*4 + 0x34]
+        and     eax, 1
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   10h
+        call    PushZeroCallRet_0048bad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        _emit   0ebh
+        _emit   1ch
+        mov     edx, dword ptr [g_x_00542078]
+        neg     edx
+        mov     dword ptr [g_x_00542078], edx
+        call    PushConstCall_0048bac0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542078]
+        mov     ecx, [eax*4 + 0x54]
+        add     edx, ecx
+        mov     dword ptr [g_x_00542078], edx
+        mov     edx, [eax*4 + 0x5c]
+        mov     eax, dword ptr [g_x_0054207c]
+        add     eax, edx
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
