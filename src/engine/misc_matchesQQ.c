@@ -40344,3 +40344,76 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541fb4;
+extern unsigned int g_data_00535d5c;
+extern unsigned int g_data_00535d10;
+
+/* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
+ *   mstack-push g_x_00542070 and g_scaledInit_00542044. g_x_00542070=4.
+ *   eax = g_data_00541fb0*4 -> g_x_0054206c; eax += g_data_00541fb8.
+ *   edx = g_x_0053a3c0 - 1; eax = [eax+0x0c]; eax += edx.
+ *   ecx = g_x_00541fb0 + g_data_00541fb4; esi = [ecx*4]; edx = eax;
+ *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
+ *   mask to 8 bits; store edx to g_data_00535d5c and g_data_00535d10;
+ *   store eax to g_x_00542070 / g_x_0054206c.
+ *   mstack-pop pair.
+ */
+__declspec(naked) void BitShiftExtract_00464090(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     ecx, dword ptr [g_x_00541fb0]
+        mov     edx, dword ptr [g_data_00541fb8]
+        mov     dword ptr [g_x_00542070], 4
+        lea     eax, [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        add     eax, edx
+        mov     edx, dword ptr [g_x_0053a3c0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x0c]
+        dec     edx
+        mov     dword ptr [g_x_0054206c], edx
+        add     eax, edx
+        mov     edx, dword ptr [g_data_00541fb4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        add     ecx, edx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     esi, dword ptr [ecx*4 + 0]
+        mov     edx, eax
+        lea     ecx, [esi - 2]
+        and     ecx, 3
+        shl     ecx, 3
+        sar     edx, cl
+        lea     ecx, [esi*8 + 0]
+        pop     esi
+        sar     eax, cl
+        and     edx, 0xff
+        mov     dword ptr [g_data_00535d5c], edx
+        mov     dword ptr [g_data_00535d10], edx
+        and     eax, 0xff
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

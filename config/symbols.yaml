@@ -6729,10 +6729,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00464090
-    name: func_00464090
+    name: BitShiftExtract_00464090
     size: 250
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00464190
     name: SequencedInit3Call_00464190
     size: 173
