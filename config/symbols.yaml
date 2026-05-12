@@ -3595,10 +3595,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00435260
-    name: func_00435260
+    name: InstallSelfDualPath_00435260
     size: 203
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435330
     name: Thunk_00435330
     size: 5
@@ -6077,10 +6078,11 @@ functions:
     status: matched
     file: src/engine/dual_player_setup_call.c
   - addr: 0x0045dd90
-    name: func_0045dd90
+    name: ChainPickArgScaledInit_0045dd90
     size: 202
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045de60
     name: func_0045de60
     size: 582
@@ -7853,10 +7855,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00476a20
-    name: func_00476a20
+    name: Mul10TailPairMidChain_00476a20
     size: 202
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476af0
     name: func_00476af0
     size: 738

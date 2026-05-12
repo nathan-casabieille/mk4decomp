@@ -33429,3 +33429,195 @@ __declspec(naked) void MStackPush3IndirectCall_0045e100(void) {
         ret
     }
 }
+
+extern void Thunk_0045e0f0(void);
+extern void func_0045de60(void);
+extern unsigned int g_state_0053a730;
+
+/* @addr 0x0045dd90 (202b game) - chain-pick + arg-based scaledInit setup.
+ *   if (g_x_0054205c == 0) jmp Thunk_0045e0f0.
+ *   ecx = g_cj_00542058; clear g_state_00542088; load 0x54-field into g_x_0054206c/70/74;
+ *   3 nested tests; if min/max swap; check eax<>g_x_00542080.
+ *   If lo: g_state_00542088 = 1.
+ *   Store g_data_00542050 to [baseSel*4+0x64]; eax = arg0>>2; g_data_00542054 store at [baseSel*4+0x68];
+ *   g_data_0054204c=eax+0xf; scaledInit=eax+g_x_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
+ */
+__declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054205c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     Thunk_0045e0f0
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [g_state_00542088], 0
+        mov     edx, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     eax, dword ptr [g_state_0053a730]
+        mov     dword ptr [g_x_00542070], ecx
+        test    eax, eax
+        mov     dword ptr [g_x_00542074], eax
+        _emit   74h
+        _emit   22h
+        test    eax, eax
+        mov     dword ptr [g_x_00542080], edx
+        _emit   74h
+        _emit   18h
+        mov     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], edx
+        _emit   74h
+        _emit   0ch
+        mov     ecx, dword ptr [g_x_00542080]
+        mov     dword ptr [g_x_00542070], ecx
+        cmp     edx, ecx
+        _emit   7dh
+        _emit   0ah
+        mov     dword ptr [g_state_00542088], 1
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_data_00542050]
+        mov     dword ptr [edx*4 + 0x64], eax
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_cj_00542054]
+        sar     eax, 2
+        mov     dword ptr [ecx*4 + 0x68], edx
+        lea     ecx, [eax + 0x0f]
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     ecx, dword ptr [g_x_00542078]
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        jmp     func_0045de60
+    }
+}
+
+extern void func_004245b0(void);
+
+/* @addr 0x00476a20 (202b game) - Mul10Tail-pair with mid-chain dispatch.
+ *   eax=g_x_00542048; ecx=[eax*4+8]; g_x_00542074=ecx; edx=[eax*4+0]; g_x_00542078=-edx.
+ *   call func_004245b0; pause-check.
+ *   eax=g_scaledInit; ecx=g_x_0054206c; [eax*4+4]=ecx.
+ *   eax=g_x_00542074; push eax,eax; Mul10Tail; g_x_00542074=result.
+ *   push eax,eax; Mul10Tail; g_x_00542074+=result. Store to g_x_00542078.
+ *   call FpuSqrtMul; pause-check; load chain[+4], neg, store; call func_004245b0; pause-check;
+ *   edx=g_scaledInit; g_x_0054206c into chain[+0]; ret.
+ */
+__declspec(naked) void Mul10TailPairMidChain_00476a20(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_x_00542074], ecx
+        mov     edx, dword ptr [eax*4 + 0]
+        neg     edx
+        mov     dword ptr [g_x_00542078], edx
+        call    func_004245b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   96h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 4], ecx
+        mov     eax, dword ptr [g_x_00542074]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_x_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        add     esp, 8
+        add     ecx, eax
+        mov     dword ptr [g_x_00542078], eax
+        mov     dword ptr [g_x_00542074], ecx
+        call    FpuSqrtMul_004ab350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_00542078], edx
+        mov     ecx, dword ptr [eax*4 + 4]
+        neg     ecx
+        mov     dword ptr [g_x_00542074], ecx
+        call    func_004245b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [edx*4 + 0], eax
+        ret
+    }
+}
+
+extern void func_00436a10(void);
+extern void func_00438690(void);
+extern void func_00437970(void);
+extern void InstallSelfChainSet13333_00437880(void);
+
+/* @addr 0x00435260 (203b game) - dual-entry install-self with scaledInit-chain push.
+ *   chain[+0x84]!=0 path: g_cj_00542054 = 0x004e45a0>>2; call func_00436a10; mov eax, [g_pause]; ret.
+ *   chain[+0x84]==0 path: g_x_00542084=0x6666; g_x_00542080=0x1e; install-self at +0x08=0x00435260,
+ *     scaledInit-chain push 0x00435260|0x01000000; call func_00438690; g_pause=1; ret.
+ *   Block B (+0xb0): cmp g_state_00535ddc < 0x10000? jmp func_00437970 : jmp InstallSelfChainSet13333_00437880.
+ */
+__declspec(naked) void InstallSelfDualPath_00435260(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   19h
+        mov     ecx, 0x004e45a0
+        sar     ecx, 2
+        mov     dword ptr [g_cj_00542054], ecx
+        call    func_00436a10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        ret
+        mov     dword ptr [g_x_00542084], 0x00006666
+        mov     dword ptr [g_x_00542080], 0x0000001e
+        mov     dword ptr [eax + 0x08], 0x00435260
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, 0x00435260
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00438690
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00010000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00437970
+        jmp     InstallSelfChainSet13333_00437880
+    }
+}
