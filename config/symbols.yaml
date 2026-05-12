@@ -8041,10 +8041,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047aa40
-    name: func_0047aa40
+    name: InstallSelfNegOrSet_0047aa40
     size: 167
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047aaf0
     name: func_0047aaf0
     size: 560

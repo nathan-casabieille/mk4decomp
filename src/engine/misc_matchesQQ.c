@@ -26906,6 +26906,63 @@ __declspec(naked) void PackedTableWalkChainStore_00463e20(void) {
     }
 }
 
+extern void func_0047aaf0(void);
+
+/* @addr 0x0047aa40 (167b game) - install-self 3-way with neg-or-set chain[+0x84].
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag == 0): set g_x_00542084 = 0xccc; call func_0047aaf0; pause? -> end;
+ *     install with [esi+0x84]=1, g_x_0054204c=2, pause=1.
+ *   if (flag == 1): g_x_00542084 = -g_x_00542084; call func_0047aaf0; pause? -> end;
+ *     install with [esi+0x84]=2 (eax), g_x_0054204c=2, pause=1.
+ *   else: call StackPopDispatchTagged; pop esi; ret.
+ */
+__declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   49h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_x_00542084]
+        neg     ecx
+        mov     dword ptr [g_x_00542084], ecx
+        call    func_0047aaf0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        mov     eax, 2
+        mov     dword ptr [esi + 8], 0x0047aa40
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+        mov     dword ptr [g_x_00542084], 0x0ccc
+        call    func_0047aaf0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0047aa40
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 2
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
