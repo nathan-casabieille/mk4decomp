@@ -3845,15 +3845,17 @@ functions:
     group: game
     status: stub
   - addr: 0x00437f00
-    name: func_00437f00
+    name: InstallSelfChainSetB333v2_00437f00
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437fb0
-    name: func_00437fb0
+    name: InstallSelfChainSetB333v3_00437fb0
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438060
     name: func_00438060
     size: 249

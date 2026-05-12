@@ -28361,6 +28361,92 @@ __declspec(naked) void InstallSelfChainSetB333_00437b60(void) {
     }
 }
 
+extern void CallPauseDirtyConstJmp_00438ca0(void);
+
+/* @addr 0x00437f00 (172b game) - same install-self pattern; GuardedDirtyDispatch_00438c50 error path; chain[+0x84]=0xb333. */
+__declspec(naked) void InstallSelfChainSetB333v2_00437f00(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    GuardedDirtyDispatch_00438c50
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        mov     dword ptr [g_x_00542084], 0x0000b333
+        mov     dword ptr [g_x_00542080], 0x1e
+        mov     dword ptr [esi + 8], 0x00437f00
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00437f00
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00438690
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00437fb0 (172b game) - same install-self pattern; CallPauseDirtyConstJmp_00438ca0 error path; chain[+0x84]=0xb333. */
+__declspec(naked) void InstallSelfChainSetB333v3_00437fb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CallPauseDirtyConstJmp_00438ca0
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        mov     dword ptr [g_x_00542084], 0x0000b333
+        mov     dword ptr [g_x_00542080], 0x1e
+        mov     dword ptr [esi + 8], 0x00437fb0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00437fb0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00438690
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
