@@ -27114,6 +27114,70 @@ __declspec(naked) void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
     }
 }
 
+extern void SwapOrPassSet_0048fbf0(void);
+extern unsigned int g_x_00537f94;
+extern unsigned int g_x_0052d724;
+
+/* @addr 0x0048fc80 (169b game) - dual-gated state transition with mstack-push g_scaledInit.
+ *   eax = [0x537f94]; g_x_0054206c = eax;
+ *   if (eax == 0): g_state_0054208c |= 4; ret 0.
+ *   mstack-push g_scaledInit; call SwapOrPassSet.
+ *   mstack-pop into g_scaledInit (= edx); eax = g_x_0054205c; ecx = g_x_0054204c.
+ *   g_x_0054206c = 0x3f; if (eax != ecx) goto skip-second-check.
+ *   eax = [0x52d724]; g_x_0054206c = eax;
+ *   if (eax == 0): g_state_0054208c |= 4; ret 0.
+ *   g_x_0054206c = 0x3e.
+ *   skip-second-check: g_state_0054208c &= ~4; call StateDispatchYield; ret 1.
+ */
+__declspec(naked) void DualGatedStateYield_0048fc80(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00537f94]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0fh
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 4
+        mov     dword ptr [g_state_0054208c], eax
+        xor     eax, eax
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    SwapOrPassSet_0048fbf0
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_x_0054205c]
+        cmp     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_x_0054206c], 0x3f
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_x_0052d724]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0fh
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 4
+        mov     dword ptr [g_state_0054208c], eax
+        xor     eax, eax
+        ret
+        mov     dword ptr [g_x_0054206c], 0x3e
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfb
+        mov     dword ptr [g_state_0054208c], eax
+        call    StateDispatchYield_00471190
+        mov     eax, 1
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

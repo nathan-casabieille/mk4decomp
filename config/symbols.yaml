@@ -10205,10 +10205,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fc80
-    name: func_0048fc80
+    name: DualGatedStateYield_0048fc80
     size: 169
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fd30
     name: IterLoad_0048fd30
     size: 36
