@@ -43001,3 +43001,87 @@ __declspec(naked) void TripleMul10TailIndexed_00425970(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541d8c;
+extern unsigned int g_data_00541dcc;
+extern void SetJmp_00440720(void);
+extern void func_00475990(void);
+
+/* @addr 0x00442e80 (269b game) - field accumulate + threshold check + 9-field clear + dual Mul10.
+ *   scaledInit[+0x70] += scaledInit[+0x4c]; load scaledInit[+0x58] as ecx.
+ *   If ecx < 0xccc: if ecx < -0x8000: call SetJmp_00440720; eax = g_pause; ret.
+ *   Else: scale eax = scaledInit*4 (base addr); zero ecx; clear 11 fields via
+ *   g_x_0054206c=0; ecx=[eax+0x54]; eax=[eax+0x5c]; push twice, Mul10Tail twice.
+ *   Compare (eax + g_data_00541d8c) to g_data_0053a180:
+ *     if <=: tail-jmp ScaledOr4DirtyClear_00409320.
+ *     else: tail-jmp func_00475990.
+ */
+__declspec(naked) void ScaledChainAccumThreshold_00442e80(void) {
+    __asm {
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [ecx*4 + 0x4c]
+        add     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        cmp     ecx, 0x00000ccc
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7dh
+        _emit   13h
+        cmp     ecx, 0xffff8000
+        _emit   7dh
+        _emit   05h
+        call    SetJmp_00440720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        ret
+        shl     eax, 2
+        xor     ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x58], ecx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x70], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x6c], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x74], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x7c], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x78], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x80], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x64], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x60], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x68], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [eax + 0x54]
+        mov     dword ptr [eax + 0x4c], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [eax + 0x5c]
+        push    ecx
+        push    ecx
+        mov     dword ptr [g_x_00542070], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00541d8c], eax
+        mov     eax, dword ptr [g_x_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00541dcc], eax
+        mov     ecx, dword ptr [g_data_00541d8c]
+        add     eax, ecx
+        cmp     eax, dword ptr [g_x_0053a180]
+        _emit   7eh
+        _emit   05h
+        jmp     ScaledOr4DirtyClear_00409320
+        jmp     func_00475990
+    }
+}
