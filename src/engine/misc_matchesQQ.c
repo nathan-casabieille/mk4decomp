@@ -40264,3 +40264,83 @@ __declspec(naked) void BootInitGuardedCallChain_004265d0(void) {
         ret
     }
 }
+
+extern void IndirectJmp_00438160(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void StateGateMStackOverlap_00438690(void);
+
+/* @addr 0x00438060 (249b game) - install-self with state init.
+ *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp_00438160; ret.
+ *   Else: call LeaPlus22StoreSelf_0048e4d0; if pause? ret.
+ *   set g_x_0054206c=5; call StorePauseImulShr16_004ab630; if pause? ret.
+ *   eax = (0x004e4db8>>2) + g_x_0054206c*2 -> g_x_00542048; load eax[+0]/eax[+4]
+ *   into g_x_00542084 / g_x_00542058; g_state_00542080=0x1e;
+ *   install-self at [esi+8]=0x00438060; chain[+0x84]=1;
+ *   scaledInit-chain push 0x00438060+0x01000000;
+ *   call StateGateMStackOverlap_00438690; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfWithStateInit_00438060(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    IndirectJmp_00438160
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 5
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, 0x004e4db8
+        shl     ecx, 1
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542084], ecx
+        mov     edx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_state_00542080], 0x1e
+        mov     dword ptr [esi + 8], 0x00438060
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00438060
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    StateGateMStackOverlap_00438690
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

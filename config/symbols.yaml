@@ -3906,10 +3906,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00438060
-    name: func_00438060
+    name: InstallSelfWithStateInit_00438060
     size: 249
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438160
     name: IndirectJmp_00438160
     size: 6
