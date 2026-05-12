@@ -38173,3 +38173,74 @@ __declspec(naked) void QuadStateHandler_0046c6e0(void) {
         ret
     }
 }
+
+extern void GuardedSeq_00471670(void);
+extern void DualEntryInstall00471920_00471920(void);
+extern void ChainListVecAdd_0049d200(void);
+
+/* @addr 0x00471840 (212b game) - install-self with 4 conditional exits.
+ *   Snapshot+clear chain[+0x84]; if was 0 -> tail-chain via cj[+0x18] + sub 0x33 + ChainListVecAdd
+ *     -> install-self at [esi+8]=0x00471840 + chain[+0x84]=1 if pause; ret.
+ *   If was nonzero -> branch on cj[0x18]/[0x28]/[0x38] doing one of:
+ *     - GuardedSeq_00471670 (if scaledInit zero)
+ *     - DualEntryInstall00471920_00471920 (if bit10 set OR after sub-0x33 clamp).
+ */
+__declspec(naked) void InstallSelfBranchCascade_00471840(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   74h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   75h
+        _emit   07h
+        call    GuardedSeq_00471670
+        pop     esi
+        ret
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        and     eax, 0x400
+        mov     dword ptr [g_x_00542094], eax
+        _emit   75h
+        _emit   07h
+        call    DualEntryInstall00471920_00471920
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x38]
+        sub     eax, 0x33
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   79h
+        _emit   07h
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        call    DualEntryInstall00471920_00471920
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    ChainListVecAdd_0049d200
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00471840
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

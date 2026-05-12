@@ -7426,10 +7426,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00471840
-    name: func_00471840
+    name: InstallSelfBranchCascade_00471840
     size: 212
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471920
     name: DualEntryInstall00471920_00471920
     size: 193
