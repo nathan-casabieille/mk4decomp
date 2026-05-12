@@ -12126,10 +12126,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x004a41a0
-    name: func_004a41a0
+    name: AudioInitSequence_004a41a0
     size: 182
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a4260
     name: InitDispatchersJmp_004a4260
     size: 75

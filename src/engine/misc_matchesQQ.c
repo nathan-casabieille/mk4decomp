@@ -25885,6 +25885,74 @@ __declspec(naked) void MStackIndirectCallBit_00470e20(void) {
     }
 }
 
+extern void TestCmpZeroFour_004238b0(void);
+extern void TablePushAccumTailJmp_00429e30(void);
+extern unsigned char g_x_00542040;
+extern unsigned int g_x_00541ecc;
+extern unsigned int g_x_00541ed0;
+extern unsigned int g_x_0053a790;
+extern unsigned int g_x_00541ec4;
+extern unsigned int g_x_00537ea0;
+extern unsigned int g_x_00541ec8;
+extern unsigned int g_x_00537edc;
+extern unsigned int g_x_0053a1cc;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0053a51c;
+extern unsigned int g_x_0053a178;
+extern unsigned int g_x_0053a250;
+extern unsigned int g_x_0052aac4;
+
+/* @addr 0x004a41a0 (182b audio) - audio init sequence.
+ *   g_x_00542040 = 1; g_x_0054206c = 0; call CopyGlobal_004ac1f0; call func_004265d0.
+ *   Copy chain: [0x541ec4] = [0x541ecc]; [0x541ec8] = [0x541ed0]; [0x537f48] = [0x53a790];
+ *               [0x5380e0] = [0x537ea0]; [0x53a178] = [0x537edc]; [0x53a250] = [0x53a1cc];
+ *               g_x_0054206c = [0x53a51c].
+ *   call TablePushAccumTailJmp_00429e30; pause? -> end.
+ *   call TestCmpZeroFour_004238b0; pause? -> end.
+ *   push 0x1000, 0x004202c0; call StoreTwoCall_0049cb40; add esp, 8.
+ *   [0x543800] = -1; g_x_0054206c = 0; [0x52aac4] = 0.
+ */
+__declspec(naked) void AudioInitSequence_004a41a0(void) {
+    __asm {
+        mov     byte ptr [g_x_00542040], 1
+        mov     dword ptr [g_x_0054206c], 0
+        call    CopyGlobal_004ac1f0
+        call    func_004265d0
+        mov     eax, dword ptr [g_x_00541ecc]
+        mov     ecx, dword ptr [g_x_00541ed0]
+        mov     edx, dword ptr [g_x_0053a790]
+        mov     dword ptr [g_x_00541ec4], eax
+        mov     eax, dword ptr [g_x_00537ea0]
+        mov     dword ptr [g_x_00541ec8], ecx
+        mov     ecx, dword ptr [g_x_00537edc]
+        mov     dword ptr [g_x_00537f48], edx
+        mov     edx, dword ptr [g_x_0053a1cc]
+        mov     dword ptr [g_x_005380e0], eax
+        mov     eax, dword ptr [g_x_0053a51c]
+        mov     dword ptr [g_x_0053a178], ecx
+        mov     dword ptr [g_x_0053a250], edx
+        mov     dword ptr [g_x_0054206c], eax
+        call    TablePushAccumTailJmp_00429e30
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        call    TestCmpZeroFour_004238b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   30h
+        push    0x1000
+        push    0x004202c0
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        mov     dword ptr [g_x_00543800], 0xffffffff
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_x_0052aac4], 0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
