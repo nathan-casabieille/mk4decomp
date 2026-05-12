@@ -2485,10 +2485,11 @@ functions:
     status: matched
     file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428d80
-    name: func_00428d80
+    name: InstallSelf3WayChainCmp_00428d80
     size: 182
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428e40
     name: ScaledStoreEntZeroJmp_00428e40
     size: 33

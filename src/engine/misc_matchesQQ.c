@@ -24527,6 +24527,74 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
     }
 }
 
+extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void GuardedSeq_004297b0(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
+/* @addr 0x00428d80 (182b game) - 3-way install-self with chain compare and bit-test branch.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag == 0): main path with chain compare + GuardedChainCmpDualBitXor.
+ *   if (flag == 1): alt path with GuardedSeq + bit test + ScaledInitOrSelfPtr.
+ *   else: call StackPopDispatchTagged; pop esi; ret.
+ */
+__declspec(naked) void InstallSelf3WayChainCmp_00428d80(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   56h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, [ecx*4 + 0x28]
+        mov     ecx, dword ptr [g_x_00542080]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   7ch
+        _emit   30h
+        call    GuardedChainCmpDualBitXor_004299a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5dh
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00428d80
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+        call    GuardedSeq_004297b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     eax, 1
+        _emit   84h
+        _emit   0c8h
+        _emit   74h
+        _emit   07h
+        call    ScaledInitOrSelfPtr_00429680
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], 0x00428d80
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
