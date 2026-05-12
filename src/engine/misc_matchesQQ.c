@@ -36911,3 +36911,76 @@ __declspec(naked) void MStackPush4IndirectCall_0048fd60(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0052ab44;
+extern unsigned int g_data_0053a6d8;
+extern unsigned int g_data_00537ef4;
+extern unsigned int g_data_00535e68;
+extern unsigned int g_data_0053a280;
+extern unsigned int g_data_00535e80;
+extern unsigned int g_data_00538128;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_0053a700;
+extern unsigned int g_data_0053a358;
+extern unsigned int g_data_0052aab4;
+extern unsigned int g_data_0053a3e8;
+extern unsigned int g_data_0053a2d8;
+extern unsigned int g_data_0053a2dc;
+extern unsigned int g_state_00537ea4;
+extern void func_0049cb60(void);
+extern void func_00420090(void);
+
+/* @addr 0x004222a0 (224b game) - reset/init: clears ~17 globals, sets g_data_0054204c=0x004200b0,
+ *   g_x_00542074=0x1000, call func_0049cb60; if !pause: clears more globals and stores eax=0xc
+ *   to g_x_0054206c/0x0053a3e8; call func_00420090; if !pause: clears 6 more globals; ret.
+ */
+__declspec(naked) void GlobalsResetInit_004222a0(void) {
+    __asm {
+        push    esi
+        xor     esi, esi
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_x_00541dc0], esi
+        mov     dword ptr [g_data_0054204c], 0x004200b0
+        mov     dword ptr [g_x_00542074], 0x00001000
+        call    func_0049cb60
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   0fh
+        _emit   85h
+        _emit   0aah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, 0x0c
+        mov     dword ptr [g_state_0053a51c], esi
+        mov     dword ptr [g_data_0052ab44], esi
+        mov     dword ptr [g_data_0053a6d8], esi
+        mov     dword ptr [g_state_00538158], esi
+        mov     dword ptr [g_dualA_0053815c], esi
+        mov     dword ptr [g_state_00537e94], esi
+        mov     dword ptr [g_data_00537ef4], esi
+        mov     dword ptr [g_data_00535e68], esi
+        mov     dword ptr [g_data_0053a280], esi
+        mov     dword ptr [g_data_00535e80], esi
+        mov     dword ptr [g_data_00538128], esi
+        mov     dword ptr [g_data_0053a3e0], esi
+        mov     dword ptr [g_data_0053a700], esi
+        mov     dword ptr [g_data_0053a6e0], esi
+        mov     dword ptr [g_state_00537ea4], esi
+        mov     dword ptr [g_data_0053a358], esi
+        mov     dword ptr [g_data_0052aab4], 8
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0053a3e8], eax
+        call    func_00420090
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   24h
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_x_00541e4c], esi
+        mov     dword ptr [g_data_0053a2d8], esi
+        mov     dword ptr [g_data_0053a2dc], esi
+        mov     dword ptr [g_load_0052ab04], esi
+        mov     dword ptr [g_load_0052ab08], esi
+        pop     esi
+        ret
+    }
+}

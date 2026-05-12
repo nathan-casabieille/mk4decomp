@@ -1769,10 +1769,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004222a0
-    name: func_004222a0
+    name: GlobalsResetInit_004222a0
     size: 224
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422380
     name: StateInitShuffle_00422380
     size: 96
