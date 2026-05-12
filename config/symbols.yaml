@@ -617,10 +617,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesII.c
   - addr: 0x00407c60
-    name: func_00407c60
+    name: ThreeChan11BitPack_00407c60
     size: 152
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00407d00
     name: MStackPushZeroCallPop_00407d00
     size: 73
@@ -2030,10 +2031,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004252c0
-    name: func_004252c0
+    name: ThreeMul10Stores_004252c0
     size: 150
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425360
     name: NegateThree_00425360
     size: 31
@@ -5744,10 +5746,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00459160
-    name: func_00459160
+    name: MStackPush2ClampLookup_00459160
     size: 150
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00459200
     name: ThreeCharNormalize_00459200
     size: 133
@@ -6516,10 +6519,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00463390
-    name: func_00463390
+    name: DirtyBitToggleDispatch_00463390
     size: 150
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463430
     name: func_00463430
     size: 355
@@ -7700,10 +7704,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004767e0
-    name: func_004767e0
+    name: MStackPushVec3Mul10_004767e0
     size: 150
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476880
     name: TripleVecAccCallStore_00476880
     size: 165
@@ -13325,10 +13330,11 @@ functions:
     group: engine.app
     status: stub
   - addr: 0x004b3590
-    name: func_004b3590
+    name: Mat3x3VecMul6Bit_004b3590
     size: 151
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3630
     name: Mat3x3VecMul_004b3630
     size: 142
@@ -14111,10 +14117,11 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004bddf0
-    name: func_004bddf0
+    name: TransformAccumulate_004bddf0
     size: 151
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bde90
     name: NodeApplyTransform_C
     size: 163

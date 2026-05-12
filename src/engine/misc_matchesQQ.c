@@ -15040,6 +15040,399 @@ extern void CallPauseConstStoreJmp_00438170(void);
 extern unsigned int g_x_00535ddc;
 extern void ScaledChain3c74_0048f910(void);
 
+extern unsigned int g_arr_4252c0_0;
+extern unsigned int g_arr_4252c0_4_dst;
+
+extern unsigned int g_x_004d510c;
+extern unsigned int g_x_004d5108;
+extern unsigned int g_arr_407c60;
+
+extern unsigned int g_arr_chain_4767e0;
+extern void Triple3VecMul10Tail_00424a20(void);
+
+extern short g_mat3x3_007af990_v2;
+extern short g_mat3x3_007af992_v2;
+extern short g_mat3x3_007af994_v2;
+extern short g_mat3x3_007af996_v2;
+extern short g_mat3x3_007af998_v2;
+extern short g_mat3x3_007af99a_v2;
+extern short g_mat3x3_007af99c_v2;
+extern short g_mat3x3_007af99e_v2;
+extern short g_mat3x3_007af9a0_v2;
+#define g_mat3x3_007af990 g_mat3x3_007af990_v2
+#define g_mat3x3_007af992 g_mat3x3_007af992_v2
+#define g_mat3x3_007af994 g_mat3x3_007af994_v2
+#define g_mat3x3_007af996 g_mat3x3_007af996_v2
+#define g_mat3x3_007af998 g_mat3x3_007af998_v2
+#define g_mat3x3_007af99a g_mat3x3_007af99a_v2
+#define g_mat3x3_007af99c g_mat3x3_007af99c_v2
+#define g_mat3x3_007af99e g_mat3x3_007af99e_v2
+#define g_mat3x3_007af9a0 g_mat3x3_007af9a0_v2
+
+/* @addr 0x004b3590 (151b engine.geo) - 3x3 fixed-point matrix * vec3 (6-bit):
+ *   Same matrix as Mat3x3VecMul_004b3630 (at 0x7af990) but pre-shifts inputs
+ *   by 6 before imul, then sar 6 after sum.
+ */
+__declspec(naked) void Mat3x3VecMul6Bit_004b3590(void) {
+    __asm {
+        mov     edx, dword ptr [esp + 4]
+        push    ebx
+        push    esi
+        push    edi
+        mov     eax, dword ptr [edx]
+        mov     ecx, dword ptr [edx + 4]
+        movsx   edi, word ptr [g_mat3x3_007af992]
+        movsx   esi, word ptr [g_mat3x3_007af990]
+        sar     eax, 6
+        sar     ecx, 6
+        imul    esi, eax
+        imul    edi, ecx
+        mov     edx, dword ptr [edx + 8]
+        add     edi, esi
+        movsx   esi, word ptr [g_mat3x3_007af994]
+        sar     edx, 6
+        imul    esi, edx
+        add     edi, esi
+        mov     esi, dword ptr [esp + 0x14]
+        sar     edi, 6
+        mov     dword ptr [esi], edi
+        movsx   edi, word ptr [g_mat3x3_007af998]
+        movsx   ebx, word ptr [g_mat3x3_007af996]
+        imul    edi, ecx
+        imul    ebx, eax
+        add     edi, ebx
+        movsx   ebx, word ptr [g_mat3x3_007af99a]
+        imul    ebx, edx
+        add     edi, ebx
+        sar     edi, 6
+        mov     dword ptr [esi + 4], edi
+        movsx   edi, word ptr [g_mat3x3_007af99e]
+        imul    edi, ecx
+        movsx   ecx, word ptr [g_mat3x3_007af99c]
+        imul    ecx, eax
+        movsx   eax, word ptr [g_mat3x3_007af9a0]
+        imul    eax, edx
+        add     edi, ecx
+        add     edi, eax
+        sar     edi, 6
+        mov     dword ptr [esi + 8], edi
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+#undef g_mat3x3_007af990
+#undef g_mat3x3_007af992
+#undef g_mat3x3_007af994
+#undef g_mat3x3_007af996
+#undef g_mat3x3_007af998
+#undef g_mat3x3_007af99a
+#undef g_mat3x3_007af99c
+#undef g_mat3x3_007af99e
+#undef g_mat3x3_007af9a0
+
+extern unsigned int g_x_00542050;
+extern unsigned int g_arr_4bddf0_src;
+extern unsigned int g_arr_4bddf0_a;
+extern unsigned int g_arr_4bddf0_b;
+
+/* @addr 0x004bddf0 (151b engine.geo) - vec3 transform + accumulate:
+ *   src = &arr_src[g_x_00542050]; load v3 from src to g_walkCallback/
+ *   g_x_00542070/g_x_00542048.
+ *   Mat3x3VecMul6Bit(arr_a + 4*scaledInit, arr_b + 4*sceneFlags);
+ *   add g_walkCallback to arr_b[+0], g_x_00542070 to arr_b[+4],
+ *   g_x_00542048 to arr_b[+8].
+ */
+__declspec(naked) void TransformAccumulate_004bddf0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + g_arr_4bddf0_src]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     edx, [eax*4 + g_arr_4bddf0_src + 0x04]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_data_00542070], edx
+        mov     eax, [eax*4 + g_arr_4bddf0_src + 0x08]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [g_x_0054204c]
+        lea     edx, [ecx*4 + g_arr_4bddf0_a]
+        lea     ecx, [eax*4 + g_arr_4bddf0_b]
+        push    edx
+        push    ecx
+        call    Mat3x3VecMul6Bit_004b3590
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_walkCallback]
+        add     esp, 8
+        mov     ecx, [eax*4 + g_arr_4bddf0_a]
+        add     ecx, edx
+        mov     [eax*4 + g_arr_4bddf0_a], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     edx, [eax*4 + g_arr_4bddf0_a + 0x04]
+        add     edx, ecx
+        mov     [eax*4 + g_arr_4bddf0_a + 0x04], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542048]
+        add     [eax*4 + g_arr_4bddf0_a + 0x08], edx
+        ret
+    }
+}
+
+extern unsigned char g_data_00542a08;
+extern unsigned int g_arr_463390;
+extern unsigned int g_chain_disp_30_463390;
+extern void MStackCall_00406340(void);
+
+/* @addr 0x00463390 (150b game) - g_x_0053a408 == 1 ? a:b path; lookup +
+ *   conditional dirty-bit toggle:
+ *   ecx = (g_x_0053a408==1 ? g_x_00537f48 : g_x_005380e0); key = (0x542a08>>2)+ecx;
+ *   g_scaledInit = key; g_x_00542048 = arr[key]; call DispatcherComplex260; pause? ret.
+ *   if (g_state_0054208c & 4): skip phase2.
+ *   else: chain[scaledInit].slot30 = 0x26d (g_walkCallback=it); call MStackCall;
+ *     pause? ret.
+ *   Then: set bit 2 of g_state_0054208c; if (scaledInit != 0): xor that bit off.
+ */
+__declspec(naked) void DirtyBitToggleDispatch_00463390(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0053a408]
+        mov     ecx, dword ptr [g_x_00537f48]
+        cmp     eax, 1
+        _emit   74h
+        _emit   06h
+        mov     ecx, dword ptr [g_x_005380e0]
+        mov     eax, offset g_data_00542a08
+        mov     dword ptr [g_walkCallback], ecx
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_arr_463390]
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   50h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   25h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x26d
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_disp_30_463390], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern unsigned char g_data_004e87c0;
+extern unsigned int g_arr_459160_main;
+extern void Push16Call_00489f50(void);
+
+/* @addr 0x00459160 (150b game) - mstack-push 2 + clamped arr lookup:
+ *   push g_x_00542074, g_x_00542044; compute key = (0x4e87c0 >> 2) + g_walkCallback;
+ *   v = arr[key]; if v < 0x19: --v; g_x_00542074 = v.
+ *   call Push16Call; pause? ret; pop into g_x_00542044, g_x_00542074.
+ */
+__declspec(naked) void MStackPush2ClampLookup_00459160(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     edx, dword ptr [g_walkCallback]
+        mov     eax, offset g_data_004e87c0
+        shr     eax, 2
+        add     eax, edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_arr_459160_main]
+        cmp     eax, 0x19
+        mov     dword ptr [g_x_00542074], eax
+        _emit   7dh
+        _emit   06h
+        dec     eax
+        mov     dword ptr [g_x_00542074], eax
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x004767e0 (150b game) - mstack-push + chain[+0,+4,+8] vec3 Mul10:
+ *   push g_x_00542074 on mstack; call Triple3VecMul10Tail; pause? ret.
+ *   pop into g_x_00542074. esi = chain[scaledInit]; for slot in {0,4,8}:
+ *     r = Mul10Tail(slot, g_x_00542074); chain[slot] = r; g_x_00542070 = r.
+ */
+__declspec(naked) void MStackPushVec3Mul10_004767e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    Triple3VecMul10Tail_00424a20
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   6fh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        push    esi
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        lea     esi, [edx*4 + g_arr_chain_4767e0]
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    ecx
+        mov     eax, dword ptr [esi]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_data_00542070], eax
+        mov     edx, dword ptr [esi + 4]
+        add     esp, 8
+        mov     dword ptr [esi], eax
+        mov     ecx, dword ptr [g_x_00542074]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_data_00542070], eax
+        mov     ecx, dword ptr [esi + 8]
+        add     esp, 8
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_x_00542074]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [esi + 8], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00407c60 (152b boot) - 3 11-bit channel pack + Mul10Tail:
+ *   For each of g_walkCallback bits [0..10], [11..21], [22..31]:
+ *     v = (bits) << 16; r = Mul10Tail(g_x_004d510c or 4d5108, v); dst[+i] = r.
+ */
+__declspec(naked) void ThreeChan11BitPack_00407c60(void) {
+    __asm {
+        mov     eax, dword ptr [g_walkCallback]
+        and     eax, 0x7ff
+        shl     eax, 16
+        mov     dword ptr [g_data_00542070], eax
+        push    eax
+        mov     eax, dword ptr [g_x_004d510c]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054204c]
+        add     esp, 8
+        mov     [ecx*4 + g_arr_407c60], eax
+        mov     eax, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_x_004d510c]
+        shr     eax, 0x0b
+        and     eax, 0x7ff
+        shl     eax, 16
+        push    eax
+        push    edx
+        mov     dword ptr [g_data_00542070], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     dword ptr [g_data_00542070], eax
+        add     esp, 8
+        mov     [ecx*4 + g_arr_407c60 + 0x04], eax
+        mov     eax, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_x_004d5108]
+        shr     eax, 0x16
+        shl     eax, 16
+        push    eax
+        push    edx
+        mov     dword ptr [g_walkCallback], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     dword ptr [g_walkCallback], eax
+        add     esp, 8
+        mov     [ecx*4 + g_arr_407c60 + 0x08], eax
+        ret
+    }
+}
+
+
+/* @addr 0x004252c0 (150b game) - 3 Mul10Tail calls writing to chain[+0, +4, +8]:
+ *   For i in {0, 4, 8}: r = Mul10Tail(g_walkCallback, arr_src[i]);
+ *   arr_dst[+i] = r.
+ *   g_x_00542070, g_x_00542074, g_walkCallback updated as scratch.
+ */
+__declspec(naked) void ThreeMul10Stores_004252c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_walkCallback]
+        mov     ecx, [eax*4 + g_arr_4252c0_0]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_walkCallback]
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_x_00542048]
+        add     esp, 8
+        mov     ecx, [eax*4 + g_arr_4252c0_0 + 0x04]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     [eax*4 + g_arr_4252c0_4_dst], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_00542074]
+        mov     [edx*4 + g_arr_4252c0_4_dst + 0x04], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     eax, [edx*4 + g_arr_4252c0_0 + 0x08]
+        push    ecx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_walkCallback], eax
+        add     esp, 8
+        mov     [ecx*4 + g_arr_4252c0_4_dst + 0x08], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00542058;
 extern unsigned int g_x_00542044;
 extern unsigned int g_arr_460b60_main;
