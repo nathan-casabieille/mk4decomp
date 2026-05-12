@@ -2055,10 +2055,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004251f0
-    name: func_004251f0
+    name: TripleArrayDiffClamp_004251f0
     size: 207
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004252c0
     name: ThreeMul10Stores_004252c0
     size: 150

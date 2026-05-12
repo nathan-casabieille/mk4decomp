@@ -19,27 +19,23 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00404bd0 */
-__declspec(naked) void ScaledDecPop_00404bd0(void) {
-    __asm {
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [edx*4 + 4]
-        dec     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [ecx*4 + 0]
-        mov     dword ptr [edx*4 + 4], ecx
-        ret
-    }
+unsigned int ScaledDecPop_00404bd0(void) {
+    unsigned int idx, n, v;
+    idx = g_baseSel_00542060;
+    n = *(unsigned int *)(idx * 4 + 4) - 1;
+    g_scaledInit_00542044 = n;
+    v = *(unsigned int *)(n * 4);
+    *(unsigned int *)(idx * 4 + 4) = n;
+    return v;
 }
 
 /* @addr 0x00404c40 */
-__declspec(naked) void ScaledDecPop_00404c40(void) {
-    __asm {
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [edx*4 + 4]
-        dec     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [ecx*4 + 0]
-        mov     dword ptr [edx*4 + 4], ecx
-        ret
-    }
+unsigned int ScaledDecPop_00404c40(void) {
+    unsigned int idx, n, v;
+    idx = g_baseSel_00542060;
+    n = *(unsigned int *)(idx * 4 + 4) - 1;
+    g_scaledInit_00542044 = n;
+    v = *(unsigned int *)(n * 4);
+    *(unsigned int *)(idx * 4 + 4) = n;
+    return v;
 }

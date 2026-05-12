@@ -37996,3 +37996,76 @@ __declspec(naked) void PushCallPauseIncStoreSelfRecurse_00460c00(void) {
         jmp     StackPopDispatchTagged_0041f780
     }
 }
+
+extern unsigned int g_data_004d5328;
+
+/* @addr 0x004251f0 (207b game) - 3-iter loop computing |a-b| diffs then clamping
+ * to thresholds in [004d5320..0x4d5328], storing to scaledInit table.
+ *   esi=2, edi=3; loop iterates 3 times (jne after dec edi).
+ *   per iter: a=arr1[i], b=arr2[j], diff=a-b; |diff|<=thr ? 1 : 0; clamp uses 004d5328;
+ *   advance indices, write diff to scaledInit[k]*4, k++.
+ *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
+ */
+__declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
+    __asm {
+        push    ebx
+        push    esi
+        push    edi
+        mov     esi, 2
+        mov     edi, 3
+loop_004251fd:
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [ecx*4 + 0]
+        mov     ebx, dword ptr [edx*4 + 0]
+        sub     eax, ebx
+        inc     edx
+        inc     ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_0054204c], edx
+        test    eax, eax
+        mov     ecx, eax
+        _emit   7dh
+        _emit   02h
+        neg     ecx
+        mov     ebx, dword ptr [g_x_004d5320]
+        xor     edx, edx
+        cmp     ecx, ebx
+        mov     ecx, dword ptr [g_state_004d5324]
+        setle   dl
+        test    eax, eax
+        mov     dword ptr [g_x_00542098], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7ch
+        _emit   0ch
+        mov     ecx, dword ptr [g_data_004d5328]
+        mov     dword ptr [g_x_0054206c], ecx
+        test    edx, edx
+        _emit   75h
+        _emit   07h
+        add     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     edx
+        dec     esi
+        dec     edi
+        mov     dword ptr [g_scaledInit_00542044], edx
+        jne     loop_004251fd
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_x_0054204c]
+        mov     dword ptr [g_x_0053a1ac], esi
+        sub     edx, 3
+        sub     ecx, 3
+        sub     eax, 3
+        pop     edi
+        pop     esi
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_0054204c], eax
+        pop     ebx
+        ret
+    }
+}
