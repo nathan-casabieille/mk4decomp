@@ -40183,3 +40183,84 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         ret
     }
 }
+
+extern void func_0049e1c0(void);
+extern void func_0045c8e0(void);
+extern void Init0AndMax_00401370(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void Init6Struct_00404e20(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void CallPauseClear3CallTriple_00428030(void);
+extern void func_00498900(void);
+extern void AndStorePushCallZero_0048a220(void);
+
+/* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
+ *   8 setup calls (func_0049e1c0, func_0045c8e0, Init0AndMax_00401370,
+ *     g_x_0054206c=0, CopyGlobal_004ac1f0, Init6Struct_00404e20, ScenegraphWalk_0041f7d0,
+ *     CallPauseClear3CallTriple_00428030). If pause? ret.
+ *   mstack-push 3 (0, g_x_00542070, g_x_00542074); clear g_state_0053a7b0;
+ *   call func_00498900; if pause? ret. call AndStorePushCallZero_0048a220; if pause? ret.
+ *   mstack-pop 3 into g_x_00542074, g_x_00542070, g_x_0054206c.
+ *   set g_x_00543550 = 0x100; ret.
+ */
+__declspec(naked) void BootInitGuardedCallChain_004265d0(void) {
+    __asm {
+        call    func_0049e1c0
+        call    func_0045c8e0
+        call    Init0AndMax_00401370
+        mov     dword ptr [g_x_0054206c], 0
+        call    CopyGlobal_004ac1f0
+        call    Init6Struct_00404e20
+        call    ScenegraphWalk_0041f7d0
+        call    CallPauseClear3CallTriple_00428030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0beh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], 0
+        inc     eax
+        mov     dword ptr [g_state_0053a7b0], 0
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], 0
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        call    func_00498900
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   56h
+        call    AndStorePushCallZero_0048a220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   48h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_00543550], 0x100
+        ret
+    }
+}

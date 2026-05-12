@@ -2178,10 +2178,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x004265d0
-    name: func_004265d0
+    name: BootInitGuardedCallChain_004265d0
     size: 249
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004266d0
     name: Eleven404b90_404c00_004266d0
     size: 162
