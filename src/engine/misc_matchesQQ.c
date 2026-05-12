@@ -39644,3 +39644,89 @@ __declspec(naked) void QuadGuardedCjSet_004230b0(void) {
         ret
     }
 }
+
+extern void PushCallPauseDirtyClear_0042c9c0(void);
+extern void InstallSelfDualStateDispatch_0042c9f0(void);
+extern void func_0042cac0(void);
+
+/* @addr 0x0042c8c0 (247b game) - three adjacent blocks (16/48/183 bytes, 16-byte aligned).
+ *   B1 (0..15): push 0x004e3500; tail-call ArgSarStoreJmp.
+ *   B2 (16..63): call func_0042cac0; if !pause and bit0 of g_state_0054208c clear:
+ *     tail-jmp PushCallPauseDirtyClear_0042c9c0. else if !pause: push 0x004e3520,
+ *     tail-call ArgSarStoreJmp.
+ *   B3 (64..246): push esi; call func_0042cac0; if !pause and bit0 set: copy 4 fields
+ *     from baseSel[+0x38][+0x5c/+0x60/+0x64] to scaledInit, set cj[+0x28]=0x37,
+ *     then recurse to self (call 0x0042c8c0); pop esi; ret.
+ *     If bit0 clear: call InstallSelfDualStateDispatch_0042c9f0; pop esi; ret.
+ */
+__declspec(naked) void TripleBlockCjCopy_0042c8c0(void) {
+    __asm {
+        push    0x004e3500
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        call    func_0042cac0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     PushCallPauseDirtyClear_0042c9c0
+        push    0x004e3520
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        push    esi
+        call    func_0042cac0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   07h
+        call    InstallSelfDualStateDispatch_0042c9f0
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     edx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax*4 + 0x60]
+        mov     dword ptr [g_x_00542070], esi
+        mov     eax, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [ecx*4 + 0x58], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [eax*4 + 0x5c], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x37
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x28], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x28], ecx
+        call    TripleBlockCjCopy_0042c8c0
+        pop     esi
+        ret
+    }
+}
