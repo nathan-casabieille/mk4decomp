@@ -10660,10 +10660,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesMM.c
   - addr: 0x00492450
-    name: func_00492450
+    name: MStackBitmaskIncMod_00492450
     size: 187
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00492510
     name: MStackBitmaskUpdate_00492510
     size: 187
