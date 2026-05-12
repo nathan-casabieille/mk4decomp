@@ -1952,10 +1952,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00424080
-    name: func_00424080
+    name: MStackPush1ChainPair_00424080
     size: 227
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424170
     name: TripleArgScaledShiftCall_00424170
     size: 132

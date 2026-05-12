@@ -37133,3 +37133,75 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         ret
     }
 }
+
+extern void DispatcherComplex260_00407400(void);
+
+/* @addr 0x00424080 (227b game) - mstack-push g_x_0054206c; advance g_cj_00542058 counter twice;
+ *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
+ *   load 2 chain values via scaledInit, shift, store; mstack-pop g_x_0054206c. ret.
+ */
+__declspec(naked) void MStackPush1ChainPair_00424080(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_cj_00542058]
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_cj_00542058], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   0e8h
+        _emit   69h
+        _emit   23h
+        _emit   0feh
+        _emit   0ffh
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     eax, dword ptr [ecx*4 + 0]
+        inc     ecx
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        shl     eax, 0x10
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [ecx*4 + 0]
+        inc     ecx
+        shl     eax, 0x10
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     eax, dword ptr [g_cj_00542058]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_cj_00542058], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x5c], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
