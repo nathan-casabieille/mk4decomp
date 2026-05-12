@@ -32786,3 +32786,186 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         jmp     func_00433f50
     }
 }
+
+extern void ScaledInitOrSelfPtrSetType_0047a620(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledZeroFour_00490740(void);
+extern void MStackPushSet0008_004901a0(void);
+
+/* @addr 0x0047a560 (181b game) - install-self with 4-call cascade.
+ *   Block A: install-self path; if chain[+0x84] != 0 call ScaledInitOrSelfPtrSetType, pop+ret.
+ *   Else g_x_0054206c=0x18; call CmpEqInitCallElseJmp; pause-check; bit-0 test;
+ *     g_x_00542080=0x13; call ScaledArrStore; pause-check; call ScaledZeroFour; pause-check;
+ *     call MStackPushSet0008; pause-check; cmp ebx vs g_state_00542088; if eq: install-self at +0x08=0x0047a560,
+ *     g_data_0054204c=5, g_pause=1; else call ScaledInitOrSelfPtrSetType. pop+ret.
+ */
+__declspec(naked) void InstallSelf4Cascade_0047a560(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   08h
+        call    ScaledInitOrSelfPtrSetType_0047a620
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_x_0054206c], 0x18
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6fh
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   61h
+        mov     dword ptr [g_x_00542080], 0x13
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   49h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3bh
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        cmp     dword ptr [g_state_00542088], ebx
+        _emit   74h
+        _emit   08h
+        call    ScaledInitOrSelfPtrSetType_0047a620
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 0x08], 0x0047a560
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], 5
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+extern void func_0042f8a0(void);
+
+/* @addr 0x0042fa10 (183b game) - 3-Mul10Tail interpolation for cj fields 0x6c/0x74/0x7c.
+ *   eax=g_x_0054205c; init g_x_0054206c=0xd999; load cj[+0x6c/0x74/0x7c] into g_x_00542070/74/78.
+ *   Mul10Tail([+0x6c], 0xd999) -> g_x_00542070.
+ *   Mul10Tail(g_x_0054206c, g_x_00542074) -> g_x_00542074.
+ *   Mul10Tail([+0x7c], 0x9999) -> g_x_00542078.
+ *   Store new values back to cj[+0x6c/+0x74/+0x7c]. jmp func_0042f8a0.
+ */
+__declspec(naked) void Mul10Triple0xd999Interp_0042fa10(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 0x0000d999
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     edx, dword ptr [eax*4 + 0x74]
+        mov     dword ptr [g_x_00542074], edx
+        mov     eax, dword ptr [eax*4 + 0x7c]
+        push    ecx
+        push    0x0000d999
+        mov     dword ptr [g_x_00542078], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_00542070], eax
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_x_00542078]
+        push    eax
+        push    0x00009999
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_00542078], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x6c], edx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [eax*4 + 0x74], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_00542078]
+        mov     dword ptr [edx*4 + 0x7c], eax
+        jmp     func_0042f8a0
+    }
+}
+
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void CallPauseJmpStateInit_004370e0(void);
+
+/* @addr 0x00437020 (183b game) - install-self with mstack-push g_x_00542080 + bit-0 check + countdown.
+ *   chain[+0x84]!=0 path: mstack-push g_x_00542080; call GuardedDualAndFlagToggle_0048f020;
+ *     pause-check; cl=g_state_0054208c; reload mstack tail back to g_x_00542080; if bit-0 set:
+ *     jmp CallPauseJmpStateInit_004370e0. Else mstack-push 0x004370c0; jmp func_004339c0.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x00437020, g_data_0054204c=1, pause=1, ret.
+ *   Block B (+0xa0): countdown g_x_00542080; if zero jmp self(0x00437020); else jmp StackPopDispatchTagged.
+ */
+__declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   64h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        call    GuardedDualAndFlagToggle_0048f020
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        test    cl, 1
+        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   75h
+        _emit   05h
+        jmp     CallPauseJmpStateInit_004370e0
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004370c0
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x00437020
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfMStackCountdown_00437020
+        jmp     StackPopDispatchTagged_0041f780
+    }
+}

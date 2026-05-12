@@ -3073,10 +3073,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042fa10
-    name: func_0042fa10
+    name: Mul10Triple0xd999Interp_0042fa10
     size: 183
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042fad0
     name: EsiInstallChainCallCmpThreshold_0042fad0
     size: 163
@@ -3789,10 +3790,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00437020
-    name: func_00437020
+    name: InstallSelfMStackCountdown_00437020
     size: 183
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004370e0
     name: CallPauseJmpStateInit_004370e0
     size: 84
@@ -8060,10 +8062,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047a560
-    name: func_0047a560
+    name: InstallSelf4Cascade_0047a560
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a620
     name: ScaledInitOrSelfPtrSetType_0047a620
     size: 68
