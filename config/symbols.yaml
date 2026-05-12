@@ -9285,10 +9285,11 @@ functions:
     status: matched
     file: src/engine/call_pause_dirty_lit.c
   - addr: 0x00488ca0
-    name: func_00488ca0
+    name: InstallSelfChainPlusGuardedTail_00488ca0
     size: 256
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00488da0
     name: GDispatch1_00488da0
     size: 29

@@ -41055,3 +41055,96 @@ __declspec(naked) void SixBlockCjCascade_004829b0(void) {
         ret
     }
 }
+
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void ClearBit2x34_00490130(void);
+
+/* @addr 0x00488ca0 (256b game) - install-self + sibling guarded chain.
+ *   B1 (0..201, +6 NOPs): snapshot+clear chain[+0x84]. If was nonzero: tail-call
+ *     ScaledInitWithCounterAndType; ret.
+ *     Else: call ScaledZeroFour; if pause? ret. push 0x00542be4; call
+ *     GuardedPackedSlotInit; if !pause: cj[+0x28]=0x14; install-self at
+ *     [esi+8]=0x00488ca0; chain[+0x84]=1; scaledInit-chain push 0x00488ca0+0x01000000;
+ *     call ScaledLoadJmp_00428d20; pause=1; ret.
+ *   B2 (208..255): call ScaledLoadOrSetJmp; if !pause: call GateDispatch6c; if !pause:
+ *     call ClearBit2x34; if !pause: tail-jmp ScaledInitWithCounterAndType.
+ */
+__declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    ScaledInitWithCounterAndType_004314f0
+        pop     esi
+        ret
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    0x00542be4
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   77h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x14
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     dword ptr [esi + 8], 0x00488ca0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00488ca0
+        add     ecx, 0x01000000
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    ScaledLoadOrSetJmp_00406b20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    ClearBit2x34_00490130
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledInitWithCounterAndType_004314f0
+        ret
+    }
+}
