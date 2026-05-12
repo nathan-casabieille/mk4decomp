@@ -28042,6 +28042,69 @@ __declspec(naked) void ChainInit3CallTailJmp_00423b80(void) {
     }
 }
 
+extern void CmpCondIdxArrLookup_0048e450(void);
+extern void TableLookupCall_0048a130(void);
+extern void ClearBit2x34_00490130(void);
+extern unsigned char g_byte_0054389c;
+
+/* @addr 0x0048e240 (162b game) - state-6 latch with arr-lookup + tail-jmp.
+ *   eax = ([0x537f48] if g_x_0054205c == [0x538158] else [0x5380e0]); g_x_0054206c = eax.
+ *   if (eax != 6): ret.
+ *   eax = chain[g_baseSel + 0x34]; g_x_00542070 = eax;
+ *   if (eax == 6): goto end.
+ *   if ([0x537f94] != 0): skip CmpCondIdxArrLookup.
+ *   else: g_x_0054206c = 5; call CmpCondIdxArrLookup; pause? ret;
+ *     if (g_x_0054206c < 0x258): goto end.
+ *   [0x54389c] = 1; chain[g_baseSel + 0x34] = 6; g_x_0054206c = 0x2c.
+ *   call TableLookupCall; pause? ret; jmp ClearBit2x34.
+ */
+__declspec(naked) void State6Latch_0048e240(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_00538158]
+        mov     eax, dword ptr [g_x_00537f48]
+        cmp     ecx, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_x_005380e0]
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, 6
+        _emit   75h
+        _emit   78h
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, [edx*4 + 0x34]
+        cmp     eax, 6
+        mov     dword ptr [g_x_00542070], eax
+        _emit   74h
+        _emit   61h
+        mov     eax, dword ptr [g_x_00537f94]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        mov     dword ptr [g_x_0054206c], 5
+        call    CmpCondIdxArrLookup_0048e450
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        cmp     dword ptr [g_x_0054206c], 0x258
+        _emit   7ch
+        _emit   34h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     byte ptr [g_byte_0054389c], 1
+        mov     dword ptr [eax*4 + 0x34], 6
+        mov     dword ptr [g_x_0054206c], 0x2c
+        call    TableLookupCall_0048a130
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     ClearBit2x34_00490130
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

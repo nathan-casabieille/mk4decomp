@@ -9784,10 +9784,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e240
-    name: func_0048e240
+    name: State6Latch_0048e240
     size: 162
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e2f0
     name: PushCallPauseScaledJmpInd_0048e2f0
     size: 60
