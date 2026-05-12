@@ -2934,10 +2934,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042ce60
-    name: func_0042ce60
+    name: PauseGuardChainTriple_0042ce60
     size: 82
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042cec0
     name: func_0042cec0
     size: 322

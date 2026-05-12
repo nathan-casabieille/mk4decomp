@@ -37848,3 +37848,54 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         ret
     }
 }
+
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GuardedTripleCallSwapJmp_0048fee0(void);
+extern void SetJmp_0042d080(void);
+
+/* @addr 0x0042ce60 (82b game) - three adjacent micro-handlers, 16-byte aligned:
+ *   0x0042ce60 (14b + 2 NOPs): push 0x004e36a0; call ArgSarStoreJmp; add esp,4; ret.
+ *   0x0042ce70 (20b + 12 NOPs): call GuardedTriple; if !pause jmp CjInstallSelfRouter; ret.
+ *   0x0042ce90 (34b): call GuardedTriple; if pause skip; else call SetJmp + recheck pause + jmp CjInstallSelfRouter; ret.
+ */
+__declspec(naked) void PauseGuardChainTriple_0042ce60(void) {
+    __asm {
+        push    0x004e36a0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        call    GuardedTripleCallSwapJmp_0048fee0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CjInstallSelfRouter_00470480
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    GuardedTripleCallSwapJmp_0048fee0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    SetJmp_0042d080
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CjInstallSelfRouter_00470480
+        ret
+    }
+}
