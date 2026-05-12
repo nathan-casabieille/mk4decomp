@@ -23072,3 +23072,150 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         ret
     }
 }
+
+extern void DirtyToggleByGate_0048f350(void);
+extern void func_004339c0(void);
+extern void func_00484000(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+
+/* @addr 0x00483f30 (196b game) - eax-based install-self with two tail-jmps.
+ *   eax = base*4; ecx = [eax+0x84]; clear; if (ecx == 0) install-path;
+ *   else: call DirtyToggleByGate; pause? -> end;
+ *     if (g_state_0054208c & 4): mstack-push 0x00484000; jmp func_004339c0;
+ *     else: jmp func_00484000.
+ *   install-path: g_x_00542080 = 4; install self; chain[base+0x84] = 1;
+ *     packed_ptr[scaledInit] = 0x00483f30 + 0x01000000; g_scaledInit++; [eax+4] = scaledInit;
+ *     chain[base+0x84] = 0; call EsiInstallDecCallChain; g_framePauseFlag = 1.
+ */
+__declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   3bh
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00484000
+        jmp     func_004339c0
+        jmp     func_00484000
+        mov     dword ptr [g_x_00542080], 4
+        mov     dword ptr [eax + 8], 0x00483f30
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00483f30
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    EsiInstallDecCallChain_004294a0
+        mov     dword ptr [g_framePauseFlag], 1
+        ret
+    }
+}
+
+extern unsigned int g_x_00543800;
+
+/* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
+ *   if ([0x543800] != 0): ret;
+ *   g_x_0054206c = eax = chain[g_scaledInit + 0x2c]; if (eax == 0) ret.
+ *   Push g_x_00542048. Loop while eax != 0:
+ *     g_x_00542048 = eax; eax *= 4;
+ *     chain[+4] += chain[+0x10]; chain[+8] += chain[+0x14]; chain[+0xc] += chain[+0x18];
+ *     eax = chain[+0]; g_x_0054206c = eax;
+ *   First iter has different field reg ordering (compiler quirk).
+ *   Pop g_x_00542048.
+ */
+__declspec(naked) void ChainListVecAdd_0049d200(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00543800]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, [eax*4 + 0x2c]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   84h
+        _emit   9dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542048], eax
+        shl     eax, 2
+        mov     edx, [eax + 0x10]
+        mov     ecx, [eax + 4]
+        add     ecx, edx
+        mov     edx, [eax + 8]
+        mov     [eax + 4], ecx
+        mov     ecx, [eax + 0x14]
+        add     edx, ecx
+        mov     ecx, [eax + 0x0c]
+        mov     [eax + 8], edx
+        mov     edx, [eax + 0x18]
+        add     ecx, edx
+        mov     [eax + 0x0c], ecx
+        mov     eax, [eax]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   34h
+        mov     dword ptr [g_x_00542048], eax
+        shl     eax, 2
+        mov     ecx, [eax + 0x10]
+        mov     edx, [eax + 4]
+        add     edx, ecx
+        mov     ecx, [eax + 8]
+        mov     [eax + 4], edx
+        mov     edx, [eax + 0x14]
+        add     ecx, edx
+        mov     edx, [eax + 0x0c]
+        mov     [eax + 8], ecx
+        mov     ecx, [eax + 0x18]
+        add     edx, ecx
+        mov     [eax + 0x0c], edx
+        mov     eax, [eax]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0cch
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

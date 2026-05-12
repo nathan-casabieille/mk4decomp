@@ -8713,10 +8713,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00483f30
-    name: func_00483f30
+    name: InstallSelfTwoTailJmp_00483f30
     size: 196
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484000
     name: func_00484000
     size: 336
@@ -11399,10 +11400,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d200
-    name: func_0049d200
+    name: ChainListVecAdd_0049d200
     size: 196
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d2d0
     name: ScaledTripleCopy4_0049d2d0
     size: 52
