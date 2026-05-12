@@ -8951,10 +8951,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x00485d90
-    name: func_00485d90
+    name: Mul10Tail5xInterp_00485d90
     size: 214
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00485e70
     name: func_00485e70
     size: 703

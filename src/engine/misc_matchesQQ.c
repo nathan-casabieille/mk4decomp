@@ -35246,3 +35246,63 @@ __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0053a41c;
+extern unsigned int g_data_0053a3dc;
+
+/* @addr 0x00485d90 (214b game) - 5x Mul10Tail interpolation accumulator. */
+__declspec(naked) void Mul10Tail5xInterp_00485d90(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_0053a41c]
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     edx, dword ptr [g_data_0053a3dc]
+        push    ecx
+        push    eax
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_x_00542080], edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        add     esp, 8
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_x_00542080]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542084]
+        add     esp, 8
+        mov     dword ptr [g_x_00542080], eax
+        mov     eax, dword ptr [g_x_00542078]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054207c]
+        add     esp, 8
+        mov     dword ptr [g_x_00542084], eax
+        push    ecx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542080]
+        add     esp, 8
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_x_00542084]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_0054207c]
+        add     ecx, edx
+        mov     edx, dword ptr [g_x_00542070]
+        add     edx, eax
+        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], ecx
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x54], ecx
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        ret
+    }
+}
