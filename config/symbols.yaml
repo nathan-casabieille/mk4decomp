@@ -8979,10 +8979,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487dd0
-    name: func_00487dd0
+    name: SnapshotDispatchAccum_00487dd0
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487e80
     name: func_00487e80
     size: 905
@@ -9131,10 +9132,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesZ.c
   - addr: 0x00489170
-    name: func_00489170
+    name: InstallSelfFiveStoreCalls_00489170
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489220
     name: Push267_Push44eb60_Jmp_00489220
     size: 23
@@ -11361,10 +11363,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0049d0a0
-    name: func_0049d0a0
+    name: LinkedListSwapHead_0049d0a0
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d150
     name: ChainUnlinkPushFree_0049d150
     size: 174
@@ -12162,10 +12165,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a6180
-    name: func_004a6180
+    name: TwoStageAudioInit_004a6180
     size: 162
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a6230
     name: AudioBindEntryB_004a6230
     size: 114
