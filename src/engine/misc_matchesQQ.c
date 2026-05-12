@@ -37062,3 +37062,74 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         ret
     }
 }
+
+extern void InstallSelfMultiCascade_004388f0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void func_00438780(void);
+
+/* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
+__declspec(naked) void StateGateMStackOverlap_00438690(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_x_00542084]
+        cmp     eax, ecx
+        push    esi
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [g_x_0054206c], 0x00002147
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   90h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, 0x00500c50
+        mov     esi, dword ptr [ecx*4 + g_data_004d57ac_arr]
+        dec     ecx
+        shr     eax, 2
+        mov     dword ptr [g_x_00542080], esi
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     edx, dword ptr [edx*4 + 0x24]
+        cmp     eax, edx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        _emit   75h
+        _emit   07h
+        call    InstallSelfMultiCascade_004388f0
+        pop     esi
+        ret
+        inc     ecx
+        push    0x005422e8
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4 + g_data_004d57ac_arr], esi
+        mov     dword ptr [g_x_0054207c], 0x0d
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    func_00438780
+        pop     esi
+        ret
+    }
+}

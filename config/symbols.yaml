@@ -3990,10 +3990,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x00438690
-    name: func_00438690
+    name: StateGateMStackOverlap_00438690
     size: 226
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438780
     name: func_00438780
     size: 354
