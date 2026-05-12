@@ -45544,3 +45544,110 @@ __declspec(naked) void TripleEntryWordChainInc5_00462870(void) {
         ret
     }
 }
+
+extern void func_0049f7b0(void);
+
+/* @addr 0x0049f6a0 (259b game) - indirect-call state dispatcher with retry loop.
+ *   Init: table = (g_x_00541fc0 + g_x_00535e48); load [table*4 + 4]; call eax indirect.
+ *   If pause: ret. If !bit0(0054208c): jmp tail-CallSetPause.
+ *   Load state = [g_x_00542048*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
+ *   Else inc state, call func_0049f7b0; if pause: ret; if bit0 still set & state==5: loop;
+ *   if bit0 cleared: store, call func_0049e7e0; if pause ret; load [+8], call GuardedScaledCall;
+ *   else fall to tail-CallSetPause; pop ebx; ret.
+ */
+__declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00541fc0]
+        mov     ecx, dword ptr [g_x_00535e48]
+        mov     dword ptr [g_x_00542048], eax
+        add     eax, ecx
+        push    ebx
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     bl, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   0fh
+        _emit   84h
+        _emit   0b3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [edx*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+    retry:
+        cmp     eax, 5
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   84h
+        _emit   8ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     eax, 0xa
+        _emit   0fh
+        _emit   84h
+        _emit   83h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     eax, 0xf
+        _emit   74h
+        _emit   7eh
+        cmp     eax, 0x12
+        _emit   74h
+        _emit   79h
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_0049f7b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ah
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   11h
+        mov     eax, dword ptr [g_x_0054206c]
+        cmp     eax, 5
+        _emit   75h
+        _emit   0c7h
+        call    CallSetPause_0041f830
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_00535e48]
+        mov     dword ptr [g_data_00542070], edx
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        call    CallSetPause_0041f830
+        pop     ebx
+        ret
+    }
+}
