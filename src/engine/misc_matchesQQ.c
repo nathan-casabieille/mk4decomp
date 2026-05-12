@@ -24881,6 +24881,63 @@ __declspec(naked) void ThreeCallChainCopy_004409e0(void) {
     }
 }
 
+extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void ScaledArrStore_00429450(void);
+
+/* @addr 0x00460190 (184b game) - install-self push-arg call + chain[+0x74] = 0x2001, packed_ptr store.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag != 0): call CallPauseScaledStorePushCall; pop esi; ret.
+ *   chain[base + 0x74] = 0x2001; g_x_0054206c = 0x2001;
+ *   push 0x00542970; call ArgScaledTestStore_00494140; add esp, 4.
+ *   pause? -> end.
+ *   install self with packed_ptr store and call ScaledArrStore_00429450; pause = 1.
+ */
+__declspec(naked) void InstallSelfPushArg_00460190(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CallPauseScaledStorePushCall_0045fca0
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00002001
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x00542970
+        mov     [ecx*4 + 0x74], eax
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   60h
+        mov     dword ptr [esi + 8], 0x00460190
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00460190
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledArrStore_00429450
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
