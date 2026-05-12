@@ -7804,10 +7804,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00475490
-    name: func_00475490
+    name: InstallSelfWithSibling_00475490
     size: 250
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00475590
     name: func_00475590
     size: 347

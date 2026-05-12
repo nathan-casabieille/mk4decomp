@@ -40417,3 +40417,68 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         ret
     }
 }
+
+extern void func_00428990(void);
+
+/* @addr 0x00475490 (250b game) - dual-block install-self + sibling.
+ *   B1 (0..221, +1 NOP): snapshot+clear chain[+0x84]. If was zero: cj[+0x24]=g_x_00542054,
+ *     cj[+0x28]=0, g_x_00542054=baseSel[+0x64], g_x_00542058=baseSel[+0x68];
+ *     tail-jmp StackPopDispatchTagged.
+ *     If was nonzero: g_state_00542088=g_x_00542084; g_x_00542058=0x00475570 (sibling);
+ *     g_state_00542080=0; install-self at [eax+8]=0x00475490; chain[+0x84]=1;
+ *     scaledInit-chain push 0x00475490+0x01000000; call func_00428990; pause=1; ret.
+ *   B2 (224..249): cj[+0x58] = cj[+0x48] (sibling at 0x00475570).
+ */
+__declspec(naked) void InstallSelfWithSibling_00475490(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   48h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [g_x_00542054]
+        mov     dword ptr [ecx*4 + 0x24], eax
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [ecx*4 + 0x28], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_x_00542054], edx
+        mov     eax, dword ptr [eax*4 + 0x68]
+        mov     dword ptr [g_x_00542058], eax
+        jmp     StackPopDispatchTagged_0041f780
+        mov     ecx, dword ptr [g_x_00542084]
+        mov     dword ptr [g_x_00542058], 0x00475570
+        mov     dword ptr [g_state_00542088], ecx
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [eax + 8], 0x00475490
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, 0x00475490
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    func_00428990
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+        nop
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x48]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x58], ecx
+        ret
+    }
+}
