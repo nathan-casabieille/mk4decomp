@@ -28761,3 +28761,54 @@ __declspec(naked) void DualEntryInitDispatch_00431360(void) {
         ret
     }
 }
+
+extern void MStackPushSwapEqJmp_00474ed0(void);
+extern void PushCallRetNopJmp_0043d580(void);
+extern void CountdownStoreCallChain_0043d5a0(void);
+
+/* @addr 0x0043d510 (101b game) - dual-entry: prolog calls mstack-swap-eq, branches on pause/bitfield,
+ *   sets up scaled-table stores indexed by g_x_0054205c, then calls mid-ArgSarStoreJmp+5;
+ *   second block (after 12 NOPs) tail-jmps CountdownStoreCallChain_0043d5a0.
+ */
+__declspec(naked) void DualEntryStub_0043d510(void) {
+    __asm {
+        call    MStackPushSwapEqJmp_00474ed0
+        mov     ecx, dword ptr [g_pause_00541e6c]
+        xor     eax, eax
+        cmp     ecx, eax
+        _emit   75h
+        _emit   42h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     PushCallRetNopJmp_0043d580
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     ecx, 0x00501154
+        shr     ecx, 2
+        mov     dword ptr [edx*4 + 0x24], ecx
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004e5110
+        mov     dword ptr [ecx*4 + 0x28], eax
+        _emit   0e8h
+        _emit   90h
+        _emit   0bfh
+        _emit   01h
+        _emit   00h
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     CountdownStoreCallChain_0043d5a0
+    }
+}

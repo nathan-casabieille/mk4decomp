@@ -4518,10 +4518,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043d510
-    name: func_0043d510
+    name: DualEntryStub_0043d510
     size: 101
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d580
     name: PushCallRetNopJmp_0043d580
     size: 21
