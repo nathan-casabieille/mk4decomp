@@ -25174,6 +25174,67 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
     }
 }
 
+extern void func_004244d0(void);
+extern void InstallSelfDecrement_0047fc30(void);
+
+/* @addr 0x0047fb70 (188b game) - chain[+0x5c] save, gated +0x18000 update, then Mul10^2 chain stores.
+ *   chain[g_baseSel + 0x5c] = g_scaledInit.
+ *   if (g_x_00542054 == 0): jmp InstallSelfDecrement_0047fc30.
+ *   g_x_00542074 = chain[g_baseSel + 0x60] + 0x18000;
+ *   call func_004244d0; pause? ret.
+ *   chain[g_baseSel + 0x60] = g_x_00542074.
+ *   eax = g_x_0054206c; ecx = eax * 25 (lea eax+eax*4 twice gives *25);
+ *   g_x_0054206c = ecx; chain[g_x_00542054 + 0x54] = ecx.
+ *   eax = g_x_00542070 * 25; g_x_00542070 = eax;
+ *   chain[g_x_00542054 + 0x5c] = g_x_00542070.
+ *   chain[g_x_00542054 + 0x3c] -= 0xccc; g_x_0054206c = result.
+ *   jmp InstallSelfDecrement_0047fc30.
+ */
+__declspec(naked) void ChainPathMul25_0047fb70(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     [eax*4 + 0x5c], ecx
+        mov     eax, dword ptr [g_x_00542054]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfDecrement_0047fc30
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, [edx*4 + 0x60]
+        add     eax, 0x00018000
+        mov     dword ptr [g_x_00542074], eax
+        call    func_004244d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   76h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542074]
+        mov     [ecx*4 + 0x60], edx
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_00542054]
+        lea     eax, [eax + eax*4]
+        lea     ecx, [eax + eax*4]
+        mov     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0054206c], ecx
+        lea     eax, [eax + eax*4]
+        lea     eax, [eax + eax*4]
+        mov     dword ptr [g_x_00542070], eax
+        mov     [edx*4 + 0x54], ecx
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     [eax*4 + 0x5c], ecx
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     eax, [ecx*4 + 0x3c]
+        sub     eax, 0x00000ccc
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x3c], eax
+        jmp     InstallSelfDecrement_0047fc30
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

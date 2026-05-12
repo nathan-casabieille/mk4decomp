@@ -8341,10 +8341,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047fb70
-    name: func_0047fb70
+    name: ChainPathMul25_0047fb70
     size: 188
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047fc30
     name: InstallSelfDecrement_0047fc30
     size: 134
