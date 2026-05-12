@@ -24671,6 +24671,85 @@ __declspec(naked) void InstallSelfPair3Branch_00429240(void) {
     }
 }
 
+extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledChainJmp_004298e0(void);
+extern void func_00429130(void);
+
+/* @addr 0x00428eb0 (182b game) - install-self with conditional 2-call cascade.
+ *   esi = base*4; ebx = 1; flag = [esi+0x84]; clear.
+ *   if (flag == 0): install-path.
+ *   else: if (208c & 1): call ScaledChainJmp_004298e0; pause? ret. (skip first call)
+ *     call ScaledLoadJmp_24_00429790; pause? ret.
+ *     if (208c & 1): goto install-path; (skip second call)
+ *     call ScaledChainJmp; pause? ret.
+ *     call StackPopDispatchTagged; ret.
+ *   install-path: install self with [esi+0x84]=ebx, packed_ptr store, g_scaledInit++,
+ *     chain[+0x84]=0, call func_00429130; pause = 1.
+ */
+__declspec(naked) void InstallSelfBitGated_00428eb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   34h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   75h
+        _emit   16h
+        call    ScaledLoadJmp_24_00429790
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   75h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   74h
+        _emit   16h
+        call    ScaledChainJmp_004298e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 8], 0x00428eb0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00428eb0
+        mov     [ecx*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00429130
+        mov     dword ptr [g_framePauseFlag], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

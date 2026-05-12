@@ -2509,10 +2509,11 @@ functions:
     status: matched
     file: src/engine/scaled_clear_jmp.c
   - addr: 0x00428eb0
-    name: func_00428eb0
+    name: InstallSelfBitGated_00428eb0
     size: 182
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428f70
     name: func_00428f70
     size: 215
