@@ -7147,10 +7147,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046fd10
-    name: func_0046fd10
+    name: ThresholdPauseDispatch_0046fd10
     size: 90
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046fd70
     name: TimerWindowThreshDispatch_0046fd70
     size: 127
