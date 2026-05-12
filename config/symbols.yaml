@@ -5387,10 +5387,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00450de0
-    name: func_00450de0
+    name: InstallSelfIndexWalk_00450de0
     size: 229
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00450ed0
     name: ScaledInit_00450ed0
     size: 18

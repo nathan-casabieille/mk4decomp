@@ -38324,3 +38324,93 @@ __declspec(naked) void DispatchCopyFields_0043ec80(void) {
         ret
     }
 }
+
+extern void DualScaledStore_00452740(void);
+extern void Thunk_0049cbc0(void);
+
+/* @addr 0x00450de0 (229b game) - install-self with index-walk loop.
+ *   snapshot+clear chain[+0x84]. If was nonzero -> recompute eax = 0x004e7528>>2 + 5
+ *     (jmp at +0xa7 back to +0x63) then resume search.
+ *   If was zero: call DualScaledStore; if pause? ret.
+ *   else: copy g_cj_0054205c to baseSel[+0x4c] and g_x_00542058; compute
+ *   eax = 0x004e7528>>2 -> g_x_00542054 -> [eax*4]; if <0: call Thunk_0049cbc0, ret.
+ *   else: add g_data_00542080; load scaledInit; indirect call. If pause? ret.
+ *   else: refetch [g_x_00542054*4+0x10]; if zero: add 5 to eax, jmp back to scaledInit
+ *   walk. If non-zero: install-self at [esi+8]=0x00450de0, chain[+0x84]=1, pause=1; ret.
+ */
+__declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        mov     edi, 0x00450de0
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   93h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DualScaledStore_00452740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [edx*4 + 0x4c], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_00542058], eax
+        mov     eax, 0x004e7528
+        shr     eax, 2
+walk_00450e43:
+        mov     dword ptr [g_x_00542054], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   08h
+        call    Thunk_0049cbc0
+        pop     edi
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_state_00542080]
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0x10]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   75h
+        _emit   0fh
+        add     eax, 5
+        _emit   0ebh
+        _emit   0a4h
+        mov     eax, dword ptr [g_x_00542054]
+        add     eax, 5
+        _emit   0ebh
+        _emit   9ah
+        mov     eax, 1
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [esi + 8], edi
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     edi
+        pop     esi
+        ret
+    }
+}
