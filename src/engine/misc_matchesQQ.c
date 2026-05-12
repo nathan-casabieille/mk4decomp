@@ -29478,3 +29478,166 @@ __declspec(naked) void DualEntry4002Chain_00482b60(void) {
         jmp     CallPauseFourSet_00482be0
     }
 }
+
+extern void func_0045f650(void);
+extern void ArgScaledChain_004949b0(void);
+extern void Const111ScaledStoreJmp_00495da0(void);
+
+/* @addr 0x00495d20 (124b game) - triple-entry chain.
+ *   Blocks A/B (+0x00, +0x30): set baseSel[*4+0x74]=eax (0x0302/0x0303) and g_x_0054207c (0x20011/0x20019);
+ *     jmp func_0045f650.
+ *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
+ */
+__declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
+    __asm {
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000302
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     dword ptr [g_x_0054207c], 0x00020011
+        jmp     func_0045f650
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000303
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     dword ptr [g_x_0054207c], 0x00020019
+        jmp     func_0045f650
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x004f1a10
+        call    ArgScaledChain_004949b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     Const111ScaledStoreJmp_00495da0
+        ret
+    }
+}
+
+extern void ScaledChainAndF000DirtyToggle_0048e740(void);
+extern void func_0048eec0(void);
+extern void StateDispatchYield_00471190(void);
+
+/* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
+ *   Block A: g_x_00542070=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
+ *     g_state_00535ddc<=0xcccc: g_x_00542070=0x9. Then call func_0048eec0; if !pause: if bitfield set
+ *     g_x_00542070=0xb; g_x_0054206c=g_x_00542070; jmp StateDispatchYield_00471190.
+ *   Block B (+0x70): g_x_0054206c=0x8; jmp StateDispatchYield_00471190.
+ */
+__declspec(naked) void DualEntryStateGated_00460fa0(void) {
+    __asm {
+        mov     dword ptr [g_x_00542070], 0x0b
+        call    ScaledChainAndF000DirtyToggle_0048e740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   54h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   3ch
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x0000cccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7fh
+        _emit   0ah
+        mov     dword ptr [g_x_00542070], 0x09
+        call    func_0048eec0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_x_00542070], 0x0b
+        mov     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0054206c], eax
+        jmp     StateDispatchYield_00471190
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x08
+        jmp     StateDispatchYield_00471190
+    }
+}
+
+extern void func_0045f950(void);
+extern void func_00471250(void);
+extern void MStackPushPtr1Jmp_00438ef0(void);
+extern void Set0xaCmpEqSet0x26Jmp_0046a1e0(void);
+extern void SetJmp_00439c30(void);
+
+/* @addr 0x00439ba0 (128b game) - dual-entry pause/bit gated.
+ *   Block A: call func_0045f950; if !pause: cl=g_state_0054208c; if (al=1 & cl): g_data_0053a478=1,
+ *     mstack-push 0x00439bf0, jmp func_00471250; ret.
+ *   Block B (+0x50): call func_0045f950; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
+ *     call Set0xaCmpEqSet0x26Jmp; if !pause jmp SetJmp_00439c30; ret.
+ */
+__declspec(naked) void DualEntryBitGated_00439ba0(void) {
+    __asm {
+        call    func_0045f950
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     eax, 1
+        _emit   84h
+        _emit   0c8h
+        _emit   74h
+        _emit   2ah
+        mov     dword ptr [g_data_0053a478], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00439bf0
+        jmp     func_00471250
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    func_0045f950
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     MStackPushPtr1Jmp_00438ef0
+        call    Set0xaCmpEqSet0x26Jmp_0046a1e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     SetJmp_00439c30
+        ret
+    }
+}

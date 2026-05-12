@@ -4268,10 +4268,11 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x00439ba0
-    name: func_00439ba0
+    name: DualEntryBitGated_00439ba0
     size: 128
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439c20
     name: Thunk_00439c20
     size: 5
@@ -6395,10 +6396,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00460fa0
-    name: func_00460fa0
+    name: DualEntryStateGated_00460fa0
     size: 127
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461020
     name: PushFourCallPopBitJmp_00461020
     size: 103
@@ -11012,10 +11014,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x00495d20
-    name: func_00495d20
+    name: TripleEntry03ChainArg_00495d20
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00495da0
     name: Const111ScaledStoreJmp_00495da0
     size: 28
