@@ -7192,10 +7192,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046ec20
-    name: func_0046ec20
+    name: FiveBlockDispatchChain_0046ec20
     size: 275
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046ed40
     name: MStackJmpInstallSelf_0046ed40
     size: 192

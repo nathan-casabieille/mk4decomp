@@ -43874,3 +43874,147 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         ret
     }
 }
+
+extern void TripleCallPauseJmp_00470500(void);
+extern void Wrapper_0048a3c0(void);
+extern void func_004709e0(void);
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void func_0046ef70(void);
+extern void MStackJmpInstallSelf_0046ed40(void);
+
+/* @addr 0x0046ec20 (275b game) - 5 adjacent blocks.
+ *   B1 (0..0x4f, 64+15 NOPs): call ScaledAndAlfe_00490390; if !pause: cj[+0x74]=0x604;
+ *     call TripleCallPauseJmp_00470500; if !pause: push 0x004eb6d8, tail-call ArgSarStoreJmp.
+ *   B2 (0x50..0x7f): call Wrapper_0048a3c0; if !pause: g_x_00542054 = 0x004eb6e8>>2;
+ *     tail-jmp func_004709e0.
+ *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn_0046e2a0.
+ *     Else: g_state_00542080=8, g_x_0054207c=8, mstack-push 0x0046ece0 (B4 addr);
+ *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
+ *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp func_0046ef70.
+ *     Else: g_state_00542080=9, g_x_0054207c=8, mstack-push 0x0046ed20 (B5 addr);
+ *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
+ *   B5 (0x100..0x112): if bit0 of state set: tail-jmp func_0046ef70.
+ *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
+ */
+__declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
+    __asm {
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x604
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    TripleCallPauseJmp_00470500
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eb6d8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    Wrapper_0048a3c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     eax, 0x004eb6e8
+        sar     eax, 2
+        mov     dword ptr [g_x_00542054], eax
+        jmp     func_004709e0
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+        mov     eax, 8
+        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0c7h
+        _emit   04h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   0e0h
+        _emit   0ech
+        _emit   46h
+        _emit   00h
+        jmp     InstallSelfMStackOverwrite_0046e9a0
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046ef70
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_state_00542080], 9
+        inc     eax
+        mov     dword ptr [g_x_0054207c], 8
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0c7h
+        _emit   04h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   20h
+        _emit   0edh
+        _emit   46h
+        _emit   00h
+        jmp     InstallSelfMStackOverwrite_0046e9a0
+        nop
+        nop
+        nop
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046ef70
+        jmp     MStackJmpInstallSelf_0046ed40
+    }
+}
