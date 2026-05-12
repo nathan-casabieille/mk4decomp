@@ -15179,6 +15179,119 @@ extern void AudioVolumeRescale_004ab690(void);
 extern void func_00406790(void);
 extern void func_004069b0(void);
 
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void func_004537a0(void);
+extern void func_00453620(void);
+extern void GDispatch4_004089c0(void);
+
+extern unsigned int g_x_00537f98;
+extern unsigned int g_x_0053a430;
+extern unsigned char g_data_004dfc98;
+extern unsigned int g_arr_421f40;
+
+/* @addr 0x00421f40 (160b game) - install-self with stack-state reset:
+ *   chain[sel].slot84 -> eax; clear. If !=0: zero walkCallback/0x537f98,
+ *   set g_state_00542080=1, jmp StackPopDispatchTagged.
+ *   Else: eax = g_x_0053a430; if 0: jmp StackPopDispatchTagged.
+ *   walkCallback = max(eax-1, 0); key = (0x4dfc98>>2) + edx; g_scaledInit=key;
+ *   g_x_0054204c = arr[key]; install self; g_framePauseFlag=1; ret.
+ */
+__declspec(naked) void InstallSelfStackReset_00421f40(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        lea     ecx, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [ecx + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   23h
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [g_x_00537f98], 0
+        mov     dword ptr [g_state_00542080], 1
+        jmp     StackPopDispatchTagged_0041f780
+        mov     eax, dword ptr [g_x_0053a430]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   49h
+        lea     edx, [eax - 1]
+        test    edx, edx
+        mov     dword ptr [g_walkCallback], edx
+        _emit   7dh
+        _emit   08h
+        xor     edx, edx
+        mov     dword ptr [g_walkCallback], edx
+        mov     eax, offset g_data_004dfc98
+        shr     eax, 2
+        add     eax, edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_arr_421f40]
+        mov     eax, 1
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [ecx + 8], offset InstallSelfStackReset_00421f40
+        mov     dword ptr [ecx + 0x84], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        ret
+        jmp     StackPopDispatchTagged_0041f780
+    }
+}
+
+/* @addr 0x00453540 (159b game) - 4-stage chained dispatch:
+ *   g_walkCallback=3; DirtyDoubleDeref; pause? ret;
+ *   g_x_00542048 = chain[scaledInit].slot24; DispatcherComplex260; pause? ret;
+ *   if (g_state_0054208c & 4) ret; else g_cj = scaledInit; chain[chain[scaledInit].slot18].slot30 = 1;
+ *   g_walkCallback=1; g_scaledInit = g_cj; GDispatch4; pause? ret;
+ *   if (g_state_0054208c & 4) ret; call func_004537a0; pause? jmp func_00453620.
+ */
+__declspec(naked) void FourStageChainedDispatch_00453540(void) {
+    __asm {
+        mov     dword ptr [g_walkCallback], 3
+        call    DirtyDoubleDeref_00408cb0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   82h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x24]
+        mov     dword ptr [g_x_00542048], ecx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   62h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   59h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, 1
+        mov     dword ptr [g_cj_0054205c], eax
+        mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x18]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     [eax*4 + g_chain_arr_4348f0 + 0x30], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    GDispatch4_004089c0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   13h
+        call    func_004537a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00453620
+        ret
+    }
+}
+
 extern unsigned char g_data_00408000;
 extern void ThreeChanPackClamp_00404cc0(int);
 extern void CopyThreeFields_00404df0(int);

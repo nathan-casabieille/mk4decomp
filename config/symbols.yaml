@@ -1722,10 +1722,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesX.c
   - addr: 0x00421f40
-    name: func_00421f40
+    name: InstallSelfStackReset_00421f40
     size: 160
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00421fe0
     name: GuardedChainDispatch_00421fe0
     size: 108
@@ -5504,10 +5505,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00453540
-    name: func_00453540
+    name: FourStageChainedDispatch_00453540
     size: 159
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004535e0
     name: Set2CallDirtyCallPauseJmp_004535e0
     size: 53
