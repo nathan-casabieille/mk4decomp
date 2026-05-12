@@ -5725,10 +5725,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004580a0
-    name: func_004580a0
+    name: TriplePackedTagged_004580a0
     size: 185
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458160
     name: func_00458160
     size: 723

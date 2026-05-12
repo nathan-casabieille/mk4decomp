@@ -25051,6 +25051,66 @@ __declspec(naked) void MStackPush3MaskBit0_004929e0(void) {
     }
 }
 
+extern void Push70CallScaleArith_00457ad0(void);
+extern unsigned int g_x_00537e98;
+
+/* @addr 0x004580a0 (185b game) - 3-call dual-tagged setup with bit-4 gating.
+ *   g_x_00542048 = (([0x537e98] != 0) ? packed_ptr(0x4d55f8) : packed_ptr(0x4d55e8)).
+ *   Init: g_x_0054206c=0xa; +0x70=4; +0x78=0; +0x7c=0xff9c0000.
+ *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
+ *   g_x_0054207c += 0x140000; g_x_00542048 = packed_ptr(0x4d55c0).
+ *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
+ *   g_x_0054207c = 0x780000; g_x_00542048 = packed_ptr(0x4d55d8); tail-jmp Push70CallScaleArith.
+ */
+__declspec(naked) void TriplePackedTagged_004580a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00537e98]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     eax, 0x004d55e8
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        _emit   0ebh
+        _emit   0eh
+        mov     ecx, 0x004d55f8
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_0054206c], 0x0a
+        mov     dword ptr [g_x_00542070], 4
+        mov     dword ptr [g_x_00542078], 0
+        mov     dword ptr [g_x_0054207c], 0xff9c0000
+        call    Push70CallScaleArith_00457ad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   53h
+        mov     edx, dword ptr [g_x_0054207c]
+        add     edx, 0x00140000
+        mov     dword ptr [g_x_0054207c], edx
+        mov     edx, 0x004d55c0
+        shr     edx, 2
+        mov     dword ptr [g_x_00542048], edx
+        call    Push70CallScaleArith_00457ad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   1ch
+        mov     eax, 0x004d55d8
+        mov     dword ptr [g_x_0054207c], 0x00780000
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        jmp     Push70CallScaleArith_00457ad0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
