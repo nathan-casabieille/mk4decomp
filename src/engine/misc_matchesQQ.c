@@ -15214,6 +15214,143 @@ extern unsigned int g_chain_disp_64_40a690_fwd;
 extern void GuardedClampStoreJmp_00428bd0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 
+extern char g_byte_00f9efec;
+extern unsigned int g_x_00f9eff0;
+extern unsigned int g_x_00f9efc8;
+extern void (*g_iat_004d2074)();
+extern int BuildMaskFromArray_004c38d0(void);
+extern void Audio_UpdateChannels_fwd(void);
+extern void VtableArgClamp_004c3eb0(int);
+extern void Loop1cBitMask_004c4450(void);
+extern void IterateCallSkip_004c4210(void);
+extern void func_004c4110(int);
+
+/* @addr 0x004c4240 (168b platform.win32) - audio shutdown sequence:
+ *   For i in [0, g_byte_00f9efec): if BuildMaskFromArray() nonzero:
+ *     base = (*iat)(); Audio_UpdateChannels(); VtableArgClamp(i);
+ *     used = (*iat)(); delta = 10 - used; total = base + delta;
+ *     if total > 0: SleepEx(total).
+ *   Then: g_x_00f9eff0 = 1; Loop1cBitMask; IterateCallSkip;
+ *   func_004c4110(0); g_x_00f9eff0 = 0;
+ *   if g_x_00f9efcc: vtbl[+8](.); clear. Same for g_x_00f9efc8.
+ */
+__declspec(naked) void AudioShutdownSequence_004c4240(void) {
+    __asm {
+        push    ebx
+        push    esi
+        push    edi
+        movsx   edi, byte ptr [g_byte_00f9efec]
+        test    edi, edi
+        _emit   7eh
+        _emit   3ch
+        mov     ebx, dword ptr [g_iat_004d2240]
+loopShutdown:
+        call    BuildMaskFromArray_004c38d0
+        test    eax, eax
+        _emit   74h
+        _emit   2dh
+        call    ebx
+        mov     esi, eax
+        call    Audio_UpdateChannels
+        push    edi
+        call    VtableArgClamp_004c3eb0
+        add     esp, 4
+        call    ebx
+        mov     ecx, 0xa
+        sub     ecx, eax
+        add     esi, ecx
+        test    esi, esi
+        _emit   7eh
+        _emit   07h
+        push    esi
+        call    dword ptr [g_iat_004d2074]
+        dec     edi
+        test    edi, edi
+        _emit   7fh
+        _emit   0cah
+        mov     dword ptr [g_x_00f9eff0], 1
+        call    Loop1cBitMask_004c4450
+        call    IterateCallSkip_004c4210
+        push    0
+        mov     dword ptr [g_x_00f9eff0], 0
+        call    func_004c4110
+        mov     eax, dword ptr [g_x_00f9efcc]
+        add     esp, 4
+        test    eax, eax
+        _emit   74h
+        _emit   10h
+        mov     edx, dword ptr [eax]
+        push    eax
+        call    dword ptr [edx + 8]
+        mov     dword ptr [g_x_00f9efcc], 0
+        mov     eax, dword ptr [g_x_00f9efc8]
+        test    eax, eax
+        _emit   74h
+        _emit   10h
+        mov     ecx, dword ptr [eax]
+        push    eax
+        call    dword ptr [ecx + 8]
+        mov     dword ptr [g_x_00f9efc8], 0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+/* @addr 0x00477400 (167b game) - mstack push 2 + 2-state global swap + pop 2:
+ *   push scaledInit, g_x_00542048;
+ *   eax = chain[base].slot64; g_x_00542048 = g_x_00538158; g_scaledInit = eax;
+ *   if (eax == g_x_00538158): g_scaledInit = g_x_00538158 = 0.
+ *   else: g_x_00542048 = g_x_0053815c; if (g_x_0053815c == eax): g_scaledInit = g_x_0053815c = 0.
+ *   Then pop 2 into g_x_00542048, g_scaledInit.
+ */
+__declspec(naked) void MStackPush2GlobalSwap_00477400(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_00538158]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x64]
+        mov     dword ptr [g_x_00542048], ecx
+        cmp     ecx, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   75h
+        _emit   0eh
+        xor     eax, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00538158], eax
+        _emit   0ebh
+        _emit   1ch
+        mov     ecx, dword ptr [g_x_0053815c]
+        cmp     ecx, eax
+        mov     dword ptr [g_x_00542048], ecx
+        _emit   75h
+        _emit   0ch
+        xor     eax, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_0053815c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 /* @addr 0x00428b20 (166b game) - install-self with accumulator overflow check:
  *   chain[sel].slot84 -> eax; clear. If !=0: eax = g_state_00542088 + g_currentNodeFlags;
  *     g_state_00542088 = eax. If eax > 0x10000: jmp StackPopDispatchTagged; ret.

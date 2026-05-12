@@ -7828,10 +7828,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00477400
-    name: func_00477400
+    name: MStackPush2GlobalSwap_00477400
     size: 167
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004774b0
     name: ScaledDerefStore_004774b0
     size: 19
@@ -14504,10 +14505,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004c4240
-    name: func_004c4240
+    name: AudioShutdownSequence_004c4240
     size: 168
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c42f0
     name: OneShotVtableWalk_004c42f0
     size: 103
