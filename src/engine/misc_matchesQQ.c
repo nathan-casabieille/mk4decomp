@@ -41961,3 +41961,84 @@ __declspec(naked) void InstallSelfThreeStateBranch_00439d20(void) {
         ret
     }
 }
+
+extern void func_00407330(void);
+
+/* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
+ *   g_x_00542048 = 0x0050d434>>2; call func_00407330; if pause? final-ret.
+ *   if bit2 of g_state_0054208c set: tail-jmp ScaledInitWithCounterAndType_004314f0.
+ *   g_cj_0054205c = g_scaledInit_00542044. call func_004058c0; if pause? final-ret.
+ *   call MStackCall_00406340; if pause? final-ret.
+ *   Clear cj[+0x5c] and g_x_0054207c. cj[+0x64] = g_x_00542058[+0x64].
+ *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_x_00542058[+0x34] & 1) | 0x81000.
+ *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_x_00542054[+0x54].
+ */
+__declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
+    __asm {
+        mov     eax, 0x0050d434
+        sar     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00407330
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     ScaledInitWithCounterAndType_004314f0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_cj_0054205c], ecx
+        call    func_004058c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [edx*4 + 0x5c], 0
+        mov     eax, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [edx*4 + 0x34]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_00542070], ecx
+        and     ecx, 1
+        mov     eax, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_x_00542070], ecx
+        and     al, 0xfe
+        or      eax, ecx
+        or      eax, 0x00081000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_x_00535e6c]
+        mov     dword ptr [eax*4 + 0x3c], ecx
+        mov     edx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x54]
+        mov     dword ptr [g_x_00542078], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        ret
+    }
+}
