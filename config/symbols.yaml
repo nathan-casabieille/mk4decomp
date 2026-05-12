@@ -2525,10 +2525,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00428f70
-    name: func_00428f70
+    name: InstallSelfWithDispatch_00428f70
     size: 215
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429050
     name: func_00429050
     size: 216

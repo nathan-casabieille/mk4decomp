@@ -35306,3 +35306,75 @@ __declspec(naked) void Mul10Tail5xInterp_00485d90(void) {
         ret
     }
 }
+
+extern void Thunk_004296e0(void);
+extern void ScaledLoadJmp_24_00429790(void);
+extern void Install3WayChainStateAdvance_00429130(void);
+
+/* @addr 0x00428f70 (215b game) - install-self with countdown-and-dispatch.
+ *   chain[+0x84]!=0 path: if bit-0 set call Thunk_004296e0; else call ScaledLoadJmp_24_00429790;
+ *     if !pause: cmp [g_x_0054205c*4+0x28] vs g_x_00542080; if <: call GuardedChainCmpDualBitXor;
+ *     if !pause: call StackPopDispatchTagged.
+ *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
+ *     call Install3WayChainStateAdvance; pause=1. ret.
+ */
+__declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   53h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   07h
+        call    Thunk_004296e0
+        pop     esi
+        ret
+        call    ScaledLoadJmp_24_00429790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        mov     ecx, dword ptr [g_x_00542080]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   7ch
+        _emit   15h
+        call    GuardedChainCmpDualBitXor_004299a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   67h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     dword ptr [esi + 0x08], 0x00428f70
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00428f70
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    Install3WayChainStateAdvance_00429130
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
