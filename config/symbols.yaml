@@ -15590,10 +15590,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cd110
-    name: func_004cd110
+    name: SetFdMode_004cd110
     size: 161
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cd1c0
     name: CrtFdClose_004cd1c0
     size: 147

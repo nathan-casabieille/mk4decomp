@@ -27317,6 +27317,100 @@ __declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
     }
 }
 
+extern void CallAdd8B_004c8bb0(void);
+extern void (*g_SetStdHandle_004d20d4)(void);
+extern unsigned int g_x_00fa0ee0;
+extern unsigned int g_x_00fa0de0;
+extern unsigned int g_x_00520064;
+
+/* @addr 0x004cd110 (161b crt) - _setmode-like (FD slot -> reserved 32-fd table; binary/text + std handle).
+ *   fd (ecx) must be < [0xfa0ee0]; else errno = EBADF (9).
+ *   table = [0xfa0de0 + (fd/32)*4]; slot_idx = (fd%32)*36; check [table][slot] != -1 else fail.
+ *   If [0x520064] == 1: switch (fd) {
+ *     case 0: SetStdHandle(STD_INPUT=-10, arg2); fall to default cleanup.
+ *     case 1: SetStdHandle(STD_OUTPUT=-11, arg2); cleanup; ret.
+ *     case 2: SetStdHandle(STD_ERROR=-12, arg2); cleanup; ret.
+ *     default: cleanup. }
+ *   Cleanup: *[table] [slot] = arg2; return 0.
+ *   Fail: __errno() = 9; clear another errno-like ptr; return -1.
+ */
+__declspec(naked) void SetFdMode_004cd110(void) {
+    __asm {
+        mov     ecx, [esp + 4]
+        mov     eax, dword ptr [g_x_00fa0ee0]
+        push    ebx
+        push    esi
+        cmp     ecx, eax
+        push    edi
+        _emit   73h
+        _emit   74h
+        mov     eax, ecx
+        sar     eax, 5
+        lea     edi, [eax*4 + g_x_00fa0de0]
+        mov     eax, ecx
+        and     eax, 0x1f
+        mov     edx, [edi]
+        lea     esi, [eax + eax*8]
+        shl     esi, 2
+        cmp     dword ptr [edx + esi], 0xffffffff
+        _emit   75h
+        _emit   55h
+        mov     eax, dword ptr [g_x_00520064]
+        mov     ebx, [esp + 0x14]
+        cmp     eax, 1
+        _emit   75h
+        _emit   3ch
+        sub     ecx, 0
+        _emit   74h
+        _emit   2eh
+        dec     ecx
+        _emit   74h
+        _emit   17h
+        dec     ecx
+        _emit   75h
+        _emit   31h
+        push    ebx
+        push    0xfffffff4
+        call    dword ptr [g_SetStdHandle_004d20d4]
+        mov     eax, [edi]
+        mov     [eax + esi], ebx
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        push    ebx
+        push    0xfffffff5
+        call    dword ptr [g_SetStdHandle_004d20d4]
+        mov     eax, [edi]
+        mov     [eax + esi], ebx
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        push    ebx
+        push    0xfffffff6
+        call    dword ptr [g_SetStdHandle_004d20d4]
+        mov     eax, [edi]
+        mov     [eax + esi], ebx
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 9
+        call    CallAdd8B_004c8bb0
+        pop     edi
+        mov     dword ptr [eax], 0
+        pop     esi
+        or      eax, 0xffffffff
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
