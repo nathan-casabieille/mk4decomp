@@ -7266,10 +7266,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00470390
-    name: func_00470390
+    name: Mul10TailPairChain_00470390
     size: 232
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470480
     name: CjInstallSelfRouter_00470480
     size: 114
