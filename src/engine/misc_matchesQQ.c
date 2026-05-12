@@ -37325,3 +37325,72 @@ __declspec(naked) void InstallSelfChainAccumPath_004752b0(void) {
         ret
     }
 }
+
+extern void func_00444ef0(void);
+
+/* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_x_00542074; 3-stage AudioVolumeRescale
+ *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to func_00444ef0.
+ *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_x_0054206c).
+ */
+__declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [g_x_0054206c], 0x64
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   12h
+        mov     eax, 0x004e5df8
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        jmp     func_00444ef0
+        mov     dword ptr [g_x_0054206c], 0x0000015e
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   62h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   47h
+        mov     dword ptr [g_x_0054206c], 0x00000200
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   13h
+        mov     ecx, 0x004e5dc8
+        shr     ecx, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        jmp     func_00444ef0
+        mov     edx, 0x004e5d90
+        shr     edx, 2
+        mov     dword ptr [g_x_0054206c], edx
+        jmp     func_00444ef0
+        mov     eax, 0x004e5d58
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        jmp     func_00444ef0
+        ret
+    }
+}
