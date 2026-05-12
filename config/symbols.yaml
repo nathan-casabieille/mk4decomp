@@ -2223,10 +2223,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00427390
-    name: func_00427390
+    name: GatedScaledChainSetup_00427390
     size: 204
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427460
     name: Thunk_00427460
     size: 5
@@ -5203,10 +5204,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cb80
-    name: func_0044cb80
+    name: MStackPush3SideStore_0044cb80
     size: 203
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cc50
     name: DualPushAddCallDualPopJmp_0044cc50
     size: 124
