@@ -64,18 +64,12 @@ __declspec(naked) void ScaledLoadOrSetJmp_00406b20(void) {
  *   ret
  */
 extern unsigned int g_xformEntityIdx;
-__declspec(naked) void ScaledStoreThree_00409260(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_walkCallback]
-        shl     eax, 2
-        mov     dword ptr [eax + 4], ecx
-        xor     ecx, ecx
-        mov     dword ptr [eax + 8], ecx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x0c], ecx
-        ret
-    }
+void ScaledStoreThree_00409260(void) {
+    unsigned int *base = (unsigned int *)(g_xformEntityIdx * 4);
+    base[1] = (unsigned int)g_walkCallback;
+    base[2] = 0;
+    g_walkCallback = (void (*)(void))0;
+    base[3] = 0;
 }
 
 /* @addr 0x00409320 (40b)
@@ -89,18 +83,12 @@ __declspec(naked) void ScaledStoreThree_00409260(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void ScaledOr4DirtyClear_00409320(void) {
-    __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x34]
-        or      al, 4
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void ScaledOr4DirtyClear_00409320(void) {
+    unsigned int idx = g_scaledInit_00542044;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 4;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00409350 (35b)

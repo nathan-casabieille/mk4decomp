@@ -5868,10 +5868,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00458f40
-    name: func_00458f40
+    name: NestedLoopDispatch_00458f40
     size: 238
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00459030
     name: func_00459030
     size: 296
