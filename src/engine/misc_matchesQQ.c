@@ -36432,3 +36432,83 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         ret
     }
 }
+
+extern void func_0040ca70(void);
+extern void InstallSelfHelper2_0047e8a0(void);
+extern void func_0047e9f0(void);
+
+/* @addr 0x0047e910 (220b game) - install-self with countdown. */
+__declspec(naked) void InstallSelfCountdown2Stage_0047e910(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   8ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_0040ca70
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [g_x_0054206c], ebx
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6fh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        _emit   84h
+        _emit   0c3h
+        mov     dword ptr [g_x_00542080], edx
+        _emit   74h
+        _emit   08h
+        call    InstallSelfHelper2_0047e8a0
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   75h
+        _emit   20h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        call    func_0047e9f0
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_x_00542080], 0x0c
+        mov     dword ptr [esi + 0x08], 0x0047e910
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

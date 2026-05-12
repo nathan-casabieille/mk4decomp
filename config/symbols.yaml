@@ -8367,10 +8367,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e910
-    name: func_0047e910
+    name: InstallSelfCountdown2Stage_0047e910
     size: 220
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e9f0
     name: func_0047e9f0
     size: 906
