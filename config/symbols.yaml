@@ -3695,10 +3695,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00436030
-    name: func_00436030
+    name: InstallSelfThreeStateDispatch_00436030
     size: 240
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436120
     name: func_00436120
     size: 289

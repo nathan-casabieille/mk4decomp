@@ -39156,3 +39156,78 @@ __declspec(naked) void DualHelperCallStoreCjFields_0048ff40(void) {
         ret
     }
 }
+
+extern void func_00436120(void);
+extern void InstallSelfDecBitCheck_004391d0(void);
+extern void MStackPushSet0Jmp_004384b0(void);
+
+/* @addr 0x00436030 (240b game) - 3-state install-self dispatcher.
+ *   state 0 (chain[+0x84]==0): install-self at [eax+8]=0x00436030; chain[+0x84]=1;
+ *     scaledInit-chain push 0x00436030 + 0x01000000; call MStackPushSet0Jmp_004384b0;
+ *     pause=1; ret.
+ *   state 1 (chain[+0x84]==1): g_state_00542080=0x78; install-self; chain[+0x84]=2;
+ *     scaledInit-chain push 0x00436030 + 0x02000000; call InstallSelfDecBitCheck_004391d0;
+ *     pause=1; ret.
+ *   state >=2: tail-call func_00436120; ret.
+ */
+__declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        _emit   74h
+        _emit   76h
+        dec     ecx
+        _emit   74h
+        _emit   08h
+        call    func_00436120
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [g_state_00542080], 0x78
+        mov     dword ptr [eax + 8], 0x00436030
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 0x00436030
+        add     esi, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfDecBitCheck_004391d0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [eax + 8], 0x00436030
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 1
+        mov     edi, 0x00436030
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    MStackPushSet0Jmp_004384b0
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
