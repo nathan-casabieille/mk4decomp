@@ -36791,3 +36791,123 @@ __declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
         jmp     InstallSelfCountdownLong_0047ee70
     }
 }
+
+extern void func_00446c50(void);
+
+/* @addr 0x00446b10 (224b game) - 7-entry-point self-recursive dispatcher with table addresses.
+ *   A: call func_00446c50; if !pause: chain[g_x_00542048*4+0x10]=0; ret.
+ *   B-G (+0x20..+0xc0): call self; eax = const>>2; chain[*4+0x14]=eax. Constants: 0x004e6080, 0x004e6090,
+ *     0x004e60a0, 0x004e60b0, 0x004e60c0, 0x004e60d0.
+ */
+__declspec(naked) void SevenEntrySelfCallTable_00446b10(void) {
+    __asm {
+        call    func_00446c50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   10h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     dword ptr [eax*4 + 0x10], 0
+        ret
+        _emit   90h
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e6080
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e6090
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e60a0
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e60b0
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e60c0
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        call    SevenEntrySelfCallTable_00446b10
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004e60d0
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+    }
+}
+
+/* @addr 0x0048fd60 (224b game) - mstack-push 4 globals, indirect call via [g_scaledInit], mstack-pop 4.
+ *   Push g_cj_00542054, g_cj_00542058, g_x_0054205c, g_baseSel; eax=baseSel[*4+0x38] → g_x_0054205c,
+ *   baseSel[*4+0x3c] → g_baseSel; call [g_scaledInit]; pause-check; mstack-pop in reverse.
+ */
+__declspec(naked) void MStackPush4IndirectCall_0048fd60(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_cj_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_cj_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_x_0054205c], ecx
+        mov     edx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_baseSel_00542060], edx
+        call    dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_baseSel_00542060], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_cj_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

@@ -5092,10 +5092,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446b10
-    name: func_00446b10
+    name: SevenEntrySelfCallTable_00446b10
     size: 224
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446bf0
     name: PushImmCallSetCallAdjustCall_00446bf0
     size: 85
@@ -10343,10 +10344,11 @@ functions:
     status: matched
     file: src/engine/iter_load.c
   - addr: 0x0048fd60
-    name: func_0048fd60
+    name: MStackPush4IndirectCall_0048fd60
     size: 224
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fe40
     name: EsiInstallClampAddCall_0048fe40
     size: 158
