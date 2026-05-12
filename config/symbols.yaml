@@ -11150,10 +11150,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00495480
-    name: func_00495480
+    name: InstallSelfThreeStateSiblingPair_00495480
     size: 271
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00495590
     name: ScaledInit_00495590
     size: 18
