@@ -9227,10 +9227,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x00488dc0
-    name: func_00488dc0
+    name: DualCondMatchSet_00488dc0
     size: 208
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00488e90
     name: CmpEax1OrSetDirty_00488e90
     size: 56
@@ -10096,10 +10097,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x0048eec0
-    name: func_0048eec0
+    name: MStackPush3CmpCall_0048eec0
     size: 208
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ef90
     name: CopyJmp_0048ef90
     size: 15

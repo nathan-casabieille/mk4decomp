@@ -34578,3 +34578,151 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         ret
     }
 }
+
+extern void SwapOrPassSet_0048fbf0(void);
+extern void CmpEax1OrSetDirty_00488e90(void);
+extern void SetJmp_0049cb90(void);
+
+/* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_state_00537f94 != 0:
+ *   call SwapOrPassSet; if !pause: cmp g_x_0054205c vs g_data_0054204c; if eq jmp CmpEax1OrSetDirty.
+ *   else set g_x_0054206c=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
+ *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
+ *   else xor bit-2 and set bit-0. Multiple ret paths.
+ */
+__declspec(naked) void DualCondMatchSet_00488dc0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0052aac4]
+        cmp     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   84h
+        _emit   0b0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_00537f94]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   84h
+        _emit   9eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    SwapOrPassSet_0048fbf0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   98h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_data_0054204c]
+        cmp     eax, ecx
+        _emit   74h
+        _emit   05h
+        jmp     CmpEax1OrSetDirty_00488e90
+        mov     dword ptr [g_x_0054206c], 0x00001000
+        call    SetJmp_0049cb90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ch
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     ecx, 4
+        or      eax, ecx
+        mov     dword ptr [g_state_0054208c], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        test    eax, eax
+        _emit   74h
+        _emit   39h
+        mov     edx, dword ptr [g_state_0054208c]
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   75h
+        _emit   0ah
+        mov     eax, edx
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_data_0054204c], 0x00421f40
+        cmp     eax, 0x00421f40
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void SlotCmp3way_0048efa0(void);
+extern unsigned int g_dualA_0053815c;
+
+/* @addr 0x0048eec0 (208b game) - mstack-push 3, chain[*4+0x38] match with state dual,
+ *   call SlotCmp3way; if !pause: mstack-pop 3. ret.
+ */
+__declspec(naked) void MStackPush3CmpCall_0048eec0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542088]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     eax, dword ptr [edx*4 + 0x38]
+        cmp     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   1fh
+        mov     edx, dword ptr [g_dualA_0053815c]
+        cmp     eax, edx
+        _emit   74h
+        _emit   15h
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        cmp     eax, ecx
+        _emit   74h
+        _emit   06h
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    SlotCmp3way_0048efa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_00542088], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
