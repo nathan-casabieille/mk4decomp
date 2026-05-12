@@ -39351,3 +39351,74 @@ __declspec(naked) void ThresholdSetMatchDispatch_0046dc10(void) {
         ret
     }
 }
+
+extern void func_004089e0(void);
+extern void func_00408d30(void);
+extern void func_004b8fa0(void);
+extern void GuardedSeq_00473ef0(void);
+
+/* @addr 0x0044c430 (241b game) - 4-field copy from scaledInit chain to chain via cj alias.
+ *   Set cj = baseSel[+0x4c]; call func_004089e0; if pause? ret.
+ *   g_x_0054206c=2; call func_00408d30; if pause? ret.
+ *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_x_00542048[k]
+ *     (first iteration also OR's al with 4).
+ *   Then call func_004b8fa0; if !pause: g_x_0054206c=3, g_x_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
+ */
+__declspec(naked) void CjFieldCopyCascade_0044c430(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x4c]
+        mov     dword ptr [g_cj_0054205c], ecx
+        call    func_004089e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 2
+        call    func_00408d30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [edx*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [ecx*4 + 0]
+        or      al, 4
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x30], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [edx*4 + 0x38]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [g_x_0054206c], 3
+        mov     dword ptr [g_x_00542078], 2
+        jmp     GuardedSeq_00473ef0
+        ret
+    }
+}

@@ -19,21 +19,18 @@ extern void func_00429610(void);
 
 /* @addr 0x00428d20 */
 void ScaledLoadJmp_00428d20(void) {
-    unsigned int idx = g_fightGroupHead;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
     func_00429530();
 }
 
 /* @addr 0x00429210 */
 void ScaledLoadJmp_00429210(void) {
-    unsigned int idx = g_fightGroupHead;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
     func_004295a0();
 }
 
 /* @addr 0x00429390 */
 void ScaledLoadJmp_00429390(void) {
-    unsigned int idx = g_fightGroupHead;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    g_walkCallback = (void (*)(void))*(unsigned int *)(g_fightGroupHead * 4 + 0x28);
     func_00429610();
 }

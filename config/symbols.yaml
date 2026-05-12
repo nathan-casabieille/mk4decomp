@@ -5220,10 +5220,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044c430
-    name: func_0044c430
+    name: CjFieldCopyCascade_0044c430
     size: 241
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044c530
     name: func_0044c530
     size: 1428
