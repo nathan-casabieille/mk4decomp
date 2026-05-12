@@ -7458,10 +7458,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00473c90
-    name: func_00473c90
+    name: TriStageDispatchTailJmp_00473c90
     size: 192
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473d50
     name: GuardedDirty4ScaledJmp_00473d50
     size: 75

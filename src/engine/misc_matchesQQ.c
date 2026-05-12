@@ -26077,6 +26077,84 @@ __declspec(naked) void ChainAccumMul10Pair_00490b70(void) {
     }
 }
 
+extern void SetJmp_00405420(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void func_00473da0(void);
+
+/* @addr 0x00473c90 (192b game) - 3-stage gated call+tail-jmp dispatcher.
+ *   call SetJmp; pause? -> ret.
+ *   g_x_0054206c = (208c & 4) ? 0x15e : 0xa; call Cmp1OrDispatch; pause? -> ret;
+ *   if (208c & 1 == 0): ret; else:
+ *     g_x_0054206c = 0x64; call Cmp1OrDispatch; pause? -> ret;
+ *     if (208c & 1): goto stage3 (packed_ptr 0x4ec960 + tail-jmp);
+ *     else: g_x_0054206c = 0x200; call Cmp1OrDispatch; pause? -> ret;
+ *       if (208c & 1 == 0): packed_ptr=0x4ec9c0 + tail-jmp;
+ *       else: packed_ptr=0x4ec990 + tail-jmp.
+ */
+__declspec(naked) void TriStageDispatchTailJmp_00473c90(void) {
+    __asm {
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 4
+        neg     al
+        sbb     eax, eax
+        and     eax, 0x00000154
+        add     eax, 0x0a
+        mov     dword ptr [g_x_0054206c], eax
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   83h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   7ah
+        mov     dword ptr [g_x_0054206c], 0x64
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   62h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   47h
+        mov     dword ptr [g_x_0054206c], 0x200
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   13h
+        mov     ecx, 0x004ec9c0
+        shr     ecx, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        jmp     func_00473da0
+        mov     edx, 0x004ec990
+        shr     edx, 2
+        mov     dword ptr [g_x_0054206c], edx
+        jmp     func_00473da0
+        mov     eax, 0x004ec960
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        jmp     func_00473da0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
