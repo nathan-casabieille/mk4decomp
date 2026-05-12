@@ -3456,10 +3456,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00434b60
-    name: func_00434b60
+    name: DispatchWcSwitch_00434b60
     size: 147
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434c00
     name: Thunk_00434c00
     size: 5
@@ -3573,20 +3574,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00435b00
-    name: func_00435b00
+    name: InstallSelfStatePush_00435b00
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435ba0
     name: func_00435ba0
     size: 411
     group: game
     status: stub
   - addr: 0x00435d40
-    name: func_00435d40
+    name: InstallSelfStatePush_00435d40
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435de0
     name: Thunk_00435de0
     size: 5
@@ -6243,10 +6246,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00460b60
-    name: func_00460b60
+    name: StateSnapshotDispatch_00460b60
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460c00
     name: func_00460c00
     size: 83
@@ -8185,10 +8189,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047e800
-    name: func_0047e800
+    name: InstallSelfDualBranch_0047e800
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e8a0
     name: InstallSelfHelper2_0047e8a0
     size: 104
@@ -10070,10 +10075,11 @@ functions:
     status: matched
     file: src/engine/cond_player_lookup.c
   - addr: 0x0048f980
-    name: func_0048f980
+    name: NineFieldCopy_0048f980
     size: 148
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fa20
     name: StoreCallPauseCallPauseJmp_0048fa20
     size: 44
@@ -12313,10 +12319,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004aa8a0
-    name: func_004aa8a0
+    name: AudioInstallSelfStatePush_004aa8a0
     size: 146
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa940
     name: PushPopScaledInit343c_004aa940
     size: 76
@@ -13446,10 +13453,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesCC.c
   - addr: 0x004b4450
-    name: func_004b4450
+    name: DecodeTableAllocaCall_004b4450
     size: 146
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b44f0
     name: AbsClampIATCall_004b44f0
     size: 52
@@ -15327,10 +15335,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004cc520
-    name: func_004cc520
+    name: DecodeModeFlags_004cc520
     size: 150
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc5c0
     name: EncodeModeFlags_004cc5c0
     size: 139
