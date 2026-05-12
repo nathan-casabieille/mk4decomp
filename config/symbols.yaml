@@ -8949,10 +8949,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484c90
-    name: func_00484c90
+    name: DualBlockInstallSelfWithSibling_00484c90
     size: 248
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484d90
     name: Wrapper_00484d90
     size: 14
