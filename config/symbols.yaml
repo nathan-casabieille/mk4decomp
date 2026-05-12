@@ -10313,10 +10313,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x0048fa50
-    name: func_0048fa50
+    name: Cascade3ChainInit_0048fa50
     size: 236
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048fb40
     name: GatedScaledSubSat_0048fb40
     size: 127

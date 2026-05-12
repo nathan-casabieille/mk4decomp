@@ -37679,3 +37679,92 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         ret
     }
 }
+
+extern void MStackPushSet0001_00490260(void);
+extern void PushSetCallPopCj_004907b0(void);
+extern void NineFieldCopy_0048f980(void);
+extern void IterLoad_0048fd30(void);
+extern unsigned int g_data_0053a1a8;
+extern unsigned int g_data_0053a1a4;
+
+/* @addr 0x0048fa50 (236b game) - 3-call cascade + chain init + 3-call cascade.
+ *   call MStackPushSet0001; pause-check; call ScaledZeroFour; pause-check;
+ *   call PushSetCallPopCj_004907b0; pause-check; load scaledInit=baseSel[*4+0x38];
+ *   compute chain[*4+0x34] |= 1 from cj[*4+0x34]; call NineFieldCopy_0048f980; pause-check;
+ *   push 0x004f12a4; call IterLoad_0048fd30; pause-check; call ScaledChainDouble_004911f0; pause-check;
+ *   copy g_x_00542080→0x0053a3dc, g_x_0054207c→0x0053a41c; chain[+0x54]→g_x_0054206c and 0x0053a1a8;
+ *   chain[+0x5c]→g_x_0054206c and 0x0053a1a4. ret.
+ */
+__declspec(naked) void Cascade3ChainInit_0048fa50(void) {
+    __asm {
+        call    MStackPushSet0001_00490260
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    PushSetCallPopCj_004907b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     eax, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        and     ecx, 1
+        and     al, 0xfe
+        or      eax, ecx
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        call    NineFieldCopy_0048f980
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        push    0x004f12a4
+        call    IterLoad_0048fd30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   4dh
+        call    ScaledChainDouble_004911f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        mov     eax, dword ptr [g_x_00542080]
+        mov     edx, dword ptr [g_x_0054207c]
+        mov     dword ptr [g_data_0053a3dc], eax
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_data_0053a41c], edx
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0053a1a8], ecx
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0053a1a4], eax
+        ret
+    }
+}
