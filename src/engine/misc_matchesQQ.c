@@ -35642,3 +35642,142 @@ __declspec(naked) void MStackPush2TableNot_00426230(void) {
         ret
     }
 }
+
+/* @addr 0x00429050 (216b game) - install-self with countdown. */
+__declspec(naked) void InstallSelfDualCountdown_00429050(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   56h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   08h
+        call    Thunk_004296e0
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   75h
+        _emit   08h
+        call    Thunk_004296e0
+        pop     esi
+        pop     ebx
+        ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x24]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    ScaledLoadJmp_24_00429790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   67h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   08h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 0x08], 0x00429050
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00429050
+        mov     dword ptr [eax*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    Install3WayChainStateAdvance_00429130
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+extern void func_00407330(void);
+extern void PushSetCallTailJmp_00493e40(void);
+
+/* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
+__declspec(naked) void StateMachineInit_00493000(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542074], eax
+        call    func_00407330
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bbh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0aeh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    MStackPushTableWalk_00493a20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_x_00542084]
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_state_00542088]
+        mov     dword ptr [edx*4 + 0x5c], eax
+        call    PushSetCallTailJmp_00493e40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   47h
+        mov     eax, dword ptr [g_x_00535e6c]
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        call    MStackCall_004062f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_x_0054205c]
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}

@@ -2533,10 +2533,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00429050
-    name: func_00429050
+    name: InstallSelfDualCountdown_00429050
     size: 216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429130
     name: Install3WayChainStateAdvance_00429130
     size: 211
@@ -10885,10 +10886,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00493000
-    name: func_00493000
+    name: StateMachineInit_00493000
     size: 216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004930e0
     name: ScaledLoadCmp0fJmp_004930e0
     size: 28
