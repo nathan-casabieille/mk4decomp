@@ -35853,3 +35853,156 @@ __declspec(naked) void DualGuardStateMachine_0049ea30(void) {
         ret
     }
 }
+
+extern void Wrapper_0049eb10(void);
+extern unsigned int g_data_0053a354;
+
+/* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine_0049ea30, uses 0x267 tag and
+ *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_0049eb10.
+ */
+__declspec(naked) void DualGuardStateMachine_0049eb20(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542004]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     Wrapper_0049eb10
+        mov     eax, dword ptr [g_data_0053a354]
+        push    0x00000267
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   09h
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        ret
+        call    SaveCallRestoreOrXor_00404a00
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        test    al, 4
+        _emit   0fh
+        _emit   84h
+        _emit   93h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00541fc0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   5ah
+        call    MStackCall_004062a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4ch
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x30], 0x00000267
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_x_0054206c], 4
+        call    func_0049ed00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x0000028f
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        ret
+    }
+}
+
+extern void func_0048fa50(void);
+extern void func_0042cac0(void);
+extern void InstallSelfDualStateDispatch_0042c9f0(void);
+extern void func_0042c8c0(void);
+
+/* @addr 0x0042c7e0 (218b game) - triple-entry chain.
+ *   A: call func_0048fa50; if !pause: push 0x004e3828, call ArgSarStoreJmp; ret.
+ *   B (+0x20): chain[*4+0x68]=0; g_x_0054206c=0; push 0x004e34d8; call ArgSarStoreJmp; ret.
+ *   C (+0x50): call func_0042cac0; if !pause: if bit-0 set call InstallSelfDualStateDispatch_0042c9f0; ret.
+ *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_x_0054206c/70/74;
+ *     store back to chain+0x5c/+0x60/+0x64; call func_0042c8c0; pop+ret.
+ */
+__declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
+    __asm {
+        call    func_0048fa50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004e3828
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004e34d8
+        mov     dword ptr [ecx*4 + 0x68], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    esi
+        call    func_0042cac0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   07h
+        call    InstallSelfDualStateDispatch_0042c9f0
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_x_00542070], esi
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [ecx*4 + 0x5c], edx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [ecx*4 + 0x60], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [eax*4 + 0x64], ecx
+        call    func_0042c8c0
+        pop     esi
+        ret
+    }
+}

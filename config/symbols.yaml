@@ -2886,10 +2886,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0042c7e0
-    name: func_0042c7e0
+    name: TripleEntryStateCascade_0042c7e0
     size: 218
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c8c0
     name: func_0042c8c0
     size: 247
@@ -11674,10 +11675,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0049eb20
-    name: func_0049eb20
+    name: DualGuardStateMachine_0049eb20
     size: 216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ec00
     name: func_0049ec00
     size: 252
