@@ -12784,10 +12784,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ad5f0
-    name: func_004ad5f0
+    name: PaletteRampInit_004ad5f0
     size: 169
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ad6a0
     name: Renderer2_Init_D3D
     size: 286

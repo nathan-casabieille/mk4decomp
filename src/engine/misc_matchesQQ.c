@@ -27178,6 +27178,91 @@ __declspec(naked) void DualGatedStateYield_0048fc80(void) {
     }
 }
 
+extern unsigned int g_x_0058c7e0;
+extern unsigned int g_x_0058c7b8;
+extern unsigned int g_x_0058c7dc;
+extern unsigned char g_palette_00544158;
+
+/* @addr 0x004ad5f0 (169b engine.install) - gamma/palette ramp computation (256 entries).
+ *   if ([0x58c7e0] == 0): ret (no init).
+ *   ebx = arg & 0x7f (clamped abs to 100).
+ *   Zero-fill 10 dwords on stack ([esp+0xc..]); [esp+0xc] = 0x28 (cb); [esp+0x28] = ebx*5.
+ *   if ([0x58c7b8] != 0): COM-style vtable call ([0x58c7b8])->vtable[0x10](self, &caps).
+ *     Store result to [0x58c7dc].
+ *   ebx clamp at 60. Loop 256 entries (ecx=0..0xff): byte = ((ebx*esi*0x51eb851f) sar 36) signed-fixup,
+ *     clamp to 0xff, store at [ecx + 0x544158]. esi += ebx; ecx++.
+ */
+__declspec(naked) void PaletteRampInit_004ad5f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0058c7e0]
+        sub     esp, 0x28
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    edi
+        push    esi
+        push    ebx
+        mov     ebx, [esp + 0x38]
+        mov     eax, ebx
+        cdq
+        xor     eax, edx
+        sub     eax, edx
+        cmp     eax, 0x64
+        _emit   7eh
+        _emit   05h
+        mov     ebx, 0x64
+        mov     ecx, 0x0a
+        xor     eax, eax
+        lea     edi, [esp + 0x0c]
+        rep stosd
+        lea     eax, [ebx + ebx*4]
+        mov     dword ptr [esp + 0x0c], 0x28
+        mov     [esp + 0x28], eax
+        mov     eax, dword ptr [g_x_0058c7b8]
+        test    eax, eax
+        mov     dword ptr [esp + 0x10], 0x20
+        _emit   74h
+        _emit   10h
+        mov     ecx, [eax]
+        lea     edx, [esp + 0x0c]
+        push    edx
+        push    eax
+        call    dword ptr [ecx + 0x10]
+        mov     dword ptr [g_x_0058c7dc], eax
+        cmp     ebx, 0x3c
+        _emit   7eh
+        _emit   05h
+        mov     ebx, 0x3c
+        xor     ecx, ecx
+        xor     esi, esi
+        mov     eax, 0x51eb851f
+        imul    esi
+        sar     edx, 4
+        mov     eax, edx
+        shr     eax, 0x1f
+        add     edx, eax
+        cmp     edx, 0xff
+        _emit   7ch
+        _emit   05h
+        mov     edx, 0xff
+        mov     byte ptr [ecx + g_palette_00544158], dl
+        inc     ecx
+        add     esi, ebx
+        cmp     ecx, 0x100
+        _emit   7ch
+        _emit   0d1h
+        pop     ebx
+        pop     esi
+        pop     edi
+        add     esp, 0x28
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
