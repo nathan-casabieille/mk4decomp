@@ -6080,10 +6080,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0045db70
-    name: func_0045db70
+    name: MStackPush3CallChain_0045db70
     size: 228
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045dc60
     name: BitSavePushCallMergePop_0045dc60
     size: 108
