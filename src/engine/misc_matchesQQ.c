@@ -15138,6 +15138,371 @@ extern unsigned int g_arr_4bddf0_src;
 extern unsigned int g_arr_4bddf0_a;
 extern unsigned int g_arr_4bddf0_b;
 
+extern unsigned int g_arr_41aaf0_mstack;
+extern void func_0041ab90(void);
+extern void func_00472a90(void);
+
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
+extern unsigned int g_chain_disp_64_440d20;
+extern void func_00440dc0(void);
+
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledTestCallPauseJmpFar_00487150(void);
+extern void ScaledTestCallPauseJmp_00487180(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void func_00486ff0(void);
+extern void Wrapper_00487140(void);
+extern void func_00486f20(void);
+extern unsigned int g_chain_disp_30_486e80;
+
+/* @addr 0x00486e80 (150b game) - 5-stage gated chain w/ count-bracket + clamp:
+ *   walkCallback=0; call F1; pause? ret.
+ *   if (g_x_00542080 >= 0x10): call F2; pause? ret. else: call F3; pause? ret.
+ *   call F4; pause? ret. if (g_state_0054208c & 1): jmp func_00486ff0.
+ *   eax = chain[sel].slot30; walkCallback=eax; if eax != 0: jmp Wrapper_00487140.
+ *   else: if (g_x_0054207c > 3): g_x_0054207c = 3. jmp func_00486f20.
+ */
+__declspec(naked) void GatedChainClamp_00486e80(void) {
+    __asm {
+        mov     dword ptr [g_walkCallback], 0
+        call    ScaledIndexConditionalAdd_0048e400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   7dh
+        cmp     dword ptr [g_state_00542080], 0x10
+        _emit   7ch
+        _emit   17h
+        call    ScaledTestCallPauseJmpFar_00487150
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   66h
+        cmp     dword ptr [g_state_00542080], 0x10
+        _emit   7dh
+        _emit   0eh
+        call    ScaledTestCallPauseJmp_00487180
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00486ff0
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, [eax*4 + g_chain_disp_30_486e80]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   05h
+        jmp     Wrapper_00487140
+        mov     ecx, dword ptr [g_x_0054207c]
+        mov     eax, 3
+        cmp     ecx, eax
+        _emit   7eh
+        _emit   05h
+        mov     dword ptr [g_x_0054207c], eax
+        jmp     func_00486f20
+        ret
+    }
+}
+extern void Wrapper_0048a280(void);
+extern void func_00457bb0(void);
+extern void func_0048a050(void);
+extern void func_00426b60(void);
+extern unsigned int g_chain_arr_485cc0;
+
+/* @addr 0x00485cc0 (151b game) - sequential 5-call setup chain:
+ *   GateDispatch6c -> pause? ret;
+ *   Wrapper_0048a280 -> pause? ret;
+ *   g_x_0054207c = 0; func_00457bb0 -> pause? ret;
+ *   g_walkCallback = 6; func_0048a050 -> pause? ret;
+ *   g_x_00542078 = chain[cj].slot54; g_x_0054207c = chain[cj].slot5c;
+ *   func_00426b60 -> pause? ret.
+ *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
+ */
+__declspec(naked) void FiveStageSetupChain_00485cc0(void) {
+    __asm {
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    Wrapper_0048a280
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   76h
+        mov     dword ptr [g_x_0054207c], 0
+        call    func_00457bb0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5eh
+        mov     dword ptr [g_walkCallback], 6
+        call    func_0048a050
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   46h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, [eax*4 + g_chain_arr_485cc0 + 0x54]
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     edx, [eax*4 + g_chain_arr_485cc0 + 0x5c]
+        mov     dword ptr [g_x_0054207c], edx
+        call    func_00426b60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, [eax*4 + g_chain_arr_485cc0 + 0x48]
+        mov     dword ptr [g_walkCallback], ecx
+        mov     [eax*4 + g_chain_arr_485cc0 + 0x58], ecx
+        ret
+    }
+}
+
+/* @addr 0x00440d20 (152b game) - install-self with snapshot:
+ *   chain[sel].slot84 -> eax; clear. If !=0: g_x_00542054 = chain[sel].slot64;
+ *     tail to StackPopDispatch.
+ *   Else: mstack-push g_x_0054207c; call func_00440dc0; pause? ret;
+ *     pop into g_x_0054207c; install self; set state.
+ */
+__declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   1ah
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, [ecx*4 + g_chain_disp_64_440d20]
+        mov     dword ptr [g_x_00542054], edx
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    func_00440dc0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 1
+        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [esi + 8], offset InstallSelfSnapshot64_00440d20
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00496630 (152b game) - install-self twin of 0x41aaf0 with
+ *   different early-out / second call targets.
+ */
+__declspec(naked) void InstallSelfMStackPush_00496630(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        call    PushPopWalkSet1006_00470ee0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_00496630
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelfMStackPush_00496630
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_arr_41aaf0_mstack], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004968a0 (152b game) - install-self twin of 0x496630. */
+__declspec(naked) void InstallSelfMStackPush_004968a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        call    PushPopWalkSet1006_00470ee0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_004968a0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelfMStackPush_004968a0
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_arr_41aaf0_mstack], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_chain_disp_64_40a690;
+extern void func_004244d0(void);
+
+/* @addr 0x0040a690 (152b boot) - mstack-push scaledInit, snapshot g_x_0052ab10
+ *   into scaledInit, load chain[scaledInit].slot64 into g_x_00542074;
+ *   neg g_walkCallback -> g_x_00542078; call func_004244d0; pause? ret;
+ *   Mul10Tail(neg, walkCallback) -> g_walkCallback;
+ *   Mul10Tail(walkCallback, g_data_00542070) -> g_data_00542070; mstack-pop scaledInit.
+ */
+__declspec(naked) void MStackPushNegMul10_0040a690(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_x_0052ab10]
+        neg     edx
+        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_chain_disp_64_40a690]
+        mov     dword ptr [g_x_00542074], eax
+        call    func_004244d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4dh
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_acc_00542078]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_acc_00542078]
+        add     esp, 8
+        mov     dword ptr [g_walkCallback], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     esp, 8
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x0041aaf0 (152b boot) - install-self with mstack push:
+ *   chain[sel].slot84 -> eax; clear. If !=0: tail to StackPopDispatchTagged.
+ *   Else: call func_0041ab90; pause? ret.
+ *   install self at chain[sel]+8; chain[base].slot84 = 1;
+ *   mstack-push 0x141aaf0 (self + 0x01000000) via custom arr;
+ *   ++chain[sel].slot4; clear chain[base].slot84;
+ *   call func_00472a90; g_framePauseFlag = 1; ret.
+ */
+__declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    func_0041ab90
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_0041aaf0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelfMStackPush_0041aaf0
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_arr_41aaf0_mstack], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], 0
+        call    func_00472a90
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
 /* @addr 0x004bddf0 (151b engine.geo) - vec3 transform + accumulate:
  *   src = &arr_src[g_x_00542050]; load v3 from src to g_walkCallback/
  *   g_x_00542070/g_x_00542048.

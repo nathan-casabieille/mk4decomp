@@ -850,10 +850,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040a690
-    name: func_0040a690
+    name: MStackPushNegMul10_0040a690
     size: 152
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040a730
     name: func_0040a730
     size: 166
@@ -1418,10 +1419,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0041aaf0
-    name: func_0041aaf0
+    name: InstallSelfMStackPush_0041aaf0
     size: 152
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041ab90
     name: func_0041ab90
     size: 464
@@ -4635,10 +4637,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00440d20
-    name: func_00440d20
+    name: InstallSelfSnapshot64_00440d20
     size: 152
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00440dc0
     name: func_00440dc0
     size: 1025
@@ -8766,10 +8769,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00485cc0
-    name: func_00485cc0
+    name: FiveStageSetupChain_00485cc0
     size: 151
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00485d60
     name: SetJmp_00485d60
     size: 15
@@ -8856,10 +8860,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486e80
-    name: func_00486e80
+    name: GatedChainClamp_00486e80
     size: 150
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486f20
     name: func_00486f20
     size: 149
@@ -10909,20 +10914,22 @@ functions:
     group: game
     status: stub
   - addr: 0x00496630
-    name: func_00496630
+    name: InstallSelfMStackPush_00496630
     size: 152
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004966d0
     name: func_004966d0
     size: 458
     group: game
     status: stub
   - addr: 0x004968a0
-    name: func_004968a0
+    name: InstallSelfMStackPush_004968a0
     size: 152
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00496940
     name: DirtyGuardLitOrJmp_00496940
     size: 28
