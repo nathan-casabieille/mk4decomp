@@ -38069,3 +38069,107 @@ loop_004251fd:
         ret
     }
 }
+
+extern void ScaledMove48to58_00490720(void);
+extern void func_00461090(void);
+extern void func_0046c5d0(void);
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void func_0046f250(void);
+extern void StateDispatchYield_00471190(void);
+extern void QuadEntryChainPush_0046dd00(void);
+extern void MStackBitFlagDispatch_00494750(void);
+extern void PushFourCallPopBitJmp_00461020(void);
+
+/* @addr 0x0046c6e0 (212b game) - four adjacent state-handler blocks.
+ *   B1 (0..19, +12 NOPs): call ScaledMove48to58; if !pause jmp func_00461090; ret.
+ *   B2 (32..71, +8 NOPs): call ScaledMove48to58; if !pause call func_0046c5d0; if !pause
+ *     call FlagCascadeStateSet; if !pause test bit0 of g_state_0054208c (clear=>jmp
+ *     func_0046f250; set=>store 5 at g_x_0054206c and tail-jmp StateDispatchYield); ret.
+ *   B3 (112..187, +4 NOPs): scaled chain via baseSel[+0x30]; if eax==0 jmp
+ *     QuadEntryChainPush; else call MStackBitFlagDispatch; if !pause: chain[+0xc][+4]
+ *     extracted and tail-call eax; ret.
+ *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
+ */
+__declspec(naked) void QuadStateHandler_0046c6e0(void) {
+    __asm {
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00461090
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        call    func_0046c5d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        call    FlagCascadeStateSet_0048ec30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046f250
+        mov     dword ptr [g_x_0054206c], 5
+        jmp     StateDispatchYield_00471190
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_x_0054207c], eax
+        _emit   75h
+        _emit   05h
+        jmp     QuadEntryChainPush_0046dd00
+        call    MStackBitFlagDispatch_00494750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        mov     eax, dword ptr [g_x_0054207c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x0c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x04]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     eax
+        ret
+        nop
+        nop
+        nop
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     PushFourCallPopBitJmp_00461020
+        ret
+    }
+}

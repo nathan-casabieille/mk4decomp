@@ -19,31 +19,27 @@
 extern unsigned int g_baseSel_00542060;
 
 /* @addr 0x0045c020 */
-__declspec(naked) void ScaledIterStep_0045c020(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     edx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        ret
-    }
+void ScaledIterStep_0045c020(void) {
+    unsigned int idx, p, v;
+    idx = g_baseSel_00542060;
+    p = *(unsigned int *)(idx * 4 + 0x48);
+    g_eventQueueTotal = p;
+    v = *(unsigned int *)(p * 4);
+    p++;
+    g_walkCallback = (void (*)(void))v;
+    g_eventQueueTotal = p;
+    *(unsigned int *)(idx * 4 + 0x48) = p;
 }
 
 /* @addr 0x0045c050 */
-__declspec(naked) void ScaledIterStep_0045c050(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     edx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        ret
-    }
+void ScaledIterStep_0045c050(void) {
+    unsigned int idx, p, v;
+    idx = g_baseSel_00542060;
+    p = *(unsigned int *)(idx * 4 + 0x48);
+    g_eventQueueTotal = p;
+    v = *(unsigned int *)(p * 4);
+    p++;
+    g_walkCallback = (void (*)(void))v;
+    g_eventQueueTotal = p;
+    *(unsigned int *)(idx * 4 + 0x48) = p;
 }
