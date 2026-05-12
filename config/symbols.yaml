@@ -2999,10 +2999,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042e800
-    name: func_0042e800
+    name: ScaledChainInit2Phase_0042e800
     size: 206
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e8d0
     name: func_0042e8d0
     size: 538
@@ -10008,10 +10009,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0048e820
-    name: func_0048e820
+    name: DualEntryBitFlagDispatch_0048e820
     size: 205
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e8f0
     name: func_0048e8f0
     size: 329
@@ -10679,10 +10681,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00491520
-    name: func_00491520
+    name: Cascade5StageInit_00491520
     size: 205
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004915f0
     name: StoreGuardedBitInstallJmp_004915f0
     size: 110

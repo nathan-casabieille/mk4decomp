@@ -33958,3 +33958,212 @@ __declspec(naked) void Quad4SequencerInstall_00483900(void) {
         ret
     }
 }
+
+extern void GuardedWalkSwitchDirty_0048ea40(void);
+extern void func_0048e8f0(void);
+
+/* @addr 0x0048e820 (205b game) - dual-entry bit-flag dispatcher.
+ *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_state_00542094 = & 4; toggle bit-0 based on result. ret.
+ *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty_0048ea40;
+ *     call func_0048e8f0; pause-check; if bit-0 clear ret. call PushPopState70Mask_00490650; pause-check;
+ *     load g_state_00538158 vs g_x_0054205c; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_x_0054206c;
+ *     toggle bit-0; ret.
+ */
+__declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_x_00542070], eax
+        and     eax, 4
+        mov     dword ptr [g_state_00542094], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        _emit   74h
+        _emit   08h
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DirtyToggleByBaseSel_0048f2e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7eh
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     GuardedWalkSwitchDirty_0048ea40
+        call    func_0048e8f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   62h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   59h
+        call    PushPopState70Mask_00490650
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4bh
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, 0x00000200
+        cmp     edx, ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, 2
+        mov     dword ptr [g_x_00542070], eax
+        and     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_state_00542094], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        _emit   74h
+        _emit   08h
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void GDispatch1_00488da0(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void func_004916f0(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
+extern void StoreGuardedBitInstallJmp_004915f0(void);
+
+/* @addr 0x00491520 (205b game) - 5-stage cascade init.
+ *   call ScaledMove48to58; if !pause: scaledInit=(arg0>>2); call GDispatch1; if !pause: call DirtyToggleByGate;
+ *   if !pause: bit-2 check; if not set call GuardedDualConst2AndToggle; if !pause: bit-0 check;
+ *   if set jmp func_004916f0; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_x_0054206c=eax;
+ *   call MStackFrameCdeclDouble_004903f0; if !pause: g_x_00542048 = [g_cj_00542054*4 + 4],
+ *   store to [g_x_0054205c*4 + 0x24], clear g_x_0054206c; jmp StoreGuardedBitInstallJmp_004915f0. ret.
+ */
+__declspec(naked) void Cascade5StageInit_00491520(void) {
+    __asm {
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [esp + 4]
+        sar     eax, 2
+        mov     dword ptr [g_cj_00542054], eax
+        call    GDispatch1_00488da0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   1ch
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_004916f0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x0000200e
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     edx, dword ptr [g_cj_00542054]
+        mov     eax, dword ptr [edx*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2eh
+        mov     ecx, dword ptr [g_cj_00542054]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     dword ptr [g_x_0054206c], 0
+        jmp     StoreGuardedBitInstallJmp_004915f0
+        ret
+    }
+}
+
+extern void MStackCall_00406340(void);
+
+/* @addr 0x0042e800 (206b game) - scaledInit chain init with 2 phases.
+ *   Phase 1: scaledInit[+0x54] = 0; +0x58 = 0; +0x5c += 0x41999; +0x68 = 0x62978;
+ *   +0x74 = 0xffffaaab; +0x30 = arg1; g_x_0054206c = arg1.
+ *   call MStackCall_00406340; if !pause: phase 2: g_data_0054204c = g_x_00535e6c;
+ *   second chain at g_data_0054204c[+0x54/0x58/0x5c]=0/0xfffc0000/0;
+ *   g_scaledInit[+0x3c] = g_data_0054204c. pop+ret.
+ */
+__declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        xor     esi, esi
+        mov     dword ptr [eax*4 + 0x54], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [ecx*4 + 0x58], esi
+        mov     edx, dword ptr [g_cj_00542054]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x5c]
+        add     eax, 0x00041999
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [edx*4 + 0x68], 0x00062978
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [eax*4 + 0x74], 0xffffaaab
+        mov     eax, dword ptr [esp + 8]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    MStackCall_00406340
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   47h
+        mov     eax, dword ptr [g_x_00535e6c]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [eax*4 + 0x54], esi
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [edx*4 + 0x58], 0xfffc0000
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [eax*4 + 0x5c], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [ecx*4 + 0x3c], edx
+        pop     esi
+        ret
+    }
+}
