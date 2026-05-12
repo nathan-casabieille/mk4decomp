@@ -25359,6 +25359,74 @@ __declspec(naked) void ChainSetupBitToggle_00491290(void) {
     }
 }
 
+extern void func_004879e0(void);
+
+/* @addr 0x00487920 (187b game) - install-self with mstack push, indirect call, chain compare.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag == 0): install-path.
+ *   mstack-push g_x_0054207c; if (g_x_00542054 != 0): call eax = g_x_00542054.
+ *   pause? -> end. eax = mstack-pop; g_x_0054207c = eax; counter--.
+ *   if (eax != 0): chain[g_baseSel+0x3c] -> g_scaledInit; ecx = chain[+0x74];
+ *     g_x_0054206c = ecx; if (ecx == eax): goto install-path; else: call func_004879e0; pop esi; ret.
+ *   if (eax == 0): call func_004879e0; pop esi; ret.
+ *   install-path: install self with [esi+0x84]=1, g_x_0054204c=1, pause=1.
+ */
+__declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   7bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_x_00542054]
+        test    eax, eax
+        _emit   74h
+        _emit   02h
+        call    eax
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   6bh
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, [ecx*4 + g_data_004d57ac_arr]
+        dec     ecx
+        test    eax, eax
+        mov     dword ptr [g_x_0054207c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        _emit   75h
+        _emit   07h
+        call    func_004879e0
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, [edx*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     ecx, [ecx*4 + 0x74]
+        cmp     ecx, eax
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   74h
+        _emit   07h
+        call    func_004879e0
+        pop     esi
+        ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00487920
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
