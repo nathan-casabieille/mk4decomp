@@ -5963,10 +5963,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0045d9b0
-    name: func_0045d9b0
+    name: ChainShiftRight8_0045d9b0
     size: 194
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045da80
     name: TripleInstallJmp_0045da80
     size: 39
@@ -8372,10 +8373,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004806c0
-    name: func_004806c0
+    name: InstallSelfCascadingCalls_004806c0
     size: 195
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480790
     name: func_00480790
     size: 168

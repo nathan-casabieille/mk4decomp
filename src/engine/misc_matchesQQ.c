@@ -23135,6 +23135,123 @@ __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
     }
 }
 
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void ScaledZeroFour_00490740(void);
+extern void IterLoad_00491050(void);
+
+/* @addr 0x004806c0 (195b game) - install-self with cascading pause-gated calls.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag != 0): g_x_0054206c = 8; call ScaledIndexConditionalAdd; pause? ret;
+ *     call FiveCallGuardSetTail; ret.
+ *   else: chain[base+0x74] = 0x1015; g_x_0054206c = 7; call ScaledLitLoadCall; pause? ret;
+ *     call MStackPushSet0008; pause? ret;
+ *     call ScaledZeroFour; pause? ret;
+ *     push 0x00542bac; call IterLoad; add esp,4; pause? ret;
+ *     install self: [esi+8] = 0x004806c0; [esi+0x84] = 1; g_x_0054204c = 0x3c; pause = 1.
+ */
+__declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   23h
+        mov     dword ptr [g_x_0054206c], 8
+        call    ScaledIndexConditionalAdd_0048e400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   83h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [ecx*4 + 0x74], 0x00001015
+        mov     dword ptr [g_x_0054206c], 7
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   53h
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        push    0x00542bac
+        call    IterLoad_00491050
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x004806c0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0x3c
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0045d9b0 (194b game) - shift-right chain entries by one dword (8 slots).
+ *   For ofs in [0x1c, 0x18, 0x14, 0x10, 0xc, 8, 4]:
+ *     ecx = chain[g_x_00542050 + (ofs - 4)]; g_x_00542070 = ecx; chain[+ofs] = ecx.
+ *   chain[g_x_00542050 + 0] = g_x_00542074.
+ */
+__declspec(naked) void ChainShiftRight8_0045d9b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x18]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x1c], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x14]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x18], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x10]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x14], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x0c]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x10], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x08]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x0c], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + 0x04]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x08], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [eax*4 + 0x04], ecx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
