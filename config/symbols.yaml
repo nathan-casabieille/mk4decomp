@@ -6612,10 +6612,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00463e20
-    name: func_00463e20
+    name: PackedTableWalkChainStore_00463e20
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463ed0
     name: func_00463ed0
     size: 209

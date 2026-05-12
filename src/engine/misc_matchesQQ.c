@@ -26850,6 +26850,62 @@ __declspec(naked) void InstallSelfCounter_00404920(void) {
     }
 }
 
+extern void SaveCallRestore_004049d0(void);
+extern unsigned int g_x_00541fb0;
+
+/* @addr 0x00463e20 (166b game) - push 0x26f arg call + 3-entry table walk + Push70CallScaleArith + chain[+0x5c].
+ *   push 0x26f; call SaveCallRestore; add esp,4.
+ *   eax = [0x541fb0]; ecx = eax*3; g_x_0054206c = ecx.
+ *   g_scaledInit = packed_ptr(0x4ea670) + ecx.
+ *   Read 3 fields: chain[scaledInit] -> g_x_00542048;
+ *                  chain[scaledInit+1] -> g_x_00542078;
+ *                  chain[scaledInit+2] -> g_x_0054207c. Incrementing scaledInit each time.
+ *   g_x_0054206c = 0x26f; g_x_00542070 = 4; call Push70CallScaleArith;
+ *   pause? -> end; (208c&4)? -> end.
+ *   chain[g_scaledInit + 0x5c] = 0x14000; g_x_0054206c = 0x14000.
+ */
+__declspec(naked) void PackedTableWalkChainStore_00463e20(void) {
+    __asm {
+        push    0x26f
+        call    SaveCallRestore_004049d0
+        mov     eax, dword ptr [g_x_00541fb0]
+        add     esp, 4
+        lea     ecx, [eax + eax*2]
+        mov     eax, 0x004ea670
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542078], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_0054206c], 0x26f
+        mov     dword ptr [g_x_00542070], 4
+        call    Push70CallScaleArith_00457ad0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   17h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x00014000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [edx*4 + 0x5c], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
