@@ -15184,6 +15184,127 @@ extern void func_004537a0(void);
 extern void func_00453620(void);
 extern void GDispatch4_004089c0(void);
 
+extern unsigned char g_data_004ebee0;
+extern unsigned int g_arr_491350;
+extern unsigned int g_x_00538038_fwd;
+extern unsigned int g_x_0053803c_fwd;
+#define g_x_00538038 g_x_00538038_fwd
+#define g_x_0053803c g_x_0053803c_fwd
+extern void Thunk_0049cbd0(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+
+/* @addr 0x00491350 (159b game) - state-snapshot + dispatch + mstack push/pop:
+ *   scaledInit = g_x_00538038; if (g_cj != g_x_00538158) scaledInit = g_x_0053803c.
+ *   key = (0x4ebee0>>2) + g_walkCallback; g_x_00542048 = arr[key];
+ *   Thunk_0049cbd0; pause? ret.
+ *   mstack-push g_baseSel; g_baseSel = scaledInit;
+ *   FiveCallScaledChainTailJmp; pause? ret.
+ *   mstack-pop into g_baseSel.
+ */
+__declspec(naked) void SnapshotDispatchMStack_00491350(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00538038]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [g_x_00538158]
+        cmp     ecx, eax
+        _emit   74h
+        _emit   0ch
+        mov     edx, dword ptr [g_x_0053803c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     eax, offset g_data_004ebee0
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, [eax*4 + g_arr_491350]
+        mov     dword ptr [g_x_00542048], eax
+        call    Thunk_0049cbd0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4ah
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_baseSel_00542060], edx
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_baseSel_00542060], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+#undef g_x_00538038
+#undef g_x_0053803c
+
+extern unsigned int g_x_00537f30;
+extern unsigned int g_x_00537edc;
+extern unsigned int g_x_0053a1cc;
+extern unsigned int g_x_0053a790;
+extern unsigned int g_x_00537f48_v2;
+extern unsigned int g_x_005380e0_v2;
+extern unsigned int g_x_00541ecc;
+extern unsigned int g_x_00541ed0;
+extern unsigned int g_x_0053a178_v2;
+extern unsigned int g_x_00537ea0;
+extern unsigned int g_x_00541ec4;
+extern unsigned int g_x_0053a250_v2;
+extern unsigned int g_x_00541ec8;
+
+/* @addr 0x004225f0 (161b game) - 2-state copy swap based on g_x_00537f30 & 1:
+ *   if even: copy {0x537edc, 0x53a1cc, 0x53a790, 0x541ecc, 0x541ed0, 0x537ea0}
+ *     -> {0x537f48, 0x5380e0, 0x53a178, 0x541ec4, 0x541ec8, walkCallback/0x53a250}.
+ *   if odd: same source set but with different mapping (swap a/c, etc).
+ */
+__declspec(naked) void TwoStateCopyDup_004225f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00537f30]
+        and     eax, 1
+        mov     dword ptr [g_state_00542094], eax
+        _emit   75h
+        _emit   4ah
+        mov     ecx, dword ptr [g_x_00537edc]
+        mov     edx, dword ptr [g_x_0053a1cc]
+        mov     eax, dword ptr [g_x_0053a790]
+        mov     dword ptr [g_x_00537f48_v2], ecx
+        mov     ecx, dword ptr [g_x_00541ecc]
+        mov     dword ptr [g_x_005380e0_v2], edx
+        mov     edx, dword ptr [g_x_00541ed0]
+        mov     dword ptr [g_x_0053a178_v2], eax
+        mov     eax, dword ptr [g_x_00537ea0]
+        mov     dword ptr [g_x_00541ec4], ecx
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_x_0053a250_v2], eax
+        mov     dword ptr [g_x_00541ec8], edx
+        ret
+        mov     eax, dword ptr [g_x_0053a790]
+        mov     ecx, dword ptr [g_x_00537ea0]
+        mov     edx, dword ptr [g_x_00537edc]
+        mov     dword ptr [g_x_00537f48_v2], eax
+        mov     eax, dword ptr [g_x_0053a1cc]
+        mov     dword ptr [g_x_005380e0_v2], ecx
+        mov     ecx, dword ptr [g_x_00541ed0]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_x_0053a250_v2], eax
+        mov     eax, dword ptr [g_x_00541ecc]
+        mov     dword ptr [g_x_0053a178_v2], edx
+        mov     dword ptr [g_x_00541ec4], eax
+        mov     dword ptr [g_x_00541ec8], ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00537f98;
 extern unsigned int g_x_0053a430;
 extern unsigned char g_data_004dfc98;

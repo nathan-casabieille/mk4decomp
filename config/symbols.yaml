@@ -1773,10 +1773,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004225f0
-    name: func_004225f0
+    name: TwoStateCopyDup_004225f0
     size: 161
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004226a0
     name: ClampTwoToMax_004226a0
     size: 55
@@ -10497,10 +10498,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00491350
-    name: func_00491350
+    name: SnapshotDispatchMStack_00491350
     size: 159
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004913f0
     name: func_004913f0
     size: 271
