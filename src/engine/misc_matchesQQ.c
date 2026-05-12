@@ -27500,6 +27500,68 @@ __declspec(naked) void IATCriticalSection_004b09a0(void) {
     }
 }
 
+extern void Thunk_0049cc00(void);
+extern void func_004069b0(void);
+
+/* @addr 0x0043d780 (169b game) - init + 2-stage loop call sequence with chain[+0x30/+0x6c/+0x70/+0x74] init.
+ *   g_x_0054206c=0x83; g_x_00542070=-1; call Thunk; pause? -> ret.
+ *   esi=0; ebx=0x45; g_x_0054206c=ebx; call func_004069b0; pause? -> ret.
+ *   ebp=0x7a; edi=0xffffeb86; loop_top:
+ *     if (208c & 4): ret;
+ *     chain[g_scaledInit+0x30]=ebp; chain[+0x70]=edi;
+ *     g_x_0054206c=esi=0; chain[+0x6c]=esi;
+ *     chain[+0x74]=g_x_0054206c (=0);
+ *     g_x_0054206c=ebx=0x45; call func_004069b0;
+ *     if (pause == 0): loop;
+ */
+__declspec(naked) void DoubleCallChainInit_0043d780(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        mov     dword ptr [g_x_0054206c], 0x83
+        mov     dword ptr [g_x_00542070], 0xffffffff
+        call    Thunk_0049cc00
+        mov     eax, dword ptr [g_framePauseFlag]
+        xor     esi, esi
+        cmp     eax, esi
+        _emit   75h
+        _emit   7ch
+        mov     ebx, 0x45
+        mov     dword ptr [g_x_0054206c], ebx
+        call    func_004069b0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   64h
+        mov     ebp, 0x7a
+        mov     edi, 0xffffeb86
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     [eax*4 + 0x30], ebp
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     [ecx*4 + 0x70], edi
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     [edx*4 + 0x6c], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     [ecx*4 + 0x74], eax
+        mov     dword ptr [g_x_0054206c], ebx
+        call    func_004069b0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   74h
+        _emit   0a6h
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
