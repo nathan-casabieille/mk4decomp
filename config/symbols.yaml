@@ -3805,10 +3805,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x004377d0
-    name: func_004377d0
+    name: InstallSelfChainSet13333Alt_004377d0
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437880
     name: InstallSelfChainSet13333_00437880
     size: 172
@@ -3833,10 +3834,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00437b60
-    name: func_00437b60
+    name: InstallSelfChainSetB333_00437b60
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437c10
     name: func_00437c10
     size: 738

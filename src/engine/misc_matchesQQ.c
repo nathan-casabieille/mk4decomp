@@ -28271,6 +28271,96 @@ __declspec(naked) void InstallSelfChainSet13333_00437880(void) {
     }
 }
 
+extern void SetJmp_00438f50(void);
+extern void QuadGuardBitGateJmp_00439130(void);
+
+/* @addr 0x004377d0 (172b game) - same install-self pattern as 0x437880; SetJmp_00438f50 error path.
+ */
+__declspec(naked) void InstallSelfChainSet13333Alt_004377d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    SetJmp_00438f50
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        mov     dword ptr [g_x_00542084], 0x00013333
+        mov     dword ptr [g_x_00542080], 0x1e
+        mov     dword ptr [esi + 8], 0x004377d0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x004377d0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00438690
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00437b60 (172b game) - same install-self pattern; QuadGuardBitGateJmp_00439130 error path.
+ *   Differs from 0x437880 in chain[+0x84] = 0xb333 (vs 0x13333).
+ */
+__declspec(naked) void InstallSelfChainSetB333_00437b60(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    QuadGuardBitGateJmp_00439130
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        mov     dword ptr [g_x_00542084], 0x0000b333
+        mov     dword ptr [g_x_00542080], 0x1e
+        mov     dword ptr [esi + 8], 0x00437b60
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00437b60
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00438690
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
