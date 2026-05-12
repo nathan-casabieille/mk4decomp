@@ -11660,10 +11660,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0049d450
-    name: func_0049d450
+    name: LinkedListFieldAdd_0049d450
     size: 248
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d550
     name: func_0049d550
     size: 299

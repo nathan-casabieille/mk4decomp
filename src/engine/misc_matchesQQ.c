@@ -40097,3 +40097,89 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         ret
     }
 }
+
+/* @addr 0x0049d450 (248b game) - linked-list traverse adding 3 fields per node.
+ *   eax = [g_scaledInit_00542044]; if 0 ret.
+ *   ecx = [g_x_00542048]<<2 (table base, byte address).
+ *   For each node: node[+4/+8/+0xc] += table[+0/+4/+8] (g_x_0054206c temp).
+ *   eax = node[+0] (next link). Loop while eax != 0.
+ *   Two loop body copies in the original — first uses shl/mov, second uses lea+mov.
+ */
+__declspec(naked) void LinkedListFieldAdd_0049d450(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        test    eax, eax
+        mov     dword ptr [g_x_00542070], eax
+        _emit   0fh
+        _emit   84h
+        _emit   0e3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00542048]
+        shl     ecx, 2
+        shl     eax, 2
+        mov     edx, dword ptr [ecx]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax + 4]
+        add     edx, esi
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 4], edx
+        mov     edx, dword ptr [ecx + 4]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax + 8]
+        add     edx, esi
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 8], edx
+        mov     ecx, dword ptr [ecx + 8]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax + 0x0c]
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x0c], ecx
+        mov     eax, dword ptr [eax]
+        xor     ecx, ecx
+        test    eax, eax
+        setne   cl
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542098], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   76h
+        mov     edx, dword ptr [g_x_00542048]
+        shl     eax, 2
+        lea     ecx, [edx*4 + 0]
+        mov     edx, dword ptr [edx*4 + 0]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax + 4]
+        add     edx, esi
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 4], edx
+        mov     edx, dword ptr [ecx + 4]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     esi, dword ptr [eax + 8]
+        add     edx, esi
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 8], edx
+        mov     ecx, dword ptr [ecx + 8]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax + 0x0c]
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x0c], ecx
+        mov     eax, dword ptr [eax]
+        xor     ecx, ecx
+        test    eax, eax
+        setne   cl
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542098], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   75h
+        _emit   8ah
+        pop     esi
+        ret
+    }
+}
