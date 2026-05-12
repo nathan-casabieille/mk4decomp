@@ -42404,3 +42404,80 @@ __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
         ret
     }
 }
+
+extern void InstallSelfTableWalk_004200d0(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void Push16Call_00489f50(void);
+
+/* @addr 0x00462980 (265b game) - install-self dual path with init / state setup.
+ *   snapshot+clear chain[+0x84].
+ *   If was nonzero: call BootInitGuardedCallChain_004265d0; if pause? ret.
+ *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk_004200d0; ret.
+ *   If was zero: clear scaledInit[0]=0; g_state_00537f74=1; g_x_0054206c=2;
+ *     g_state_0053a408=2; g_state_00537e88=2; g_x_00542074=4.
+ *     call Push16Call_00489f50; if pause? ret.
+ *     call ScenegraphWalk_0041f7d0; g_x_00542070=0xc; install-self at
+ *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
+ *     Call InstallSelfPackedF80_00426000; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfBootInit_00462980(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   30h
+        call    BootInitGuardedCallChain_004265d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x1000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x0c], eax
+        call    InstallSelfTableWalk_004200d0
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 2
+        mov     dword ptr [edx*4 + 0], 0
+        mov     dword ptr [g_state_00537f74], 1
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_0053a408], eax
+        mov     dword ptr [g_state_00537e88], eax
+        mov     dword ptr [g_x_00542074], 4
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6eh
+        call    ScenegraphWalk_0041f7d0
+        mov     dword ptr [g_x_00542070], 0x0c
+        mov     dword ptr [esi + 8], 0x00462980
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00462980
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfPackedF80_00426000
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

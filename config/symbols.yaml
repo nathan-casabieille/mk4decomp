@@ -6663,10 +6663,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00462980
-    name: func_00462980
+    name: InstallSelfBootInit_00462980
     size: 265
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00462a90
     name: func_00462a90
     size: 1496
