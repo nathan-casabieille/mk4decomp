@@ -22230,3 +22230,187 @@ __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
         ret
     }
 }
+
+extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void func_00476670(void);
+extern void LoopMStackBitTest_00441fd0(void);
+
+/* @addr 0x00441f00 (197b game) - 6 pause-gated calls with different tag values, then chain bit-clear and tail-jmp.
+ *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_x_0054206c = tag; call F; pause? ret.
+ *   First uses PushPopCurrent (0x473070); rest use func_00476670.
+ *   chain[g_baseSel + 0x64] = g_x_0054205c; chain[g_x_0054205c + 0x34] &= 0xfffffffb; jmp LoopMStackBitTest_00441fd0.
+ */
+__declspec(naked) void SixTagCallsTailJmp_00441f00(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0x93
+        call    PushPopCurrentSetFFFFFFFF_00473070
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0x7e
+        call    func_00476670
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0x7b
+        call    func_00476670
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   74h
+        mov     dword ptr [g_x_0054206c], 0x94
+        call    func_00476670
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        mov     dword ptr [g_x_0054206c], 0x77
+        call    func_00476670
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   44h
+        mov     dword ptr [g_x_0054206c], 0x7f
+        call    func_00476670
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2ch
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, [eax*4 + 0x64]
+        mov     dword ptr [g_x_0054205c], ecx
+        mov     eax, [ecx*4 + 0x34]
+        and     al, 0xfb
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x34], eax
+        jmp     LoopMStackBitTest_00441fd0
+        ret
+    }
+}
+
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542088;
+
+/* @addr 0x00433c60 (197b game) - branch packed_ptr select, then load 6 fields.
+ *   eax = packed_ptr(0x541d98); ecx = packed_ptr(0x535d18);
+ *   g_scaledInit = eax; g_x_00542048 = ecx;
+ *   if (g_x_0054205c != [0x538158]) g_scaledInit = ecx;
+ *   Walk g_scaledInit forward, storing 6 values into:
+ *     g_x_0054207c, 80, 84, 88, 54, 58 (using edx/ecx alternating).
+ *   Then: g_scaledInit = chain[g_baseSel + 0x3c];
+ *   g_x_0054206c = chain[g_scaledInit + 0x74].
+ */
+__declspec(naked) void PackedSelectLoad6_00433c60(void) {
+    __asm {
+        mov     edx, dword ptr [g_x_0054205c]
+        push    esi
+        mov     esi, dword ptr [g_x_00538158]
+        mov     eax, 0x00541d98
+        mov     ecx, 0x00535d18
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542084], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542088], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542058], edx
+        pop     esi
+        mov     eax, [eax*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + 0x74]
+        mov     dword ptr [g_x_0054206c], ecx
+        ret
+    }
+}
+
+extern unsigned int g_x_0053a168;
+
+/* @addr 0x004ab440 (199b audio) - linked-list insert with mstack-push 2.
+ *   Push [0x53a168], g_x_0054204c; g_x_0054204c = g_scaledInit;
+ *   eax = chain[g_x_00542048 + 4] + g_scaledInit; g_x_0054204c = eax;
+ *   chain[eax + 4] = g_x_00542048; eax = chain[g_x_00542048 + 0];
+ *   g_x_0054206c = eax; chain[g_x_0054204c + 0] = eax;
+ *   chain[g_x_00542048 + 0] = g_scaledInit; chain[g_x_00542048 + 8]++;
+ *   mstack-pop into g_x_0054204c, then into [0x53a168].
+ */
+__declspec(naked) void LinkedListInsert_004ab440(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0053a168]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     eax, [edx*4 + 4]
+        add     eax, ecx
+        mov     dword ptr [g_x_0054204c], eax
+        mov     [eax*4 + 4], edx
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     [edx*4 + g_data_004d57ac_arr], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, [eax*4 + 8]
+        inc     ecx
+        mov     [eax*4 + 8], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0053a168], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

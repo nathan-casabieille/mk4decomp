@@ -3376,10 +3376,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00433c60
-    name: func_00433c60
+    name: PackedSelectLoad6_00433c60
     size: 197
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00433d30
     name: CmpP1DualInitStore_00433d30
     size: 66
@@ -4701,10 +4702,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00441f00
-    name: func_00441f00
+    name: SixTagCallsTailJmp_00441f00
     size: 197
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00441fd0
     name: LoopMStackBitTest_00441fd0
     size: 200
@@ -12437,10 +12439,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab440
-    name: func_004ab440
+    name: LinkedListInsert_004ab440
     size: 199
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab510
     name: func_004ab510
     size: 240
