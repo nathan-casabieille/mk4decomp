@@ -5691,10 +5691,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00457d10
-    name: func_00457d10
+    name: MStackBranchSelect_00457d10
     size: 196
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457de0
     name: func_00457de0
     size: 517
@@ -14253,10 +14254,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesMM.c
   - addr: 0x004be690
-    name: func_004be690
+    name: TaggedSceneDispatch_004be690
     size: 197
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be760
     name: TableSearch_004be760
     size: 46

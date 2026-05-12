@@ -22762,3 +22762,173 @@ __declspec(naked) void RenderChainCopy_004b9770(void) {
         ret
     }
 }
+
+extern unsigned int g_x_007af91c;
+extern void CallZero2_004be610(void);
+extern void SixDoublePushCall_004be630(void);
+extern void TwinRecordIter_004be590(void);
+extern void func_004ac650(void);
+extern void func_004c3960(void);
+extern unsigned int g_x_004f7d78;
+extern unsigned int g_x_0053a770;
+
+/* @addr 0x004be690 (197b engine.scenegraph) - tagged dispatcher with 16-bit cases.
+ *   if ([0x7af91c] != 0) jmp branch_pos;
+ *   load si = [esp+8] (arg);
+ *   if (si != -1) skip; else: call CallZero2, SixDoublePushCall, TwinRecordIter; ret.
+ *   if (si != 0)  skip; else: call CallZero2, SixDoublePushCall, TwinRecordIter; ret.
+ *   if (si != -2) skip; else: call TwinRecordIter; ret.
+ *   if (si < 0x64) or (0x157c <= si <= 0x1590): call TwinRecordIter (positive-range gate).
+ *   push si; call TableSearch; if (result != 0): chain[result*4+0x4f7d78]; call func_004ac650.
+ *   else: signed-mod check then push (si or si+0x7d0); call func_004c3960;
+ *   store result to [0x53a770].
+ */
+__declspec(naked) void TaggedSceneDispatch_004be690(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_007af91c]
+        push    esi
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     esi, dword ptr [esp + 8]
+        cmp     si, 0xffff
+        _emit   75h
+        _emit   11h
+        call    CallZero2_004be610
+        call    SixDoublePushCall_004be630
+        call    TwinRecordIter_004be590
+        pop     esi
+        ret
+        test    si, si
+        _emit   75h
+        _emit   11h
+        call    CallZero2_004be610
+        call    SixDoublePushCall_004be630
+        call    TwinRecordIter_004be590
+        pop     esi
+        ret
+        cmp     si, 0xfffe
+        _emit   75h
+        _emit   07h
+        call    TwinRecordIter_004be590
+        pop     esi
+        ret
+        cmp     si, 0x64
+        _emit   7ch
+        _emit   0eh
+        cmp     si, 0x157c
+        _emit   7ch
+        _emit   0ch
+        cmp     si, 0x1590
+        _emit   7fh
+        _emit   05h
+        call    TwinRecordIter_004be590
+        push    esi
+        call    TableSearch_004be760
+        add     esp, 4
+        test    eax, eax
+        _emit   74h
+        _emit   17h
+        mov     ecx, [eax*4 + 0x004f7d78]
+        push    0
+        push    ecx
+        push    0
+        push    eax
+        call    func_004ac650
+        add     esp, 0x10
+        pop     esi
+        ret
+        cmp     si, 0x64
+        _emit   7fh
+        _emit   0bh
+        movsx   edx, si
+        add     edx, 0x000007d0
+        _emit   0ebh
+        _emit   13h
+        movsx   ecx, si
+        mov     eax, 0x66666667
+        imul    ecx
+        sar     edx, 1
+        mov     eax, edx
+        shr     eax, 0x1f
+        add     edx, eax
+        push    0xffffffff
+        push    0xffffffff
+        push    edx
+        call    func_004c3960
+        movsx   ecx, al
+        add     esp, 0x0c
+        mov     dword ptr [g_x_0053a770], ecx
+        pop     esi
+        ret
+    }
+}
+
+extern void DualBranchWordLookup_0048a290(void);
+extern void func_00426b60(void);
+extern void func_00457bb0(void);
+extern void TableLookupCall_00489f60(void);
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+
+/* @addr 0x00457d10 (196b game) - mstack-push g_baseSel; branch-select source; chain ops.
+ *   Push g_baseSel; g_baseSel = (g_x_0054205c==[0x538158] ? [0x53803c] : [0x538038]);
+ *   g_x_0054206c = 1; call DualBranchWordLookup; pause? ret.
+ *   mstack-pop into g_baseSel.
+ *   g_x_00542078 = chain[g_x_0054205c + 0x54]; g_x_0054207c = chain[+0x5c];
+ *   call func_00426b60; pause? ret.
+ *   g_x_0054207c = 0; call func_00457bb0; pause? ret.
+ *   g_x_0054206c = 0x13; jmp TableLookupCall.
+ */
+__declspec(naked) void MStackBranchSelect_00457d10(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_x_00538158]
+        mov     edx, dword ptr [g_x_00538038]
+        cmp     eax, ecx
+        mov     dword ptr [g_baseSel_00542060], edx
+        _emit   74h
+        _emit   0ch
+        mov     ecx, dword ptr [g_x_0053803c]
+        mov     dword ptr [g_baseSel_00542060], ecx
+        mov     dword ptr [g_x_0054206c], 1
+        call    DualBranchWordLookup_0048a290
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   6ch
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_baseSel_00542060], edx
+        mov     ecx, [eax*4 + 0x54]
+        mov     dword ptr [g_x_00542078], ecx
+        mov     edx, [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054207c], edx
+        call    func_00426b60
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     dword ptr [g_x_0054207c], 0
+        call    func_00457bb0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_x_0054206c], 0x13
+        jmp     TableLookupCall_00489f60
+        ret
+    }
+}
