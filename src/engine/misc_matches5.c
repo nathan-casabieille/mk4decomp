@@ -136,15 +136,11 @@ __declspec(naked) void DualConstJmpBig_0048fbd0(void) {
  *   mov     [ecx*4 + 0x34], eax
  *   ret
  */
-__declspec(naked) void ScaledOr4Store_00490110(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x34]
-        or      al, 4
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        ret
-    }
+void ScaledOr4Store_00490110(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 4;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
 }
 
 /* @addr 0x004902d0 (29b)
@@ -155,87 +151,59 @@ __declspec(naked) void ScaledOr4Store_00490110(void) {
  *   mov     [ecx*4 + 0x40], eax
  *   ret
  */
-__declspec(naked) void ScaledAndAh_004902d0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     ah, 0xfd
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAh_004902d0(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFDFFu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x004902f0 (28b): same shape, and al, 0x7f */
-__declspec(naked) void ScaledAndAl7f_004902f0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0x7f
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAl7f_004902f0(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFF7Fu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490310 (28b): same shape, and al, 0xf7 */
-__declspec(naked) void ScaledAndAlf7_00490310(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xf7
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAlf7_00490310(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFF7u;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490330 (28b): same shape, and al, 0xdf */
-__declspec(naked) void ScaledAndAldf_00490330(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xdf
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAldf_00490330(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFDFu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490350 (28b): same shape, and al, 0xbf */
-__declspec(naked) void ScaledAndAlbf_00490350(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xbf
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAlbf_00490350(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFBFu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490370 (28b): same shape, and al, 0xfb */
-__declspec(naked) void ScaledAndAlfb_00490370(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xfb
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAlfb_00490370(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFBu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490390 (28b): same shape, and al, 0xfe */
-__declspec(naked) void ScaledAndAlfe_00490390(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xfe
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAlfe_00490390(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFEu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x0045e0b0 (30b)
