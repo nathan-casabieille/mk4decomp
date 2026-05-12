@@ -38761,3 +38761,77 @@ __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
         ret
     }
 }
+
+extern void MStackPushTableSearchPop_0048bc40(void);
+extern void DispatchSetDirtyToggle_004ac150(void);
+extern void func_00406d00(void);
+
+/* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
+ *   push g_scaledInit_00542044 and g_x_00542048 onto mstack (2x inc g_state_004d57ac).
+ *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_data_00538158
+ *     use g_data_00537f48 else use g_data_005380e0; store to g_x_0054206c.
+ *   call MStackPushTableSearchPop_0048bc40; if pause? ret.
+ *   load scaledInit[+0x14] -> g_x_00542048; call DispatchSetDirtyToggle_004ac150; if pause? ret.
+ *   if bit2 of g_state_0054208c clear: load scaledInit[+0x18] -> g_x_00542048.
+ *   call func_00406d00; if pause? ret. pop pair: g_x_00542048, g_scaledInit_00542044; ret.
+ */
+__declspec(naked) void MStackPushPairTriCall_0048ce60(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        or      ch, 8
+        mov     dword ptr [eax*4 + 0x34], ecx
+        mov     eax, dword ptr [g_state_00537f48]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     ecx, dword ptr [g_state_00538158]
+        _emit   74h
+        _emit   0ch
+        mov     edx, dword ptr [g_state_005380e0]
+        mov     dword ptr [g_x_0054206c], edx
+        call    MStackPushTableSearchPop_0048bc40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   74h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x14]
+        mov     dword ptr [g_x_00542048], ecx
+        call    DispatchSetDirtyToggle_004ac150
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   54h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   12h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00406d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

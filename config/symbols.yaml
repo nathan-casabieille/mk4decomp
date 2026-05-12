@@ -9836,10 +9836,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ce60
-    name: func_0048ce60
+    name: MStackPushPairTriCall_0048ce60
     size: 237
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048cf50
     name: func_0048cf50
     size: 278
