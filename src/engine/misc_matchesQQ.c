@@ -32969,3 +32969,240 @@ __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
         jmp     StackPopDispatchTagged_0041f780
     }
 }
+
+extern void DecJneSetCallSetJmp_004389b0(void);
+
+/* @addr 0x004388f0 (190b game) - install-self with multi-stage cascade.
+ *   chain[+0x84]!=0 path: call DecOrZeroDirty4; if !pause and !bit-2 ret; else call GuardedSeq_00438630; ret.
+ *     Continuing: esi=g_x_00542080; call Push84CallTestInstallJmp_00460940; if !pause:
+ *     call DecJneSetCallSetJmp_004389b0; if !pause: mstack-push 0x00438990; jmp func_004339c0; ret.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_data_0054204c=1, pause=1; pop+ret.
+ *   Block B (+0xa0): cmp g_state_00535ddc vs g_x_00542084; if le jmp self; else jmp GuardedSeq_00438630.
+ */
+__declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   63h
+        call    DecOrZeroDirty4_00438650
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   73h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   07h
+        call    GuardedSeq_00438630
+        pop     esi
+        ret
+        mov     esi, dword ptr [g_x_00542080]
+        call    Push84CallTestInstallJmp_00460940
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        call    DecJneSetCallSetJmp_004389b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_00542080], esi
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00438990
+        call    func_004339c0
+        pop     esi
+        ret
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x004388f0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_x_00542084]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     InstallSelfMultiCascade_004388f0
+        jmp     GuardedSeq_00438630
+    }
+}
+
+extern void func_00471840(void);
+extern void GuardedSeq_00471670(void);
+extern void func_00471710(void);
+extern void func_004719f0(void);
+extern void TripleCallBitJmp_00471690(void);
+
+/* @addr 0x00471920 (193b game) - dual-entry: A: g_x_0054206c=[g_x_0054205c*4+0x18];
+ *   if zero jmp GuardedSeq_00471670; else jmp func_00471840.
+ *   B (+0x20): install-self path with countdown; chain[+0x84]!=0 path: g_x_00542070=0x10000,
+ *   g_x_00542074=0x10000; call func_00471710; pause-check; jmp func_004719f0.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
+ *   call TripleCallBitJmp_00471690; g_pause=1; ret.
+ */
+__declspec(naked) void DualEntryInstall00471920_00471920(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   05h
+        jmp     func_00471840
+        jmp     GuardedSeq_00471670
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   22h
+        mov     eax, 0x00010000
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542074], eax
+        call    func_00471710
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   67h
+        jmp     func_004719f0
+        mov     dword ptr [eax + 0x08], 0x00471940
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00471940
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    TripleCallBitJmp_00471690
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}
+
+extern void func_0048d7b0(void);
+
+/* @addr 0x0043a550 (194b game) - jump table with multi-entry chain for switch.
+ *   A: eax = (arg0>>2 + g_x_0054206c); scaledInit = eax; eax = [eax*4 + 0];
+ *     scaledInit = eax; jmp eax (indirect call to handler).
+ *   B/C/D/E/F (+0x30/+0x50/+0x70/+0x90/+0xb0): set scaledInit = (table_addr_n>>2); jmp func_0048d7b0.
+ */
+__declspec(naked) void JumpTableDispatch_0043a550(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [g_x_0054206c]
+        sar     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     eax
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, 0x00542ea8
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_0048d7b0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, 0x00542ef8
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_0048d7b0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, 0x00542e48
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_0048d7b0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, 0x00542d00
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_0048d7b0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, 0x00542db8
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     func_0048d7b0
+    }
+}

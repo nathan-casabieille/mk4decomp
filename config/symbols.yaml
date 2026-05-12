@@ -3980,10 +3980,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004388f0
-    name: func_004388f0
+    name: InstallSelfMultiCascade_004388f0
     size: 190
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004389b0
     name: DecJneSetCallSetJmp_004389b0
     size: 48
@@ -4369,10 +4370,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0043a550
-    name: func_0043a550
+    name: JumpTableDispatch_0043a550
     size: 194
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a620
     name: CopyJmp_0043a620
     size: 15
@@ -7387,10 +7389,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00471920
-    name: func_00471920
+    name: DualEntryInstall00471920_00471920
     size: 193
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004719f0
     name: func_004719f0
     size: 484
