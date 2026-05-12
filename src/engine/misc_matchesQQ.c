@@ -35524,3 +35524,121 @@ __declspec(naked) void MStackPush2BitLoop_00476670(void) {
         ret
     }
 }
+
+/* @addr 0x004244d0 (216b game) - mstack-push g_scaledInit; magic-mod g_x_00542074 by 0x6487e;
+ *   Mul10Tail with g_x_004d5318; sar 16, +0x200, &0x7ff, +g_data_0054202c → scaledInit;
+ *   load [scaledInit*4+0]; +g_data_00542028 → scaledInit; mstack-pop g_scaledInit. ret.
+ */
+__declspec(naked) void MStackPush1MagicMod2_004244d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     ecx, dword ptr [g_x_00542074]
+        test    ecx, ecx
+        _emit   7dh
+        _emit   1fh
+        mov     edx, 0x0006487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x0006487e
+        add     ecx, edx
+        mov     dword ptr [g_x_00542074], ecx
+        cmp     ecx, 0x0006487e
+        _emit   7ch
+        _emit   19h
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+        sub     ecx, 0x0006487e
+        dec     edx
+        _emit   75h
+        _emit   0f7h
+        mov     dword ptr [g_x_00542074], ecx
+        mov     eax, dword ptr [g_x_004d5318]
+        push    ecx
+        push    eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_0054202c]
+        mov     ecx, eax
+        sar     ecx, 0x10
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        lea     eax, [ecx + 0x200]
+        and     eax, 0x7ff
+        add     eax, edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     eax, dword ptr [g_data_00542028]
+        add     eax, ecx
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x00426230 (216b game) - mstack-push g_x_00542078 and g_scaledInit; load 3 tables
+ *   from 0x004d50a4/0x004d50a8/0x004d50b0 (each shr 2), NOT each value, store to chain;
+ *   mstack-pop g_scaledInit, g_x_00542078. ret.
+ */
+__declspec(naked) void MStackPush2TableNot_00426230(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, 0x004d50a4
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542078], 0x0000ffff
+        not     eax
+        and     eax, 0x0000ffff
+        mov     ecx, eax
+        mov     eax, 0x004d50a8
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        and     ecx, 0x0000ffff
+        not     eax
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, 0x004d50b0
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     eax, dword ptr [g_state_004d57ac]
+        not     edx
+        and     ecx, 0x0000ffff
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542078], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

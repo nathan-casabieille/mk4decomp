@@ -1979,10 +1979,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004244d0
-    name: func_004244d0
+    name: MStackPush1MagicMod2_004244d0
     size: 216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004245b0
     name: func_004245b0
     size: 390
@@ -2134,10 +2135,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00426230
-    name: func_00426230
+    name: MStackPush2TableNot_00426230
     size: 216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426310
     name: DispatcherComplex181_00426310
     size: 181
