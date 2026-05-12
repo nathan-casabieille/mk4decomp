@@ -8981,10 +8981,11 @@ functions:
     status: matched
     file: src/engine/guarded_dispatch_4.c
   - addr: 0x00484b70
-    name: func_00484b70
+    name: FiveBlockDispatchChain_00484b70
     size: 284
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484c90
     name: DualBlockInstallSelfWithSibling_00484c90
     size: 248

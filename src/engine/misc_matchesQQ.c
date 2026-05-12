@@ -44961,3 +44961,147 @@ __declspec(naked) void InstallSelfPlusTailThunk_00436a10(void) {
         ret
     }
 }
+
+extern void ScaledAndAl7f_004902f0(void);
+extern void func_00408190(void);
+extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void ScaledXorStore_004903b0(void);
+extern void CallPauseDirtyPushCall_00488ba0(void);
+extern void CopyJmp_0048ef90(void);
+extern void func_00484da0(void);
+extern void Wrapper_00484d90(void);
+
+/* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
+ *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_x_0054206c=2; tail-jmp
+ *     MstackPopScaledChainPlusThunks_00471250.
+ *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f_004902f0; if !pause: push 0x004ee8f8,
+ *     tail-call ArgSarStoreJmp.
+ *   B3 (0x50..0xa4, +11 NOPs): g_x_00542048 = 0x00500698>>2; 4-call chain
+ *     (func_00408190, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
+ *     if all !pause: tail-jmp CallPauseDirtyPushCall_00488ba0.
+ *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
+ *     if !pause and bit0 of state set: tail-jmp func_00484da0; else: push 0x004ee920,
+ *     tail-call ArgSarStoreJmp.
+ *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
+ *     tail-jmp Wrapper_00484d90; else g_state_00542080=0xd and tail-jmp
+ *     DualBlockInstallSelfWithSibling_00484c90.
+ */
+__declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], 2
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0c7h
+        _emit   04h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   80h
+        _emit   04h
+        _emit   47h
+        _emit   00h
+        jmp     MstackPopScaledChainPlusThunks_00471250
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    ScaledAndAl7f_004902f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee8f8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        mov     eax, 0x00500698
+        mov     dword ptr [g_x_0054206c], 0
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00408190
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2fh
+        call    GuardedChainCmpDualBitXor_004299a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        call    ScaledXorStore_004903b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallPauseDirtyPushCall_00488ba0
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00484da0
+        push    0x004ee920
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   05h
+        jmp     Wrapper_00484d90
+        mov     dword ptr [g_state_00542080], 0x0d
+        jmp     DualBlockInstallSelfWithSibling_00484c90
+        ret
+    }
+}
