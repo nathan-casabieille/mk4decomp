@@ -5073,10 +5073,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00446790
-    name: func_00446790
+    name: GuardedChainMaskOr_00446790
     size: 235
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446880
     name: ScaledLoadJmpPauseSetMax_00446880
     size: 62

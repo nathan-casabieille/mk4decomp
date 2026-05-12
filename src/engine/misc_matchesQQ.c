@@ -38503,3 +38503,93 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         ret
     }
 }
+
+extern void func_00408600(void);
+extern void func_004088b0(void);
+extern void func_004058c0(void);
+
+/* @addr 0x00446790 (235b game) - triple-call guard then chain bit-mask update.
+ *   call func_00408600; if pause? ret.
+ *   if bit2 of g_state_0054208c set? ret.
+ *   call func_004088b0; if pause? ret.
+ *   call func_004058c0; if pause? ret.
+ *   then walk chain[+0x1c]; if 0 ret; chain[+0x08] if 0 ret; mask chain[+0x20]
+ *   with 0xf0ffffff, then OR with 0x0b000000; set bit2 of g_state_0054208c;
+ *   if scaledInit was 0 clear bit2 again (xor 4); ret.
+ */
+__declspec(naked) void GuardedChainMaskOr_00446790(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x4c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    func_00408600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0b9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_004088b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_004058c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x1c]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   7fh
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x08]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   6ah
+        mov     ecx, 0xf0ffffff
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x20]
+        and     edx, ecx
+        mov     dword ptr [eax*4 + 0x20], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], 0x0b000000
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      eax, 0x0b000000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
