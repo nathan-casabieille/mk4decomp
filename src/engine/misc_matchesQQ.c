@@ -45278,3 +45278,83 @@ __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
         ret
     }
 }
+
+extern void ScaledAndAldf_00490330(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern unsigned int g_data_004ed0dc;
+
+/* @addr 0x0047a1c0 (285b game) - 3-state install-self dispatch.
+ *   Load g_baseSel_00542060[*4]; state=[idx*4+0x84]; clear it.
+ *   state==0: ScaledAndAldf init; if pause unset, push g_data_004ed0dc + IterStepDualStore;
+ *     if still 0, set g_state_00542080=0x1d, install-self+0x01000000, call InstallSelf3WayChainCmp.
+ *   state==1: install-self+0x02000000; call ScaledLoadJmp; set pause=1.
+ *   state>=2: tail-call FiveCallGuardSetTail.
+ */
+__declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        je      case0
+        dec     eax
+        je      case1
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+    case1:
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain_0047a1c0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelf3StateDualChain_0047a1c0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    case0:
+        call    ScaledAndAldf_00490330
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     tail
+        push    offset g_data_004ed0dc
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     tail
+        mov     dword ptr [g_state_00542080], 0x1d
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualChain_0047a1c0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelf3StateDualChain_0047a1c0
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelf3WayChainCmp_00428d80
+        mov     dword ptr [g_pause_00541e6c], 1
+    tail:
+        pop     esi
+        ret
+    }
+}
