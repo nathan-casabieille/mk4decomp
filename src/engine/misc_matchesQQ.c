@@ -43250,3 +43250,87 @@ __declspec(naked) void InstallSelfThreeStateSiblingPair_00495480(void) {
         ret
     }
 }
+
+extern void MStackIndirectCallBit_00470e20(void);
+
+/* @addr 0x00470d10 (271b game) - install-self with mstack-pop and indirect-call branch.
+ *   If chain[+0x84] nonzero: dec baseSel[+4] (mstack-pop); load scaledInit and g_x_00542048.
+ *   Read g_x_00542054[0] (state push); if signed >= 0: indirect call [eax*4]; ret.
+ *   Else: call ScaledArrStore; if pause? ret.
+ *   Check baseSel[+0x3c][+0x74] == 0x2001 OR g_x_00542084 != 0: skip middle call.
+ *   Else: call MStackIndirectCallBit_00470e20; if pause? ret.
+ *   Install-self via baseSel[+4] chain push; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   27h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_state_00542080], ecx
+        mov     dword ptr [g_x_00542054], eax
+        _emit   7dh
+        _emit   09h
+        call    dword ptr [eax*4 + 0]
+        pop     esi
+        ret
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x74]
+        cmp     eax, 0x2001
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   17h
+        mov     eax, dword ptr [g_x_00542084]
+        test    eax, eax
+        _emit   75h
+        _emit   0eh
+        call    MStackIndirectCallBit_00470e20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   52h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542048]
+        lea     eax, [ecx*4 + 4]
+        mov     ecx, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00470d10
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

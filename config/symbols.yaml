@@ -7375,10 +7375,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00470d10
-    name: func_00470d10
+    name: InstallSelfBranchIndirect_00470d10
     size: 271
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470e20
     name: MStackIndirectCallBit_00470e20
     size: 181
