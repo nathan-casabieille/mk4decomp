@@ -25646,6 +25646,68 @@ __declspec(naked) void NineSlotReplace_004b7a40(void) {
     }
 }
 
+/* @addr 0x0042e1d0 (188b game) - install-self counted-decrement with chain accumulator.
+ *   eax = base*4; flag = [eax+0x84]; clear.
+ *   if (flag != 0): g_x_00542054--; if (!= 0) install-with-snapshot;
+ *     else call StackPopDispatchTagged; pop edi/esi; ret.
+ *   if (flag == 0): esi = [0x52ab10]; edx = packed_ptr(0x4e38d0);
+ *     g_x_0054205c = esi; g_x_00542058 = edx; g_x_00542054 = 0xf; jmp install-with-snapshot.
+ *   install-with-snapshot: esi = g_x_0054205c; edx = g_x_00542058;
+ *     ecx = chain[esi+0x5c]; edi = chain[(edx+1)*4 - 4]; ecx += edi;
+ *     g_x_0054206c = ecx; g_x_00542070 = edi; g_x_00542058 = edx+1;
+ *     chain[esi+0x5c] = ecx. install self: [eax+8]=0x42e1d0, [eax+0x84]=1.
+ *     g_x_0054204c = 2; pause = 1.
+ */
+__declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        shl     eax, 2
+        push    edi
+        mov     ecx, [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   17h
+        mov     ecx, dword ptr [g_x_00542054]
+        dec     ecx
+        mov     dword ptr [g_x_00542054], ecx
+        _emit   75h
+        _emit   2eh
+        call    StackPopDispatchTagged_0041f780
+        pop     edi
+        pop     esi
+        ret
+        mov     esi, dword ptr [g_x_0052ab10]
+        mov     edx, 0x004e38d0
+        shr     edx, 2
+        mov     dword ptr [g_x_0054205c], esi
+        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_x_00542054], 0x0f
+        _emit   0ebh
+        _emit   0ch
+        mov     esi, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, [esi*4 + 0x5c]
+        inc     edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edi, [edx*4 - 4]
+        add     ecx, edi
+        mov     dword ptr [g_x_00542070], edi
+        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [esi*4 + 0x5c], ecx
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], 0x0042e1d0
+        mov     dword ptr [eax + 0x84], ecx
+        pop     edi
+        mov     dword ptr [g_x_0054204c], 2
+        mov     dword ptr [g_framePauseFlag], ecx
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
