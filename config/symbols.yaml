@@ -3464,10 +3464,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00434690
-    name: func_00434690
+    name: InstallSelfFlagCountdown_00434690
     size: 154
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434730
     name: InstallSelfAbsDiff_00434730
     size: 185
@@ -3939,10 +3940,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00438590
-    name: func_00438590
+    name: InstallSelfBit4Gate_00438590
     size: 155
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438630
     name: GuardedSeq_00438630
     size: 20
@@ -8164,10 +8166,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c8f0
-    name: func_0047c8f0
+    name: InstallSelfCountdown2Stage_0047c8f0
     size: 154
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c990
     name: func_0047c990
     size: 357

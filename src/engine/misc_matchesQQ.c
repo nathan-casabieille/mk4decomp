@@ -30687,3 +30687,172 @@ __declspec(naked) void MStackChainCountdown_00486f20(void) {
         jmp     DualCallPauseDirtyDoubleJmp_00486fc0
     }
 }
+
+extern void ChainDecCondStoreCallJmp_00434880(void);
+
+/* @addr 0x00434690 (154b game) - install-self + countdown loop with global flag.
+ *   Block A: standard install-self at 0x00434690; mstack-push 0x004346f0 jmp func_004339c0.
+ *     Also sets g_data_00ab51f8 = 1 at entry.
+ *   Block B (+0x60): cmp g_state_00535ddc, g_x_00542084; set g_data_00ab51f8=1 either way;
+ *     if le: countdown g_x_00542080, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
+ */
+__declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, 1
+        shl     eax, 2
+        mov     dword ptr [g_data_00ab51f8], edx
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004346f0
+        jmp     func_004339c0
+        mov     dword ptr [eax + 0x08], 0x00434690
+        mov     dword ptr [eax + 0x84], edx
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pause_00541e6c], edx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_x_00542084]
+        cmp     eax, ecx
+        mov     dword ptr [g_data_00ab51f8], 1
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     ChainDecCondStoreCallJmp_00434880
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfFlagCountdown_00434690
+        jmp     ChainDecCondStoreCallJmp_00434880
+    }
+}
+
+extern void PopCallBitCmpPushCall_0047cb00(void);
+extern void func_0047cb90(void);
+extern void func_0047c990(void);
+extern void ScaledChain3c7c_0048f930(void);
+
+/* @addr 0x0047c8f0 (154b game) - install-self with 2-stage 3-way dispatch.
+ *   Block A: standard install-self at +0x80 (self-addr 0x0047c8f0).
+ *   Path on chain[+0x84]!=0: countdown g_x_00542080 (clearing g_state_00542088 first);
+ *     when ==0 call PopCallBitCmpPushCall; pause-check then 2-way jmp dispatch on g_state_00542088
+ *     and g_x_0054206c; otherwise call ScaledChain3c7c then 3-way dispatch on g_x_0054206c.
+ */
+__declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   5fh
+        mov     ecx, dword ptr [g_x_00542080]
+        xor     eax, eax
+        dec     ecx
+        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_x_00542080], ecx
+        _emit   75h
+        _emit   13h
+        call    PopCallBitCmpPushCall_0047cb00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   59h
+        mov     eax, dword ptr [g_state_00542088]
+        mov     ecx, 1
+        cmp     eax, ecx
+        _emit   75h
+        _emit   05h
+        jmp     func_0047cb90
+        _emit   7dh
+        _emit   05h
+        jmp     func_0047c990
+        call    ScaledChain3c7c_0048f930
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   31h
+        cmp     dword ptr [g_x_0054206c], 3
+        _emit   7ch
+        _emit   05h
+        jmp     func_0047cb90
+        jmp     func_0047c990
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x0047c8f0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
+
+extern void DecOrZeroDirty4_00438650(void);
+
+/* @addr 0x00438590 (155b game) - install-self + countdown gate with byte-4 bit check.
+ *   Block A: standard install-self at 0x00438590; mstack-push 0x004385f0 jmp func_004339c0.
+ *   Block B (+0x60): call DecOrZeroDirty4; if !pause: if bit-4 set jmp GuardedSeq_00438630;
+ *     else cmp g_state_00535ddc vs g_x_00542084; if le self-jmp; else jmp GuardedSeq.
+ */
+__declspec(naked) void InstallSelfBit4Gate_00438590(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004385f0
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x00438590
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DecOrZeroDirty4_00438650
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2ch
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     GuardedSeq_00438630
+        mov     eax, dword ptr [g_state_00535ddc]
+        mov     ecx, dword ptr [g_x_00542084]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     InstallSelfBit4Gate_00438590
+        jmp     GuardedSeq_00438630
+        ret
+    }
+}
