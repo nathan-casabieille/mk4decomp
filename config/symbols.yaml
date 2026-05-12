@@ -10762,10 +10762,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004936f0
-    name: func_004936f0
+    name: MStackChainDecodeCall_004936f0
     size: 189
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004937b0
     name: func_004937b0
     size: 618
