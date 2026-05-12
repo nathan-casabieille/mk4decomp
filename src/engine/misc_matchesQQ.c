@@ -36720,3 +36720,74 @@ __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
         ret
     }
 }
+
+extern void InstallSelfCountdownLong_0047ee70(void);
+
+/* @addr 0x0047ed90 (223b game) - quad-entry chain.
+ *   A: push 0x004ed670; call ArgSarStoreJmp; ret.
+ *   B (+0x10): install-self at +0x08=0x0047eda0, scaledInit-chain push 0x0047eda0|0x01000000;
+ *     call func_0046fdf0; g_pause=1. ret. On chain[+0x84]!=0: jmp FiveCallGuardSetTail.
+ *   C (+0x90): push 0x004ed690, chain[*4+0x68]=0x40c, chain[*4+0x74]=0x207; call ArgSarStoreJmp; ret.
+ *   D (+0xd0): g_x_00542080=6; jmp InstallSelfCountdownLong_0047ee70.
+ */
+__declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
+    __asm {
+        push    0x004ed670
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        mov     dword ptr [eax + 0x08], 0x0047eda0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, 0x0047eda0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    func_0046fdf0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    0x004ed690
+        mov     dword ptr [eax*4 + 0x68], 0x0000040c
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000207
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_00542080], 6
+        jmp     InstallSelfCountdownLong_0047ee70
+    }
+}
