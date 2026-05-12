@@ -4467,10 +4467,11 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x0043bd50
-    name: func_0043bd50
+    name: QuadStringStateGate_0043bd50
     size: 123
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bdd0
     name: func_0043bdd0
     size: 1399
@@ -5028,10 +5029,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x004468c0
-    name: func_004468c0
+    name: TripleStringPauseChain_004468c0
     size: 116
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446940
     name: ScaledInitWithCounterAndType_00446940
     size: 53
@@ -8634,10 +8636,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00482b60
-    name: func_00482b60
+    name: DualEntry4002Chain_00482b60
     size: 124
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482be0
     name: CallPauseFourSet_00482be0
     size: 68
