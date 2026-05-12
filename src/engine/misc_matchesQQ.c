@@ -34167,3 +34167,138 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         ret
     }
 }
+
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void ScaledInit_0048d430(void);
+
+/* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
+ *   chain[+0x84]!=0 path: esi=g_x_0054207c; call CopyJmp_0048ef90; pause-check; bit-0 test:
+ *     if set call CallPauseDirtyMStackPushFn_0046e2a0; pop+ret. Else g_x_0054206c=esi; call ScaledInit_0048d430;
+ *     if !pause: call [g_cj_00542058]; pop+ret.
+ *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_x_0054206c.
+ *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_x_0054206c; install-self at +0x08=0x0046e9a0;
+ *     g_data_0054204c=1; g_pause=1. pop+ret.
+ */
+__declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   44h
+        mov     esi, dword ptr [g_x_0054207c]
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   92h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   07h
+        call    CallPauseDirtyMStackPushFn_0046e2a0
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], esi
+        call    ScaledInit_0048d430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6eh
+        _emit   0ffh
+        _emit   15h
+        _emit   58h
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 1
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [esi + 0x08], 0x0046e9a0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0048f090 (203b game) - mstack-push 2, chain[*4+0x38] load and swap, mstack-pop 2 into
+ *   esi/edx (final state: g_scaledInit_00542044=last esi); bit-0 toggle based on cmp result.
+ */
+__declspec(naked) void MStackPush2ChainSwap_0048f090(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_state_0053a730]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_00542084], eax
+        mov     ecx, dword ptr [ecx*4 + 0x54]
+        test    edx, edx
+        mov     dword ptr [g_state_00542088], ecx
+        mov     dword ptr [g_x_0054206c], edx
+        _emit   74h
+        _emit   11h
+        mov     edx, eax
+        mov     eax, ecx
+        mov     ecx, edx
+        mov     dword ptr [g_x_00542084], eax
+        mov     dword ptr [g_state_00542088], ecx
+        mov     edx, dword ptr [g_state_004d57ac]
+        mov     esi, dword ptr [edx*4 + 0]
+        dec     edx
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_state_004d57ac], edx
+        mov     esi, dword ptr [edx*4 + 0]
+        dec     edx
+        cmp     eax, ecx
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_scaledInit_00542044], esi
+        mov     dword ptr [g_state_004d57ac], edx
+        _emit   7dh
+        _emit   09h
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+        or      al, 1
+        pop     esi
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}

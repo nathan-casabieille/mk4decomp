@@ -7101,10 +7101,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046e9a0
-    name: func_0046e9a0
+    name: InstallSelfMStackOverwrite_0046e9a0
     size: 206
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046ea70
     name: DirtyTestScaledCmpJmp_0046ea70
     size: 39
@@ -10115,10 +10116,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f090
-    name: func_0048f090
+    name: MStackPush2ChainSwap_0048f090
     size: 203
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f160
     name: State208cBit0Flag_0048f160
     size: 172
