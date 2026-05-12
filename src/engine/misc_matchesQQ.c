@@ -28603,3 +28603,61 @@ __declspec(naked) void ChainListVecAdd_0049d200(void) {
         ret
     }
 }
+
+extern unsigned int g_pause_00541e6c;
+
+/* @addr 0x00426a30 (173b game) - mstack-push g_x_00542074, dispatch Mul10Index/func_00424410,
+ *   then two Mul10Tail double-pushes accumulating into g_x_0054206c (via g_x_00542078) and
+ *   g_x_00542070 (via g_x_0054207c), with pause-aborts after each callee. mstack-pop g_x_00542074.
+ */
+__declspec(naked) void Chain2CallMul10Accum_00426a30(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    ModMagicMul10Index_00424350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   82h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542070], edx
+        call    func_00424410
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   68h
+        mov     eax, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_x_00542080]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, dword ptr [g_x_00542080]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542078]
+        mov     edx, dword ptr [g_x_00542070]
+        add     eax, ecx
+        mov     ecx, dword ptr [g_x_0054207c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     edx, ecx
+        add     esp, 8
+        mov     dword ptr [g_x_00542070], edx
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

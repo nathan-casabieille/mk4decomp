@@ -2188,10 +2188,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00426a30
-    name: func_00426a30
+    name: Chain2CallMul10Accum_00426a30
     size: 173
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426ae0
     name: func_00426ae0
     size: 114
