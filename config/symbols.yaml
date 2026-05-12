@@ -15301,10 +15301,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004c9a30
-    name: func_004c9a30
+    name: FgetsImpl_004c9a30
     size: 167
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9ae0
     name: IOWrapper_004c9ae0
     size: 114

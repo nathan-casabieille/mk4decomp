@@ -27735,6 +27735,108 @@ __declspec(naked) void BitsetReserve_004cc960(void) {
     }
 }
 
+extern void func_004cdc20(void);
+extern unsigned int g_x_00f9fac8;
+extern unsigned char g_x_00f9f8c1;
+
+/* @addr 0x004c9a30 (167b crt) - fgets-like string read with lock-iter implementation.
+ *   if ([0xf9fac8] != 0): call func_004cdc20(dst, count, stream); return.
+ *   else: Lock(0x19); count = arg2; if (count != 0): copy chars with class-table check.
+ *   Reads char [src], stores to [dst]; if char's class (table[char] & 4) is set, treat as line-end.
+ *   Otherwise continues to copy until count exhausted or NUL.
+ *   On line-end: null-terminate. Pad remaining buffer with zeros (rep stosd + rep stosb).
+ *   Unlock(0x19) (TableLookupIatCall_004c6fd0); return dst.
+ */
+__declspec(naked) void FgetsImpl_004c9a30(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00f9fac8]
+        push    esi
+        push    edi
+        mov     edi, [esp + 0x0c]
+        test    eax, eax
+        mov     esi, edi
+        _emit   75h
+        _emit   16h
+        mov     eax, [esp + 0x14]
+        mov     ecx, [esp + 0x10]
+        push    eax
+        push    ecx
+        push    edi
+        call    func_004cdc20
+        add     esp, 0x0c
+        pop     edi
+        pop     esi
+        ret
+        push    ebp
+        push    0x19
+        call    Lock_004c6f50
+        mov     edx, [esp + 0x1c]
+        add     esp, 4
+        test    edx, edx
+        _emit   74h
+        _emit   43h
+        mov     eax, [esp + 0x14]
+        mov     cl, [eax]
+        dec     edx
+        mov     ebp, ecx
+        and     ebp, 0xff
+        test    byte ptr [ebp + g_x_00f9f8c1], 4
+        mov     [edi], cl
+        _emit   74h
+        _emit   13h
+        inc     edi
+        inc     eax
+        test    edx, edx
+        _emit   74h
+        _emit   19h
+        mov     cl, [eax]
+        dec     edx
+        mov     [edi], cl
+        inc     edi
+        inc     eax
+        test    cl, cl
+        _emit   74h
+        _emit   14h
+        _emit   0ebh
+        _emit   06h
+        inc     edi
+        inc     eax
+        test    cl, cl
+        _emit   74h
+        _emit   10h
+        test    edx, edx
+        _emit   75h
+        _emit   0cdh
+        _emit   0ebh
+        _emit   0ah
+        mov     byte ptr [edi - 1], 0
+        _emit   0ebh
+        _emit   04h
+        mov     byte ptr [edi - 2], 0
+        mov     eax, edx
+        dec     edx
+        test    eax, eax
+        _emit   74h
+        _emit   13h
+        lea     ecx, [edx + 1]
+        xor     eax, eax
+        mov     edx, ecx
+        shr     ecx, 2
+        rep stosd
+        mov     ecx, edx
+        and     ecx, 3
+        rep stosb
+        push    0x19
+        call    TableLookupIatCall_004c6fd0
+        add     esp, 4
+        mov     eax, esi
+        pop     ebp
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
