@@ -1972,10 +1972,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00424410
-    name: func_00424410
+    name: MStackMagicModMul10_00424410
     size: 178
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004244d0
     name: func_004244d0
     size: 216
@@ -3282,10 +3283,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431f40
-    name: func_00431f40
+    name: InstallSelfState88_00431f40
     size: 178
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00432000
     name: func_00432000
     size: 264
@@ -9831,10 +9833,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x0048de20
-    name: func_0048de20
+    name: MStackClampMul10_0048de20
     size: 177
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048dee0
     name: func_0048dee0
     size: 497
