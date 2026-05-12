@@ -21151,3 +21151,473 @@ __declspec(naked) void InstallSelfChainAddSigned_004a18d0(void) {
         ret
     }
 }
+
+extern unsigned int g_x_0054205c;
+extern unsigned int g_chain_disp_24_409420;
+
+/* @addr 0x00409420 (167b boot) - mstack-push 2 (g_x_00542048, g_x_0054204c);
+ *   call func_00408d30; pause? ret;
+ *   g_x_0054204c = g_x_00542048; mstack-push g_x_0054205c;
+ *   g_x_00542048 = chain[g_scaledInit+0x24];
+ *   call func_00407330; pause? ret;
+ *   mstack-pop into g_x_0054205c; if (g_state_0054208c & 4) ret;
+ *   jmp func_004094d0.
+ */
+__declspec(naked) void MStackPush2GatedTail_00409420(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    func_00408d30
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   68h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + g_chain_disp_24_409420]
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00407330
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   26h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        test    al, 4
+        mov     dword ptr [g_x_0054205c], ecx
+        _emit   75h
+        _emit   05h
+        jmp     func_004094d0
+        ret
+    }
+}
+
+extern void func_00405630(void);
+extern unsigned int g_x_0054206c;
+
+/* @addr 0x00406c10 (198b boot) - call F; pause? ret; (208c&4)? ret;
+ *   chain[g_scaledInit + 0x24] = g_x_00542048;
+ *   mstack-push *g_x_00542048;
+ *   chain[g_scaledInit + 0x1c] = (val >> 20);
+ *   chain[g_scaledInit + 0x20] = (mstack-pop & 0xfffff) | 0x08000000;
+ *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
+ */
+__declspec(naked) void FramePauseScaledStore_00406c10(void) {
+    __asm {
+        call    func_00405630
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     edx, 4
+        test    al, dl
+        _emit   0fh
+        _emit   85h
+        _emit   0a1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_00542048]
+        mov     [ecx*4 + 0x24], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        inc     ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        sar     eax, 0x14
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x1c], eax
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, [ecx*4 + g_data_004d57ac_arr]
+        dec     ecx
+        and     eax, 0x000fffff
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        or      eax, 0x08000000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x20], eax
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, edx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   09h
+        mov     eax, ecx
+        xor     eax, edx
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void func_00407140(void);
+extern void func_00406340(void);
+extern void func_00404cc0(void);
+extern void func_00404df0(void);
+
+/* @addr 0x0043f8f0 (199b game) - g_x_0054206c = (0x4e5650 >> 2);
+ *   call F1; pause? ret; (208c&4)? ret; call F2; pause? ret;
+ *   chain[g_scaledInit + 0x30] = 0x76; push 0xfb43fb;
+ *   ecx = chain[g_scaledInit + 0x18]; g_x_00542048 = ecx;
+ *   chain[ecx + 0x20] |= 0x1600; g_x_0054205c = g_scaledInit;
+ *   call F3 (cdecl, ate 0xfb43fb); push g_x_0054205c; call F4 (cdecl);
+ *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
+ */
+__declspec(naked) void TwoCallScaledOr1600_0043f8f0(void) {
+    __asm {
+        mov     eax, 0x004e5650
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_00407140
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   9ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_00406340
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   88h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x76
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x00fb43fb
+        mov     [ecx*4 + 0x30], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, [edx*4 + 0x18]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, [ecx*4 + 0x20]
+        or      ah, 0x16
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x20], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054205c], eax
+        call    func_00404cc0
+        mov     ecx, dword ptr [g_x_0054205c]
+        add     esp, 4
+        push    ecx
+        call    func_00404df0
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        add     esp, 4
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_00542084;
+
+/* @addr 0x004275c0 (198b game) - store-and-incr scaledInit, then mstack push 6 globals.
+ *   ecx = chain[g_baseSel + 4]; g_scaledInit = ecx; packed_ptr[ecx] = g_x_00542048;
+ *   g_scaledInit++; chain[g_baseSel + 4] = g_scaledInit;
+ *   mstack-push g_x_0054206c, 70, 74, 78, 7c, 84.
+ */
+__declspec(naked) void StoreIncrMStackPush6_004275c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        ret
+    }
+}
+
+extern unsigned int g_x_00542080;
+extern void ScaledChainDouble_004911f0(void);
+extern void Mul10Tail_00404af0(void);
+
+/* @addr 0x004903f0 (198b game) - mstack-push g_scaledInit, g_x_0054206c;
+ *   call ScaledChainDouble_004911f0; pause? ret;
+ *   mstack-pop ecx; push g_x_0054207c, push ecx; call Mul10Tail; result -> g_x_0054207c;
+ *   push g_x_00542080, push g_x_0054206c(=ecx); call Mul10Tail; result -> g_x_00542080;
+ *   chain[g_x_0054205c + 0x6c] = g_x_0054207c (=ecx);
+ *   chain[g_x_0054205c + 0x74] = g_x_00542080 (=edx);
+ *   mstack-pop into g_scaledInit.
+ */
+__declspec(naked) void MStackFrameCdeclDouble_004903f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    ScaledChainDouble_004911f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   83h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_x_0054207c]
+        push    eax
+        push    ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542080]
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_0054207c], eax
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054207c]
+        mov     dword ptr [g_x_00542080], eax
+        mov     eax, dword ptr [g_x_0054205c]
+        add     esp, 8
+        mov     [eax*4 + 0x6c], ecx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_00542080]
+        mov     [eax*4 + 0x74], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+extern void RegistryPushBindPop_00403c20(void);
+extern void PushSetCallPop_00406530(void);
+
+/* @addr 0x00458ba0 (198b game) - paired packed_ptr install + chain setup.
+ *   g_x_00542048 = packed_ptr(0x0050f1f4); call Dispatcher; pause? ret; (208c&4)? ret;
+ *   chain[g_scaledInit + 0x54] = 0xffba0000; chain[+0x30] = 0x1f;
+ *   call PushSetCallPop; pause? ret; call RegistryPushBindPop; pause? ret;
+ *   g_x_00542048 = packed_ptr(0x0050f210); call Dispatcher; pause? ret;
+ *   chain[+0x54] = 0x00810000; chain[+0x30] = 0x1f;
+ *   call PushSetCallPop; pause? ret; call RegistryPushBindPop;
+ */
+__declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
+    __asm {
+        mov     eax, 0x0050f1f4
+        push    esi
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   97h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     esi, 0x1f
+        mov     dword ptr [ecx*4 + 0x54], 0xffba0000
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     [edx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   60h
+        call    RegistryPushBindPop_00403c20
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   52h
+        mov     eax, 0x0050f210
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x54], 0x00810000
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     [edx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        call    RegistryPushBindPop_00403c20
+        pop     esi
+        ret
+    }
+}
+
+extern void StoreTwoCall_0049cb40(void);
+extern void func_00407510(void);
+extern void func_00424860(void);
+extern void func_00425380(void);
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_00541f94;
+extern unsigned int g_x_004d5320;
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_00542094;
+
+/* @addr 0x004107d0 (198b boot) - 2-arg cdecl call + neg-chain + signed-bit branch + final tail-jmp.
+ *   g_x_00542058 = g_x_0054206c; push 0x2f, 0x4109b0; call StoreTwoCall;
+ *   g_baseSel = g_scaledInit; g_scaledInit = [0x52ab10];
+ *   ecx = -chain[g_scaledInit + 0x64]; g_x_0054206c = ecx;
+ *   eax = chain[g_x_0054205c + 0x34]; g_x_00542070 = eax;
+ *   g_x_00542094 = eax & 1; if (bit clear) skip the add;
+ *   else: g_x_0054206c = ecx + g_x_004d5320;
+ *   call func_00407510; pause? ret;
+ *   g_x_00542074 = g_x_0054206c; g_x_0054204c = g_x_00541f94;
+ *   call func_00424860; pause? ret;
+ *   g_scaledInit = g_baseSel + 0xc; g_x_00542048 = g_x_0054204c;
+ *   g_x_0054204c += 9; jmp func_00425380.
+ */
+__declspec(naked) void StoreTailJmpSigned_004107d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054206c]
+        push    0x2f
+        push    0x004109b0
+        mov     dword ptr [g_x_00542058], eax
+        call    StoreTwoCall_0049cb40
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0052ab10]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_baseSel_00542060], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + 0x64]
+        neg     ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, [edx*4 + 0x34]
+        add     esp, 8
+        mov     dword ptr [g_x_00542070], eax
+        and     eax, 1
+        mov     dword ptr [g_x_00542094], eax
+        _emit   74h
+        _emit   0ch
+        add     ecx, dword ptr [g_x_004d5320]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_00407510
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_00541f94]
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_x_0054204c], ecx
+        call    func_00424860
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_x_0054204c]
+        add     edx, 0x0c
+        add     ecx, 9
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_x_0054204c], ecx
+        jmp     func_00425380
+        ret
+    }
+}
