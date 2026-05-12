@@ -40866,3 +40866,74 @@ __declspec(naked) void SevenThunks_0047cc50(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541fac;
+extern unsigned int g_data_0053a3cc;
+extern unsigned int g_data_00535d68;
+extern unsigned int g_data_00535d60;
+
+/* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
+ *   eax = g_x_0052ab10 (chain base); ecx = g_data_00541fac (table idx).
+ *   g_scaledInit_00542044 = eax; g_x_00542048 = ecx.
+ *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
+ *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_x_0054206c=value.
+ *   Then idx++; chain[+0x68] = table[+idx] (no g_x_0054206c set).
+ *   Then idx++ (final increment).
+ *   Set g_data_0053a3cc=0, g_data_00535d68=0, g_x_0054206c=0xffff0000,
+ *   g_data_00535d60=0xffff0000; ret.
+ */
+__declspec(naked) void FiveFieldChainCopyTableWalk_00431260(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0052ab10]
+        mov     ecx, dword ptr [g_data_00541fac]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     ecx, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x60], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x64], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [ecx*4 + 0x68], eax
+        mov     eax, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        xor     eax, eax
+        mov     dword ptr [g_data_0053a3cc], eax
+        mov     dword ptr [g_data_00535d68], eax
+        mov     eax, 0xffff0000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_00535d60], eax
+        ret
+    }
+}

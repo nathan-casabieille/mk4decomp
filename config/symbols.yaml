@@ -3216,10 +3216,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431260
-    name: func_00431260
+    name: FiveFieldChainCopyTableWalk_00431260
     size: 256
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431360
     name: DualEntryInitDispatch_00431360
     size: 100
