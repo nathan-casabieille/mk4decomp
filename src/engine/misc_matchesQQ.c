@@ -44476,3 +44476,108 @@ __declspec(naked) void InstallSelfDualBranchInit_004201a0(void) {
         ret
     }
 }
+
+extern void Wrapper_0041fcf0(void);
+extern void func_0043cc10(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+
+/* @addr 0x00467d40 (280b game) - 3-state install-self with state-dependent dispatch.
+ *   state 1: call CopyJmp_00406ba0; if !pause:
+ *     baseSel[+0x34] mapped: 0x10 -> 2, 0x11 -> 7, else unchanged.
+ *     g_x_0054206c=mapped++. Fall through to common tail.
+ *   state >= 2: skip to common tail.
+ *   Common tail: call Wrapper_0041fcf0; tail-call func_0043cc10.
+ *   state 0: dual-equal byte tests (g_x_00543590 vs g_state_00537f94 for 1 and 2)
+ *     increment g_x_005433e8 on each match. g_x_0054206c=0xac. 4-call chain
+ *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
+ *     g_x_0054204c=8, pause=1; ret.
+ */
+__declspec(naked) void InstallSelfStateCounter_00467d40(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   63h
+        dec     eax
+        _emit   75h
+        _emit   54h
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0deh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        cmp     eax, 0x10
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, 0x11
+        _emit   75h
+        _emit   0ah
+        mov     eax, 7
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        call    Wrapper_0041fcf0
+        call    func_0043cc10
+        pop     esi
+        ret
+        mov     al, byte ptr [g_x_00543590]
+        mov     ecx, dword ptr [g_state_00537f94]
+        cmp     al, 1
+        _emit   75h
+        _emit   0bh
+        cmp     ecx, 1
+        _emit   75h
+        _emit   06h
+        inc     dword ptr [g_x_005433e8]
+        cmp     al, 2
+        _emit   75h
+        _emit   0bh
+        cmp     ecx, 2
+        _emit   75h
+        _emit   06h
+        inc     dword ptr [g_x_005433e8]
+        mov     dword ptr [g_x_0054206c], 0xac
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   33h
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        mov     dword ptr [esi + 8], 0x00467d40
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_x_0054204c], 8
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

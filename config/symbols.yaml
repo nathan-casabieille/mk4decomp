@@ -6935,10 +6935,11 @@ functions:
     status: matched
     file: src/engine/call_jmp.c
   - addr: 0x00467d40
-    name: func_00467d40
+    name: InstallSelfStateCounter_00467d40
     size: 280
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00467e60
     name: PairedTickGated_00467e60
     size: 111
