@@ -45358,3 +45358,71 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
         ret
     }
 }
+
+extern void StackPopDispatchTagged_0041f780(void);
+
+/* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
+ *   Load idx=g_baseSel_00542060; entry=ecx=*idx*4; state=[idx*4+0x84]; clear state.
+ *   state==0: clear-and-init path; copy [idx*4+0x58], [g_acc_00542078]; fall to install.
+ *   state!=0: bump [g_x_00542054*4 + 0x70] by 0x3d7; compare with [g_baseSel*4 + 0x5c].
+ *     if eax<edx: jump to install (state stays 1).
+ *     else: clear scaledInit fields; tail-call StackPopDispatchTagged_0041f780.
+ *   install: state=1; [ecx+8]=self; g_x_0054204c=1; g_pause=1; ret.
+ */
+__declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     ecx, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [ecx + 0x84], 0
+        test    eax, eax
+        je      case0
+        mov     edx, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [edx*4 + 0x70]
+        add     eax, 0x3d7
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x70], eax
+        mov     esi, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [esi*4 + 0x58]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [edx*4 + 0x5c]
+        cmp     eax, edx
+        mov     dword ptr [g_data_00542070], edx
+        jl      install
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [esi*4 + 0x6c], 0
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     eax, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x74], edx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    case0:
+        mov     eax, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_acc_00542078]
+        mov     dword ptr [eax*4 + 0x70], edx
+    install:
+        mov     eax, 1
+        mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp_0043a830
+        mov     dword ptr [ecx + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

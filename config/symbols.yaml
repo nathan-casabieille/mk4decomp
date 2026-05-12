@@ -4438,10 +4438,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043a830
-    name: func_0043a830
+    name: InstallSelfScaledAdv3d7Cmp_0043a830
     size: 286
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a950
     name: func_0043a950
     size: 290
