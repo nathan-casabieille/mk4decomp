@@ -36245,3 +36245,75 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         ret
     }
 }
+
+/* @addr 0x0042f760 (221b game) - gated chain init. */
+__declspec(naked) void GatedChainInit_0042f760(void) {
+    __asm {
+        mov     al, byte ptr [g_x_004f360c]
+        push    esi
+        test    al, al
+        _emit   0fh
+        _emit   84h
+        _emit   0cdh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     esi, 0x004e3898
+        shr     esi, 2
+        mov     dword ptr [g_x_0054206c], esi
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        shl     eax, 2
+        mov     dword ptr [eax + 0x54], 0
+        mov     dword ptr [eax + 0x58], 0
+        mov     dword ptr [eax + 0x5c], 0x00003333
+        mov     dword ptr [eax + 0x60], 0x0000ca3d
+        mov     dword ptr [g_x_0054206c], esi
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   56h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   4dh
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x54], 0x0000b333
+        mov     dword ptr [ecx*4 + 0x58], 0x00003333
+        mov     dword ptr [ecx*4 + 0x5c], 0x00003333
+        lea     eax, [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], 0x0000ca3d
+        mov     dword ptr [eax + 0x60], 0x0000ca3d
+        pop     esi
+        ret
+    }
+}

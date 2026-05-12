@@ -3064,10 +3064,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042f760
-    name: func_0042f760
+    name: GatedChainInit_0042f760
     size: 221
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042f840
     name: StoreByteJmp_0042f840
     size: 12
