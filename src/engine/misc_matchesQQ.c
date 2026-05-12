@@ -27067,6 +27067,53 @@ __declspec(naked) void MStackPush7_004ab900(void) {
     }
 }
 
+extern void Triple3VecMul10Tail_00424a20(void);
+extern void func_0048a3d0(void);
+
+/* @addr 0x0044cad0 (169b game) - 2-axis chain diff (+0x54, +0x5c) store + Mul10 + tail-jmp.
+ *   eax = chain[g_x_00542054 + 0x54]; g_x_0054206c = eax;
+ *   ecx = chain[g_x_00542058 + 0x54]; eax -= ecx;  (eax = diff)
+ *   g_x_00542070 = ecx; chain[g_baseSel + 0x3c] = eax.
+ *   Same for +0x5c -> +0x44. g_scaledInit = g_baseSel + 0xf.
+ *   call Triple3VecMul10Tail; pause? -> ret. jmp func_0048a3d0.
+ */
+__declspec(naked) void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, [ecx*4 + 0x54]
+        sub     eax, ecx
+        mov     dword ptr [g_x_00542070], ecx
+        mov     [edx*4 + 0x3c], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [eax*4 + 0x40], 0
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_x_00542058]
+        mov     eax, [ecx*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, [edx*4 + 0x5c]
+        mov     dword ptr [g_x_00542070], ecx
+        sub     eax, ecx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x44], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        add     edx, 0x0f
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    Triple3VecMul10Tail_00424a20
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_0048a3d0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

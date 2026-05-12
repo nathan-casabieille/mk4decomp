@@ -5155,10 +5155,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044cad0
-    name: func_0044cad0
+    name: Chain2AxisDiffStoreTailJmp_0044cad0
     size: 169
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cb80
     name: func_0044cb80
     size: 203
