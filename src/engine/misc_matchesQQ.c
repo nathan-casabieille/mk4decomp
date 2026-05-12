@@ -38926,3 +38926,81 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         ret
     }
 }
+
+extern void func_0048e0e0(void);
+extern void ScaledZeroFour_00490740(void);
+extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
+extern void ScaledClearJmp_00428d60(void);
+
+/* @addr 0x004916f0 (238b game) - install-self with init-OR-step branch.
+ *   snapshot+clear chain[+0x84]. If was zero: install-self ([esi+8]=0x004916f0,
+ *     chain[+0x84]=1) + scaledInit-chain push with +0x01000000 packed_ptr; call
+ *     ScaledClearJmp_00428d60; pause=1; ret.
+ *   If was nonzero: call func_0048e0e0; if pause? ret. call ScaledZeroFour_00490740;
+ *     if pause? ret. tail-call CallPauseScaledStorePushCall_0045fca0; ret.
+ */
+__declspec(naked) void InstallSelfScaledChain_004916f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   2bh
+        call    func_0048e0e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CallPauseScaledStorePushCall_0045fca0
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [ecx*4 + 8]
+        mov     dword ptr [g_x_0054206c], edx
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7eh
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x0c]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [ecx*4 + 0x24], eax
+        mov     dword ptr [esi + 8], 0x004916f0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x004916f0
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledClearJmp_00428d60
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

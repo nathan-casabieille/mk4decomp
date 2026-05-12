@@ -10759,10 +10759,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004916f0
-    name: func_004916f0
+    name: InstallSelfScaledChain_004916f0
     size: 238
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004917e0
     name: func_004917e0
     size: 306
