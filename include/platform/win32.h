@@ -86,7 +86,7 @@ void AppInit(HWND hwnd);                                 /* 0x004b2500 */
 void AppInit_PostJoy(void);                              /* 0x004b5a10 */
 void AppInit_PreInstall(void);                           /* 0x004b1cf0 */
 void AuxAudio_SetMasterVol(s32 vol);                     /* 0x004ac9c0 */
-void AppInit_AudioPostInit(s32 flag);                    /* 0x004c3eb0 */
+void AppInit_AudioPostInit(unsigned char flag);          /* 0x004c3eb0 */
 void AppInit_PostDSound(void);                           /* 0x004b21b0 */
 void AppInit_Misc1(void);                                /* 0x004b6180 */
 void AppInit_Misc2(void);                                /* 0x004b5a80 */
