@@ -15164,6 +15164,194 @@ extern unsigned int g_arr_461640;
 extern unsigned char g_str_00461980;
 extern unsigned int g_x_0053a748;
 
+extern void func_00474390(void);
+
+extern unsigned int g_x_0053a3c0;
+extern unsigned int g_chain_disp_30_439a40;
+extern unsigned int g_chain_disp_40_439a40;
+extern unsigned int g_x_0053a498;
+extern unsigned int g_x_005380d8;
+extern void TwoStageWalkGate_00439ae0(void);
+extern void TwoConditionalJmp_00439b80(void);
+extern void Thunk_00439c20(void);
+extern void AudioVolumeRescale_004ab690(void);
+
+extern double g_fp_004d29b8;
+extern double g_fp_004d29c0;
+extern int DoubleToInt64_004c57d0(void);
+extern int g_arr_007af9c0;
+extern int g_arr_007af9d8;
+extern int g_arr_007af9c4;
+extern int g_arr_007af9dc;
+extern int g_arr_007af9c8;
+extern int g_arr_007af9e0;
+
+/* @addr 0x004b3130 (161b engine.app) - 3-vec normalize + scale + store:
+ *   len2 = a^2 + b^2 + c^2; if (sqrt(len2) <= const1): write 0/0/0.
+ *   else: factor = const2 / sqrt(len2);
+ *   For each component: result = DoubleToInt64(component * factor).
+ *   Store esi/edi/ecx (each int result) to 6 slots at 0x7af9c0/c4/c8/d8/dc/e0
+ *   indexed by 12*idx0.
+ */
+__declspec(naked) void Vec3NormalizeScaleStore_004b3130(void) {
+    __asm {
+        push    ecx
+        push    esi
+        mov     esi, dword ptr [esp + 0x10]
+        push    edi
+        mov     edi, dword ptr [esp + 0x18]
+        mov     eax, esi
+        mov     ecx, edi
+        imul    eax, esi
+        imul    ecx, edi
+        add     eax, ecx
+        mov     ecx, dword ptr [esp + 0x1c]
+        mov     edx, ecx
+        imul    edx, ecx
+        add     eax, edx
+        mov     dword ptr [esp + 8], eax
+        fild    dword ptr [esp + 8]
+        fsqrt
+        fcom    qword ptr [g_fp_004d29b8]
+        fnstsw  ax
+        test    ah, 0x40
+        _emit   75h
+        _emit   34h
+        fdivr   qword ptr [g_fp_004d29c0]
+        fild    dword ptr [esp + 0x14]
+        fmul    st(0), st(1)
+        call    DoubleToInt64_004c57d0
+        fild    dword ptr [esp + 0x18]
+        movsx   esi, ax
+        fmul    st(0), st(1)
+        call    DoubleToInt64_004c57d0
+        fild    dword ptr [esp + 0x1c]
+        movsx   edi, ax
+        fmul    st(0), st(1)
+        call    DoubleToInt64_004c57d0
+        fstp    st(0)
+        movsx   ecx, ax
+        _emit   0ebh
+        _emit   02h
+        fstp    st(0)
+        mov     eax, dword ptr [esp + 0x10]
+        lea     eax, [eax + eax*2]
+        shl     eax, 2
+        mov     dword ptr [eax + g_arr_007af9c0], esi
+        mov     dword ptr [eax + g_arr_007af9d8], esi
+        mov     dword ptr [eax + g_arr_007af9c4], edi
+        mov     dword ptr [eax + g_arr_007af9dc], edi
+        mov     dword ptr [eax + g_arr_007af9c8], ecx
+        pop     edi
+        mov     dword ptr [eax + g_arr_007af9e0], ecx
+        pop     esi
+        pop     ecx
+        ret
+    }
+}
+
+/* @addr 0x00439a40 (152b game) - multi-branch state filter:
+ *   if g_x_0053a3c0 == 1: ret.
+ *   if chain[base].slot30 != 0: jmp TwoStageWalkGate.
+ *   v = chain[cj].slot40; if (v & 2): jmp TwoConditionalJmp.
+ *   delta = g_x_0053a498 - g_x_005380d8; if delta < 0x1e0: jmp TwoConditionalJmp.
+ *   else: walkCallback=0x64; call AudioVolumeRescale; pause? ret;
+ *     if dirty1: jmp Thunk_00439c20; else jmp TwoConditionalJmp.
+ */
+__declspec(naked) void MultiBranchStateFilter_00439a40(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0053a3c0]
+        cmp     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        _emit   0fh
+        _emit   84h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, [eax*4 + g_chain_disp_30_439a40]
+        test    eax, eax
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   05h
+        jmp     TwoStageWalkGate_00439ae0
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, [ecx*4 + g_chain_disp_40_439a40]
+        mov     dword ptr [g_x_00542074], eax
+        and     eax, 2
+        mov     dword ptr [g_state_00542094], eax
+        _emit   74h
+        _emit   05h
+        jmp     TwoConditionalJmp_00439b80
+        mov     eax, dword ptr [g_x_0053a498]
+        mov     edx, dword ptr [g_x_005380d8]
+        sub     eax, edx
+        cmp     eax, 0x1e0
+        mov     dword ptr [g_walkCallback], eax
+        _emit   7dh
+        _emit   05h
+        jmp     TwoConditionalJmp_00439b80
+        mov     dword ptr [g_walkCallback], 0x64
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     Thunk_00439c20
+        jmp     TwoConditionalJmp_00439b80
+        ret
+    }
+}
+
+/* @addr 0x004740d0 (152b game) - call helper; if not dirty bit 2 set:
+ *   halve chain[cj].slot6c/70/74 (sar 1). Then mstack pop 2 into cj and scaledInit.
+ */
+__declspec(naked) void HalveChainTriplePop2_004740d0(void) {
+    __asm {
+        call    func_00474390
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   51h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, [ecx*4 + g_chain_arr_4348f0 + 0x6c]
+        sar     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x6c], eax
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, [ecx*4 + g_chain_arr_4348f0 + 0x70]
+        sar     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x70], eax
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, [ecx*4 + g_chain_arr_4348f0 + 0x74]
+        sar     eax, 1
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x74], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_arr_425a80_src;
 extern unsigned int g_arr_425a80_dst;
 extern unsigned int g_x_0053a1ac;

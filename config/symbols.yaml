@@ -4197,10 +4197,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439a40
-    name: func_00439a40
+    name: MultiBranchStateFilter_00439a40
     size: 152
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439ae0
     name: TwoStageWalkGate_00439ae0
     size: 107
@@ -7480,10 +7481,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesZ.c
   - addr: 0x004740d0
-    name: func_004740d0
+    name: HalveChainTriplePop2_004740d0
     size: 152
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474170
     name: func_00474170
     size: 282
@@ -13321,10 +13323,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3130
-    name: func_004b3130
+    name: Vec3NormalizeScaleStore_004b3130
     size: 161
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b31e0
     name: func_004b31e0
     size: 301
