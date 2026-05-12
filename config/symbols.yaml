@@ -11403,10 +11403,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x0049b000
-    name: func_0049b000
+    name: InstallSelfFourStatePauseChain_0049b000
     size: 276
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b120
     name: EsiInstallCounterDispatch_0049b120
     size: 170

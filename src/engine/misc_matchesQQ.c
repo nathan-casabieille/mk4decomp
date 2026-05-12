@@ -44203,3 +44203,95 @@ __declspec(naked) void CjTableThresholdDispatch_00488f00(void) {
         ret
     }
 }
+
+extern void func_00406790(void);
+extern void Mul10SumSqrt_00425830(void);
+extern void EsiInstallCounterDispatch_0049b120(void);
+
+/* @addr 0x0049b000 (276b game) - 4-state install-self.
+ *   state 0: install-self chain[+0x84]=1; scaledInit-chain push 0x0049b000+0x01000000;
+ *     call EsiInstallCounterDispatch_0049b120; pause=1; ret.
+ *   state 1/2 share common tail: call ScaledZeroFour; if pause? ret. Then
+ *     install-self with appropriate packed_ptr offset (+0x02000000 / +0x03000000).
+ *   state >=3: g_scaledInit = g_cj_0054205c; call func_00406790; if pause? ret;
+ *     else tail-call Mul10SumSqrt_00425830.
+ */
+__declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        _emit   0fh
+        _emit   84h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   55h
+        dec     eax
+        _emit   74h
+        _emit   25h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    func_00406790
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   0c9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    Mul10SumSqrt_00425830
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], 0x0049b000
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x0049b000
+        mov     dword ptr [edx*4 + 0x84], 3
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     ecx, 0x03000000
+        _emit   0ebh
+        _emit   63h
+        mov     dword ptr [esi + 8], 0x0049b000
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x0049b000
+        mov     dword ptr [eax*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     ecx, 0x02000000
+        _emit   0ebh
+        _emit   37h
+        call    ScaledZeroFour_00490740
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   75h
+        _emit   5bh
+        mov     dword ptr [esi + 8], 0x0049b000
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x0049b000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    EsiInstallCounterDispatch_0049b120
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    }
+}
