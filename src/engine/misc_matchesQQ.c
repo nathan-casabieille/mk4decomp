@@ -21821,3 +21821,209 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         ret
     }
 }
+
+extern void func_0042e550(void);
+extern unsigned int g_x_0052ab10;
+
+/* @addr 0x0042e480 (200b game) - mstack-push 2, counted call-loop, restore globals.
+ *   Push g_x_00542070, g_x_00542074; set 70=10, 74=0x5a0000; call F1; pause? ret;
+ *   Loop: 74 -= 0xa0000; 70--; if (70 == 0) break; call F1; while (!pause).
+ *   After: g_x_0054205c = [0x52ab10]; g_x_0054206c = chain[+0x74] = 0xffffaaab;
+ *   mstack-pop into g_x_00542074, g_x_00542070.
+ */
+__declspec(naked) void CountedLoopMStack_0042e480(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [g_x_00542070], 0xa
+        mov     dword ptr [g_x_00542074], 0x005a0000
+        call    func_0042e550
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   75h
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_x_00542070]
+        sub     ecx, 0x000a0000
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   74h
+        _emit   0fh
+        call    func_0042e550
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   74h
+        _emit   0d3h
+        ret
+        mov     eax, dword ptr [g_x_0052ab10]
+        mov     ecx, 0xffffaaab
+        mov     dword ptr [g_x_0054205c], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [eax*4 + 0x74], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+extern void func_00406ba0(void);
+extern void func_004285c0(void);
+
+/* @addr 0x004283b0 (200b game) - 3-way install-self with two pending-state variants.
+ *   esi = base*4; snapshot [esi+0x84], clear.
+ *   if (snap == 0): go to setup path; if (snap == 1): skip first call; else: call F1 (PopDispatch); ret.
+ *   Setup: call F2 (~0x406ba0); pause? ret;
+ *   chain[g_x_0054205c+0x28] = 0; g_x_0054206c = 0; call F3 (~0x4285c0); pause? ret;
+ *   if (208c & 4): install with [esi+0x84]=1 (via eax); else: install with [esi+0x84]=2 (const).
+ *   Both paths: g_x_0054204c = 1; g_framePauseFlag = 1.
+ */
+__declspec(naked) void TripleBranchInstall_004283b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   0ah
+        dec     eax
+        _emit   74h
+        _emit   34h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    func_00406ba0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x28], 0
+        call    func_004285c0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5eh
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   17h
+        call    func_004285c0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   47h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   22h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x004283b0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x004283b0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+extern void DispatcherComplex138_004760f0(void);
+extern void ScaledAndFBJmp_00476fe0(void);
+
+/* @addr 0x00441fd0 (200b game) - mstack-push g_scaledInit; clear it; esi=0x91;
+ *   g_x_0054206c = esi; call F1 (Dispatcher138); pause? -> epilogue;
+ *   loop: if (g_state_0054208c & 4) -> pop+epilogue;
+ *     mstack-push g_scaledInit; g_scaledInit = chain[g_scaledInit + 0x18];
+ *     call F2 (ScaledAndFBJmp); pause? -> epilogue;
+ *     mstack-pop -> g_scaledInit; g_x_0054206c = esi;
+ *     call F1; if (!pause) goto loop; pop esi; pop ebx; ret;
+ *   Bit-set exit: mstack-pop -> g_scaledInit; pop esi; pop ebx; ret.
+ */
+__declspec(naked) void LoopMStackBitTest_00441fd0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        push    ebx
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, 0x91
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     bl, 4
+        test    byte ptr [g_state_0054208c], bl
+        mov     eax, dword ptr [g_state_004d57ac]
+        _emit   75h
+        _emit   62h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, [eax*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    ScaledAndFBJmp_00476fe0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   42h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   74h
+        _emit   94h
+        pop     esi
+        pop     ebx
+        ret
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

@@ -2322,10 +2322,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x004283b0
-    name: func_004283b0
+    name: TripleBranchInstall_004283b0
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428480
     name: GuardedSeq_00428480
     size: 20
@@ -2957,10 +2958,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0042e480
-    name: func_0042e480
+    name: CountedLoopMStack_0042e480
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e550
     name: func_0042e550
     size: 455
@@ -4702,10 +4704,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00441fd0
-    name: func_00441fd0
+    name: LoopMStackBitTest_00441fd0
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004420a0
     name: func_004420a0
     size: 1164
