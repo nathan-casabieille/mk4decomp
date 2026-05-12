@@ -10665,10 +10665,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00492510
-    name: func_00492510
+    name: MStackBitmaskUpdate_00492510
     size: 187
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004925d0
     name: func_004925d0
     size: 266
