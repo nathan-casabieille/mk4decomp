@@ -29801,3 +29801,164 @@ __declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
         ret
     }
 }
+
+extern void Wrapper_0048a280(void);
+
+/* @addr 0x00488740 (138b game) - dual-entry install-self.
+ *   Block A: call Wrapper_0048a280; if !pause push 0x004ef068 call ArgSarStoreJmp; ret.
+ *   Block B (+0x20): eax=baseSel*4; ecx=chain[+0x84]; clear chain[+0x84]; if zero: set
+ *     [g_x_0054205c*4+0x70]=0xccc, install-self @+0x08 with 0x00488760, chain[+0x84]=1,
+ *     g_data_0054204c=0x28, g_pause=1; ret. Else: call ScaledMove48to58; if !pause jmp CjInstallSelfRouter.
+ */
+__declspec(naked) void DualEntryInstallSelf_00488740(void) {
+    __asm {
+        call    Wrapper_0048a280
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ef068
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   13h
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        jmp     CjInstallSelfRouter_00470480
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     ecx, 0x00000ccc
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x70], ecx
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x00488760
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0x28
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
+
+extern void func_0048e820(void);
+
+/* @addr 0x004383b0 (139b game) - dual-entry install-self with self-loop.
+ *   Block A: install-self path. If chain[+0x84]==0 install-self @+0x08=0x004383b0, ret.
+ *     Else mstack-push 0x00438410, jmp func_004339c0.
+ *   Block B (+0x60): call DualGatedStateYield_0048fc80; if !pause: call func_0048e820;
+ *     if !pause: if bit-clear jmp self(0x004383b0); else jmp StackPopDispatchTagged.
+ */
+__declspec(naked) void InstallSelfPathSelfLoop_004383b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00438410
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x004383b0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        call    func_0048e820
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfPathSelfLoop_004383b0
+        jmp     StackPopDispatchTagged_0041f780
+        ret
+    }
+}
+
+extern void func_004660d0(void);
+extern void DecCallPushCall_00466090(void);
+
+/* @addr 0x00466000 (140b game) - dual-entry chain scaledInit push.
+ *   Block A: call func_004660d0; if !pause: edx=g_x_0054206c; push string; ecx=baseSel[*4+4];
+ *     scaledInit=ecx; [ecx*4+0]=edx; ++scaledInit; [baseSel*4+4]=scaledInit (via eax indirect);
+ *     call ArgSarStoreJmp; ret.
+ *   Block B (+0x60): scaledInit=--baseSel[*4+4]; g_x_0054206c=[scaledInit*4+0]; jmp DecCallPushCall_00466090.
+ */
+__declspec(naked) void DualScaledChainPush_00466000(void) {
+    __asm {
+        call    func_004660d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   42h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_0054206c]
+        push    0x004ea978
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        jmp     DecCallPushCall_00466090
+    }
+}

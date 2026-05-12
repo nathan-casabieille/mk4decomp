@@ -3901,10 +3901,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004383b0
-    name: func_004383b0
+    name: InstallSelfPathSelfLoop_004383b0
     size: 139
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438440
     name: ScaledPopSaveJmp_00438440
     size: 44
@@ -6712,10 +6713,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00466000
-    name: func_00466000
+    name: DualScaledChainPush_00466000
     size: 140
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00466090
     name: DecCallPushCall_00466090
     size: 61
@@ -9088,10 +9090,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488740
-    name: func_00488740
+    name: DualEntryInstallSelf_00488740
     size: 138
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004887d0
     name: TwoCallsPushCall_004887d0
     size: 42
