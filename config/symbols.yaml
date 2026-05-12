@@ -4480,10 +4480,11 @@ functions:
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x0043b9a0
-    name: func_0043b9a0
+    name: InstallSelfDoubleMStack_0043b9a0
     size: 236
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043ba90
     name: EsiInstallPushDecPopJmp_0043ba90
     size: 136

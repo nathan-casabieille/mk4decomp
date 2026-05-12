@@ -37768,3 +37768,83 @@ __declspec(naked) void Cascade3ChainInit_0048fa50(void) {
         ret
     }
 }
+
+extern void EsiInstallPushDecPopJmp_0043ba90(void);
+
+/* @addr 0x0043b9a0 (236b game) - install-self with countdown.
+ *   chain[+0x84]!=0 path: dec g_x_0054207c; if not zero call StackPopDispatchTagged; pop+ret;
+ *   call GuardedSeq_004297b0; pause-check; mstack-push g_x_00542080, mstack-push g_x_00542080 again
+ *   (with g_x_0054207c copied to g_x_0054206c then g_x_00542080); call CmpEqInitCallElseJmp; pause-check;
+ *   mstack-pop g_x_00542080, mstack-pop g_x_0054207c; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_data_0054204c=1, pause=1; pop+ret.
+ */
+__declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   14h
+        mov     eax, dword ptr [g_x_0054207c]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], eax
+        _emit   75h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    GuardedSeq_004297b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542080]
+        mov     edx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   58h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 1
+        _emit   84h
+        _emit   0c8h
+        _emit   74h
+        _emit   07h
+        call    EsiInstallPushDecPopJmp_0043ba90
+        pop     esi
+        ret
+        mov     dword ptr [esi + 0x08], 0x0043b9a0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
