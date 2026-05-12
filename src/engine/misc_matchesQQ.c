@@ -42123,3 +42123,84 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         ret
     }
 }
+
+extern void DivLongPushCall_004ab320(void);
+
+/* @addr 0x00432000 (264b game) - 4-field setup + 2-iter Mul10Tail loop.
+ *   diff = g_x_0054206c - [g_x_0054204c*4]; -= [g_data_00542050*4]; shl 16;
+ *   += [g_x_0054204c*4 +4]; += [g_data_00542050*4 +4].
+ *   call DivLongPushCall_004ab320; if pause? final-ret.
+ *   Init g_data_0053a1ac = 2. Loop while g_data_0053a1ac >= 0:
+ *     Mul10Tail([g_x_00542048*4], g_x_0054206c), store to scaledInit++, ++g_x_00542048, --g_data_0053a1ac.
+ *   At end: scaledInit -= 3, g_x_00542048 -= 4 (rewind to start), pop esi, ret.
+ */
+__declspec(naked) void DiffMul10Loop_00432000(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [g_x_0054206c]
+        push    esi
+        mov     edx, dword ptr [ecx*4 + 0]
+        sub     eax, edx
+        mov     edx, dword ptr [g_data_00542050]
+        mov     dword ptr [g_x_0054206c], eax
+        sub     eax, dword ptr [edx*4 + 0]
+        shl     eax, 0x10
+        mov     dword ptr [g_x_0054206c], eax
+        mov     esi, dword ptr [ecx*4 + 4]
+        add     eax, esi
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [edx*4 + 4]
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        call    DivLongPushCall_004ab320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [eax*4 + 0]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542048]
+        add     esp, 8
+        inc     ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_0053a1ac], 2
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     edx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [edx*4 + 0]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_0053a1ac]
+        add     esp, 8
+        inc     edx
+        dec     ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_x_0053a1ac], ecx
+        _emit   79h
+        _emit   0a8h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, edx
+        sub     ecx, 3
+        sub     eax, 4
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_x_00542048], eax
+        pop     esi
+        ret
+    }
+}

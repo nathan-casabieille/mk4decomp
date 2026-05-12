@@ -3316,10 +3316,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00432000
-    name: func_00432000
+    name: DiffMul10Loop_00432000
     size: 264
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00432110
     name: func_00432110
     size: 1412
