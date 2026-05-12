@@ -9890,10 +9890,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048cf50
-    name: func_0048cf50
+    name: MStackPush2TripleCallChain_0048cf50
     size: 278
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048d070
     name: GuardedSelfRefSet_0048d070
     size: 80

@@ -44295,3 +44295,92 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         ret
     }
 }
+
+extern void PushSarCallBitToggle_0048bb60(void);
+
+/* @addr 0x0048cf50 (278b game) - sibling of 0x0048ce60, mstack-push 2 + 3 calls.
+ *   mstack-push g_scaledInit_00542044 and g_x_00542048.
+ *   cj[+0x34] &= ~0x800 (clear bit 11 via `and ch, 0xf7`).
+ *   Select dispatch arg: if cj == g_state_00538158 use g_x_00537f48 else g_state_005380e0;
+ *   store to g_x_0054206c. Call MStackPushTableSearchPop_0048bc40; if pause? ret.
+ *   load scaledInit[+0x0c] -> g_x_00542048; call DispatchSetDirtyToggle; if pause? ret.
+ *   If bit2 of g_state_0054208c clear: load scaledInit[+0x10] -> g_x_00542048.
+ *   Call PushSarCallBitToggle_0048bb60; if pause? ret.
+ *   If bit2 clear: g_x_00542048 = 0x005114b4 >> 2. call func_00406d00; if pause? ret.
+ *   mstack-pop pair to g_x_00542048, g_scaledInit_00542044. ret.
+ */
+__declspec(naked) void MStackPush2TripleCallChain_0048cf50(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        and     ch, 0xf7
+        mov     dword ptr [eax*4 + 0x34], ecx
+        mov     eax, dword ptr [g_x_00537f48]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     ecx, dword ptr [g_state_00538158]
+        _emit   74h
+        _emit   0ch
+        mov     edx, dword ptr [g_state_005380e0]
+        mov     dword ptr [g_x_0054206c], edx
+        call    MStackPushTableSearchPop_0048bc40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x0c]
+        mov     dword ptr [g_x_00542048], ecx
+        call    DispatchSetDirtyToggle_004ac150
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   12h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x10]
+        mov     dword ptr [g_x_00542048], eax
+        call    PushSarCallBitToggle_0048bb60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   50h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   0eh
+        mov     ecx, 0x005114b4
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542048], ecx
+        call    func_00406d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
