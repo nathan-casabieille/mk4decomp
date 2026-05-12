@@ -5088,10 +5088,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x00446680
-    name: func_00446680
+    name: GuardedCascadeBaseSelBit_00446680
     size: 272
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446790
     name: GuardedChainMaskOr_00446790
     size: 235

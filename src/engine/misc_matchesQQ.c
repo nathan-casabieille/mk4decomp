@@ -43414,3 +43414,99 @@ __declspec(naked) void MStackPush3TripleMul10WithAbs_0048b500(void) {
         ret
     }
 }
+
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void func_00406dd0(void);
+
+/* @addr 0x00446680 (272b game) - load baseSel triple + call cascade with bit2 gate.
+ *   Load baseSel[+0x30/+0x60/+0x4c] -> scaledInit/g_x_00542048/g_cj_0054205c.
+ *   Call PushPopScaled1cDoubleCall; if pause? ret.
+ *   mstack-push g_cj_0054205c; g_cj_0054205c = g_x_00542058.
+ *   Call DispatchSetDirtyToggle.
+ *   If bit2 of state set: g_x_00542048 = 0x0051962c >> 2. Else: 0x00519ae0 >> 2.
+ *   mstack-pop g_cj_0054205c. Call func_00406dd0; if pause/bit2? ret.
+ *   g_x_00542048 = baseSel[+0x30]. Call func_004058c0; if pause? ret.
+ *   Call func_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
+ *   else: state ^= 4 (clear bit2); ret.
+ */
+__declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     edx, dword ptr [eax*4 + 0x60]
+        mov     dword ptr [g_x_00542048], edx
+        mov     eax, dword ptr [eax*4 + 0x4c]
+        mov     dword ptr [g_cj_0054205c], eax
+        call    PushPopScaled1cDoubleCall_00408510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_00542058]
+        mov     dword ptr [g_cj_0054205c], edx
+        call    DispatchSetDirtyToggle_004ac150
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   0fh
+        mov     eax, 0x0051962c
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        _emit   0ebh
+        _emit   0eh
+        mov     ecx, 0x00519ae0
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    func_00406dd0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   56h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   4eh
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_x_00542048], ecx
+        call    func_004058c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2eh
+        call    func_0043e3e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   09h
+        mov     eax, ecx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+        pop     ebx
+        ret
+    }
+}
