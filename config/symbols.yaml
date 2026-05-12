@@ -3711,10 +3711,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004366d0
-    name: func_004366d0
+    name: DualEntry5WayThreshold_004366d0
     size: 137
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436760
     name: Wrapper_00436760
     size: 14
@@ -3979,10 +3980,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00438a10
-    name: func_00438a10
+    name: InstallSelfCountdownDispatch_00438a10
     size: 134
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438aa0
     name: InstallSelfBitGate_00438aa0
     size: 109
@@ -7447,10 +7449,11 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp_30.c
   - addr: 0x00472fe0
-    name: func_00472fe0
+    name: InstallSelfMagicShift_00472fe0
     size: 137
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473070
     name: PushPopCurrentSetFFFFFFFF_00473070
     size: 73

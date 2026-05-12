@@ -29641,3 +29641,163 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         ret
     }
 }
+
+extern void DualGatedStateYield_0048fc80(void);
+extern void func_004339c0(void);
+extern void Push84CallTestInstallJmp_00460940(void);
+extern void CmpJmpConstStoreJmp_004389e0(void);
+extern void StackPopDispatchTagged_0041f780(void);
+
+/* @addr 0x00438a10 (134b game) - install-self + countdown.
+ *   Block A: esi=baseSel*4; eax=chain[+0x84]; clear chain[+0x84]; if zero ret;
+ *     call DualGatedStateYield; if !pause: mstack-push 0x00438a70, jmp func_004339c0; else install-self at +0x08, pause=1, 0054204c=1, ret.
+ *   Block B (+0x60): call Push84CallTestInstallJmp; if !pause: countdown g_x_00542080; if zero jmp CmpJmpConstStoreJmp_004389e0; else self-jmp.
+ *   Final tail-jmp StackPopDispatchTagged_0041f780.
+ */
+__declspec(naked) void InstallSelfCountdownDispatch_00438a10(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   24h
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00438a70
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x00438a10
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        call    Push84CallTestInstallJmp_00460940
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   05h
+        jmp     CmpJmpConstStoreJmp_004389e0
+        jmp     StackPopDispatchTagged_0041f780
+        ret
+    }
+}
+
+extern void CallPauseMStackPushSet2Jmp_00437930(void);
+extern void ScaledChainSignDirtyToggle_00439680(void);
+extern void Wrapper_00436760(void);
+extern void Wrapper_00436770(void);
+extern void func_00436780(void);
+
+/* @addr 0x004366d0 (137b game) - 5-way state threshold dispatcher with two entry points.
+ *   Block A (+0x00): threshold checks on g_state_00535ddc; jmp GuardedSeq/MStackPush;
+ *     fallback: push string, call PackedAdvanceCallTailJmp.
+ *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
+ *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
+ */
+__declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x0003cccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        cmp     eax, 0x00018000
+        _emit   7dh
+        _emit   05h
+        jmp     CallPauseMStackPushSet2Jmp_00437930
+        push    0x004e46f0
+        call    PackedAdvanceCallTailJmp_004392c0
+        add     esp, 4
+        ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        call    ScaledChainSignDirtyToggle_00439680
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00018000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00436780
+        cmp     eax, 0x00030000
+        _emit   7dh
+        _emit   05h
+        jmp     Wrapper_00436770
+        cmp     eax, 0x00040000
+        _emit   7dh
+        _emit   05h
+        jmp     Wrapper_00436760
+        jmp     GuardedSeq_00433bb0
+        ret
+    }
+}
+
+extern void Thunk_0049cbc0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
+/* @addr 0x00472fe0 (137b game) - dual-entry install-self with magic-shift table init.
+ *   Block A (+0x00): ecx=scaledInit; eax=0x00538158>>2; g_x_0054206c=0; eax = ecx+eax-1;
+ *     scaledInit=eax; mov [eax*4 + 0], 0; ret.
+ *   Block B (+0x30): esi=baseSel*4; if chain[+0x84]!=0 call Thunk_0049cbc0 then pop+ret;
+ *     else push 0x00808080, call ThreeChanPackClamp, install-self at chain[+0x08]=0x00473010,
+ *     chain[+0x84]=1, g_data_0054204c=3, g_pause=1; pop+ret.
+ */
+__declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x00538158
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], 0
+        lea     eax, [ecx + eax - 1]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], 0
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    Thunk_0049cbc0
+        pop     esi
+        ret
+        push    0x00808080
+        call    ThreeChanPackClamp_00404cc0
+        add     esp, 4
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x00473010
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
