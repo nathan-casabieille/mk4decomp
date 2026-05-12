@@ -23438,6 +23438,60 @@ __declspec(naked) void InstallSelfMul10_00481c70(void) {
     }
 }
 
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledClearJmp_00428d40(void);
+
+/* @addr 0x0049a410 (194b game) - install-self with StoreTwoCall + ArgSarStoreJmp.
+ *   eax = base*4; ecx = [eax+0x84]; clear; if (ecx == 0) install-path.
+ *   else: push 0x47, 0x49a580; call StoreTwoCall_0049cb40; add esp, 8;
+ *     eax = 0x1016; g_x_0054206c = eax; chain[base+0x74] = eax;
+ *     push 0x4f23f0; call ArgSarStoreJmp; add esp, 4; ret.
+ *   install-path: g_x_00542080 = 4; install self; packed_ptr store;
+ *     g_scaledInit++; chain[+0x84] = 0; call ScaledClearJmp; g_framePauseFlag = 1.
+ */
+__declspec(naked) void InstallSelfStoreTwoCall_0049a410(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   39h
+        push    0x47
+        push    0x0049a580
+        call    StoreTwoCall_0049cb40
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        add     esp, 8
+        mov     eax, 0x1016
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f23f0
+        mov     [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        ret
+        mov     dword ptr [g_x_00542080], 4
+        mov     dword ptr [eax + 8], 0x0049a410
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, 0x0049a410
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     edx, 0x01000000
+        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledClearJmp_00428d40
+        mov     dword ptr [g_framePauseFlag], 1
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
