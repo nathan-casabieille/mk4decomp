@@ -699,10 +699,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00408ad0
-    name: func_00408ad0
+    name: MStackInitCallToggle_00408ad0
     size: 191
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00408b90
     name: DirtyToggleInstall_00408b90
     size: 115
@@ -7051,10 +7052,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046ed40
-    name: func_0046ed40
+    name: MStackJmpInstallSelf_0046ed40
     size: 192
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046ee00
     name: func_0046ee00
     size: 356
