@@ -6692,10 +6692,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00463fb0
-    name: func_00463fb0
+    name: MStackChainCountdownLoop_00463fb0
     size: 220
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00464090
     name: func_00464090
     size: 250
