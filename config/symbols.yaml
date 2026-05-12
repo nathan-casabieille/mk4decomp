@@ -10737,10 +10737,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00492920
-    name: func_00492920
+    name: MStackPush3MaskBit_00492920
     size: 182
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004929e0
     name: MStackPush3MaskBit0_004929e0
     size: 185

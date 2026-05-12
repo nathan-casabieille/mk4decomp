@@ -25776,6 +25776,63 @@ __declspec(naked) void TablePushAccumTailJmp_00429e30(void) {
     }
 }
 
+/* @addr 0x00492920 (182b game) - same pattern as MStackPush3MaskBit0_004929e0 but with mask 0x01.
+ *   Push g_x_0054206c, g_x_00542070, g_x_00542074; call func_00426230; pause? -> end.
+ *   edx = g_x_0054206c & 1; eax = g_state_0054208c; g_x_00542094 = edx;
+ *   if (edx != 0): or al, 1; else: and al, 0xfe.
+ *   g_state_0054208c = eax.
+ *   mstack-pop into g_x_00542074, g_x_00542070, g_x_0054206c.
+ */
+__declspec(naked) void MStackPush3MaskBit_00492920(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    func_00426230
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_state_0054208c]
+        and     edx, 1
+        mov     dword ptr [g_x_00542094], edx
+        _emit   75h
+        _emit   04h
+        and     al, 0xfe
+        _emit   0ebh
+        _emit   02h
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
