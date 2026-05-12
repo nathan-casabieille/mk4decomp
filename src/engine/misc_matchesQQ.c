@@ -45105,3 +45105,96 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         ret
     }
 }
+
+/* @addr 0x00424740 (285b game) - 3-unrolled mod-0x6487e on scaledInit[0/4/8].
+ *   For each of 3 indices (0, 4, 8): load ecx = scaledInit[index]. If ecx < 0:
+ *     ecx += ((0x6487d - ecx) * 0xa2f99905 >> 18) * 0x6487e (reciprocal-magic add-to-positive).
+ *   Else: while (ecx >= 0x6487e): ecx -= 0x6487e (using magic-div as quotient counter).
+ *   Store result back to scaledInit[index] and g_x_0054206c.
+ *   pop esi; ret.
+ */
+__declspec(naked) void TripleMod411262_00424740(void) {
+    __asm {
+        push    esi
+        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [esi*4 + 0]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7dh
+        _emit   1fh
+        mov     edx, 0x0006487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x0006487e
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x0006487e
+        _emit   7ch
+        _emit   19h
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+        sub     ecx, 0x0006487e
+        dec     edx
+        _emit   75h
+        _emit   0f7h
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [esi*4 + 0], ecx
+        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [esi*4 + 4]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7dh
+        _emit   1fh
+        mov     edx, 0x0006487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x0006487e
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x0006487e
+        _emit   7ch
+        _emit   19h
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+        sub     ecx, 0x0006487e
+        dec     edx
+        _emit   75h
+        _emit   0f7h
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [esi*4 + 4], ecx
+        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [esi*4 + 8]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7dh
+        _emit   1fh
+        mov     edx, 0x0006487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x0006487e
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x0006487e
+        _emit   7ch
+        _emit   19h
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+        sub     ecx, 0x0006487e
+        dec     edx
+        _emit   75h
+        _emit   0f7h
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [esi*4 + 8], ecx
+        pop     esi
+        ret
+    }
+}
