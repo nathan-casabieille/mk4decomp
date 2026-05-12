@@ -2130,10 +2130,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004260d0
-    name: func_004260d0
+    name: DispatcherChainRampClamp_004260d0
     size: 248
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004261d0
     name: GuardedDualMaskFlagToggle_004261d0
     size: 82

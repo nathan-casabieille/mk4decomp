@@ -39811,3 +39811,98 @@ __declspec(naked) void DualHelperMul10TailPair_00490ec0(void) {
         ret
     }
 }
+
+extern void MStackPushComplexCallPop_00406430(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+
+/* @addr 0x004260d0 (248b game) - dual-block: guarded chain set + ramp clamp.
+ *   B1 (0..188, +2 NOPs): shr 0x00514f1c >>2 -> g_x_00542048; call DispatcherComplex260_00407030;
+ *     if pause? ret. If bit2 of g_state_0054208c set? ret. Set scaledInit[+0x54]=0xf8300000,
+ *     [+0x30]=0x274, scaledInit chain[+0x18][+0x1c]=1; g_x_0054204c=eax; call
+ *     func_00408600; if pause or bit2? ret. call func_004088b0; if pause or bit2? ret.
+ *     load g_x_0054204c[+0x28]; tail-jmp MStackPushComplexCallPop_00406430; ret.
+ *   B2 (192..247): edx = g_x_00542048[+0x14] - g_data_0053a384; if neg clamp to 0;
+ *     store to g_data_00543550 = 2*result; clear g_x_00542048[+0x14]; tail-jmp
+ *     ClampMulShiftStore_004ba0e0.
+ */
+__declspec(naked) void DispatcherChainRampClamp_004260d0(void) {
+    __asm {
+        mov     eax, 0x00514f1c
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x274
+        _emit   0c7h
+        _emit   04h
+        _emit   8dh
+        _emit   54h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   30h
+        _emit   0f8h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, 1
+        mov     dword ptr [edx*4 + 0x30], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [eax*4 + 0x1c], ecx
+        call    func_00408600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   38h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   2fh
+        call    func_004088b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   18h
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [ecx*4 + 0x28]
+        mov     dword ptr [g_x_00542048], edx
+        jmp     MStackPushComplexCallPop_00406430
+        ret
+        nop
+        nop
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_x_0053a384]
+        mov     eax, dword ptr [ecx*4 + 0x14]
+        sub     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   79h
+        _emit   07h
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        lea     edx, [eax + eax]
+        mov     dword ptr [g_x_00543550], edx
+        mov     dword ptr [ecx*4 + 0x14], eax
+        jmp     ClampMulShiftStore_004ba0e0
+    }
+}

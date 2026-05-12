@@ -43,13 +43,9 @@ void ScaledStoreIdx24_00406ce0(void) {
  *   jmp     +0xf
  */
 extern void func_004296d4(void);
-__declspec(naked) void DirtyOrJmp_004296c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        jmp     func_004296d4
-    }
+void DirtyOrJmp_004296c0(void) {
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    func_004296d4();
 }
 
 /* @addr 0x00421c20 (18b)
@@ -74,13 +70,9 @@ void ZeroTriple_00421c20(void) {
  *   jmp     +0xe
  */
 extern void func_0044cce2(void);
-__declspec(naked) void Add0fJmp_0044ccd0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        add     eax, 0x0f
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     func_0044cce2
-    }
+void Add0fJmp_0044ccd0(void) {
+    g_scaledInit_00542044 = g_baseSel_00542060 + 0x0f;
+    func_0044cce2();
 }
 
 /* @addr 0x00489f50 (16b)
