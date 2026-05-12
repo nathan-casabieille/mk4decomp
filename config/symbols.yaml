@@ -11606,10 +11606,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x0049fa50
-    name: func_0049fa50
+    name: MStackDirtyArgsBit0_0049fa50
     size: 186
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049fb10
     name: Cmp2DirtySetOrClear_0049fb10
     size: 36

@@ -25427,6 +25427,94 @@ __declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
     }
 }
 
+extern void Cmp2DirtySetOrClear_0049fb10(void);
+extern void Cmp2DirtySetOrClear_0049fb40(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+
+/* @addr 0x0049fa50 (186b game) - mstack-push g_scaledInit; 2 dirty cmp + 3 push-arg calls; bit-0 set/clear.
+ *   Push g_scaledInit; call Cmp2DirtySetOrClear_0049fb10; pause? -> end.
+ *   if (208c & 1): goto end-bit-set. else: call Cmp2DirtySetOrClear_0049fb40; pause? -> end.
+ *   if (208c & 1): goto end-bit-set.
+ *   push 0x15; call DualPushSetCallDualPop; add esp,4; if (208c & 1) goto end-bit-set.
+ *   push 0x16; call DualPushSetCallDualPop; add esp,4; if (208c & 1) goto end-bit-set.
+ *   push 0x250; call DualPushSetCallDualPop; add esp,4; if !(208c & 1) goto end-bit-clear.
+ *   end-bit-set: g_state_0054208c &= ~1; jmp store.
+ *   end-bit-clear: g_state_0054208c |= 1.
+ *   store: g_state_0054208c = result.
+ *   mstack-pop into g_scaledInit.
+ */
+__declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    Cmp2DirtySetOrClear_0049fb10
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   52h
+        call    Cmp2DirtySetOrClear_0049fb40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   71h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   3ch
+        push    0x15
+        call    DualPushSetCallDualPop_00404b10
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   29h
+        push    0x16
+        call    DualPushSetCallDualPop_00404b10
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   16h
+        push    0x250
+        call    DualPushSetCallDualPop_00404b10
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   09h
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        _emit   0ebh
+        _emit   07h
+        mov     eax, dword ptr [g_state_0054208c]
+        or      eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
