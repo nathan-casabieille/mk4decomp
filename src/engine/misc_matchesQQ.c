@@ -29164,3 +29164,150 @@ __declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
         ret
     }
 }
+
+extern void func_0048cf50(void);
+extern void ScaledMove48to58_00490720(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void func_00486610(void);
+extern void func_00486580(void);
+
+/* @addr 0x00486410 (114b game) - mstack-push self-handler & wait-then-chain.
+ *   Block A (+0x00): g_data_004d57ac_arr[++g_state]=0x00486440; g_x_00542084=0xccc; jmp func_00486610.
+ *   Block B (+0x30): countdown wait on g_x_00542080; on zero call func_0048cf50; pause-check then
+ *     two more sub-calls and tail-jmps. Self-jmp at +0x3d when timer not yet expired.
+ */
+__declspec(naked) void MStackPushWaitChain_00486410(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_00542084], 0x00000ccc
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00486440
+        jmp     func_00486610
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   05h
+        jmp     MStackPushWaitChain_00486410
+        call    func_0048cf50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        cmp     dword ptr [g_x_0054207c], 1
+        _emit   75h
+        _emit   05h
+        jmp     func_00486580
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        ret
+    }
+}
+
+extern void GuardedSeq_004297b0(void);
+extern void InstallSelfMStackIndirect_00487920(void);
+extern void SetJmp_00487910(void);
+
+/* @addr 0x00487890 (115b game) - triple-entry: call GuardedSeq; if !pause & bit-set,
+ *   set scaledidx[ecx*4+0x28]=4. Second (+0x30): set 0x0054207c=0x501, clear g_cj_00542054,
+ *   jmp InstallSelfMStackIndirect_00487920. Third (+0x50): load chain[*4+0x3c]/0x74, jmp SetJmp_00487910.
+ */
+__declspec(naked) void TripleEntryBitsetMStack_00487890(void) {
+    __asm {
+        call    GuardedSeq_004297b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   17h
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, 4
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        ret
+        _emit   90h
+        mov     dword ptr [g_x_0054207c], 0x00000501
+        mov     dword ptr [g_cj_00542054], 0
+        jmp     InstallSelfMStackIndirect_00487920
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x74]
+        mov     dword ptr [g_x_0054207c], ecx
+        jmp     SetJmp_00487910
+    }
+}
+
+extern void CjInstallSelfRouter_00470480(void);
+extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void func_0042c5a0(void);
+
+/* @addr 0x0042c4f0 (116b game) - dual-entry install-self.
+ *   Block A (+0x00): esi=baseSel*4; eax=chain[+0x84]; clear chain[+0x84]; if eax==0 pop+ret;
+ *     else call CjInstallSelfRouter, pop, ret. Else (after install): set g_data_00542048=0x42b6f0,
+ *     call ScaledChainCallPauseSetJmp; if !pause: install-self at chain[+8], chain[+0x84]=1,
+ *     g_data_0054204c=1, g_pause=1; pop+ret.
+ *   Block B (+0x60): call FiveCallScaledChainTailJmp; if !pause: jmp func_0042c5a0; else ret.
+ */
+__declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        mov     dword ptr [g_x_00542048], 0x0042b6f0
+        call    ScaledChainCallPauseSetJmp_0048f8e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x0042c4f0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        _emit   90h
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_0042c5a0
+        ret
+    }
+}

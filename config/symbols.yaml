@@ -2851,10 +2851,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c4f0
-    name: func_0042c4f0
+    name: InstallSelfDualEsi_0042c4f0
     size: 116
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c570
     name: GuardedDispatch_0042c570
     size: 34
@@ -8908,10 +8909,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486410
-    name: func_00486410
+    name: MStackPushWaitChain_00486410
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486490
     name: InstallSelfHelperGate_00486490
     size: 125
@@ -9034,10 +9036,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487890
-    name: func_00487890
+    name: TripleEntryBitsetMStack_00487890
     size: 115
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487910
     name: SetJmp_00487910
     size: 15
