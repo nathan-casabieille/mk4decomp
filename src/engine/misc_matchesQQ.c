@@ -43677,3 +43677,95 @@ __declspec(naked) void InstallSelfThreeStateLeaPlus22_00437970(void) {
         ret
     }
 }
+
+extern void DoublePushCallDoublePop_004905e0(void);
+extern void GuardedSeq_00490c60(void);
+
+/* @addr 0x004904c0 (273b game) - bit-driven dispatch with 2-call cascade + mstack-push.
+ *   Negate g_x_0054206c -> g_x_00542070. scaledInit = baseSel[+0x38];
+ *   g_x_00542074 = scaledInit[+0x34]; bit0 -> g_x_00542094.
+ *   If bit0 set: "1-bit" branch; else "0-bit" branch.
+ *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
+ *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble_004903f0.
+ */
+__declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        neg     eax
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_x_00542074], eax
+        and     eax, 1
+        mov     dword ptr [g_x_00542094], eax
+        _emit   75h
+        _emit   77h
+        call    DoublePushCallDoublePop_004905e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   0ch
+        mov     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     al, byte ptr [g_state_0054208c]
+        test    al, 1
+        _emit   74h
+        _emit   12h
+        call    GuardedSeq_00490c60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   82h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     MStackFrameCdeclDouble_004903f0
+        call    DoublePushCallDoublePop_004905e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   57h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     MStackFrameCdeclDouble_004903f0
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_x_00542070]
+        inc     ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4 + 0], eax
+        call    GuardedSeq_00490c60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     MStackFrameCdeclDouble_004903f0
+        ret
+    }
+}
