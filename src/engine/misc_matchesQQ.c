@@ -35781,3 +35781,75 @@ __declspec(naked) void StateMachineInit_00493000(void) {
         ret
     }
 }
+
+extern void SaveCallRestore_004049d0(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void DispatcherComplex260_00407030(void);
+extern void MStackCall_004062a0(void);
+extern void func_0049ed00(void);
+extern unsigned int g_data_0053a1bc;
+
+/* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
+__declspec(naked) void DualGuardStateMachine_0049ea30(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542004]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   0eh
+        mov     eax, dword ptr [g_data_0053a1bc]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   0eh
+        push    0x00000266
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        ret
+        push    0x00000266
+        call    SaveCallRestoreOrXor_00404a00
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 4
+        test    al, 4
+        _emit   0fh
+        _emit   84h
+        _emit   93h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00541fc0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   5ah
+        call    MStackCall_004062a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4ch
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x30], 0x00000266
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_x_0054206c], 2
+        call    func_0049ed00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x0000028f
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        ret
+    }
+}
