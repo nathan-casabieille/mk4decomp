@@ -22414,3 +22414,140 @@ __declspec(naked) void LinkedListInsert_004ab440(void) {
         ret
     }
 }
+
+extern void CjInstallSelfRouter_00470480(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void func_00482000(void);
+
+/* @addr 0x00481f30 (199b game) - install-self with 3-way state branch.
+ *   esi = base*4; flag = [esi+0x84]; clear; sub flag,0.
+ *   if (flag == 0): packed-store path (clears install-self with packed store + call F3);
+ *   if (flag == 1): call F2 (CallPauseScaledStoreCopyJmp); pause? -> end ret;
+ *      install self with [esi+0x84]=2; g_x_0054204c=0x28; g_framePauseFlag=1.
+ *   else: call F1 (CjInstallSelfRouter); pop esi; ret.
+ */
+__declspec(naked) void InstallSelf3WayState_00481f30(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   43h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], 0x00481f30
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 0x28
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], 0x00481f30
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00481f30
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00482000
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned int g_x_00538038;
+extern unsigned int g_x_0053803c;
+extern unsigned int g_x_00542010;
+extern unsigned int g_x_00542014;
+extern unsigned int g_x_00542018;
+extern unsigned int g_x_0054201c;
+extern unsigned int g_x_00542050;
+
+/* @addr 0x0049c5a0 (199b game) - dual-cmp swap-and-store with 3 saved regs.
+ *   edx = g_x_0054205c; ebx = [0x538158]; esi = [0x53803c]; edi = [0x538038];
+ *   g_x_00542048 = edi; if (edx != ebx) g_x_00542048 = esi;
+ *   g_x_00542084 = chain[g_x_00542048 + 0x68];
+ *   g_x_00542088 = chain[g_x_00542048 + 0x6c];
+ *   ecx = [0x53815c]; g_x_00542050 = g_x_00542010;
+ *   g_x_00542048 = ecx; g_x_0054204c = esi; g_x_00542054 = g_x_00542014;
+ *   if (ecx == edx): swap with ebx-side; g_x_0054204c = edi;
+ *      g_x_00542048 = ebx; g_x_00542050 = g_x_00542018; g_x_00542054 = g_x_0054201c;
+ *   eax = g_baseSel*4; chain[eax + 0x38] = ecx;
+ *   chain[eax + 0x3c] = g_x_0054204c (=ecx-or-edi);
+ *   chain[eax + 0x40] = g_x_00542050; chain[eax + 0x44] = g_x_00542054.
+ */
+__declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
+    __asm {
+        mov     edx, dword ptr [g_x_0054205c]
+        push    ebx
+        mov     ebx, dword ptr [g_x_00538158]
+        push    esi
+        mov     esi, dword ptr [g_x_0053803c]
+        push    edi
+        mov     edi, dword ptr [g_x_00538038]
+        cmp     edx, ebx
+        mov     eax, edi
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   07h
+        mov     eax, esi
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, [eax*4 + 0x68]
+        mov     dword ptr [g_x_00542084], ecx
+        mov     eax, [eax*4 + 0x6c]
+        mov     ecx, dword ptr [g_x_0053815c]
+        mov     dword ptr [g_x_00542088], eax
+        mov     eax, dword ptr [g_x_00542010]
+        cmp     ecx, edx
+        mov     dword ptr [g_x_00542050], eax
+        mov     eax, dword ptr [g_x_00542014]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_0054204c], esi
+        mov     dword ptr [g_x_00542054], eax
+        _emit   75h
+        _emit   24h
+        mov     edx, dword ptr [g_x_00542018]
+        mov     eax, dword ptr [g_x_0054201c]
+        mov     ecx, ebx
+        mov     dword ptr [g_x_0054204c], edi
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_00542050], edx
+        mov     dword ptr [g_x_00542054], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     [edx*4 + 0x38], ecx
+        mov     ecx, dword ptr [g_x_0054204c]
+        pop     edi
+        lea     eax, [edx*4 + g_data_004d57ac_arr]
+        pop     esi
+        pop     ebx
+        mov     [eax + 0x3c], ecx
+        mov     edx, dword ptr [g_x_00542050]
+        mov     [eax + 0x40], edx
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     [eax + 0x44], ecx
+        ret
+    }
+}
