@@ -10038,10 +10038,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048f160
-    name: func_0048f160
+    name: State208cBit0Flag_0048f160
     size: 172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048f210
     name: GuardedRangeCmpToggle_0048f210
     size: 87

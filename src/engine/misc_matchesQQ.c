@@ -28447,6 +28447,78 @@ __declspec(naked) void InstallSelfChainSetB333v3_00437fb0(void) {
     }
 }
 
+extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern unsigned int g_x_00535d04;
+extern unsigned int g_x_0053a774;
+extern unsigned int g_x_0053a180;
+
+/* @addr 0x0048f160 (172b game) - state-208c bit-0 flag based on two calls + chain compare.
+ *   call ScaledLoadCmpStoreXfm; pause? clear-bit-0 path.
+ *   if (g_x_00542070 < g_x_0054206c): call ScaledLoadCmpStoreXfm again; pause? clear-bit-0;
+ *     else: g_x_00542074 = g_x_00542070; clear bit 0; ret.
+ *   else: ecx = [0x538158]; edx = g_x_0054205c; eax = [0x535d04];
+ *     g_x_0054206c = eax; g_scaledInit = ecx;
+ *     if (edx != ecx): g_x_0054206c = [0x53a774].
+ *     ecx = [0x53a180]; edx = ecx; ecx += 0xfff60000; edx -= eax (g_x_00542074).
+ *     g_x_00542070 = ecx. if (eax <= ecx): clear bit 0; else: set bit 0.
+ */
+__declspec(naked) void State208cBit0Flag_0048f160(void) {
+    __asm {
+        call    ScaledLoadCmpStoreXfm_0048f2a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_x_0054206c]
+        cmp     eax, ecx
+        _emit   7dh
+        _emit   27h
+        call    ScaledLoadCmpStoreXfm_0048f2a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   7ch
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_x_00542070]
+        and     al, 0xfe
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     ecx, dword ptr [g_x_00538158]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_00535d04]
+        cmp     edx, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_x_0053a774]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [g_x_0053a180]
+        mov     edx, ecx
+        add     ecx, 0xfff60000
+        sub     edx, eax
+        cmp     eax, ecx
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_x_00542070], ecx
+        _emit   7eh
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
