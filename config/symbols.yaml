@@ -8342,10 +8342,11 @@ functions:
     status: matched
     file: src/engine/dirty_guard_lit_or_jmp.c
   - addr: 0x0047ef60
-    name: func_0047ef60
+    name: DualEntryInstallScaledChain_0047ef60
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047eff0
     name: func_0047eff0
     size: 421
@@ -8494,10 +8495,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00480f20
-    name: func_00480f20
+    name: DualEntryDecLoop_00480f20
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480fb0
     name: ScaledLitAddJmp_00480fb0
     size: 38
@@ -8690,10 +8692,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483130
-    name: func_00483130
+    name: InstallSelfReenterSelfJmp_00483130
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004831c0
     name: func_004831c0
     size: 1045
