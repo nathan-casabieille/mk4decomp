@@ -26235,6 +26235,117 @@ __declspec(naked) void StateDispatchYield_00471190(void) {
     }
 }
 
+extern unsigned int g_x_007affe4;
+extern unsigned int g_x_007affe0;
+extern void (*g_PeekMessageA_007b003c)(void);
+
+/* @addr 0x004b4530 (196b engine.geo) - Windows message-queue probe (PeekMessageA-like indirect).
+ *   Stack frame: sub esp, 0x14; save ebx/ebp/esi/edi (ebp = 0).
+ *   Probe HWND ([0x7affe4]), arg1 ([esp+0x2c]), arg2 ([esp+0x30]),
+ *   state ([0x7affe0] == 0), arg3 ([esp+0x34]); all must be non-zero.
+ *   Build PeekMessage params on stack depending on [esp+0x28] (esi).
+ *   Indirect call [0x7b003c].
+ *   On success, verify [esp+0x14] != 0 and [esp+0x18] < 0x280;
+ *   write result to *arg1, *arg2, *arg3=1; update [0x7affe0]; return 1.
+ *   On any fail, return 0.
+ */
+__declspec(naked) void WindowsMsgProbe_004b4530(void) {
+    __asm {
+        sub     esp, 0x14
+        mov     eax, dword ptr [g_x_007affe4]
+        push    ebx
+        push    ebp
+        xor     ebp, ebp
+        push    esi
+        cmp     eax, ebp
+        push    edi
+        mov     dword ptr [esp + 0x10], 0x14
+        mov     [esp + 0x14], ebp
+        mov     [esp + 0x18], ebp
+        mov     [esp + 0x1c], ebp
+        mov     [esp + 0x20], ebp
+        _emit   0fh
+        _emit   84h
+        _emit   8ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     [esp + 0x2c], ebp
+        _emit   0fh
+        _emit   84h
+        _emit   82h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ebx, [esp + 0x30]
+        cmp     ebx, ebp
+        _emit   74h
+        _emit   7ah
+        cmp     dword ptr [g_x_007affe0], ebp
+        _emit   75h
+        _emit   72h
+        mov     edi, [esp + 0x34]
+        cmp     edi, ebp
+        _emit   74h
+        _emit   6ah
+        mov     esi, [esp + 0x28]
+        cmp     esi, ebp
+        _emit   74h
+        _emit   0eh
+        lea     eax, [esp + 0x10]
+        push    eax
+        push    ebp
+        push    ebp
+        push    ebp
+        push    1
+        push    1
+        _emit   0ebh
+        _emit   0eh
+        lea     ecx, [esp + 0x10]
+        push    ecx
+        push    ebp
+        push    ebp
+        push    0xff
+        push    ebp
+        push    ebp
+        call    dword ptr [g_PeekMessageA_007b003c]
+        cmp     eax, ebp
+        _emit   74h
+        _emit   3ch
+        mov     eax, [esp + 0x14]
+        cmp     eax, ebp
+        _emit   74h
+        _emit   34h
+        mov     ecx, [esp + 0x18]
+        cmp     ecx, 0x00000280
+        _emit   72h
+        _emit   28h
+        mov     edx, [esp + 0x2c]
+        mov     [edx], eax
+        xor     eax, eax
+        cmp     esi, ebp
+        mov     [ebx], ecx
+        setne   al
+        inc     eax
+        mov     dword ptr [g_x_007affe0], eax
+        mov     dword ptr [edi], 1
+        mov     eax, 1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x14
+        ret
+        pop     edi
+        pop     esi
+        pop     ebp
+        xor     eax, eax
+        pop     ebx
+        add     esp, 0x14
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
