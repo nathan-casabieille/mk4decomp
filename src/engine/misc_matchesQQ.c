@@ -34726,3 +34726,157 @@ __declspec(naked) void MStackPush3CmpCall_0048eec0(void) {
         ret
     }
 }
+
+extern void CmpRangeJmpStateInit_00436250(void);
+extern void DualCallPauseDirtyJmp_00435f20(void);
+extern void func_00436030(void);
+
+/* @addr 0x00435f50 (209b game) - 4-block dual-Mul10Tail + thresholded state dispatcher.
+ *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit_00436250.
+ *     Else threshold checks on g_state_00535ddc: <0x13333 jmp func_00438f80, >0x28000 jmp GuardedSeq_00433bb0,
+ *     else jmp func_00438f80.
+ *   B/C (+0x80/+0x90): jmp DualCallPauseDirtyJmp_00435f20.
+ *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_00438ee0,
+ *     >0x14ccc jmp func_00437c10, else jmp func_00436030. ret.
+ */
+__declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x6c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x74]
+        push    eax
+        push    eax
+        mov     dword ptr [g_x_00542070], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_x_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   74h
+        _emit   05h
+        jmp     CmpRangeJmpStateInit_00436250
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00013333
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00438f80
+        cmp     eax, 0x00028000
+        _emit   7eh
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        jmp     func_00438f80
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     DualCallPauseDirtyJmp_00435f20
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     DualCallPauseDirtyJmp_00435f20
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x0002b333
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        cmp     eax, 0x00014ccc
+        _emit   7dh
+        _emit   05h
+        jmp     func_00437c10
+        jmp     func_00436030
+        ret
+    }
+}
+
+extern unsigned int g_data_00541fb8;
+
+/* @addr 0x00463ed0 (209b game) - mstack-push 2 (g_x_00542070, g_scaledInit), set scaledInit and chain,
+ *   loop scanning chain[*4+disp] for zero terminator, mstack-pop 2.
+ */
+__declspec(naked) void MStackPushSearchLoop_00463ed0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_x_00541fb0]
+        mov     ecx, dword ptr [g_data_00541fb8]
+        mov     dword ptr [g_x_00542070], 4
+        shl     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x0c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   24h
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     ecx
+        inc     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     ecx, dword ptr [eax*4 - 4]
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   75h
+        _emit   0dch
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

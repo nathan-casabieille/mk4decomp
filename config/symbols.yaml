@@ -3674,10 +3674,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x00435f50
-    name: func_00435f50
+    name: Mul10ThresholdQuad_00435f50
     size: 209
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436030
     name: func_00436030
     size: 240
@@ -6677,10 +6678,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00463ed0
-    name: func_00463ed0
+    name: MStackPushSearchLoop_00463ed0
     size: 209
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463fb0
     name: func_00463fb0
     size: 220
