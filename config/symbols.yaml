@@ -2541,10 +2541,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00429240
-    name: func_00429240
+    name: InstallSelfPair3Branch_00429240
     size: 185
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429300
     name: EsiInstallChainCmpDualCall_00429300
     size: 144

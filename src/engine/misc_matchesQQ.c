@@ -24595,6 +24595,82 @@ __declspec(naked) void InstallSelf3WayChainCmp_00428d80(void) {
     }
 }
 
+extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void ScaledArrStore_00429980(void);
+
+/* @addr 0x00429240 (185b game) - install-self with shared install-or-toggle path (flag 0 & 1).
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag != 0 && flag != 1): call StackPopDispatchTagged; ret.
+ *   else: call GuardedDoubleIncCmpJmp; pause? -> end.
+ *     if (g_state_0054208c & 1): call ScaledInitOrSelfPtr; ret.
+ *     eax = chain[g_x_0054205c+0x28]; g_x_0054206c = eax;
+ *     if (eax < g_x_00542080): goto install-second-state.
+ *     call ScaledArrStore; pause? -> end.
+ *     install self with [esi+0x84]=2; pause = ebx (=1).
+ *   install-second-state: install self with [esi+0x84]=ebx (=1).
+ */
+__declspec(naked) void InstallSelfPair3Branch_00429240(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   0bh
+        dec     eax
+        _emit   74h
+        _emit   08h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        call    GuardedDoubleIncCmpJmp_00429860
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   08h
+        call    ScaledInitOrSelfPtr_00429680
+        pop     esi
+        pop     ebx
+        ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, [ecx*4 + 0x28]
+        mov     ecx, dword ptr [g_x_00542080]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7ch
+        _emit   2eh
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        mov     dword ptr [esi + 8], 0x00429240
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 8], 0x00429240
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_framePauseFlag], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
