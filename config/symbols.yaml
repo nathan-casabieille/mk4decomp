@@ -11742,10 +11742,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ec00
-    name: func_0049ec00
+    name: DoubleIndirectFourWaySelect_0049ec00
     size: 252
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ed00
     name: func_0049ed00
     size: 658

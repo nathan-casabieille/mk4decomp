@@ -40649,3 +40649,83 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         ret
     }
 }
+
+/* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
+ *   mstack-push g_scaledInit_00542044, g_data_00535e48.
+ *   ecx = g_x_00541fc0; eax = g_x_0054206c; g_x_00542048=ecx; edx=eax;
+ *   ecx += eax (sum index); g_data_00535e48=edx (original eax).
+ *   eax = [ecx*4]; g_x_00542048=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
+ *   ecx = [ecx*4]; g_x_0054206c=ecx. cmp ecx, 0xf;
+ *   ecx = [eax*4 + 0x40]; g_scaledInit_00542044=ecx; ecx = [ecx*4];
+ *   g_x_0054206c=ecx. jbe block_8or10 (ecx<=0xf).
+ *   block_c_or_e (ecx>0xf): edx = (ecx!=0 ? 0xe : 0xc).
+ *   block_8_or_a: edx = (ecx!=0 ? 0xa : 8).
+ *   Merge: edx += g_x_00542070; eax += edx; g_data_00535e48=edx; eax=[eax*4];
+ *   g_x_00542048=eax. mstack-pop pair.
+ */
+__declspec(naked) void DoubleIndirectFourWaySelect_0049ec00(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00535e48]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     ecx, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     edx, eax
+        add     ecx, eax
+        mov     dword ptr [g_data_00535e48], edx
+        mov     eax, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     ecx, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x0f
+        mov     ecx, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     ecx, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   76h
+        _emit   14h
+        test    ecx, ecx
+        _emit   75h
+        _emit   09h
+        test    ecx, ecx
+        mov     edx, 0x0c
+        _emit   74h
+        _emit   19h
+        mov     edx, 0x0e
+        _emit   0ebh
+        _emit   12h
+        test    ecx, ecx
+        _emit   75h
+        _emit   09h
+        test    ecx, ecx
+        mov     edx, 0x08
+        _emit   74h
+        _emit   05h
+        mov     edx, 0x0a
+        add     edx, dword ptr [g_x_00542070]
+        add     eax, edx
+        mov     dword ptr [g_data_00535e48], edx
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_data_00535e48], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
