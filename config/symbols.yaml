@@ -11011,10 +11011,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00494670
-    name: func_00494670
+    name: StateChainIndirect_00494670
     size: 219
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494750
     name: MStackBitFlagDispatch_00494750
     size: 165

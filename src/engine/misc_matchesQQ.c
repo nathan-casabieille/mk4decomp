@@ -36006,3 +36006,79 @@ __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
         ret
     }
 }
+
+extern void ScaledLoadCmp0fJmp_004930e0(void);
+extern void MStackBitFlagDispatch_00494750(void);
+
+/* @addr 0x00494670 (219b game) - 2-call cascade + state-based chain selection + indirect call.
+ *   call ScaledLoadCmp0fJmp; if !pause: call MStackBitFlagDispatch; if !pause:
+ *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_x_0054205c==g_state_00538158;
+ *   g_x_0054206c=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_x_00542070=[scaledInit*4+0x7c];
+ *   if > 3: ecx=0x4ccc, g_x_0054206c=ecx; store ecx to [chain*4+0].
+ *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
+ *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
+ */
+__declspec(naked) void StateChainIndirect_00494670(void) {
+    __asm {
+        call    ScaledLoadCmp0fJmp_004930e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackBitFlagDispatch_00494750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_x_0054205c]
+        push    esi
+        mov     esi, dword ptr [g_state_00538158]
+        mov     ecx, 0x0053a3e4
+        mov     eax, 0x0053a474
+        shr     ecx, 2
+        shr     eax, 2
+        cmp     edx, esi
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_x_00542048], eax
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [edx*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     edx, dword ptr [edx*4 + 0x7c]
+        cmp     edx, 3
+        mov     dword ptr [g_x_00542070], edx
+        _emit   7eh
+        _emit   0bh
+        mov     ecx, 0x00004ccc
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     eax, 0x004f1b28
+        sub     ecx, 0x60
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        pop     esi
+        ret
+    }
+}
