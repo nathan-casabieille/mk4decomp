@@ -1856,10 +1856,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004230b0
-    name: func_004230b0
+    name: QuadGuardedCjSet_004230b0
     size: 246
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004231b0
     name: DualPushCallStore_004231b0
     size: 53

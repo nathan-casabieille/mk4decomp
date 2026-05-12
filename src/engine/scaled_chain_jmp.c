@@ -23,27 +23,17 @@ extern void func_004293b0(void);
 extern void func_00429960(void);
 
 /* @addr 0x00429470 */
-__declspec(naked) void ScaledChainJmp_00429470(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 4]
-        dec     ecx
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_004293b0
-    }
+void ScaledChainJmp_00429470(void) {
+    unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    g_scaledInit_00542044 = p;
+    g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
+    func_004293b0();
 }
 
 /* @addr 0x004298e0 */
-__declspec(naked) void ScaledChainJmp_004298e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 4]
-        dec     ecx
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_00429960
-    }
+void ScaledChainJmp_004298e0(void) {
+    unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    g_scaledInit_00542044 = p;
+    g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
+    func_00429960();
 }
