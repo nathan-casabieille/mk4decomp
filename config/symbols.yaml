@@ -3108,10 +3108,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x0042fee0
-    name: func_0042fee0
+    name: MStackSignedMod_0042fee0
     size: 184
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042ffa0
     name: DualMulScaleStore_0042ffa0
     size: 115

@@ -24750,6 +24750,72 @@ __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
     }
 }
 
+extern void DualChainSubCallSubLoad_00431c80(void);
+
+/* @addr 0x0042fee0 (184b game) - mstack-push 2, frame call, signed-mod arithmetic.
+ *   Push g_x_00542070, g_x_00542074; call DualChainSubCallSubLoad_00431c80;
+ *   pause? -> pop+ret.
+ *   ecx = g_x_00542048; eax = g_x_0054206c; edx = chain[ecx + 0x64];
+ *   ecx = 0; ecx = eax - edx; cmp ecx, 0xfffcdbc1; if (>=0): ecx += 0x6487e.
+ *   eax = ecx + ecx; ecx = 0; cmp eax, 0x32437f; g_x_00542070 = eax;
+ *   if (<): ecx = 0x6487e; g_x_00542070 = ecx.
+ *   eax = eax - ecx; g_x_0054206c = eax; if (>= 0) skip;
+ *   neg eax; g_x_0054206c = eax.
+ *   mstack-pop into g_x_00542074, g_x_00542070.
+ */
+__declspec(naked) void MStackSignedMod_0042fee0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    DualChainSubCallSubLoad_00431c80
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, [ecx*4 + 0x64]
+        xor     ecx, ecx
+        sub     eax, edx
+        cmp     eax, 0xfffcdbc1
+        _emit   7dh
+        _emit   05h
+        mov     ecx, 0x0006487e
+        add     eax, ecx
+        xor     ecx, ecx
+        cmp     eax, 0x0003243f
+        mov     dword ptr [g_x_00542070], ecx
+        _emit   7ch
+        _emit   0bh
+        mov     ecx, 0x0006487e
+        mov     dword ptr [g_x_00542070], ecx
+        sub     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   79h
+        _emit   07h
+        neg     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
