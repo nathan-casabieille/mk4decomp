@@ -1585,10 +1585,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041fa50
-    name: func_0041fa50
+    name: ChainNodeInit_0041fa50
     size: 186
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041fb10
     name: func_0041fb10
     size: 318

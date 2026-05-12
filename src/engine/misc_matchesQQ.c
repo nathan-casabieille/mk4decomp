@@ -24397,6 +24397,57 @@ __declspec(naked) void InstallSelfPackedF190_0046f190(void) {
     }
 }
 
+/* @addr 0x0041fa50 (186b boot) - chain node init using g_scaledInit as id.
+ *   ecx = g_scaledInit; eax = ecx*4 (chain ptr); if (ecx == 0): mstack pop+ret.
+ *   mstack-push g_x_00542048.
+ *   chain[+0x84] = 0; chain[+8] = g_x_00542048; chain[eax+0xd8] = chain[+8];
+ *   chain[+0x10] = 1; g_x_0054206c = 1; chain[eax+0xdc] = (word)1;
+ *   ecx = g_scaledInit + 0x22; g_x_0054206c = ecx; chain[+4] = ecx;
+ *   mstack-pop into g_x_00542048.
+ */
+__declspec(naked) void ChainNodeInit_0041fa50(void) {
+    __asm {
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        test    ecx, ecx
+        lea     eax, [ecx*4 + g_data_004d57ac_arr]
+        _emit   0fh
+        _emit   84h
+        _emit   0a4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x84], 0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     [edx*4 + 8], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, [edx*4 + 8]
+        mov     [eax + 0xd8], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, 1
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [edx*4 + 0x10], ecx
+        mov     cx, word ptr [g_x_0054206c]
+        mov     word ptr [eax + 0xdc], cx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        lea     ecx, [eax + 0x22]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [eax*4 + 4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
