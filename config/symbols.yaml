@@ -6224,10 +6224,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x0045f470
-    name: func_0045f470
+    name: CdeclArgScaledLookupAndStore_0045f470
     size: 251
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045f570
     name: CallCmpDirtyTrueOrFalse_0045f570
     size: 48
