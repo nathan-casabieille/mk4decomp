@@ -23252,6 +23252,75 @@ __declspec(naked) void ChainShiftRight8_0045d9b0(void) {
     }
 }
 
+extern unsigned int g_x_0052ab3c;
+
+/* @addr 0x0041f8f0 (194b boot) - linked-list search by bit-mask flag.
+ *   Push g_x_00542074; ecx = [0x52ab3c]; edx = g_x_0054206c & g_x_00542070; g_x_0054206c = edx.
+ *   if (ecx == 0): bit_set_exit.
+ *   loop: if ([ecx+0xd8] != 0) {
+ *     g_scaledInit = ecx >> 2; g_x_00542074 = chain[g_scaledInit + 0xc];
+ *     if (g_x_00542074 == edx) goto bit_clear_exit;
+ *   }
+ *   ecx = [ecx+0xe4]; if (ecx != 0) goto loop;
+ *   bit_set_exit: mstack-pop g_x_00542074; g_scaledInit = 0;
+ *     g_state_0054208c = (orig & ~1) | 4; ret.
+ *   bit_clear_exit: mstack-pop g_x_00542074;
+ *     g_state_0054208c = (orig & ~4) | 1; ret.
+ */
+__declspec(naked) void LinkedListBitMaskSearch_0041f8f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_x_0052ab3c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     edx, dword ptr [g_x_0054206c]
+        and     edx, dword ptr [g_x_00542070]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], edx
+        _emit   74h
+        _emit   2eh
+        mov     eax, [ecx + 0xd8]
+        test    eax, eax
+        _emit   74h
+        _emit   1ah
+        mov     eax, ecx
+        sar     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + 0x0c]
+        cmp     eax, edx
+        mov     dword ptr [g_x_00542074], eax
+        _emit   74h
+        _emit   3fh
+        mov     ecx, [ecx + 0xe4]
+        test    ecx, ecx
+        _emit   75h
+        _emit   0d2h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_scaledInit_00542044], 0
+        and     edx, 0xfffffffe
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        or      edx, 4
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_state_0054208c], edx
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_0054208c]
+        and     edx, 0xfffffffb
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        or      edx, 1
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_state_0054208c], edx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

@@ -1571,10 +1571,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041f8f0
-    name: func_0041f8f0
+    name: LinkedListBitMaskSearch_0041f8f0
     size: 194
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041f9c0
     name: ChainSearch_0041f9c0
     size: 138
