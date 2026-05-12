@@ -14812,10 +14812,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x004c5ad0
-    name: func_004c5ad0
+    name: FSeekImpl_004c5ad0
     size: 151
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5b70
     name: WrapThreeDispatch_004c5b70
     size: 55

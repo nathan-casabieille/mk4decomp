@@ -26698,6 +26698,97 @@ __declspec(naked) void LazyLoadInvoke_004ce150(void) {
     }
 }
 
+extern void func_004c58e0(void);
+extern void FFlushImpl_004c69a0(void);
+extern void CallAdd8_004c8ba0(void);
+
+/* @addr 0x004c5ad0 (151b boot/crt) - fseek-like wrapper (file flush + IO + errno).
+ *   arg2 (whence) must be in {0,1,2}; else: set errno=EINVAL, return -1.
+ *   FILE* esi = arg1; if (!(flags & 0x83)) errno fail.
+ *   Mask bit 4 in flags; if (whence == 1): offset += saved_pos (call func_004c58e0).
+ *   call FFlushImpl_004c69a0; reload flags.
+ *   if (flag&0x80): flags &= ~3; jmp do-io.
+ *   else: skip if flag & (1|8) or (ah & 4); set [esi+0x18] = 0x200.
+ *   do-io: call IOWrapper_004c8dd0(offset, whence, [esi+0x10], 0); add esp,c.
+ *   Return ((eax+1 != 0) ? 0 : -1) - 1 (encoded via neg/sbb/neg/dec).
+ *   Fail: call CallAdd8; *eax = EINVAL (0x16); return -1.
+ */
+__declspec(naked) void FSeekImpl_004c5ad0(void) {
+    __asm {
+        push    esi
+        mov     esi, [esp + 8]
+        push    edi
+        mov     eax, [esi + 0x0c]
+        test    al, 0x83
+        _emit   74h
+        _emit   79h
+        mov     edi, [esp + 0x14]
+        test    edi, edi
+        _emit   74h
+        _emit   0ah
+        cmp     edi, 1
+        _emit   74h
+        _emit   05h
+        cmp     edi, 2
+        _emit   75h
+        _emit   67h
+        and     al, 0xef
+        cmp     edi, 1
+        mov     [esi + 0x0c], eax
+        _emit   75h
+        _emit   15h
+        push    esi
+        call    func_004c58e0
+        mov     ecx, [esp + 0x14]
+        add     esp, 4
+        add     ecx, eax
+        xor     edi, edi
+        mov     [esp + 0x10], ecx
+        push    esi
+        call    FFlushImpl_004c69a0
+        mov     eax, [esi + 0x0c]
+        add     esp, 4
+        test    al, 0x80
+        _emit   74h
+        _emit   07h
+        and     al, 0xfc
+        mov     [esi + 0x0c], eax
+        _emit   0ebh
+        _emit   14h
+        test    al, 1
+        _emit   74h
+        _emit   10h
+        test    al, 8
+        _emit   74h
+        _emit   0ch
+        test    ah, 4
+        _emit   75h
+        _emit   07h
+        mov     dword ptr [esi + 0x18], 0x200
+        mov     eax, [esp + 0x10]
+        mov     ecx, [esi + 0x10]
+        push    edi
+        push    eax
+        push    ecx
+        call    IOWrapper_004c8dd0
+        add     esp, 0x0c
+        inc     eax
+        neg     eax
+        sbb     eax, eax
+        neg     eax
+        dec     eax
+        pop     edi
+        pop     esi
+        ret
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 0x16
+        pop     edi
+        or      eax, 0xffffffff
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
