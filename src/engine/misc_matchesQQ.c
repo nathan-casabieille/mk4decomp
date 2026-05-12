@@ -41620,3 +41620,87 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         ret
     }
 }
+
+extern void ScaledChainDouble_004911f0(void);
+
+/* @addr 0x004910b0 (259b game) - mstack-push + neg-aware Mul10Tail pair.
+ *   mstack-push g_x_00542070, neg ecx if g_state_0053a730 != 0; reswap+push;
+ *   call ScaledChainDouble_004911f0; if pause? ret. Then mstack-pop and either:
+ *   if eax < 0 and g_x_0054207c < 0: neg both; else: signs unchanged.
+ *   Then 2x Mul10Tail (cdecl) feeding cj[+0x6c] and cj[+0x74].
+ */
+__declspec(naked) void MStackNegAwareMul10Pair_004910b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_0053a730]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542070], eax
+        test    eax, eax
+        _emit   74h
+        _emit   08h
+        neg     ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [eax*4 + 0], ecx
+        call    ScaledChainDouble_004911f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [ecx*4 + 0]
+        dec     ecx
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        _emit   7dh
+        _emit   13h
+        mov     ecx, dword ptr [g_x_0054207c]
+        neg     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   0ch
+        _emit   0ebh
+        _emit   20h
+        mov     ecx, dword ptr [g_x_0054207c]
+        test    ecx, ecx
+        _emit   7dh
+        _emit   16h
+        mov     edx, dword ptr [g_state_00542080]
+        neg     ecx
+        neg     edx
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_state_00542080], edx
+        push    ecx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_state_00542080]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_state_00542080], eax
+        mov     eax, dword ptr [g_x_0054207c]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x6c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_state_00542080]
+        mov     dword ptr [edx*4 + 0x74], ecx
+        ret
+    }
+}

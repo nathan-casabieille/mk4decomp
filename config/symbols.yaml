@@ -10723,10 +10723,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x004910b0
-    name: func_004910b0
+    name: MStackNegAwareMul10Pair_004910b0
     size: 259
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004911c0
     name: SwapTwoGlobals_004911c0
     size: 42
