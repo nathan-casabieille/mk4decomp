@@ -43769,3 +43769,108 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         ret
     }
 }
+
+extern void func_0040c460(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void func_0040bde0(void);
+extern void func_0040a8d0(void);
+extern void GuardedSeq_0049c340(void);
+
+/* @addr 0x0049c220 (274b game) - three adjacent blocks.
+ *   B1 (0..0x7f): 2x Mul10Tail with 0x3333 mod for g_x_00542084/g_x_00542088;
+ *     store results to scaledInit[+0x6c/+0x74]; g_cj_0054205c = scaledInit;
+ *     baseSel[+0x5c]=0x30; baseSel[+0x74]=1; ret.
+ *   B2 (0x80..0xe3, +12 NOPs): dec baseSel[+0x74] (clamp to 3 if was 0); if
+ *     orig was 0: call func_0040c460. If !pause: dec baseSel[+0x5c]; if was 0:
+ *     tail-jmp ScaledIndirectJmp_0049c850. ret.
+ *   B3 (0xf0..0x111): call func_0040bde0; if !pause: call func_0040a8d0;
+ *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
+ */
+__declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
+    __asm {
+        mov     edx, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        push    edx
+        push    0x3333
+        lea     esi, [eax*4 + 0]
+        lea     edi, [ecx*4 + 0]
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542084], eax
+        mov     eax, dword ptr [g_x_00542088]
+        push    eax
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542084]
+        mov     dword ptr [g_x_00542088], eax
+        mov     dword ptr [esi + 0x6c], ecx
+        mov     edx, dword ptr [g_x_00542088]
+        mov     dword ptr [esi + 0x74], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_cj_0054205c], eax
+        mov     eax, 1
+        add     esp, 8
+        mov     dword ptr [edi + 0x5c], 0x30
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edi + 0x74], eax
+        pop     edi
+        pop     esi
+        ret
+        nop
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x74]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00541dc4], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, 3
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     eax, dword ptr [g_x_00541dc4]
+        test    eax, eax
+        _emit   75h
+        _emit   0eh
+        call    func_0040c460
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x5c]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledIndirectJmp_0049c850
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    func_0040bde0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    func_0040a8d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     GuardedSeq_0049c340
+        ret
+    }
+}

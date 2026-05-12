@@ -11478,10 +11478,11 @@ functions:
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x0049c220
-    name: func_0049c220
+    name: DualMul10AndDispatchChain_0049c220
     size: 274
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c340
     name: GuardedSeq_0049c340
     size: 20
