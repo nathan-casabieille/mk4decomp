@@ -36082,3 +36082,93 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         ret
     }
 }
+
+extern void AudioDistantPause_004ab670(void);
+
+/* @addr 0x0048a050 (219b game) - byte/word table walk + TaggedSceneDispatch.
+ *   eax = [g_baseSel*4+0x34]; if !=0x10, eax=0xa; edx=signed byte [eax+0x004efd00];
+ *   scaledInit = (0x00542c40>>2) + g_x_0054206c; eax = [scaledInit*4+0];
+ *   esi = [eax*4+0]; if esi!=0: ecx=[eax*4+0], dec eax; ax = word [ecx+eax*2+2];
+ *   if ax!=0: push eax, call TaggedSceneDispatch, pop+ret.
+ *   Else: eax += edx+1; scaledInit=[eax*4+0]; if 0 ret;
+ *   ecx = signed word [eax]; g_x_0054206c=ecx; call AudioDistantPause; if !pause:
+ *   ecx=[scaledInit*4+0]; dec g_x_0054206c by 1; cx=[ecx+edx*2]; if 0 ret;
+ *   push ecx, call TaggedSceneDispatch, pop+ret.
+ */
+__declspec(naked) void ByteWordTableTaggedDispatch_0048a050(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        mov     eax, dword ptr [eax*4 + 0x34]
+        cmp     eax, 0x10
+        mov     dword ptr [g_x_00542070], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, 0x0a
+        mov     dword ptr [g_x_00542070], eax
+        movsx   edx, byte ptr [eax + 0x004efd00]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, 0x00542c40
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     esi, dword ptr [eax*4 + 0]
+        lea     ecx, [eax*4 + 0]
+        test    esi, esi
+        mov     dword ptr [g_x_0054206c], esi
+        _emit   75h
+        _emit   60h
+        lea     eax, [eax + edx + 1]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        shl     eax, 2
+        test    eax, eax
+        _emit   74h
+        _emit   56h
+        movsx   ecx, word ptr [eax]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    AudioDistantPause_004ab670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        dec     eax
+        lea     ecx, [edx*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   66h
+        _emit   8bh
+        _emit   44h
+        _emit   41h
+        _emit   02h
+        _emit   66h
+        _emit   85h
+        _emit   0c0h
+        _emit   74h
+        _emit   1dh
+        push    eax
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        pop     esi
+        ret
+        _emit   66h
+        _emit   8bh
+        _emit   0ch
+        _emit   51h
+        _emit   66h
+        _emit   85h
+        _emit   0c9h
+        _emit   74h
+        _emit   09h
+        push    ecx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        pop     esi
+        ret
+    }
+}

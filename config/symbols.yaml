@@ -9381,10 +9381,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesJ.c
   - addr: 0x0048a050
-    name: func_0048a050
+    name: ByteWordTableTaggedDispatch_0048a050
     size: 219
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a130
     name: TableLookupCall_0048a130
     size: 33
