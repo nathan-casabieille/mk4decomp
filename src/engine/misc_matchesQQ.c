@@ -28715,3 +28715,49 @@ __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
         ret
     }
 }
+
+/* @addr 0x00431360 (100b game) - dual-entry init+dispatch.
+ *   entry +0x00: eax = g_x_0054205c; eax *= 4; zero out 6 fields at offsets 0x6c,0x70,0x74,0x78,0x7c,0x80
+ *     of struct at [eax], with g_x_0054206c=0 used as scratch zero source. ret.
+ *   12 NOPs alignment pad.
+ *   entry +0x50 (= 0x004313b0): self-call to +0x00 init, then if !g_pause: tail-jmp ScaledInitWithCounterAndType.
+ */
+__declspec(naked) void DualEntryInitDispatch_00431360(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054205c]
+        xor     ecx, ecx
+        shl     eax, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x78], ecx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x7c], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x80], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x6c], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x70], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x74], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DualEntryInitDispatch_00431360
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledInitWithCounterAndType_004314f0
+        ret
+    }
+}

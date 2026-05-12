@@ -3190,10 +3190,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00431360
-    name: func_00431360
+    name: DualEntryInitDispatch_00431360
     size: 100
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004313d0
     name: TripleScaledChainStore54_004313d0
     size: 124
