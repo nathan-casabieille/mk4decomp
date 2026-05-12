@@ -9657,10 +9657,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048ae50
-    name: func_0048ae50
+    name: IndirectDispatchCjStore_0048ae50
     size: 263
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048af60
     name: func_0048af60
     size: 292
