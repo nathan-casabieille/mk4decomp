@@ -37600,3 +37600,82 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
         ret
     }
 }
+
+extern void func_004871f0(void);
+extern void GatedChainClamp_00486e80(void);
+extern void IterStepDualStore_00490b40(void);
+extern void func_00488f00(void);
+
+/* @addr 0x00486d90 (234b game) - mstack-push 3 (g_x_0054207c, g_x_00542080, g_x_00542074);
+ *   negate g_x_0054206c; if g_x_00542070 != 0 call func_004871f0; pause-check.
+ *   call MStackFrameCdeclDouble; pause-check. push 0x004eee48; call IterStepDualStore;
+ *   pause-check. mstack-pop g_x_00542074 (with test); if zero skip call; else call func_00488f00;
+ *   pause-check. mstack-pop g_x_00542080, g_x_0054207c. jmp GatedChainClamp_00486e80.
+ */
+__declspec(naked) void MStackPush3CallCascade_00486d90(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_0054207c]
+        neg     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_x_00542070]
+        test    eax, eax
+        _emit   74h
+        _emit   0eh
+        call    func_004871f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7eh
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   70h
+        push    0x004eee48
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   5ah
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   74h
+        _emit   13h
+        call    func_00488f00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   30h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     GatedChainClamp_00486e80
+        ret
+    }
+}
