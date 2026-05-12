@@ -3683,10 +3683,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x004362f0
-    name: func_004362f0
+    name: TripleThresholdDispatch_004362f0
     size: 149
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436390
     name: ThresholdedTailJmps_00436390
     size: 83
@@ -8920,10 +8921,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486370
-    name: func_00486370
+    name: MStackInstallCountdown_00486370
     size: 146
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486410
     name: MStackPushWaitChain_00486410
     size: 114
@@ -8981,10 +8983,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00486f20
-    name: func_00486f20
+    name: MStackChainCountdown_00486f20
     size: 149
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486fc0
     name: DualCallPauseDirtyDoubleJmp_00486fc0
     size: 48

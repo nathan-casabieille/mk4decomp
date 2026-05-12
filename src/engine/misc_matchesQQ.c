@@ -30481,3 +30481,209 @@ __declspec(naked) void QuadBlockDispatch_00483090(void) {
         ret
     }
 }
+
+/* @addr 0x00486370 (146b game) - dual-entry mstack-push + install-self with countdown.
+ *   Block A (+0x00): mstack-push 0x004863a0; g_x_00542084=0xccc; jmp func_00486610.
+ *   Block B (+0x30): if chain[+0x84]!=0 (already armed): g_x_00542080=3, jmp MStackPushWaitChain_00486410;
+ *     else countdown g_x_00542080; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
+ *     g_data_0054204c=0x58, g_pause=1; otherwise self-jmp.
+ */
+__declspec(naked) void MStackInstallCountdown_00486370(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_00542084], 0x00000ccc
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004863a0
+        jmp     func_00486610
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   0fh
+        mov     dword ptr [g_x_00542080], 3
+        jmp     MStackPushWaitChain_00486410
+        mov     ecx, dword ptr [g_x_00542080]
+        dec     ecx
+        mov     dword ptr [g_x_00542080], ecx
+        _emit   74h
+        _emit   05h
+        jmp     MStackInstallCountdown_00486370
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x004863a0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0x58
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
+
+extern void InstallSelfSetTagJmp_00439e40(void);
+extern void func_00437c10(void);
+extern void Wrapper_00438ee0(void);
+extern void SetJmp_00438f70(void);
+extern void ThresholdedTailJmps_00436390(void);
+
+/* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
+ *   threshold-dispatch on g_state_00535ddc to {0x00437c10, Wrapper_00438ee0, func_00438f80}.
+ *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_00438f70, func_00438f80}.
+ *   D (+0x90): jmp ThresholdedTailJmps_00436390.
+ */
+__declspec(naked) void TripleThresholdDispatch_004362f0(void) {
+    __asm {
+        jmp     InstallSelfSetTagJmp_00439e40
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00014ccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00437c10
+        cmp     eax, 0x00020000
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00020000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        cmp     eax, 0x00019999
+        _emit   7dh
+        _emit   05h
+        jmp     SetJmp_00438f70
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     ThresholdedTailJmps_00436390
+    }
+}
+
+extern void Const0x2005Store_00487120(void);
+extern void DualCallPauseDirtyDoubleJmp_00486fc0(void);
+
+/* @addr 0x00486f20 (149b game) - mstack-push g_x_0054207c, dispatch, mstack-pop.
+ *   Call DirtyToggleByGate; if pause ret; if bit-2 set call Const0x2005Store; if pause ret;
+ *   push 0x004eee50; mstack-pop into g_x_0054207c; call ArgSarStoreJmp; ret.
+ *   Block B (+0x70): if g_x_0054207c==0 jmp DualCallPauseDirtyDoubleJmp_00486fc0;
+ *     else countdown g_x_0054207c; if zero jmp DualCallPauseDirtyDoubleJmp; else self-jmp.
+ */
+__declspec(naked) void MStackChainCountdown_00486f20(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3ch
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   0eh
+        call    Const0x2005Store_00487120
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        mov     eax, dword ptr [g_state_004d57ac]
+        push    0x004eee50
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_x_0054207c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     DualCallPauseDirtyDoubleJmp_00486fc0
+        mov     eax, dword ptr [g_x_0054207c]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], eax
+        _emit   74h
+        _emit   05h
+        jmp     MStackChainCountdown_00486f20
+        jmp     DualCallPauseDirtyDoubleJmp_00486fc0
+    }
+}
