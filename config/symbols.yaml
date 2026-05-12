@@ -8687,10 +8687,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483090
-    name: func_00483090
+    name: QuadBlockDispatch_00483090
     size: 146
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483130
     name: InstallSelfReenterSelfJmp_00483130
     size: 144
@@ -8948,10 +8949,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesKK.c
   - addr: 0x00486580
-    name: func_00486580
+    name: DualEntryInstallScaledChain_00486580
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486610
     name: func_00486610
     size: 414
@@ -9683,10 +9685,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c370
-    name: func_0048c370
+    name: Cascade4StepBitTest_0048c370
     size: 144
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c400
     name: DualPushCallCjPop_0048c400
     size: 116

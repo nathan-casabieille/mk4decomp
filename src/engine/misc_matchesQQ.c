@@ -30312,3 +30312,172 @@ __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
         ret
     }
 }
+
+/* @addr 0x00486580 (144b game) - dual-entry install-self + scaledChain push (same shape as 0x0047ef60,
+ *   different install addr 0x00486590 and push string 0x004ed720).
+ */
+__declspec(naked) void DualEntryInstallScaledChain_00486580(void) {
+    __asm {
+        push    0x004eed20
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        mov     dword ptr [eax + 0x08], 0x00486590
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, 0x00486590
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    func_0046fdf0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+    }
+}
+
+extern void PushScaledIdxBitToggle_0048c2f0(void);
+
+/* @addr 0x0048c370 (144b game) - 4-step cascade with bl=4 bit-test on g_state_0054208c.
+ *   For step n in {0,1,2,3}: g_x_0054206c=n; call PushScaledIdxBitToggle; pause/bit-check breaks.
+ *   Final default: g_x_0054206c=-1. ret.
+ */
+__declspec(naked) void Cascade4StepBitTest_0048c370(void) {
+    __asm {
+        push    ebx
+        mov     dword ptr [g_x_0054206c], 0
+        call    PushScaledIdxBitToggle_0048c2f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   75h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     bl, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   6ah
+        mov     dword ptr [g_x_0054206c], 1
+        call    PushScaledIdxBitToggle_0048c2f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   52h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   4ah
+        mov     dword ptr [g_x_0054206c], 2
+        call    PushScaledIdxBitToggle_0048c2f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   2ah
+        mov     dword ptr [g_x_0054206c], 3
+        call    PushScaledIdxBitToggle_0048c2f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_x_0054206c], 0xffffffff
+        pop     ebx
+        ret
+    }
+}
+
+extern void CallPauseDirtyLit_00488c70(void);
+extern void Wrapper_0048a380(void);
+extern void DirtyToggleByGate_0048f350(void);
+extern void func_004831c0(void);
+
+/* @addr 0x00483090 (146b game) - 4-block sequencer.
+ *   A: push str 0x004ee418, call ArgSarStoreJmp, if !pause jmp CallPauseDirtyLit.
+ *   B (+0x20): cascade GateDispatch6c, Wrapper_0048a380, ScaledMove48to58, push 0x004ee448.
+ *   C (+0x60): push 0x004ee480, call ArgSarStoreJmp; ret.
+ *   D (+0x70): call DirtyToggleByGate; if !pause, bit-4 selects func_004831c0 vs InstallSelfReenterSelfJmp_00483130.
+ */
+__declspec(naked) void QuadBlockDispatch_00483090(void) {
+    __asm {
+        push    0x004ee418
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallPauseDirtyLit_00488c70
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    Wrapper_0048a380
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee448
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x004ee480
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   05h
+        jmp     func_004831c0
+        jmp     InstallSelfReenterSelfJmp_00483130
+        ret
+    }
+}
