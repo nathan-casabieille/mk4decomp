@@ -37940,3 +37940,59 @@ __declspec(naked) void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void) {
         jmp     IdCascadeBitSet_00439760
     }
 }
+
+extern void GuardedScaledChainJmpIndirect_00460e40(void);
+extern void EsiInstallChainCallIndirect_00428680(void);
+extern void StackPopDispatchTagged_0041f780(void);
+
+/* @addr 0x00460c00 (83b game) - dual block.
+ *   Block1 (0..49, +14 NOPs): push 0x004e9fc0; call GuardedScaledChainJmpIndirect; if pause? ret;
+ *     else inc g_state_004d57ac, store 0x00460c40 at [eax*4]; tail-jmp EsiInstallChainCallIndirect.
+ *   Block2 (64..82): test bit2 of g_state_0054208c; clear => jmp 0x00460c00 (self); set => tail-jmp StackPopDispatchTagged.
+ */
+__declspec(naked) void PushCallPauseIncStoreSelfRecurse_00460c00(void) {
+    __asm {
+        push    0x004e9fc0
+        call    GuardedScaledChainJmpIndirect_00460e40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   0c7h
+        _emit   04h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   40h
+        _emit   0ch
+        _emit   46h
+        _emit   00h
+        jmp     EsiInstallChainCallIndirect_00428680
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   05h
+        jmp     PushCallPauseIncStoreSelfRecurse_00460c00
+        jmp     StackPopDispatchTagged_0041f780
+    }
+}

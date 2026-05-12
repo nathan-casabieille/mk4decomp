@@ -6389,10 +6389,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00460c00
-    name: func_00460c00
+    name: PushCallPauseIncStoreSelfRecurse_00460c00
     size: 83
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460c60
     name: CallPauseCallTestStackPushJmp_00460c60
     size: 61
