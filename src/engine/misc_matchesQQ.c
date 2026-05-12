@@ -15193,6 +15193,70 @@ extern unsigned int g_x_0053803c_fwd;
 extern void Thunk_0049cbd0(void);
 extern void FiveCallScaledChainTailJmp_0045f8d0(void);
 
+extern void TwinLoopSlotFinder_00429a40(void);
+extern void LoadGeoAsset_Default(void);
+extern void func_004ab790_fwd(void);
+#define func_004ab790 func_004ab790_fwd
+extern void MStackPop8_004ab860_fwd(void);
+#define MStackPop8_004ab860 MStackPop8_004ab860_fwd
+
+/* @addr 0x00429ac0 (161b game) - 4-stage chain dispatch:
+ *   TableWalkBoundedCmp(7); func_004ab790; pause? jmp MStackPop8.
+ *   mstack-push walkCallback; TwinLoopSlotFinder; pause? jmp MStackPop8.
+ *   scaledInit = arr[g_x_00542058]; LoadGeoAsset_Default; pause? jmp MStackPop8.
+ *   scaledInit = chain[g_x_00542058].slot4; LoadGeoAsset_Default; pause? jmp MStackPop8.
+ *   mstack-pop into walkCallback; jmp MStackPop8.
+ */
+__declspec(naked) void DispatchPair_00429ac0(void) {
+    __asm {
+        push    7
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    func_004ab790
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_walkCallback]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    TwinLoopSlotFinder_00429a40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5eh
+        mov     edx, dword ptr [g_x_00542058]
+        mov     eax, [edx*4 + g_chain_arr_4348f0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     edx, [ecx*4 + g_chain_arr_4348f0 + 0x04]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     MStackPop8_004ab860
+        ret
+    }
+}
+
 /* @addr 0x00491350 (159b game) - state-snapshot + dispatch + mstack push/pop:
  *   scaledInit = g_x_00538038; if (g_cj != g_x_00538158) scaledInit = g_x_0053803c.
  *   key = (0x4ebee0>>2) + g_walkCallback; g_x_00542048 = arr[key];
@@ -15247,6 +15311,8 @@ __declspec(naked) void SnapshotDispatchMStack_00491350(void) {
 
 #undef g_x_00538038
 #undef g_x_0053803c
+#undef func_004ab790
+#undef MStackPop8_004ab860
 
 extern unsigned int g_x_00537f30;
 extern unsigned int g_x_00537edc;

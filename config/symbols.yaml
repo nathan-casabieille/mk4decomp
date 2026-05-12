@@ -2717,10 +2717,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00429ac0
-    name: func_00429ac0
+    name: DispatchPair_00429ac0
     size: 161
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429b70
     name: func_00429b70
     size: 691
