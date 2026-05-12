@@ -8737,10 +8737,11 @@ functions:
     status: matched
     file: src/engine/guarded_push.c
   - addr: 0x004829b0
-    name: func_004829b0
+    name: SixBlockCjCascade_004829b0
     size: 256
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482ab0
     name: CmpP1DualInitStore_00482ab0
     size: 66

@@ -40937,3 +40937,121 @@ __declspec(naked) void FiveFieldChainCopyTableWalk_00431260(void) {
         ret
     }
 }
+
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void func_00488f00(void);
+extern void GateDispatch6c_00494580(void);
+
+/* @addr 0x004829b0 (256b game) - 6 small blocks (80/64/16/16/16/64 byte alignment).
+ *   B1 (0..79): cmp baseSel[+0x60] vs 0x2001/0x2002, set/clear bit0 of state, ret.
+ *   B2 (80..143): call DualCallPauseDirtyJmp; if !pause: add 0x32492 to cj[+0x64],
+ *     push 0x004ee188, tail-call ArgSarStoreJmp; ret.
+ *   B3 (144..159): push 0x004ee1a8; tail-call ArgSarStoreJmp.
+ *   B4 (160..175): push 0x004ee1b8; tail-call ArgSarStoreJmp.
+ *   B5 (176..191): push 0x004ee1d0; tail-call ArgSarStoreJmp.
+ *   B6 (192..255): call func_00488f00; if !pause: call GateDispatch6c_00494580; if !pause:
+ *     push 0x004ee1e8; call func_00482c30+0x1c0 (0x00482df0); pop;
+ *     if !pause: push 0x004ee1f0, tail-call ArgSarStoreJmp; ret.
+ */
+__declspec(naked) void SixBlockCjCascade_004829b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x60]
+        cmp     eax, 0x2001
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        cmp     eax, 0x2002
+        mov     eax, dword ptr [g_state_0054208c]
+        _emit   75h
+        _emit   08h
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     ecx, dword ptr [g_cj_0054205c]
+        push    0x004ee188
+        mov     eax, dword ptr [ecx*4 + 0x64]
+        add     eax, 0x00032492
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        push    0x004ee1a8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        push    0x004ee1b8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        push    0x004ee1d0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        call    func_00488f00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   31h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        push    0x004ee1e8
+        _emit   0e8h
+        _emit   5ah
+        _emit   03h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee1f0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
