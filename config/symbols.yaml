@@ -4637,10 +4637,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043ec80
-    name: func_0043ec80
+    name: DispatchCopyFields_0043ec80
     size: 227
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043ed70
     name: StackPushCallPopChain_0043ed70
     size: 112

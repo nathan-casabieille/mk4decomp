@@ -38244,3 +38244,83 @@ __declspec(naked) void InstallSelfBranchCascade_00471840(void) {
         ret
     }
 }
+
+extern void DispatcherComplex260_00407030(void);
+extern void MStackCall_00406340(void);
+
+/* @addr 0x0043ec80 (227b game) - dispatch then 6-field copy.
+ *   shr 0x004ec8f8 >> 2 -> g_x_00542048; call DispatcherComplex260; if pause? ret.
+ *   if bit2 of g_state_0054208c set: copy g_cj_00542058 to g_x_00537e9c, ret.
+ *   else: scaledInit[+0x30] = 0x78; call MStackCall; if pause? ret.
+ *   else: copy fields +0x54/+0x58/+0x5c (via g_x_0054206c temp) and +0x64 from
+ *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
+ *   scaledInit to g_x_00537e9c; merge low bit of [+0x34]; ret.
+ */
+__declspec(naked) void DispatchCopyFields_0043ec80(void) {
+    __asm {
+        mov     eax, 0x004ec8f8
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   0dh
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [g_x_00537e9c], ecx
+        ret
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x78
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x30], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        shl     ecx, 2
+        shl     eax, 2
+        mov     edx, dword ptr [ecx + 0x54]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 0x54], edx
+        mov     edx, dword ptr [ecx + 0x58]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 0x58], edx
+        mov     edx, dword ptr [ecx + 0x5c]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 0x5c], edx
+        mov     edx, dword ptr [ecx + 0x64]
+        mov     dword ptr [eax + 0x64], edx
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [eax + 0x60], 0
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x68], edx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_00537e9c], edx
+        mov     edx, dword ptr [eax + 0x34]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     ecx, dword ptr [ecx + 0x34]
+        and     ecx, 1
+        _emit   83h
+        _emit   0e2h
+        _emit   0feh
+        or      edx, ecx
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax + 0x34], edx
+        ret
+    }
+}
