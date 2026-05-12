@@ -25235,6 +25235,63 @@ __declspec(naked) void ChainPathMul25_0047fb70(void) {
     }
 }
 
+extern void DualSlotCopyChain_004756f0(void);
+extern void func_004752b0(void);
+
+/* @addr 0x004751f0 (188b game) - install-self variant with packed_ptr store and tail-jmp.
+ *   eax = base*4; flag = [eax+0x84]; clear.
+ *   if (flag != 0): g_x_0054205c = g_x_00542054; call DualSlotCopyChain; pause? -> end;
+ *     jmp StackPopDispatchTagged_0041f780.
+ *   else: g_x_0054205c = g_x_00542054 (swap); g_x_00542054 = packed_ptr(0x501028);
+ *     install self with [eax+8]=0x004751f0, chain[+0x84]=1, packed_ptr store, g_scaledInit++,
+ *     chain[+0x84]=0; call func_004752b0; pause = 1.
+ */
+__declspec(naked) void InstallSelfPackedTailJmp_004751f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   23h
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     dword ptr [g_x_0054205c], ecx
+        call    DualSlotCopyChain_004756f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   81h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        jmp     StackPopDispatchTagged_0041f780
+        mov     edx, dword ptr [g_x_00542054]
+        mov     ecx, 0x00501028
+        shr     ecx, 2
+        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [eax + 8], 0x004751f0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, 0x004751f0
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     edx, 0x01000000
+        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_004752b0
+        mov     dword ptr [g_framePauseFlag], 1
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
