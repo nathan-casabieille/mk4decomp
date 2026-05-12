@@ -25111,6 +25111,69 @@ __declspec(naked) void TriplePackedTagged_004580a0(void) {
     }
 }
 
+extern void ChainDecCondStoreCallJmp_00434880(void);
+extern void InstallSelfChainSet80Call_004347f0(void);
+extern void CmpDispatchPushCallPop_00438530(void);
+
+/* @addr 0x00434730 (185b game) - install-self with abs-diff threshold gating.
+ *   eax = base*4; edx=0; flag = [eax+0x84]; clear via edx.
+ *   if (flag != 0): call ChainDecCondStoreCallJmp; pop edi; ret.
+ *   ecx = abs(g_x_0054206c - g_x_00542084); g_x_0054206c = ecx;
+ *   if (ecx > 0x20000): goto install-path.
+ *   else: call InstallSelfChainSet80Call; pop edi; ret.
+ *   install-path: g_x_00542080 = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
+ *     pause = 1.
+ */
+__declspec(naked) void InstallSelfAbsDiff_00434730(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    edi
+        mov     ecx, [eax + 0x84]
+        mov     [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   07h
+        call    ChainDecCondStoreCallJmp_00434880
+        pop     edi
+        ret
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     edi, dword ptr [g_x_00542084]
+        sub     ecx, edi
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   79h
+        _emit   08h
+        neg     ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x00020000
+        _emit   7eh
+        _emit   07h
+        call    InstallSelfChainSet80Call_004347f0
+        pop     edi
+        ret
+        mov     dword ptr [g_x_00542080], 0x50
+        mov     dword ptr [eax + 8], 0x00434730
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edi, 0x00434730
+        add     edi, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + 0x84], edx
+        call    CmpDispatchPushCallPop_00438530
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     edi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
