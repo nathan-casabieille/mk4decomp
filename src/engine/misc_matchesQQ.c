@@ -45359,6 +45359,9 @@ __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
     }
 }
 
+extern void Cmp9DirtyToggle_00464320(void);
+extern void InstallSelfBootInit_00462980(void);
+extern void func_00462a90(void);
 extern void StackPopDispatchTagged_0041f780(void);
 
 /* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
@@ -45423,6 +45426,121 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     dword ptr [g_x_0054204c], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00462870 (259b game) - triple-entry inc-cmp5 chain (sibling of 0x004627c0).
+ *   Block A: g_x_0054206c=g_state_00537f74; if nonzero jmp CallSetPause path.
+ *     Else inc g_x_00541fb0 -> g_state_00542080; if >=5 jmp CallSetPause path.
+ *     Call func_004635a0, pause-check; sync 80->fb0; call PackedTableWalkChainStore, pause-check;
+ *     call func_00463430, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch.
+ *     Fall-through to jmp CallSetPause.
+ *   Block B (+0x70): call Cmp9DirtyToggle; if pause? ret. If !bit0(0054208c): jmp CallSetPause.
+ *     Set g_x_0054206c=g_state_0053a408, g_scaledInit_00542044=0x0053a3e0>>2;
+ *     if nonzero: jmp InstallSelfBootInit; else jmp func_00462a90; ret.
+ *   Block C (+0xc0): same as B but with g_state_00537e88 and 0x0053a700>>2.
+ */
+__declspec(naked) void TripleEntryWordChainInc5_00462870(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00537f74]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   56h
+        mov     eax, dword ptr [g_x_00541fb0]
+        inc     eax
+        cmp     eax, 5
+        mov     dword ptr [g_state_00542080], eax
+        _emit   73h
+        _emit   46h
+        call    func_004635a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        mov     ecx, dword ptr [g_state_00542080]
+        mov     dword ptr [g_x_00541fb0], ecx
+        call    PackedTableWalkChainStore_00463e20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        call    func_00463430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   15h
+        _emit   66h
+        _emit   8bh
+        _emit   15h
+        _emit   58h
+        _emit   28h
+        _emit   4eh
+        _emit   00h
+        push    edx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        jmp     CallSetPause_0041f830
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp9DirtyToggle_00464320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        mov     eax, dword ptr [g_state_0053a408]
+        mov     ecx, offset g_data_0053a3e0
+        shr     ecx, 2
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfBootInit_00462980
+        jmp     func_00462a90
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp9DirtyToggle_00464320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   34h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        mov     eax, dword ptr [g_state_00537e88]
+        mov     ecx, offset g_data_0053a700
+        shr     ecx, 2
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfBootInit_00462980
+        jmp     func_00462a90
         ret
     }
 }

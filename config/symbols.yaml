@@ -6670,10 +6670,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00462870
-    name: func_00462870
+    name: TripleEntryWordChainInc5_00462870
     size: 259
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00462980
     name: InstallSelfBootInit_00462980
     size: 265
