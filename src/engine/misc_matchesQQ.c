@@ -38593,3 +38593,86 @@ __declspec(naked) void GuardedChainMaskOr_00446790(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541e34;
+extern void DownloadPlayerChar(void);
+extern void GuardedDualPushTailJmp_004231f0(void);
+extern void ScaledOr4DirtyClear_00409320(void);
+
+/* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
+ *   call DownloadPlayerChar with g_x_00542070=2; if pause? ret.
+ *   call GuardedDualPushTailJmp_004231f0; if pause? ret.
+ *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear_00409320, mstack-pop.
+ *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
+ *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_data_00537f78; ret.
+ */
+__declspec(naked) void QuadGuardedCjSet_00422fc0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0053a178]
+        mov     dword ptr [g_x_00542070], 2
+        mov     dword ptr [g_x_0054206c], eax
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0053a178]
+        mov     edx, dword ptr [g_data_00541e34]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542070], 2
+        mov     dword ptr [g_x_00542074], edx
+        call    GuardedDualPushTailJmp_004231f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   92h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    ScaledOr4DirtyClear_00409320
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, 3
+        mov     dword ptr [g_x_00538160], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x30], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        _emit   81h
+        _emit   0ch
+        _emit   85h
+        _emit   34h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   1ch
+        _emit   00h
+        call    TwoStateLookupDirty_004237d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     eax, dword ptr [g_x_00537f78]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x3c], eax
+        ret
+    }
+}

@@ -1850,10 +1850,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00422fc0
-    name: func_00422fc0
+    name: QuadGuardedCjSet_00422fc0
     size: 237
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004230b0
     name: func_004230b0
     size: 246
