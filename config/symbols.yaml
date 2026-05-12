@@ -8282,10 +8282,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cc50
-    name: func_0047cc50
+    name: SevenThunks_0047cc50
     size: 254
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cd50
     name: func_0047cd50
     size: 522

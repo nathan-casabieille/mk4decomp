@@ -40729,3 +40729,140 @@ __declspec(naked) void DoubleIndirectFourWaySelect_0049ec00(void) {
         ret
     }
 }
+
+extern void func_00470b90(void);
+
+/* @addr 0x0047cc50 (254b game) - seven adjacent small thunks (16/32/64-byte blocks).
+ *   B1 (0..31): call MStackBitFlagDispatch; if !pause: push 0x004ed8b0, tail-call ArgSarStoreJmp.
+ *   B2 (32..95): set baseSel[+0x74]=0x10f; call internal 0x00465ba0 (inside func_00464830);
+ *     if !pause: push 0x004ed340, tail-call ArgSarStoreJmp.
+ *   B3 (96..127): g_x_00542054 = 0x004ed358>>2; tail-jmp func_00470b90.
+ *   B4 (128..143): push 0x004ed378; tail-call ArgSarStoreJmp.
+ *   B5 (144..207): set baseSel[+0x74]=0x114; call 0x00465ba0; if !pause: push 0x004ed388,
+ *     tail-call ArgSarStoreJmp.
+ *   B6 (208..239): g_x_00542054 = 0x004ed3a0>>2; tail-jmp func_00470b90.
+ *   B7 (240..253): push 0x004ed3c0; tail-call ArgSarStoreJmp.
+ */
+__declspec(naked) void SevenThunks_0047cc50(void) {
+    __asm {
+        call    MStackBitFlagDispatch_00494750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ed8b0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x10f
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        _emit   0e8h
+        _emit   14h
+        _emit   9fh
+        _emit   0f8h
+        _emit   0ffh
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ed340
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, 0x004ed358
+        sar     eax, 2
+        mov     dword ptr [g_x_00542054], eax
+        jmp     func_00470b90
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        push    0x004ed378
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x114
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        _emit   0e8h
+        _emit   0a4h
+        _emit   9eh
+        _emit   0f8h
+        _emit   0ffh
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ed388
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, 0x004ed3a0
+        sar     eax, 2
+        mov     dword ptr [g_x_00542054], eax
+        jmp     func_00470b90
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        push    0x004ed3c0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
