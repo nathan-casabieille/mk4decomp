@@ -6466,10 +6466,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00461260
-    name: func_00461260
+    name: NineEntryFlagDispatch_00461260
     size: 222
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461340
     name: Set1JmpSet2Jmp_00461340
     size: 31
