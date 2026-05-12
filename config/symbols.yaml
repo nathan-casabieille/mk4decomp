@@ -11361,10 +11361,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049a2f0
-    name: func_0049a2f0
+    name: InstallSelfDualPathInit_0049a2f0
     size: 280
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049a410
     name: InstallSelfStoreTwoCall_0049a410
     size: 194

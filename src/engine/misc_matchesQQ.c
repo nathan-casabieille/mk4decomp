@@ -44581,3 +44581,105 @@ __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
         ret
     }
 }
+
+extern void StoreTwoCall_0049cb40(void);
+extern void func_00499c80(void);
+extern void ScaledClearJmp_00428d40(void);
+extern void CondPickDualStore_0049c670(void);
+extern void InstallSelfStoreTwoCall_0049a410(void);
+
+/* @addr 0x0049a2f0 (280b game) - install-self with dual-path tail.
+ *   state nonzero (init path): push 0x47, 0x0049a580; call StoreTwoCall;
+ *     push 0x004f2770; tail-call ArgSarStoreJmp; eax=g_pause; ret.
+ *   state zero: call func_00499c80; if !pause: push 0x0054331c, call
+ *     GuardedPackedSlotInit; if !pause: g_state_00542080=4; install-self;
+ *     chain[+0x84]=1; scaledInit-chain push 0x0049a2f0+0x01000000;
+ *     call ScaledClearJmp_00428d40; pause=1; ret.
+ *   After 12 NOPs (alignment-only): tail block for another entry/sibling that
+ *     calls CondPickDualStore; if !pause: func_00499c80; if !pause:
+ *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall_0049a410; ret.
+ */
+__declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   23h
+        push    0x47
+        push    0x0049a580
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        push    0x004f2770
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+        call    func_00499c80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7fh
+        push    0x0054331c
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   69h
+        mov     dword ptr [g_state_00542080], 4
+        mov     dword ptr [esi + 8], 0x0049a2f0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x0049a2f0
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledClearJmp_00428d40
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    func_00499c80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        push    0x00543318
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfStoreTwoCall_0049a410
+        ret
+    }
+}
