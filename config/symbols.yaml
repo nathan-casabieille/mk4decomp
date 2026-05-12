@@ -10733,10 +10733,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004929e0
-    name: func_004929e0
+    name: MStackPush3MaskBit0_004929e0
     size: 185
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00492aa0
     name: func_00492aa0
     size: 945
