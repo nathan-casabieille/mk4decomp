@@ -39498,3 +39498,77 @@ __declspec(naked) void MStackPush3DualCallHalve_00477300(void) {
         ret
     }
 }
+
+extern void MStackPushPtr1Jmp_00438ef0(void);
+extern void PushCallPauseSet1Jmp_00438f20(void);
+
+/* @addr 0x00434db0 (244b game) - 3-state install-self with countdown.
+ *   state 0 (chain[+0x84]==0): install-self at [eax+8]=0x00434db0; chain[+0x84]=1;
+ *     scaledInit-chain push 0x00434db0+0x01000000; call MStackPushSet0Jmp_004384b0;
+ *     pause=1; ret.
+ *   state 1: dec g_state_00542080; if zero -> tail-call MStackPushPtr1Jmp_00438ef0; ret.
+ *     else: baseSel[+0x38][+0x58] < 0xffff0000 ? tail-call PushCallPauseSet1Jmp_00438f20; ret.
+ *     else: continue to state-2 setup.
+ *   state 2 init: g_state_00542080=0x1e; install-self; chain[+0x84]=2; g_x_0054204c=1;
+ *     pause=1; ret.
+ */
+__declspec(naked) void InstallSelfStateCountdown_00434db0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        _emit   74h
+        _emit   79h
+        dec     ecx
+        _emit   74h
+        _emit   45h
+        mov     ecx, dword ptr [g_state_00542080]
+        dec     ecx
+        mov     dword ptr [g_state_00542080], ecx
+        _emit   75h
+        _emit   07h
+        call    MStackPushPtr1Jmp_00438ef0
+        pop     edi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     ecx, dword ptr [ecx*4 + 0x58]
+        cmp     ecx, 0xffff0000
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   7ch
+        _emit   11h
+        call    PushCallPauseSet1Jmp_00438f20
+        pop     edi
+        ret
+        mov     dword ptr [g_state_00542080], 0x1e
+        mov     dword ptr [eax + 8], 0x00434db0
+        mov     dword ptr [eax + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 1
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+        mov     dword ptr [eax + 8], 0x00434db0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edi, 0x00434db0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    MStackPushSet0Jmp_004384b0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+    }
+}

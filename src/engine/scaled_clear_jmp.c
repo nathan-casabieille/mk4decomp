@@ -19,34 +19,22 @@ extern void func_00429530(void);
 extern void func_00428eb0(void);
 
 /* @addr 0x00428d40 */
-__declspec(naked) void ScaledClearJmp_00428d40(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        jmp     func_00428d80
-    }
+void ScaledClearJmp_00428d40(void) {
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_00428d80();
 }
 
 /* @addr 0x00428d60 */
-__declspec(naked) void ScaledClearJmp_00428d60(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        jmp     func_00429530
-    }
+void ScaledClearJmp_00428d60(void) {
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_00429530();
 }
 
 /* @addr 0x00428e90 */
-__declspec(naked) void ScaledClearJmp_00428e90(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        jmp     func_00428eb0
-    }
+void ScaledClearJmp_00428e90(void) {
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_00428eb0();
 }

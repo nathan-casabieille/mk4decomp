@@ -3557,10 +3557,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesKK.c
   - addr: 0x00434db0
-    name: func_00434db0
+    name: InstallSelfStateCountdown_00434db0
     size: 244
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434eb0
     name: Thunk_00434eb0
     size: 5
