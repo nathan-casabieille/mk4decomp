@@ -44772,3 +44772,83 @@ __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
         ret
     }
 }
+
+extern void func_00474390(void);
+
+/* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
+ *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
+ *   Call func_00474390; if pause? final-ret. If bit2 of g_state_0054208c set? skip 3 Mul10Tails.
+ *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
+ *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
+ */
+__declspec(naked) void MStackPush2CjMul10Triple_00474170(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_cj_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     dword ptr [g_scaledInit_00542044], 0x7d
+        call    func_00474390
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cdh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x6c]
+        push    eax
+        push    0x0001c000
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x70]
+        push    eax
+        push    0x0001c000
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x74]
+        push    eax
+        push    0x0001c000
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

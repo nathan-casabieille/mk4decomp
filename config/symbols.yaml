@@ -7685,10 +7685,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00474170
-    name: func_00474170
+    name: MStackPush2CjMul10Triple_00474170
     size: 282
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474290
     name: DualPushSet7dCallPop_00474290
     size: 116
