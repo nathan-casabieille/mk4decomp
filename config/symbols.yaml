@@ -7090,10 +7090,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046cb70
-    name: func_0046cb70
+    name: InstallSelfChainedDispatch_0046cb70
     size: 259
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046cc80
     name: InstallSelfMStackPush_0046cc80
     size: 162

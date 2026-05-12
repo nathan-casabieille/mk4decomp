@@ -41704,3 +41704,102 @@ __declspec(naked) void MStackNegAwareMul10Pair_004910b0(void) {
         ret
     }
 }
+
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void DirtyTestScaledCmpJmp_0046ea70(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void MStackPushSet0200_00490140(void);
+
+/* @addr 0x0046cb70 (259b game) - install-self with state-based dispatch.
+ *   snapshot+clear chain[+0x84].
+ *   If was nonzero: cj[+0x4c]=0x28f; mstack-push 0x0046e2a0; tail-call
+ *     InstallSelfIndirectJmp_0048f3f0; pop esi; ret.
+ *   If was zero: call DirtyTestScaledCmpJmp_0046ea70; if pause? ret.
+ *     call TripleFieldCopyJmpHi_0048f740; if pause? ret.
+ *     call CopyJmp_0048ee80; if pause? ret.
+ *     if g_x_0054206c <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
+ *     else: call ScaledMove48to58_00490720; if pause? ret.
+ *     call MStackPushSet0200_00490140; if pause? ret.
+ *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable_0048f6d0; if pause? ret.
+ *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_x_0054204c=0xc; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   34h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x28f
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], 0x0046e2a0
+        call    InstallSelfIndirectJmp_0048f3f0
+        pop     esi
+        ret
+        call    DirtyTestScaledCmpJmp_0046ea70
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    TripleFieldCopyJmpHi_0048f740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CopyJmp_0048ee80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        cmp     dword ptr [g_x_0054206c], 0xcccc
+        _emit   7eh
+        _emit   14h
+        push    0x004eb268
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4bh
+        call    MStackPushSet0200_00490140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        mov     edx, 0x004ec0a8
+        shr     edx, 2
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    GuardedDirtyXformFromTable_0048f6d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0046cb70
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0x0c
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
