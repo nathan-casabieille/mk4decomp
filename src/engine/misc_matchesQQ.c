@@ -41541,3 +41541,82 @@ __declspec(naked) void InstallSelfPlusTrampoline_0046c5d0(void) {
         ret
     }
 }
+
+extern void func_0043e3e0(void);
+extern void func_00477040(void);
+
+/* @addr 0x0043e2d0 (259b game) - mstack-push cj, then helper call + 3 Mul10Tail.
+ *   mstack-push g_cj_0054205c; g_cj_0054205c = g_scaledInit_00542044;
+ *   g_x_00542054 = baseSel[+0x64]; call func_0043e3e0; if pause? final-ret.
+ *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
+ *   then g_x_00542048 = g_x_0052ab10 + 0x15; g_x_00542070 = 0x2b85;
+ *   g_x_00542074 = 0x20; call func_00477040; if pause? final-ret.
+ *   mstack-pop g_cj_0054205c; ret.
+ */
+__declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     ecx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_x_00542054], ecx
+        call    func_0043e3e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x78]
+        lea     esi, [edx*4 + 0]
+        push    eax
+        push    0x9999
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x78], eax
+        mov     eax, dword ptr [esi + 0x7c]
+        push    eax
+        push    0x9999
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x7c], eax
+        mov     eax, dword ptr [esi + 0x80]
+        push    eax
+        push    0x9999
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi + 0x80], eax
+        mov     eax, dword ptr [g_x_0052ab10]
+        add     esp, 8
+        add     eax, 0x15
+        mov     dword ptr [g_x_00542070], 0x2b85
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_x_00542074], 0x20
+        call    func_00477040
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    }
+}
