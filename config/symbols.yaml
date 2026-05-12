@@ -3877,10 +3877,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesS.c
   - addr: 0x00437970
-    name: func_00437970
+    name: InstallSelfThreeStateLeaPlus22_00437970
     size: 273
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437a90
     name: InstallSelfPacked0x2005_00437a90
     size: 200
