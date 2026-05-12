@@ -31664,3 +31664,224 @@ __declspec(naked) void MStackPushTableSearchPop_0048bc40(void) {
         ret
     }
 }
+
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
+/* @addr 0x0049d380 (174b game) - linked-list iteration with field-add via 3 sub-calls.
+ *   eax=g_scaledInit; if zero pop+ret. Loop: ecx=g_x_00542048; esi=eax*4; eax=[ecx*4+0];
+ *     edi=ecx*4. Three nested calls to StoreDoubleNegPauseSubStore (each gated on pause and
+ *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_x_0054206c. Walk: esi=[esi]; eax=esi;
+ *     scaledInit=eax; loop if nonzero. ret.
+ */
+__declspec(naked) void LinkedListFieldAdd_0049d380(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        test    eax, eax
+        push    edi
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   84h
+        _emit   97h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00542048]
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [ecx*4 + 0]
+        lea     edi, [ecx*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   13h
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   65h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [edi + 4]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   13h
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   43h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [esi + 8], eax
+        mov     edi, dword ptr [edi + 8]
+        test    edi, edi
+        mov     dword ptr [g_x_0054206c], edi
+        _emit   74h
+        _emit   14h
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        mov     edi, dword ptr [g_x_0054206c]
+        mov     dword ptr [esi + 0x0c], edi
+        mov     esi, dword ptr [esi]
+        mov     eax, esi
+        mov     dword ptr [g_x_0054206c], esi
+        test    esi, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   0fh
+        _emit   85h
+        _emit   69h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+extern void InstallSelfChainSetB333_00437b60(void);
+extern void PushPop84TripleCall_00438b90(void);
+extern void TriStageChainGate_004344b0(void);
+
+/* @addr 0x00439fd0 (175b game) - install-self with countdown + 3-stage cascade.
+ *   Block A install-self path. Then call func_0045e640 + bit-1 test, set g_data_0053a478,
+ *     call PushPop84TripleCall, pause-check, set g_x_00542080=0x78, call ScaledChain3c74,
+ *     pause-check, if g_x_0054206c==0x1009 call TriStageChainGate_004344b0, pop+ret.
+ *     Else install-self at +0x08=0x00439fd0, set chain[+0x84]=ebx=1, set 0054204c=1, pause=1; pop+ret.
+ */
+__declspec(naked) void InstallSelfCountdownCascade_00439fd0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   15h
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   75h
+        _emit   3ch
+        call    InstallSelfChainSetB333_00437b60
+        pop     esi
+        pop     ebx
+        ret
+        call    func_0045e640
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   61h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   59h
+        mov     dword ptr [g_data_0053a478], ebx
+        call    PushPop84TripleCall_00438b90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        mov     dword ptr [g_x_00542080], 0x78
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        cmp     dword ptr [g_x_0054206c], 0x00001009
+        _emit   75h
+        _emit   08h
+        call    TriStageChainGate_004344b0
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 0x08], 0x00439fd0
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+extern void DispatcherComplex138_004760f0(void);
+extern void func_00442f90(void);
+extern void func_00442e80(void);
+extern void ScaledInitOrSelfPtr_00442d90(void);
+
+/* @addr 0x00442dd0 (176b game) - dual sequence: A: esi=0x94, scaledInit=0; loop:
+ *   set g_x_0054206c=esi; call DispatcherComplex138; pause-check; if bit-2 (bl=4) test fails:
+ *   call func_00442f90; pause-check; reset. Block B (+0x58): same shape with esi=0x7e and
+ *   func_00442e80; falls through to call ScaledInitOrSelfPtr_00442d90.
+ */
+__declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
+    __asm {
+        push    ebx
+        push    esi
+        mov     esi, 0x94
+        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     bl, 4
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   25h
+        call    func_00442f90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ch
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   74h
+        _emit   0d6h
+        pop     esi
+        pop     ebx
+        ret
+        mov     esi, 0x7e
+        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   25h
+        call    func_00442e80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     dword ptr [g_x_0054206c], esi
+        call    DispatcherComplex138_004760f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   74h
+        _emit   0d6h
+        pop     esi
+        pop     ebx
+        ret
+        call    ScaledInitOrSelfPtr_00442d90
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

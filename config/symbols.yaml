@@ -4343,10 +4343,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00439fd0
-    name: func_00439fd0
+    name: InstallSelfCountdownCascade_00439fd0
     size: 175
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a080
     name: func_0043a080
     size: 1204
@@ -4789,10 +4790,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesX.c
   - addr: 0x00442dd0
-    name: func_00442dd0
+    name: DualSeqLoopDispatch_00442dd0
     size: 176
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00442e80
     name: func_00442e80
     size: 269
@@ -11533,10 +11535,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesAA.c
   - addr: 0x0049d380
-    name: func_0049d380
+    name: LinkedListFieldAdd_0049d380
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d430
     name: ScaledZeroIfNonzero_0049d430
     size: 30
