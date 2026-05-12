@@ -10550,10 +10550,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00491290
-    name: func_00491290
+    name: ChainSetupBitToggle_00491290
     size: 188
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00491350
     name: SnapshotDispatchMStack_00491350
     size: 159
