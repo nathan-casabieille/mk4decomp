@@ -7072,10 +7072,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046c5d0
-    name: func_0046c5d0
+    name: InstallSelfPlusTrampoline_0046c5d0
     size: 258
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046c6e0
     name: QuadStateHandler_0046c6e0
     size: 212

@@ -41434,3 +41434,110 @@ __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
         ret
     }
 }
+
+extern void ScaledChain3c7c_0048f930(void);
+extern void CopyJmp_0048ee80(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void DualEntryPushCall_0046b630(void);
+
+/* @addr 0x0046c5d0 (258b game) - dual-block install-self plus tail trampoline.
+ *   B1 (0..213, +7 NOPs): snapshot+clear chain[+0x84]. If was zero: tail-call
+ *     FiveCallGuardSetTail_0046f6b0; ret.
+ *     Else: call ScaledChain3c7c_0048f930; if pause? ret. If g_x_0054206c<=1? ret.
+ *     Call CopyJmp_0048ee80; if pause? ret. If g_x_0054206c>0x8000? ret.
+ *     Call GuardedDualConst2AndToggle_0048eba0; if pause? ret. If bit0 of state
+ *     clear? ret. Else: install-self at [esi+8]=0x0046c5d0; chain[+0x84]=1;
+ *     scaledInit-chain push 0x0046c5d0+0x01000000; call DualEntryPushCall_0046b630;
+ *     pause=1; ret.
+ *   B2 (224..257): call ScaledMove48to58_00490720; if pause? ret. call self
+ *     (0x0046c5d0); if pause? ret. tail-jmp QuadStateHandler_0046c6e0.
+ */
+__declspec(naked) void InstallSelfPlusTrampoline_0046c5d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   08h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        pop     ebx
+        ret
+        call    ScaledChain3c7c_0048f930
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ebx, 1
+        cmp     eax, ebx
+        _emit   0fh
+        _emit   8eh
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CopyJmp_0048ee80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        cmp     dword ptr [g_x_0054206c], 0x8000
+        _emit   7fh
+        _emit   6dh
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   57h
+        mov     dword ptr [esi + 8], 0x0046c5d0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x0046c5d0
+        mov     dword ptr [ecx*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    DualEntryPushCall_0046b630
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    InstallSelfPlusTrampoline_0046c5d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     QuadStateHandler_0046c6e0
+        ret
+    }
+}
