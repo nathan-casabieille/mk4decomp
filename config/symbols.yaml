@@ -11311,10 +11311,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049aef0
-    name: func_0049aef0
+    name: InstallSelfCountdownBit_0049aef0
     size: 225
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049afe0
     name: Const7cCallJmp_0049afe0
     size: 30

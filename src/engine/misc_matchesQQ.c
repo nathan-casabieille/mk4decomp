@@ -36984,3 +36984,81 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         ret
     }
 }
+
+extern void func_0049c870(void);
+extern void func_0049b1d0(void);
+
+/* @addr 0x0049aef0 (225b game) - install-self with countdown.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x0049aef0; chain[+0x84]=1; g_data_0054204c=1; pause=1; ret.
+ *   chain[+0x84]!=0 path: mstack-push g_x_0054207c, g_x_00542080; g_x_0054206c=6; call func_0049c870;
+ *   if !pause: mstack-pop g_x_00542080 (no dec for first), then dec; g_x_0054207c gets next; bit-0 test;
+ *   if set: call func_0049b1d0; ret. Else dec g_x_0054207c; if not zero call StackPopDispatchTagged; ret.
+ */
+__declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [g_x_0054206c], 6
+        call    func_0049c870
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ah
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        _emit   84h
+        _emit   0c3h
+        mov     dword ptr [g_x_0054207c], edx
+        _emit   74h
+        _emit   08h
+        call    func_0049b1d0
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_0054207c]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], eax
+        _emit   75h
+        _emit   08h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [esi + 0x08], 0x0049aef0
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
