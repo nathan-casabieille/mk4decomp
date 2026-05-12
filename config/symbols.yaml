@@ -7983,10 +7983,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00477300
-    name: func_00477300
+    name: MStackPush3DualCallHalve_00477300
     size: 241
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00477400
     name: MStackPush2GlobalSwap_00477400
     size: 167

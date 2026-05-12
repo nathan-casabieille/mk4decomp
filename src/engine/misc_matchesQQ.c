@@ -39422,3 +39422,79 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         ret
     }
 }
+
+extern void RangeMulMod_004ab2a0(void);
+extern void Mul10Tail_00404af0(void);
+
+/* @addr 0x00477300 (241b game) - mstack-push 3 + 2 calls + halve subtract.
+ *   mstack-push g_x_00542078; call RangeMulMod_004ab2a0; if pause? ret.
+ *   mstack-push g_x_0054206c twice. g_x_00542070 = g_x_0054206c; g_x_0054206c =
+ *     g_x_00542078; call RangeMulMod again; if pause? ret.
+ *   g_x_00542078 = g_x_0054206c. mstack-pop; push (ecx, g_x_00542074) for cdecl call
+ *     to Mul10Tail. After call: cdq; eax-=edx; eax>>=1; ecx-=eax. mstack-pop 2.
+ */
+__declspec(naked) void MStackPush3DualCallHalve_00477300(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    RangeMulMod_004ab2a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_x_00542078]
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_x_0054206c], eax
+        call    RangeMulMod_004ab2a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   72h
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [g_x_00542078], ecx
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        push    ecx
+        push    edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542078]
+        add     esp, 8
+        cdq
+        sub     eax, edx
+        sar     eax, 1
+        sub     ecx, eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542078], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
