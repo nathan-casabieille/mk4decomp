@@ -39231,3 +39231,123 @@ __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
         ret
     }
 }
+
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void Wrapper_0048ec20(void);
+extern void ScaledChainAndF000DirtyToggle_0048e740(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void GuardedDispatch_0042c570(void);
+
+/* @addr 0x0046dc10 (240b game) - guarded threshold check + 8-way constant-set match.
+ *   if g_state_00535ddc > 0xb333 -> ret.
+ *   call MStackPush3CmpCall_0048eec0; if pause? ret. if bit0 of g_state_0054208c -> ret.
+ *   call Wrapper_0048ec20; if pause? ret. if bit0 of g_state_0054208c -> ret.
+ *   if g_data_0052ab40 & 1 -> ret.
+ *   if cj[+0x40] & 0x200 -> ret.
+ *   call ScaledChainAndF000DirtyToggle_0048e740; if pause? ret. if bit0 of g_state_0054208c -> ret.
+ *   call ScaledChain3c74_0048f910; if pause? ret.
+ *   if g_x_0054206c IN {0x10a, 0x10b, 0x100, 0x102, 0x10e, 0x111, 0x112, 0x113} -> ret.
+ *   else: tail-jmp GuardedDispatch_0042c570.
+ */
+__declspec(naked) void ThresholdSetMatchDispatch_0046dc10(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0xb333
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   8fh
+        _emit   0dah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   0fh
+        _emit   85h
+        _emit   0bbh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    Wrapper_0048ec20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   0fh
+        _emit   85h
+        _emit   9ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0052ab40]
+        mov     dword ptr [g_x_0054206c], eax
+        and     eax, 1
+        mov     dword ptr [g_x_00542094], eax
+        _emit   0fh
+        _emit   85h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_x_0054206c], eax
+        and     eax, 0x200
+        mov     dword ptr [g_x_00542094], eax
+        _emit   75h
+        _emit   67h
+        call    ScaledChainAndF000DirtyToggle_0048e740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   59h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   50h
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   42h
+        mov     eax, dword ptr [g_x_0054206c]
+        cmp     eax, 0x10a
+        _emit   74h
+        _emit   36h
+        cmp     eax, 0x10b
+        _emit   74h
+        _emit   2fh
+        cmp     eax, 0x100
+        _emit   74h
+        _emit   28h
+        cmp     eax, 0x102
+        _emit   74h
+        _emit   21h
+        cmp     eax, 0x10e
+        _emit   74h
+        _emit   1ah
+        cmp     eax, 0x111
+        _emit   74h
+        _emit   13h
+        cmp     eax, 0x112
+        _emit   74h
+        _emit   0ch
+        cmp     eax, 0x113
+        _emit   74h
+        _emit   05h
+        jmp     GuardedDispatch_0042c570
+        ret
+    }
+}

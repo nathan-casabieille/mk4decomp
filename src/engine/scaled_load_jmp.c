@@ -18,31 +18,22 @@ extern void func_004295a0(void);
 extern void func_00429610(void);
 
 /* @addr 0x00428d20 */
-__declspec(naked) void ScaledLoadJmp_00428d20(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_00429530
-    }
+void ScaledLoadJmp_00428d20(void) {
+    unsigned int idx = g_fightGroupHead;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    func_00429530();
 }
 
 /* @addr 0x00429210 */
-__declspec(naked) void ScaledLoadJmp_00429210(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_004295a0
-    }
+void ScaledLoadJmp_00429210(void) {
+    unsigned int idx = g_fightGroupHead;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    func_004295a0();
 }
 
 /* @addr 0x00429390 */
-__declspec(naked) void ScaledLoadJmp_00429390(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_00429610
-    }
+void ScaledLoadJmp_00429390(void) {
+    unsigned int idx = g_fightGroupHead;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x28);
+    func_00429610();
 }
