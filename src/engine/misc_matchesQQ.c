@@ -27917,6 +27917,79 @@ __declspec(naked) void SetupArgv_004cbc20(void) {
     }
 }
 
+extern void func_004d0800(void);
+
+/* @addr 0x004d0ac0 (138b other) - signed-int-to-buffer ("itoa-like" with 8-base digit table).
+ *   arg1 = sign-aware num; arg2 = base flag.
+ *   Setup edi to point at digit table base ([0x523690] or [0x5237f0]) depending on sign.
+ *   If positive arg2==0, write null word at start of dst.
+ *   Loop: digit = num & 7; num >>= 3; lookup 3-word entry at edi[digit*4]; copy to stack;
+ *     dec count; push (&stack, dst); call func_004d0800 (probably emit to dst);
+ *     edi += 0x54 each iter.
+ */
+__declspec(naked) void IntToBufBase8_004d0ac0(void) {
+    __asm {
+        sub     esp, 0x0c
+        push    ebx
+        push    esi
+        mov     esi, [esp + 0x1c]
+        push    edi
+        mov     edi, 0x005236f0
+        sub     edi, 0x60
+        test    esi, esi
+        _emit   74h
+        _emit   6dh
+        _emit   7dh
+        _emit   0ah
+        mov     edi, 0x00523850
+        neg     esi
+        sub     edi, 0x60
+        mov     eax, [esp + 0x24]
+        mov     ebx, [esp + 0x1c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        mov     word ptr [ebx], 0
+        test    esi, esi
+        _emit   74h
+        _emit   4ch
+        mov     eax, esi
+        add     edi, 0x54
+        and     eax, 7
+        sar     esi, 3
+        test    eax, eax
+        _emit   74h
+        _emit   39h
+        lea     eax, [eax + eax*2]
+        cmp     word ptr [edi + eax*4], 0x8000
+        lea     eax, [edi + eax*4]
+        _emit   72h
+        _emit   21h
+        mov     ecx, [eax]
+        mov     [esp + 0x0c], ecx
+        mov     edx, [eax + 4]
+        mov     [esp + 0x10], edx
+        mov     eax, [eax + 8]
+        mov     [esp + 0x14], eax
+        mov     eax, [esp + 0x0e]
+        dec     eax
+        mov     [esp + 0x0e], eax
+        lea     eax, [esp + 0x0c]
+        push    eax
+        push    ebx
+        call    func_004d0800
+        add     esp, 8
+        test    esi, esi
+        _emit   75h
+        _emit   0b4h
+        pop     edi
+        pop     esi
+        pop     ebx
+        add     esp, 0x0c
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
