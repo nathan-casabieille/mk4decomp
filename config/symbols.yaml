@@ -8656,10 +8656,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x00482ef0
-    name: func_00482ef0
+    name: Chain3CallGuarded_00482ef0
     size: 101
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482f60
     name: func_00482f60
     size: 291

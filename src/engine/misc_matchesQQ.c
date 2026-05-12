@@ -28812,3 +28812,51 @@ __declspec(naked) void DualEntryStub_0043d510(void) {
         jmp     CountdownStoreCallChain_0043d5a0
     }
 }
+
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void GateDispatch6c_00494580(void);
+extern void CmpDualPatchCallJmp_00482b00(void);
+extern void func_00482f60(void);
+
+/* @addr 0x00482ef0 (101b game) - 3-stage pause-guarded chain: set g_x_0054206c=0x8000;
+ *   call CmpP1DualInitStore; if pause ret; call GateDispatch6c; if pause ret;
+ *   call CmpDualPatchCallJmp; if pause ret; g_x_0054206c=0x4003; store at
+ *   [g_baseSel_00542060*4 + 0x74]; push 0x004ee370; call ArgSarStoreJmp; ret.
+ *   Second block (+0x60): tail-jmp func_00482f60.
+ */
+__declspec(naked) void Chain3CallGuarded_00482ef0(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0x00008000
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        call    CmpDualPatchCallJmp_00482b00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00004003
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004ee370
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     func_00482f60
+    }
+}
