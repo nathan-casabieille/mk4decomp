@@ -21621,3 +21621,203 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         ret
     }
 }
+
+extern void func_004245b0(void);
+extern void FpuSqrtMul_004ab350(void);
+
+/* @addr 0x00425830 (200b game) - load packed_ptr[+8/+0], Mul10 each squared, sum:
+ *   g_x_00542074 = packed[+8]; g_x_00542078 = packed[+0]; call func_004245b0;
+ *   pause? ret;
+ *   chain[g_scaledInit + 4] = g_x_0054206c;
+ *   g_x_00542074 = Mul10(g_x_00542074, g_x_00542074);
+ *   g_x_00542078 = Mul10(g_x_00542078, g_x_00542078);
+ *   g_x_00542074 += g_x_00542078;
+ *   call FpuSqrtMul_004ab350; pause? ret;
+ *   g_x_00542074 = g_x_0054206c; g_x_00542078 = -packed[g_x_00542048 + 4];
+ *   call func_004245b0; pause? ret;
+ *   packed[g_scaledInit] = g_x_0054206c.
+ */
+__declspec(naked) void Mul10SumSqrt_00425830(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, [eax*4 + 8]
+        mov     dword ptr [g_x_00542074], ecx
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00542078], edx
+        call    func_004245b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   96h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     [eax*4 + 4], ecx
+        mov     eax, dword ptr [g_x_00542074]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_x_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        add     esp, 8
+        add     ecx, eax
+        mov     dword ptr [g_x_00542078], eax
+        mov     dword ptr [g_x_00542074], ecx
+        call    FpuSqrtMul_004ab350
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_00542074], edx
+        mov     ecx, [eax*4 + 4]
+        neg     ecx
+        mov     dword ptr [g_x_00542078], ecx
+        call    func_004245b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     [edx*4 + g_data_004d57ac_arr], eax
+        ret
+    }
+}
+
+extern void DownloadPlayerChar(void);
+extern void GuardedDualPushTailJmp_004231f0(void);
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0052aafc;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00541de0;
+
+/* @addr 0x00422ef0 (199b game) - load g_x_005380e0 + flags, call F1; pause? ret;
+ *   prep two-arg state, call F2; pause? ret;
+ *   chain[g_x_0054205c +0x30]=2, +0x54=0x14ccc, +0x5c=0;
+ *   chain[+0x34] |= 0x001c0001; chain[+0x3c] = g_x_00541de0.
+ */
+__declspec(naked) void DownloadCharSetup_00422ef0(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_005380e0]
+        mov     dword ptr [g_x_00542070], 1
+        mov     dword ptr [g_x_0054206c], eax
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_005380e0]
+        mov     edx, dword ptr [g_x_0052aafc]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542070], 1
+        mov     dword ptr [g_x_00542074], edx
+        call    GuardedDualPushTailJmp_004231f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   70h
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0053815c], eax
+        mov     dword ptr [eax*4 + 0x30], 2
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [eax*4 + 0x54], 0x00014ccc
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x5c], 0
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, [eax*4 + 0x34]
+        or      ecx, 0x001c0001
+        mov     [eax*4 + 0x34], ecx
+        mov     eax, dword ptr [g_x_00541de0]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [edx*4 + 0x3c], eax
+        ret
+    }
+}
+
+extern void func_004260d0(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void DivBy_004ab300(void);
+extern unsigned int g_x_0053a384;
+extern unsigned int g_x_00543550;
+
+/* @addr 0x00426000 (199b game) - install-self gate with three-way exit:
+ *   esi = base*4; snapshot [esi+0x84]; clear.
+ *   if (snapshot != 0) goto install-self-zero;
+ *   save g_x_00542070 in 0x53a384; call func_004260d0; pause? ret;
+ *   if (208c & 4 != 0) goto install-self-zero;
+ *   else: chain[g_x_00542048 + 0x10] = 0x426190 (handler);
+ *         chain[+0x14] = 0x80; restore g_x_00542070;
+ *         g_x_0054206c = 0x80; call DivBy; pause? ret;
+ *         g_x_0054206c += 6; g_x_0054204c = g_x_0054206c;
+ *         [esi+8] = 0x00426000; [esi+0x84] = 1; pause = 1.
+ *   install-self-zero: g_x_00543550 = 0; call StackPopDispatchTagged; ret.
+ */
+__declspec(naked) void InstallSelfPackedF80_00426000(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0053a384], ecx
+        call    func_004260d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   11h
+        mov     dword ptr [g_x_00543550], 0
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, 0x80
+        mov     dword ptr [edx*4 + 0x10], 0x00426190
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     [ecx*4 + 0x14], eax
+        mov     edx, dword ptr [g_x_0053a384]
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_x_0054206c], eax
+        call    DivBy_004ab300
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        mov     eax, dword ptr [g_x_0054206c]
+        add     eax, 6
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00426000
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}

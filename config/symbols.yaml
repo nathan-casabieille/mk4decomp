@@ -1834,10 +1834,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422ef0
-    name: func_00422ef0
+    name: DownloadCharSetup_00422ef0
     size: 199
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422fc0
     name: func_00422fc0
     size: 237
@@ -2065,10 +2066,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00425830
-    name: func_00425830
+    name: Mul10SumSqrt_00425830
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425900
     name: PushStackAllocCall_00425900
     size: 97
@@ -2102,10 +2104,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00426000
-    name: func_00426000
+    name: InstallSelfPackedF80_00426000
     size: 199
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004260d0
     name: func_004260d0
     size: 248
