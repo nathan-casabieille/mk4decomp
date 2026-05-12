@@ -24816,6 +24816,71 @@ __declspec(naked) void MStackSignedMod_0042fee0(void) {
     }
 }
 
+extern void func_004089e0(void);
+extern void func_004b8fa0(void);
+extern void func_00476320(void);
+extern void func_004058c0(void);
+
+/* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
+ *   set chain[+0x30] = 0x74, call func_00406340, tail-jmp func_004058c0.
+ */
+__declspec(naked) void ThreeCallChainCopy_004409e0(void) {
+    __asm {
+        call    func_004089e0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   93h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_00476320
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   81h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [eax*4 + 0x3c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + 0x40]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + 0x44]
+        mov     [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x74
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [edx*4 + 0x30], eax
+        call    func_00406340
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_004058c0
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
