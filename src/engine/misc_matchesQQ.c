@@ -25833,6 +25833,58 @@ __declspec(naked) void MStackPush3MaskBit_00492920(void) {
     }
 }
 
+/* @addr 0x00470e20 (181b game) - mstack-push 3 + indirect call via global ptr + mstack-pop 3 + bit-1 dispatch.
+ *   Push g_x_00542048, g_x_00542084, g_x_0054207c; g_x_0054206c = g_x_0054207c;
+ *   call [g_x_00542048] (indirect through memory); pause? -> end.
+ *   mstack-pop into g_x_0054207c, g_x_00542084, g_x_00542048.
+ *   if (g_state_0054208c & 1): g_x_00542084 = 0x10000.
+ */
+__declspec(naked) void MStackIndirectCallBit_00470e20(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_x_0054207c]
+        mov     dword ptr [g_x_0054206c], edx
+        call    dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        test    al, 1
+        mov     dword ptr [g_x_00542048], ecx
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_x_00542084], 0x00010000
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
