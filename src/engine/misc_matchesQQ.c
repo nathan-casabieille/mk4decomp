@@ -15154,6 +15154,181 @@ extern void Thunk_0049cb80(void);
 extern unsigned int g_x_00542058_v2;
 #define g_x_00542058 g_x_00542058_v2
 
+extern unsigned char g_data_004ded70;
+extern unsigned char g_data_004ded80;
+extern unsigned int g_arr_4237d0;
+extern void Cmp2DirtyToggle_00423870(void);
+
+extern unsigned char g_data_004ea070;
+extern unsigned int g_arr_461640;
+extern unsigned char g_str_00461980;
+extern unsigned int g_x_0053a748;
+
+extern unsigned int g_arr_425a80_src;
+extern unsigned int g_arr_425a80_dst;
+extern unsigned int g_x_0053a1ac;
+
+/* @addr 0x00425a80 (155b game) - 3-element clamp loop:
+ *   neg = -g_walkCallback; for i in {0,1,2}:
+ *     v = arr_src[g_x_00542048++];
+ *     if (v < 0): if (v < neg) v = neg; else: if (v > g_walkCallback) v = walkCallback;
+ *     arr_dst[g_scaledInit++] = v.
+ *   Then: g_x_0053a1ac = 2 (the iter sentinel), rollback g_scaledInit/g_x_00542048 by 3.
+ */
+__declspec(naked) void ThreeClampLoop_00425a80(void) {
+    __asm {
+        push    ebx
+        push    esi
+        mov     esi, dword ptr [g_walkCallback]
+        push    edi
+        mov     edx, esi
+        mov     edi, 2
+        neg     edx
+        mov     dword ptr [g_data_00542070], edx
+        mov     ebx, 3
+        _emit   0ebh
+        _emit   0ch
+loop425a80:
+        mov     edx, dword ptr [g_data_00542070]
+        mov     esi, dword ptr [g_walkCallback]
+afterReload:
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, [ecx*4 + g_arr_425a80_src]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_x_00542048], ecx
+        _emit   7dh
+        _emit   08h
+        cmp     eax, edx
+        _emit   7dh
+        _emit   0fh
+        mov     eax, edx
+        _emit   0ebh
+        _emit   06h
+        cmp     eax, esi
+        _emit   7eh
+        _emit   07h
+        mov     eax, esi
+        mov     dword ptr [g_x_00542074], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     [ecx*4 + g_arr_425a80_dst], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     edx
+        dec     edi
+        dec     ebx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        _emit   75h
+        _emit   0a6h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, edx
+        mov     dword ptr [g_x_0053a1ac], edi
+        sub     ecx, 3
+        sub     eax, 3
+        pop     edi
+        pop     esi
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_x_00542048], eax
+        pop     ebx
+        ret
+    }
+}
+
+/* @addr 0x00461640 (154b game) - walk a table at 0x4ea070 in 3-int strides
+ *   while entry[0] >= 0. For each entry: store entry[0..2] into 4 globals,
+ *   call StoreTwoCall(0x461980, 0x30); ++idx (in 3-stride scaled form).
+ *   Returns g_walkCallback = 8 = (count*3); g_x_0053a748 = 8.
+ */
+__declspec(naked) void TableWalk3StrideCall_00461640(void) {
+    __asm {
+        push    esi
+        mov     esi, offset g_data_004ea070
+        shr     esi, 2
+        mov     eax, esi
+        mov     dword ptr [g_state_00542080], 0
+        mov     dword ptr [g_walkCallback], 0
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, [eax*4 + g_arr_461640]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054207c], ecx
+        _emit   7ch
+        _emit   54h
+loopInner:
+        mov     ecx, [eax*4 + g_arr_461640 + 0x04]
+        push    0x30
+        mov     dword ptr [g_currentNodeFlags], ecx
+        mov     edx, [eax*4 + g_arr_461640 + 0x08]
+        push    offset g_str_00461980
+        mov     dword ptr [g_state_00542088], edx
+        call    StoreTwoCall_0049cb40
+        mov     eax, dword ptr [g_state_00542080]
+        add     esp, 8
+        inc     eax
+        mov     dword ptr [g_state_00542080], eax
+        lea     eax, [eax + eax*2]
+        mov     dword ptr [g_walkCallback], eax
+        add     eax, esi
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, [eax*4 + g_arr_461640]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054207c], ecx
+        _emit   7dh
+        _emit   0ach
+        mov     eax, 8
+        pop     esi
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_x_0053a748], eax
+        ret
+    }
+}
+
+/* @addr 0x004237d0 (154b game) - 2-state lookup with dirty toggle:
+ *   g_scaledInit = (0x4dde70 >> 2); g_x_00542048 = (0x4dde80 >> 2);
+ *   call Cmp2DirtyToggle; pause? ret;
+ *   if (g_state_0054208c & 1): g_scaledInit = g_x_00542048;
+ *   key = g_scaledInit + (chain[cj].slot30*2 - 2);
+ *   g_walkCallback = (chain[cj].slot30*2 - 2);
+ *   g_scaledInit = key; chain[cj].slot54 = arr[key];
+ *   key2 = chain[scaledInit].slot4; chain[cj].slot5c = key2;
+ *   chain[cj].slot64 = 0x4b5c2.
+ */
+__declspec(naked) void TwoStateLookupDirty_004237d0(void) {
+    __asm {
+        mov     eax, offset g_data_004ded70
+        mov     ecx, offset g_data_004ded80
+        shr     eax, 2
+        shr     ecx, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        call    Cmp2DirtyToggle_00423870
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   70h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   0ch
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x30]
+        lea     ecx, [ecx + ecx - 2]
+        add     edx, ecx
+        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     edx, [edx*4 + g_arr_4237d0]
+        mov     [eax*4 + g_chain_arr_4348f0 + 0x54], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x04]
+        mov     [edx*4 + g_chain_arr_4348f0 + 0x5c], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     [eax*4 + g_chain_arr_4348f0 + 0x64], 0x4b5c2
+        ret
+    }
+}
+
 /* @addr 0x004b3a90 (159b engine.geo) - in-place 9-word transform:
  *   For i=0..8: arg1[i] = (signed short)arg1[i] * arg2[(i%3)*4] >> 12.
  */

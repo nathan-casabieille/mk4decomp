@@ -1888,10 +1888,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004237d0
-    name: func_004237d0
+    name: TwoStateLookupDirty_004237d0
     size: 154
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00423870
     name: Cmp2DirtyToggle_00423870
     size: 55
@@ -2072,10 +2073,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00425a80
-    name: func_00425a80
+    name: ThreeClampLoop_00425a80
     size: 155
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425b20
     name: func_00425b20
     size: 177
@@ -6368,10 +6370,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461640
-    name: func_00461640
+    name: TableWalk3StrideCall_00461640
     size: 154
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004616e0
     name: func_004616e0
     size: 345
