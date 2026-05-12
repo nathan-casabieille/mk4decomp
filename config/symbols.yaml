@@ -1963,10 +1963,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00424350
-    name: func_00424350
+    name: ModMagicMul10Index_00424350
     size: 188
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424410
     name: func_00424410
     size: 178
@@ -6722,10 +6723,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004667f0
-    name: func_004667f0
+    name: TagDispatchPairedPacked_004667f0
     size: 190
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004668b0
     name: func_004668b0
     size: 1460

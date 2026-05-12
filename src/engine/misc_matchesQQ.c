@@ -23801,6 +23801,153 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
     }
 }
 
+extern unsigned int g_x_0054202c;
+extern unsigned int g_x_004d5318;
+
+/* @addr 0x00424350 (188b game) - mod-by-0x6487e by reciprocal magic + Mul10 + chain index.
+ *   Push g_scaledInit; ecx = g_x_00542074;
+ *   if (ecx < 0): ecx = (0x6487d - ecx) % 0x6487e + ecx; (effectively adds multiples of 0x6487e)
+ *   Wait actually it's: edx = 0x6487d - ecx; eax = 0xa2f99905 (magic); mul edx → edx:eax = product;
+ *     shift edx right by 0x12 (giving quotient); imul edx, 0x6487e; ecx += edx;
+ *   Then if (ecx >= 0x6487e): loop subtracting 0x6487e by computed quotient until below.
+ *   g_x_00542074 = ecx; push [0x4d5318], push ecx; g_x_0054206c = ecx;
+ *   call Mul10Tail_00404af0; g_x_0054206c = eax;
+ *   eax = (eax >> 16) + 0x200; eax &= 0x7ff; eax += g_x_0054202c;
+ *   g_scaledInit = eax; g_x_0054206c = packed_ptr[eax];
+ *   mstack-pop into g_scaledInit.
+ */
+__declspec(naked) void ModMagicMul10Index_00424350(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     ecx, dword ptr [g_x_00542074]
+        test    ecx, ecx
+        _emit   7dh
+        _emit   1fh
+        mov     edx, 0x0006487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x0006487e
+        add     ecx, edx
+        mov     dword ptr [g_x_00542074], ecx
+        cmp     ecx, 0x0006487e
+        _emit   7ch
+        _emit   19h
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+        sub     ecx, 0x0006487e
+        dec     edx
+        _emit   75h
+        _emit   0f7h
+        mov     dword ptr [g_x_00542074], ecx
+        mov     eax, dword ptr [g_x_004d5318]
+        push    ecx
+        push    eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_0054202c]
+        mov     dword ptr [g_x_0054206c], eax
+        sar     eax, 0x10
+        add     eax, 0x200
+        add     esp, 8
+        and     eax, 0x000007ff
+        add     eax, edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+extern void GatedWordPushCall_00489f90(void);
+extern void PushSearchToggleBit0_004577a0(void);
+extern void GuardedScaledCall_0048a020(void);
+extern unsigned int g_x_00537f9c;
+
+/* @addr 0x004667f0 (190b game) - tag dispatch + paired packed_ptr install with bit-0 branch.
+ *   g_x_0054206c = 0; call GatedWordPushCall_00489f90; pause? ret.
+ *   g_x_0054206c = [0x537f9c]; call PushSearchToggleBit0_004577a0; pause? ret.
+ *   if (g_state_0054208c & 1):
+ *     mstack-push g_scaledInit; g_x_0054206c = packed_ptr(0x4e28c8); call GuardedScaledCall;
+ *     pause? ret; jmp end-section.
+ *   else:
+ *     mstack-push g_scaledInit; g_x_0054206c = packed_ptr(0x4e28cc); call GuardedScaledCall;
+ *     pause? ret.
+ *   mstack-pop into g_scaledInit.
+ */
+__declspec(naked) void TagDispatchPairedPacked_004667f0(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0
+        call    GatedWordPushCall_00489f90
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00537f9c]
+        mov     dword ptr [g_x_0054206c], eax
+        call    PushSearchToggleBit0_004577a0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        mov     eax, dword ptr [g_state_004d57ac]
+        _emit   75h
+        _emit   31h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     edx, 0x004e28c8
+        mov     dword ptr [g_state_004d57ac], eax
+        sar     edx, 2
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [g_x_0054206c], edx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   48h
+        _emit   0ebh
+        _emit   2eh
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, 0x004e28cc
+        sar     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
