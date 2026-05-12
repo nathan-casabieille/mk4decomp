@@ -2840,10 +2840,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesN.c
   - addr: 0x0042c3e0
-    name: func_0042c3e0
+    name: QuadStageStateDispatch_0042c3e0
     size: 169
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c490
     name: EsiAliasInstallChainCall_0042c490
     size: 95
@@ -6666,10 +6667,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00464190
-    name: func_00464190
+    name: SequencedInit3Call_00464190
     size: 173
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00464240
     name: StoreCallPauseCmpDirty_00464240
     size: 60
@@ -10865,10 +10867,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00493a20
-    name: func_00493a20
+    name: MStackPushTableWalk_00493a20
     size: 173
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493ad0
     name: func_00493ad0
     size: 431

@@ -31295,3 +31295,189 @@ __declspec(naked) void TripleEntryChainGate_00480790(void) {
         ret
     }
 }
+
+extern void ScaledChain3c74_0048f910(void);
+extern void DirtyToggleByBaseSel_0048f2e0(void);
+extern void WeightedSumClampHelper_00439920(void);
+
+/* @addr 0x0042c3e0 (169b game) - 4-stage cascade with bit-test on g_state_0054208c and 3-way state-cmp.
+ *   A: call ScaledChain3c74; if !pause: if g_x_0054206c==0x1003: clear bit-0; ret.
+ *   B (+0x27): call DirtyToggleByGate; if !pause: if bit-2 clear: clear bit-0; ret.
+ *   C (+0x4b): call DirtyToggleByBaseSel_0048f2e0; if !pause: if bit-2 set: clear bit-0; ret.
+ *   D (+0x6f): cmp g_x_0054205c, g_state_00538158; default g_x_0054206c=g_x_0053a6dc;
+ *     if not equal: g_x_0054206c=g_x_00537f2c. If still zero: clear bit-0; ret.
+ *     Else: jmp WeightedSumClampHelper_00439920.
+ */
+__declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
+    __asm {
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        cmp     dword ptr [g_x_0054206c], 0x00001003
+        _emit   75h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0f1h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        call    DirtyToggleByBaseSel_0048f2e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0cdh
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_state_00538158]
+        mov     eax, dword ptr [g_x_0053a6dc]
+        cmp     ecx, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, dword ptr [g_x_00537f2c]
+        mov     dword ptr [g_x_0054206c], eax
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        jmp     WeightedSumClampHelper_00439920
+    }
+}
+
+extern void func_004265d0(void);
+extern void Init4Globals_0042ae10(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void LoadGeoAsset_Default(void);
+extern unsigned int g_state_0053a734;
+extern unsigned int g_state_0053a350;
+
+/* @addr 0x00464190 (173b game) - sequenced init: call func_004265d0; pause-check;
+ *   call Init4Globals_0042ae10; pause-check; setup scaledInit/0053a734/0053a350 from g_load_0052ab10;
+ *   init 5 fields of struct[*4+0x54..0x68]; call CopyGlobal_004ac1f0; pause-check;
+ *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
+ */
+__declspec(naked) void SequencedInit3Call_00464190(void) {
+    __asm {
+        push    esi
+        call    func_004265d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        xor     esi, esi
+        cmp     eax, esi
+        _emit   0fh
+        _emit   85h
+        _emit   96h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    Init4Globals_0042ae10
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_load_0052ab10]
+        mov     dword ptr [g_state_0053a734], esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_state_0053a350], esi
+        shl     eax, 2
+        mov     dword ptr [eax + 0x54], esi
+        mov     dword ptr [eax + 0x58], 0xfffe199a
+        mov     dword ptr [eax + 0x5c], 0xfffc0000
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [eax + 0x60], esi
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x64], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x68], edx
+        mov     dword ptr [g_x_0054206c], esi
+        call    CopyGlobal_004ac1f0
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   2dh
+        mov     eax, 0x0050b124
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    LoadGeoAsset_Default
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   13h
+        mov     ecx, 0x0050b124
+        shr     ecx, 2
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    LoadGeoAsset_Default
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x00493a20 (173b game) - mstack-push g_scaledInit and g_data_0054204c, set
+ *   g_scaledInit=0x00543200>>2, then walk a 1-table comparing edx (= old g_x_0054206c)
+ *   to [ecx*4+0]; advance through table while not match. mstack-pop both. ret.
+ */
+__declspec(naked) void MStackPushTableWalk_00493a20(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, 0x00543200
+        mov     dword ptr [g_data_0054204c], edx
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        cmp     edx, dword ptr [ecx*4 + 0]
+        _emit   74h
+        _emit   1ch
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        cmp     edx, dword ptr [ecx*4 + 0]
+        _emit   75h
+        _emit   0e4h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
