@@ -12555,10 +12555,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab900
-    name: func_004ab900
+    name: MStackPush7_004ab900
     size: 169
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab9b0
     name: MStackPop7_004ab9b0
     size: 139
