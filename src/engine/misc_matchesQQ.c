@@ -30856,3 +30856,218 @@ __declspec(naked) void InstallSelfBit4Gate_00438590(void) {
         ret
     }
 }
+
+extern void IncStoreCallIATDec_00439520(void);
+
+/* @addr 0x004382a0 (158b game) - install-self + 2-stage state-cascade.
+ *   Block A: standard install-self at 0x004382a0; mstack-push 0x00438300 jmp func_004339c0.
+ *   Block B (+0x60): call IncStoreCallIATDec; if !pause: if bit-0 set jmp StackPopDispatchTagged;
+ *     else call DecOrZeroDirty4_00438650; if !pause and bit-2 clear self-jmp; else jmp GuardedSeq_00438630.
+ */
+__declspec(naked) void InstallSelfStateCascade_004382a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00438300
+        jmp     func_004339c0
+        mov     ecx, 1
+        mov     dword ptr [eax + 0x08], 0x004382a0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    IncStoreCallIATDec_00439520
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2fh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     StackPopDispatchTagged_0041f780
+        call    DecOrZeroDirty4_00438650
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfStateCascade_004382a0
+        jmp     GuardedSeq_00438630
+        ret
+    }
+}
+
+/* @addr 0x004395d0 (161b game) - dual-entry Mul10Tail pair accumulator with bit-flag toggle.
+ *   Block A: scaledInit=baseSel[*4+0x38]; g_x_0054206c=scaledInit[*4+0x6c]; g_x_00542070=scaledInit[*4+0x74];
+ *     call Mul10Tail twice; accumulate into g_x_00542070; if add ZF clear set bit-0 of g_state_0054208c, else clear bit-0; ret.
+ *   Block B (+0x70): call ScaledChainSignDirtyToggle; if !pause: if bit (al=1 vs cl) clear, OR bit-0 of state.
+ *     Else clear bit-0 and ret.
+ */
+__declspec(naked) void DualMul10Tail_004395d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x74]
+        push    ecx
+        push    ecx
+        mov     dword ptr [g_x_00542070], edx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_x_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        _emit   75h
+        _emit   08h
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    ScaledChainSignDirtyToggle_00439680
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     eax, 1
+        _emit   84h
+        _emit   0c8h
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        or      dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void InstallSelfPacked0x2005_00437a90(void);
+extern void func_0043a550(void);
+extern void DualCallTestPauseRange_004353f0(void);
+
+/* @addr 0x00435340 (165b game) - 5-block dispatcher.
+ *   Block A: gate g_state_00535ddc>0x20000? jmp Wrapper_00438ee0 : jmp InstallSelfPacked0x2005_00437a90.
+ *   Block B (+0x20): jmp GuardedSeq_00433bb0.
+ *   Block C (+0x30): g_x_0054206c=g_x_0054206c & 0xff; push 0x004e45b0; call func_0043a550; ret.
+ *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
+ *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange_004353f0.
+ */
+__declspec(naked) void FiveBlockDispatch_00435340(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00020000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     InstallSelfPacked0x2005_00437a90
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     GuardedSeq_00433bb0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     edx, dword ptr [g_x_0054206c]
+        push    0x004e45b0
+        and     edx, 0xff
+        mov     dword ptr [g_x_0054206c], edx
+        call    func_0043a550
+        add     esp, 4
+        ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00029999
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     DualCallTestPauseRange_004353f0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     DualCallTestPauseRange_004353f0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     DualCallTestPauseRange_004353f0
+    }
+}

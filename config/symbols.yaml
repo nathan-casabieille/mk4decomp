@@ -3597,10 +3597,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00435340
-    name: func_00435340
+    name: FiveBlockDispatch_00435340
     size: 165
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004353f0
     name: DualCallTestPauseRange_004353f0
     size: 65
@@ -3893,10 +3894,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004382a0
-    name: func_004382a0
+    name: InstallSelfStateCascade_004382a0
     size: 158
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00438340
     name: ThreeStageGateCascade_00438340
     size: 108
@@ -4187,10 +4189,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004395d0
-    name: func_004395d0
+    name: DualMul10Tail_004395d0
     size: 161
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439680
     name: ScaledChainSignDirtyToggle_00439680
     size: 54
