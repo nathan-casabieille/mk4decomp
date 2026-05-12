@@ -1645,10 +1645,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004201a0
-    name: func_004201a0
+    name: InstallSelfDualBranchInit_004201a0
     size: 279
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004202c0
     name: ScaledClearTripleCallJmp_004202c0
     size: 57

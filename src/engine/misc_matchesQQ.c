@@ -44384,3 +44384,95 @@ __declspec(naked) void MStackPush2TripleCallChain_0048cf50(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004f3404;
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TestCmpZeroFour_004238b0(void);
+extern void Set5CallPauseTestByteJmpCall_00491950(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void ScaledClearTripleCallJmp_004202c0(void);
+
+/* @addr 0x004201a0 (279b game) - install-self with 2-state branching.
+ *   state nonzero: push 5, call TableWalkBoundedCmp; call BootInitGuardedCallChain;
+ *     if !pause: tail-call ScaledClearTripleCallJmp_004202c0; ret.
+ *   state zero: call TestCmpZeroFour_004238b0; if !pause:
+ *     If g_data_004f3404 != 0: install-self chain[+0x84]=1, scaledInit+0x01000000,
+ *       call Set5CallPauseTestByteJmpCall_00491950.
+ *     Else: chain[+0x84]=2, scaledInit+0x02000000, call AudioInstallSelfStatePush_004aa8a0.
+ *     pause=1; ret.
+ */
+__declspec(naked) void InstallSelfDualBranchInit_004201a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   24h
+        dec     eax
+        push    5
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    BootInitGuardedCallChain_004265d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ScaledClearTripleCallJmp_004202c0
+        pop     esi
+        ret
+        call    TestCmpZeroFour_004238b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_data_004f3404]
+        mov     dword ptr [esi + 8], 0x004201a0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        test    eax, eax
+        _emit   74h
+        _emit   54h
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     edx, 0x004201a0
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x01000000
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    Set5CallPauseTestByteJmpCall_00491950
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     edx, 0x004201a0
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x02000000
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    AudioInstallSelfStatePush_004aa8a0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
