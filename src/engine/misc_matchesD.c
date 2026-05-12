@@ -101,17 +101,11 @@ void ScaledOr4DirtyClear_00409320(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void ScaledAnd4InvDirtyClear_00409350(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + 0x34]
-        and     ecx, 0xfffffffb
-        mov     dword ptr [eax*4 + 0x34], ecx
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void ScaledAnd4InvDirtyClear_00409350(void) {
+    unsigned int idx = g_scaledInit_00542044;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) & 0xFFFFFFFBu;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00413040 (39b)
@@ -145,29 +139,17 @@ __declspec(naked) void MStackPushSet9Jmp_00413040(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void ScaledStoreCurDirtyClear_004296f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [eax*4 + 0x28], ecx
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void ScaledStoreCurDirtyClear_004296f0(void) {
+    unsigned int idx = g_fightGroupHead;
+    *(unsigned int *)(idx * 4 + 0x28) = g_eventQueueCurrent;
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00429730 (31b): same shape, or al,1 instead of and al,0xfe */
-__declspec(naked) void ScaledStoreCurDirtyOr1_00429730(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [eax*4 + 0x28], ecx
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void ScaledStoreCurDirtyOr1_00429730(void) {
+    unsigned int idx = g_fightGroupHead;
+    *(unsigned int *)(idx * 4 + 0x28) = g_eventQueueCurrent;
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }
 
 /* @addr 0x00428300 (33b)
