@@ -32255,3 +32255,144 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         ret
     }
 }
+
+extern void CallPauseConstStoreJmp_004350f0(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void MStackPushSet0Jmp_004384b0(void);
+
+/* @addr 0x00435030 (178b game) - dual-entry install-self. */
+__declspec(naked) void InstallSelfStdChain_00435030(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CallPauseConstStoreJmp_004350f0
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x000001f4
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6fh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   07h
+        call    SetJmp_00438f70
+        pop     esi
+        ret
+        mov     dword ptr [esi + 0x08], 0x00435030
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00435030
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    MStackPushSet0Jmp_004384b0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
+
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
+/* @addr 0x00494d60 (178b game) - install-self chain. */
+__declspec(naked) void InstallSelfChain494d60_00494d60(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    PushPopWalkSet1006_00470ee0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, 0x00494d60
+        add     edx, 0x01000000
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        inc     eax
+        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     dword ptr [esi + 0x08], 0x00494d60
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0049cd40 (178b game) - init scaledInit chain with -7 offset and table accumulator loop. */
+__declspec(naked) void ScaledChainAccumLoop_0049cd40(void) {
+    __asm {
+        mov     eax, 0x0052d718
+        mov     dword ptr [g_data_00535e48], 0xfffffff9
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [g_x_00541f98]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [eax*4 + 0], 0xfffffff9
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        add     eax, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], 0
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, eax
+        mov     dword ptr [g_x_0053a1ac], 0x0000018e
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   0ebh
+        _emit   05h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        add     eax, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [edx*4 + 0]
+        add     ecx, eax
+        mov     eax, dword ptr [g_x_0053a1ac]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_0053a1ac], eax
+        _emit   79h
+        _emit   0c1h
+        mov     eax, 0x0052ab58
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00537f24], eax
+        ret
+    }
+}

@@ -3562,10 +3562,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00435030
-    name: func_00435030
+    name: InstallSelfStdChain_00435030
     size: 178
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004350f0
     name: CallPauseConstStoreJmp_004350f0
     size: 30
@@ -11001,10 +11002,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00494d60
-    name: func_00494d60
+    name: InstallSelfChain494d60_00494d60
     size: 178
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494e20
     name: func_00494e20
     size: 1212
@@ -11484,10 +11486,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049cd40
-    name: func_0049cd40
+    name: ScaledChainAccumLoop_0049cd40
     size: 178
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ce00
     name: func_0049ce00
     size: 364
