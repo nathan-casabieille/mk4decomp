@@ -28105,6 +28105,70 @@ __declspec(naked) void State6Latch_0048e240(void) {
     }
 }
 
+extern void StorePauseImulShr16_004ab630(void);
+
+/* @addr 0x00428080 (171b game) - mstack-push g_x_00542070; 3-call countdown loop with chain compare.
+ *   Push g_x_00542070; esi = 0xc; g_x_0054206c = esi; call StorePauseImulShr16; pause? -> mstack-pop+ret.
+ *   [0x537f48] = g_x_0054206c (result); g_x_00542070 = 5; g_x_0054206c = esi.
+ *   call StorePauseImulShr16; pause? -> mstack-pop+ret.
+ *   loop: g_x_00542070--; eax = g_x_0054206c;
+ *     if (eax == 0): goto mstack-pop+ret.
+ *     if (eax != [0x537f48]): goto save-and-exit (store eax to [0x5380e0], mstack-pop+ret).
+ *     g_x_0054206c = esi; call StorePauseImulShr16; if (pause == 0): loop;
+ *     else: just pop esi+ret (no mstack-pop).
+ */
+__declspec(naked) void TripleCallCountdown_00428080(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, 0x0c
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [g_x_0054206c], esi
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   77h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542070], 5
+        mov     dword ptr [g_x_00537f48], edx
+        mov     dword ptr [g_x_0054206c], esi
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4dh
+        mov     eax, dword ptr [g_x_00542070]
+        dec     eax
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        _emit   74h
+        _emit   1eh
+        cmp     eax, dword ptr [g_x_00537f48]
+        _emit   75h
+        _emit   16h
+        mov     dword ptr [g_x_0054206c], esi
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   74h
+        _emit   0d2h
+        pop     esi
+        ret
+        mov     dword ptr [g_x_005380e0], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
