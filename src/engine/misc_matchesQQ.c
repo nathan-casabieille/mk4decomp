@@ -22551,3 +22551,214 @@ __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
         ret
     }
 }
+
+extern void func_004265d0(void);
+extern void LoadGeoAsset_Default(void);
+extern void func_004a10b0(void);
+extern void CopyGlobal_004ac1f0(void);
+
+/* @addr 0x00403c90 (196b boot) - five TableWalk calls then five pause-gated calls.
+ *   For tag in [2,3,4,5,7]: push tag; call TableWalkBoundedCmp; add esp, 4.
+ *   call func_004265d0; if (pause != 0) -> end clears.
+ *   g_scaledInit = packed_ptr(0x00506c20); call LoadGeoAsset_Default; if (pause != 0) skip;
+ *   ... (same again); call func_004a10b0; pause? skip;
+ *   g_x_0054206c = 0; call CopyGlobal; pause? skip;
+ *   g_scaledInit = [0x52ab10]; g_x_0054206c = 0xfff88000;
+ *   chain[g_scaledInit*4 + 0x54/0x58/0x5c/0x60/0x64/0x68] = 0 (or 0xfff88000 for +0x5c).
+ */
+__declspec(naked) void FiveTableWalkInit_00403c90(void) {
+    __asm {
+        push    esi
+        push    2
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        push    3
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        push    4
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        push    5
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        push    7
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    func_004265d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        xor     esi, esi
+        cmp     eax, esi
+        _emit   75h
+        _emit   7fh
+        mov     eax, 0x00506c20
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    LoadGeoAsset_Default
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   65h
+        mov     ecx, 0x00506c20
+        shr     ecx, 2
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    LoadGeoAsset_Default
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   4ah
+        call    func_004a10b0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   3dh
+        mov     dword ptr [g_x_0054206c], esi
+        call    CopyGlobal_004ac1f0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   2ah
+        mov     eax, dword ptr [g_x_0052ab10]
+        mov     ecx, 0xfff88000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        shl     eax, 2
+        mov     [eax + 0x60], esi
+        mov     [eax + 0x64], esi
+        mov     [eax + 0x68], esi
+        mov     [eax + 0x54], esi
+        mov     [eax + 0x58], esi
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [eax + 0x5c], ecx
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_00537f78;
+extern unsigned int g_x_0053a510;
+
+/* @addr 0x00422e20 (196b game) - 0x537f48 download/dual-push setup.
+ *   g_x_0054206c = [0x537f48]; g_x_00542070 = 0; call DownloadPlayerChar;
+ *   pause? ret;
+ *   g_x_0054206c = [0x537f48] (reload); g_x_00542074 = [0x53a510];
+ *   g_x_00542070 = 0; call GuardedDualPushTailJmp; pause? ret;
+ *   [0x538158] = g_x_0054205c; g_x_0054206c = 1; chain[+0x30] = 1;
+ *   chain[+0x34] |= 0x001c0000; chain[+0x54] = 0xfffeb334; chain[+0x5c] = 0;
+ *   chain[+0x3c] = [0x537f78]; g_x_0054206c = same.
+ */
+__declspec(naked) void DownloadDualPush_00422e20(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00537f48]
+        mov     dword ptr [g_x_00542070], 0
+        mov     dword ptr [g_x_0054206c], eax
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00537f48]
+        mov     edx, dword ptr [g_x_0053a510]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00542070], 0
+        mov     dword ptr [g_x_00542074], edx
+        call    GuardedDualPushTailJmp_004231f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   6dh
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, 1
+        mov     dword ptr [g_x_00538158], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     [eax*4 + 0x30], ecx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, [eax*4 + 0x34]
+        or      ecx, 0x001c0000
+        mov     [eax*4 + 0x34], ecx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [eax*4 + 0x54], 0xfffeb334
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [ecx*4 + 0x5c], 0
+        mov     eax, dword ptr [g_x_00537f78]
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [edx*4 + 0x3c], eax
+        ret
+    }
+}
+
+extern void DispatchScaledLEA_004b8f50(void);
+extern void NodeApplyTransform_C(void);
+extern void Word9Reorder_004b3b30(void);
+extern unsigned int g_x_0052aa90;
+extern unsigned int g_x_00537f50;
+extern unsigned int g_x_00ab4d18;
+extern unsigned int g_x_00ab4d1c;
+extern unsigned int g_x_00ab4d20;
+extern unsigned int g_x_00ab4e24;
+
+/* @addr 0x004b9770 (197b engine.render) - dispatch + reorder + scaled chain copy.
+ *   call DispatchScaledLEA; ecx = [0x52ab10] + 0x18; g_scaledInit = packed_ptr(0xab4878);
+ *   g_x_00542048 = ecx; call NodeApplyTransform; pause? -> tail copy.
+ *   push 0xab4d58, 0xab4878; call Word9Reorder; add esp, 8.
+ *   Two memcpy-shl4 loops: [0x52aa90 .. +9 dwords] = [0xab4878 .. +9 words]*16;
+ *     [0x537f50 .. +9 dwords] = [0xab4d58 .. +9 words]*16.
+ *   ecx = [0x52ab10] + 0x15 (packed_ptr ofs); g_x_00542048 = ecx;
+ *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
+ */
+__declspec(naked) void RenderChainCopy_004b9770(void) {
+    __asm {
+        call    DispatchScaledLEA_004b8f50
+        mov     ecx, dword ptr [g_x_0052ab10]
+        mov     eax, 0x00ab4878
+        sar     eax, 2
+        add     ecx, 0x18
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        call    NodeApplyTransform_C
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    0x00ab4d58
+        push    0x00ab4878
+        call    Word9Reorder_004b3b30
+        add     esp, 8
+        mov     ecx, 0x0052aa90
+        mov     eax, 0x00ab4878
+        movsx   edx, word ptr [eax]
+        shl     edx, 4
+        mov     [ecx], edx
+        add     eax, 2
+        add     ecx, 4
+        cmp     eax, 0x00ab488a
+        _emit   7ch
+        _emit   0ebh
+        mov     ecx, 0x00537f50
+        mov     eax, 0x00ab4d58
+        movsx   edx, word ptr [eax]
+        shl     edx, 4
+        mov     [ecx], edx
+        add     eax, 2
+        add     ecx, 4
+        cmp     eax, 0x00ab4d6a
+        _emit   7ch
+        _emit   0ebh
+        mov     ecx, dword ptr [g_x_0052ab10]
+        lea     eax, [ecx + 0x15]
+        mov     dword ptr [g_x_00542048], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00ab4d18], edx
+        mov     edx, [eax*4 + 4]
+        mov     dword ptr [g_x_00ab4d1c], edx
+        mov     eax, [eax*4 + 8]
+        mov     dword ptr [g_x_00ab4d20], eax
+        mov     ecx, [ecx*4 + 0x58]
+        mov     dword ptr [g_x_00ab4e24], ecx
+        ret
+    }
+}
