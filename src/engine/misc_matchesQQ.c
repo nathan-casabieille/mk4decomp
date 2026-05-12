@@ -31885,3 +31885,206 @@ __declspec(naked) void DualSeqLoopDispatch_00442dd0(void) {
         ret
     }
 }
+
+extern void MStackCall_00406740(void);
+extern void CondPickDualStore_0049c670(void);
+extern void func_0049c040(void);
+
+/* @addr 0x0049bf90 (175b game) - 3-block: A: call MStackCall_00406740; if !pause jmp CallSetPause.
+ *   B (+0x20): chain[*4+0x74]=0x30d; call CondPickDualStore; if !pause push 0x004f2660 call ArgSarStoreJmp; ret.
+ *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
+ *     jmp func_0049c040; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
+ */
+__declspec(naked) void Triple3PathDispatch_0049bf90(void) {
+    __asm {
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x0000030d
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004f2660
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0049c040
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x0000030c
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f26a8
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
+
+extern unsigned int g_state_00541e70;
+extern unsigned int g_state_00541e74;
+extern unsigned int g_state_00541e78;
+extern void func_00409740(void);
+
+/* @addr 0x00425b20 (177b game) - dual-entry init + compare branch.
+ *   A: scaledInit=[0x00541e70]; ecx=[0x00541e74]; init globals 0x48/0x4c/0x50/0x54;
+ *     call func_00409740; if !pause: re-init w/ ecx=0x7fc and store; jmp func_00409740.
+ *   B (+0x80): eax = ++[scaledInit*4 + 0xc]; if eax > g_x_00542070: set bit-0 in 0054208c;
+ *     else clear it. ret.
+ */
+__declspec(naked) void DualEntryInitCmp_00425b20(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00541e70]
+        mov     ecx, dword ptr [g_state_00541e74]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], 0
+        mov     dword ptr [g_data_0054204c], 0x00000800
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_cj_00542054], 1
+        call    func_00409740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        mov     eax, dword ptr [g_state_00541e70]
+        mov     ecx, 0x000007fc
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x0c], ecx
+        mov     edx, dword ptr [g_state_00541e78]
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_cj_00542054], 0
+        jmp     func_00409740
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [eax*4 + 0x0c]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     ecx, eax
+        mov     eax, dword ptr [g_state_0054208c]
+        _emit   7dh
+        _emit   08h
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
+
+extern void FpuSqrtMul_004ab350(void);
+extern void DivLongPushCall_004ab320(void);
+
+/* @addr 0x00431120 (177b game) - 4-Mul10Tail call sequence + 2 audio FPU calls.
+ *   Mul10Tail(g_x_00542080-=chain[+0x5c],g_x_00542080) -> g_x_00542074.
+ *   Mul10Tail(g_x_0054207c,g_x_0054207c) -> add to g_x_00542074, store to g_x_0054206c.
+ *   call FpuSqrtMul; pause-check; call DivLongPushCall; pause-check.
+ *   Mul10Tail(g_x_0054206c,g_x_0054207c) -> g_x_0054207c.
+ *   Mul10Tail(g_x_0054206c,g_x_00542080) -> g_x_00542080. ret.
+ */
+__declspec(naked) void QuadMul10TailFpuChain_00431120(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_0054207c]
+        mov     eax, dword ptr [ecx*4 + 0x54]
+        sub     edx, eax
+        mov     eax, dword ptr [g_x_00542080]
+        mov     dword ptr [g_x_0054207c], edx
+        mov     edx, dword ptr [ecx*4 + 0x5c]
+        sub     eax, edx
+        push    eax
+        push    eax
+        mov     dword ptr [g_x_00542080], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_x_0054207c]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        add     esp, 8
+        add     ecx, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00542074], ecx
+        call    FpuSqrtMul_004ab350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   43h
+        call    DivLongPushCall_004ab320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   35h
+        mov     ecx, dword ptr [g_x_0054207c]
+        mov     edx, dword ptr [g_x_0054206c]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_0054207c], eax
+        mov     eax, dword ptr [g_x_00542080]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542080], eax
+        ret
+    }
+}

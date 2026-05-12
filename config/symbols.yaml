@@ -2099,10 +2099,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00425b20
-    name: func_00425b20
+    name: DualEntryInitCmp_00425b20
     size: 177
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425be0
     name: func_00425be0
     size: 457
@@ -3177,10 +3178,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431120
-    name: func_00431120
+    name: QuadMul10TailFpuChain_00431120
     size: 177
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004311e0
     name: BulkSlotInit_004311e0
     size: 127
@@ -11312,10 +11314,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049bf90
-    name: func_0049bf90
+    name: Triple3PathDispatch_0049bf90
     size: 175
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c040
     name: func_0049c040
     size: 440
