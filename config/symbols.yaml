@@ -3657,10 +3657,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004359f0
-    name: func_004359f0
+    name: InstallSelfPlusThresholdJmpChain_004359f0
     size: 257
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435b00
     name: InstallSelfStatePush_00435b00
     size: 148
