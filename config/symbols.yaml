@@ -8502,10 +8502,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00481c70
-    name: func_00481c70
+    name: InstallSelfMul10_00481c70
     size: 194
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00481d40
     name: func_00481d40
     size: 368
@@ -12498,10 +12499,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004ab790
-    name: func_004ab790
+    name: MStackPush8_004ab790
     size: 193
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab860
     name: MStackPop8_004ab860
     size: 158

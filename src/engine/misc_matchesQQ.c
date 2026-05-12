@@ -23321,6 +23321,123 @@ __declspec(naked) void LinkedListBitMaskSearch_0041f8f0(void) {
     }
 }
 
+/* @addr 0x004ab790 (193b audio) - mstack-push 8 sequential globals:
+ *   g_scaledInit, g_x_00542048, 4c, 50, 54, 58, 5c, g_baseSel.
+ */
+__declspec(naked) void MStackPush8_004ab790(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_baseSel_00542060]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        ret
+    }
+}
+
+extern void MStackCall_00406740(void);
+extern void CallSetPause_0041f830(void);
+extern void Wrapper_0048a250(void);
+
+/* @addr 0x00481c70 (194b game) - install-self with Mul10 of two globals.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag != 0): call MStackCall_00406740; pause? -> end; call CallSetPause_0041f830; ret.
+ *   else: call Wrapper_0048a250; pause? -> end;
+ *     eax = g_x_00542084 * 10; ecx = g_x_00542088 * 10;
+ *     g_x_00542084 = eax; g_x_00542088 = ecx;
+ *     chain[g_x_0054205c + 0x6c] = eax; chain[+0x74] = ecx;
+ *     g_x_0054206c = 0x1999; chain[+0x80] = 0x1999;
+ *     install self; g_x_0054204c = 0x2d; pause = 1.
+ */
+__declspec(naked) void InstallSelfMul10_00481c70(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   19h
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+        call    Wrapper_0048a250
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   77h
+        mov     eax, dword ptr [g_x_00542084]
+        mov     ecx, dword ptr [g_x_00542088]
+        mov     edx, dword ptr [g_x_0054205c]
+        lea     eax, [eax + eax*4]
+        lea     ecx, [ecx + ecx*4]
+        shl     eax, 1
+        shl     ecx, 1
+        mov     dword ptr [g_x_00542084], eax
+        mov     dword ptr [g_x_00542088], ecx
+        mov     [edx*4 + 0x6c], eax
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_x_00542088]
+        mov     [eax*4 + 0x74], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, 0x1999
+        mov     dword ptr [g_x_0054206c], eax
+        mov     [edx*4 + 0x80], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00481c70
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0x2d
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
