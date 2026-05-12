@@ -10894,10 +10894,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004925d0
-    name: func_004925d0
+    name: MStackPushChainDispatchInit5_004925d0
     size: 266
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004926e0
     name: DispatchSetWalk6_004926e0
     size: 78

@@ -1,11 +1,11 @@
 /**
  * 33 single-instruction tail-call thunks (`jmp Target`).
  *
- * Each compiles to `e9 + rel32` (5 bytes). MSVC SP3 emitted
- * these as out-of-line wrappers - probably static aliases
- * or forward declarations the linker resolved into thunks.
- * Each is named `Thunk_VA` after its source VA, jumping to the
- * referenced target by name.
+ * Each compiles to `e9 + rel32` (5 bytes). MSVC SP3 /O2 emits the
+ * tail call as `jmp` for a void-returning function whose body is a
+ * single call to another void-returning function — no frame setup,
+ * no prologue/epilogue. Each is named `Thunk_VA` after its source
+ * VA, jumping to the referenced target by name.
  */
 
 /* Externs for thunk targets. */
@@ -42,167 +42,100 @@ extern void ExitGame(void);     /* 0x004c4870 */
 
 /* The thunks. */
 /* @addr 0x00405ac0 */
-__declspec(naked) void Thunk_00405ac0(void) {
-    __asm jmp func_00409970
-}
+void Thunk_00405ac0(void) { func_00409970(); }
 
 /* @addr 0x00427460 */
-__declspec(naked) void Thunk_00427460(void) {
-    __asm jmp func_00407510
-}
+void Thunk_00427460(void) { func_00407510(); }
 
 /* @addr 0x004296e0 */
-__declspec(naked) void Thunk_004296e0(void) {
-    __asm jmp func_0041f780
-}
+void Thunk_004296e0(void) { func_0041f780(); }
 
 /* @addr 0x00433950 */
-__declspec(naked) void Thunk_00433950(void) {
-    __asm jmp func_00433960
-}
+void Thunk_00433950(void) { func_00433960(); }
 
 /* @addr 0x004344a0 */
-__declspec(naked) void Thunk_004344a0(void) {
-    __asm jmp func_00437b60
-}
+void Thunk_004344a0(void) { func_00437b60(); }
 
 /* @addr 0x00434c00 */
-__declspec(naked) void Thunk_00434c00(void) {
-    __asm jmp func_00438f80
-}
+void Thunk_00434c00(void) { func_00438f80(); }
 
 /* @addr 0x00434eb0 */
-__declspec(naked) void Thunk_00434eb0(void) {
-    __asm jmp func_00436030
-}
+void Thunk_00434eb0(void) { func_00436030(); }
 
 /* @addr 0x00435330 */
-__declspec(naked) void Thunk_00435330(void) {
-    __asm jmp func_00437a90
-}
+void Thunk_00435330(void) { func_00437a90(); }
 
 /* @addr 0x00435de0 */
-__declspec(naked) void Thunk_00435de0(void) {
-    __asm jmp func_00438ee0
-}
+void Thunk_00435de0(void) { func_00438ee0(); }
 
 /* @addr 0x004368d0 */
-__declspec(naked) void Thunk_004368d0(void) {
-    __asm jmp func_00438ee0
-}
+void Thunk_004368d0(void) { func_00438ee0(); }
 
 /* @addr 0x004368e0 */
-__declspec(naked) void Thunk_004368e0(void) {
-    __asm jmp func_004368f0
-}
+void Thunk_004368e0(void) { func_004368f0(); }
 
 /* @addr 0x004399b0 */
-__declspec(naked) void Thunk_004399b0(void) {
-    __asm jmp func_00433bb0
-}
+void Thunk_004399b0(void) { func_00433bb0(); }
 
 /* @addr 0x00439c20 */
-__declspec(naked) void Thunk_00439c20(void) {
-    __asm jmp func_00439c30
-}
+void Thunk_00439c20(void) { func_00439c30(); }
 
 /* @addr 0x00439e30 */
-__declspec(naked) void Thunk_00439e30(void) {
-    __asm jmp func_00439ec0
-}
+void Thunk_00439e30(void) { func_00439ec0(); }
 
 /* @addr 0x0043a540 */
-__declspec(naked) void Thunk_0043a540(void) {
-    __asm jmp func_00437f00
-}
+void Thunk_0043a540(void) { func_00437f00(); }
 
 /* @addr 0x0045dae0 */
-__declspec(naked) void Thunk_0045dae0(void) {
-    __asm jmp func_0049cbd0
-}
+void Thunk_0045dae0(void) { func_0049cbd0(); }
 
 /* @addr 0x0045e0f0 */
-__declspec(naked) void Thunk_0045e0f0(void) {
-    __asm jmp func_0049cbc0
-}
+void Thunk_0045e0f0(void) { func_0049cbc0(); }
 
 /* @addr 0x00460250 */
-__declspec(naked) void Thunk_00460250(void) {
-    __asm jmp func_00460260
-}
+void Thunk_00460250(void) { func_00460260(); }
 
 /* @addr 0x004647f0 */
-__declspec(naked) void Thunk_004647f0(void) {
-    __asm jmp func_0041f780
-}
+void Thunk_004647f0(void) { func_0041f780(); }
 
 /* @addr 0x0049cb70 */
-__declspec(naked) void Thunk_0049cb70(void) {
-    __asm jmp func_0041f870
-}
+void Thunk_0049cb70(void) { func_0041f870(); }
 
 /* @addr 0x0049cb80 */
-__declspec(naked) void Thunk_0049cb80(void) {
-    __asm jmp func_0041f810
-}
+void Thunk_0049cb80(void) { func_0041f810(); }
 
 /* @addr 0x0049cba0 */
-__declspec(naked) void Thunk_0049cba0(void) {
-    __asm jmp func_0041f8f0
-}
+void Thunk_0049cba0(void) { func_0041f8f0(); }
 
 /* @addr 0x0049cbb0 */
-__declspec(naked) void Thunk_0049cbb0(void) {
-    __asm jmp func_0049cbc0
-}
+void Thunk_0049cbb0(void) { func_0049cbc0(); }
 
 /* @addr 0x0049cbc0 */
-__declspec(naked) void Thunk_0049cbc0(void) {
-    __asm jmp func_0041f840
-}
+void Thunk_0049cbc0(void) { func_0041f840(); }
 
 /* @addr 0x0049cbd0 */
-__declspec(naked) void Thunk_0049cbd0(void) {
-    __asm jmp func_0041fa50
-}
+void Thunk_0049cbd0(void) { func_0041fa50(); }
 
 /* @addr 0x0049cbe0 */
-__declspec(naked) void Thunk_0049cbe0(void) {
-    __asm jmp func_0041f570
-}
+void Thunk_0049cbe0(void) { func_0041f570(); }
 
 /* @addr 0x0049cbf0 */
-__declspec(naked) void Thunk_0049cbf0(void) {
-    __asm jmp func_0041f270
-}
+void Thunk_0049cbf0(void) { func_0041f270(); }
 
 /* @addr 0x0049cc00 */
-__declspec(naked) void Thunk_0049cc00(void) {
-    __asm jmp func_0041fc50
-}
+void Thunk_0049cc00(void) { func_0041fc50(); }
 
 /* @addr 0x004b5ac0 */
-__declspec(naked) void Thunk_004b5ac0(void) {
-    __asm jmp func_004b5a80
-}
+void Thunk_004b5ac0(void) { func_004b5a80(); }
 
 /* @addr 0x004bd5c0 */
-__declspec(naked) void Thunk_004bd5c0(void) {
-    __asm jmp LoadGeoAsset_Default
-}
+void Thunk_004bd5c0(void) { LoadGeoAsset_Default(); }
 
 /* @addr 0x004bd8d0 */
-__declspec(naked) void Thunk_004bd8d0(void) {
-    __asm jmp func_004bd570
-}
+void Thunk_004bd8d0(void) { func_004bd570(); }
 
 /* @addr 0x004bf320 */
-__declspec(naked) void Thunk_004bf320(void) {
-    __asm jmp FlushDrawQueue
-}
+void Thunk_004bf320(void) { FlushDrawQueue(); }
 
 /* @addr 0x004c48b0 */
-__declspec(naked) void Thunk_004c48b0(void) {
-    __asm jmp ExitGame
-}
-
+void Thunk_004c48b0(void) { ExitGame(); }

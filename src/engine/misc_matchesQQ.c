@@ -42481,3 +42481,89 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00535de4;
+extern void StoreIncrMStackPush6_004275c0(void);
+extern void DispatcherComplex181_004263d0(void);
+extern void func_00427690(void);
+
+/* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
+ *   mstack-push g_scaledInit_00542044; g_x_00542048 = 0x0050f4e8 >> 2.
+ *   call DispatcherComplex260_00407400; if pause? final-ret.
+ *   If bit2 of g_state_0054208c set, skip to final-ret.
+ *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
+ *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
+ *   g_x_0054206c = g_data_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
+ *   Set 5 fields (g_x_00542070=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
+ *   call DispatcherComplex181_004263d0; if pause? final-ret.
+ *   call func_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
+ */
+__declspec(naked) void MStackPushChainDispatchInit5_004925d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     edx, 0x0050f4e8
+        mov     dword ptr [g_state_004d57ac], eax
+        shr     edx, 2
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     dword ptr [g_x_00542048], edx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0ach
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [eax*4 + 0x54], 0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x1c
+        mov     dword ptr [ecx*4 + 0x58], 0xff920000
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x30], eax
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7eh
+        mov     eax, dword ptr [g_data_00535de4]
+        mov     dword ptr [g_x_0054206c], eax
+        call    StoreIncrMStackPush6_004275c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   66h
+        mov     dword ptr [g_x_00542070], 1
+        mov     dword ptr [g_x_00542074], 0x1d
+        mov     dword ptr [g_x_00542078], 0
+        mov     dword ptr [g_x_0054207c], 0xffb50000
+        mov     dword ptr [g_x_00542084], 0
+        call    DispatcherComplex181_004263d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   26h
+        call    func_00427690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   18h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
