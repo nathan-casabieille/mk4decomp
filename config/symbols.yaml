@@ -5316,10 +5316,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044d0c0
-    name: func_0044d0c0
+    name: MStackPush2GuardedFieldClear_0044d0c0
     size: 276
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044d1e0
     name: PushPopXformEntityCall_0044d1e0
     size: 66
