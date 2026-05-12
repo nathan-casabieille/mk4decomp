@@ -2012,10 +2012,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00424a90
-    name: func_00424a90
+    name: MStackPushMul10TailSqrt_00424a90
     size: 223
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424b70
     name: IdentityMatrix_00424b70
     size: 42
@@ -4650,10 +4651,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043f2c0
-    name: func_0043f2c0
+    name: InstallSelfChainStateInit_0043f2c0
     size: 223
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043f3a0
     name: func_0043f3a0
     size: 1355
