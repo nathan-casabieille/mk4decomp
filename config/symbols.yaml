@@ -13150,10 +13150,11 @@ functions:
     status: matched
     file: src/engine/ecm_open.c
   - addr: 0x004b09a0
-    name: func_004b09a0
+    name: IATCriticalSection_004b09a0
     size: 169
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b0a50
     name: ECM_PlayThread
     size: 608
