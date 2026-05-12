@@ -42918,3 +42918,86 @@ __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
         ret
     }
 }
+
+extern void AudioMixerStep_004ab700(void);
+
+/* @addr 0x00425970 (269b game) - 3-iter call-Mul10Tail-store loop for scaledInit[0/4/8].
+ *   For each of 3 indices (0, 4, 8): g_x_0054206c = g_x_00542074 - g_x_00542070;
+ *   call AudioMixerStep_004ab700; if pause? ret. Compute eax = g_x_0054206c + g_x_00542070;
+ *   Mul10Tail(eax, scaledInit[idx]); store result to scaledInit[idx]. ret.
+ */
+__declspec(naked) void TripleMul10TailIndexed_00425970(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_x_00542070]
+        sub     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        add     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        push    eax
+        mov     edx, dword ptr [ecx*4 + 0]
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     edx, dword ptr [g_x_00542074]
+        sub     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0054206c], edx
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_00542070]
+        add     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        push    eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 4]
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 4], eax
+        mov     eax, dword ptr [g_x_00542074]
+        sub     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [g_x_0054206c], eax
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3bh
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        add     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        push    eax
+        mov     edx, dword ptr [ecx*4 + 8]
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 8], eax
+        ret
+    }
+}
