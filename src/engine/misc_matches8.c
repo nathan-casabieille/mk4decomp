@@ -140,17 +140,10 @@ __declspec(naked) void CallPauseInc_004ab670(void) {
  *   ret
  */
 extern int func_0049f280(int);
-__declspec(naked) void StoreTwoCall_0049cb40(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 8]
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     eax, dword ptr [esp + 4]
-        push    eax
-        mov     dword ptr [g_pendingNodeType], eax
-        call    func_0049f280
-        add     esp, 4
-        ret
-    }
+void StoreTwoCall_0049cb40(int arg1, int arg2) {
+    g_eventQueueWorkType = arg2;
+    g_pendingNodeType = arg1;
+    func_0049f280(arg1);
 }
 
 /* @addr 0x004abfc0 (27b)
@@ -177,16 +170,9 @@ void SplitHi8Lo24_004abfc0(void) {
  *   and     eax, 1
  *   ret
  */
-extern void *g_iat_004d21c0;
-__declspec(naked) void CallShrAnd_004b5450(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    eax
-        call    dword ptr [g_iat_004d21c0]
-        shr     eax, 0x0f
-        and     eax, 1
-        ret
-    }
+extern unsigned int (__stdcall *g_iat_004d21c0)(int);
+int CallShrAnd_004b5450(int arg) {
+    return (g_iat_004d21c0(arg) >> 15) & 1;
 }
 
 /* @addr 0x004bd510 (22b)
@@ -198,15 +184,8 @@ __declspec(naked) void CallShrAnd_004b5450(void) {
  *   ret
  */
 extern int func_004bd524(void *);
-__declspec(naked) void LeaScaledCall_004bd510(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        lea     ecx, dword ptr [eax*4 + 0x48]
-        push    ecx
-        call    func_004bd524
-        add     esp, 4
-        ret
-    }
+void LeaScaledCall_004bd510(void) {
+    func_004bd524((void *)(g_scaledInit_00542044 * 4 + 0x48));
 }
 
 /* @addr 0x004bd570 (21b)

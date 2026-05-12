@@ -8448,10 +8448,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047f3f0
-    name: func_0047f3f0
+    name: InstallSelfStateMachine_0047f3f0
     size: 237
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047f4e0
     name: func_0047f4e0
     size: 592

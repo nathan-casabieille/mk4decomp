@@ -38676,3 +38676,88 @@ __declspec(naked) void QuadGuardedCjSet_00422fc0(void) {
         ret
     }
 }
+
+extern void ScaledArrStore_00429980(void);
+extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void TripleFieldCopyHi_0048f7b0(void);
+extern void func_0048ff40(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+
+/* @addr 0x0047f3f0 (237b game) - install-self with 3-state dispatch by [+0x84].
+ *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call func_0048ff40; if !pause
+ *     call TripleFieldCopyJmpHi_0048f740; if !pause install-self + chain[+0x84]=1
+ *     + g_x_0054204c=4 + g_pause=1; ret.
+ *   B1 ([+0x84]==1): call TripleFieldCopyHi_0048f7b0; if !pause set g_x_0054206c=0xe666
+ *     call EsiEdiAliasDualMul10_004906b0; if !pause install-self + chain[+0x84]=2
+ *     + g_x_0054204c=4 + g_pause=1; ret.
+ *   B2 ([+0x84]==2+): set g_state_00542080=0x11; call ScaledArrStore_00429980;
+ *     if !pause: tail-call StackPopDispatchTagged_0041f780; ret.
+ */
+__declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   77h
+        dec     eax
+        _emit   74h
+        _emit   23h
+        mov     dword ptr [g_state_00542080], 0x11
+        call    ScaledArrStore_00429980
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    TripleFieldCopyHi_0048f7b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   90h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0xe666
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   78h
+        mov     dword ptr [esi + 8], 0x0047f3f0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 4
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x4ccc
+        mov     dword ptr [g_x_00542070], 0xffffb334
+        call    func_0048ff40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2fh
+        call    TripleFieldCopyJmpHi_0048f740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0047f3f0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 4
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
