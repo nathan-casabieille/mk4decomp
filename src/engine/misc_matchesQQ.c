@@ -28911,3 +28911,151 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         jmp     IncCmp28StoreOrJmp_00458880
     }
 }
+
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void CondInstallDispatch_00476ed0(void);
+
+/* @addr 0x00476e60 (109b game) - dual-entry: call DirtyDoubleDeref; if !pause: set bit 2 of
+ *   scaledInit[ecx*4+0x20] and jmp CondInstallDispatch. ret on pause.
+ *   Second entry (+0x30): check scaledInit[ecx*4+0x1c]; if <= 0: clear bit 0 of g_state_0054208c, ret;
+ *   else set bit 2 of scaledInit[ecx*4+0x20], jmp CondInstallDispatch.
+ */
+__declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
+    __asm {
+        call    DirtyDoubleDeref_00408cb0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      al, 4
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        jmp     CondInstallDispatch_00476ed0
+        ret
+        _emit   90h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x1c]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      al, 4
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        jmp     CondInstallDispatch_00476ed0
+    }
+}
+
+/* @addr 0x004835e0 (110b game) - 4-entry-point pause-guarded push+call dispatcher.
+ *   Each block: call GateDispatch6c_00494580; if pause ret; push string-literal; call ArgSarStoreJmp; add esp,4; ret.
+ *   4 separate push literals at 0x004ef3c8, 0x004ee640, 0x004ee678, 0x004ee6b0.
+ *   Last block omits the pause-check.
+ */
+__declspec(naked) void Quad4EntryPushArg_004835e0(void) {
+    __asm {
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ef3c8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee640
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee678
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x004ee6b0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
+
+extern void func_0045e640(void);
+
+/* @addr 0x0045e5d0 (111b game) - 3-entry threshold/state-check gates.
+ *   Block A: if g_state_00535ddc > 0x10000: jmp func_0045e640; else clear bit 0 of g_state_0054208c, ret.
+ *   Block B (+0x30): if g_state_0053a51c == 8: ret (no flag clear); else clear bit 0, ret.
+ *   Block C (+0x4c): same as A but inlined (no jmp), then jmp func_0045e640 at end.
+ */
+__declspec(naked) void TripleEntryGate_0045e5d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00010000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        jmp     func_0045e640
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_0053a51c]
+        cmp     eax, 8
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00010000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        jmp     func_0045e640
+    }
+}

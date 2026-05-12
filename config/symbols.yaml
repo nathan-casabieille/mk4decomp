@@ -6097,10 +6097,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesW.c
   - addr: 0x0045e5d0
-    name: func_0045e5d0
+    name: TripleEntryGate_0045e5d0
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045e640
     name: func_0045e640
     size: 1454
@@ -7841,10 +7842,11 @@ functions:
     status: matched
     file: src/engine/cond_install_dispatch.c
   - addr: 0x00476e60
-    name: func_00476e60
+    name: DirtyOrFlagDispatch_00476e60
     size: 109
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476ed0
     name: CondInstallDispatch_00476ed0
     size: 58
@@ -8683,10 +8685,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004835e0
-    name: func_004835e0
+    name: Quad4EntryPushArg_004835e0
     size: 110
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483650
     name: func_00483650
     size: 632
