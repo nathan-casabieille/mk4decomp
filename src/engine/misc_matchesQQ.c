@@ -43334,3 +43334,83 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         ret
     }
 }
+
+/* @addr 0x0048b500 (271b game) - mstack-push 3 globals + 3 Mul10Tail + abs/half.
+ *   mstack-push g_state_00542080, g_x_00542084, g_state_00542088.
+ *   Compute: ecx = g_state_00542080 << 0x10; eax = g_state_00542088 - ecx; abs(eax).
+ *   ecx = g_x_00542084 >> 1; push twice; Mul10Tail; result -> g_x_0054206c.
+ *   Push edx=g_state_00542088 and eax (last result); Mul10Tail.
+ *   eax >>= 2; ecx >>= 2; add; sub edx; add 0x10000; Mul10Tail; -> g_x_0054206c.
+ *   mstack-pop 3.
+ */
+__declspec(naked) void MStackPush3TripleMul10WithAbs_0048b500(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542088]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     ecx, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_state_00542088]
+        shl     ecx, 0x10
+        sub     eax, ecx
+        mov     dword ptr [g_state_00542080], ecx
+        mov     dword ptr [g_state_00542088], eax
+        _emit   79h
+        _emit   07h
+        neg     eax
+        mov     dword ptr [g_state_00542088], eax
+        mov     ecx, dword ptr [g_x_00542084]
+        push    eax
+        sar     ecx, 1
+        push    eax
+        mov     dword ptr [g_x_00542084], ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], eax
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     ecx, edx
+        sar     eax, 2
+        sar     ecx, 2
+        add     ecx, eax
+        mov     dword ptr [g_state_00542088], eax
+        mov     eax, dword ptr [g_x_00542084]
+        sub     ecx, edx
+        add     ecx, 0x00010000
+        push    ecx
+        push    eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     esp, 8
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_00542088], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

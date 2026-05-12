@@ -9707,10 +9707,11 @@ functions:
     status: matched
     file: src/engine/copy_call_pause_jmp.c
   - addr: 0x0048b500
-    name: func_0048b500
+    name: MStackPush3TripleMul10WithAbs_0048b500
     size: 271
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048b610
     name: CmpDirectOrIndirectChain_0048b610
     size: 161
