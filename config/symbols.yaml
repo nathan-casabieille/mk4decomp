@@ -4643,10 +4643,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043e850
-    name: func_0043e850
+    name: GuardedCascadeCjLink70Mul10_0043e850
     size: 264
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043e960
     name: func_0043e960
     size: 799

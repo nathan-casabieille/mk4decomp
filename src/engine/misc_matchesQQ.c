@@ -42204,3 +42204,97 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         ret
     }
 }
+
+/* @addr 0x0043e850 (264b game) - sibling of 0x00440880 (264b) with different constants.
+ *   mstack-push g_x_00542070; call GuardedCallStoreSlotsCmp; if pause/bit2? ret.
+ *   cj[+0x4c] = 0x28f; call GDispatch4; if pause/bit2? ret.
+ *   call ThreeCallChainCopy; if pause? ret. mstack-pop. If scaledInit[+0x18]==0? ret.
+ *   call func_00440aa0; if pause? ret. cj[+0x70] = baseSel[+0x70]; scaledInit+=0x1b;
+ *   g_x_00542074=0x3333; call MStackPushVec3Mul10; if pause? ret; else scaledInit-=0x1b. ret.
+ */
+__declspec(naked) void GuardedCascadeCjLink70Mul10_0043e850(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    GuardedCallStoreSlotsCmp_00440990
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0ddh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x28f
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x4c], eax
+        call    GDispatch4_004089c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   9ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ThreeCallChainCopy_004409e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   88h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [edx*4 + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   5ah
+        call    func_00440aa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4ch
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [eax*4 + 0x70]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_00542074], 0x3333
+        add     ecx, 0x1b
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    MStackPushVec3Mul10_004767e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   07h
+        sub     dword ptr [g_scaledInit_00542044], 0x1b
+        ret
+    }
+}
