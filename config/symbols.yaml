@@ -1633,10 +1633,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004200d0
-    name: func_004200d0
+    name: InstallSelfTableWalk_004200d0
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004201a0
     name: func_004201a0
     size: 279
@@ -3806,10 +3807,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00437a90
-    name: func_00437a90
+    name: InstallSelfPacked0x2005_00437a90
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437b60
     name: func_00437b60
     size: 172
@@ -7619,10 +7621,11 @@ functions:
     status: matched
     file: src/engine/guarded_scaled.c
   - addr: 0x004750f0
-    name: func_004750f0
+    name: LinkedListSearch_004750f0
     size: 200
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004751c0
     name: TestP1ReplaceCurrent_004751c0
     size: 43
