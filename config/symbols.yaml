@@ -3272,10 +3272,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00431dd0
-    name: func_00431dd0
+    name: DualMul10AccumState88_00431dd0
     size: 179
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431e90
     name: GuardedArithDualCallChain_00431e90
     size: 170
@@ -8198,10 +8199,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cb90
-    name: func_0047cb90
+    name: InstallSelfCountdownStr_0047cb90
     size: 180
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cc50
     name: func_0047cc50
     size: 254
@@ -10028,10 +10030,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048ec30
-    name: func_0048ec30
+    name: FlagCascadeStateSet_0048ec30
     size: 179
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ecf0
     name: CjMaskedFlagProbe_0048ecf0
     size: 128
