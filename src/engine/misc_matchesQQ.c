@@ -31071,3 +31071,227 @@ __declspec(naked) void FiveBlockDispatch_00435340(void) {
         jmp     DualCallTestPauseRange_004353f0
     }
 }
+
+extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
+extern void CallPauseCmpStateJmp_0046a520(void);
+extern unsigned int g_x_0052d724;
+
+/* @addr 0x0046a630 (165b game) - 4-entry-point dispatcher.
+ *   Block A: g_x_0054206c=g_x_0052d724; if zero jmp CallPauseCmpStateJmp; else jmp ScaledInitOrSelfPtrSetType.
+ *   Blocks B/C/D: standard push/store chain[*4+0x74]=value, push string, call ArgSarStoreJmp.
+ *     B: value=0x402, string=0x004eabe8.
+ *     C: value=0x403, string=0x004eac38.
+ *     D: value=0x1015, string=0x004eac08.
+ */
+__declspec(naked) void QuadEntryGateChain_0046a630(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0052d724]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     ScaledInitOrSelfPtrSetType_0046a5e0
+        jmp     CallPauseCmpStateJmp_0046a520
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000402
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004eabe8
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000403
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004eac38
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00001015
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004eac08
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
+
+extern unsigned int g_state_00537f74;
+extern void func_004635a0(void);
+extern void PackedTableWalkChainStore_00463e20(void);
+extern void func_00463430(void);
+extern void func_00462870(void);
+
+/* @addr 0x004627c0 (168b game) - triple-entry pause-gated chain.
+ *   Block A: if g_state_00537f74 != 0: dec g_x_00541fb0 -> g_x_00542080; if >= 0:
+ *     call func_004635a0, pause-check, sync 80→fb0; call PackedTableWalkChainStore, pause-check;
+ *     call func_00463430, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch_004be690.
+ *     Fall-through to jmp CallSetPause_0041f830.
+ *   Block B (+0x70): g_x_0054206c=g_state_0053a408; if zero jmp CallSetPause; else jmp func_00462870.
+ *   Block C (+0x90): g_x_0054206c=g_state_00537e88; if zero jmp CallSetPause; else jmp func_00462870.
+ */
+__declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00537f74]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   55h
+        mov     eax, dword ptr [g_x_00541fb0]
+        dec     eax
+        test    eax, eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   7ch
+        _emit   46h
+        call    func_004635a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        mov     ecx, dword ptr [g_x_00542080]
+        mov     dword ptr [g_x_00541fb0], ecx
+        call    PackedTableWalkChainStore_00463e20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        call    func_00463430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   15h
+        _emit   66h
+        _emit   8bh
+        _emit   15h
+        _emit   58h
+        _emit   28h
+        _emit   4eh
+        _emit   00h
+        push    edx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        jmp     CallSetPause_0041f830
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_0053a408]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        jmp     func_00462870
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00537e88]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        jmp     func_00462870
+    }
+}
+
+extern void func_00480840(void);
+
+/* @addr 0x00480790 (168b game) - triple-entry dispatcher.
+ *   Block A: ecx=baseSel; g_x_0054206c=0x3e; eax = [ecx*4+0x68]-1; g_x_00542070=eax;
+ *     if eax==0 set eax=0x46, g_x_00542070=0x46; [ecx*4+0x68]=eax; if g_x_00542070!=0x14 ret; else jmp TableLookupCall_00489ff0.
+ *   Block B (+0x40): push 0x004ed838; [eax*4+0x68]=0x316; chain[*4+0x74]=0x407; call ArgSarStoreJmp; ret.
+ *   Block C (+0x80): g_x_0054206c=0x1d; call TableLookupCall_00489ff0; if !pause: g_x_00542080=0xc; jmp func_00480840.
+ */
+__declspec(naked) void TripleEntryChainGate_00480790(void) {
+    __asm {
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], 0x3e
+        mov     eax, dword ptr [ecx*4 + 0x68]
+        dec     eax
+        mov     dword ptr [g_x_00542070], eax
+        _emit   75h
+        _emit   0ah
+        mov     eax, 0x46
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [ecx*4 + 0x68], eax
+        mov     eax, dword ptr [g_x_00542070]
+        cmp     eax, 0x14
+        _emit   75h
+        _emit   05h
+        jmp     TableLookupCall_00489ff0
+        ret
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    0x004ed838
+        mov     dword ptr [eax*4 + 0x68], 0x00000316
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000407
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x1d
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_x_00542080], 0x0c
+        jmp     func_00480840
+        ret
+    }
+}
