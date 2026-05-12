@@ -10894,10 +10894,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00494750
-    name: func_00494750
+    name: MStackBitFlagDispatch_00494750
     size: 165
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494800
     name: ScaledAddDeref_00494800
     size: 39

@@ -26963,6 +26963,66 @@ __declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
     }
 }
 
+extern void IterLoad_0048fd30(void);
+
+/* @addr 0x00494750 (165b game) - mstack-push bit-flag + 2 calls + cond push-arg call.
+ *   g_x_00542080 = 0. g_scaledInit = chain[g_baseSel + 0x38].
+ *   g_x_0054206c = eax = chain[g_scaledInit + 0x40].
+ *   g_x_00542094 = (eax & 8); if non-zero: ecx = 1; g_x_00542080 = 1.
+ *   mstack-push ecx (= 0 or 1). call func_0048eec0. pause? -> ret.
+ *   if (208c & 1): skip first call. else: g_x_0054206c = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
+ *   mstack-pop into g_x_00542080. counter--.
+ *   if (popped == 0): ret.
+ *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
+ */
+__declspec(naked) void MStackBitFlagDispatch_00494750(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     ecx, ecx
+        mov     dword ptr [g_x_00542080], ecx
+        mov     eax, [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + 0x40]
+        mov     dword ptr [g_x_0054206c], eax
+        and     eax, 8
+        mov     dword ptr [g_x_00542094], eax
+        _emit   74h
+        _emit   0bh
+        mov     ecx, 1
+        mov     dword ptr [g_x_00542080], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    func_0048eec0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4ah
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   18h
+        mov     dword ptr [g_x_0054206c], 0x78
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   74h
+        _emit   0dh
+        push    0x004f1400
+        call    IterLoad_0048fd30
+        add     esp, 4
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
