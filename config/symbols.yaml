@@ -7393,10 +7393,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00471250
-    name: func_00471250
+    name: MstackPopScaledChainPlusThunks_00471250
     size: 239
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471340
     name: Wrapper_00471340
     size: 14

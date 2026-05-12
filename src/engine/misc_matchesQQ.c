@@ -39004,3 +39004,86 @@ __declspec(naked) void InstallSelfScaledChain_004916f0(void) {
         ret
     }
 }
+
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void func_0045f650(void);
+
+/* @addr 0x00471250 (239b game) - mstack-pop+scaled chain, then 3 thunks.
+ *   Main (0..176): mstack-pop 1 (dec g_state_004d57ac) -> g_x_00542048; push baseSel[+4]
+ *     to scaledInit chain (with new entry at baseSel[+4]). mstack-push g_x_0054206c.
+ *     call ScaledZeroFour_00490740; if pause? ret.
+ *     call FiveCallScaledChainTailJmp_0045f8d0; if pause? ret.
+ *     mstack-pop 1; load (0x004ec008>>2)+ecx, follow [eax*4], indirect-jmp eax.
+ *   Aligned with 15 NOPs.
+ *   Thunks: 3 adjacent setters of g_x_0054207c (0x080004 / 0x080000 / 0x080001) each
+ *     tail-jmp func_0045f650 (with single NOP padding between).
+ */
+__declspec(naked) void MstackPopScaledChainPlusThunks_00471250(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     edx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [edx*4 + 0], ecx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   43h
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   35h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 0x004ec008
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     dword ptr [g_x_0054207c], 0x00080004
+        jmp     func_0045f650
+        nop
+        mov     dword ptr [g_x_0054207c], 0x00080000
+        jmp     func_0045f650
+        nop
+        mov     dword ptr [g_x_0054207c], 0x00080001
+        jmp     func_0045f650
+    }
+}

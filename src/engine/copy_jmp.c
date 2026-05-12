@@ -23,56 +23,38 @@ extern void func_0048efa0(void);   /* 0x0048efa0 */
 
 /* The wrappers. */
 /* @addr 0x00406ba0 */
-__declspec(naked) void CopyJmp_00406ba0(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_currentNodeIdx], eax
-        jmp     func_00406bb0
-    }
+void CopyJmp_00406ba0(void) {
+    g_currentNodeIdx = g_cj_0054205c;
+    func_00406bb0();
 }
 
 /* @addr 0x0043a620 */
-__declspec(naked) void CopyJmp_0043a620(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_00535df0]
-        mov     dword ptr [g_currentNodeIdx], eax
-        jmp     func_0043a670
-    }
+void CopyJmp_0043a620(void) {
+    g_currentNodeIdx = g_cj_00535df0;
+    func_0043a670();
 }
 
 /* @addr 0x00445ec0 */
-__declspec(naked) void CopyJmp_00445ec0(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_00542058]
-        mov     dword ptr [g_cj_0054205c], eax
-        jmp     func_00446190
-    }
+void CopyJmp_00445ec0(void) {
+    g_cj_0054205c = g_cj_00542058;
+    func_00446190();
 }
 
 /* @addr 0x00446180 */
-__declspec(naked) void CopyJmp_00446180(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_00542054]
-        mov     dword ptr [g_cj_0054205c], eax
-        jmp     func_00446190
-    }
+void CopyJmp_00446180(void) {
+    g_cj_0054205c = g_cj_00542054;
+    func_00446190();
 }
 
 /* @addr 0x0048ee80 */
-__declspec(naked) void CopyJmp_0048ee80(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_currentNodeIdx], eax
-        jmp     func_0048ee90
-    }
+void CopyJmp_0048ee80(void) {
+    g_currentNodeIdx = g_cj_0054205c;
+    func_0048ee90();
 }
 
 /* @addr 0x0048ef90 */
-__declspec(naked) void CopyJmp_0048ef90(void) {
-    __asm {
-        mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_currentNodeIdx], eax
-        jmp     func_0048efa0
-    }
+void CopyJmp_0048ef90(void) {
+    g_currentNodeIdx = g_cj_0054205c;
+    func_0048efa0();
 }
 
