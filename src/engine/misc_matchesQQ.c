@@ -44683,3 +44683,92 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         ret
     }
 }
+
+extern void func_0043aab0(void);
+
+/* @addr 0x0043aed0 (282b game) - dual block: thunk + 3-state install-self.
+ *   B1 (0..0x1f): call FiveCallScaledChainTailJmp_0045f8d0; if !pause: push 0x004e4b28,
+ *     tail-call ArgSarStoreJmp; ret.
+ *   B2 (0x20..0x119, 3-state install-self):
+ *     state >=2: tail-call func_0043aab0.
+ *     state 1: install-self [eax+8]=0x0043aef0, chain[+0x84]=2, scaledInit-chain push
+ *       0x0043aef0+0x02000000; call ScaledLoadIncJmp_00428d00; pause=1; ret.
+ *     state 0: g_x_0054207c=0xa, g_state_00542080=0x1f, install-self at
+ *       [eax+8]=0x0043aef0; chain[+0x84]=1; scaledInit-chain push 0x0043aef0+0x01000000;
+ *       call InstallSelfDoubleMStack_0043b9a0; pause=1; ret.
+ */
+__declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
+    __asm {
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004e4b28
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        _emit   74h
+        _emit   6ch
+        dec     ecx
+        _emit   74h
+        _emit   08h
+        call    func_0043aab0
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [eax + 8], 0x0043aef0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 0x0043aef0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        add     esi, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledLoadIncJmp_00428d00
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054207c], 0x0a
+        mov     dword ptr [g_state_00542080], 0x1f
+        mov     dword ptr [eax + 8], 0x0043aef0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 1
+        mov     edi, 0x0043aef0
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfDoubleMStack_0043b9a0
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
