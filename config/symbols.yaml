@@ -12620,10 +12620,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004ac3f0
-    name: func_004ac3f0
+    name: AuxAudioDevCapsQuery_004ac3f0
     size: 189
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac4b0
     name: Audio_TimerTick
     size: 104

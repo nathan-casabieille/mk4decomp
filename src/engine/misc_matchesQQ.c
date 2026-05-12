@@ -24195,6 +24195,93 @@ __declspec(naked) void LockIterTwoPath_004c6a20(void) {
     }
 }
 
+extern void Helper_AuxAudio_PostInit(void);
+extern unsigned int g_x_005438e8;
+extern unsigned int g_x_004d2244;
+
+/* @addr 0x004ac3f0 (189b audio) - aux audio devcaps query (auxGetDevCapsA via [0x4d2244]).
+ *   Frame: sub esp, 0x1c; push esi, edi.
+ *   call Helper_AuxAudio_PostInit; if (rv == 0) fail.
+ *   ecx = [0x5438e8] (device id); edi = arg[0]; esi = [0x4d2244] (function ptr).
+ *   Build mciSendCommandA-style packet on stack (cmd 0x814 = MCI_GETDEVCAPS, flags 0x4001, edi).
+ *   esi(ecx, 0x814, 0x110, &caps); if (rv != 0) fail; check caps.devType == 0x440; else fail.
+ *   Second call: cmd 0x80d (MCI_INFO), flags 2, no edi store; esi(eax, 0x80d, 0x400, &stack8).
+ *   Third call: cmd 0x814 again with flags 1, edi.
+ *   On success: return ((caps[+0x18] & 0xff) * 0x3c) | (caps[+0x18] >> 8 & 0xff).
+ *     (eax | edx where edx = result*0x3c (= eax * 5 * 4 * 3? Actually lea+shl gives *60))
+ *   Wait: eax_low *= 3; eax *= 5 ((eax + eax*4)); shl 2 → *60 total. So eax_low * 60 + (caps >> 8 & 0xff).
+ */
+__declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
+    __asm {
+        sub     esp, 0x1c
+        push    esi
+        push    edi
+        call    Helper_AuxAudio_PostInit
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   0a3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_005438e8]
+        mov     edi, [esp + 0x28]
+        mov     esi, dword ptr [g_x_004d2244]
+        lea     eax, [esp + 0x14]
+        push    eax
+        push    0x110
+        push    0x0814
+        push    ecx
+        mov     dword ptr [esp + 0x2c], 0x00004001
+        mov     [esp + 0x30], edi
+        call    esi
+        test    eax, eax
+        _emit   75h
+        _emit   71h
+        cmp     dword ptr [esp + 0x18], 0x00000440
+        _emit   75h
+        _emit   67h
+        mov     eax, dword ptr [g_x_005438e8]
+        lea     edx, [esp + 0x08]
+        push    edx
+        push    0x400
+        push    0x080d
+        push    eax
+        mov     dword ptr [esp + 0x1c], 2
+        call    esi
+        mov     edx, dword ptr [g_x_005438e8]
+        lea     ecx, [esp + 0x14]
+        push    ecx
+        push    0x110
+        push    0x0814
+        push    edx
+        mov     dword ptr [esp + 0x2c], 1
+        mov     [esp + 0x30], edi
+        call    esi
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        mov     eax, [esp + 0x18]
+        xor     ecx, ecx
+        mov     cl, ah
+        and     eax, 0xff
+        lea     eax, [eax + eax*2]
+        lea     edx, [eax + eax*4]
+        shl     edx, 2
+        add     ecx, edx
+        mov     eax, ecx
+        pop     edi
+        pop     esi
+        add     esp, 0x1c
+        ret
+        pop     edi
+        xor     eax, eax
+        pop     esi
+        add     esp, 0x1c
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
