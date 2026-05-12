@@ -33750,3 +33750,211 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         ret
     }
 }
+
+extern void StateDispatchTable_00490fc0(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+
+/* @addr 0x0042c9f0 (205b game) - dual-entry install-self. */
+__declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
+    __asm {
+        push    0x004e3550
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [g_cj_00542054], ecx
+        mov     dword ptr [g_x_00542084], 0x00000ccc
+        mov     dword ptr [esi + 0x08], 0x0042ca00
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x0042ca00
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    EsiInstallClampAddCall_0048fe40
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
+
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+
+/* @addr 0x00433d80 (205b game) - dual-entry chained install-self. */
+__declspec(naked) void InstallSelfDualChain_00433d80(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, 0x004e4c98
+        and     eax, 0xff
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542048], ecx
+        jmp     AddDerefJmp_00433e70
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   33h
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6bh
+        call    WeightedSumClampHelper_00439920
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5dh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   07h
+        call    func_00437c10
+        pop     esi
+        ret
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2fh
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x00433db0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x0a
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
+
+extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void InstallSelfDualEntry_00426ae0(void);
+extern void GatedScaledChainSetup_00427390(void);
+
+/* @addr 0x00483900 (205b game) - 4-entry-point sequencer. */
+__declspec(naked) void Quad4SequencerInstall_00483900(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, 0x0000028f
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004ef350
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x004ef370
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        call    InstallSelfDualEntry_00426ae0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        mov     dword ptr [g_x_0054206c], 0x00006666
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        call    func_00488f00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee740
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_00542078], ecx
+        mov     edx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054207c], edx
+        call    GatedScaledChainSetup_00427390
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_x_00542080], 9
+        jmp     CallPauseDirty4StackPushFn_004839d0
+        ret
+    }
+}

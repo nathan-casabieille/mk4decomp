@@ -2894,10 +2894,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesF.c
   - addr: 0x0042c9f0
-    name: func_0042c9f0
+    name: InstallSelfDualStateDispatch_0042c9f0
     size: 205
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042cac0
     name: func_0042cac0
     size: 450
@@ -3417,10 +3418,11 @@ functions:
     status: matched
     file: src/engine/cmp_p1_dual_init_store.c
   - addr: 0x00433d80
-    name: func_00433d80
+    name: InstallSelfDualChain_00433d80
     size: 205
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00433e50
     name: ShrShrStoreJmp_00433e50
     size: 32
@@ -8758,10 +8760,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x00483900
-    name: func_00483900
+    name: Quad4SequencerInstall_00483900
     size: 205
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004839d0
     name: CallPauseDirty4StackPushFn_004839d0
     size: 70
