@@ -245,16 +245,11 @@ int Push40ArgCall_004cbad0(int x) {
  *   mov     eax, [eax-4]
  *   ret
  */
-__declspec(naked) void StreamReadDword_004c8380(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [eax]
-        add     ecx, 4
-        mov     dword ptr [eax], ecx
-        mov     eax, ecx
-        mov     eax, dword ptr [eax - 4]
-        ret
-    }
+int StreamReadDword_004c8380(int **stream) {
+    int *p = *stream;
+    *stream = p + 1;
+    p = *stream;
+    return p[-1];
 }
 
 /* @addr 0x004c83a0 (18b)
