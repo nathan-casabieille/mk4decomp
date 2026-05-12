@@ -27562,6 +27562,90 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
     }
 }
 
+/* @addr 0x00457830 (164b game) - search-with-counter through scaled array, find slot by value, return chain[+8].
+ *   Save g_x_00542070 to [esp+0xc]. ebp = g_x_0054204c (offset).
+ *   eax = chain[ebp]; edx = &chain[ebp]; ecx=0; edi=0; esi=0.
+ *   if (chain[ebp] == 0) skip-loop.
+ *   else: ebx = g_x_0054206c (target value).
+ *     loop_outer: ecx = chain[edx+4]; edx += 4; esi++.
+ *       if (ebx < eax || ebx > ecx) { edx += 4; ecx -= eax; esi++; eax = [edx];
+ *         edi += ecx + 1; g_x_00542070 = eax;
+ *         if (eax != 0): loop_outer.
+ *         else: ecx=0; edi=0; jmp skip-loop.
+ *       } else: ebx -= eax; edi += ebx; ecx=0; esi++; fall to skip-loop.
+ *   skip-loop: edx = esi + ebp; g_x_00542078 = ecx;
+ *     while (chain[edx] != ecx): esi++; edx = esi + ebp;
+ *     esi += edi + ebp; g_x_00542048 = chain[esi*4 + 8];
+ *     restore: g_x_00542070 = saved; g_scaledInit = [g_scaledInit] (no-op).
+ */
+__declspec(naked) void ScaledSearchSum_00457830(void) {
+    __asm {
+        push    ecx
+        mov     eax, dword ptr [g_x_00542070]
+        push    ebx
+        push    ebp
+        mov     ebp, dword ptr [g_x_0054204c]
+        push    esi
+        mov     [esp + 0x0c], eax
+        mov     eax, [ebp*4 + g_data_004d57ac_arr]
+        lea     edx, [ebp*4 + g_data_004d57ac_arr]
+        push    edi
+        xor     ecx, ecx
+        xor     edi, edi
+        xor     esi, esi
+        cmp     eax, ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   74h
+        _emit   2ch
+        mov     ebx, dword ptr [g_x_0054206c]
+        mov     ecx, [edx + 4]
+        add     edx, 4
+        inc     esi
+        cmp     ebx, eax
+        _emit   7ch
+        _emit   04h
+        cmp     ebx, ecx
+        _emit   7eh
+        _emit   1bh
+        add     edx, 4
+        sub     ecx, eax
+        inc     esi
+        mov     eax, [edx]
+        lea     edi, [edi + ecx + 1]
+        test    eax, eax
+        mov     dword ptr [g_x_00542070], eax
+        _emit   75h
+        _emit   0dch
+        xor     ecx, ecx
+        xor     edi, edi
+        _emit   0ebh
+        _emit   07h
+        sub     ebx, eax
+        add     edi, ebx
+        xor     ecx, ecx
+        inc     esi
+        lea     edx, [esi + ebp]
+        mov     dword ptr [g_x_00542078], ecx
+        cmp     [edx*4 + g_data_004d57ac_arr], ecx
+        _emit   75h
+        _emit   0edh
+        add     esi, edi
+        mov     ecx, [esp + 0x10]
+        add     esi, ebp
+        pop     edi
+        mov     eax, [esi*4 + 8]
+        pop     esi
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        pop     ebp
+        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
