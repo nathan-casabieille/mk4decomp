@@ -4,10 +4,8 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x00438160 (6b): jmp [g_eventQueueChild]  (indirect jump through global) */
-__declspec(naked) void IndirectJmp_00438160(void) {
-    __asm {
-        jmp     dword ptr [g_eventQueueChild]
-    }
+void IndirectJmp_00438160(void) {
+    ((void (*)(void))g_eventQueueChild)();
 }
 
 /* @addr 0x00460400 (30b)
@@ -21,14 +19,12 @@ extern unsigned int g_xformScratch2088;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_eventQueueIdx;
 extern void func_0042ac0a(void);
-__declspec(naked) void Init3333Jmp_00460400(void) {
-    __asm {
-        mov     eax, 0x3333
-        mov     dword ptr [g_eventQueueIdx], 0x00460490
-        mov     dword ptr [g_xformScratch2088], eax
-        mov     dword ptr [g_currentNodeFlags], eax
-        jmp     func_0042ac0a
-    }
+void Init3333Jmp_00460400(void) {
+    unsigned int v = 0x3333;
+    g_eventQueueIdx = 0x00460490;
+    g_xformScratch2088 = v;
+    g_currentNodeFlags = v;
+    func_0042ac0a();
 }
 
 /* @addr 0x004c6fd0 (22b)

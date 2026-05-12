@@ -39906,3 +39906,100 @@ __declspec(naked) void DispatcherChainRampClamp_004260d0(void) {
         jmp     ClampMulShiftStore_004ba0e0
     }
 }
+
+extern void IncStoreCallIATDec_00439520(void);
+extern void PushPop84TripleCall_00438b90(void);
+
+/* @addr 0x00436910 (248b game) - install-self with shared bit0 dispatch.
+ *   snapshot+clear chain[+0x84]. If was nonzero (init path): call IncStoreCallIATDec
+ *     [via mstack mediation in scaledInit chain]; if pause? final. If bit0 of state
+ *     set: tail-call StackPopDispatchTagged; else fall through to install-self.
+ *   If was zero (advance path): mstack-push g_x_00542054 incrementing twice with
+ *     state copy to g_state_00542080 and chain push of edx (scaledInit base+4).
+ *     call IncStoreCallIATDec_00439520; if pause? ret. If bit0 of state set:
+ *     tail-call StackPopDispatchTagged; else: call PushPop84TripleCall_00438b90;
+ *     if !pause: install-self at [esi+8]=0x00436910; chain[+0x84]=1; g_x_0054204c=1; pause=1.
+ *   ret.
+ */
+__declspec(naked) void InstallSelfMStackPushDispatch_00436910(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   2ch
+        call    IncStoreCallIATDec_00439520
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   0fh
+        _emit   84h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542058], ecx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542054], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        lea     ecx, [ecx*4 + 4]
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_x_00542054], eax
+        mov     edx, dword ptr [ecx]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [edx*4 + 0], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [ecx], eax
+        call    IncStoreCallIATDec_00439520
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   74h
+        _emit   08h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        call    PushPop84TripleCall_00438b90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [esi + 8], 0x00436910
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
