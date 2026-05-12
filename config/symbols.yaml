@@ -1886,10 +1886,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00423720
-    name: func_00423720
+    name: ZeroSlotsGatedDispatch_00423720
     size: 163
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004237d0
     name: TwoStateLookupDirty_004237d0
     size: 154
@@ -4680,10 +4681,11 @@ functions:
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x00441e50
-    name: func_00441e50
+    name: TwoStageSetupTripleCopy_00441e50
     size: 162
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00441f00
     name: func_00441f00
     size: 197
@@ -6937,10 +6939,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046cc80
-    name: func_0046cc80
+    name: InstallSelfMStackPush_0046cc80
     size: 162
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046cd30
     name: func_0046cd30
     size: 3632
@@ -7560,10 +7563,11 @@ functions:
     status: matched
     file: src/engine/mstack_push_swap_eq_jmp.c
   - addr: 0x00474f20
-    name: func_00474f20
+    name: StateSwitchMStackPop_00474f20
     size: 162
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474fd0
     name: GuardedScaled_00474fd0
     size: 33

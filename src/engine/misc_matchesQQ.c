@@ -15195,6 +15195,222 @@ extern void FiveCallScaledChainTailJmp_0045f8d0(void);
 
 extern void TwinLoopSlotFinder_00429a40(void);
 extern void LoadGeoAsset_Default(void);
+
+extern void CjInstallSelfRouter_00470480(void);
+extern void Wrapper_0048a300(void);
+extern void ScaledArrStore_00428e70(void);
+
+extern void PushSetXfmMaskCallPop_00407140(void);
+
+extern void func_0048e0e0(void);
+extern void StateDispatchTable_00490fc0(void);
+
+/* @addr 0x00423720 (163b game) - zero chain slots + gated dispatch:
+ *   chain[base].slot80 = 0; walkCallback=0; chain[base].slot7c = 0;
+ *   chain[base].slot30 = walkCallback; chain[base].slot4c = walkCallback;
+ *   v = chain[cj].slot30; walkCallback = v;
+ *   if (v != 3 && v != 4): call func_0048e0e0; pause? ret.
+ *   call StateDispatchTable_00490fc0; pause? ret;
+ *   chain[cj].slot24 = walkCallback; walkCallback = 0; chain[cj].slot28 = 0.
+ */
+__declspec(naked) void ZeroSlotsGatedDispatch_00423720(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        xor     esi, esi
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x80], esi
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_walkCallback], esi
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x7c], esi
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_walkCallback]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x30], edx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     [edx*4 + g_chainPtrArr_0046f6b0 + 0x4c], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x30]
+        cmp     eax, 3
+        mov     dword ptr [g_walkCallback], eax
+        _emit   74h
+        _emit   12h
+        cmp     eax, 4
+        _emit   74h
+        _emit   0dh
+        call    func_0048e0e0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   32h
+        call    StateDispatchTable_00490fc0
+        cmp     dword ptr [g_framePauseFlag], esi
+        _emit   75h
+        _emit   25h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_walkCallback]
+        mov     [edx*4 + g_chain_arr_4348f0 + 0x24], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_walkCallback], esi
+        mov     [eax*4 + g_chain_arr_4348f0 + 0x28], esi
+        pop     esi
+        ret
+    }
+}
+
+extern unsigned int g_x_00542098;
+
+/* @addr 0x00474f20 (162b game) - switch on (g_x_00542098 ? walk : alt):
+ *   v = g_x_00542098 ? g_data_00542070 : (g_data_00542070 = g_x_005380e0).
+ *   switch (v) {
+ *     case 2: case 9: walkCallback=0; state |= 4; jmp 0x83 path.
+ *     case 1: walkCallback=2; clear bit 2; mstack-pop into g_data_00542070; ret.
+ *     default: walkCallback=1; clear bit 2; mstack-pop into g_data_00542070; ret.
+ *   }
+ */
+__declspec(naked) void StateSwitchMStackPop_00474f20(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00542098]
+        test    eax, eax
+        _emit   75h
+        _emit   0ch
+        mov     eax, dword ptr [g_x_005380e0]
+        mov     dword ptr [g_data_00542070], eax
+        _emit   0ebh
+        _emit   05h
+        mov     eax, dword ptr [g_data_00542070]
+        cmp     eax, 2
+        _emit   74h
+        _emit   05h
+        cmp     eax, 9
+        _emit   75h
+        _emit   15h
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_walkCallback], 0
+        or      edx, 4
+        _emit   0ebh
+        _emit   4ah
+        cmp     eax, 1
+        _emit   75h
+        _emit   32h
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_state_004d57ac]
+        and     edx, 0xfffffffb
+        mov     dword ptr [g_walkCallback], 2
+        mov     dword ptr [g_state_0054208c], edx
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_walkCallback], 1
+        and     edx, 0xfffffffb
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_state_0054208c], edx
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/* @addr 0x00441e50 (162b game) - 2-stage setup + 3-field copy:
+ *   PushSetXfmMaskCallPop; pause? ret; if dirty bit 2: ret.
+ *   chain[scaledInit].slot30 = 0x91 (walkCallback=it); MStackCall_00406340; pause? ret.
+ *   Then triple copy: chain[scaledInit].slot54/58/5c = chain[g_x_00542048].slot3c/40/44.
+ */
+__declspec(naked) void TwoStageSetupTripleCopy_00441e50(void) {
+    __asm {
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8fh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   82h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x91
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x30], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5dh
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x3c]
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x54], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x40]
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x58], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x44]
+        mov     dword ptr [g_walkCallback], eax
+        mov     [ecx*4 + g_chain_arr_4348f0 + 0x5c], eax
+        ret
+    }
+}
+
+/* @addr 0x0046cc80 (162b game) - install-self with mstack-push:
+ *   chain[sel].slot84 -> eax; clear. If !=0: jmp CjInstallSelfRouter.
+ *   Else: Wrapper_0048a300; pause? ret.
+ *   g_data_00542070 = 0x17; install self at +8.
+ *   chain[base].slot84 = 1; mstack-push (self + 0x01000000); ++chain[sel].slot4;
+ *   chain[base].slot84 = 0; ScaledArrStore_00428e70; g_framePauseFlag = 1; ret.
+ */
+__declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    Wrapper_0048a300
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   69h
+        mov     dword ptr [g_data_00542070], 0x17
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPush_0046cc80
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelfMStackPush_0046cc80
+        add     edx, 0x01000000
+        mov     [ecx*4 + g_chainPtrArr_0046f6b0 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     [eax*4 + g_arr_41aaf0_mstack], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + g_chainPtrArr_0046f6b0 + 0x84], 0
+        call    ScaledArrStore_00428e70
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
 extern void func_004ab790_fwd(void);
 #define func_004ab790 func_004ab790_fwd
 extern void MStackPop8_004ab860_fwd(void);
