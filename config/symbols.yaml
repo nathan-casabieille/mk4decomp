@@ -4362,10 +4362,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439d20
-    name: func_00439d20
+    name: InstallSelfThreeStateBranch_00439d20
     size: 261
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439e30
     name: Thunk_00439e30
     size: 5
