@@ -4311,10 +4311,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439ec0
-    name: func_00439ec0
+    name: InstallSelfChainSet2011_00439ec0
     size: 171
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00439f70
     name: func_00439f70
     size: 83
