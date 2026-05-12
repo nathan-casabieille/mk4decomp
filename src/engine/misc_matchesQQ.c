@@ -41346,3 +41346,91 @@ __declspec(naked) void GuardedCascadeCjSetMul10_00440880(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0053a238;
+extern void DualScaledChainPush_00466000(void);
+extern void DecCallPushCall_00466090(void);
+extern void func_004660d0(void);
+
+/* @addr 0x00465ef0 (257b game) - 3 adjacent blocks (16/48/193 byte sizes).
+ *   B1: push 0x004ea948; tail-call ArgSarStoreJmp.
+ *   B2: if g_data_0053a238==1: tail-jmp DualScaledChainPush_00466000;
+ *     else: push 0x004ea968, tail-call ArgSarStoreJmp.
+ *   B3: install-self pattern.
+ */
+__declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
+    __asm {
+        push    0x004ea948
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        mov     eax, dword ptr [g_data_0053a238]
+        cmp     eax, 1
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     DualScaledChainPush_00466000
+        push    0x004ea968
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   2eh
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        call    DecCallPushCall_00466090
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_data_0053a238]
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_004660d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   57h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_0054206c]
+        lea     eax, [ecx*4 + 4]
+        mov     ecx, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00465f30
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0x0f
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
