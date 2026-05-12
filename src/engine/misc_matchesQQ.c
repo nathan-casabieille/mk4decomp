@@ -24448,6 +24448,85 @@ __declspec(naked) void ChainNodeInit_0041fa50(void) {
     }
 }
 
+extern void func_0048eec0(void);
+extern void CmpP1GTSetup_00470980(void);
+extern void SnapshotDispatchMStack_00491350(void);
+extern unsigned int g_x_00535ddc;
+
+/* @addr 0x004708c0 (186b game) - dual-guarded packed-table search by chain[+0x34].
+ *   call func_0048eec0. if (!(g_state_0054208c & 1)): return 0.
+ *   eax = [0x535ddc]; g_x_0054206c = eax; if (eax > 0x10000): return 0.
+ *   call CmpP1GTSetup_00470980; g_scaledInit = packed_ptr(0x4ebe90);
+ *   ecx = chain[scaledInit]; scaledInit++;
+ *   loop: g_x_00542074 = ecx; if (ecx < 0) break;
+ *     esi = g_x_00542048; if (chain[esi+0x34] == ecx) goto found.
+ *     ecx = chain[scaledInit++]; g_x_00542074 = ecx; scaledInit++ again;
+ *     ecx = chain[scaledInit]; if (ecx >= 0) goto loop.
+ *   break: return 0.
+ *   found: g_x_0054206c = chain[scaledInit++]; call SnapshotDispatchMStack;
+ *     call ScaledZeroFour_00490740; return 1.
+ */
+__declspec(naked) void DualGuardedTableSearch_004708c0(void) {
+    __asm {
+        push    esi
+        call    func_0048eec0
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   04h
+        xor     eax, eax
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_x_00535ddc]
+        cmp     eax, 0x00010000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   04h
+        xor     eax, eax
+        pop     esi
+        ret
+        call    CmpP1GTSetup_00470980
+        mov     eax, 0x004ebe90
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   7ch
+        _emit   41h
+        mov     esi, dword ptr [g_x_00542048]
+        mov     edx, [esi*4 + 0x34]
+        cmp     edx, ecx
+        mov     dword ptr [g_x_00542070], edx
+        _emit   74h
+        _emit   2eh
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   7dh
+        _emit   0c5h
+        xor     eax, eax
+        pop     esi
+        ret
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    SnapshotDispatchMStack_00491350
+        call    ScaledZeroFour_00490740
+        mov     eax, 1
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

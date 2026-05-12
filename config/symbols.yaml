@@ -7200,10 +7200,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x004708c0
-    name: func_004708c0
+    name: DualGuardedTableSearch_004708c0
     size: 186
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470980
     name: CmpP1GTSetup_00470980
     size: 55
