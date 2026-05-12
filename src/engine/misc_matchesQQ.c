@@ -34880,3 +34880,153 @@ __declspec(naked) void MStackPushSearchLoop_00463ed0(void) {
         ret
     }
 }
+
+/* @addr 0x00487430 (209b game) - dual-entry install-self.
+ *   A: call MStackPushSet0008; if !pause: chain[*4+0x74]=0x1008; call ScaledMove48to58; if !pause:
+ *     push 0x004eef08; call ArgSarStoreJmp; ret.
+ *   B (+0x50): standard install-self via chain[+0x84]==0 path: 0x00487480 self-addr.
+ */
+__declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
+    __asm {
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00001008
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eef08
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   33h
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   48h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   08h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   75h
+        _emit   12h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_x_00542080], 0x40
+        mov     dword ptr [esi + 0x08], 0x00487480
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
+/* @addr 0x004809e0 (210b game) - 3-way install-self with chain[+0x84] value dispatch (0, 1, 2+).
+ *   Value 0: fresh init via MStackPushSet0008, chain[+0x74]=0x100f, push str, call IterStepNegStore,
+ *     call CopyJmp_00406ba0, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_data_0054204c=4, pause=1.
+ *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_data_0054204c=8.
+ *   Value 2+: call FiveCallGuardSetTail_0046f6b0, pop+ret.
+ */
+__declspec(naked) void Install3WayChainCounter_004809e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   43h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 0x08], 0x004809e0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 8
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5ch
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x0000100f
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004ed850
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    IterStepNegStore_00490b10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   2fh
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 0x08], 0x004809e0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

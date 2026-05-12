@@ -8502,10 +8502,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x004809e0
-    name: func_004809e0
+    name: Install3WayChainCounter_004809e0
     size: 210
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480ac0
     name: InstallSelfCmpJgJmp_00480ac0
     size: 93
@@ -9088,10 +9089,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00487430
-    name: func_00487430
+    name: DualEntryInstallSelfChain_00487430
     size: 209
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487510
     name: func_00487510
     size: 477
