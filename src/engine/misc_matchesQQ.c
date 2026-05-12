@@ -27837,6 +27837,86 @@ __declspec(naked) void FgetsImpl_004c9a30(void) {
     }
 }
 
+extern void (*g_GetModuleFileNameA_004d20a0)(void);
+extern void func_004cbcc0(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void CmpCallPushIATCall_004c6e60(void);
+extern unsigned char g_buf_00f9faf0;
+extern unsigned int g_x_00fa0ee8;
+extern unsigned int g_x_00f9f830;
+extern unsigned int g_x_00f9f818;
+extern unsigned int g_x_00f9f814;
+
+/* @addr 0x004cbc20 (158b crt) - argv[] setup from GetModuleFileNameA + ParseCommandLine.
+ *   Frame: sub esp, 8; push esi, edi.
+ *   GetModuleFileNameA(NULL, [0xf9faf0], MAX_PATH).
+ *   edi = [0xfa0ee8]; [0xf9f830] = [0xf9faf0].
+ *   if (*edi == 0): edi = [0xf9faf0] (use module path).
+ *   Call func_004cbcc0 (parse, count). Get char_size + arg_count.
+ *   Call malloc/realloc-like LoadArgPushCall(total_bytes). esi = result.
+ *   if (esi == 0): call CmpCallPushIATCall(8) (errno).
+ *   Call func_004cbcc0 again (this time storing args). [0xf9f818] = esi (argv array).
+ *   [0xf9f814] = argc - 1.
+ */
+__declspec(naked) void SetupArgv_004cbc20(void) {
+    __asm {
+        sub     esp, 8
+        push    esi
+        push    edi
+        push    0x104
+        push    offset g_buf_00f9faf0
+        push    0
+        call    dword ptr [g_GetModuleFileNameA_004d20a0]
+        mov     edi, dword ptr [g_x_00fa0ee8]
+        mov     dword ptr [g_x_00f9f830], offset g_buf_00f9faf0
+        cmp     byte ptr [edi], 0
+        _emit   75h
+        _emit   05h
+        mov     edi, offset g_buf_00f9faf0
+        lea     eax, [esp + 0x0c]
+        lea     ecx, [esp + 8]
+        push    eax
+        push    ecx
+        push    0
+        push    0
+        push    edi
+        call    func_004cbcc0
+        mov     edx, [esp + 0x20]
+        mov     eax, [esp + 0x1c]
+        add     esp, 0x14
+        lea     ecx, [edx + eax*4]
+        push    ecx
+        call    LoadArgPushCall_004c54b0
+        mov     esi, eax
+        add     esp, 4
+        test    esi, esi
+        _emit   75h
+        _emit   0ah
+        push    8
+        call    CmpCallPushIATCall_004c6e60
+        add     esp, 4
+        mov     ecx, [esp + 8]
+        lea     edx, [esp + 0x0c]
+        push    edx
+        lea     eax, [esp + 0x0c]
+        lea     edx, [esi + ecx*4]
+        push    eax
+        push    edx
+        push    esi
+        push    edi
+        call    func_004cbcc0
+        mov     eax, [esp + 0x1c]
+        add     esp, 0x14
+        dec     eax
+        mov     dword ptr [g_x_00f9f818], esi
+        pop     edi
+        mov     dword ptr [g_x_00f9f814], eax
+        pop     esi
+        add     esp, 8
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
