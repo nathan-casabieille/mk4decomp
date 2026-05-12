@@ -26609,6 +26609,95 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
     }
 }
 
+extern unsigned int g_x_00f9fc34;
+extern unsigned int g_x_00f9fc38;
+extern unsigned int g_x_00f9fc3c;
+extern void (*g_GetModuleHandleA)(void);
+extern void (*g_GetProcAddress)(void);
+
+/* @addr 0x004ce150 (147b crt) - lazy-load + invoke 4-arg function via 3 GetProcAddress lookups.
+ *   Cache: [0xf9fc34] (main FP), [0xf9fc38] (init FP), [0xf9fc3c] (cleanup FP).
+ *   If cache populated, skip setup; else:
+ *     GetModuleHandleA("...") -> esi; if 0 -> fail.
+ *     GetProcAddress(esi, name1) -> store [0xf9fc34]; if 0 -> fail.
+ *     GetProcAddress(esi, name2) -> store [0xf9fc38].
+ *     GetProcAddress(esi, name3) -> store [0xf9fc3c].
+ *   If [0xf9fc38]: ebx = [0xf9fc38]().
+ *   If ebx && [0xf9fc3c]: ebx = [0xf9fc3c](ebx).
+ *   Call main FP with (ebx, arg1, arg2, arg3).
+ *   Tail block 3 (+0x8f-+0x92): NOP + xor eax, eax + ret (unreachable dead code).
+ */
+__declspec(naked) void LazyLoadInvoke_004ce150(void) {
+    __asm {
+        mov     eax, dword ptr [g_x_00f9fc34]
+        push    ebx
+        xor     ebx, ebx
+        push    esi
+        test    eax, eax
+        push    edi
+        _emit   75h
+        _emit   42h
+        push    0x004d2f70
+        call    dword ptr [g_GetModuleHandleA]
+        mov     esi, eax
+        test    esi, esi
+        _emit   74h
+        _emit   6ah
+        mov     edi, dword ptr [g_GetProcAddress]
+        push    0x004d2f64
+        push    esi
+        call    edi
+        test    eax, eax
+        mov     dword ptr [g_x_00f9fc34], eax
+        _emit   74h
+        _emit   53h
+        push    0x004d2f54
+        push    esi
+        call    edi
+        push    0x004d2f40
+        push    esi
+        mov     dword ptr [g_x_00f9fc38], eax
+        call    edi
+        mov     dword ptr [g_x_00f9fc3c], eax
+        mov     eax, dword ptr [g_x_00f9fc38]
+        test    eax, eax
+        _emit   74h
+        _emit   04h
+        call    eax
+        mov     ebx, eax
+        test    ebx, ebx
+        _emit   74h
+        _emit   0eh
+        mov     eax, dword ptr [g_x_00f9fc3c]
+        test    eax, eax
+        _emit   74h
+        _emit   05h
+        push    ebx
+        call    eax
+        mov     ebx, eax
+        mov     eax, [esp + 0x18]
+        mov     ecx, [esp + 0x14]
+        mov     edx, [esp + 0x10]
+        push    eax
+        push    ecx
+        push    edx
+        push    ebx
+        call    dword ptr [g_x_00f9fc34]
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        pop     edi
+        pop     esi
+        xor     eax, eax
+        pop     ebx
+        ret
+        nop
+        xor     eax, eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

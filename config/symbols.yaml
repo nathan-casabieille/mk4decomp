@@ -15680,10 +15680,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ce150
-    name: func_004ce150
+    name: LazyLoadInvoke_004ce150
     size: 147
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ce1f0
     name: AddOverflowCheck_004ce1f0
     size: 35
