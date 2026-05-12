@@ -13821,10 +13821,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b7a40
-    name: func_004b7a40
+    name: NineSlotReplace_004b7a40
     size: 193
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7b10
     name: func_004b7b10
     size: 464

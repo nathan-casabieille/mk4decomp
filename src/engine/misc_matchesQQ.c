@@ -25565,6 +25565,87 @@ __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
     }
 }
 
+extern unsigned int g_x_00543b20;
+extern unsigned int g_x_00543b28;
+extern unsigned int g_x_00543b30;
+extern unsigned int g_x_00543b38;
+extern unsigned int g_x_00543b40;
+extern unsigned int g_x_00543b48;
+extern unsigned int g_x_00543b50;
+extern unsigned int g_x_00543b58;
+extern unsigned int g_x_00543b60;
+
+/* @addr 0x004b7a40 (193b game.menu) - search 9-slot table; replace first match with eax.
+ *   Caller passes (esi=&id, edx=new_id, ecx_idx=[esp+0x10]).
+ *   eax = *esi; *esi = 0; if (edx == 0) goto end.
+ *   For each slot (0..8): if (slot[ecx_idx] == edx) { slot[ecx_idx] = eax; eax = 0; }
+ *   *esi = edx. pop esi; ret.
+ */
+__declspec(naked) void NineSlotReplace_004b7a40(void) {
+    __asm {
+        mov     edx, [esp + 8]
+        push    esi
+        mov     esi, [esp + 8]
+        test    edx, edx
+        mov     eax, [esi]
+        mov     dword ptr [esi], 0
+        _emit   0fh
+        _emit   84h
+        _emit   0a6h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, [esp + 0x10]
+        cmp     [ecx*4 + g_x_00543b20], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b20], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b28], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b28], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b30], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b30], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b38], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b38], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b40], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b40], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b48], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b48], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b50], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b50], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b58], edx
+        _emit   75h
+        _emit   09h
+        mov     [ecx*4 + g_x_00543b58], eax
+        xor     eax, eax
+        cmp     [ecx*4 + g_x_00543b60], edx
+        _emit   75h
+        _emit   07h
+        mov     [ecx*4 + g_x_00543b60], eax
+        mov     [esi], edx
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
