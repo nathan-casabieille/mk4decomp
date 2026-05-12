@@ -10395,10 +10395,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048ff40
-    name: func_0048ff40
+    name: DualHelperCallStoreCjFields_0048ff40
     size: 239
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490030
     name: SwapCallRestore_00490030
     size: 54

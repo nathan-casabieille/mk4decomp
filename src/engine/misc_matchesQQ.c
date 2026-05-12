@@ -39087,3 +39087,72 @@ __declspec(naked) void MstackPopScaledChainPlusThunks_00471250(void) {
         jmp     func_0045f650
     }
 }
+
+/* @addr 0x0048ff40 (239b game) - call into mid-function helper at 0x004074f0
+ * (inside DispatcherComplex260_00407400). Uses two cdecl-style call+push pairs
+ * to compute fields +0x54/+0x5c via the helper, then stores results into scaledInit
+ * chain[+0x54], chain[+0x5c] and cj[+0x58].
+ */
+__declspec(naked) void DualHelperCallStoreCjFields_0048ff40(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542070]
+        test    edx, edx
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        push    esi
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   1fh
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x58]
+        add     eax, edx
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [eax*4 + 0x44]
+        mov     dword ptr [g_x_0054204c], eax
+        mov     ecx, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_00542074], ecx
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     eax, dword ptr [g_x_0054206c]
+        push    ecx
+        push    eax
+        mov     dword ptr [g_x_00542078], edx
+        _emit   0e8h
+        _emit   35h
+        _emit   4bh
+        _emit   0f7h
+        _emit   0ffh
+        mov     ecx, dword ptr [g_x_00542078]
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        push    ecx
+        push    edx
+        _emit   0e8h
+        _emit   1ah
+        _emit   4bh
+        _emit   0f7h
+        _emit   0ffh
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     esi, dword ptr [g_x_00542074]
+        mov     dword ptr [g_x_00542078], eax
+        add     esp, 8
+        mov     ecx, dword ptr [edx*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [edx*4 + 0x5c]
+        add     edx, eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        add     ecx, esi
+        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542070]
+        pop     esi
+        mov     dword ptr [ecx*4 + 0x5c], edx
+        ret
+    }
+}
