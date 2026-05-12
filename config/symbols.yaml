@@ -2194,10 +2194,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00426ae0
-    name: func_00426ae0
+    name: InstallSelfDualEntry_00426ae0
     size: 114
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426b60
     name: func_00426b60
     size: 463
@@ -8144,10 +8145,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047c880
-    name: func_0047c880
+    name: TripleEntryTblPushJmp_0047c880
     size: 111
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c8f0
     name: func_0047c8f0
     size: 154

@@ -29059,3 +29059,108 @@ __declspec(naked) void TripleEntryGate_0045e5d0(void) {
         jmp     func_0045e640
     }
 }
+
+extern void func_0047c8f0(void);
+
+/* @addr 0x0047c880 (111b game) - triple-entry dispatcher.
+ *   Block A: set g_x_0054206c=0x37; call TableLookupCall; if !pause set =0x07; ret.
+ *   Block B (+0x30): set baseSel[*4+0x74]=0x408; push 0x004ed320; call ArgSarStoreJmp; ret.
+ *   Block C (+0x60): set g_x_00542080=0x8; jmp func_0047c8f0.
+ */
+__declspec(naked) void TripleEntryTblPushJmp_0047c880(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0x37
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_x_0054206c], 0x07
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x00000408
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004ed320
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_00542080], 0x08
+        jmp     func_0047c8f0
+    }
+}
+
+extern void func_0041fb10(void);
+extern void Wrapper_0048a270(void);
+
+/* @addr 0x00426ae0 (114b game) - dual-entry stub + install-self.
+ *   Block A: push 0x241; push 0x00426b00; call func_0041fb10; ret. Stack arg dispatch.
+ *   Block B (+0x20): ecx = baseSel[*4+0x84]; clear it; if zero ret; call Wrapper_0048a270;
+ *     if pause: install-self at +8, set baseSel[*4+0x84]=1, store 0x1e to g_data_0054204c
+ *     and 1 to g_pause; ret. Else jmp CallSetPause_0041f830.
+ */
+__declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
+    __asm {
+        push    0x00000241
+        push    0x00426b00
+        call    func_0041fb10
+        add     esp, 8
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   13h
+        call    Wrapper_0048a270
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        jmp     CallSetPause_0041f830
+        mov     ecx, 0x01
+        mov     dword ptr [eax + 0x08], 0x00426b00
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0x1e
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
