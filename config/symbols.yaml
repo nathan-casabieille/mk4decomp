@@ -1164,10 +1164,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00413ea0
-    name: func_00413ea0
+    name: SoundSetupLoop_00413ea0
     size: 157
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00413f40
     name: func_00413f40
     size: 1146
@@ -2258,10 +2259,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00427f90
-    name: func_00427f90
+    name: MStackPush2DirtyCall_00427f90
     size: 156
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428030
     name: CallPauseClear3CallTriple_00428030
     size: 78

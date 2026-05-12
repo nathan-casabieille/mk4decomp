@@ -15176,6 +15176,134 @@ extern void TwoConditionalJmp_00439b80(void);
 extern void Thunk_00439c20(void);
 extern void AudioVolumeRescale_004ab690(void);
 
+extern void func_00406790(void);
+extern void func_004069b0(void);
+
+extern unsigned char g_data_00408000;
+extern void ThreeChanPackClamp_00404cc0(int);
+extern void CopyThreeFields_00404df0(int);
+extern void func_004ab790(void);
+extern void SetJmp_00405420(void);
+extern void func_00413f40(void);
+extern void MStackPop8_004ab860(void);
+
+/* @addr 0x00413ea0 (157b boot) - 4-stage sound setup loop:
+ *   ThreeChanPackClamp(0x408000); CopyThreeFields(cj); func_004ab790;
+ *   pause? jmp tail. g_x_00542050=0x23, g_x_00542054=cj; SetJmp; pause? jmp tail.
+ *   if !(g_state_0054208c & 4): g_x_00542050 = 0x14.
+ *   loop: call func_00413f40; pause? jmp tail. if dirty bit2: jmp 0x96 path.
+ *   if (--g_x_00542050 >= 0): loop again.
+ *   tail: call MStackPop8_004ab860; ret.
+ */
+__declspec(naked) void SoundSetupLoop_00413ea0(void) {
+    __asm {
+        push    ebx
+        push    offset g_data_00408000
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_cj_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        call    func_004ab790
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   71h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_data_00542050], 0x23
+        mov     dword ptr [g_x_00542054], ecx
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   4dh
+        mov     al, byte ptr [g_state_0054208c]
+        mov     bl, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00542050], 0x14
+loop413ea0:
+        call    func_00413f40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2ah
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_data_00542050]
+        dec     eax
+        mov     dword ptr [g_data_00542050], eax
+        _emit   78h
+        _emit   10h
+        call    func_00413f40
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   74h
+        _emit   0ddh
+        pop     ebx
+        ret
+        call    MStackPop8_004ab860
+        pop     ebx
+        ret
+    }
+}
+
+/* @addr 0x00427f90 (156b game) - mstack push 2 + 2-stage call w/ dirty toggle:
+ *   push g_walkCallback, g_scaledInit; call func_004069b0; pause? ret;
+ *   set bit 2 of g_state_0054208c; if scaledInit != 0: xor bit 2 off, call
+ *   func_00406790; pause? ret; pop into g_scaledInit, g_walkCallback.
+ */
+__declspec(naked) void MStackPush2DirtyCall_00427f90(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_walkCallback]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    func_004069b0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5dh
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     ecx, 4
+        or      eax, ecx
+        mov     dword ptr [g_state_0054208c], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        test    eax, eax
+        _emit   74h
+        _emit   08h
+        xor     dword ptr [g_state_0054208c], ecx
+        test    eax, eax
+        _emit   74h
+        _emit   0eh
+        call    func_00406790
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern double g_fp_004d29b8;
 extern double g_fp_004d29c0;
 extern int DoubleToInt64_004c57d0(void);
