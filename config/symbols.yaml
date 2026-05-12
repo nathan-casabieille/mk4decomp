@@ -8284,10 +8284,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x0047d560
-    name: func_0047d560
+    name: GuardedThenCjCascade_0047d560
     size: 231
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047d650
     name: ChainSetCallPauseDispatch_0047d650
     size: 128

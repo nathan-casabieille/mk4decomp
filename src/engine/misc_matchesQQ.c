@@ -38414,3 +38414,92 @@ walk_00450e43:
         ret
     }
 }
+
+extern void func_00457bb0(void);
+extern void TableLookupCall_00489f60(void);
+extern void ScaledDualPropagateJmp_004287b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledZero44_00491500(void);
+
+/* @addr 0x0047d560 (231b game) - two blocks (+13 NOPs padding).
+ *   B1 (0..66): clear g_x_0054207c; call func_00457bb0; if !pause: set
+ *     g_x_0054206c=0x13; call TableLookupCall; push 0x004ed420; call
+ *     ScaledDualPropagateJmp; if !pause: tail-jmp FiveCallGuardSetTail; ret.
+ *   B2 (80..230): read cj[+0x58]; if eax<0x9999: select g_data_00538038 or
+ *     [0053803c] based on edx == g_state_00538158; copy [+0x5c]/[+0x60]; clear
+ *     cj[+0x58] = 0xfffc0000; set cj[+0x4c] = 0xa3d; tail-jmp ScaledZero44.
+ */
+__declspec(naked) void GuardedThenCjCascade_0047d560(void) {
+    __asm {
+        mov     dword ptr [g_x_0054207c], 0
+        call    func_00457bb0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2ah
+        mov     dword ptr [g_x_0054206c], 0x13
+        call    TableLookupCall_00489f60
+        push    0x004ed420
+        call    ScaledDualPropagateJmp_004287b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        cmp     eax, 0x9999
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7ch
+        _emit   7dh
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     eax, dword ptr [g_data_00538038]
+        cmp     edx, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_data_0053803c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x60]
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [edx*4 + 0x54], ecx
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_00542070]
+        mov     dword ptr [ecx*4 + 0x5c], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        _emit   0c7h
+        _emit   04h
+        _emit   85h
+        _emit   58h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   0fch
+        _emit   0ffh
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0xa3d
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        jmp     ScaledZero44_00491500
+        ret
+    }
+}
