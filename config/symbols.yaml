@@ -12135,10 +12135,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a47c0
-    name: func_004a47c0
+    name: ChainInitDoublePushCall_004a47c0
     size: 183
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a4880
     name: TripleCallSetCopy_004a4880
     size: 92
