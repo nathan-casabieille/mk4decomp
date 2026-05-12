@@ -15206,6 +15206,128 @@ extern unsigned int g_x_0053a718;
 extern void SaveCallRestore_004049d0(int);
 extern void SaveCallRestoreOrXor_00404a00(int);
 
+extern void func_004244d0_fwd(void);
+#define func_004244d0 func_004244d0_fwd
+extern unsigned int g_chain_disp_64_40a690_fwd;
+#define g_chain_disp_64_40a690 g_chain_disp_64_40a690_fwd
+
+extern void GuardedClampStoreJmp_00428bd0(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+
+/* @addr 0x00428b20 (166b game) - install-self with accumulator overflow check:
+ *   chain[sel].slot84 -> eax; clear. If !=0: eax = g_state_00542088 + g_currentNodeFlags;
+ *     g_state_00542088 = eax. If eax > 0x10000: jmp StackPopDispatchTagged; ret.
+ *   Else: GuardedClampStoreJmp; pause? ret.
+ *   Then: walkCallback = g_state_00542088; g_data_00542070 = g_state_00542080;
+ *     MStackPushZeroCallPop; pause? ret;
+ *     if (g_x_00542058 != 0) call g_x_00542058; pause? ret;
+ *     install self, slot84=1, g_x_0054204c=1, framePauseFlag=1.
+ */
+__declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_chainPtrArr_0046f6b0]
+        mov     eax, [eax*4 + g_chainPtrArr_0046f6b0 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   20h
+        mov     eax, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_currentNodeFlags]
+        add     eax, edx
+        cmp     eax, 0x10000
+        mov     dword ptr [g_state_00542088], eax
+        _emit   7eh
+        _emit   1ah
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        call    GuardedClampStoreJmp_00428bd0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   54h
+        mov     eax, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_state_00542080]
+        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_data_00542070], ecx
+        call    MStackPushZeroCallPop_00407d00
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   30h
+        mov     eax, dword ptr [g_x_00542058]
+        test    eax, eax
+        _emit   74h
+        _emit   02h
+        call    eax
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset InstallSelfAccumOverflow_00428b20
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x0040a730 (166b boot) - same shape as MStackPushNegMul10_0040a690
+ *   but with 3rd FP step: mstack-push scaledInit; snapshot g_x_0052ab10
+ *   into scaledInit; chain[+0x64] -> g_x_00542074; call func_004244d0;
+ *   pause? ret; Mul10Tail(g_data_00542070, neg) -> g_x_00542074;
+ *   Mul10Tail(walkCallback, neg) -> g_data_00542070; neg g_x_00542074 -> walkCallback;
+ *   mstack-pop into scaledInit.
+ */
+__declspec(naked) void MStackPushNegMul10Var_0040a730(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_x_0052ab10]
+        neg     edx
+        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_chain_disp_64_40a690]
+        mov     dword ptr [g_x_00542074], eax
+        call    func_004244d0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   5bh
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_acc_00542078]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_acc_00542078]
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_walkCallback]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     esp, 8
+        neg     edx
+        mov     dword ptr [g_walkCallback], edx
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00538090;
 extern unsigned int g_x_00541fc4;
 extern void CallSetPause_0041f830(void);

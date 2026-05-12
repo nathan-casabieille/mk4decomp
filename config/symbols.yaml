@@ -857,10 +857,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040a730
-    name: func_0040a730
+    name: MStackPushNegMul10Var_0040a730
     size: 166
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040a7e0
     name: StackPushAdd15CallPop_0040a7e0
     size: 69
@@ -2420,10 +2421,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00428b20
-    name: func_00428b20
+    name: InstallSelfAccumOverflow_00428b20
     size: 166
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428bd0
     name: GuardedClampStoreJmp_00428bd0
     size: 77
