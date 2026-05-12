@@ -8881,10 +8881,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x00483b80
-    name: func_00483b80
+    name: IncThunkPlusCjDispatch_00483b80
     size: 264
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483c90
     name: func_00483c90
     size: 334

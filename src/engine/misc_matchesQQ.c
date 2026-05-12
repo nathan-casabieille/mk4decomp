@@ -42298,3 +42298,109 @@ __declspec(naked) void GuardedCascadeCjLink70Mul10_0043e850(void) {
         ret
     }
 }
+
+extern void Wrapper_0048a380(void);
+extern void ScaledDecOrZero_00483b50(void);
+extern void ScaledAndAlf7_00490310(void);
+extern void DirtyToggleByGate_0048f350(void);
+extern void func_00483c90(void);
+extern void DualPushCallPause_00482eb0(void);
+
+/* @addr 0x00483b80 (264b game) - dual block: counter inc thunk + cj cascade dispatch.
+ *   B1 (0..0x1a, +5 NOPs): ++baseSel[+0x7c]; g_x_0054206c = new value; ret.
+ *   B2 (0x20..0x107): cascade of guarded calls ending in 3-way dispatch:
+ *     baseSel[+0x80] vs g_state_00542080 (set per state bits): if less, jmp func_00483c90.
+ *     Else if baseSel[+0x34] != 0xf: jmp func_00483c90. Else: push 0x004ee780, tail-call ArgSarStoreJmp.
+ */
+__declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
+    __asm {
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x7c]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x7c], eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        call    Wrapper_0048a380
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    SixBlockCjCascade_004829b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     DualPushCallPause_00482eb0
+        call    ScaledDecOrZero_00483b50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ScaledAndAlf7_00490310
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_state_00542080], 0x3333
+        call    FlagCascadeStateSet_0048ec30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_state_00542080], 0x2666
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   58h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_state_00542080], 0x2666
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [ecx*4 + 0x80]
+        cmp     eax, edx
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7ch
+        _emit   05h
+        jmp     func_00483c90
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        cmp     ecx, 0x0f
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   75h
+        _emit   05h
+        jmp     func_00483c90
+        push    0x004ee780
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
