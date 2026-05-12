@@ -39730,3 +39730,84 @@ __declspec(naked) void TripleBlockCjCopy_0042c8c0(void) {
         ret
     }
 }
+
+extern void func_004245b0(void);
+extern void MStackMagicModMul10_00424410(void);
+extern void ModMagicMul10Index_00424350(void);
+
+/* @addr 0x00490ec0 (247b game) - triple-helper call then dual Mul10Tail for cj fields.
+ *   Load cj[+0x54]/cj[+0x5c] and g_x_00542058[+0x54]/[+0x5c]; compute diff; call
+ *   func_004245b0; if pause? ret. set g_x_00542074=g_x_00542078=g_x_0054206c;
+ *   call MStackMagicModMul10_00424410; if pause? ret. swap+store; call
+ *   ModMagicMul10Index_00424350; if pause? ret.
+ *   Then 2x Mul10Tail (cdecl, [g_x_00542080] is shared magic param):
+ *     cj[+0x6c] = Mul10Tail(g_x_00542080, g_x_0054206c)
+ *     cj[+0x74] = Mul10Tail(g_state_00542080, g_x_00542070)
+ *   pop esi; ret.
+ */
+__declspec(naked) void DualHelperMul10TailPair_00490ec0(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_00542058]
+        push    esi
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_00542070], eax
+        mov     esi, dword ptr [edx*4 + 0x54]
+        mov     dword ptr [g_x_00542074], esi
+        mov     edx, dword ptr [edx*4 + 0x5c]
+        sub     esi, ecx
+        sub     edx, eax
+        mov     dword ptr [g_x_00542074], esi
+        mov     dword ptr [g_x_00542078], edx
+        call    func_004245b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_x_00542078], eax
+        call    MStackMagicModMul10_00424410
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7dh
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_00542078]
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    ModMagicMul10Index_00424350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   59h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_state_00542080]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_state_00542080]
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], eax
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542070], eax
+        mov     eax, dword ptr [g_cj_0054205c]
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x6c], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [edx*4 + 0x74], eax
+        pop     esi
+        ret
+    }
+}

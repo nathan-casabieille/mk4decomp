@@ -10681,10 +10681,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x00490ec0
-    name: func_00490ec0
+    name: DualHelperMul10TailPair_00490ec0
     size: 247
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490fc0
     name: StateDispatchTable_00490fc0
     size: 136
