@@ -14924,10 +14924,11 @@ functions:
     status: matched
     file: src/engine/push_const_call.c
   - addr: 0x004c6a20
-    name: func_004c6a20
+    name: LockIterTwoPath_004c6a20
     size: 187
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6ae0
     name: func_004c6ae0
     size: 464

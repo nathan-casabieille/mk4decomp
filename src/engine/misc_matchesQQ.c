@@ -24082,6 +24082,119 @@ __declspec(naked) void MStackBitmaskUpdate_00492510(void) {
     }
 }
 
+extern void Lock_004c6f50(void);
+extern void TwoPathIATDispatch_004c7030(void);
+extern void TwoPathIATDispatch_004c70a0(void);
+extern void CallTestPushSubCall_004c6960(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern unsigned int g_x_00fa0dc0;
+
+/* @addr 0x004c6a20 (187b boot) - lock-iter handler table with two dispatch paths.
+ *   Reserve stack [esp+0x10] = 0; push 2; call Lock; load count = [0xfa0dc0].
+ *   edi = arg; esi = 0; ebp = 0.
+ *   loop while esi < count:
+ *     bl = 0x83; eax = [0xf9fdb4][esi]; if (eax == 0 || ![eax+0xc] & 0x83) continue.
+ *     push eax, esi; call TwoPathIATDispatch_004c7030; add esp, 8.
+ *     eax = [0xf9fdb4][esi]; ecx = [eax+0xc]; if (!(ecx & 0x83)) goto next.
+ *     if (edi == 1): push eax; call CallTestPushSubCall; if (result != -1) inc [esp+0x10].
+ *     else: if (edi == 0 && (cl & 2)): push eax; call CallTestPushSubCall; if (result != -1) ebp |= eax.
+ *     push [0xf9fdb4][esi], esi; call TwoPathIATDispatch_004c70a0; add esp, 8.
+ *     next: inc esi; cmp esi, [0xfa0dc0]; if (<) goto loop.
+ *   push 2; call TableLookupIatCall; eax = [esp+0x14] (saved 0).
+ *   if (edi != 1): eax = ebp.
+ *   pop all regs.
+ */
+__declspec(naked) void LockIterTwoPath_004c6a20(void) {
+    __asm {
+        push    ecx
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        xor     esi, esi
+        push    2
+        mov     [esp + 0x14], esi
+        xor     ebp, ebp
+        call    Lock_004c6f50
+        mov     eax, dword ptr [g_x_00fa0dc0]
+        mov     edi, [esp + 0x1c]
+        add     esp, 4
+        cmp     eax, esi
+        _emit   7eh
+        _emit   7ch
+        mov     bl, 0x83
+        mov     eax, dword ptr [g_x_00f9fdb4]
+        mov     eax, [eax + esi*4]
+        test    eax, eax
+        _emit   74h
+        _emit   64h
+        test    byte ptr [eax + 0xc], bl
+        _emit   74h
+        _emit   5fh
+        push    eax
+        push    esi
+        call    TwoPathIATDispatch_004c7030
+        mov     ecx, dword ptr [g_x_00f9fdb4]
+        add     esp, 8
+        mov     eax, [ecx + esi*4]
+        mov     ecx, [eax + 0x0c]
+        _emit   84h
+        _emit   0cbh
+        _emit   74h
+        _emit   32h
+        cmp     edi, 1
+        _emit   75h
+        _emit   14h
+        push    eax
+        call    CallTestPushSubCall_004c6960
+        add     esp, 4
+        cmp     eax, 0xffffffff
+        _emit   74h
+        _emit   1fh
+        inc     dword ptr [esp + 0x10]
+        _emit   0ebh
+        _emit   19h
+        test    edi, edi
+        _emit   75h
+        _emit   15h
+        test    cl, 2
+        _emit   74h
+        _emit   10h
+        push    eax
+        call    CallTestPushSubCall_004c6960
+        add     esp, 4
+        cmp     eax, 0xffffffff
+        _emit   75h
+        _emit   02h
+        or      ebp, eax
+        mov     edx, dword ptr [g_x_00f9fdb4]
+        mov     eax, [edx + esi*4]
+        push    eax
+        push    esi
+        call    TwoPathIATDispatch_004c70a0
+        add     esp, 8
+        mov     eax, dword ptr [g_x_00fa0dc0]
+        inc     esi
+        cmp     esi, eax
+        _emit   7ch
+        _emit   86h
+        push    2
+        call    TableLookupIatCall_004c6fd0
+        mov     eax, [esp + 0x14]
+        add     esp, 4
+        cmp     edi, 1
+        _emit   74h
+        _emit   02h
+        mov     eax, ebp
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
