@@ -166,10 +166,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesHH.c
   - addr: 0x00404a50
-    name: func_00404a50
+    name: TripleStageRollback_00404a50
     size: 156
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00404af0
     name: Mul10Tail_00404af0
     size: 18
@@ -12446,10 +12447,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004ab860
-    name: func_004ab860
+    name: MStackPop8_004ab860
     size: 158
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab900
     name: func_004ab900
     size: 169
@@ -13367,10 +13369,11 @@ functions:
     status: matched
     file: src/engine/rot_matrix_b.c
   - addr: 0x004b3a90
-    name: func_004b3a90
+    name: Transform9Words_004b3a90
     size: 159
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3b30
     name: Word9Reorder_004b3b30
     size: 79
@@ -15557,10 +15560,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004ce010
-    name: func_004ce010
+    name: Fpclass_004ce010
     size: 155
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ce0b0
     name: StreamCleanupLoop_004ce0b0
     size: 147

@@ -15148,6 +15148,260 @@ extern void ScaledLoadJmp_00428d20(void);
 extern unsigned int g_chain_disp_64_440d20;
 extern void func_00440dc0(void);
 
+extern void Thunk_0049cb70(void);
+extern void Thunk_0049cb80(void);
+
+extern unsigned int g_x_00542058_v2;
+#define g_x_00542058 g_x_00542058_v2
+
+/* @addr 0x004b3a90 (159b engine.geo) - in-place 9-word transform:
+ *   For i=0..8: arg1[i] = (signed short)arg1[i] * arg2[(i%3)*4] >> 12.
+ */
+__declspec(naked) void Transform9Words_004b3a90(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        mov     ecx, dword ptr [esp + 8]
+        push    esi
+        movsx   edx, word ptr [eax]
+        mov     esi, dword ptr [ecx]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 2]
+        sar     esi, 0xc
+        mov     word ptr [eax], si
+        mov     esi, dword ptr [ecx + 4]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 4]
+        sar     esi, 0xc
+        mov     word ptr [eax + 2], si
+        mov     esi, dword ptr [ecx + 8]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 6]
+        sar     esi, 0xc
+        mov     word ptr [eax + 4], si
+        mov     esi, dword ptr [ecx]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 8]
+        sar     esi, 0xc
+        mov     word ptr [eax + 6], si
+        mov     esi, dword ptr [ecx + 4]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 0xa]
+        sar     esi, 0xc
+        mov     word ptr [eax + 8], si
+        mov     esi, dword ptr [ecx + 8]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 0xc]
+        sar     esi, 0xc
+        mov     word ptr [eax + 0xa], si
+        mov     esi, dword ptr [ecx]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 0xe]
+        sar     esi, 0xc
+        mov     word ptr [eax + 0xc], si
+        mov     esi, dword ptr [ecx + 4]
+        imul    esi, edx
+        movsx   edx, word ptr [eax + 0x10]
+        sar     esi, 0xc
+        mov     word ptr [eax + 0xe], si
+        mov     ecx, dword ptr [ecx + 8]
+        imul    ecx, edx
+        sar     ecx, 0xc
+        mov     word ptr [eax + 0x10], cx
+        pop     esi
+        ret
+    }
+}
+
+/* @addr 0x004ab860 (158b audio) - mstack pop 8 into g_baseSel/g_cj/0x58/
+ *   g_x_00542054/g_data_00542050/g_x_0054204c/g_x_00542048/g_scaledInit.
+ */
+__declspec(naked) void MStackPop8_004ab860(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_baseSel_00542060], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+extern double g_fp_004d2f38;
+extern int FpClassify_004cde80(void);
+
+/* @addr 0x004ce010 (155b crt) - _fpclass: classify a double:
+ *   If exp == 0x7ff (inf/nan): call FpClassify; switch on result.
+ *   If exp == 0: zero/denormal.
+ *   Else: normal positive/negative (compare to 0.0).
+ *   Returns FP class flags 1/2/4/0x200/etc.
+ */
+__declspec(naked) int Fpclass_004ce010(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 0x0a]
+        mov     ecx, eax
+        and     ecx, 0x7ff0
+        cmp     cx, 0x7ff0
+        _emit   75h
+        _emit   33h
+        mov     eax, dword ptr [esp + 8]
+        mov     ecx, dword ptr [esp + 4]
+        push    eax
+        push    ecx
+        call    FpClassify_004cde80
+        add     esp, 8
+        dec     eax
+        _emit   74h
+        _emit   18h
+        dec     eax
+        _emit   74h
+        _emit   0fh
+        dec     eax
+        _emit   74h
+        _emit   06h
+        mov     eax, 1
+        ret
+        mov     eax, 2
+        ret
+        mov     eax, 4
+        ret
+        mov     eax, 0x200
+        ret
+        and     eax, 0x8000
+        test    cx, cx
+        mov     edx, eax
+        _emit   75h
+        _emit   20h
+        test    dword ptr [esp + 8], 0xfffff
+        _emit   75h
+        _emit   08h
+        mov     eax, dword ptr [esp + 4]
+        test    eax, eax
+        _emit   74h
+        _emit   0eh
+        mov     eax, edx
+        neg     eax
+        sbb     eax, eax
+        and     al, 0x90
+        _emit   05h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        ret
+        fld     qword ptr [esp + 4]
+        fcomp   qword ptr [g_fp_004d2f38]
+        fnstsw  ax
+        test    ah, 0x40
+        mov     eax, edx
+        _emit   74h
+        _emit   0ah
+        neg     eax
+        sbb     eax, eax
+        and     al, 0xe0
+        add     eax, 0x40
+        ret
+        neg     eax
+        sbb     eax, eax
+        and     al, 8
+        add     eax, 0x100
+        ret
+    }
+}
+
+
+/* @addr 0x00404a50 (156b boot) - 3-stage wrap with rollback:
+ *   Save g_x_0054204c, g_x_00542044, g_walkCallback; set walkCallback=arg1,
+ *   g_data_00542070=0xffff; call Thunk_0049cb70; pause? rollback+ret.
+ *   If (g_state_0054208c & 1): rollback, jmp out.
+ *   Else: g_x_0054204c = scaledInit; Thunk_0049cb80; pause? rollback.
+ *     restore walkCallback=arg1, g_data_00542070=0xffff; Thunk_0049cb70 again;
+ *     if !pause: loop back to step.
+ *   On rollback path: restore saved values.
+ */
+__declspec(naked) void TripleStageRollback_00404a50(void) {
+    __asm {
+        push    ecx
+        mov     eax, dword ptr [g_x_0054204c]
+        push    ebx
+        mov     ebx, dword ptr [g_scaledInit_00542044]
+        push    ebp
+        mov     ebp, dword ptr [g_walkCallback]
+        push    esi
+        mov     esi, dword ptr [esp + 0x14]
+        push    edi
+        mov     edi, 0xffff
+        mov     dword ptr [esp + 0x10], eax
+        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_data_00542070], edi
+        call    Thunk_0049cb70
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   59h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   3ah
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054204c], ecx
+        call    Thunk_0049cb80
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   36h
+        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_data_00542070], edi
+        call    Thunk_0049cb70
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   74h
+        _emit   0c3h
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+        mov     edx, dword ptr [esp + 0x10]
+        mov     dword ptr [g_scaledInit_00542044], ebx
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_walkCallback], ebp
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
+
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern void ScaledTestCallPauseJmpFar_00487150(void);
 extern void ScaledTestCallPauseJmp_00487180(void);
