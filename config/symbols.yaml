@@ -8066,10 +8066,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047a840
-    name: func_0047a840
+    name: InstallSelfFullPath_0047a840
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a8f0
     name: InstallSelfOrChainCmpJmp_0047a8f0
     size: 83
@@ -8973,10 +8974,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004867b0
-    name: func_004867b0
+    name: TripleStringCascade_004867b0
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486860
     name: func_00486860
     size: 1317
@@ -9646,10 +9648,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0048bc40
-    name: func_0048bc40
+    name: MStackPushTableSearchPop_0048bc40
     size: 174
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048bcf0
     name: DownloadPlayerChar
     size: 741

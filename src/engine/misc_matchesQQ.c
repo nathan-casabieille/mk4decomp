@@ -31481,3 +31481,186 @@ __declspec(naked) void MStackPushTableWalk_00493a20(void) {
         ret
     }
 }
+
+extern void CopyJmp_00406ba0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledChainJmp_00429470(void);
+
+/* @addr 0x0047a840 (174b game) - dual-entry install-self.
+ *   Block A: standard install-self (no-op if chain[+0x84]==0); else call CjInstallSelfRouter, pop+ret.
+ *     Then call CopyJmp_00406ba0; if !pause: push 0x00542b88, call GuardedPackedSlotInit_00428760;
+ *     if !pause: install-self at +0x08=0x0047a840 with scaledInit-chain push 0x0047a840+0x01000000,
+ *     baseSel[*4+0x84]=1 then clear; call ScaledChainJmp_00429470; g_pause=1; pop+ret.
+ */
+__declspec(naked) void InstallSelfFullPath_0047a840(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   75h
+        push    0x00542b88
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     dword ptr [esi + 0x08], 0x0047a840
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x0047a840
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledChainJmp_00429470
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
+
+extern void CopyJmp_0048ef90(void);
+extern void func_00481d40(void);
+
+/* @addr 0x004867b0 (174b game) - 3-block string-cascade. */
+__declspec(naked) void TripleStringCascade_004867b0(void) {
+    __asm {
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eedd0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        push    0x004eedf0
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eedf8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   31h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00481d40
+        push    0x004eee1c
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eee20
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
+
+/* @addr 0x0048bc40 (174b game) - mstack-push 2, table-search nonzero, mstack-pop 2. */
+__declspec(naked) void MStackPushTableSearchPop_0048bc40(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00535e48]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     edx, 0x004f02d0
+        lea     ecx, [eax*8 + 0]
+        shr     edx, 2
+        mov     dword ptr [g_data_00535e48], ecx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        lea     eax, [edx + ecx]
+        mov     eax, dword ptr [eax*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0bh
+        add     ecx, 8
+        mov     dword ptr [g_data_00535e48], ecx
+        _emit   0ebh
+        _emit   0e2h
+        _emit   7dh
+        _emit   0ah
+        xor     ecx, ecx
+        mov     dword ptr [g_data_00535e48], ecx
+        _emit   0ebh
+        _emit   0d6h
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     edx, ecx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00535e48], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
