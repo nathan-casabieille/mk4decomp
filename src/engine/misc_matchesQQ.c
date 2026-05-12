@@ -42567,3 +42567,75 @@ __declspec(naked) void MStackPushChainDispatchInit5_004925d0(void) {
         ret
     }
 }
+
+/* @addr 0x0047f2e0 (267b game) - 3-state install-self.
+ *   state >=2: tail-call FiveCallGuardSetTail.
+ *   state 1: call ScaledZeroFour; if pause? ret. Install-self with chain[+0x84]=2,
+ *     scaledInit-chain push 0x0047f2e0+0x02000000; call ScaledLoadJmp_00428d20; pause=1; ret.
+ *   state 0: g_state_00542080=0x15. Install-self with chain[+0x84]=1,
+ *     scaledInit-chain push 0x0047f2e0+0x01000000; call ScaledLoadJmp_00428d20; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfThreeStateScaledLoad_0047f2e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   74h
+        _emit   7dh
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], 0x0047f2e0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x0047f2e0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     dword ptr [g_state_00542080], 0x15
+        mov     dword ptr [esi + 8], 0x0047f2e0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x0047f2e0
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
