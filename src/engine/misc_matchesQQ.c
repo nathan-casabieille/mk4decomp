@@ -35378,3 +35378,149 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         ret
     }
 }
+
+extern void InstallSelfHelperGate_00486490(void);
+extern void func_0048ce60(void);
+
+/* @addr 0x00486290 (215b game) - chain dispatcher with 4-call cascade.
+ *   g_x_0054206c = 0x8000; if baseSel*4+0x7c <= 0: g_x_0054206c = 0x4ccc.
+ *   call CmpP1DualInitStore_00482ab0; if !pause: g_x_0054206c=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate_00486490.
+ *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_x_0054206c=1; call TableLookupCall_00489ff0; pause-check;
+ *   call func_0048ce60; pause-check; g_x_0054207c=0; call CopyJmp_0048ef90; pause-check;
+ *   if bit-0 set g_x_0054207c=1; g_x_00542080=6; jmp MStackInstallCountdown_00486370.
+ */
+__declspec(naked) void ChainDispatcher4Call_00486290(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], 0x00008000
+        mov     eax, dword ptr [eax*4 + 0x7c]
+        test    eax, eax
+        mov     dword ptr [g_x_00542070], eax
+        _emit   7eh
+        _emit   0ah
+        mov     dword ptr [g_x_0054206c], 0x00004ccc
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x00001003
+        mov     ecx, dword ptr [eax*4 + 0x60]
+        cmp     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfHelperGate_00486490
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [eax*4 + 0x74], edx
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   60h
+        mov     dword ptr [g_x_0054206c], 1
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   48h
+        call    func_0048ce60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3ah
+        mov     dword ptr [g_x_0054207c], 0
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   0ah
+        mov     dword ptr [g_x_0054207c], 1
+        mov     dword ptr [g_x_00542080], 6
+        jmp     MStackInstallCountdown_00486370
+        ret
+    }
+}
+
+extern void func_004069b0(void);
+extern void func_00406790(void);
+
+/* @addr 0x00476670 (214b game) - mstack-push 2 (g_scaledInit, g_x_0054206c), call func_004069b0;
+ *   pause-check; loop: set bit-2 of state, test scaledInit; if zero exit. Toggle bit-2; test again.
+ *   call func_00406790; pause-check; mstack-pop top w/o dec, rewrite, call func_004069b0; if !pause loop.
+ *   Final: mstack-pop 2 into g_x_0054206c and g_scaledInit. ret.
+ */
+__declspec(naked) void MStackPush2BitLoop_00476670(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     esi, 4
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      edx, esi
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   4ah
+        mov     ecx, edx
+        xor     ecx, esi
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   3ch
+        call    func_00406790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   59h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   74h
+        _emit   0a1h
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    }
+}

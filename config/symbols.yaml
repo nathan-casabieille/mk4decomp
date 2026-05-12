@@ -7835,10 +7835,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00476670
-    name: func_00476670
+    name: MStackPush2BitLoop_00476670
     size: 214
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476750
     name: PushSearchToggleBit_00476750
     size: 141
@@ -8968,10 +8969,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486290
-    name: func_00486290
+    name: ChainDispatcher4Call_00486290
     size: 215
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486370
     name: MStackInstallCountdown_00486370
     size: 146
