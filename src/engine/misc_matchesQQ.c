@@ -22932,3 +22932,143 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         ret
     }
 }
+
+extern unsigned int g_x_00541fc0;
+
+/* @addr 0x004a07a0 (196b audio) - mstack-push 2; sample bit-update by index.
+ *   Push g_x_00542078, g_x_00542048.
+ *   ecx = [0x541fc0]; eax = g_x_0054206c; g_x_00542048 = ecx;
+ *   [0x535e48] = eax (= g_x_0054206c snapshot); ecx += eax;
+ *   eax = chain[ecx]; g_x_00542048 = eax;
+ *   edx = chain[eax + 0x10]; g_x_00542048 = edx; esi = chain[edx];
+ *   g_x_00542078--; g_x_0054206c = esi;
+ *   if (g_x_00542078 > 0 before decrement, i.e., decremented value >= 0):
+ *     g_x_00542070 = (1 << g_x_00542078) | esi; chain[edx] = same.
+ *   mstack-pop into g_x_00542048, g_x_00542078.
+ */
+__declspec(naked) void BitSetByIndex_004a07a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542078]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     ecx, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542048], ecx
+        add     ecx, eax
+        mov     dword ptr [g_x_00535e48], eax
+        mov     eax, [ecx*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00542048], eax
+        mov     edx, [eax*4 + 0x10]
+        mov     eax, dword ptr [g_x_00542078]
+        mov     dword ptr [g_x_00542048], edx
+        dec     eax
+        mov     esi, [edx*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00542078], eax
+        mov     dword ptr [g_x_0054206c], esi
+        _emit   78h
+        _emit   1bh
+        mov     ecx, dword ptr [g_x_00542078]
+        mov     eax, 1
+        shl     eax, cl
+        or      eax, esi
+        mov     dword ptr [g_x_00542070], eax
+        mov     [edx*4 + g_data_004d57ac_arr], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        pop     esi
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542078], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+extern void CallPauseDirty4ScaledSet_00419780(void);
+extern void GuardedClampStoreJmp_00428bd0(void);
+extern void StateDispatchTable_00490fc0(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+extern unsigned int g_x_00542058;
+
+/* @addr 0x00428c20 (195b game) - install-self with accumulator overflow path.
+ *   esi = base*4; snapshot [esi+0x84]; clear.
+ *   if (snap == 0): main path.
+ *   else: g_x_00542088 += g_x_00542084; if (sum > 0x10000): call CallPauseDirty4ScaledSet; ret;
+ *     else: fall through to setup.
+ *   Main: call GuardedClampStoreJmp; pause? -> end.
+ *   call StateDispatchTable_00490fc0; pause? -> end.
+ *   g_x_00542054 = g_x_0054206c; g_x_0054206c = g_x_00542088; g_x_00542070 = 0;
+ *   call MStackPushZeroCallPop; pause? -> end.
+ *   if (g_x_00542058 != 0): call eax = g_x_00542058. pause? -> end.
+ *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_x_0054204c=1; pause=1.
+ */
+__declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   20h
+        mov     eax, dword ptr [g_x_00542088]
+        mov     edx, dword ptr [g_x_00542084]
+        add     eax, edx
+        cmp     eax, 0x00010000
+        mov     dword ptr [g_x_00542088], eax
+        _emit   7eh
+        _emit   34h
+        call    CallPauseDirty4ScaledSet_00419780
+        pop     esi
+        ret
+        call    GuardedClampStoreJmp_00428bd0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   71h
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [g_x_00542088]
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00542070], 0
+        call    MStackPushZeroCallPop_00407d00
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   35h
+        mov     eax, dword ptr [g_x_00542058]
+        test    eax, eax
+        mov     dword ptr [g_x_00541dc4], eax
+        _emit   74h
+        _emit   02h
+        call    eax
+        mov     eax, dword ptr [g_framePauseFlag]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00428c20
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_framePauseFlag], eax
+        pop     esi
+        ret
+    }
+}

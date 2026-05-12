@@ -2444,10 +2444,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00428c20
-    name: func_00428c20
+    name: InstallSelfAccumCheck_00428c20
     size: 195
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00428cf0
     name: SetJmp_00428cf0
     size: 15
@@ -11668,10 +11669,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a07a0
-    name: func_004a07a0
+    name: BitSetByIndex_004a07a0
     size: 196
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0870
     name: func_004a0870
     size: 328
