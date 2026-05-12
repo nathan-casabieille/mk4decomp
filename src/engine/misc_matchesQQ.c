@@ -37274,3 +37274,54 @@ __declspec(naked) void MStackPush3CallChain_0045db70(void) {
         ret
     }
 }
+
+extern void InstallSelfAccumOverflow_00428b20(void);
+
+/* @addr 0x004752b0 (228b game) - install-self with chain[+0x84] dispatch. */
+__declspec(naked) void InstallSelfChainAccumPath_004752b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     ecx, ecx
+        shl     eax, 2
+        mov     edx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], ecx
+        cmp     edx, ecx
+        _emit   74h
+        _emit   49h
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_cj_00542054]
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x28], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_cj_00542054], ecx
+        mov     edx, dword ptr [eax*4 + 0x68]
+        mov     dword ptr [g_cj_00542058], edx
+        jmp     StackPopDispatchTagged_0041f780
+        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_x_00542084], 0x000032f1
+        mov     dword ptr [g_state_00542088], 0x00003333
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [eax + 0x08], 0x004752b0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, 0x004752b0
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     edx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [edx*4 + 0], edi
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        inc     edx
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [eax + 4], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], ecx
+        call    InstallSelfAccumOverflow_00428b20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+    }
+}
