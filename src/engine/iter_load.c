@@ -23,43 +23,31 @@ extern void func_0048fd60(void);
 extern void func_00491080(void);
 
 /* @addr 0x0048e680 */
-__declspec(naked) void IterLoad_0048e680(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_scaledInit_00542048], ecx
-        mov     dword ptr [g_eventQueueTotal], eax
-        jmp     func_0049cbb0
-    }
+void IterLoad_0048e680(int arg) {
+    int p = arg >> 2;
+    g_eventQueueTotal = p;
+    g_scaledInit_00542048 = *(unsigned int *)(p * 4);
+    p++;
+    g_eventQueueTotal = p;
+    func_0049cbb0();
 }
 
 /* @addr 0x0048fd30 */
-__declspec(naked) void IterLoad_0048fd30(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_eventQueueTotal], eax
-        jmp     func_0048fd60
-    }
+void IterLoad_0048fd30(int arg) {
+    int p = arg >> 2;
+    g_eventQueueTotal = p;
+    g_scaledInit_00542044 = *(unsigned int *)(p * 4);
+    p++;
+    g_eventQueueTotal = p;
+    func_0048fd60();
 }
 
 /* @addr 0x00491050 */
-__declspec(naked) void IterLoad_00491050(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_scaledInit_00542048], ecx
-        mov     dword ptr [g_eventQueueTotal], eax
-        jmp     func_00491080
-    }
+void IterLoad_00491050(int arg) {
+    int p = arg >> 2;
+    g_eventQueueTotal = p;
+    g_scaledInit_00542048 = *(unsigned int *)(p * 4);
+    p++;
+    g_eventQueueTotal = p;
+    func_00491080();
 }
