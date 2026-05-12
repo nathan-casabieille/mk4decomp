@@ -25515,6 +25515,56 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
     }
 }
 
+extern void InstallSelfAccumOverflow_00428b20(void);
+
+/* @addr 0x0045bd80 (187b game) - install-self with mid-function push-edi save.
+ *   eax = base*4; edx=0; flag=[eax+0x84]; clear.
+ *   if (flag == 0): install-path (push edi here).
+ *   else: g_x_0054206c=1; chain[g_x_0054205c+0x28]=1; jmp StackPopDispatchTagged_0041f780.
+ *   install-path: g_x_00542080=0; g_x_00542058=0; g_x_00542084=0xa3d; g_x_00542088=0x4000.
+ *     install self: [eax+8]=0x45bd80, push edi for packed_ptr store,
+ *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow_00428b20; pause=1.
+ */
+__declspec(naked) void InstallSelfMidPush_0045bd80(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, [eax + 0x84]
+        mov     [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   20h
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 1
+        mov     dword ptr [ecx*4 + 0x28], 1
+        jmp     StackPopDispatchTagged_0041f780
+        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_x_00542084], 0x00000a3d
+        mov     dword ptr [g_x_00542088], 0x00004000
+        mov     dword ptr [eax + 8], 0x0045bd80
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, 0x0045bd80
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [ecx*4 + g_data_004d57ac_arr], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     [eax*4 + 0x84], edx
+        call    InstallSelfAccumOverflow_00428b20
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     edi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.

@@ -5865,10 +5865,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045bd80
-    name: func_0045bd80
+    name: InstallSelfMidPush_0045bd80
     size: 187
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045be40
     name: DispatcherComplex197_0045be40
     size: 197
