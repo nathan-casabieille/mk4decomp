@@ -14509,10 +14509,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004c3710
-    name: func_004c3710
+    name: ObjectSlotRelease_004c3710
     size: 206
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c37e0
     name: DSound_GetContext
     size: 6
