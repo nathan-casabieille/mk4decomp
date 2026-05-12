@@ -6842,10 +6842,11 @@ functions:
     status: matched
     file: src/engine/scaled_dec_branch.c
   - addr: 0x00466490
-    name: func_00466490
+    name: ThunkPlus4FieldCjCopy_00466490
     size: 285
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004665b0
     name: func_004665b0
     size: 447

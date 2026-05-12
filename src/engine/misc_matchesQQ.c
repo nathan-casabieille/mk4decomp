@@ -45198,3 +45198,83 @@ __declspec(naked) void TripleMod411262_00424740(void) {
         ret
     }
 }
+
+extern void func_00476180(void);
+extern void StoreFightFieldCallTailJmp_004667a0(void);
+extern void func_004665b0(void);
+
+/* @addr 0x00466490 (285b game) - dual block: thunk + 4-field copy + cj setup.
+ *   B1 (0..0xf, +2 NOPs): push 0x004eaa08; tail-call ArgSarStoreJmp.
+ *   B2 (0x10..0x11c): call func_00476180; if pause? ret.
+ *     If bit2 of g_state_0054208c set: tail-jmp StoreFightFieldCallTailJmp_004667a0.
+ *     Else: copy cj[+0x58/+0x3c/+0x64] to scaledInit fields with intermediate via
+ *     g_x_00542058 (for +0x38). cj[+0x30]=0x7e. Call MStackCall_00406340; if pause? ret.
+ *     baseSel[+0x30]=2, baseSel[+0x34]=g_scaledInit, baseSel[+0x38]=g_x_00542058,
+ *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp func_004665b0; ret.
+ */
+__declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
+    __asm {
+        push    0x004eaa08
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        call    func_00476180
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0fah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     StoreFightFieldCallTailJmp_004667a0
+        mov     eax, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_x_00542058], ecx
+        mov     eax, dword ptr [edx*4 + 0x58]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x3c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x64]
+        mov     dword ptr [ecx*4 + 0x64], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x7e
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x30], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5dh
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542054], eax
+        mov     eax, 2
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_x_00542054]
+        mov     dword ptr [edx*4 + 0x34], eax
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_00542058]
+        mov     dword ptr [ecx*4 + 0x38], edx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        jmp     func_004665b0
+        ret
+    }
+}
