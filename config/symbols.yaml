@@ -6105,10 +6105,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0045e100
-    name: func_0045e100
+    name: MStackPush3IndirectCall_0045e100
     size: 201
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045e1d0
     name: IncJmp_0045e1d0
     size: 11
@@ -8360,10 +8361,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047ee70
-    name: func_0047ee70
+    name: InstallSelfCountdownLong_0047ee70
     size: 199
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047ef40
     name: DirtyGuardLitOrJmp_0047ef40
     size: 28
@@ -11316,10 +11318,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049bb90
-    name: func_0049bb90
+    name: QuadBlockSoundInit_0049bb90
     size: 195
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049bc60
     name: func_0049bc60
     size: 430

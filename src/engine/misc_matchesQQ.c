@@ -33206,3 +33206,226 @@ __declspec(naked) void JumpTableDispatch_0043a550(void) {
         jmp     func_0048d7b0
     }
 }
+
+extern void CopyThreeFields_00404df0(void);
+extern void ScaledThreeChanPack_00404d50(void);
+
+/* @addr 0x0049bb90 (195b game) - 4-block sound init.
+ *   A: call MStackCall_00406740; if !pause jmp CallSetPause; ret.
+ *   B (+0x20): push 0x41f04; call ThreeChanPackClamp; push g_x_0054205c; call CopyThreeFields;
+ *     call CondPickDualStore; if !pause and g_x_00542070>g_x_00542074: jmp ScaledIndirectJmp_0049c850.
+ *   C (+0x60): push 0x808; call ScaledThreeChanPack_00404d50; push g_x_0054205c; call CopyThreeFields;
+ *     call CondPickDualStore; same comparison + jmp.
+ *   D (+0xa0): call CondPickDualStore; pause-check; same comparison + jmp ScaledIndirectJmp.
+ */
+__declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
+    __asm {
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    0x00041f04
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_x_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        call    func_0049bc60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_x_00542074]
+        cmp     ecx, eax
+        _emit   7eh
+        _emit   05h
+        jmp     ScaledIndirectJmp_0049c850
+        ret
+        _emit   90h
+        _emit   90h
+        push    0x00000808
+        call    ScaledThreeChanPack_00404d50
+        mov     eax, dword ptr [g_x_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        call    func_0049bc60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_x_00542074]
+        cmp     ecx, eax
+        _emit   7eh
+        _emit   05h
+        jmp     ScaledIndirectJmp_0049c850
+        ret
+        _emit   90h
+        _emit   90h
+        call    func_0049bc60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        mov     eax, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_x_00542074]
+        cmp     eax, ecx
+        _emit   7eh
+        _emit   05h
+        jmp     ScaledIndirectJmp_0049c850
+        ret
+    }
+}
+
+extern void func_0047eff0(void);
+extern void DirtyGuardLitOrJmp_0047ef40(void);
+
+/* @addr 0x0047ee70 (199b game) - dual-entry install-self with countdown.
+ *   A: mstack-push 0x0047ee90; jmp func_0047eff0.
+ *   B (+0x20): standard install-self.  chain[+0x84]!=0 path: load [g_x_0054205c*4+0x4c];
+ *     if nonzero: g_x_00542080 = ax (after decrement?), jmp 0x80; else push 0x004ed6b8, call ArgSarStoreJmp, pop+ret.
+ *     +0x6c countdown: dec g_x_00542080; if zero proceed; else self-call jmp.
+ *     g_x_0054206c=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
+ *     else install-self at +0x08=0x0047ee90.
+ */
+__declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x0047ee90
+        jmp     func_0047eff0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   2ah
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x4c]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   28h
+        push    0x004ed6b8
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   74h
+        _emit   07h
+        call    InstallSelfCountdownLong_0047ee70
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x0c
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     eax, 1
+        _emit   84h
+        _emit   0c8h
+        _emit   74h
+        _emit   07h
+        call    DirtyGuardLitOrJmp_0047ef40
+        pop     esi
+        ret
+        mov     dword ptr [esi + 0x08], 0x0047ee90
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
+
+extern void IncJmp_0045e1d0(void);
+
+/* @addr 0x0045e100 (201b game) - mstack-push 3 values, indirect call from table at 0x004e9ea8>>2,
+ *   pause-check, mstack-pop 3 in reverse, bit-0 test, jmp IncJmp_0045e1d0 or ret.
+ */
+__declspec(naked) void MStackPush3IndirectCall_0045e100(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, 0x004e9ea8
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   54h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        test    al, 1
+        mov     dword ptr [g_scaledInit_00542044], edx
+        _emit   75h
+        _emit   0dh
+        mov     eax, edx
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        jmp     IncJmp_0045e1d0
+        ret
+    }
+}
