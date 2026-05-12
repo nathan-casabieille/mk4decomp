@@ -12455,10 +12455,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004ab380
-    name: func_004ab380
+    name: LinkedListBuilder_004ab380
     size: 191
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab440
     name: LinkedListInsert_004ab440
     size: 199

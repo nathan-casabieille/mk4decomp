@@ -23948,6 +23948,77 @@ __declspec(naked) void TagDispatchPairedPacked_004667f0(void) {
     }
 }
 
+extern unsigned int g_x_0053a1ac;
+
+/* @addr 0x004ab380 (191b audio) - linked-list builder for ESI=g_x_00542050 array.
+ *   ebx = g_x_00542048; esi = g_x_00542050; edi = g_x_0054204c.
+ *   [esi+0] = 0; [esi+4] = ebx; [esi+8] = g_x_00542054.
+ *   if (g_x_00542054 == 0): return.
+ *   [esi+0] = g_scaledInit; eax = ebx + g_scaledInit + 1; [eax*4] = esi.
+ *   [0x53a1ac] = [esi+8]; if (<= 1) skip loop;
+ *   [0x53a1ac] -= 2; eax = g_scaledInit + edi;
+ *   loop: push ebp; ecx = g_scaledInit*4; [ecx + ebx*4 + 4] = esi; [ecx + ebx*4] = eax;
+ *     ebp = [0x53a1ac]; edx = eax; ecx = eax*4; eax += edi; ebp--;
+ *     [0x53a1ac] = ebp; if (ebp >= 0) loop;
+ *   pop ebp.
+ *   [ebx + edx] *= 0; [(ebx + edx + 1)*4] = esi.
+ *   pop edi/esi/ebx.
+ */
+__declspec(naked) void LinkedListBuilder_004ab380(void) {
+    __asm {
+        push    ebx
+        mov     ebx, dword ptr [g_x_00542048]
+        push    esi
+        mov     esi, dword ptr [g_x_00542050]
+        push    edi
+        mov     edi, dword ptr [g_x_0054204c]
+        mov     dword ptr [esi*4 + g_data_004d57ac_arr], 0
+        mov     eax, dword ptr [g_x_00542048]
+        mov     [esi*4 + 4], eax
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     [esi*4 + 8], ecx
+        mov     eax, dword ptr [g_x_00542054]
+        test    eax, eax
+        _emit   74h
+        _emit   79h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     [esi*4 + g_data_004d57ac_arr], edx
+        lea     eax, [ebx + edx + 1]
+        mov     [eax*4 + g_data_004d57ac_arr], esi
+        mov     eax, [esi*4 + 8]
+        cmp     eax, 1
+        mov     dword ptr [g_x_0053a1ac], eax
+        _emit   7eh
+        _emit   37h
+        sub     eax, 2
+        mov     dword ptr [g_x_0053a1ac], eax
+        lea     eax, [edx + edi]
+        _emit   78h
+        _emit   2ah
+        push    ebp
+        lea     ecx, [edx*4 + g_data_004d57ac_arr]
+        mov     [ecx + ebx*4 + 4], esi
+        mov     [ecx + ebx*4], eax
+        mov     ebp, dword ptr [g_x_0053a1ac]
+        mov     edx, eax
+        lea     ecx, [eax*4 + g_data_004d57ac_arr]
+        add     eax, edi
+        dec     ebp
+        mov     dword ptr [g_x_0053a1ac], ebp
+        _emit   79h
+        _emit   0dfh
+        pop     ebp
+        lea     ecx, [ebx + edx]
+        lea     edx, [ebx + edx + 1]
+        mov     dword ptr [ecx*4 + g_data_004d57ac_arr], 0
+        mov     [edx*4 + g_data_004d57ac_arr], esi
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
