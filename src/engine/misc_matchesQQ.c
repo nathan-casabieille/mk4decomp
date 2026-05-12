@@ -32570,3 +32570,219 @@ __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
         ret
     }
 }
+
+extern void func_00413760(void);
+extern void func_0049bc60(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void func_0040fe40(void);
+extern void func_00498eb0(void);
+
+/* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
+__declspec(naked) void TripleEntry3Block_00498df0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        push    ecx
+        push    0x00003333
+        lea     esi, [eax*4 + 0]
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [g_x_00542084], eax
+        push    edx
+        push    0x00003333
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_state_00542088], eax
+        mov     eax, dword ptr [g_x_00542084]
+        mov     dword ptr [esi + 0x6c], eax
+        mov     ecx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [esi + 0x74], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054205c], edx
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_data_0053a498]
+        test    al, 1
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0eh
+        call    func_00413760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        call    func_0049bc60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   14h
+        mov     eax, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_x_00542074]
+        cmp     eax, ecx
+        _emit   7eh
+        _emit   05h
+        jmp     ScaledIndirectJmp_0049c850
+        ret
+        _emit   90h
+        call    func_0040fe40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00498eb0
+        ret
+    }
+}
+
+extern unsigned int g_data_005380b4;
+extern unsigned int g_data_005380b8;
+extern unsigned int g_data_005380a4;
+extern unsigned int g_data_00541d6c;
+
+/* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
+__declspec(naked) void SequencedInit3CallB_00458ae0(void) {
+    __asm {
+        push    esi
+        call    func_004265d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        xor     esi, esi
+        cmp     eax, esi
+        _emit   0fh
+        _emit   85h
+        _emit   9eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, 0x0050b130
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    LoadGeoAsset_Default
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   0fh
+        _emit   85h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], esi
+        call    CopyGlobal_004ac1f0
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   6dh
+        mov     eax, dword ptr [g_load_0052ab10]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        shl     eax, 2
+        mov     dword ptr [eax + 0x60], esi
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x64], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x68], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x54], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x58], edx
+        mov     dword ptr [eax + 0x5c], 0xfff10000
+        mov     eax, 0x00000027
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_data_005380b0], eax
+        mov     dword ptr [g_data_005380b4], eax
+        mov     dword ptr [g_data_005380b8], eax
+        mov     dword ptr [g_data_005380a4], esi
+        mov     dword ptr [g_data_00541d6c], esi
+        mov     dword ptr [g_state_0053a278], esi
+        pop     esi
+        ret
+    }
+}
+
+extern void ScaledCmp200eCallBool_004398f0(void);
+extern void AddDerefJmp_00433e70(void);
+extern void InstallSelfChainSetB333v2_00437f00(void);
+extern void InstallSelfChainSet13333Alt_004377d0(void);
+extern void func_00433f50(void);
+
+/* @addr 0x00433e90 (181b game) - 5-block dispatcher.
+ *   A: call ScaledCmp200eCallBool; if nonzero: g_x_0054206c=0x004e4d40; g_x_00542070 = (eax & 0xff) >> 2;
+ *     g_x_00542048 = same; jmp AddDerefJmp_00433e70; else ret.
+ *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_x_0054206c=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
+ *     else g_state_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
+ *   C (+0x80): threshold-dispatch g_state_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
+ *   D (+0xb0): jmp func_00433f50.
+ */
+__declspec(naked) void FiveBlockDispatch_00433e90(void) {
+    __asm {
+        call    ScaledCmp200eCallBool_004398f0
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, 0x004e4d40
+        and     eax, 0xff
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_x_00542048], ecx
+        jmp     AddDerefJmp_00433e70
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00030000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     InstallSelfChainSet13333Alt_004377d0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00020000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     GuardedSeq_00433bb0
+        cmp     eax, 0x00010000
+        _emit   7dh
+        _emit   05h
+        jmp     CallPauseTestByteJmpCalls_004390f0
+        jmp     InstallSelfChainSetB333v2_00437f00
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     func_00433f50
+    }
+}

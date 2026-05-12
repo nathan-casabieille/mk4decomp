@@ -3432,10 +3432,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesF.c
   - addr: 0x00433e90
-    name: func_00433e90
+    name: FiveBlockDispatch_00433e90
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00433f50
     name: func_00433f50
     size: 1015
@@ -5805,10 +5806,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00458ae0
-    name: func_00458ae0
+    name: SequencedInit3CallB_00458ae0
     size: 181
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458ba0
     name: DoublePackedPtrInstall_00458ba0
     size: 198
@@ -11186,10 +11188,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00498df0
-    name: func_00498df0
+    name: TripleEntry3Block_00498df0
     size: 180
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00498eb0
     name: func_00498eb0
     size: 3524
