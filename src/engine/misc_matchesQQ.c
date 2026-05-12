@@ -37394,3 +37394,75 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         ret
     }
 }
+
+extern void InstallSelfNegOrSet_0047aa40(void);
+
+/* @addr 0x0047a950 (231b game) - install-self with countdown.
+ *   chain[+0x84]==0: install-self path with chain[*4+0x74]=0x100e, ScaledZeroFour/MStackPushSet0008/CopyJmp;
+ *   install-self at +0x08=0x0047a950 with scaledInit-chain push 0x0047a950|0x01000000;
+ *   call InstallSelfNegOrSet_0047aa40, g_pause=1. pop+ret.
+ *   chain[+0x84]!=0: countdown g_x_00542080; if zero call InstallSelfFullPath_0047a840, pop+ret;
+ *   else jnz to install path with g_x_00542080=8.
+ */
+__declspec(naked) void InstallSelfCountdownChain_0047a950(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   14h
+        mov     eax, dword ptr [g_x_00542080]
+        dec     eax
+        mov     dword ptr [g_x_00542080], eax
+        _emit   75h
+        _emit   56h
+        call    InstallSelfFullPath_0047a840
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x0000100e
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   78h
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ah
+        mov     dword ptr [g_x_00542080], 8
+        mov     dword ptr [esi + 0x08], 0x0047a950
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x0047a950
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfNegOrSet_0047aa40
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

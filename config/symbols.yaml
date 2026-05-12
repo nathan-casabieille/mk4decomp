@@ -8132,10 +8132,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a950
-    name: func_0047a950
+    name: InstallSelfCountdownChain_0047a950
     size: 231
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047aa40
     name: InstallSelfNegOrSet_0047aa40
     size: 167
