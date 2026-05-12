@@ -42639,3 +42639,101 @@ __declspec(naked) void InstallSelfThreeStateScaledLoad_0047f2e0(void) {
         ret
     }
 }
+
+extern void Thunk_0049cb80(void);
+extern void SetJmp_0049cb90(void);
+extern void AndStoreJmp_0049cc10(void);
+
+/* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
+__declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542074], edx
+        call    SetJmp_0049cb90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ebx, 4
+        or      esi, 0xffffffff
+        test    byte ptr [g_state_0054208c], bl
+        _emit   0fh
+        _emit   85h
+        _emit   0a4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        cmp     ecx, dword ptr [eax*4 + 0x2c]
+        _emit   74h
+        _emit   5ch
+        mov     edx, dword ptr [g_state_0054208c]
+        or      edx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   7eh
+        mov     ecx, edx
+        xor     ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   70h
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [g_x_00542070], esi
+        mov     dword ptr [g_x_0054206c], edx
+        call    AndStoreJmp_0049cc10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   68h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   48h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        cmp     ecx, dword ptr [eax*4 + 0x2c]
+        _emit   75h
+        _emit   0a4h
+        mov     dword ptr [g_x_0054204c], eax
+        call    Thunk_0049cb80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   39h
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [g_x_0054206c], edx
+        call    SetJmp_0049cb90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   53h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

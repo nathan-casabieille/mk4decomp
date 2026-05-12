@@ -11611,10 +11611,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0049cc30
-    name: func_0049cc30
+    name: MStackBitLoopTripleCall_0049cc30
     size: 267
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049cd40
     name: ScaledChainAccumLoop_0049cd40
     size: 178
