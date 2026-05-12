@@ -12,81 +12,48 @@
 
 /*
  * @addr 0x004b2750
- *
- * Naked + __asm: lots of specific scheduling - the compiler
- * interleaves the (delta - 16667) / 1000 magic-divide with a
- * g_inLoopStep = 0 store, threads `delta` through edi across
- * three QueryMicroTimer rounds, and produces a signed-divide
- * idiom (imul 0x10624dd3 / sar 6 / round-up) that's painful to
- * match from C with the right operand order.
  */
-__declspec(naked) void MainLoopStep(void)
+void MainLoopStep(void)
 {
-    __asm {
-        mov     al, byte ptr [g_appFlags]
-        push    esi
-        test    al, 1
-        push    edi
-        jne     skip_baseline
-        or      al, 1
-        mov     byte ptr [g_appFlags], al
-        call    QueryMicroTimer
-        mov     dword ptr [g_lastFrameTime], eax
-skip_baseline:
-        push    1
-        call    BeginFrame
-        add     esp, 4
-        call    GameLogicStep
-        call    DrawScene
-        call    PresentFrame
-        mov     dword ptr [g_loopCounter],  0
-        mov     dword ptr [g_sleepBudgetMs], 0
-        mov     dword ptr [g_inLoopStep],   1
-        xor     esi, esi
-catchup_loop:
-        call    QueryMicroTimer
-        mov     ecx, dword ptr [g_lastFrameTime]
-        mov     edi, eax
-        sub     edi, ecx
-        cmp     edi, 0x4e20             ; 20 ms in us
-        jl      compute_sleep
-        call    GameLogicStep
-        mov     eax, dword ptr [g_lastFrameTime]
-        mov     ecx, dword ptr [g_loopCounter]
-        add     eax, 0x411b             ; 16667 us per frame
-        inc     esi
-        inc     ecx
-        cmp     esi, 3
-        mov     dword ptr [g_lastFrameTime], eax
-        mov     dword ptr [g_loopCounter],  ecx
-        jl      catchup_loop
-compute_sleep:
-        lea     ecx, [edi + 0xffffbee5] ; edi - 16667
-        mov     eax, 0x10624dd3         ; 1/1000 magic
-        imul    ecx
-        sar     edx, 6
-        mov     eax, edx
-        mov     dword ptr [g_inLoopStep], 0
-        shr     eax, 31
-        add     edx, eax
-        or      eax, 0xffffffff
-        sub     eax, edx
-        cmp     eax, 1
-        jle     no_sleep
-        cmp     eax, 16
-        jle     clamp_ok
-        mov     eax, 16
-clamp_ok:
-        mov     edx, dword ptr [g_sleepBudgetMs]
-        push    eax
-        add     edx, eax
-        mov     dword ptr [g_sleepBudgetMs], edx
-        call    dword ptr [Sleep]
-no_sleep:
-        call    QueryMicroTimer
-        pop     edi
-        mov     dword ptr [g_lastFrameTime], eax
-        pop     esi
-        ret
+    int delta;
+    int counter;
+    int sleep_ms;
+
+    if (!(g_appFlags & 1)) {
+        g_appFlags |= 1;
+        g_lastFrameTime = QueryMicroTimer();
     }
+    BeginFrame(1);
+    GameLogicStep();
+    DrawScene();
+    PresentFrame();
+
+    g_loopCounter   = 0;
+    g_sleepBudgetMs = 0;
+    g_inLoopStep    = 1;
+
+    counter = 0;
+    while (1) {
+        delta = (int)QueryMicroTimer() - (int)g_lastFrameTime;
+        if (delta < 0x4e20) {
+            break;
+        }
+        GameLogicStep();
+        g_lastFrameTime += 0x411b;
+        ++counter;
+        ++g_loopCounter;
+        if (counter >= 3) {
+            break;
+        }
+    }
+
+    sleep_ms = -1 - (delta - 16667) / 1000;
+    g_inLoopStep = 0;
+
+    if (sleep_ms > 1) {
+        if (sleep_ms > 16) sleep_ms = 16;
+        g_sleepBudgetMs += sleep_ms;
+        Sleep(sleep_ms);
+    }
+    g_lastFrameTime = QueryMicroTimer();
 }
