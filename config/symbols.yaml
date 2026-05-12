@@ -15514,10 +15514,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc960
-    name: func_004cc960
+    name: BitsetReserve_004cc960
     size: 157
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cca00
     name: Copy3Dwords_004cca00
     size: 29

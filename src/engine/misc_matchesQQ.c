@@ -27646,6 +27646,95 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
     }
 }
 
+extern void BitsetTrailZeroCheck_004cc880(void);
+extern void BitsetIterClear_004cc8f0(void);
+
+/* @addr 0x004cc960 (157b crt) - bitset region allocator/reservation.
+ *   arg1 (start), ebx (bitset), arg3 (length).
+ *   ebp = arg1; esi = (ebp + ebp%32) / 32 (dword index);
+ *   bit_idx = 31 - (|ebp| & 31); mask = 1 << bit_idx.
+ *   if (bitset[esi] & mask): inc ebp; call BitsetTrailZeroCheck; if (!=0) skip;
+ *     else: call BitsetIterClear with arg3.
+ *   else: edx = 0.
+ *   Clear bit, zero remaining dwords (3 - esi entries with rep stosd).
+ *   Return edx.
+ */
+__declspec(naked) void BitsetReserve_004cc960(void) {
+    __asm {
+        push    ecx
+        mov     eax, [esp + 0x0c]
+        push    ebx
+        push    ebp
+        push    esi
+        lea     ebp, [eax - 1]
+        mov     ebx, [esp + 0x14]
+        mov     [esp + 0x18], ebp
+        inc     ebp
+        mov     eax, ebp
+        push    edi
+        cdq
+        and     edx, 0x1f
+        mov     edi, 0x1f
+        add     eax, edx
+        mov     dword ptr [esp + 0x10], 0
+        mov     esi, eax
+        mov     eax, ebp
+        cdq
+        xor     eax, edx
+        sub     eax, edx
+        and     eax, 0x1f
+        xor     eax, edx
+        sub     eax, edx
+        mov     edx, 1
+        sub     edi, eax
+        mov     ecx, edi
+        sar     esi, 5
+        shl     edx, cl
+        test    [ebx + esi*4], edx
+        _emit   74h
+        _emit   21h
+        inc     ebp
+        push    ebp
+        push    ebx
+        call    BitsetTrailZeroCheck_004cc880
+        add     esp, 8
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     eax, [esp + 0x1c]
+        push    eax
+        push    ebx
+        call    BitsetIterClear_004cc8f0
+        add     esp, 8
+        mov     edx, eax
+        _emit   0ebh
+        _emit   04h
+        mov     edx, [esp + 0x10]
+        or      eax, 0xffffffff
+        mov     ecx, edi
+        shl     eax, cl
+        mov     ecx, [ebx + esi*4]
+        and     ecx, eax
+        mov     [ebx + esi*4], ecx
+        inc     esi
+        cmp     esi, 3
+        _emit   7dh
+        _emit   0eh
+        mov     ecx, 3
+        lea     edi, [ebx + esi*4]
+        sub     ecx, esi
+        xor     eax, eax
+        rep stosd
+        pop     edi
+        pop     esi
+        pop     ebp
+        mov     eax, edx
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
