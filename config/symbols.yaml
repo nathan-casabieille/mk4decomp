@@ -3805,10 +3805,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00436a10
-    name: func_00436a10
+    name: InstallSelfPlusTailThunk_00436a10
     size: 284
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436b30
     name: func_00436b30
     size: 792

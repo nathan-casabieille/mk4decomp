@@ -44852,3 +44852,112 @@ __declspec(naked) void MStackPush2CjMul10Triple_00474170(void) {
         ret
     }
 }
+
+extern void func_0043a950(void);
+extern void InstallSelfChainSetB333v3_00437fb0(void);
+
+/* @addr 0x00436a10 (284b game) - sibling of 0x00436910 + 8-NOP-aligned tail thunk.
+ *   B1 (0..0xf7): install-self with mstack-push dispatch (matches 0x00436910 pattern),
+ *     installs at [esi+8]=0x00436a10.
+ *   B2 (0xf8..0x11b, +8 NOPs): push 0x004e4a18; call func_0043a950; if !pause:
+ *     tail-jmp InstallSelfChainSetB333v3_00437fb0.
+ */
+__declspec(naked) void InstallSelfPlusTailThunk_00436a10(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   2ch
+        call    IncStoreCallIATDec_00439520
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542058], ecx
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542054], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        lea     ecx, [ecx*4 + 4]
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_x_00542054], eax
+        mov     edx, dword ptr [ecx]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [edx*4 + 0], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [ecx], eax
+        call    IncStoreCallIATDec_00439520
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3dh
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   08h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+        call    PushPop84TripleCall_00438b90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [esi + 8], 0x00436a10
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        push    0x004e4a18
+        call    func_0043a950
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfChainSetB333v3_00437fb0
+        ret
+    }
+}
