@@ -26789,6 +26789,67 @@ __declspec(naked) void FSeekImpl_004c5ad0(void) {
     }
 }
 
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void func_004be250(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void func_004a2140(void);
+extern unsigned int g_x_00541d90;
+
+/* @addr 0x00404920 (160b boot) - install-self with counter mod 0x10 + arg=cnt+3 dispatch + 3-call cleanup.
+ *   esi = base*4; flag = [esi+0x84]; clear.
+ *   if (flag != 0): call StackPopDispatchTagged; pop esi; ret.
+ *   [0x541d90]++; if (>= 0x10): reset to 0; g_x_0054206c = same.
+ *   call SixCallSeqPushImm. push 1, (g_x_0054206c+3); call func_004be250; add esp, 8.
+ *   if (eax == 0xa): install self: [esi+8]=0x404920, [esi+0x84]=1, g_x_0054204c=1, pause=1.
+ *   else: call ScenegraphWalk; call func_004265d0; call func_004a2140; ret.
+ */
+__declspec(naked) void InstallSelfCounter_00404920(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        xor     ecx, ecx
+        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + 0x84]
+        mov     [esi + 0x84], ecx
+        cmp     eax, ecx
+        _emit   74h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_x_00541d90]
+        lea     eax, [edx + 1]
+        cmp     eax, 0x10
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00541d90], eax
+        _emit   7ch
+        _emit   0ch
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_00541d90], ecx
+        call    SixCallSeqPushImm_004a1d80
+        mov     eax, dword ptr [g_x_0054206c]
+        push    1
+        add     eax, 3
+        push    eax
+        call    func_004be250
+        add     esp, 8
+        cmp     eax, 0x0a
+        _emit   75h
+        _emit   11h
+        call    ScenegraphWalk_0041f7d0
+        call    func_004265d0
+        call    func_004a2140
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], 0x00404920
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_x_0054204c], 1
+        mov     dword ptr [g_framePauseFlag], 1
+        pop     esi
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
