@@ -8384,10 +8384,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047e310
-    name: func_0047e310
+    name: InstallSelfThresholdDispatch_0047e310
     size: 268
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e420
     name: func_0047e420
     size: 466

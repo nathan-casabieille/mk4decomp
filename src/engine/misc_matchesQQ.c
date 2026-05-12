@@ -42816,3 +42816,105 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         ret
     }
 }
+
+extern void func_0047e690(void);
+extern void CopyJmp_00406ba0(void);
+extern void ScaledArrStore_00429450(void);
+
+/* @addr 0x0047e310 (268b game) - 3-state install-self with threshold dispatch.
+ *   sub eax, 0; je state-0 path.
+ *   state >= 2: tail-call FiveCallGuardSetTail.
+ *   state 1: load cj[+0x70] (must >= 0 else jmp state-0 install path); call func_0047e690;
+ *     if pause? final-ret. If g_x_0054206c > 0x18ccc, jmp install path.
+ *     Else: call CopyJmp_00406ba0; if pause? final-ret.
+ *     g_x_00542048 = 0x0050014c >> 2; install-self at [esi+8]=0x0047e310;
+ *     chain[+0x84]=2; scaledInit-chain push 0x0047e310+0x02000000;
+ *     call ScaledArrStore_00429450; pause=1; ret.
+ *   state 0 path (or threshold/sign fall-through): install-self at [esi+8]=0x0047e310;
+ *     chain[+0x84]=1; g_x_0054204c=1; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        _emit   0fh
+        _emit   84h
+        _emit   0c7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   8ch
+        _emit   0a3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_0047e690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     dword ptr [g_x_0054206c], 0x00018ccc
+        _emit   0fh
+        _emit   8fh
+        _emit   81h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, 0x0050014c
+        mov     ecx, 0x0047e310
+        shr     edx, 2
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [esi + 8], 0x0047e310
+        mov     eax, dword ptr [g_baseSel_00542060]
+        add     ecx, 0x02000000
+        mov     dword ptr [eax*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledArrStore_00429450
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0047e310
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
