@@ -26025,6 +26025,58 @@ __declspec(naked) void ChainGatedNegAccum_0048b740(void) {
     }
 }
 
+/* @addr 0x00490b70 (191b game) - chain[+0x58] accumulate, then 2 Mul10 calls + chain[+0x54,+0x5c] accumulate.
+ *   chain[g_x_0054205c + 0x58] += g_x_0054206c; g_x_00542074 = result.
+ *   g_scaledInit = chain[g_baseSel + 0x40]; push packed_ptr[g_scaledInit], g_x_00542070;
+ *   call Mul10Tail; g_x_0054206c = result; add esp,8.
+ *   g_scaledInit = chain[g_baseSel + 0x44]; eax = packed_ptr[g_scaledInit];
+ *   g_x_00542074 = eax; push eax, g_x_00542070; call Mul10Tail; add esp,8.
+ *   g_x_00542074 = result; chain[g_x_0054205c + 0x54] += g_x_0054206c; g_x_00542070 = sum.
+ *   chain[g_x_0054205c + 0x5c] += g_x_00542074; g_x_00542070 = sum.
+ */
+__declspec(naked) void ChainAccumMul10Pair_00490b70(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_0054206c]
+        add     eax, [ecx*4 + 0x58]
+        mov     dword ptr [g_x_00542074], eax
+        mov     [ecx*4 + 0x58], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, [eax*4 + 0x40]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        push    eax
+        push    ecx
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     eax, [edx*4 + 0x44]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        mov     dword ptr [g_x_00542074], eax
+        push    eax
+        mov     eax, dword ptr [g_x_00542070]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        add     esp, 8
+        add     eax, [ecx*4 + 0x54]
+        mov     dword ptr [g_x_00542070], eax
+        mov     [ecx*4 + 0x54], eax
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_00542074]
+        add     eax, [ecx*4 + 0x5c]
+        mov     dword ptr [g_x_00542070], eax
+        mov     [ecx*4 + 0x5c], eax
+        ret
+    }
+}
+
 extern unsigned int g_x_00543800;
 
 /* @addr 0x0049d200 (196b game) - linked-list iteration over chain entries with field add.
