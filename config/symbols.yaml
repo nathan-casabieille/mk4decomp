@@ -3817,10 +3817,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004376f0
-    name: func_004376f0
+    name: InstallSelfChain4Call_004376f0
     size: 207
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004377c0
     name: Wrapper_004377c0
     size: 14
@@ -10757,10 +10758,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00492140
-    name: func_00492140
+    name: DualSectionInit_00492140
     size: 207
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00492210
     name: GuardedSetupTailMStackJmp_00492210
     size: 99

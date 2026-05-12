@@ -34302,3 +34302,149 @@ __declspec(naked) void MStackPush2ChainSwap_0048f090(void) {
         ret
     }
 }
+
+extern void func_004335f0(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void DualBlockPauseAbsDirty_00439560(void);
+extern void Wrapper_004377c0(void);
+extern void MStackPushSet4Jmp_004384f0(void);
+
+/* @addr 0x004376f0 (207b game) - install-self with 4-call cascade and scaledInit-chain push. */
+__declspec(naked) void InstallSelfChain4Call_004376f0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    func_004335f0
+        pop     esi
+        ret
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   92h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DualBlockPauseAbsDirty_00439560
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     dword ptr [g_x_0054206c], 0x00140000
+        _emit   7dh
+        _emit   07h
+        call    Wrapper_004377c0
+        pop     esi
+        ret
+        call    DualScaledInitClear_00433c10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     dword ptr [esi + 0x08], 0x004376f0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, 0x004376f0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    MStackPushSet4Jmp_004384f0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
+
+extern void DispatcherComplex260_00407400(void);
+extern void PushSetCallPop_00406530(void);
+extern void RegistryPushBindPop_00403c20(void);
+
+/* @addr 0x00492140 (207b game) - dual-section init.
+ *   Section A: g_x_00542048=0x0050f3d0>>2; call DispatcherComplex260; pause-check;
+ *     bit-2 check; scaledInit[+0x54]=0xff9c0000; chain[+0x30]=scaledInit (= g_x_0054206c);
+ *     call PushSetCallPop_00406530; pause-check; call RegistryPushBindPop; pause-check.
+ *   Section B (+0x70): g_x_00542048=0x0050f3ec>>2; same pattern with chain[+0x54]=0x00630000.
+ *   ret with pop esi.
+ */
+__declspec(naked) void DualSectionInit_00492140(void) {
+    __asm {
+        mov     eax, 0x0050f3d0
+        push    esi
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0a0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     esi, 0x0000001f
+        mov     dword ptr [ecx*4 + 0x54], 0xff9c0000
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [edx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   69h
+        call    RegistryPushBindPop_00403c20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   5bh
+        mov     eax, 0x0050f3ec
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   40h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   37h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x54], 0x00630000
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [edx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        call    RegistryPushBindPop_00403c20
+        pop     esi
+        ret
+    }
+}
