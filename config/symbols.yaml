@@ -6626,10 +6626,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00461a60
-    name: func_00461a60
+    name: InstallSelfTableDispatch_00461a60
     size: 268
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461b70
     name: func_00461b70
     size: 296

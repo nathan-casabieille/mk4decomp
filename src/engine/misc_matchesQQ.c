@@ -42737,3 +42737,82 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         ret
     }
 }
+
+extern void StateMachineInit_00493000(void);
+extern void CallSetPause_0041f830(void);
+extern void InitZeroChainLookupJmp_00494210(void);
+
+/* @addr 0x00461a60 (268b game) - install-self with table-walk init dispatch.
+ *   If chain[+0x84] was nonzero: g_x_0054206c=2 unless was already 2 (then 6);
+ *     scaledInit = 0x00543200>>2 + g_x_0054206c; nested chain load;
+ *     call StateMachineInit_00493000; if pause? ret. If bit2 of state set tail-call CallSetPause; ret.
+ *   If was zero: g_x_00542054 = g_cj_0054205c; cj[+0x58] = 0xfffb0000; install-self;
+ *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
+ *     call InitZeroChainLookupJmp_00494210; pause=1; ret.
+ */
+__declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   75h
+        _emit   66h
+        mov     ecx, dword ptr [g_x_0054206c]
+        cmp     ecx, 2
+        _emit   75h
+        _emit   0bh
+        mov     ecx, 6
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, 0x00543200
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_x_00542048], edx
+        call    StateMachineInit_00493000
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   07h
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, 0xfffb0000
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x58], ecx
+        mov     dword ptr [esi + 8], 0x00461a60
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x00461a60
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InitZeroChainLookupJmp_00494210
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
