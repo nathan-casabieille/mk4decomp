@@ -73886,3 +73886,110 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541f8c;
+extern unsigned int g_data_00541f98;
+extern void TripleSubVec3_004250f0(void);
+extern void TripleAddVec3_00425130(void);
+extern void ThreeMul10Stores_004252c0(void);
+extern void ThreeClampLoop_00425a80(void);
+extern void func_004255b0(void);
+
+/* @addr 0x00464660 (386b game) - install-self with 5-call vec/slot chain.
+ *   Always installs Self at end (no phase check). Sets:
+ *     - g_data_00542048 = g_data_00541f8c (vec0 base)
+ *     - g_data_0054204c = g_data_00542060 + 0xc (slot pointer+0xc)
+ *     - g_data_00542050 = [g_data_00542054*4] (deref scope)
+ *   If 0x542050 is non-zero AND [g_data_00542058*4] is non-zero, runs a
+ *   5-step chain through scaled-buffer indices: func_004255b0 (+0x15) →
+ *   TripleSubVec3_004250f0 (+0x15) → ThreeMul10Stores_004252c0
+ *   (with 0xcccc weight) → TripleSubVec3_004250f0 (+0x1b) →
+ *   ThreeClampLoop_00425a80 (with 0x4ccc cap) → TripleAddVec3_00425130
+ *   (with +0x1b advance). Failure path skips remaining calls.
+ *
+ *   Tail unconditionally installs Self with slot[+0x84]=1,
+ *   g_data_0054204c=2, arms 0x541e6c=1.
+ */
+__declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        mov     dword ptr [eax*4 + 0x84], 0
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_data_00541f8c]
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [g_data_00542054]
+        add     edx, 0xc
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_0054204c], edx
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542050], eax
+        je      L_isvc_install
+        mov     ecx, dword ptr [g_data_00541f98]
+        add     eax, 0x15
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_data_00542044], ecx
+        call    func_004255b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_isvc_done
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542050]
+        mov     dword ptr [g_data_00542048], edx
+        mov     eax, dword ptr [eax*4]
+        test    ecx, ecx
+        je      L_isvc_install
+        add     eax, 0x15
+        mov     dword ptr [g_data_0054204c], eax
+        call    TripleSubVec3_004250f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_isvc_done
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0xcccc
+        mov     dword ptr [g_data_00542048], ecx
+        call    ThreeMul10Stores_004252c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_isvc_done
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_00542048], edx
+        mov     ecx, dword ptr [eax*4]
+        add     ecx, 0x1b
+        mov     dword ptr [g_data_0054204c], ecx
+        call    TripleSubVec3_004250f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_isvc_done
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0x4ccc
+        mov     dword ptr [g_data_00542048], edx
+        call    ThreeClampLoop_00425a80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_isvc_done
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [ecx*4]
+        add     eax, 0x1b
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00542044], eax
+        call    TripleAddVec3_00425130
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_isvc_done
+    L_isvc_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset InstallSelf5CallVecChain_00464660
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_data_00541e6c], eax
+    L_isvc_done:
+        pop     esi
+        ret
+    }
+}

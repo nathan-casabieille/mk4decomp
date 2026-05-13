@@ -6887,10 +6887,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00464660
-    name: func_00464660
+    name: InstallSelf5CallVecChain_00464660
     size: 386
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004647f0
     name: Thunk_004647f0
     size: 5
