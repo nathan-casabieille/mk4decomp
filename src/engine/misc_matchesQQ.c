@@ -69907,3 +69907,139 @@ __declspec(naked) void TextureSlotAllocDispatch_004c3960(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_0054388c;
+extern unsigned int g_data_00543890;
+extern unsigned int g_data_004ec040;
+extern unsigned int g_data_004ec050;
+extern unsigned int g_data_00542a58;
+extern unsigned int g_data_00542050;
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void func_00490970(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void func_004694b0(void);
+extern void ScaledClearJmp_00428d60(void);
+
+/* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
+ *   packed_ptr select. Sets g_data_0054206c=0x52, calls
+ *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
+ *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
+ *   g_data_00542060:
+ *     - matches g_data_00538038: if g_data_0054388c is set, picks
+ *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
+ *       into g_data_00542050, clears g_data_0054388c, jumps to next.
+ *     - matches g_data_0053803c: mirror with g_data_00543890.
+ *     - default: both g_data_00542050 and 0x54204c set to the two
+ *       packed_ptrs, zeroes g_data_00542080, calls
+ *       GuardedDualConst2AndToggle_0048eba0. If bit 0 of 0x54208c set,
+ *       sets g_data_00542080=1 and copies 0x54204c into 0x542050; else
+ *       keeps 0x542050.
+ *   Tail: copies chosen base into 0x542044, calls func_00490970, pushes
+ *   0x542a58 and calls GuardedPackedSlotInit_00428760, then
+ *   MStackPush3CmpCall_0048eec0. If bit 0 of 0x54208c set, calls
+ *   func_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
+ *   ScaledClearJmp_00428d60 depending on g_data_00542080.
+ */
+__declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
+    __asm {
+        mov     dword ptr [g_data_0054206c], 0x52
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sfp_done
+        mov     dword ptr [g_data_0054206c], 0xa
+        call    ScaledIndexConditionalAdd_0048e400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sfp_done
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_data_00538038]
+        cmp     ecx, eax
+        jne     short L_sfp_check2
+        mov     eax, dword ptr [g_data_0054388c]
+        test    eax, eax
+        je      short L_sfp_check2
+        cmp     eax, 1
+        mov     eax, offset g_data_004ec050
+        je      short L_sfp_useEax1
+        mov     eax, offset g_data_004ec040
+    L_sfp_useEax1:
+        shr     eax, 2
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_data_0054388c], 0
+        jmp     L_sfp_callBlock
+    L_sfp_check2:
+        cmp     ecx, dword ptr [g_data_0053803c]
+        jne     short L_sfp_defaultPath
+        mov     eax, dword ptr [g_data_00543890]
+        test    eax, eax
+        je      short L_sfp_defaultPath
+        cmp     eax, 1
+        mov     eax, offset g_data_004ec050
+        je      short L_sfp_useEax2
+        mov     eax, offset g_data_004ec040
+    L_sfp_useEax2:
+        shr     eax, 2
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_data_00543890], 0
+        jmp     short L_sfp_callBlock
+    L_sfp_defaultPath:
+        mov     eax, offset g_data_004ec040
+        mov     ecx, offset g_data_004ec050
+        shr     eax, 2
+        shr     ecx, 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_data_00542080], 0
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sfp_done
+        mov     eax, dword ptr [g_data_0054208c]
+        and     eax, 1
+        je      short L_sfp_useSecond
+        mov     dword ptr [g_data_00542080], 1
+    L_sfp_useSecond:
+        test    eax, eax
+        je      short L_sfp_useStored
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_00542050], eax
+        jmp     short L_sfp_callBlock
+    L_sfp_useStored:
+        mov     eax, dword ptr [g_data_00542050]
+    L_sfp_callBlock:
+        mov     dword ptr [g_data_00542044], eax
+        call    func_00490970
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sfp_done
+        push    offset g_data_00542a58
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_sfp_done
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sfp_done
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_sfp_skipCallb0
+        call    func_004694b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sfp_done
+    L_sfp_skipCallb0:
+        mov     eax, dword ptr [g_data_00542080]
+        test    eax, eax
+        jne     short L_sfp_tailClear
+        jmp     ScaledChainJmp_00429470
+    L_sfp_tailClear:
+        jmp     ScaledClearJmp_00428d60
+    L_sfp_done:
+        ret
+    }
+}

@@ -7069,10 +7069,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00469340
-    name: func_00469340
+    name: StreamFlagPackedSelectChain_00469340
     size: 364
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004694b0
     name: func_004694b0
     size: 1679
