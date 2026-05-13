@@ -2001,10 +2001,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00424860
-    name: func_00424860
+    name: MStackPush2DualModMul10Pop2_00424860
     size: 301
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424990
     name: TripleMul10VecJmpFpu_00424990
     size: 132

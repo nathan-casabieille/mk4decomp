@@ -47411,3 +47411,84 @@ __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
         ret
     }
 }
+
+extern void ModMagicMul10Index_00424350(void);
+extern void MStackMagicModMul10_00424410(void);
+
+/* @addr 0x00424860 (301b game) - mstack-push 2 + dual mod-mul10 chain + field init + mstack-pop 2.
+ *   Push g_x_0054206c twice onto mstack. Call ModMagicMul10Index_00424350; if pause ret.
+ *   chain[g_x_0054204c*4]=g_x_0054206c; chain[+0x20]=g_x_0054206c.
+ *   Call MStackMagicModMul10_00424410; if pause ret.
+ *   chain[+0x18]=g_x_0054206c; chain[+0x08]=-g_x_0054206c; chain[+0x10]=0x10000;
+ *   g_x_0054206c=0; chain[+0x04]=0; chain[+0x0c]=0; chain[+0x14]=0; chain[+0x1c]=0.
+ *   Mstack-pop 2: both into g_x_0054206c; ret.
+ */
+__declspec(naked) void MStackPush2DualModMul10Pop2_00424860(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    ModMagicMul10Index_00424350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0eah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     eax, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x20], edx
+        call    MStackMagicModMul10_00424410
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [edx*4 + 0x18], ecx
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_0054204c]
+        neg     eax
+        mov     dword ptr [ecx*4 + 8], eax
+        mov     edx, dword ptr [g_x_0054204c]
+        mov     dword ptr [edx*4 + 0x10], 0x10000
+        mov     eax, dword ptr [g_x_0054204c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [eax*4 + 4], 0
+        mov     edx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [edx*4 + 0xc], ecx
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0x14], eax
+        mov     eax, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x1c], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
