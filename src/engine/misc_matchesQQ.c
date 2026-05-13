@@ -46917,3 +46917,92 @@ __declspec(naked) void FlagInitTableSelector_00434560(void) {
         ret
     }
 }
+
+extern void ScaledZeroFour_00490740(void);
+extern void func_00460000(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void ScaledClearJmp_00428d60(void);
+
+/* @addr 0x00486ff0 (298b game) - 3-state install-self with dual entry-point.
+ *   state==0: push 0x00542bc8; call ArgScaledTestStore; pop. If pause ret.
+ *     [cj*4+0x24]=g_x_00542048. Install-self at func entry +0x01000000.
+ *     state=1; chain[+0x84]=0; call ScaledClearJmp; pause=1; ret.
+ *   state==1: install-self at func entry +0x02000000. State=2; call ScaledChainJmp; pause=1; ret.
+ *   state>=2: call ScaledZeroFour_00490740; if pause ret. Tail-call func_00460000; ret.
+ */
+__declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   7dh
+        dec     eax
+        _emit   74h
+        _emit   19h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_00460000
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry_00486ff0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelf3StateDualEntry_00486ff0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledChainJmp_00429470
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        push    0x00542bc8
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   72h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [ecx*4 + 0x24], edx
+        mov     dword ptr [esi + 8], offset InstallSelf3StateDualEntry_00486ff0
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset InstallSelf3StateDualEntry_00486ff0
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledClearJmp_00428d60
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

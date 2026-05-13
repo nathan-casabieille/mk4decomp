@@ -9154,10 +9154,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesP.c
   - addr: 0x00486ff0
-    name: func_00486ff0
+    name: InstallSelf3StateDualEntry_00486ff0
     size: 298
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487120
     name: Const0x2005Store_00487120
     size: 24
