@@ -79024,3 +79024,144 @@ __declspec(naked) void DualLinkedBlockCopyBracketed_00476320(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542054;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00537e94;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void GuardedSeq_004297b0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void InstallSelfThreeStateScaledLoad_0047f2e0(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void Install4StateMerge_0047f1a0(void);
+
+__declspec(naked) void TwoPhasePackInstall_0047eff0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_tppi_phase0
+        call    dword ptr [g_data_00542054]
+        pop     esi
+        ret
+    L_tppi_phase0:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    GuardedSeq_004297b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tppi_retP0
+        mov     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00537e94], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset TwoPhasePackInstall_0047eff0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_tppi_retP0:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+    L_tppi_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x68], 0x409
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     dword ptr [ecx*4 + 0x74], 0x208
+        mov     dword ptr [g_data_0054206c], 0x42
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tppi_sub2_ret
+        push    0x4ed728
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_tppi_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tppi_sub3:
+        push    0x4ed758
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+    L_tppi_sub4:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_tppi_sub4_phase0
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_tppi_sub4_after
+        call    InstallSelfThreeStateScaledLoad_0047f2e0
+        pop     esi
+        ret
+    L_tppi_sub4_phase0:
+        mov     dword ptr [g_data_00542080], 4
+    L_tppi_sub4_after:
+        call    ScaledLoadIncJmp_00429840
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tppi_sub4_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_0054206c], 9
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tppi_sub4_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     cl, byte ptr [g_data_0054208c]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 1
+        test    cl, al
+        mov     dword ptr [g_data_00542080], edx
+        je      short L_tppi_sub4_install
+        call    Install4StateMerge_0047f1a0
+        pop     esi
+        ret
+    L_tppi_sub4_install:
+        mov     dword ptr [esi + 8], offset L_tppi_sub4
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_tppi_sub4_ret:
+        pop     esi
+        ret
+    }
+}
