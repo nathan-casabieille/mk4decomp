@@ -60060,6 +60060,143 @@ extern unsigned int g_data_00f8fac8[];
 extern unsigned char g_data_00f8fadf[];
 extern unsigned char g_data_00f8fade[];
 extern short g_data_00f85b60[];
+extern void func_004d0270(void);
+extern void func_004d0400(void);
+extern unsigned int g_data_00f9fc14;
+extern unsigned int g_data_005236e8;
+extern unsigned int g_data_00f9fc74;
+extern unsigned int g_data_005236b8;
+
+/* @addr 0x004d0140 (303b other) - bundled string-digit-strip + slot-replace pair.
+ *   sub-1 (~48b at 0x4d0140): in-place string translation. For each char:
+ *     if digit '0'..'9': subtract '0'; if ';': skip (shift rest down).
+ *   sub-2 (~239b at 0x4d0180): slot replace - allocate 0x30 bytes via func_004c6110,
+ *     copy from g_data_005236e8 into new slot, free old, swap pointers.
+ *     Path differs based on flag g_data_00f9fc14.
+ */
+__declspec(naked) void StringStripSlotReplace_004d0140(void) {
+    __asm {
+        /* sub-1 (in-place string strip) */
+        mov     ecx, [esp + 4]
+        mov     al, [ecx]
+        test    al, al
+        jz      short L_strs_endA
+    L_strs_scan:
+        cmp     al, 0x30
+        jl      short L_strs_notDigit
+        cmp     al, 0x39
+        jg      short L_strs_notDigit
+        sub     al, 0x30
+        mov     [ecx], al
+    L_strs_advance:
+        inc     ecx
+    L_strs_load:
+        mov     al, [ecx]
+        test    al, al
+        jne     short L_strs_scan
+    L_strs_endA:
+        ret
+    L_strs_notDigit:
+        cmp     al, 0x3b
+        jne     short L_strs_advance
+        mov     eax, ecx
+    L_strs_shift:
+        mov     dl, [eax + 1]
+        mov     [eax], dl
+        mov     dl, [eax + 1]
+        inc     eax
+        test    dl, dl
+        jne     short L_strs_shift
+        jmp     short L_strs_load
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2 (slot replace) */
+        mov     eax, dword ptr [g_data_00f9fc14]
+        push    esi
+        test    eax, eax
+        jz      L_srr_directPath
+        push    0x30
+        push    1
+        call    func_004c6110
+        mov     esi, eax
+        add     esp, 8
+        test    esi, esi
+        jne     short L_srr_haveBuf
+        mov     eax, 1
+        pop     esi
+        ret
+    L_srr_haveBuf:
+        push    esi
+        call    func_004d0270
+        add     esp, 4
+        test    eax, eax
+        jz      short L_srr_install
+        push    esi
+        call    func_004d0400
+        add     esp, 4
+        push    esi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, 1
+        pop     esi
+        ret
+    L_srr_install:
+        mov     eax, dword ptr [g_data_005236e8]
+        mov     ecx, [eax]
+        mov     [esi], ecx
+        mov     edx, dword ptr [g_data_005236e8]
+        mov     eax, [edx + 4]
+        mov     [esi + 4], eax
+        mov     ecx, dword ptr [g_data_005236e8]
+        mov     edx, [ecx + 8]
+        mov     [esi + 8], edx
+        mov     eax, dword ptr [g_data_00f9fc74]
+        push    eax
+        mov     dword ptr [g_data_005236e8], esi
+        call    func_004d0400
+        mov     ecx, dword ptr [g_data_00f9fc74]
+        add     esp, 4
+        push    ecx
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     dword ptr [g_data_00f9fc74], esi
+        xor     eax, eax
+        pop     esi
+        ret
+    L_srr_directPath:
+        mov     eax, dword ptr [g_data_005236e8]
+        mov     edx, [eax]
+        mov     dword ptr [g_data_005236b8], edx
+        mov     ecx, [eax + 4]
+        mov     dword ptr [g_data_005236b8 + 4], ecx
+        mov     edx, [eax + 8]
+        mov     eax, dword ptr [g_data_00f9fc74]
+        mov     dword ptr [g_data_005236b8 + 8], edx
+        push    eax
+        mov     dword ptr [g_data_005236e8], offset g_data_005236b8
+        call    func_004d0400
+        mov     ecx, dword ptr [g_data_00f9fc74]
+        add     esp, 4
+        push    ecx
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     dword ptr [g_data_00f9fc74], 0
+        xor     eax, eax
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x004c3d00 (293b engine.render) - 3D sound volume/pan setter via vtbl 0x3c/0x40.
  *   args: id (word), vol (byte, clamped to 100), group_idx (byte), pan (byte, clamped to 100).
