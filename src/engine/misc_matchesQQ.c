@@ -54656,3 +54656,67 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         ret
     }
 }
+
+extern void StackPushAdd15CallPop_0040a7e0(void);
+extern unsigned int g_data_004d6478;
+
+/*
+ * BootCallChainDoubleMul10_0040b890 — 217b boot init via StoreTwoCall + dual Mul10.
+ *   Snapshot g_x_0054205c → g_x_00542054; g_cj_00542058 = (0x004d6478 >> 2);
+ *   g_state_0054207c = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall_0049cb40.
+ *   If g_state_0054208c & 1: ret. Call StackPushAdd15CallPop_0040a7e0; if paused: ret.
+ *   g_data_00542070 = 0x3333; load g_x_0054205c[+0x6c] → eax → g_x_0054206c;
+ *   push (eax,0x3333); call Mul10Tail; chain[+0x44] = result.
+ *   g_x_0054206c = 0; chain[+0x48] = 0;
+ *   load g_x_0054205c[+0x74] → eax → g_x_0054206c; push (eax, g_data_00542070);
+ *   call Mul10Tail; chain[+0x4c] = result; ret.
+ */
+__declspec(naked) void BootCallChainDoubleMul10_0040b890(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, offset g_data_004d6478
+        shr     ecx, 2
+        push    0xc0
+        push    0x0049db40
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [g_state_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     L_end
+        call    StackPushAdd15CallPop_0040a7e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_end
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_data_00542070], 0x3333
+        mov     eax, dword ptr [edx*4 + 0x6c]
+        push    eax
+        push    0x3333
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542044]
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x44], eax
+        mov     edx, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [edx*4 + 0x48], 0
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [eax*4 + 0x74]
+        push    eax
+        push    ecx
+        mov     dword ptr [g_x_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x4c], eax
+    L_end:
+        ret
+    }
+}
