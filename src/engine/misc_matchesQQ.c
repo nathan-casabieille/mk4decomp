@@ -72781,3 +72781,134 @@ __declspec(naked) void StreamInitCountdownBody_00494830(void) {
         jmp     ScaledZero44_00491500
     }
 }
+
+extern unsigned int g_data_00543560;
+extern unsigned int g_data_00543558;
+extern unsigned int g_data_00543554;
+extern unsigned int g_data_00543580;
+extern unsigned int g_data_00543584;
+extern unsigned int g_data_00543588;
+
+/* @addr 0x00489d10 (380b game) - 2D squared-distance threshold + revert.
+ *   Reads cached (x², y²) from [scaled+0x54]/[scaled+0x5c] via two
+ *   Mul10Tail(x,x)+Mul10Tail(y,y) calls into g_data_00542070, stores
+ *   into [g_data_00542050*4] as the cur radius. Compares against
+ *   g_data_0053a180; if greater-or-equal proceeds to the success path
+ *   (advance position), else first stashes the un-advanced position
+ *   into a save-slot keyed by g_data_0054204c vs g_data_00538158 (either
+ *   0x543560/8/4 or 0x543580/4/8) and continues.
+ *
+ *   Position advance: takes the cached (x,y)+(dx,dy) vector at
+ *   [scaled+0x54]+[scaled+0x6c] etc., computes the new squared
+ *   distance, compares against the cached radius. If exceeded, RESTORES
+ *   the save-slot (revert advance) and conditionally clears velocity
+ *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
+ */
+__declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0054204c]
+        push    esi
+        push    edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ecx, dword ptr [esi + 0x5c]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [g_data_0054207c], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542050]
+        add     ecx, eax
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4], ecx
+        mov     eax, dword ptr [g_data_0053a180]
+        mov     ecx, dword ptr [g_data_0054206c]
+        cmp     ecx, eax
+        mov     dword ptr [g_data_00542070], eax
+        jge     short L_sdt_advance
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     edi, dword ptr [g_data_00538158]
+        cmp     edx, edi
+        mov     edx, dword ptr [esi + 0x54]
+        jne     short L_sdt_stashAlt
+        mov     dword ptr [g_data_00543560], edx
+        mov     edx, dword ptr [esi + 0x5c]
+        mov     dword ptr [g_data_00543558], edx
+        mov     dword ptr [g_data_00543554], ecx
+        jmp     short L_sdt_cmpRadius
+    L_sdt_stashAlt:
+        mov     dword ptr [g_data_00543580], edx
+        mov     edx, dword ptr [esi + 0x5c]
+        mov     dword ptr [g_data_00543584], edx
+        mov     dword ptr [g_data_00543588], ecx
+    L_sdt_cmpRadius:
+        cmp     ecx, eax
+        jl      L_sdt_done
+    L_sdt_advance:
+        mov     eax, dword ptr [esi + 0x54]
+        mov     dword ptr [g_data_0054207c], eax
+        mov     ecx, dword ptr [esi + 0x5c]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     edx, dword ptr [esi + 0x6c]
+        mov     dword ptr [g_data_00542074], edx
+        mov     edi, dword ptr [esi + 0x74]
+        add     eax, edx
+        add     ecx, edi
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542078], edi
+        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_data_00542070], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054207c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        add     eax, edx
+        add     esp, 8
+        cmp     eax, ecx
+        mov     dword ptr [g_data_00542070], eax
+        jle     short L_sdt_done
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00538158]
+        cmp     eax, ecx
+        jne     short L_sdt_restoreAlt
+        mov     ecx, dword ptr [g_data_00543560]
+        mov     dword ptr [esi + 0x54], ecx
+        mov     edx, dword ptr [g_data_00543558]
+        mov     dword ptr [esi + 0x5c], edx
+        jmp     short L_sdt_checkBit
+    L_sdt_restoreAlt:
+        mov     eax, dword ptr [g_data_00543580]
+        mov     dword ptr [esi + 0x54], eax
+        mov     ecx, dword ptr [g_data_00543584]
+        mov     dword ptr [esi + 0x5c], ecx
+    L_sdt_checkBit:
+        mov     eax, dword ptr [esi + 0x40]
+        mov     dword ptr [g_data_00542074], eax
+        and     eax, 0x80
+        mov     dword ptr [g_data_00542094], eax
+        jne     short L_sdt_done
+        xor     eax, eax
+        mov     dword ptr [esi + 0x6c], eax
+        mov     dword ptr [esi + 0x74], eax
+    L_sdt_done:
+        pop     edi
+        pop     esi
+        ret
+    }
+}

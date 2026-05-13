@@ -9557,10 +9557,11 @@ functions:
     status: matched
     file: src/engine/dual_install_call_swap.c
   - addr: 0x00489d10
-    name: func_00489d10
+    name: SqDistThresholdRevertAdvance_00489d10
     size: 380
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489e90
     name: ScaledStateNegCallPauseLoad_00489e90
     size: 70
