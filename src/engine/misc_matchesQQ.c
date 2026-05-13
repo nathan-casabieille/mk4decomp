@@ -63611,6 +63611,166 @@ extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054207c;
 extern void GuardedSeq_00471670(void);
 extern void ChainListVecAdd_0049d200(void);
+extern void Filbuf_004c8ed0(void);
+
+/* @addr 0x004c5bb0 (316b boot) - CRT fread: read count*size bytes from buffered stream.
+ *   Multiplies count*size, returns 0 if 0. Buffered path drains pending bytes via
+ *   rep movsd/movsb. Direct path: large reads use IOWrapper chunks, small reads
+ *   use Filbuf byte-by-byte. EOF sets flag 0x10, error sets 0x20. Returns
+ *   bytes_read/element_size.
+ */
+__declspec(naked) void Fread_004c5bb0(void) {
+    __asm {
+        push    ecx
+        push    ebx
+        push    ebp
+        mov     ebp, [esp + 0x18]
+        push    esi
+        imul    ebp, dword ptr [esp + 0x18]
+        push    edi
+        mov     edi, [esp + 0x18]
+        test    ebp, ebp
+        mov     [esp + 0x18], edi
+        mov     [esp + 0x10], ebp
+        jne     short L_fread_init
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fread_init:
+        mov     ebx, [esp + 0x24]
+        test    dword ptr [ebx + 0xc], 0x10c
+        jz      short L_fread_defaultBufsz
+        mov     esi, [ebx + 0x18]
+        mov     [esp + 0x24], esi
+        jmp     short L_fread_haveBufsz
+    L_fread_defaultBufsz:
+        mov     dword ptr [esp + 0x24], 0x1000
+    L_fread_reloadBufsz:
+        mov     esi, [esp + 0x24]
+    L_fread_haveBufsz:
+        test    dword ptr [ebx + 0xc], 0x10c
+        jz      short L_fread_noBuf
+        mov     eax, [ebx + 4]
+        test    eax, eax
+        jz      short L_fread_noBuf
+        cmp     ebp, eax
+        jae     short L_fread_useEax
+        mov     eax, ebp
+    L_fread_useEax:
+        mov     esi, [ebx]
+        mov     ecx, eax
+        mov     edx, ecx
+        sub     ebp, eax
+        shr     ecx, 2
+        rep     movsd
+        mov     ecx, edx
+        and     ecx, 3
+        rep     movsb
+        mov     esi, [ebx + 4]
+        mov     edx, [ebx]
+        mov     ecx, [esp + 0x18]
+        sub     esi, eax
+        add     edx, eax
+        add     ecx, eax
+        mov     [ebx + 4], esi
+        mov     [ebx], edx
+        mov     [esp + 0x18], ecx
+        mov     edi, ecx
+        jmp     short L_fread_checkDone
+    L_fread_noBuf:
+        cmp     ebp, esi
+        jb      short L_fread_byteRead
+        test    esi, esi
+        mov     eax, ebp
+        jz      short L_fread_doRead
+        xor     edx, edx
+        div     esi
+        mov     eax, ebp
+        sub     eax, edx
+    L_fread_doRead:
+        push    eax
+        mov     eax, [ebx + 0x10]
+        push    edi
+        push    eax
+        call    IOWrapper_004c8fc0
+        add     esp, 0xc
+        test    eax, eax
+        jz      short L_fread_eof
+        cmp     eax, -1
+        jz      short L_fread_err
+        sub     ebp, eax
+        add     edi, eax
+        mov     [esp + 0x18], edi
+        jmp     short L_fread_testEbp
+    L_fread_byteRead:
+        push    ebx
+        call    Filbuf_004c8ed0
+        add     esp, 4
+        cmp     eax, -1
+        jz      short L_fread_eofShort
+        mov     [edi], al
+        mov     ecx, [ebx + 0x18]
+        inc     edi
+        dec     ebp
+        mov     [esp + 0x18], edi
+        mov     [esp + 0x24], ecx
+    L_fread_checkDone:
+        mov     esi, [esp + 0x24]
+    L_fread_testEbp:
+        test    ebp, ebp
+        jne     L_fread_haveBufsz
+        mov     eax, [esp + 0x20]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fread_eof:
+        mov     edx, [ebx + 0xc]
+        mov     eax, [esp + 0x10]
+        or      edx, 0x10
+        sub     eax, ebp
+        mov     [ebx + 0xc], edx
+        xor     edx, edx
+        div     dword ptr [esp + 0x1c]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fread_err:
+        mov     edx, [ebx + 0xc]
+        mov     eax, [esp + 0x10]
+        or      edx, 0x20
+        sub     eax, ebp
+        mov     [ebx + 0xc], edx
+        xor     edx, edx
+        div     dword ptr [esp + 0x1c]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fread_eofShort:
+        mov     eax, [esp + 0x10]
+        xor     edx, edx
+        sub     eax, ebp
+        div     dword ptr [esp + 0x1c]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
 
 /* @addr 0x00412140 (316b boot) - bundled pair: descend-chain getter + countdown state-installer.
  *   sub-1 (~40b @ 0x412140): chases entry chain - g_data_0054205c -> [+0x18]
