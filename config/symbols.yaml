@@ -6407,10 +6407,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x0045fd30
-    name: func_0045fd30
+    name: SelfInstallPhaseDispatch_0045fd30
     size: 379
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045feb0
     name: InstallSelfChainCascade_0045feb0
     size: 272
