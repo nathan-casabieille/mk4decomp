@@ -72004,3 +72004,123 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d75e0;
+extern void SetJmp_00408d20(void);
+extern void MStackCall_004062f0(void);
+extern void ChainWalkPushPop_00405a40(void);
+
+/* @addr 0x00418e00 (379b boot) - 2-entry packed boot setup + body.
+ *   Entry 1 (offset 0, 194b): sets g_data_0054206c = &g_data_004d75e0>>2,
+ *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
+ *     g_data_0054208c clear: writes [g_data_0054205c*4+0x30]=0xa9,
+ *     +0x3c=g_data_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
+ *     SetJmp_00408d20. On no-error writes the body label at
+ *     [g_data_00542048*4+0x10] and calls ScaledTripleCopy54_004ac040.
+ *     On no-error writes g_data_0054207c → +0x58 and tail-jmps
+ *     0x4062f0.
+ *   14b NOP align pad.
+ *   Entry 2 / body (offset 0xd0, 171b): mstack-pushes
+ *     g_data_0054204c/0054205c, calls ChainWalkPushPop_00405a40.
+ *     On no-error: g_data_0054204c = g_data_0052ab10, computes
+ *     [g_data_0054205c*4+0x58] += 0x9fd70; if greater than the new
+ *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
+ *     mstack entries back.
+ */
+__declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
+    __asm {
+        mov     eax, offset g_data_004d75e0
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsm_e1End
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bsm_e1End
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [ecx*4 + 0x30], 0xa9
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     dword ptr [edx*4 + 0x3c], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xffffb334
+        mov     dword ptr [ecx*4 + 0x70], 0xffffaaab
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x80], eax
+        call    SetJmp_00408d20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsm_e1End
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, offset L_bsm_body
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x10], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsm_e1End
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [edx*4 + 0x58], eax
+        jmp     MStackCall_004062f0
+    L_bsm_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_bsm_body:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        call    ChainWalkPushPop_00405a40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsm_bodyEnd
+        mov     ecx, dword ptr [g_data_0052ab10]
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054204c], ecx
+        push    esi
+        mov     eax, dword ptr [edx*4 + 0x58]
+        add     eax, 0x9fd70
+        mov     dword ptr [g_data_0054206c], eax
+        mov     esi, dword ptr [ecx*4 + 0x58]
+        cmp     eax, esi
+        jg      short L_bsm_skipAdd
+        add     eax, 0x3be3d7
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+    L_bsm_skipAdd:
+        mov     eax, dword ptr [g_state_004d57ac]
+        pop     esi
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bsm_bodyEnd:
+        ret
+    }
+}
