@@ -78274,3 +78274,124 @@ __declspec(naked) void PerSlotPhaseRouter_00460770(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_004d5320;
+extern unsigned int g_data_0054208c;
+extern void Atan2QuadrantLookup_004245b0(void);
+extern void BootMod6487eClampAndChainMul10_00407510(void);
+extern void ScaledInit_0048d470(void);
+
+__declspec(naked) void AtanDualDeltaThreshold_0049c870(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054206c]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     esi, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_data_00542074], esi
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        sub     esi, edx
+        sub     eax, ecx
+        mov     dword ptr [g_data_00542074], esi
+        mov     dword ptr [g_data_00542078], eax
+        call    Atan2QuadrantLookup_004245b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_addt_pop
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_data_00542070], edx
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_addt_pop
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_004d5320]
+        mov     dword ptr [g_data_00542080], eax
+        add     eax, ecx
+        mov     dword ptr [g_data_0054206c], eax
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_addt_pop
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542080]
+        sub     eax, edx
+        sub     ecx, edx
+        mov     dword ptr [g_data_0054206c], eax
+        test    eax, eax
+        mov     dword ptr [g_data_00542080], ecx
+        jge     short L_addt_absEAX_done
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+    L_addt_absEAX_done:
+        test    ecx, ecx
+        jge     short L_addt_absECX_done
+        neg     ecx
+        mov     dword ptr [g_data_00542080], ecx
+    L_addt_absECX_done:
+        cmp     eax, 0x1999
+        jle     short L_addt_under
+        cmp     ecx, 0x1999
+        jg      short L_addt_over
+    L_addt_under:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    ScaledInit_0048d470
+        mov     eax, dword ptr [g_data_00541e6c]
+        pop     esi
+        ret
+    L_addt_over:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054206c], edx
+        or      al, 4
+        mov     dword ptr [g_data_0054208c], eax
+    L_addt_pop:
+        pop     esi
+        ret
+    }
+}
