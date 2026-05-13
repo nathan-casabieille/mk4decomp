@@ -14342,10 +14342,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004b9510
-    name: func_004b9510
+    name: ModelRenderDispatch_004b9510
     size: 301
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b9640
     name: func_004b9640
     size: 301

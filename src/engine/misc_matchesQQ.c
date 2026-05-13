@@ -60256,6 +60256,102 @@ extern void PushSetXfmMaskCallPop_00407140(void);
 extern void ScaledTripleCopy54_004ac040(void);
 extern void PushSetDualDeref_00406650(void);
 extern void MStackCall_00406600(void);
+extern unsigned int g_table_004f7868[];
+extern unsigned int g_table_00ab4878[];
+extern unsigned int g_table_00535db8[];
+extern unsigned int g_table_00535ddc[];
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542044;
+extern void ScaledNegThreeWords_004be210(void);
+extern void WtSnapshotPushCall_004bda70(void);
+
+/* @addr 0x004b9510 (301b engine.render) - per-frame model render path.
+ *   Pushes 2 mstack frames, looks up dispatch in g_table_004f7868[idx], runs
+ *   custom helper. On model attr bit0, calls ScaledNegThreeWords. Then sets
+ *   matrix bases via 0x00ab4878/0x00535db8 (shifted by 2), calls
+ *   WtSnapshotPushCall, scales [g_table_00535db8 .. g_table_00535ddc] inline
+ *   (each u32 *= 16). Pops the 2 mstack frames.
+ */
+__declspec(naked) void ModelRenderDispatch_004b9510(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        sub     esp, 0x24
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_table_004f7868
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        add     ecx, 0x18
+        shr     edx, 0x18
+        sar     eax, 2
+        and     edx, 0x0f
+        add     eax, edx
+        lea     edx, [esp + 4]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542048], ecx
+        sar     edx, 2
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_data_00542044], edx
+        call    eax
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mrd_pop
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        test    al, 1
+        mov     dword ptr [g_data_0054206c], eax
+        jz      short L_mrd_noBit
+        call    ScaledNegThreeWords_004be210
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mrd_pop
+    L_mrd_noBit:
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, offset g_table_00ab4878
+        mov     esi, offset g_table_00535db8
+        mov     dword ptr [g_data_0054204c], ecx
+        sar     edx, 2
+        sar     esi, 2
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_data_00542044], esi
+        call    WtSnapshotPushCall_004bda70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mrd_pop
+        mov     eax, offset g_table_00535db8
+    L_mrd_scaleloop:
+        mov     ecx, [eax]
+        add     eax, 4
+        shl     ecx, 4
+        mov     [eax - 4], ecx
+        cmp     eax, offset g_table_00535ddc
+        jl      short L_mrd_scaleloop
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_00542044], esi
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mrd_pop:
+        pop     esi
+        add     esp, 0x24
+        ret
+    }
+}
 
 /* @addr 0x0040bde0 (309b boot) - boot one-shot setup pushing 3 args via mstack.
  *   Calls ThreeChanPackClamp(0x806000), CopyThreeFields([0x5420 5c]), SetJmp().
