@@ -48131,3 +48131,96 @@ __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
         _emit   00h
     }
 }
+
+extern void FpuSqrtMul_004ab350(void);
+
+/* @addr 0x0042d090 (304b game) - 3D-distance mul10 + scaled chain advance.
+ *   Load eax/ecx/edx from globals 0053a1a8/0053a1a4/g_cj. esi = [cj*4+0x54].
+ *   Compute diffs: eax -= esi; ecx -= edx[cj*4+0x5c].
+ *   Mul10Tail(eax,eax)->g_x_00542074. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_x_00542074.
+ *   Call FpuSqrtMul; if pause ret.
+ *   Mul10Tail(g_x_00542084, g_x_0054206c)->g_state_00542080.
+ *   Mul10Tail(eax, g_data_0053a41c)->g_x_00542074. Mul10Tail(ecx, g_data_0053a3dc)->g_acc.
+ *   Sum: g_x_0054206c = g_data_0053a1a8 + g_x_00542074; g_data_00542070 = g_data_0053a1a4 + g_acc.
+ *   Store both into [g_cj*4+0x54] and [+0x5c]. Tail-call DualCallPauseDirtyJmp; pop esi; ret.
+ */
+__declspec(naked) void Distance3DMul10Chain_0042d090(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0053a1a8]
+        mov     ecx, dword ptr [g_data_0053a1a4]
+        mov     edx, dword ptr [g_cj_0054205c]
+        push    esi
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     esi, dword ptr [edx*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     edx, dword ptr [edx*4 + 0x5c]
+        sub     eax, esi
+        sub     ecx, edx
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_acc_00542078], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_acc_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_00542074]
+        add     esp, 8
+        add     ecx, eax
+        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_x_00542074], ecx
+        call    FpuSqrtMul_004ab350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_state_00542080], eax
+        push    eax
+        mov     eax, dword ptr [g_x_00542084]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_0053a41c]
+        mov     edx, dword ptr [g_data_0053a3dc]
+        add     esp, 8
+        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_acc_00542078], edx
+        push    ecx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_state_00542080]
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_acc_00542078]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_data_0053a1a8]
+        add     ecx, edx
+        mov     edx, dword ptr [g_data_0053a1a4]
+        mov     dword ptr [g_acc_00542078], eax
+        add     edx, eax
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_00542070], edx
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     dword ptr [ecx*4 + 0x5c], edx
+        call    DualCallPauseDirtyJmp_00490c30
+        pop     esi
+        ret
+    }
+}
