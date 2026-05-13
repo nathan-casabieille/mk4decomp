@@ -10084,10 +10084,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0048e0e0
-    name: func_0048e0e0
+    name: SlotPhaseResetInstallChain_0048e0e0
     size: 348
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e240
     name: State6Latch_0048e240
     size: 162

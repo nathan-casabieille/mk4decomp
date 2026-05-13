@@ -66303,3 +66303,108 @@ __declspec(naked) void MStackScopedSlotSetupPair_0040a520(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053a474;
+extern unsigned int g_data_0053a3e4;
+extern unsigned int g_data_004ea040;
+extern void PushCallPauseScaledJmpInd_0048e2f0(void);
+extern void ScaledAndAlfb_00490370(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void State6Latch_0048e240(void);
+extern void ScaledAddDeref_00494800(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+
+/* @addr 0x0048e0e0 (348b game) - 3-phase reset+install chain for a slot.
+ *   On [g_data_00542060*4 + 0x7c] >= 3: calls PushCallPauseScaledJmpInd_0048e2f0
+ *   first. Then unconditionally chains ScaledAndAlfb_00490370 /
+ *   ScaledAndAlfe_00490390 / DualCallPauseDirtyJmp_00490c30, each gated by
+ *   the error flag g_data_00541e6c. On success: masks [g_data_0054205c*4
+ *   + 0x40] with 0xfffffd17, zeroes +0x44, mirrors zero into +0x7c/+0x74/+0x80
+ *   of the slot. Loads packed_ptr-style scaled bases &g_data_0053a3e4>>2,
+ *   &g_data_0053a474>>2 into g_data_00542044/g_data_00542048; if 0x54205c
+ *   matches g_data_00538158, swaps the active base to the second. Writes
+ *   0x10000 into [eax*4] (the scaled base) and calls State6Latch_0048e240.
+ *   Then loads &g_data_004ea040>>2 into g_data_00542044 and on slot[+0x30]
+ *   non-zero sets g_data_0054206c=3 and calls ScaledAddDeref_00494800,
+ *   finally calls GuardedDirtyXformFromTable_0048f6d0.
+ */
+__declspec(naked) void SlotPhaseResetInstallChain_0048e0e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        xor     esi, esi
+        push    edi
+        mov     dword ptr [g_data_00542070], esi
+        mov     eax, dword ptr [eax*4 + 0x7c]
+        cmp     eax, 3
+        mov     dword ptr [g_data_0054206c], eax
+        jl      short L_sprc_skipE2f0
+        call    PushCallPauseScaledJmpInd_0048e2f0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sprc_done
+    L_sprc_skipE2f0:
+        call    ScaledAndAlfe_00490390
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sprc_done
+        call    ScaledAndAlfb_00490370
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sprc_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x40]
+        and     eax, 0xfffffd17
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [ecx*4 + 0x40], eax
+        call    DualCallPauseDirtyJmp_00490c30
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sprc_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [ecx*4 + 0x44], esi
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4 + 0x7c], edx
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x74], edx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset g_data_0053a474
+        mov     dword ptr [eax*4 + 0x80], esi
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     edi, dword ptr [g_data_00538158]
+        mov     eax, offset g_data_0053a3e4
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, edi
+        mov     dword ptr [g_data_0054206c], 0x10000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542048], ecx
+        je      short L_sprc_useEax
+        mov     eax, ecx
+        mov     dword ptr [g_data_00542044], eax
+    L_sprc_useEax:
+        mov     dword ptr [eax*4], 0x10000
+        call    State6Latch_0048e240
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     short L_sprc_done
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, offset g_data_004ea040
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        cmp     eax, esi
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_sprc_callTail
+        mov     dword ptr [g_data_0054206c], 3
+        call    ScaledAddDeref_00494800
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     short L_sprc_done
+    L_sprc_callTail:
+        call    GuardedDirtyXformFromTable_0048f6d0
+    L_sprc_done:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
