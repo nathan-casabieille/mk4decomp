@@ -14977,10 +14977,11 @@ functions:
     status: matched
     file: src/audio/dsound_init.c
   - addr: 0x004c4110
-    name: func_004c4110
+    name: DSoundBufferDispatch_004c4110
     size: 252
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c4210
     name: IterateCallSkip_004c4210
     size: 37
