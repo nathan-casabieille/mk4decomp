@@ -63602,6 +63602,146 @@ extern unsigned int g_data_00541f98;
 extern void func_00401000(void);
 extern unsigned int g_data_00542094;
 extern void func_00408e70(void);
+extern void AuxCapsBitFlagAggregate_004b5380(void);
+extern void func_004c3960(void);
+extern unsigned int g_data_00543b68;
+extern unsigned int g_data_00543b6c;
+extern unsigned int g_data_00ab4338;
+
+/* @addr 0x004b7020 (312b game.menu) - menu input poll - bits-of-state aggregator.
+ *   Polls 8 VK keys (0x26 up / 0x28 down / 0x0d enter / 0x20 space / 0x25 left /
+ *   0x27 right / 0x1b esc / 0x08 backspace) via CallShrAnd_004b5450; OR-merges into esi.
+ *   Reads joystick bits 0x40000000..0x10000000 from g_data_00543b68/_b6c via
+ *   AuxCapsBitFlagAggregate_004b5380 → edi; maps to esi bits 1/2/4/8.
+ *   Tests param0 [esp+0xc] to optionally set bit 0x10 from joystick low nibble.
+ *   If prior g_data_00ab4338 was nonzero AND esi is nonzero, set bit 0x8000
+ *   (auto-repeat). Else store esi to g_data_00ab4338.
+ *   If new bit-set (no auto-repeat): random pitch (func_004c3490(0xa0)) +
+ *   audio cue (func_004c3960(0xa0,-1,-1)).
+ */
+__declspec(naked) void MenuInputPoll_004b7020(void) {
+    __asm {
+        push    esi
+        push    edi
+        push    0x26
+        xor     esi, esi
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k1
+        mov     esi, 1
+    L_mip_k1:
+        push    0x28
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k2
+        or      esi, 2
+    L_mip_k2:
+        push    0x0d
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k3
+        or      esi, 0x10
+    L_mip_k3:
+        push    0x20
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k4
+        or      esi, 0x10
+    L_mip_k4:
+        push    0x25
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k5
+        or      esi, 4
+    L_mip_k5:
+        push    0x27
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k6
+        or      esi, 8
+    L_mip_k6:
+        push    0x1b
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_k7
+        or      esi, 0x60
+    L_mip_k7:
+        push    8
+        call    CallShrAnd_004b5450
+        add     esp, 4
+        test    eax, eax
+        jz      short L_mip_joy
+        or      esi, 0x20
+    L_mip_joy:
+        mov     eax, dword ptr [g_data_00543b68]
+        push    eax
+        call    AuxCapsBitFlagAggregate_004b5380
+        mov     ecx, dword ptr [g_data_00543b6c]
+        add     esp, 4
+        mov     edi, eax
+        push    ecx
+        call    AuxCapsBitFlagAggregate_004b5380
+        or      edi, eax
+        add     esp, 4
+        test    edi, 0x40000000
+        jz      short L_mip_j1
+        or      esi, 1
+    L_mip_j1:
+        test    edi, 0x80000000
+        jz      short L_mip_j2
+        or      esi, 2
+    L_mip_j2:
+        test    edi, 0x10000000
+        jz      short L_mip_j3
+        or      esi, 4
+    L_mip_j3:
+        test    edi, 0x20000000
+        jz      short L_mip_j4
+        or      esi, 8
+    L_mip_j4:
+        mov     eax, [esp + 0xc]
+        test    eax, eax
+        jz      short L_mip_check
+        test    edi, 0x0fffffff
+        jz      short L_mip_check
+        or      esi, 0x10
+    L_mip_check:
+        mov     eax, dword ptr [g_data_00ab4338]
+        test    eax, eax
+        jz      short L_mip_store
+        test    esi, esi
+        jz      short L_mip_store
+        or      esi, 0x8000
+        jmp     short L_mip_testRepeat
+    L_mip_store:
+        mov     dword ptr [g_data_00ab4338], esi
+    L_mip_testRepeat:
+        test    esi, 0x8000
+        jne     short L_mip_done
+        test    esi, esi
+        jz      short L_mip_done
+        push    0xa0
+        call    func_004c3490
+        add     esp, 4
+        push    -1
+        push    -1
+        push    0xa0
+        call    func_004c3960
+        add     esp, 0x0c
+    L_mip_done:
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x00408d30 (312b boot) - bundled 3 sub-functions in boot group.
  *   sub-1 (~140b @ 0x408d30): state validation chain - sets bit2 of g_state_0054208c

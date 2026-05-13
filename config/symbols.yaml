@@ -14214,10 +14214,11 @@ functions:
     group: game.menu
     status: stub
   - addr: 0x004b7020
-    name: func_004b7020
+    name: MenuInputPoll_004b7020
     size: 312
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7160
     name: StringSubstituteAfterColon_004b7160
     size: 73
