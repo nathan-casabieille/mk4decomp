@@ -13100,10 +13100,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac780
-    name: func_004ac780
+    name: MidiTempoTimePackSend_004ac780
     size: 357
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac8f0
     name: AuxAudio_Init
     size: 184
