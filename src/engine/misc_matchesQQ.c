@@ -52101,3 +52101,86 @@ __declspec(naked) void MStackChainBit2Cascade_0048e8f0(void) {
         ret
     }
 }
+
+extern void StoreLoadJmp_00404ef0(void);
+extern void InstallSelfWithSibling_00475490(void);
+extern unsigned int g_data_005012b0;
+
+/* @addr 0x004551f0 (330b game) - 3-thunk dispatcher + install-self body. */
+__declspec(naked) void TripleThunkInstallBody_004551f0(void) {
+    __asm {
+        push    0x00455530
+        call    StoreLoadJmp_00404ef0
+        add     esp, 4
+        push    0x004e7ef8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x13
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004554c0
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        and     ecx, 0xfffffffb
+        mov     dword ptr [eax*4 + 0x34], ecx
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, 0xffffd99a
+        mov     dword ptr [edx*4 + 0x4c], 0x28f
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        call    StoreLoadJmp_00404ef0
+        add     esp, 4
+        push    0x004553d0
+        call    StoreLoadJmp_00404ef0
+        add     esp, 4
+        push    0x004e7f08
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_290:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   13h
+        push    0x004e7f18
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        ret
+        mov     ecx, offset g_data_005012b0
+        mov     dword ptr [g_x_00542084], 0xccc
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [eax + 8], offset body_290
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, offset body_290
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfWithSibling_00475490
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}
