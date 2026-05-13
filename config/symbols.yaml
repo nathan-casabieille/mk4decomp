@@ -14731,10 +14731,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004be870
-    name: func_004be870
+    name: EffectTableWalker_004be870
     size: 216
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be950
     name: RecordIter170_004be950
     size: 99

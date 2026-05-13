@@ -59129,6 +59129,101 @@ extern void func_004c6e60_helper(void);  /* placeholder; tail call from 0x4ccf90
 extern unsigned int g_data_00520134;
 extern unsigned int g_data_00f9f8b8;
 extern void HeapRegionTeardown_004c7240(void);
+extern void func_004c3490(void);
+extern void func_004c3d00(void);
+extern unsigned int g_data_004d2a30[2];  /* double constant */
+extern unsigned char g_table_004f7dc0[];
+
+/* @addr 0x004be870 (216b engine.scenegraph) - effect-table walker.
+ *   Reads param (ecx<47), computes table base = &g_table[idx*680], iterates
+ *   170 4-byte entries: skip 0xffff; check filter via TableSearch_004be760;
+ *   compute scaled idx (if ax>100 then ax*(2/5), else ax+0x7d0); random pick
+ *   via func_004c3490; load short [esi+2] (factor), fild+fmul[g_data_004d2a30],
+ *   DoubleToInt64 → byte clamp stored at [esp+8]; recompute scaled idx;
+ *   apply effect via func_004c3d00(idx, -1, byte, byte).
+ */
+__declspec(naked) void EffectTableWalker_004be870(void) {
+    __asm {
+        push    ecx
+        mov     ecx, [esp + 8]
+        push    esi
+        cmp     ecx, 0x2f
+        push    edi
+        jae     L_et_done
+        mov     eax, ecx
+        xor     edi, edi
+        shl     eax, 4
+        add     eax, ecx
+        lea     eax, [eax + eax*4]
+        lea     esi, [eax*8 + g_table_004f7dc0]
+    L_et_loop:
+        mov     ax, word ptr [esi]
+        cmp     ax, 0xffff
+        jz      L_et_done
+        push    eax
+        call    TableSearch_004be760
+        add     esp, 4
+        test    eax, eax
+        jne     L_et_next
+        mov     ax, word ptr [esi]
+        cmp     ax, 100
+        jg      short L_et_scaleA
+        movsx   edx, ax
+        add     edx, 0x7d0
+        jmp     short L_et_callRandA
+    L_et_scaleA:
+        movsx   ecx, ax
+        mov     eax, 0x66666667
+        imul    ecx
+        sar     edx, 1
+        mov     ecx, edx
+        shr     ecx, 31
+        add     edx, ecx
+    L_et_callRandA:
+        push    edx
+        call    func_004c3490
+        movsx   edx, word ptr [esi + 2]
+        mov     [esp + 0x14], edx
+        add     esp, 4
+        fild    dword ptr [esp + 0x10]
+        fmul    qword ptr [g_data_004d2a30]
+        call    DoubleToInt64_004c57d0
+        mov     byte ptr [esp + 8], al
+        mov     ax, word ptr [esi]
+        cmp     ax, 100
+        jg      short L_et_scaleB
+        movsx   edx, ax
+        add     edx, 0x7d0
+        jmp     short L_et_callApply
+    L_et_scaleB:
+        movsx   ecx, ax
+        mov     eax, 0x66666667
+        imul    ecx
+        sar     edx, 1
+        mov     eax, edx
+        shr     eax, 31
+        add     edx, eax
+    L_et_callApply:
+        mov     eax, [esp + 8]
+        push    eax
+        push    eax
+        push    -1
+        push    edx
+        call    func_004c3d00
+        add     esp, 0x10
+    L_et_next:
+        inc     edi
+        add     esi, 4
+        cmp     edi, 0xaa
+        jl      L_et_loop
+    L_et_done:
+        pop     edi
+        pop     esi
+        pop     ecx
+        ret
+    }
+}
+
 
 /* @addr 0x004c72a0 (205b crt) - heap shrink/decommit scan.
  *   Walks the heap-region list head [g_data_00520134]; for each region with
