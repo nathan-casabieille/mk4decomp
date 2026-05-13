@@ -9267,10 +9267,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00486610
-    name: func_00486610
+    name: NegInstallNegSelfTrigPair_00486610
     size: 414
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004867b0
     name: TripleStringCascade_004867b0
     size: 174

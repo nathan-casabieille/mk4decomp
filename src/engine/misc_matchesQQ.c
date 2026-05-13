@@ -78520,3 +78520,172 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_state_004d57ac;
+extern void ChainAccumMul10Pair_00490b70(void);
+extern void IterStepDualStore_00490b40(void);
+extern void GateDispatch6c_00494580(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TripleStringCascade_004867b0(void);
+
+__declspec(naked) void NegInstallNegSelfTrigPair_00486610(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_nisnp_phase0
+        dec     eax
+        je      short L_nisnp_phase1
+        call    dword ptr [g_data_00542054]
+        pop     esi
+        ret
+    L_nisnp_phase1:
+        mov     eax, dword ptr [g_data_00542084]
+        neg     eax
+        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542070], eax
+        call    ChainAccumMul10Pair_00490b70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_retP0
+        mov     dword ptr [esi + 8], offset NegInstallNegSelfTrigPair_00486610
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_nisnp_phase0:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542070], eax
+        call    ChainAccumMul10Pair_00490b70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_retP0
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset NegInstallNegSelfTrigPair_00486610
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], eax
+    L_nisnp_retP0:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_nisnp_sub2:
+        push    0x4eed34
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_nisnp_sub2_ret
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_sub2_ret
+        push    0x4eed38
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_nisnp_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_nisnp_sub3:
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_sub3_ret
+        push    0x4eed68
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_nisnp_sub3_ret
+        push    0x4eed70
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_nisnp_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_nisnp_sub4:
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_sub4_ret
+        push    0x4eeda0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_nisnp_sub4_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_nisnp_sub5:
+        mov     dword ptr [g_data_0054206c], 0x5c
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_nisnp_sub5_ret
+        jmp     TripleStringCascade_004867b0
+    L_nisnp_sub5_ret:
+        ret
+    }
+}
