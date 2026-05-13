@@ -73778,3 +73778,111 @@ __declspec(naked) void MStackPush4VecInitPop4_00471350(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00538148;
+extern void MStackPush6OpPop6_0048af60(void);
+extern void IndirectDispatchCjStore_0048ae50(void);
+
+/* @addr 0x0048acd0 (384b game) - phase-state install-self with table check.
+ *   Phase 0: indirect-call [g_data_00542080]; on no-error copies the
+ *     3-vec at [g_data_0054205c*4+0x54/0x58/0x5c] into [g_data_00542050*4
+ *     + 0/4/8], then IndirectDispatchCjStore_0048ae50, installs Self
+ *     at body with slot[+0x84]=1, g_data_0054204c=1, arms 0x541e6c.
+ *   Phase non-0: if byte g_data_00538148 != 0, checks the scaled
+ *     g_data_00542058 ptr against the 4 sentinel addresses
+ *     {0x4efe18, 0x4eff00, 0x4effe8, 0x4f00d0}; on match tail-call
+ *     CallSetPause_0041f830. Otherwise byte g_data_00538148 = 0, then
+ *     indirect-call [g_data_00542080] (vtable advance), call
+ *     MStackPush6OpPop6_0048af60. Reads g_data_00542084 cap;
+ *     [g_data_00542058*4] + 0x30000 is the next target; if cap >= that
+ *     target, store target into g_data_00542084 and tail-call
+ *     IndirectDispatchCjStore_0048ae50, then StackPopDispatchTagged_0041f780.
+ *     Else tail-call IndirectDispatchCjStore directly.
+ */
+__declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        xor     ebx, ebx
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], ebx
+        cmp     eax, ebx
+        je      L_p3itc_phase0
+        cmp     byte ptr [g_data_00538148], bl
+        je      short L_p3itc_phase1
+        mov     ecx, dword ptr [g_data_00542058]
+        lea     eax, [ecx*4]
+        cmp     eax, 0x4efe18
+        je      L_p3itc_pauseTail
+        cmp     eax, 0x4eff00
+        je      L_p3itc_pauseTail
+        cmp     eax, 0x4effe8
+        je      L_p3itc_pauseTail
+        cmp     eax, 0x4f00d0
+        je      L_p3itc_pauseTail
+        mov     byte ptr [g_data_00538148], bl
+    L_p3itc_phase1:
+        mov     dword ptr [g_data_0054206c], ebx
+        call    dword ptr [g_data_00542080]
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     L_p3itc_done
+        call    MStackPush6OpPop6_0048af60
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     L_p3itc_done
+        mov     edx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     eax, dword ptr [edx*4]
+        add     eax, 0x30000
+        cmp     ecx, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jl      L_p3itc_dispatchOnly
+        mov     dword ptr [g_data_00542084], eax
+        call    IndirectDispatchCjStore_0048ae50
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     L_p3itc_done
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        pop     ebx
+        ret
+    L_p3itc_phase0:
+        mov     dword ptr [g_data_0054206c], ebx
+        call    dword ptr [g_data_00542080]
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     L_p3itc_done
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [edx*4 + 0x5c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 8], eax
+    L_p3itc_dispatchOnly:
+        call    IndirectDispatchCjStore_0048ae50
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     short L_p3itc_done
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset Phase3InstallTableCheck_0048acd0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p3itc_done:
+        pop     esi
+        pop     ebx
+        ret
+    L_p3itc_pauseTail:
+        call    CallSetPause_0041f830
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
