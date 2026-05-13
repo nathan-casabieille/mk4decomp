@@ -77652,3 +77652,136 @@ __declspec(naked) void PhaseClampInstallSlot_0049e1c0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_0054206c;
+extern void Wrapper_00438ee0(void);
+extern void StateGateMStackOverlap_00438690(void);
+extern void Cmp2CallDirtyCall_004398b0(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void InstallSelfStatePush_00435d40(void);
+extern void Thunk_00435de0(void);
+extern void InstallSelfChainSetB333v2_00437f00(void);
+extern void TripleBlockInstallThresholdMasked_00435df0(void);
+
+__declspec(naked) void TwoEntryStateScalar_00435ba0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_tess_install1
+        jmp     Wrapper_00438ee0
+    L_tess_install1:
+        mov     dword ptr [g_data_00542084], 0x34f5c
+        mov     dword ptr [g_data_00542080], 0x1e
+        mov     dword ptr [eax + 8], offset TwoEntryStateScalar_00435ba0
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset TwoEntryStateScalar_00435ba0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    StateGateMStackOverlap_00438690
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tess_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_tess_dispatch
+        call    Wrapper_00438ee0
+        pop     esi
+        ret
+    L_tess_dispatch:
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        jne     L_tess_setErr
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x10000
+        mov     dword ptr [g_data_0054206c], eax
+        jge     short L_tess_cmp1
+        call    CallPauseTestByteJmpCalls_004390f0
+        pop     esi
+        ret
+    L_tess_cmp1:
+        cmp     eax, 0x13333
+        jge     short L_tess_cmp2
+        call    InstallSelfStatePush_00435d40
+        pop     esi
+        ret
+    L_tess_cmp2:
+        cmp     eax, 0x20000
+        jge     short L_tess_cmp3
+        call    Thunk_00435de0
+        pop     esi
+        ret
+    L_tess_cmp3:
+        cmp     eax, 0x48000
+        jge     short L_tess_cmp4
+        call    InstallSelfChainSetB333v2_00437f00
+        pop     esi
+        ret
+    L_tess_cmp4:
+        cmp     eax, 0x5cccc
+        jge     short L_tess_install2
+        call    TripleBlockInstallThresholdMasked_00435df0
+        pop     esi
+        ret
+    L_tess_install2:
+        mov     dword ptr [g_data_00542084], 0x5cccc
+        mov     dword ptr [g_data_00542080], 0x1e
+        mov     dword ptr [esi + 8], offset L_tess_entry2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_tess_entry2
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    StateGateMStackOverlap_00438690
+        mov     dword ptr [g_data_00541e6c], 1
+    L_tess_setErr:
+        pop     esi
+        ret
+    }
+}
