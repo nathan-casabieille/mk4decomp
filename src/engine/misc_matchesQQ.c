@@ -69083,3 +69083,157 @@ __declspec(naked) void MStackVecSetupScopedRun_004749a0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d20b0;
+extern unsigned int g_data_004d209c;
+extern void StackChkAlloca_004c5dd0(void);
+extern void LseekImpl_004c8e50(void);
+extern void func_004c9b60(void);
+extern void CallAdd8_004c8ba0(void);
+extern void CallAddC_004c8bb0(void);
+
+/* @addr 0x004cef10 (334b crt) - text-mode read-CRLF normalize, ~_lread-style.
+ *   Big stack frame (4100b via StackChkAlloca_004c5dd0). Saves the current
+ *   file position with LseekImpl(fd, 0, 1) and remembers it. Probes the
+ *   file size via LseekImpl(fd, 0, 2). If size > 0, sets up a 4KB scratch
+ *   buffer on the stack, switches the fd to binary via Setmode_004d0b50,
+ *   then loops reading via func_004c9b60 (read), decrementing remaining
+ *   bytes by the amount returned. On EOF or error, dispatches via
+ *   CallAdd8_004c8ba0 / CallAddC_004c8bb0 to set errno=0xd (EBADF) if the
+ *   underlying error code was 5. Finally restores binary→text via Setmode
+ *   again. The smaller branch (size <= 0) makes two direct IAT calls
+ *   [0x4d20b0] and [0x4d209c] (likely SetFilePointer / GetLastError or
+ *   similar) to fall back to the OS handle. Returns ebp (success/-1).
+ */
+__declspec(naked) void TextModeReadStream_004cef10(void) {
+    __asm {
+        mov     eax, 0x1004
+        call    StackChkAlloca_004c5dd0
+        push    ebx
+        mov     ebx, dword ptr [esp + 0x100c]
+        push    ebp
+        push    esi
+        push    edi
+        xor     ebp, ebp
+        push    1
+        push    ebp
+        push    ebx
+        call    LseekImpl_004c8e50
+        mov     edi, eax
+        add     esp, 0xc
+        cmp     edi, -1
+        mov     dword ptr [esp + 0x10], edi
+        je      L_tmr_failEarly
+        push    2
+        push    ebp
+        push    ebx
+        call    LseekImpl_004c8e50
+        add     esp, 0xc
+        cmp     eax, -1
+        je      L_tmr_failEarly
+        mov     ecx, dword ptr [esp + 0x101c]
+        mov     esi, ecx
+        sub     esi, eax
+        test    esi, esi
+        jle     L_tmr_smallBranch
+        mov     ecx, 0x400
+        xor     eax, eax
+        lea     edi, [esp + 0x14]
+        push    0x8000
+        rep stosd
+        push    ebx
+        call    Setmode_004d0b50
+        add     esp, 8
+        mov     edi, eax
+    L_tmr_readLoop:
+        cmp     esi, 0x1000
+        mov     eax, 0x1000
+        jge     short L_tmr_useFull
+        mov     eax, esi
+    L_tmr_useFull:
+        push    eax
+        lea     eax, [esp + 0x18]
+        push    eax
+        push    ebx
+        call    func_004c9b60
+        add     esp, 0xc
+        cmp     eax, -1
+        je      short L_tmr_readErr
+        sub     esi, eax
+        test    esi, esi
+        jle     short L_tmr_readDone
+        jmp     short L_tmr_readLoop
+    L_tmr_readErr:
+        call    CallAddC_004c8bb0
+        cmp     dword ptr [eax], 5
+        jne     short L_tmr_setErrTail
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 0xd
+    L_tmr_setErrTail:
+        or      ebp, 0xffffffff
+    L_tmr_readDone:
+        push    edi
+        push    ebx
+        call    Setmode_004d0b50
+        mov     edi, dword ptr [esp + 0x18]
+        add     esp, 8
+        push    0
+        push    edi
+        push    ebx
+        call    LseekImpl_004c8e50
+        add     esp, 0xc
+        mov     eax, ebp
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x1004
+        ret
+    L_tmr_smallBranch:
+        jge     short L_tmr_restoreOnly
+        push    0
+        push    ecx
+        push    ebx
+        call    LseekImpl_004c8e50
+        add     esp, 0xc
+        push    ebx
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        push    eax
+        call    dword ptr [g_data_004d20b0]
+        mov     ebp, eax
+        neg     ebp
+        sbb     ebp, ebp
+        neg     ebp
+        dec     ebp
+        cmp     ebp, -1
+        jne     short L_tmr_restoreOnly
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 0xd
+        call    dword ptr [g_data_004d209c]
+        mov     esi, eax
+        call    CallAddC_004c8bb0
+        mov     dword ptr [eax], esi
+    L_tmr_restoreOnly:
+        push    0
+        push    edi
+        push    ebx
+        call    LseekImpl_004c8e50
+        add     esp, 0xc
+        mov     eax, ebp
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x1004
+        ret
+    L_tmr_failEarly:
+        pop     edi
+        pop     esi
+        pop     ebp
+        or      eax, 0xffffffff
+        pop     ebx
+        add     esp, 0x1004
+        ret
+    }
+}

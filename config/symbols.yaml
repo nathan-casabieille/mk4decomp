@@ -16206,10 +16206,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cef10
-    name: func_004cef10
+    name: TextModeReadStream_004cef10
     size: 334
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf060
     name: func_004cf060
     size: 820
