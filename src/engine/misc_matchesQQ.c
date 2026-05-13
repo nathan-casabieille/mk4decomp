@@ -71861,3 +71861,146 @@ __declspec(naked) void OpcodeStreamDispatch_00423ea0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00537f30;
+extern unsigned int g_data_0052d724;
+extern void func_0042d240(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void func_00420300(void);
+extern void func_00422110(void);
+extern void func_0042b2f0(void);
+extern void CallPauseClear3CallTriple_00428030(void);
+extern void ScaledInit_0048f720(void);
+extern void CopyJmp_00406ba0(void);
+extern void ScaledZero44_00491500(void);
+extern void MStackPushSet0001_00490260(void);
+extern void MStackPushSet0004_00490230(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
+/* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
+ *   Entry 1 (offset 0, 277b): phase-state install.
+ *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
+ *       g_data_0054206c with g_data_004f3608. If equal, tail-call
+ *       func_0042d240. Else bumps g_data_00537f30 by 1, calls
+ *       CallPauseClear3CallTriple_00428030, then chains
+ *       ScenegraphWalk_0041f7d0 + func_00420300.
+ *     Phase 0: g_data_0052d724=1, reads g_data_0052ab40 and tests
+ *       bit 3; if clear calls func_00422110. Either way installs Self
+ *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
+ *       bumped scaled slot, calls func_0042b2f0, arms 0x541e6c=1.
+ *   11b NOP align pad.
+ *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_0048f720,
+ *     CopyJmp_00406ba0, ScaledZero44_00491500, ScaledZeroFour_00490740,
+ *     MStackPushSet0001_00490260, MStackPushSet0004_00490230), each
+ *     gated by 0x541e6c. On full success, tail-jmps
+ *     ScaledInitWithCounterAndType_004314f0.
+ */
+__declspec(naked) void Phase3InstallSelfChain_00421380(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_pis2_phase0
+        call    SwapOrPassSet_0048fbf0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis2_done
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_data_004f3608]
+        cmp     ecx, eax
+        jne     short L_pis2_advance
+        call    func_0042d240
+        pop     esi
+        ret
+    L_pis2_advance:
+        mov     edx, dword ptr [g_data_00537f30]
+        lea     eax, [edx + 1]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00537f30], eax
+        call    CallPauseClear3CallTriple_00428030
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis2_done
+        call    ScenegraphWalk_0041f7d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis2_done
+        call    func_00420300
+        pop     esi
+        ret
+    L_pis2_phase0:
+        mov     eax, dword ptr [g_data_0052ab40]
+        mov     dword ptr [g_data_0052d724], 1
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 8
+        mov     dword ptr [g_data_00542094], eax
+        jne     short L_pis2_skipCall
+        call    func_00422110
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_done
+    L_pis2_skipCall:
+        mov     dword ptr [esi + 8], offset Phase3InstallSelfChain_00421380
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset Phase3InstallSelfChain_00421380
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    func_0042b2f0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_pis2_done:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x120) */
+    L_pis2_entry2:
+        call    ScaledInit_0048f720
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        call    ScaledZero44_00491500
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        call    MStackPushSet0001_00490260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        call    MStackPushSet0004_00490230
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis2_e2End
+        jmp     ScaledInitWithCounterAndType_004314f0
+    L_pis2_e2End:
+        ret
+    }
+}
