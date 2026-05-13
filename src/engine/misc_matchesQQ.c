@@ -70415,3 +70415,158 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004ed9c0;
+extern unsigned int g_data_004eda00;
+extern unsigned int g_data_004eda30;
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void GateDispatch6c_00494580(void);
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void Wrapper_0048a350(void);
+extern void Wrapper_00488c60(void);
+extern void func_00482000(void);
+
+/* @addr 0x00481d40 (368b game) - 4-entry packed alarm + install body.
+ *   Entry 1 (offset 0, 66b): clears g_data_0054207c=0 → chain
+ *     EntryThunkBodyStateMachine_00457bb0 → GateDispatch6c_00494580 →
+ *     push 0x4ed9c0 → ArgSarStoreJmp_004594f0 → tail-jmp
+ *     Wrapper_00488c60.
+ *   14b NOP align pad.
+ *   Entry 2 (offset 0x50, 94b): sets g_data_0054206c=0x9999 → chain
+ *     CmpP1DualInitStore_00482ab0 → CjTableThresholdDispatch_00488f00 →
+ *     GateDispatch6c_00494580 → Wrapper_0048a350 → push 0x4eda00 →
+ *     ArgSarStoreJmp → tail-jmp Wrapper_00488c60.
+ *   2b NOP align pad.
+ *   Entry 3 (offset 0xb0, 56b): chain CjTableThresholdDispatch_00488f00 →
+ *     GateDispatch6c_00494580 → push 0x4eda30 → ArgSarStoreJmp →
+ *     tail-jmp Wrapper_00488c60.
+ *   8b NOP align pad.
+ *   Entry 4 / body (offset 0xf0, 128b): phase-state install. Phase != 0
+ *     tail-jmps FiveCallGuardSetTail_0046f6b0. Phase 0 installs Self at
+ *     body, slot[+0x84]=1, packs (Self + 0x01000000) at the bumped
+ *     scaled slot, calls func_00482000, arms 0x541e6c=1.
+ */
+__declspec(naked) void Alarm4EntryInstallChain_00481d40(void) {
+    __asm {
+        mov     dword ptr [g_data_0054207c], 0
+        call    EntryThunkBodyStateMachine_00457bb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e1End
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e1End
+        push    offset g_data_004ed9c0
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_aei_e1End
+        jmp     Wrapper_00488c60
+    L_aei_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x50) */
+    L_aei_entry2:
+        mov     dword ptr [g_data_0054206c], 0x9999
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e2End
+        call    CjTableThresholdDispatch_00488f00
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e2End
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e2End
+        call    Wrapper_0048a350
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e2End
+        push    offset g_data_004eda00
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_aei_e2End
+        jmp     Wrapper_00488c60
+    L_aei_e2End:
+        ret
+        nop
+        nop
+        /* entry 3 (offset 0xb0) */
+    L_aei_entry3:
+        call    CjTableThresholdDispatch_00488f00
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e3End
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e3End
+        push    offset g_data_004eda30
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_aei_e3End
+        jmp     Wrapper_00488c60
+    L_aei_e3End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 / body (offset 0xf0) */
+    L_aei_body:
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_aei_phase0
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_aei_phase0:
+        mov     dword ptr [eax + 8], offset L_aei_body
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset L_aei_body
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    func_00482000
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+    }
+}
