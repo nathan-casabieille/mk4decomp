@@ -60086,6 +60086,152 @@ extern unsigned int g_data_00f9fc20;
 extern void *g_iat_004d2130;
 extern void *g_iat_004d2134;
 extern void *g_iat_004d20e4;
+extern unsigned int g_data_00522620;
+extern unsigned int g_data_00522640;
+extern void TestHandleBit_004cc2b0(void);
+
+/* @addr 0x004c77f0 (304b crt) - CRT _flsbuf: flush stream buffer, writing single byte.
+ *   Reads FILE flags, validates 0x82 set and 0x40 clear; for "type 1" (alloc'd):
+ *     reset buffer ptr to start, set flag bits 2/0x10. Special-case stdout/stderr
+ *     (g_data_00522620/g_data_00522640): fflush via TestHandleBit, allocate stream
+ *     via StreamAllocInit_004cc250. Final write via IOWrapper_004c9ae0; check FD
+ *     console flag (0x20 in [fd*9+...]+4), call IOWrapper_004c8dd0(b, fd, 2) if set.
+ *   Returns byte (or 0xff on error).
+ */
+__declspec(naked) void Flsbuf_004c77f0(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, [esp + 0x14]
+        push    edi
+        mov     eax, [esi + 0xc]
+        mov     ebp, [esi + 0x10]
+        test    al, 0x82
+        jz      L_fls_errFlag
+        test    al, 0x40
+        jne     L_fls_errFlag
+        xor     ebx, ebx
+        test    al, 1
+        jz      short L_fls_setMode
+        test    al, 0x10
+        mov     [esi + 4], ebx
+        jz      L_fls_errFlag
+        mov     ecx, [esi + 8]
+        and     al, 0xfe
+        mov     [esi], ecx
+        mov     [esi + 0xc], eax
+    L_fls_setMode:
+        mov     eax, [esi + 0xc]
+        mov     [esi + 4], ebx
+        and     al, 0xef
+        or      al, 2
+        test    eax, 0x10c
+        mov     [esi + 0xc], eax
+        jne     short L_fls_skipAlloc
+        cmp     esi, offset g_data_00522620
+        jz      short L_fls_flushReq
+        cmp     esi, offset g_data_00522640
+        jne     short L_fls_doAlloc
+    L_fls_flushReq:
+        push    ebp
+        call    TestHandleBit_004cc2b0
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fls_skipAlloc
+    L_fls_doAlloc:
+        push    esi
+        call    StreamAllocInit_004cc250
+        add     esp, 4
+    L_fls_skipAlloc:
+        test    dword ptr [esi + 0xc], 0x108
+        jz      short L_fls_singleByte
+        mov     eax, [esi + 8]
+        mov     edi, [esi]
+        mov     ecx, [esi + 0x18]
+        sub     edi, eax
+        lea     edx, [eax + 1]
+        dec     ecx
+        cmp     edi, ebx
+        mov     [esi], edx
+        mov     [esi + 4], ecx
+        jle     short L_fls_consoleCk
+        push    edi
+        push    eax
+        push    ebp
+        call    IOWrapper_004c9ae0
+        mov     edx, [esi + 8]
+        mov     ebx, eax
+        mov     al, byte ptr [esp + 0x20]
+        add     esp, 0xc
+        mov     [edx], al
+        jmp     short L_fls_checkResult
+    L_fls_consoleCk:
+        cmp     ebp, -1
+        jz      short L_fls_useDefault
+        mov     edx, ebp
+        mov     eax, ebp
+        sar     edx, 5
+        and     eax, 0x1f
+        mov     ecx, dword ptr [edx*4 + g_data_00fa0de0]
+        lea     eax, [eax + eax*8]
+        lea     eax, [ecx + eax*4]
+        jmp     short L_fls_haveFd
+    L_fls_useDefault:
+        mov     eax, offset g_data_005222e0
+    L_fls_haveFd:
+        test    byte ptr [eax + 4], 0x20
+        jz      short L_fls_skipLseek
+        push    2
+        push    ebx
+        push    ebp
+        call    IOWrapper_004c8dd0
+        add     esp, 0xc
+    L_fls_skipLseek:
+        mov     edx, [esi + 8]
+        mov     al, byte ptr [esp + 0x14]
+        mov     [edx], al
+        jmp     short L_fls_checkResult
+    L_fls_singleByte:
+        mov     edi, 1
+        lea     ecx, [esp + 0x14]
+        push    edi
+        push    ecx
+        push    ebp
+        call    IOWrapper_004c9ae0
+        add     esp, 0xc
+        mov     ebx, eax
+    L_fls_checkResult:
+        cmp     ebx, edi
+        jz      short L_fls_ok
+        mov     eax, [esi + 0xc]
+        or      al, 0x20
+        mov     [esi + 0xc], eax
+        or      eax, -1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_fls_ok:
+        mov     eax, [esp + 0x14]
+        and     eax, 0xff
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_fls_errFlag:
+        or      al, 0x20
+        pop     edi
+        mov     [esi + 0xc], eax
+        pop     esi
+        pop     ebp
+        or      eax, -1
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004d0f50 (304b other) - CRT mbstowcs / mb-to-wide convert dispatcher.
  *   Caches result of GetCPInfo (or similar) in g_data_00f9fd9c (1/2 state).

@@ -15490,10 +15490,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c77f0
-    name: func_004c77f0
+    name: Flsbuf_004c77f0
     size: 304
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c7920
     name: func_004c7920
     size: 1824
