@@ -68080,3 +68080,131 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00542098;
+extern void DualGatedStateYield_0048fc80(void);
+extern void Set1dCallSet16Jmp_004809b0(void);
+extern void ScaledChain3c7c_0048f930(void);
+extern void func_00496d80(void);
+extern void NotMaskStorePair_0045f440(void);
+extern void Install3WayChainCounter_004809e0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
+/* @addr 0x00480840 (356b game) - countdown loop install-self w/ 3-way tails.
+ *   On phase = [scaled g_data_00542060+0x84] == 0 jumps direct to install
+ *   tail. Else runs a polling loop:
+ *     DualGatedStateYield_0048fc80 → on success decrement g_data_00542080
+ *     and update g_data_00542098 (sete on dec result), if <= 0 sets it
+ *     to 0xc. If g_data_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
+ *     If g_data_00542088 == 1 tail-jmp Install3WayChainCounter_004809e0.
+ *     Else calls ScaledChain3c7c_0048f930. If g_data_0054206c >= 3
+ *     tail-jmp Install3WayChainCounter; else sets g_data_0054206c=0xb333
+ *     and calls EsiEdiAliasDualMul10_004906b0, sets g_data_00542088=0x9999,
+ *     calls func_00496d80, then NotMaskStorePair_0045f440. Selects
+ *     g_data_00542074 = 1 (if 0x54205c == g_data_00538158) or 0x10,
+ *     AND's with g_data_00542070 → g_data_00542094; if zero tail-jmp
+ *     FiveCallGuardSetTail_0046f6b0; else continues loop iteration by
+ *     re-reading phase and jumping back if non-zero. Install tail:
+ *     [eax+8]=Self, slot[+0x84]=1, g_data_0054204c=1, 0x541e6c=1.
+ */
+__declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    ebp
+        push    esi
+        shl     eax, 2
+        push    edi
+        xor     edi, edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edi
+        cmp     ecx, edi
+        mov     ebx, 1
+        je      L_cis_install
+        mov     ebp, 0x9999
+    L_cis_loopTop:
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     L_cis_done
+        mov     eax, dword ptr [g_data_00542080]
+        mov     ecx, 0
+        dec     eax
+        sete    cl
+        cmp     eax, edi
+        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_data_00542098], ecx
+        jg      short L_cis_skipReset
+        mov     eax, 0xc
+        mov     dword ptr [g_data_00542080], eax
+    L_cis_skipReset:
+        cmp     ecx, edi
+        mov     esi, eax
+        je      short L_cis_skipCall1
+        call    Set1dCallSet16Jmp_004809b0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_cis_done
+    L_cis_skipCall1:
+        cmp     dword ptr [g_data_00542088], ebx
+        je      L_cis_call9e0
+        call    ScaledChain3c7c_0048f930
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_cis_done
+        cmp     dword ptr [g_data_0054206c], 3
+        jge     L_cis_call9e0
+        mov     dword ptr [g_data_0054206c], 0xb333
+        call    EsiEdiAliasDualMul10_004906b0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_cis_done
+        mov     dword ptr [g_data_00542088], ebp
+        call    func_00496d80
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_cis_done
+        call    NotMaskStorePair_0045f440
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_cis_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00538158]
+        mov     eax, ebx
+        cmp     ecx, edx
+        mov     dword ptr [g_data_00542080], esi
+        mov     dword ptr [g_data_00542074], eax
+        je      short L_cis_pickEax
+        mov     eax, 0x10
+        mov     dword ptr [g_data_00542074], eax
+    L_cis_pickEax:
+        and     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542094], eax
+        je      short L_cis_call6b0
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [edx*4 + 0x84]
+        lea     eax, [edx*4]
+        cmp     ecx, edi
+        mov     dword ptr [eax + 0x84], edi
+        jne     L_cis_loopTop
+    L_cis_install:
+        mov     dword ptr [eax + 8], offset CountdownInstallSelfMultiTail_00480840
+        mov     dword ptr [eax + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_cis_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_cis_call9e0:
+        call    Install3WayChainCounter_004809e0
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_cis_call6b0:
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}

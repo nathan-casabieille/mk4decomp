@@ -8688,10 +8688,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00480840
-    name: func_00480840
+    name: CountdownInstallSelfMultiTail_00480840
     size: 356
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004809b0
     name: Set1dCallSet16Jmp_004809b0
     size: 40
