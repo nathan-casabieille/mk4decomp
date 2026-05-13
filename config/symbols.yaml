@@ -11981,10 +11981,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f3a0
-    name: func_0049f3a0
+    name: IndirectOpcodeDispatch3Entry_0049f3a0
     size: 386
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f530
     name: IndirectDispatch3Entry_0049f530
     size: 354

@@ -73993,3 +73993,133 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         ret
     }
 }
+
+/* @addr 0x0049f3a0 (386b game) - 3-entry packed sibling of IndirectDispatch3Entry.
+ *   Same shape as 0x0049f530 (which I matched earlier) but with a 7-way
+ *   opcode switch (0xb/0x10/0x11/0x12/0xf as direct pauses, 0..5 fallback
+ *   +5, 6..a fallback +5, b..f fallback +4, else pause). The middle of
+ *   the state-machine has a more extensive `cmp eax, K / je pause`
+ *   ladder, but the indirect-call setup is identical.
+ *   Entry 2 (offset 0x130, 34b): on g_data_00541d88 != 0 tail-jmp
+ *     CallSetPause_0041f830; else zero g_data_00535e48 and tail-jmp
+ *     0x49f530 (IndirectStateDispatcher).
+ *   Entry 3 (offset 0x160, 34b): mirror with g_data_00537ea8 and
+ *     g_data_00535e48 = 1.
+ */
+__declspec(naked) void IndirectOpcodeDispatch3Entry_0049f3a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00541fc0]
+        mov     ecx, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_data_00542048], eax
+        add     eax, ecx
+        push    ebx
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], eax
+        call    eax
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_iod_done
+        mov     al, byte ptr [g_data_0054208c]
+        mov     bl, 1
+        test    al, bl
+        je      L_iod_freshPath
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4]
+        cmp     eax, 0xb
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_iod_freshPath
+    L_iod_loopHead:
+        cmp     eax, 0x10
+        je      L_iod_freshPath
+        cmp     eax, 0x11
+        je      L_iod_freshPath
+        cmp     eax, 0x12
+        je      L_iod_freshPath
+        cmp     eax, 0xf
+        je      L_iod_freshPath
+        cmp     eax, 5
+        jbe     short L_iod_plus5
+        cmp     eax, 0xa
+        jbe     short L_iod_plus5
+        cmp     eax, 0xf
+        ja      L_iod_freshPath
+        add     eax, 4
+        jmp     short L_iod_stash
+    L_iod_plus5:
+        add     eax, 5
+    L_iod_stash:
+        mov     dword ptr [g_data_0054206c], eax
+        call    LinkedListIndirectDirtyToggle_0049f7b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_iod_done
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_iod_writeCx
+        mov     eax, dword ptr [g_data_0054206c]
+        cmp     eax, 0xb
+        jne     L_iod_loopHead
+        call    CallSetPause_0041f830
+        pop     ebx
+        ret
+    L_iod_writeCx:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_data_00542070], edx
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_iod_done
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_iod_done
+    L_iod_freshPath:
+        call    CallSetPause_0041f830
+    L_iod_done:
+        pop     ebx
+        ret
+        nop
+        nop
+    L_iod_entry2:
+        mov     eax, dword ptr [g_data_00541d88]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_iod_e2zero
+        jmp     CallSetPause_0041f830
+    L_iod_e2zero:
+        mov     dword ptr [g_data_00535e48], 0
+        jmp     IndirectDispatch3Entry_0049f530
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_iod_entry3:
+        mov     eax, dword ptr [g_data_00537ea8]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_iod_e3one
+        jmp     CallSetPause_0041f830
+    L_iod_e3one:
+        mov     dword ptr [g_data_00535e48], 1
+        jmp     IndirectDispatch3Entry_0049f530
+    }
+}
