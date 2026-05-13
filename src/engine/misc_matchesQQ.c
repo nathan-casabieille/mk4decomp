@@ -50853,3 +50853,92 @@ __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
         ret
     }
 }
+
+extern void DoubleStackPushAndJmp7d_00474050(void);
+extern unsigned int g_data_0052d718;
+extern unsigned int g_data_0052d71c;
+extern unsigned int g_data_0052d720;
+extern unsigned int g_data_0052d740;
+extern unsigned int g_data_0052d744;
+extern unsigned int g_data_0052d748;
+
+/* @addr 0x00440730 (324b game) - audio bridge: rescale + bit0 gate + mstack-push 3 + scaledInit copy. */
+__declspec(naked) void AudioBridgeMStackChainCopy_00440730(void) {
+    __asm {
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   31h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   0fh
+        _emit   84h
+        _emit   24h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, offset g_data_0052d718
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        shr     edx, 2
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0052d718], ecx
+        mov     ecx, dword ptr [eax*4 + 0x70]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0052d71c], ecx
+        mov     ecx, dword ptr [eax*4 + 0x74]
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0052d720], ecx
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0052d740], ecx
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0052d744], ecx
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0052d748], eax
+        mov     eax, offset g_data_0052d740
+        shr     eax, 2
+        mov     dword ptr [g_x_00542058], eax
+        call    DoubleStackPushAndJmp7d_00474050
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3eh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

@@ -4759,10 +4759,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x00440730
-    name: func_00440730
+    name: AudioBridgeMStackChainCopy_00440730
     size: 324
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00440880
     name: GuardedCascadeCjSetMul10_00440880
     size: 257
