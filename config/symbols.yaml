@@ -15101,10 +15101,11 @@ functions:
     status: matched
     file: src/boot/create_window.c
   - addr: 0x004c51f0
-    name: func_004c51f0
+    name: BootAuxAudioReferenceProbe_004c51f0
     size: 171
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c52a0
     name: PumpMessages
     size: 265
