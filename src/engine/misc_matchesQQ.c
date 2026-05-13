@@ -75713,3 +75713,131 @@ __declspec(naked) void ClampNegPair_0049a170(void)
         ret
     }
 }
+
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_004dfd18;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0053a7b0;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_0054204c;
+extern void Push16Call_00489f50(void);
+extern void func_00498900(void);
+extern void AndStorePushCallZero_0048a220(void);
+extern void CallSetPause_0041f830(void);
+
+__declspec(naked) void TwinMStackPushScaledChain_00422110(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_0053a51c]
+        mov     eax, offset g_data_004dfd18
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4]
+        add     eax, 3
+        mov     dword ptr [g_data_00542074], eax
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tmpsc_ret1
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    func_00498900
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tmpsc_ret1
+        call    AndStorePushCallZero_0048a220
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tmpsc_ret1
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        sub     eax, 2
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_0053a7b0], 0
+    L_tmpsc_ret1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tmpsc_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_tmpsc_install
+        mov     eax, dword ptr [g_data_0052ab40]
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 8
+        mov     dword ptr [g_data_00542094], eax
+        jne     short L_tmpsc_doJmp
+        mov     eax, dword ptr [g_data_0053a430]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_tmpsc_doJmp
+        mov     ecx, dword ptr [g_data_0053a51c]
+        mov     eax, offset g_data_004dfd18
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4]
+        add     ecx, 2
+        mov     dword ptr [g_data_00542074], ecx
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tmpsc_ret2
+    L_tmpsc_doJmp:
+        jmp     CallSetPause_0041f830
+    L_tmpsc_install:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_tmpsc_entry2
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0x28
+        mov     dword ptr [g_data_00541e6c], ecx
+    L_tmpsc_ret2:
+        ret
+    }
+}

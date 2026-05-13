@@ -1820,10 +1820,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00422110
-    name: func_00422110
+    name: TwinMStackPushScaledChain_00422110
     size: 399
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004222a0
     name: GlobalsResetInit_004222a0
     size: 224
