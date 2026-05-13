@@ -6597,10 +6597,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00461090
-    name: func_00461090
+    name: SixEntryYieldThunks_00461090
     size: 389
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461220
     name: CallPauseScaledStoreCopyJmp_00461220
     size: 50

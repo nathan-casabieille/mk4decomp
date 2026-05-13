@@ -74249,3 +74249,153 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         ret
     }
 }
+
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void StateDispatchYield_00471190(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void CallPauseScaledStorePushCall_0045fca0(void);
+
+/* @addr 0x00461090 (389b game) - 6-entry packed: alarm/yield + 4 thunks.
+ *   Entry 1 (offset 0, 142b): FlagCascadeStateSet_0048ec30. If bit 0 of
+ *     0x54208c set: set 0x54206c=7 and tail-jmp StateDispatchYield_00471190.
+ *     Else compare g_data_00535ddc against 0xcccc; if gt: set 0x54206c=5
+ *     and tail-jmp StateDispatchYield. Else MStackPush3CmpCall_0048eec0
+ *     + ScaledChain3c74_0048f910. Compare 0x54206c against 0x4005 or
+ *     0x4001 → tail-jmp StateDispatchYield with 5; else tail-jmp with 0xc.
+ *   2b NOP align pad.
+ *   Entry 2 (offset 0x90, 15b): set 0x54206c=1 and tail-jmp
+ *     StateDispatchYield_00471190.
+ *   1b NOP align pad.
+ *   Entry 3 (offset 0xa0, 90b): read [scaled+0x30]; if zero or non-0x60
+ *     skip ahead; if 0x60 set 0x54207c=0x40019 and tail-jmp
+ *     PrefixThunkInstallSelf3State_0045f650; else mstack-push 0x45fca0
+ *     (function pointer) with state 8 and tail-jmp
+ *     MstackPopScaledChainPlusThunks_00471250.
+ *   6b NOP align pad.
+ *   Entry 4 (offset 0x100, 37b): mstack-push 0x45fca0 with state 9.
+ *   11b NOP align pad.
+ *   Entry 5 (offset 0x130, 37b): mstack-push 0x45fca0 with state 6.
+ *   11b NOP align pad.
+ *   Entry 6 (offset 0x160, 37b): mstack-push 0x45fca0 with state 7.
+ */
+__declspec(naked) void SixEntryYieldThunks_00461090(void) {
+    __asm {
+        call    FlagCascadeStateSet_0048ec30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sey_e1End
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_sey_checkDdc
+        mov     dword ptr [g_data_0054206c], 7
+        jmp     StateDispatchYield_00471190
+    L_sey_checkDdc:
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0xcccc
+        mov     dword ptr [g_data_0054206c], eax
+        jg      short L_sey_yield5
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sey_e1End
+        test    byte ptr [g_data_0054208c], 1
+        jne     short L_sey_yield5
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sey_e1End
+        mov     eax, dword ptr [g_data_0054206c]
+        cmp     eax, 0x4005
+        je      short L_sey_yield5
+        cmp     eax, 0x4001
+        jne     short L_sey_yieldC
+    L_sey_yield5:
+        mov     dword ptr [g_data_0054206c], 5
+        jmp     StateDispatchYield_00471190
+    L_sey_yieldC:
+        mov     dword ptr [g_data_0054206c], 0xc
+        jmp     StateDispatchYield_00471190
+    L_sey_e1End:
+        ret
+        nop
+        nop
+        /* entry 2 (offset 0x90) */
+    L_sey_entry2:
+        mov     dword ptr [g_data_0054206c], 1
+        jmp     StateDispatchYield_00471190
+        nop
+        /* entry 3 (offset 0xa0) */
+    L_sey_entry3:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_sey_e3push8
+        mov     eax, dword ptr [eax*4]
+        cmp     eax, 0x60
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_sey_e3push8
+        mov     dword ptr [g_data_0054207c], 0x40019
+        jmp     PrefixThunkInstallSelf3State_00438f80
+    L_sey_e3push8:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], 8
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseScaledStorePushCall_0045fca0
+        jmp     MstackPopScaledChainPlusThunks_00471250
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 (offset 0x100) */
+    L_sey_entry4:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], 9
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseScaledStorePushCall_0045fca0
+        jmp     MstackPopScaledChainPlusThunks_00471250
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 5 (offset 0x130) */
+    L_sey_entry5:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], 6
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseScaledStorePushCall_0045fca0
+        jmp     MstackPopScaledChainPlusThunks_00471250
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 6 (offset 0x160) */
+    L_sey_entry6:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], 7
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseScaledStorePushCall_0045fca0
+        jmp     MstackPopScaledChainPlusThunks_00471250
+    }
+}
