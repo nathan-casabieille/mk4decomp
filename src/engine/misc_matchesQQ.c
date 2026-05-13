@@ -63600,6 +63600,117 @@ __declspec(naked) void SWRendererInit_004b2950(void) {
 extern unsigned int g_data_005420c8;
 extern unsigned int g_data_00541f98;
 extern void func_00401000(void);
+extern unsigned int g_data_00542094;
+extern void func_00408e70(void);
+
+/* @addr 0x00408d30 (312b boot) - bundled 3 sub-functions in boot group.
+ *   sub-1 (~140b @ 0x408d30): state validation chain - sets bit2 of g_state_0054208c
+ *     and walks index chain through up to 4 levels; if any level fails, restores
+ *     the bit2 flag via xor.
+ *   sub-2 (~29b @ 0x408dc0): sets bit 0x400 of high byte of [g_data_00542048]'s
+ *     table entry.
+ *   sub-3 (~138b @ 0x408de0): per-frame chain iterator - walks dim-list at
+ *     [g_data_00542044+0x1c], processes each non-null entry via func_00408e70,
+ *     guarded by g_data_00541e6c == 0.
+ */
+__declspec(naked) void BootStateTriple_00408d30(void) {
+    __asm {
+        /* sub-1 */
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, 4
+        mov     eax, [eax*4 + 0x1c]
+        or      edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_state_0054208c], edx
+        jz      short L_bst1_end
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        jz      short L_bst1_end
+        mov     edx, dword ptr [g_data_0054206c]
+        add     eax, edx
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_data_00542044], eax
+        or      edx, ecx
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_state_0054208c], edx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        jz      short L_bst1_end
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        jle     short L_bst1_end
+        mov     eax, [eax*4 + 0x28]
+        or      edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_state_0054208c], edx
+        jz      short L_bst1_end
+        mov     eax, edx
+        xor     eax, ecx
+        mov     dword ptr [g_state_0054208c], eax
+    L_bst1_end:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2 */
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, [ecx*4]
+        or      ah, 4
+        mov     dword ptr [g_data_0054206c], eax
+        mov     [ecx*4], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-3 */
+        mov     ecx, dword ptr [g_data_00542044]
+        push    esi
+        mov     eax, [ecx*4 + 0x1c]
+        test    eax, eax
+        jz      short L_bst3_endTail
+        mov     dword ptr [g_data_0054205c], eax
+        mov     ecx, [ecx*4 + 0x34]
+        and     ecx, 0x800
+        mov     dword ptr [g_data_00542094], ecx
+        jne     short L_bst3_endTail
+        mov     esi, [eax*4]
+        inc     eax
+        dec     esi
+        mov     dword ptr [g_data_0054205c], eax
+        js      short L_bst3_endTail
+    L_bst3_loop:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, [ecx*4]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054205c], ecx
+        jle     short L_bst3_skipBody
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, [eax*4 + 0x28]
+        test    eax, eax
+        mov     dword ptr [g_data_00542048], eax
+        jz      short L_bst3_skipBody
+        call    func_00408e70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bst3_popRet
+    L_bst3_skipBody:
+        dec     esi
+        jns     short L_bst3_loop
+    L_bst3_endTail:
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+    L_bst3_popRet:
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x00408190 (312b boot) - boot frame setup with mstack push/pop of 3 frames.
  *   Pushes g_data_00542044/0x42048/0x4204c via mstack, updates state struct via
