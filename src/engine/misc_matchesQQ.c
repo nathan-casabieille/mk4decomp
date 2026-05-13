@@ -63596,3 +63596,89 @@ __declspec(naked) void SWRendererInit_004b2950(void) {
         ret
     }
 }
+
+extern unsigned int g_data_005420c8;
+extern unsigned int g_data_00541f98;
+extern void func_00401000(void);
+
+/* @addr 0x00408190 (312b boot) - boot frame setup with mstack push/pop of 3 frames.
+ *   Pushes g_data_00542044/0x42048/0x4204c via mstack, updates state struct via
+ *   g_data_0054205c+0x24/0x28, calls func_00401000(0xfffffffd, args) to init,
+ *   walks chain via [esi*4+0x2c] (default to g_data_005420c8>>2),
+ *   then calls TripleSubVec3_004250f0 + func_00408350 (each guarded by
+ *   g_data_00541e6c == 0). Pops 3 mstack frames.
+ */
+__declspec(naked) void BootFrameSetup_00408190(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        push    1
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x28], edx
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     esi, dword ptr [g_data_0054205c]
+        push    eax
+        push    ecx
+        mov     dword ptr [g_data_0054205c], 0xfffffffd
+        call    func_00401000
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_0054205c], esi
+        mov     esi, dword ptr [esi*4 + 0x2c]
+        add     esp, 0x0c
+        test    esi, esi
+        mov     dword ptr [g_data_00542048], esi
+        jne     short L_bfs_haveEsi
+        mov     edx, offset g_data_005420c8
+        shr     edx, 2
+        mov     dword ptr [g_data_00542048], edx
+    L_bfs_haveEsi:
+        mov     eax, dword ptr [g_data_00541f98]
+        mov     dword ptr [g_data_00542044], eax
+        call    TripleSubVec3_004250f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bfs_pop
+        call    func_00408350
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bfs_pop
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     dword ptr [edx*4 + 0x2c], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bfs_pop:
+        pop     esi
+        ret
+    }
+}
