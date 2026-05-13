@@ -8996,10 +8996,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00484950
-    name: func_00484950
+    name: Install3StateSiblingTail_00484950
     size: 316
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484a90
     name: InstallSelfTri_00484a90
     size: 111

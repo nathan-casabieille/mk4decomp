@@ -50272,3 +50272,96 @@ __declspec(naked) void MStackPush3CallChainBit2_004431e0(void) {
         ret
     }
 }
+
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledAndAl7f_004902f0(void);
+
+/* @addr 0x00484950 (316b game) - 3-state install-self with tail sibling. */
+__declspec(naked) void Install3StateSiblingTail_00484950(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        _emit   0fh
+        _emit   84h
+        _emit   89h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   08h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     edi
+        pop     esi
+        ret
+        push    0x00542bb4
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        cmp     eax, edi
+        _emit   0fh
+        _emit   85h
+        _emit   0d2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_data_00542070], edi
+        mov     dword ptr [esi + 8], offset Install3StateSiblingTail_00484950
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset Install3StateSiblingTail_00484950
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edi
+        call    CallPauseScaledStoreJmp_00428820
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x28]
+        mov     ecx, offset Install3StateSiblingTail_00484950
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [esi + 8], offset Install3StateSiblingTail_00484950
+        mov     eax, dword ptr [g_baseSel_00542060]
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    CallPauseScaledStoreJmp_00428820
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+        _emit   90h
+        call    ScaledAndAl7f_004902f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee8d0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
