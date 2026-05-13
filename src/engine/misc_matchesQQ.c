@@ -59129,6 +59129,114 @@ extern void func_004c6e60_helper(void);  /* placeholder; tail call from 0x4ccf90
 extern unsigned int g_data_00520134;
 extern unsigned int g_data_00f9f8b8;
 extern void HeapRegionTeardown_004c7240(void);
+extern unsigned int g_data_00fa0dc0;
+extern unsigned int *g_data_00f9fdb4;  /* pointer to heap-region array */
+extern void TwoPathIATDispatch_004c7030(void);
+extern void TwoPathIATDispatch_004c70a0(void);
+extern void TableLookupIatCall_004c6fd0(void);
+
+/* @addr 0x004c9440 (217b crt) - heap-region scan with per-slot init.
+ *   Lock(2). For esi=0..[g_data_00fa0dc0]-1:
+ *     slot = (*g_data_00f9fdb4)[esi]
+ *     If slot == 0: allocate 0x38 bytes via LoadArgPushCall_004c54b0,
+ *       store into slot; init critsec at slot+0x20 via IAT[0x4d215c],
+ *       acquire via IAT[0x4d2140], reload slot ptr into edi, fall to finalize.
+ *     Else:
+ *       If [slot+0xc] & 0x83 == 0: call TwoPathIATDispatch_004c7030(esi, slot),
+ *         reload slot, recheck [slot+0xc] & 0x83;
+ *         if zero: edi = slot, jmp finalize;
+ *         else: call TwoPathIATDispatch_004c70a0(esi, slot), continue iter.
+ *       Else: skip helper, continue iter.
+ *   Finalize: if edi != 0, init fields at edi (+0,+4,+8,+0xc,+0x1c = 0; +0x10 = -1).
+ *   Unlock(2) via TableLookupIatCall_004c6fd0; return edi.
+ */
+__declspec(naked) void HeapScanInit_004c9440(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        push    2
+        xor     ebp, ebp
+        xor     edi, edi
+        call    Lock_004c6f50
+        mov     eax, dword ptr [g_data_00fa0dc0]
+        add     esp, 4
+        xor     esi, esi
+        cmp     eax, ebp
+        jle     L_hsi_finalize
+        mov     bl, 0x83
+    L_hsi_loop:
+        mov     eax, dword ptr [g_data_00f9fdb4]
+        mov     eax, [eax + esi*4]
+        cmp     eax, ebp
+        jz      short L_hsi_alloc
+        test    byte ptr [eax + 0xc], bl
+        jne     short L_hsi_next
+        push    eax
+        push    esi
+        call    TwoPathIATDispatch_004c7030
+        mov     ecx, dword ptr [g_data_00f9fdb4]
+        add     esp, 8
+        mov     eax, [ecx + esi*4]
+        test    byte ptr [eax + 0xc], bl
+        jz      short L_hsi_setEdi
+        push    eax
+        push    esi
+        call    TwoPathIATDispatch_004c70a0
+        add     esp, 8
+    L_hsi_next:
+        mov     eax, dword ptr [g_data_00fa0dc0]
+        inc     esi
+        cmp     esi, eax
+        jl      short L_hsi_loop
+        jmp     L_hsi_finalize
+    L_hsi_setEdi:
+        mov     edi, [ecx + esi*4]
+        jmp     L_hsi_finalize
+    L_hsi_alloc:
+        push    0x38
+        shl     esi, 2
+        call    LoadArgPushCall_004c54b0
+        mov     ecx, dword ptr [g_data_00f9fdb4]
+        add     esp, 4
+        mov     [ecx + esi], eax
+        mov     edx, dword ptr [g_data_00f9fdb4]
+        mov     eax, [edx + esi]
+        cmp     eax, ebp
+        jz      short L_hsi_finalize
+        add     eax, 0x20
+        push    eax
+        call    dword ptr [g_iat_004d215c]
+        mov     eax, dword ptr [g_data_00f9fdb4]
+        mov     ecx, [eax + esi]
+        add     ecx, 0x20
+        push    ecx
+        call    dword ptr [g_iat_004d2140]
+        mov     edx, dword ptr [g_data_00f9fdb4]
+        mov     edi, [edx + esi]
+    L_hsi_finalize:
+        cmp     edi, ebp
+        jz      short L_hsi_unlock
+        mov     [edi + 4], ebp
+        mov     [edi + 0xc], ebp
+        mov     [edi + 8], ebp
+        mov     [edi], ebp
+        mov     [edi + 0x1c], ebp
+        mov     dword ptr [edi + 0x10], -1
+    L_hsi_unlock:
+        push    2
+        call    TableLookupIatCall_004c6fd0
+        add     esp, 4
+        mov     eax, edi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
 extern void func_004c3490(void);
 extern void func_004c3d00(void);
 extern unsigned int g_data_004d2a30[2];  /* double constant */

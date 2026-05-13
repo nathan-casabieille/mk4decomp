@@ -15650,10 +15650,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c9440
-    name: func_004c9440
+    name: HeapScanInit_004c9440
     size: 217
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9520
     name: func_004c9520
     size: 555
