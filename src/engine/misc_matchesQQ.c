@@ -56647,3 +56647,111 @@ __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
         ret
     }
 }
+
+extern int g_x_007af984;
+extern int g_x_007af988;
+extern int g_x_007af98c;
+
+/*
+ * Vec3ColorShiftClamp_004b3490 — 256b RGB-channel sar+pack into a 16-bit color word triplet.
+ *   For each of 3 channels (R, G, B), reads g_x_007af984/988/98c, arithmetic-shift-right by cl
+ *   (with negative clamp to 0, max clamp to 0x1f), computes (0xffff - channel) XOR with existing
+ *   channel bits at word [esi + 0x14/0x16/0x18], packs the resulting 5-bit field into bits [0:5],
+ *   [5:10] (shl 5), and [10:15] (shl 10) of the destination word.
+ */
+__declspec(naked) void Vec3ColorShiftClamp_004b3490(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [esp + 8]
+        push    ebx
+        push    esi
+        push    edi
+        mov     edi, dword ptr [g_x_007af984]
+        sar     edi, cl
+        test    edi, edi
+        jge     short L_r_pos
+        xor     edi, edi
+    L_r_pos:
+        cmp     edi, 0x1f
+        jle     short L_r_lo
+        mov     edi, 0x1f
+    L_r_lo:
+        mov     esi, dword ptr [esp + 0x10]
+        mov     eax, 0xffff
+        sub     eax, edi
+        mov     dx, word ptr [esi + 0x14]
+        xor     al, dl
+        and     eax, 0x1f
+        xor     eax, edx
+        mov     edx, eax
+        and     eax, 0x1f
+        and     edx, 0xfc1f
+        shl     eax, 5
+        or      edx, eax
+        mov     eax, edx
+        and     edx, 0x3e0
+        and     eax, 0x83ff
+        shl     edx, 5
+        or      eax, edx
+        mov     word ptr [esi + 0x14], ax
+        mov     edx, dword ptr [g_x_007af988]
+        sar     edx, cl
+        test    edx, edx
+        jge     short L_g_pos
+        xor     edx, edx
+    L_g_pos:
+        cmp     edx, 0x1f
+        jle     short L_g_lo
+        mov     edx, 0x1f
+    L_g_lo:
+        mov     bx, word ptr [esi + 0x16]
+        mov     eax, 0xffff
+        sub     eax, edx
+        xor     al, bl
+        and     eax, 0x1f
+        xor     eax, ebx
+        mov     edx, eax
+        and     eax, 0x1f
+        and     edx, 0xfc1f
+        shl     eax, 5
+        or      edx, eax
+        mov     eax, edx
+        and     edx, 0x3e0
+        and     eax, 0x83ff
+        shl     edx, 5
+        or      eax, edx
+        mov     word ptr [esi + 0x16], ax
+        mov     edx, dword ptr [g_x_007af98c]
+        sar     edx, cl
+        test    edx, edx
+        jge     short L_b_pos
+        xor     edx, edx
+    L_b_pos:
+        cmp     edx, 0x1f
+        jle     short L_b_lo
+        mov     edx, 0x1f
+    L_b_lo:
+        mov     cx, word ptr [esi + 0x18]
+        mov     eax, 0xffff
+        sub     eax, edx
+        pop     edi
+        xor     al, cl
+        and     eax, 0x1f
+        xor     eax, ecx
+        mov     ecx, eax
+        and     eax, 0x1f
+        and     ecx, 0xfc1f
+        shl     eax, 5
+        or      ecx, eax
+        mov     edx, ecx
+        and     ecx, 0x3e0
+        and     edx, 0x83ff
+        shl     ecx, 5
+        or      edx, ecx
+        mov     word ptr [esi + 0x18], dx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

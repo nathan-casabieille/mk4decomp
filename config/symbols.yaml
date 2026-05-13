@@ -13800,10 +13800,11 @@ functions:
     status: matched
     file: src/engine/transform_vertex.c
   - addr: 0x004b3490
-    name: func_004b3490
+    name: Vec3ColorShiftClamp_004b3490
     size: 256
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3590
     name: Mat3x3VecMul6Bit_004b3590
     size: 151
