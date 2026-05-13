@@ -15925,10 +15925,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004cca50
-    name: func_004cca50
+    name: BitShiftMultiPrecision_004cca50
     size: 177
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ccb10
     name: func_004ccb10
     size: 463

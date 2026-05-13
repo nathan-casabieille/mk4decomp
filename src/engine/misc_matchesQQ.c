@@ -59125,6 +59125,90 @@ extern void DSoundQueryProperty_004ac3a0(void);
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
+/* @addr 0x004cca50 (177b crt) - multi-precision left shift on a 4-u32 array.
+ *   args: count (signed dword count, [esp+0x10] pre-push), ptr (u32* base, arg0).
+ *   Step 1 (loop 3 iters): shift each u32 by abs(count)&31, propagating bits via ebx temp,
+ *     storing back into the previous slot with edi/mask preserved low-bit pattern.
+ *   Step 2 (loop 3 iters i=2..0): if i < (count>>5): word[i] = word[i - count>>5];
+ *     else word[i] = 0.
+ *   Result: u32 array shifted right by count, accounting for negative counts via sign trick.
+ */
+__declspec(naked) void BitShiftMultiPrecision_004cca50(void) {
+    __asm {
+        sub     esp, 8
+        mov     ecx, [esp + 0x10]
+        push    ebx
+        mov     eax, ecx
+        push    ebp
+        cdq
+        and     edx, 0x1f
+        push    esi
+        add     eax, edx
+        push    edi
+        sar     eax, 5
+        mov     [esp + 0x14], eax
+        mov     eax, ecx
+        cdq
+        xor     eax, edx
+        mov     esi, [esp + 0x1c]
+        sub     eax, edx
+        or      edi, -1
+        and     eax, 0x1f
+        mov     ebp, 0x20
+        xor     eax, edx
+        xor     ebx, ebx
+        sub     eax, edx
+        mov     dword ptr [esp + 0x20], 3
+        mov     ecx, eax
+        shl     edi, cl
+        sub     ebp, eax
+        not     edi
+    L_shf_lp1:
+        mov     edx, [esi]
+        mov     ecx, edi
+        and     ecx, edx
+        add     esi, 4
+        mov     [esp + 0x10], ecx
+        mov     ecx, eax
+        shr     edx, cl
+        mov     ecx, ebp
+        or      edx, ebx
+        mov     ebx, [esp + 0x10]
+        shl     ebx, cl
+        mov     ecx, [esp + 0x20]
+        mov     [esi - 4], edx
+        dec     ecx
+        mov     [esp + 0x20], ecx
+        jne     short L_shf_lp1
+        mov     ebx, [esp + 0x14]
+        mov     esi, 2
+        mov     ecx, 8
+        lea     edi, [ebx*4 + 0]
+    L_shf_lp2:
+        cmp     esi, ebx
+        jl      short L_shf_zero
+        mov     edx, [esp + 0x1c]
+        mov     eax, ecx
+        sub     eax, edi
+        mov     eax, [edx + eax]
+        mov     [edx + ecx], eax
+        jmp     short L_shf_next
+    L_shf_zero:
+        mov     edx, [esp + 0x1c]
+        mov     dword ptr [edx + ecx], 0
+    L_shf_next:
+        dec     esi
+        sub     ecx, 4
+        jns     short L_shf_lp2
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 8
+        ret
+    }
+}
+
 extern unsigned int g_data_00f9f840;
 extern unsigned int g_data_00f9f83c;
 extern unsigned char g_byte_00f9f838;
