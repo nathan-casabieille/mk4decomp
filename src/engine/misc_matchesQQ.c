@@ -77785,3 +77785,113 @@ __declspec(naked) void TwoEntryStateScalar_00435ba0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0050c97c;
+extern unsigned int g_data_005108d0;
+extern void DispatcherComplex260_00407030(void);
+extern void func_00408600(void);
+extern void InstallSelfDispatch_00407620(void);
+extern void MStackCall_00406390(void);
+
+__declspec(naked) void MStackChainPackedDispatch_00463c80(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     edx, offset g_data_0050c97c
+        mov     dword ptr [g_state_004d57ac], eax
+        shr     edx, 2
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_00542048], edx
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mscpd_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mscpd_pop2
+        call    func_00408600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mscpd_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, offset g_data_005108d0
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        sar     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        mov     edx, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], edx
+        call    InstallSelfDispatch_00407620
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mscpd_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 0x250
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x58], 0x6666
+        call    MStackCall_00406390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mscpd_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542058], eax
+    L_mscpd_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mscpd_ret:
+        ret
+    }
+}
