@@ -68991,3 +68991,95 @@ __declspec(naked) void SlotEvent3EntryChain_0046fdf0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0051204c;
+extern void DispatcherComplex260_00407030(void);
+extern void TripleVecAccCallStore_00476880(void);
+extern void MStackCall_00406340(void);
+
+/* @addr 0x004749a0 (360b game) - mstack snapshot + vec setup + scoped run.
+ *   Sets g_data_00542048 = &g_data_0051204c>>2 (packed_ptr), calls
+ *   DispatcherComplex260_00407030. On no-error AND bit 2 of 0x54208c clear:
+ *   pushes g_data_00542044, walks one level of [scaled+0x18] indirection,
+ *   OR's bit 9 into [resolved+0x20]. Pops the snapshot back into 0x542044,
+ *   writes 0x95 into [snapshot+0x30], copies the 3-component vec at
+ *   [g_data_00542058 *4 + 0/4/8] into [snapshot+0x54/+0x58/+0x5c]. Calls
+ *   AudioMixerStep_004ab700. On no-error reads g_data_0054206c, adds
+ *   0xa3d, writes into [snapshot+0x70], sets g_data_00542074=0xc4, advances
+ *   g_data_00542044 by 0x1b, calls TripleVecAccCallStore_00476880.
+ *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
+ *   sets g_data_0054206c=1 on success.
+ */
+__declspec(naked) void MStackVecSetupScopedRun_004749a0(void) {
+    __asm {
+        mov     eax, offset g_data_0051204c
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mvss_done
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mvss_done
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      ah, 6
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 0x95
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     eax, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     dword ptr [g_data_0054206c], 0x28f
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mvss_done
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542044]
+        add     eax, 0xa3d
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x70], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542074], 0xc4
+        add     ecx, 0x1b
+        mov     dword ptr [g_data_00542044], ecx
+        call    TripleVecAccCallStore_00476880
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mvss_done
+        sub     dword ptr [g_data_00542044], 0x1b
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mvss_done
+        mov     dword ptr [g_data_0054206c], 1
+    L_mvss_done:
+        ret
+    }
+}
