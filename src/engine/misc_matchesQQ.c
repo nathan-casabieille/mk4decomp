@@ -78125,3 +78125,152 @@ __declspec(naked) void Mul10SumStoreNegCommit_00490970(void)
         jmp     L_msc_afterNeg
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054204c;
+extern void DualGatedStateYield_0048fc80(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void GuardedDoubleCallSetJmp_00460260(void);
+extern void MStackPush2ChainSwap_0048f090(void);
+extern void DualCmpSetFlagBitToggle_00460eb0(void);
+extern void DispatchThroughBaseSel6c_00460f20(void);
+extern void SetJmp_004609c0(void);
+extern void NotShrCmp1Store_00460d80(void);
+extern void GuardedDispatch_00460ca0(void);
+extern void GuardedDispatch_00460cd0(void);
+extern void CallPauseTriCmpJmp_00460910(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void DualConstMaskFlagToggle4_0048ede0(void);
+extern void CopyJmp_00406ba0(void);
+extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void GuardedSeq_004605b0(void);
+
+__declspec(naked) void PerSlotPhaseRouter_00460770(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_pspr2_phase0
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     L_pspr2_ret
+        call    CjMaskedFlagProbe_0048ecf0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pspr2_ret
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_pspr2_continue
+        call    GuardedDoubleCallSetJmp_00460260
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_continue:
+        call    MStackPush2ChainSwap_0048f090
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pspr2_ret
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_pspr2_branch2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x6c], 0
+        call    DualCmpSetFlagBitToggle_00460eb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pspr2_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_pspr2_branch1b
+        call    DispatchThroughBaseSel6c_00460f20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pspr2_ret
+    L_pspr2_branch1b:
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_pspr2_branch2
+        call    SetJmp_004609c0
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_branch2:
+        call    NotShrCmp1Store_00460d80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pspr2_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, eax
+        and     ecx, 9
+        cmp     ecx, 9
+        mov     dword ptr [g_data_00542070], ecx
+        jne     short L_pspr2_check5
+        call    GuardedDispatch_00460ca0
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_check5:
+        and     eax, 5
+        cmp     eax, 5
+        mov     dword ptr [g_data_00542070], eax
+        jne     short L_pspr2_callTri
+        call    GuardedDispatch_00460cd0
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_callTri:
+        call    CallPauseTriCmpJmp_00460910
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pspr2_ret
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pspr2_ret
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_pspr2_finish
+        call    CallPauseMStackPushSet0Jmp_0045fcf0
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_finish:
+        call    DualConstMaskFlagToggle4_0048ede0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pspr2_ret
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_pspr2_install
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pspr2_ret
+        call    ZeroScaledZeroCallPauseJmp_0045fa90
+        pop     esi
+        pop     ebx
+        ret
+    L_pspr2_phase0:
+        mov     dword ptr [g_data_0054206c], 0xfffff0a4
+        call    GuardedSeq_004605b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pspr2_ret
+    L_pspr2_install:
+        mov     dword ptr [esi + 8], offset PerSlotPhaseRouter_00460770
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_pspr2_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

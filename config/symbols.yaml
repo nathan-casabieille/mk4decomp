@@ -6494,10 +6494,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00460770
-    name: func_00460770
+    name: PerSlotPhaseRouter_00460770
     size: 413
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460910
     name: CallPauseTriCmpJmp_00460910
     size: 46
