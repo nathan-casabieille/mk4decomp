@@ -74911,3 +74911,133 @@ __declspec(naked) void SelfInstallPhaseDispatch_00460000(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_state_004d57ac;
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void func_0047d9a0(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledChainNegStore_00470310(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+
+__declspec(naked) void PhaseDispatchPair_004799c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_pdp_install1
+        mov     dword ptr [g_data_0054206c], 0x13
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pdp_ret1
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_pdp_scaled
+        call    func_0047d9a0
+        pop     esi
+        pop     ebx
+        ret
+    L_pdp_scaled:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        cmp     eax, 0xfffffd71
+        mov     dword ptr [g_data_0054206c], eax
+        jl      short L_pdp_install1
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], offset L_pdp_entry2
+        call    InstallSelfIndirectJmp_0048f3f0
+        pop     esi
+        pop     ebx
+        ret
+    L_pdp_install1:
+        mov     dword ptr [esi + 8], offset PhaseDispatchPair_004799c0
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_pdp_ret1:
+        pop     esi
+        pop     ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_pdp_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        cmp     eax, edi
+        je      short L_pdp_phase2_work
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     edi
+        pop     esi
+        ret
+    L_pdp_phase2_work:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [ecx*4 + 0x78], edi
+        mov     edx, dword ptr [g_data_0054206c]
+        lea     eax, [ecx*4]
+        mov     dword ptr [eax + 0x80], edx
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax + 0x60], ecx
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax + 0x68], edx
+        call    ScaledChainNegStore_00470310
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_pdp_ret2
+        call    SlotPhaseResetInstallChain_0048e0e0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_pdp_ret2
+        mov     dword ptr [esi + 8], offset L_pdp_entry2
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset L_pdp_entry2
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    SlotEvent3EntryChain_0046fdf0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_pdp_ret2:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
