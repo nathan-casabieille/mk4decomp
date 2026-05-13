@@ -8032,10 +8032,11 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_138.c
   - addr: 0x00476180
-    name: func_00476180
+    name: TripleMStackPushChainStores_00476180
     size: 401
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476320
     name: func_00476320
     size: 420
