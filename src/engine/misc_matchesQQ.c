@@ -56297,3 +56297,86 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         ret
     }
 }
+
+extern void func_00403170(void);
+extern unsigned int g_state_0053a6e0;
+
+/*
+ * BootStateMachine4Way_00402f60 — 257b boot 4-state install-self machine.
+ *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
+ *   sub ecx,0 flags branch:
+ *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_x_0054206c=0; g_state_00537ea4=0;
+ *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_x_00542044++; chain->state=0;
+ *       call func_00403170; g_pause_00541e6c=1; pop+ret.
+ *     state 1 → install-self; chain->state=2; g_data_0054204c=0xa0; g_pause_00541e6c=1; pop+ret.
+ *     state 2 → install-self; chain->state=3; g_data_0054204c=0x384; g_pause_00541e6c=1;
+ *       g_x_0054206c=1; g_data_00541dc8=1; pop+ret.
+ *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
+ */
+__declspec(naked) void BootStateMachine4Way_00402f60(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        je      short L_s0
+        dec     ecx
+        je      short L_s1
+        dec     ecx
+        je      short L_s2
+        call    BootDualStateInstallSelf_00403070
+        pop     edi
+        pop     esi
+        ret
+    L_s2:
+        mov     esi, 1
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_data_00541dc8], esi
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     dword ptr [eax + 0x84], 3
+        mov     dword ptr [g_data_0054204c], 0x384
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    L_s1:
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     dword ptr [eax + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 0xa0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_s0:
+        mov     esi, 1
+        mov     dword ptr [g_data_0053a50c], 7
+        mov     dword ptr [g_state_0053a6e0], esi
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_00537ea4], edx
+        mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edi, offset BootStateMachine4Way_00402f60
+        add     edi, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     ecx
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    func_00403170
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
