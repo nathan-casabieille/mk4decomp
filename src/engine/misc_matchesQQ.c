@@ -54142,3 +54142,73 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
         ret
     }
 }
+
+extern void func_004b9510(void);
+extern void TripleMul10TailIndexed_00425970(void);
+extern void TripleAddVec3_00425130(void);
+extern void func_00411d80(void);
+extern unsigned int g_data_004d78d8;
+
+/*
+ * BootInitTripleAddChain_00419bc0 — 203b boot pause-gated init.
+ *   Call func_004b9510; if paused: ret.
+ *   Snapshot g_x_00542044 → g_x_00542048; g_x_00542044 = g_x_00541f98; g_data_0054204c = (0x004d78d8>>2).
+ *   Call func_00425380; if paused: ret.
+ *   g_data_00542070 = 0xcccc; g_x_00542074 = 0x13333; call TripleMul10TailIndexed; if paused: ret.
+ *   g_x_00542048 = g_x_0054205c + 0x15; call func_00411d80; if paused or g_state_0054208c & 4: ret.
+ *   eax = g_x_00542044; g_x_00542048 = eax + 0x1b; g_x_00542044 = eax + 0x15; g_data_0054204c = eax + 0x15.
+ *   Call TripleAddVec3; if paused: ret. Call TripleAddVec3; if paused: ret. Tail-jmp TripleAddVec3.
+ */
+__declspec(naked) void BootInitTripleAddChain_00419bc0(void)
+{
+    __asm
+    {
+        call    func_004b9510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_end
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_x_00541f98]
+        mov     edx, offset g_data_004d78d8
+        mov     dword ptr [g_x_00542048], eax
+        shr     edx, 2
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_data_0054204c], edx
+        call    func_00425380
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_end
+        mov     dword ptr [g_data_00542070], 0xcccc
+        mov     dword ptr [g_x_00542074], 0x13333
+        call    TripleMul10TailIndexed_00425970
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_end
+        mov     eax, dword ptr [g_x_0054205c]
+        add     eax, 0x15
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00411d80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_end
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_end
+        mov     eax, dword ptr [g_x_00542044]
+        lea     ecx, [eax + 0x1b]
+        add     eax, 0x15
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_data_0054204c], eax
+        call    TripleAddVec3_00425130
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_end
+        call    TripleAddVec3_00425130
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_end
+        jmp     TripleAddVec3_00425130
+    L_end:
+        ret
+    }
+}
