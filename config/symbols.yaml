@@ -6422,10 +6422,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x00460000
-    name: func_00460000
+    name: SelfInstallPhaseDispatch_00460000
     size: 396
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460190
     name: InstallSelfPushArg_00460190
     size: 184

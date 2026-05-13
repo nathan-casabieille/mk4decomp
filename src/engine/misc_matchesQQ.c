@@ -74785,3 +74785,129 @@ __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542968;
+extern unsigned int g_state_004d57ac;
+extern void DualGatedStateYield_0048fc80(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void InstallSelfChainCascade_0045feb0(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void InstallSelfPushArg_00460190(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+extern void ScaledInit_0048f720(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void CjInstallSelfRouter_00470480(void);
+
+__declspec(naked) void SelfInstallPhaseDispatch_00460000(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_sipd_phase0
+        dec     eax
+        jne     L_sipd_phase2
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     L_sipd_retCommon
+        call    GuardedDualAndFlagToggle_0048f020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd_retCommon
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_sipd_phase2
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_00460000
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset SelfInstallPhaseDispatch_00460000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x2000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfChainCascade_0045feb0
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    L_sipd_phase2:
+        call    CjMaskedFlagProbe_0048ecf0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd_retCommon
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_sipd_phase2_alt
+        call    InstallSelfPushArg_00460190
+        pop     esi
+        pop     ebx
+        ret
+    L_sipd_phase2_alt:
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd_retCommon
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_sipd_finishInstall
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], ebx
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], offset CjInstallSelfRouter_00470480
+        call    MstackPopScaledChainPlusThunks_00471250
+        pop     esi
+        pop     ebx
+        ret
+    L_sipd_phase0:
+        call    SlotPhaseResetInstallChain_0048e0e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd_retCommon
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x2002
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledInit_0048f720
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd_retCommon
+        push    offset g_data_00542968
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_sipd_retCommon
+        call    DualScaledStoreZero_00491080
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd_retCommon
+    L_sipd_finishInstall:
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_00460000
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_sipd_retCommon:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
