@@ -76069,3 +76069,109 @@ __declspec(naked) void SelfInstallPhaseDispatch_004943f0(void)
         jmp     EntryThunkBodyStateMachine_00457bb0
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541fec;
+extern unsigned int g_data_00541ff0;
+extern unsigned int g_data_00541ff4;
+extern unsigned int g_data_00541ff8;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0053a1ac;
+
+__declspec(naked) void FourVecFillMStackBracket_00428130(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, 7
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00541fec]
+        xor     edx, edx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_00542070], 3
+        mov     dword ptr [g_data_0053a1ac], ecx
+    L_fvf_loop1:
+        mov     esi, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi*4], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     esi, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], esi
+        mov     esi, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0053a1ac]
+        inc     esi
+        dec     eax
+        mov     dword ptr [g_data_00542044], esi
+        mov     dword ptr [g_data_0053a1ac], eax
+        jns     short L_fvf_loop1
+        mov     eax, dword ptr [g_data_00541ff0]
+        mov     dword ptr [g_data_0054206c], 0xc
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0053a1ac], ecx
+    L_fvf_loop2:
+        mov     esi, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi*4], eax
+        mov     esi, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0053a1ac]
+        inc     esi
+        dec     eax
+        mov     dword ptr [g_data_00542044], esi
+        mov     dword ptr [g_data_0053a1ac], eax
+        jns     short L_fvf_loop2
+        mov     dword ptr [g_data_0054206c], edx
+        mov     edx, dword ptr [g_data_00541ff4]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0053a1ac], ecx
+    L_fvf_loop3:
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0053a1ac]
+        inc     edx
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0053a1ac], eax
+        jns     short L_fvf_loop3
+        mov     eax, dword ptr [g_data_00541ff8]
+        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     dword ptr [g_data_00542044], eax
+    L_fvf_loop4:
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4], ecx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0053a1ac]
+        inc     ecx
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0053a1ac], eax
+        jns     short L_fvf_loop4
+        mov     eax, dword ptr [g_state_004d57ac]
+        pop     esi
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

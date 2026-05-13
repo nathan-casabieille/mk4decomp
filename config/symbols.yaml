@@ -2379,10 +2379,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00428130
-    name: func_00428130
+    name: FourVecFillMStackBracket_00428130
     size: 400
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004282c0
     name: DualTestDirtyToggle_004282c0
     size: 54
