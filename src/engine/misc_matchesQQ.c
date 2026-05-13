@@ -70901,3 +70901,127 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541fbc;
+extern unsigned int g_data_00535de0;
+extern unsigned int g_data_00541dd8;
+extern unsigned int g_data_0053a170;
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_0052aabc;
+extern unsigned int g_data_0054371c;
+extern unsigned int g_data_0050b214;
+extern void ZeroThreeFields_00404ed0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void DownloadPlayerChar(void);
+extern void LoadGeoAsset_Default(void);
+
+/* @addr 0x0042ee40 (370b game) - boot-init: clears slot 0x52ab10, seeds
+ *   bookkeeping globals, and zero-fills a counted region.
+ *   Calls BootInitGuardedCallChain_004265d0 first. On no-error: reads the
+ *   slot index from g_data_0052ab10 into g_data_00542044, calls
+ *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
+ *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_data_00535e6c slot getting
+ *   (0, 0, 0x10000, 0). Then sets globals: 0x535de0=0, 0x541dd8=0,
+ *   0x53a170=2, and 0x53a1ac=0xa (loop counter).
+ *
+ *   Inner loop: while 0x53a1ac >= 0, zeroes [0x542044*4] (advancing
+ *   index each iteration) — counted zero-fill. After: stashes 0xa into
+ *   0x52aabc.
+ *
+ *   Calls CopyGlobal_004ac1f0; on no-error pushes 2 onto
+ *   TableWalkBoundedCmp_004bd890, sets byte 0x54371c=1, sets 0x54206c
+ *   from g_data_00537f48, calls DownloadPlayerChar; on no-error sets
+ *   0x542070=1 and 0x54206c from g_data_005380e0, calls DownloadPlayerChar
+ *   again; on no-error sets 0x542044 = &g_data_0050b214>>2 (packed_ptr),
+ *   clears 0x54371c, calls LoadGeoAsset_Default; on no-error reloads
+ *   &g_data_0050b214>>2 and calls LoadGeoAsset_Default a second time.
+ */
+__declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
+    __asm {
+        push    ebx
+        push    esi
+        push    edi
+        call    BootInitGuardedCallChain_004265d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        xor     ebx, ebx
+        cmp     eax, ebx
+        jne     L_bic_done
+        mov     eax, dword ptr [g_data_0052ab10]
+        mov     dword ptr [g_data_00542044], eax
+        lea     esi, [eax*4]
+        call    ZeroThreeFields_00404ed0
+        mov     dword ptr [esi + 0x54], ebx
+        mov     dword ptr [esi + 0x58], ebx
+        mov     dword ptr [esi + 0x5c], 0xfffc0000
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     dword ptr [g_data_00542054], eax
+        shl     eax, 2
+        mov     dword ptr [eax + 0x54], ebx
+        mov     dword ptr [eax + 0x58], ebx
+        mov     dword ptr [eax + 0x5c], 0x10000
+        mov     dword ptr [eax + 0x34], ebx
+        mov     eax, dword ptr [g_data_00541fbc]
+        mov     dword ptr [g_data_00535de0], ebx
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, 0xa
+        mov     dword ptr [g_data_00541dd8], ebx
+        mov     dword ptr [g_data_0053a170], 2
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_0053a1ac], eax
+    L_bic_zeroLoop:
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0053a1ac]
+        inc     edx
+        dec     ecx
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0053a1ac], ecx
+        jns     short L_bic_zeroLoop
+        mov     dword ptr [g_data_0052aabc], eax
+        mov     dword ptr [g_data_0054206c], ebx
+        call    CopyGlobal_004ac1f0
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     L_bic_done
+        mov     esi, dword ptr [g_data_0054206c]
+        mov     edi, dword ptr [g_data_00542070]
+        push    2
+        call    TableWalkBoundedCmp_004bd890
+        mov     eax, dword ptr [g_data_00537f48]
+        add     esp, 4
+        mov     byte ptr [g_data_0054371c], 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542070], ebx
+        call    DownloadPlayerChar
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     short L_bic_done
+        mov     ecx, dword ptr [g_data_005380e0]
+        mov     dword ptr [g_data_00542070], 1
+        mov     dword ptr [g_data_0054206c], ecx
+        call    DownloadPlayerChar
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     short L_bic_done
+        mov     edx, offset g_data_0050b214
+        mov     byte ptr [g_data_0054371c], bl
+        shr     edx, 2
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_data_00542070], edi
+        mov     dword ptr [g_data_00542044], edx
+        call    LoadGeoAsset_Default
+        cmp     dword ptr [g_data_00541e6c], ebx
+        jne     short L_bic_done
+        mov     eax, offset g_data_0050b214
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        call    LoadGeoAsset_Default
+    L_bic_done:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
