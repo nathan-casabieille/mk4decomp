@@ -74557,3 +74557,107 @@ __declspec(naked) void Atan2QuadrantLookup_004245b0(void) {
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00541e6c;
+extern void func_004685d0(void);
+
+__declspec(naked) void DualWalkRange_00468440(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542088]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        call    func_004685d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dwr_ret
+        mov     eax, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     eax, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_data_00542088]
+        mov     dword ptr [eax*4 + 0x5c], edx
+        mov     dword ptr [g_data_00542078], 3
+        call    func_004685d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dwr_ret
+    L_dwr_fwd:
+        mov     eax, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_data_0054207c]
+        mov     edx, dword ptr [g_data_00542088]
+        add     eax, ecx
+        mov     ecx, dword ptr [g_data_00542080]
+        mov     dword ptr [g_data_00542084], eax
+        add     edx, ecx
+        mov     dword ptr [g_data_00542088], edx
+        mov     edx, dword ptr [g_data_00542058]
+        mov     dword ptr [edx*4 + 0x54], eax
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_data_00542088]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_data_00542078]
+        dec     eax
+        mov     dword ptr [g_data_00542078], eax
+        je      short L_dwr_fwd_done
+        call    func_004685d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        je      short L_dwr_fwd
+        ret
+    L_dwr_fwd_done:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542088], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_data_00542078], 3
+        call    func_004685d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dwr_ret
+    L_dwr_rev:
+        mov     eax, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_data_00542088]
+        sub     eax, edx
+        mov     edx, dword ptr [g_data_00542080]
+        mov     dword ptr [g_data_00542084], eax
+        sub     ecx, edx
+        mov     dword ptr [g_data_00542088], ecx
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     eax, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_data_00542088]
+        mov     dword ptr [eax*4 + 0x5c], edx
+        mov     eax, dword ptr [g_data_00542078]
+        dec     eax
+        mov     dword ptr [g_data_00542078], eax
+        je      short L_dwr_ret
+        call    func_004685d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        je      short L_dwr_rev
+    L_dwr_ret:
+        ret
+    }
+}
