@@ -8043,10 +8043,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004764d0
-    name: func_004764d0
+    name: Vec3PackedTripleCallBracket_004764d0
     size: 403
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476670
     name: MStackPush2BitLoop_00476670
     size: 214
