@@ -77151,3 +77151,116 @@ __declspec(naked) void TwoEntryPhasePair_004952e0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_004d5e88;
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledChainOr8_00404e50(void);
+extern void Mul10Tail_00404af0(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void PushSetDualDeref_00406650(void);
+extern void MStackCall_00406600(void);
+
+__declspec(naked) void BootMStackBracketedScaledStores_0040bf70(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        push    0x408040
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    ThreeChanPackClamp_00404cc0
+        mov     edx, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    edx
+        call    CopyThreeFields_00404df0
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, offset g_data_004d5e88
+        shr     ecx, 2
+        add     esp, 4
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmbss_pop
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bmbss_pop2
+        call    ScaledChainOr8_00404e50
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x13333
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542070], 0x2000
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        push    ecx
+        push    0x2000
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_0054205c]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x6c], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [eax*4 + 0x74]
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_0054205c]
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmbss_pop
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0xff
+        mov     dword ptr [g_data_00542044], edx
+        call    PushSetDualDeref_00406650
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmbss_pop
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmbss_pop
+    L_bmbss_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bmbss_pop:
+        ret
+    }
+}
