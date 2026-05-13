@@ -54060,3 +54060,85 @@ __declspec(naked) void BootFlagChainAudioPause_00412080(void)
         ret
     }
 }
+
+extern void func_00413ce0(void);
+
+/*
+ * BootInstallPeriodicAudio_00413aa0 — 197b 2-body boot init.
+ *   Entry 0x00413aa0: push 0x8c size and pointer to body2; call StoreTwoCall; ret.
+ *   Body2 0x00413ac0: chain via g_baseSel_00542060 packed_ptr; save & clear chain->state.
+ *     If state was != 0: countdown g_x_00542058; if not yet 0: jump to mainloop;
+ *       else call CallSetPause_0041f830; pop+ret.
+ *     If state == 0 (or countdown done): reset g_x_00542058=0x14;
+ *     mainloop: g_x_0054206c=0x3333; AudioMixerStep; if paused: pop+ret. Else
+ *     g_x_0054206c += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_state_0054208c & 4:
+ *     call func_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
+ *     g_x_0054204c=1; g_pause_00541e6c=1; pop+ret.
+ */
+__declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
+{
+    __asm
+    {
+        push    0x8c
+        push    offset L_body2
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body2:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_skipCountdown
+        mov     eax, dword ptr [g_cj_00542058]
+        dec     eax
+        mov     dword ptr [g_cj_00542058], eax
+        jns     short L_mainloop
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_skipCountdown:
+        mov     dword ptr [g_cj_00542058], 0x14
+    L_mainloop:
+        mov     dword ptr [g_x_0054206c], 0x3333
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        add     dword ptr [g_x_0054206c], 0xd999
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      short L_install_self
+        call    func_00413ce0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+    L_install_self:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_body2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_b2_ret:
+        pop     esi
+        ret
+    }
+}
