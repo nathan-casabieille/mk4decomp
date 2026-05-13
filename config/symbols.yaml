@@ -9987,10 +9987,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048cca0
-    name: func_0048cca0
+    name: MStackPush2BiasResolveChain_0048cca0
     size: 347
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ce00
     name: PushCallPopScaledJmpIndirect_0048ce00
     size: 89

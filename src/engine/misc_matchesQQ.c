@@ -66408,3 +66408,111 @@ __declspec(naked) void SlotPhaseResetInstallChain_0048e0e0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541de8;
+extern unsigned int g_data_005114b4;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00541de0;
+extern void MStackPushTableSearchPop_0048bc40(void);
+extern void GuardedChainCopySetFlag_0048c480(void);
+
+/* @addr 0x0048cca0 (347b game) - mstack-push-2 chain with bias-resolve.
+ *   Pushes g_data_00542044/00542048 onto the mstack, calls
+ *   MStackPushTableSearchPop_0048bc40. On no-error reads g_data_00542070
+ *   biased by &g_data_00541de8>>2 into g_data_00542048: if [*indirect] is
+ *   non-zero takes the direct path (mirror through 0x54206c); else if
+ *   g_data_00542074 != 0 reads [ecx*4+0x10] and points to it; else loads
+ *   &g_data_005114b4>>2 as the fallback. Calls GuardedChainCopySetFlag_0048c480.
+ *   On no-error AND bit 2 of g_data_0054208c clear: dual-stream test
+ *   against g_data_00537f48 / g_data_005380e0 — when matched, writes
+ *   indexed +0x1c records into the corresponding stream slot's +0x3c.
+ *   Always pops mstack and exits.
+ */
+__declspec(naked) void MStackPush2BiasResolveChain_0048cca0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     ebx, dword ptr [g_data_0054206c]
+        mov     edi, dword ptr [g_data_00542074]
+        call    MStackPushTableSearchPop_0048bc40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb2c_done
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, offset g_data_00541de8
+        mov     esi, ecx
+        shr     eax, 2
+        add     eax, edx
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_mb2c_useFallback
+        mov     eax, dword ptr [ecx*4 + 0xc]
+        mov     dword ptr [g_data_0054206c], edi
+        test    edi, edi
+        mov     dword ptr [g_data_00542048], eax
+        je      short L_mb2c_callC480
+        mov     ecx, dword ptr [ecx*4 + 0x10]
+        mov     dword ptr [g_data_00542048], ecx
+        jmp     short L_mb2c_callC480
+    L_mb2c_useFallback:
+        mov     edx, offset g_data_005114b4
+        shr     edx, 2
+        mov     dword ptr [g_data_00542048], edx
+    L_mb2c_callC480:
+        call    GuardedChainCopySetFlag_0048c480
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb2c_done
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_mb2c_pop2
+        mov     eax, dword ptr [g_data_00537f48]
+        mov     dword ptr [g_data_00542044], esi
+        cmp     ebx, eax
+        mov     dword ptr [g_data_0054206c], ebx
+        jne     short L_mb2c_checkE0
+        mov     eax, dword ptr [g_data_00537f78]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [esi*4 + 0x1c]
+        mov     dword ptr [eax*4 + 0x3c], ecx
+    L_mb2c_checkE0:
+        mov     eax, dword ptr [g_data_005380e0]
+        mov     dword ptr [g_data_0054206c], ebx
+        cmp     ebx, eax
+        jne     short L_mb2c_pop2
+        mov     eax, dword ptr [g_data_00541de0]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [edx*4 + 0x1c]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x3c], ecx
+    L_mb2c_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mb2c_done:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
