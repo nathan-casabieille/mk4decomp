@@ -55989,3 +55989,77 @@ __declspec(naked) void AudioMode2BankSetup_004a6080(void)
         ret
     }
 }
+
+extern void func_00422110(void);
+extern void InstallSelfPackedF80_00426000(void);
+
+/*
+ * BootDualStateInstallSelf_00403070 — 246b 3-state install-self.
+ *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
+ *   sub eax, 0 → flags. If state == 0: g_x_00542074=0; Push16Call; install-self with chain->state=1
+ *     and g_data_0054204c=1, pause=1; pop+ret.
+ *   If state == 1: call FiveTableWalkInit; if paused: pop+ret. Else tail StackPopDispatchTagged; pop+ret.
+ *   Otherwise: call func_00422110; if paused: pop+ret. g_data_00542070=5; install-self;
+ *     chain->state=2; mstack-push (entry+0x02000000); g_x_00542044++; clear g_baseSel*4+0x84;
+ *     call InstallSelfPackedF80_00426000; g_pause_00541e6c=1; pop+ret.
+ */
+__declspec(naked) void BootDualStateInstallSelf_00403070(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_state0
+        dec     eax
+        je      short L_state2
+        call    FiveTableWalkInit_00403c90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ret
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_state2:
+        call    func_00422110
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ret
+        mov     dword ptr [g_data_00542070], 5
+        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset BootDualStateInstallSelf_00403070
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfPackedF80_00426000
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    L_state0:
+        mov     dword ptr [g_x_00542074], 0
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_ret:
+        pop     esi
+        ret
+    }
+}
