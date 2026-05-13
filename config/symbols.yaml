@@ -13516,10 +13516,11 @@ functions:
     status: matched
     file: src/engine/com_release_pair.c
   - addr: 0x004b0540
-    name: func_004b0540
+    name: DSoundModeSetup_004b0540
     size: 297
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b0670
     name: DialogProbeDispatch640_004b0670
     size: 123
