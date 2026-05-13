@@ -58223,6 +58223,94 @@ __declspec(naked) void BootChainBidirRecurseWalk_00405ca0(void)
 }
 
 /*
+ * BootChainTreeRecurseWalk_00405b80 — 281b boot recursive chain tree walker.
+ *   eax = g_x_00542044[+0x1c]; g_x_0054206c = eax; if <=0: skip to ret.
+ *   Push g_x_00542044 and g_x_00542048 to mstack.
+ *   edx = g_x_0054205c[+0x1c] + g_x_0054206c; eax = -(g_x_0053a430 != 0);
+ *   g_x_00542048 = edx; g_x_0054206c = eax; ecx = chain[+0x20]; g_data_00542070 = ecx;
+ *   g_state_00542094 = ecx & 0x100. If 0: clear eax + g_x_0054206c. chain2[+0] = eax.
+ *   Loop: next = chain[+0]; g_x_0054206c = next; if 0: pop+ret.
+ *     g_x_00542044 = next; call self. If paused: ret-noPop.
+ *     next = chain[+0x10]; if 0: pop+ret. g_x_00542044=next; call self.
+ *     If !paused: loop (chain[+0x10] walk).
+ *     If paused: ret-noPop.
+ *   pop2 mstack into g_x_00542048 and g_x_00542044; ret.
+ */
+__declspec(naked) void BootChainTreeRecurseWalk_00405b80(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x1c]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        jle     L_b80_justRet
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [edx*4 + 0x1c]
+        add     edx, eax
+        mov     eax, dword ptr [g_x_0053a430]
+        neg     eax
+        sbb     eax, eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x20]
+        mov     dword ptr [g_data_00542070], ecx
+        and     ecx, 0x100
+        mov     dword ptr [g_state_00542094], ecx
+        jne     short L_b80_storeEax
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+    L_b80_storeEax:
+        mov     dword ptr [edx*4], eax
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [edx*4]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_b80_pop2
+        mov     dword ptr [g_x_00542044], eax
+        call    BootChainTreeRecurseWalk_00405b80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b80_justRet
+    L_b80_loop:
+        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [eax*4 + 0x10]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_b80_pop2
+        mov     dword ptr [g_x_00542044], eax
+        call    BootChainTreeRecurseWalk_00405b80
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        je      short L_b80_loop
+        ret
+    L_b80_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_b80_justRet:
+        ret
+    }
+}
+
+/*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
  *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
