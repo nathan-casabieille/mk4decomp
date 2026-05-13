@@ -53992,3 +53992,71 @@ __declspec(naked) void EntryBodyInstallSelfMidRef_0041b550(void)
         ret
     }
 }
+
+extern void ZeroAndDirty4_00405430(void);
+extern void MStackPushCallPop_0040a830(void);
+extern void ZeroThreeFields_0040a8b0(void);
+extern unsigned int g_data_004d5d80;
+
+/*
+ * BootFlagChainAudioPause_00412080 — 183b boot pause-gated call chain.
+ *   If g_x_004f360c byte == 0: ret.
+ *   g_x_0054206c = 0x2666; call AudioMixerStep; if paused: ret.
+ *   g_x_0054206c += 0xd47a; call ZeroAndDirty4; if paused or !(g_state_0054208c & 4): ret.
+ *   call MStackPush8; if paused: ret.
+ *   Snapshot g_x_00542044 → g_x_00542054; g_cj_00542058 = (0x004d5d80 >> 2);
+ *   g_state_0054207c = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall.
+ *   If byte g_state_0054208c & 1: tail-jmp MStackPop8. Else call MStackPushCallPop;
+ *   if paused: ret. Call ZeroThreeFields; if paused: ret. Tail-jmp MStackPop8.
+ */
+__declspec(naked) void BootFlagChainAudioPause_00412080(void)
+{
+    __asm
+    {
+        mov     al, byte ptr [g_x_004f360c]
+        test    al, al
+        je      L_done
+        mov     dword ptr [g_x_0054206c], 0x2666
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_done
+        add     dword ptr [g_x_0054206c], 0xd47a
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done2
+        test    byte ptr [g_state_0054208c], 4
+        je      short L_done2
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done2
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, offset g_data_004d5d80
+        shr     ecx, 2
+        push    0xc0
+        push    0x0049db40
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [g_state_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     short L_tail_jmp
+        call    MStackPushCallPop_0040a830
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done2
+        call    ZeroThreeFields_0040a8b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done2
+    L_tail_jmp:
+        jmp     MStackPop8_004ab860
+    L_done2:
+    L_done:
+        ret
+    }
+}
