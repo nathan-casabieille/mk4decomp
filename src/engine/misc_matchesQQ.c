@@ -51184,3 +51184,138 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         jmp     InstallSelfChainSetB333v2_00437f00
     }
 }
+
+extern void Wrapper_00438ed0(void);
+extern void InstallSelfChain4Call_004376f0(void);
+extern void Thunk_004368d0(void);
+extern void Thunk_004368e0(void);
+
+/* @addr 0x00436780 (325b game) - multi-thunk dispatcher with 9 small blocks (16-byte aligned). */
+__declspec(naked) void MultiThunkDispatcher9_00436780(void) {
+    __asm {
+        push    0x004e4730
+        call    PackedAdvanceCallTailJmp_004392c0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        mov     edx, dword ptr [g_x_0054206c]
+        push    0x004e4748
+        and     edx, 0xff
+        mov     dword ptr [g_x_0054206c], edx
+        call    JumpTableDispatch_0043a550
+        add     esp, 4
+        ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     InstallSelfPacked0x2005_00437a90
+        ret
+        _emit   90h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     Wrapper_00438ed0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     InstallSelfChainSetB333v2_00437f00
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        mov     dword ptr [g_x_0054206c], 0x1f4
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfPacked0x2005_00437a90
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     InstallSelfChain4Call_004376f0
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x30000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     GuardedSeq_00433bb0
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x30000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     Thunk_004368d0
+        jmp     Thunk_004368e0
+        ret
+    }
+}
