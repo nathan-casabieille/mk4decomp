@@ -56554,3 +56554,96 @@ __declspec(naked) void BootMod6487eClampAndChainMul10_00407510(void)
         ret
     }
 }
+
+extern void MStackCall_00406740(void);
+extern void SetDirty4XorScaledLoad_004147b0(void);
+extern void func_00414670(void);
+
+/*
+ * BootCountdownPeriodicInstall_00414810 — 263b boot countdown periodic with self-install.
+ *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
+ *   If was nonzero: decrement g_state_0054207c; if still > 0 → fall through to func_00414670 path.
+ *     Else: g_x_00542044 = g_cj_00542058; call func_00406790; if paused: pop+ret.
+ *       g_state_0054208c |= 4; if g_x_0054205c != 0: g_state_0054208c ^= 4; call MStackCall_00406740;
+ *       if paused: pop+ret. Tail CallSetPause; pop+ret.
+ *   Else (state == 0): push 0x13c9; TableHitOrSchedule; g_x_00542044 = g_cj_00542058;
+ *     call SetDirty4XorScaledLoad; if paused: pop+ret. g_x_00542044 = g_x_0054205c;
+ *     call SetDirty4XorScaledLoad; if paused: pop+ret. g_state_0054207c = 0x1e.
+ *   Final: call func_00414670; if paused: pop+ret. install-self; chain->state=1;
+ *     g_data_0054204c=1; g_pause_00541e6c=1; pop+ret.
+ */
+__declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_state0
+        mov     eax, dword ptr [g_state_0054207c]
+        dec     eax
+        test    eax, eax
+        mov     dword ptr [g_state_0054207c], eax
+        jg      L_callFinal
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [g_x_00542044], ecx
+        call    func_00406790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_pop_ret
+        mov     esi, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, 4
+        or      esi, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], esi
+        je      short L_callPause
+        mov     edx, esi
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        je      short L_callPause
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret_short
+    L_callPause:
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_state0:
+        push    0x13c9
+        call    TableHitOrSchedule_004be7a0
+        mov     edx, dword ptr [g_cj_00542058]
+        add     esp, 4
+        mov     dword ptr [g_x_00542044], edx
+        call    SetDirty4XorScaledLoad_004147b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret_short
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542044], eax
+        call    SetDirty4XorScaledLoad_004147b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret_short
+        mov     dword ptr [g_state_0054207c], 0x1e
+    L_callFinal:
+        call    func_00414670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret_short
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset BootCountdownPeriodicInstall_00414810
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_pop_ret_short:
+    L_pop_ret:
+        pop     esi
+        ret
+    }
+}

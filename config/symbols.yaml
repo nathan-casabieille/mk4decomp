@@ -1223,10 +1223,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesII.c
   - addr: 0x00414810
-    name: func_00414810
+    name: BootCountdownPeriodicInstall_00414810
     size: 263
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00414920
     name: BootInstallPeriodicTriple_00414920
     size: 223
