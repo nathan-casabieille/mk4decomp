@@ -51622,3 +51622,134 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         ret
     }
 }
+
+extern void ArgScaledChain_004949b0(void);
+extern void ThresholdSetMatchDispatch_0046dc10(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void func_00494830(void);
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void func_00496ad0(void);
+extern void func_004958c0(void);
+
+/* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
+__declspec(naked) void SevenThunkDispatcher_00495770(void) {
+    __asm {
+        push    0x004f1468
+        call    ArgScaledChain_004949b0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        call    ThresholdSetMatchDispatch_0046dc10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004f1478
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x113
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f1490
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    func_00494830
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004f14a0
+        call    ArgScaledChain_004949b0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    FlagCascadeStateSet_0048ec30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     func_00496ad0
+        push    0x004f19c0
+        call    ArgScaledChain_004949b0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    FlagCascadeStateSet_0048ec30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   05h
+        jmp     func_004958c0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x111
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f19d0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgScaledChain_004949b0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x111
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f19e0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x111
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f14b0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+        ret
+    }
+}
