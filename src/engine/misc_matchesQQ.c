@@ -68208,3 +68208,111 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_004ffe04;
+extern void Set200dCallPauseJmp_0047c5e0(void);
+extern void func_0047cd50(void);
+extern void InstallSelfCountdown2Stage_0047c8f0(void);
+extern void ScaledChainJmp_00429470(void);
+
+/* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
+ *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
+ *   g_data_00537f94 != 0 tail-calls func_0047cd50.
+ *   Otherwise pushes g_data_00542080 onto the mstack and sets
+ *   g_data_0054206c=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
+ *   no-error sets g_data_00542088=0x11999, calls func_00496d80. Pops
+ *   back into g_data_00542080, then calls NotMaskStorePair_0045f440.
+ *   Selects 0x542074 = 1 or 0x10 based on g_data_0054205c ==
+ *   g_data_00538158, AND with g_data_00542070 → g_data_00542094: if
+ *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
+ *   &g_data_004ffe04>>2 into g_data_00542044 / [ecx*4+0x24] and installs
+ *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
+ *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
+ */
+__declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_ism_check2
+        call    Set200dCallPauseJmp_0047c5e0
+        pop     esi
+        ret
+    L_ism_check2:
+        mov     eax, dword ptr [g_data_00537f94]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_ism_push
+        call    func_0047cd50
+        pop     esi
+        ret
+    L_ism_push:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [g_data_0054206c], 0xb333
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ism_done
+        mov     dword ptr [g_data_00542088], 0x11999
+        call    func_00496d80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ism_done
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    NotMaskStorePair_0045f440
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ism_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00538158]
+        mov     eax, 1
+        cmp     ecx, edx
+        mov     dword ptr [g_data_00542074], eax
+        je      short L_ism_pickEax
+        mov     eax, 0x10
+        mov     dword ptr [g_data_00542074], eax
+    L_ism_pickEax:
+        and     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542094], eax
+        je      short L_ism_installSelf
+        call    InstallSelfCountdown2Stage_0047c8f0
+        pop     esi
+        ret
+    L_ism_installSelf:
+        mov     eax, offset g_data_004ffe04
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [ecx*4 + 0x24], eax
+        mov     dword ptr [esi + 8], offset InstallSelfMStackPackedFlow_0047c990
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset InstallSelfMStackPackedFlow_0047c990
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledChainJmp_00429470
+        mov     dword ptr [g_data_00541e6c], 1
+    L_ism_done:
+        pop     esi
+        ret
+    }
+}

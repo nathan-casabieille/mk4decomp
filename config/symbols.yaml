@@ -8397,10 +8397,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c990
-    name: func_0047c990
+    name: InstallSelfMStackPackedFlow_0047c990
     size: 357
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cb00
     name: PopCallBitCmpPushCall_0047cb00
     size: 141
