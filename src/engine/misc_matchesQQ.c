@@ -49380,3 +49380,102 @@ __declspec(naked) void Install4StateMerge_0047f1a0(void) {
         ret
     }
 }
+
+extern void func_004431e0(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern unsigned int g_data_004e5a00;
+
+/* @addr 0x00442740 (311b game) - field-setup with chain init + Mul10 ops + multi-field bulk store.
+ *   Save [baseSel*4+0x64] to g_x_00542054, [baseSel*4+0x68] to g_x_00542058.
+ *   g_x_00542050 = (0x004e5a00 >> 2). Call func_004431e0; if pause ret. If bit2(0054208c) ret.
+ *   chain[scaledInit*4+0x30]=0x94; eax = chain[+0x64] - 0x5b333; g_x_00542074=eax.
+ *   Call MStackPush1MagicMod2; if pause ret.
+ *   Mul10Tail(0x247, g_data_00542070) -> g_data_00542070.
+ *   Mul10Tail(g_x_00542074, g_x_0054206c) -> g_x_0054206c.
+ *   ecx=g_data_00542070; if (g_cj[+0x34] & 1): keep, else neg ecx.
+ *   chain at [scaledInit*4]: +0x6c=ecx, +0x70=-19660, +0x74=g_x_0054206c, +0x4c=0x20c,
+ *     +0x60=0x1e666, +0x78=0, +0x7c=0x51e, +0x80=0x28f.
+ *   g_x_0054206c=0x28f. ret.
+ */
+__declspec(naked) void ChainInitMul10BulkStore_00442740(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_x_00542054], ecx
+        mov     edx, dword ptr [eax*4 + 0x68]
+        mov     eax, offset g_data_004e5a00
+        mov     dword ptr [g_x_00542058], edx
+        shr     eax, 2
+        mov     dword ptr [g_x_00542050], eax
+        call    func_004431e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0ebh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x94
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x64]
+        sub     eax, 0x5b333
+        mov     dword ptr [g_x_00542074], eax
+        call    MStackPush1MagicMod2_004244d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0abh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_x_00542074], 0x247
+        push    ecx
+        push    0x247
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_x_00542074]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        mov     ecx, dword ptr [g_data_00542070]
+        and     edx, 1
+        mov     dword ptr [g_x_00542074], edx
+        _emit   74h
+        _emit   08h
+        neg     ecx
+        mov     dword ptr [g_data_00542070], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        shl     eax, 2
+        mov     dword ptr [eax + 0x6c], ecx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x74], ecx
+        mov     ecx, 0x28f
+        mov     dword ptr [eax + 0x70], 0xffffb334
+        mov     dword ptr [eax + 0x4c], 0x20c
+        mov     dword ptr [eax + 0x60], 0x1e666
+        mov     dword ptr [eax + 0x78], 0
+        mov     dword ptr [eax + 0x7c], 0x51e
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x80], ecx
+        ret
+    }
+}
