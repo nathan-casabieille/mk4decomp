@@ -8757,10 +8757,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00480b80
-    name: func_00480b80
+    name: Vec2ChainComputeStores_00480b80
     size: 401
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480d20
     name: ScaledChainTwoStores_00480d20
     size: 44

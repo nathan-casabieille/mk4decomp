@@ -76281,3 +76281,121 @@ __declspec(naked) void TripleMStackPushChainStores_00476180(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0053a180;
+extern unsigned int g_data_0054205c;
+extern void ScaledChainDouble_004911f0(void);
+extern void Mul10Tail_00404af0(void);
+
+__declspec(naked) void Vec2ChainComputeStores_00480b80(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        call    ScaledChainDouble_004911f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v2ccs_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        push    esi
+        mov     esi, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_0054207c]
+        add     edx, eax
+        add     ecx, esi
+        add     eax, edx
+        add     esi, ecx
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_data_00542078], esi
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542074], eax
+        mov     eax, dword ptr [g_data_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542074]
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_data_00542074], 0x50000
+        push    0x50000
+        push    0x50000
+        mov     dword ptr [g_data_00542078], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542078]
+        add     esp, 8
+        cmp     ecx, eax
+        mov     dword ptr [g_data_00542074], eax
+        jge     short L_v2ccs_skip
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_00542070]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_data_00542078], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542074], eax
+        mov     eax, dword ptr [g_data_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_0053a180]
+        mov     esi, dword ptr [g_data_00542074]
+        add     eax, esi
+        add     esp, 8
+        lea     ecx, [edx - 0x140000]
+        mov     dword ptr [g_data_00542078], eax
+        cmp     eax, ecx
+        mov     dword ptr [g_data_00542074], ecx
+        jl      short L_v2ccs_neg
+    L_v2ccs_skip:
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        neg     eax
+        lea     edx, [ecx + eax*2]
+        mov     eax, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_0054206c], edx
+        neg     eax
+        lea     edx, [ecx + eax*2]
+        mov     dword ptr [g_data_00542070], edx
+    L_v2ccs_neg:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        pop     esi
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     dword ptr [eax*4 + 0x5c], edx
+    L_v2ccs_ret:
+        ret
+    }
+}
