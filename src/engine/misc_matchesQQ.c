@@ -53034,3 +53034,106 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         jmp     MStackJmpInstallSelf_0046ed40
     }
 }
+
+extern unsigned int g_data_004e8620;
+
+/* @addr 0x00457bb0 (342b game) - thunk entry + install-self body with state-machine. */
+__declspec(naked) void EntryThunkBodyStateMachine_00457bb0(void) {
+    __asm {
+        mov     dword ptr [g_data_00542070], 0xffffffff
+        mov     dword ptr [g_x_0054206c], 0x20
+        call    Thunk_0049cc00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        push    0x20
+        push    offset body_bf0
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_bf0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     ecx, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [ecx + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   65h
+        dec     eax
+        _emit   74h
+        _emit   18h
+        mov     eax, dword ptr [g_state_00542080]
+        dec     eax
+        mov     dword ptr [g_state_00542080], eax
+        _emit   0fh
+        _emit   85h
+        _emit   96h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     esi, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        sub     eax, esi
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     edx, dword ptr [g_state_0054207c]
+        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [ecx + 8], offset body_bf0
+        mov     dword ptr [ecx + 0x84], 2
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_0054207c]
+        lea     edx, [eax + eax*2]
+        mov     eax, offset g_data_004e8620
+        shr     eax, 2
+        add     eax, edx
+        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_state_00542080], edx
+        mov     edx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_state_0054207c], edx
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_x_00542084], eax
+        _emit   0ebh
+        _emit   05h
+        mov     eax, dword ptr [g_x_00542084]
+        mov     edx, dword ptr [g_load_0052ab10]
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     esi, dword ptr [edx*4 + 0x58]
+        add     eax, esi
+        pop     esi
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     eax, dword ptr [g_state_0054207c]
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, 1
+        mov     dword ptr [ecx + 8], offset body_bf0
+        mov     dword ptr [ecx + 0x84], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        ret
+    }
+}

@@ -5833,10 +5833,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00457bb0
-    name: func_00457bb0
+    name: EntryThunkBodyStateMachine_00457bb0
     size: 342
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457d10
     name: MStackBranchSelect_00457d10
     size: 196
