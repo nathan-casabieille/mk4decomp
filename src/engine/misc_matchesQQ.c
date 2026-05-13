@@ -69623,3 +69623,151 @@ __declspec(naked) void BootOneShotMStackPush3_0040c100(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d215c;
+extern unsigned int g_data_004d2140;
+extern unsigned int g_data_004d213c;
+extern unsigned int g_data_00fa0ee0;
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void CritSecLazyEnter_004cd2b0(void);
+
+/* @addr 0x004ccfa0 (360b crt) - _ioinit-style file-table extend / find.
+ *   Enters crit-sec lock 0x12 (Lock_004c6f50(0x12)), then walks the
+ *   array of 0x480-byte file-table blocks at g_data_00fa0de0. For each
+ *   block, scans 0x24-byte entries looking for one with bit-0 of [+4]
+ *   set or count [+8] zero — lazy-initializes the InitializeCriticalSection
+ *   slot at [esi+0xc] via IAT [0x4d215c] on first use, then locks via
+ *   IAT [0x4d2140] and reads bit-0 of [+4] to decide whether to release
+ *   via IAT [0x4d213c]. Computes the file-table index from the byte
+ *   offset using 0x38e38e39 reciprocal-multiply (= /0x24). If no
+ *   existing block has room, allocates a new 0x480-byte block via
+ *   LoadArgPushCall_004c54b0(0x480), seeds entries with type=0xa, then
+ *   calls CritSecLazyEnter_004cd2b0(idx*0x20). Exits crit-sec 0x12.
+ */
+__declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
+    __asm {
+        sub     esp, 8
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        push    0x12
+        mov     dword ptr [esp + 0x14], 0xffffffff
+        call    Lock_004c6f50
+        xor     edi, edi
+        add     esp, 4
+        mov     dword ptr [esp + 0x14], edi
+        xor     ebx, ebx
+        mov     ebp, offset g_data_00fa0de0
+    L_fte_outer:
+        mov     esi, dword ptr [ebp]
+        test    esi, esi
+        je      L_fte_allocNew
+        lea     eax, [esi + 0x480]
+        cmp     esi, eax
+        jae     L_fte_advancePtr
+    L_fte_innerHead:
+        test    byte ptr [esi + 4], 1
+        jne     short L_fte_advanceEntry
+        mov     eax, dword ptr [esi + 8]
+        test    eax, eax
+        jne     short L_fte_initDone
+        push    0x11
+        call    Lock_004c6f50
+        mov     eax, dword ptr [esi + 8]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fte_relCrit
+        lea     ecx, [esi + 0xc]
+        push    ecx
+        call    dword ptr [g_data_004d215c]
+        inc     dword ptr [esi + 8]
+    L_fte_relCrit:
+        push    0x11
+        call    TableLookupIatCall_004c6fd0
+        add     esp, 4
+    L_fte_initDone:
+        lea     edi, [esi + 0xc]
+        push    edi
+        call    dword ptr [g_data_004d2140]
+        test    byte ptr [esi + 4], 1
+        je      short L_fte_foundFree
+        push    edi
+        call    dword ptr [g_data_004d213c]
+    L_fte_advanceEntry:
+        mov     edx, dword ptr [ebp]
+        add     esi, 0x24
+        add     edx, 0x480
+        cmp     esi, edx
+        jb      L_fte_innerHead
+        jmp     short L_fte_advancePtr
+    L_fte_foundFree:
+        mov     dword ptr [esi], 0xffffffff
+        mov     eax, dword ptr [ebp]
+        sub     esi, eax
+        mov     eax, 0x38e38e39
+        imul    esi
+        sar     edx, 3
+        mov     eax, edx
+        shr     eax, 0x1f
+        add     edx, eax
+        add     edx, ebx
+        mov     dword ptr [esp + 0x10], edx
+    L_fte_advancePtr:
+        cmp     dword ptr [esp + 0x10], -1
+        jne     L_fte_doneFound
+        mov     edi, dword ptr [esp + 0x14]
+        add     ebp, 4
+        inc     edi
+        add     ebx, 0x20
+        cmp     ebp, 0xfa0ee0
+        mov     dword ptr [esp + 0x14], edi
+        jl      L_fte_outer
+        jmp     short L_fte_doneFound
+    L_fte_allocNew:
+        push    0x480
+        call    LoadArgPushCall_004c54b0
+        xor     edx, edx
+        add     esp, 4
+        cmp     eax, edx
+        je      short L_fte_doneFound
+        mov     ebx, dword ptr [g_data_00fa0ee0]
+        lea     ecx, [eax + 0x480]
+        add     ebx, 0x20
+        cmp     eax, ecx
+        mov     dword ptr [edi*4 + g_data_00fa0de0], eax
+        mov     dword ptr [g_data_00fa0ee0], ebx
+        jae     short L_fte_postSeed
+        mov     cl, 0xa
+    L_fte_seedLoop:
+        mov     byte ptr [eax + 4], 0
+        mov     dword ptr [eax], 0xffffffff
+        mov     byte ptr [eax + 5], cl
+        mov     dword ptr [eax + 8], edx
+        mov     esi, dword ptr [edi*4 + g_data_00fa0de0]
+        add     eax, 0x24
+        add     esi, 0x480
+        cmp     eax, esi
+        jb      short L_fte_seedLoop
+    L_fte_postSeed:
+        shl     edi, 5
+        mov     eax, edi
+        push    eax
+        mov     dword ptr [esp + 0x14], eax
+        call    CritSecLazyEnter_004cd2b0
+        add     esp, 4
+    L_fte_doneFound:
+        push    0x12
+        call    TableLookupIatCall_004c6fd0
+        mov     eax, dword ptr [esp + 0x14]
+        add     esp, 4
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 8
+        ret
+    }
+}
