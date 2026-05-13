@@ -50057,3 +50057,110 @@ __declspec(naked) void LinkedListDistanceWalker_0045f950(void) {
         ret
     }
 }
+
+extern void ScaledLoadJmpIfNonzero_00490e00(void);
+
+/* @addr 0x00490cc0 (315b game) - cj-chain validate + indirect callback + threshold check + chain reset.
+ *   If g_cj==0: ret. If [cj*4+0x44]!=0: indirect call; if pause ret. If [cj*4+0x4c]!=0: add to [cj*4+0x70].
+ *   If negative: ret. Validate threshold via scaledInit chain.
+ *   Zero out chain entries 0x6c/0x70/0x74/0x78/0x7c/0x80/0x4c; sync. Select 538038/53803c.
+ *   Call ScaledLoadJmpIfNonzero; pop edi/esi; ret.
+ */
+__declspec(naked) void CjChainResetThreshold_00490cc0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_cj_0054205c]
+        push    esi
+        xor     esi, esi
+        push    edi
+        cmp     ecx, esi
+        _emit   0fh
+        _emit   84h
+        _emit   26h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [ecx*4 + 0x44]
+        cmp     eax, esi
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   19h
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   0fh
+        _emit   85h
+        _emit   03h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x4c]
+        cmp     eax, esi
+        mov     dword ptr [g_data_00542070], eax
+        _emit   0fh
+        _emit   84h
+        _emit   0e9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        add     eax, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        _emit   0fh
+        _emit   88h
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_acc_00542078], edx
+        mov     edi, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [g_data_00542070], edi
+        mov     eax, dword ptr [ecx*4 + 0x58]
+        add     eax, edx
+        mov     edx, dword ptr [g_x_0054206c]
+        add     eax, edx
+        cmp     eax, edi
+        mov     dword ptr [g_x_00542074], eax
+        _emit   0fh
+        _emit   8ch
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        lea     eax, [ecx*4 + 0]
+        mov     ecx, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [eax + 0x6c], esi
+        mov     dword ptr [eax + 0x70], esi
+        mov     dword ptr [eax + 0x74], esi
+        mov     dword ptr [eax + 0x78], esi
+        mov     dword ptr [eax + 0x7c], esi
+        mov     dword ptr [eax + 0x80], esi
+        mov     dword ptr [eax + 0x4c], esi
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x58], ecx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_data_00542070], esi
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x34], esi
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_data_00538038]
+        cmp     eax, ecx
+        mov     dword ptr [g_x_00542048], edx
+        _emit   74h
+        _emit   0ch
+        mov     ecx, dword ptr [g_data_0053803c]
+        mov     dword ptr [g_x_00542048], ecx
+        call    ScaledLoadJmpIfNonzero_00490e00
+        pop     edi
+        pop     esi
+        ret
+    }
+}

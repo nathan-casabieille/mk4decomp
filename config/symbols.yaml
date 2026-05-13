@@ -10744,10 +10744,11 @@ functions:
     status: matched
     file: src/engine/dual_install_call_swap.c
   - addr: 0x00490cc0
-    name: func_00490cc0
+    name: CjChainResetThreshold_00490cc0
     size: 315
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490e00
     name: ScaledLoadJmpIfNonzero_00490e00
     size: 49
