@@ -15792,10 +15792,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004cbb30
-    name: func_004cbb30
+    name: EnvpBuild_004cbb30
     size: 238
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cbc20
     name: SetupArgv_004cbc20
     size: 158

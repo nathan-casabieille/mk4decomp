@@ -59959,6 +59959,121 @@ extern void RendererTeardownSW_004b2a40(void);
 
 extern unsigned int g_data_004ffd4c;
 extern unsigned int g_data_00f85b34;
+extern unsigned int g_data_00f9f844;
+extern unsigned int g_data_00f9f820;
+extern void CmpCallPushIATCall_004c6e60(void);
+
+/* @addr 0x004cbb30 (238b crt) - CRT environment-string parser (envp builder).
+ *   Reads NUL-separated env string at [g_data_00f9f844]; counts non-'=' tokens.
+ *   Allocates (count+1)*4 byte ptr array, stores at [g_data_00f9f820].
+ *   Iterates env: for each token (until '='), allocates buffer, copies chars
+ *   via rep movsd/movsb, stores ptr in next slot.
+ *   Frees the env source string; writes NULL terminator at end of array.
+ */
+__declspec(naked) void EnvpBuild_004cbb30(void) {
+    __asm {
+        push    ecx
+        mov     edx, dword ptr [g_data_00f9f844]
+        push    ebx
+        push    ebp
+        push    esi
+        mov     al, [edx]
+        xor     esi, esi
+        test    al, al
+        push    edi
+        jz      short L_ep_alloc
+    L_ep_countLoop:
+        cmp     al, 0x3d
+        jz      short L_ep_skipInc
+        inc     esi
+    L_ep_skipInc:
+        mov     edi, edx
+        or      ecx, -1
+        xor     eax, eax
+        repne   scasb
+        not     ecx
+        dec     ecx
+        mov     al, [edx + ecx + 1]
+        lea     edx, [edx + ecx + 1]
+        test    al, al
+        jne     short L_ep_countLoop
+    L_ep_alloc:
+        lea     eax, [esi*4 + 4]
+        push    eax
+        call    LoadArgPushCall_004c54b0
+        mov     esi, eax
+        add     esp, 4
+        test    esi, esi
+        mov     [esp + 0x10], esi
+        mov     dword ptr [g_data_00f9f820], esi
+        jne     short L_ep_haveBuf
+        push    9
+        call    CmpCallPushIATCall_004c6e60
+        add     esp, 4
+    L_ep_haveBuf:
+        mov     ebp, dword ptr [g_data_00f9f844]
+        mov     dl, [ebp]
+        test    dl, dl
+        jz      short L_ep_finalize
+    L_ep_outer:
+        mov     edi, ebp
+        or      ecx, -1
+        xor     eax, eax
+        repne   scasb
+        not     ecx
+        dec     ecx
+        mov     ebx, ecx
+        inc     ebx
+        cmp     dl, 0x3d
+        jz      short L_ep_advance
+        push    ebx
+        call    LoadArgPushCall_004c54b0
+        add     esp, 4
+        mov     [esi], eax
+        test    eax, eax
+        jne     short L_ep_copyToken
+        push    9
+        call    CmpCallPushIATCall_004c6e60
+        add     esp, 4
+    L_ep_copyToken:
+        mov     edi, ebp
+        or      ecx, -1
+        xor     eax, eax
+        repne   scasb
+        mov     eax, [esp + 0x10]
+        not     ecx
+        sub     edi, ecx
+        mov     edx, ecx
+        mov     esi, edi
+        mov     edi, [eax]
+        shr     ecx, 2
+        rep     movsd
+        mov     ecx, edx
+        and     ecx, 3
+        add     eax, 4
+        rep     movsb
+        mov     [esp + 0x10], eax
+        mov     esi, eax
+    L_ep_advance:
+        mov     dl, [ebp + ebx]
+        add     ebp, ebx
+        test    dl, dl
+        jne     short L_ep_outer
+    L_ep_finalize:
+        mov     eax, dword ptr [g_data_00f9f844]
+        push    eax
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     dword ptr [g_data_00f9f844], 0
+        mov     dword ptr [esi], 0
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
 
 /* @addr 0x004bf370 (237b engine.scenegraph) - sprite-blit dispatcher.
  *   arg0 = sprite_id (esp+4); ecx = id & 0xf. Mark g_table_00f6e058[id]=1.
