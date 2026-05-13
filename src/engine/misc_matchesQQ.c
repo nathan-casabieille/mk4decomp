@@ -59988,6 +59988,122 @@ extern unsigned int g_data_00f9fc10;
 extern unsigned int g_data_00522bb0;
 extern unsigned int g_data_00522998;
 extern void func_004cd6f0(void);
+extern unsigned int g_data_004d2f28[2];
+extern void PackDoubleFromInts_004cde40(void);
+
+/* @addr 0x004cdee0 (259b crt) - _frexp-like double mantissa/exponent split.
+ *   Arg: double x at [esp+4], int* exp at [esp+0x18].
+ *   Compares x to 0.0 (g_data_004d2f28). If equal: *exp = 0, return 0.0.
+ *   Else: extract exponent bits; if 0 (denormal/zero): denormal-renormalize
+ *     loop, then compute fresh mantissa via PackDoubleFromInts; *exp = computed.
+ *   Normal: pack 64-bit mantissa via PackDoubleFromInts, extract biased exp,
+ *     store *exp = biased_exp - 0x3fe, return mantissa as double.
+ */
+__declspec(naked) void Frexp_004cdee0(void) {
+    __asm {
+        fld     qword ptr [esp + 4]
+        fcomp   qword ptr [g_data_004d2f28]
+        push    ebx
+        push    esi
+        push    edi
+        fnstsw  ax
+        test    ah, 0x40
+        jz      short L_fx_nz
+        mov     ecx, [esp + 0x18]
+        mov     dword ptr [esp + 0x10], 0
+        mov     dword ptr [esp + 0x14], 0
+        xor     esi, esi
+        fld     qword ptr [esp + 0x10]
+        mov     [ecx], esi
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_fx_nz:
+        mov     esi, [esp + 0x16]
+        mov     edx, [esp + 0x14]
+        mov     ecx, [esp + 0x10]
+        test    esi, 0x7ff0
+        jne     L_fx_normal
+        test    edx, 0xfffff
+        jne     short L_fx_denorm
+        test    ecx, ecx
+        jz      L_fx_normal
+    L_fx_denorm:
+        fld     qword ptr [esp + 0x10]
+        fcomp   qword ptr [g_data_004d2f28]
+        mov     esi, -0x3fd
+        fnstsw  ax
+        test    ah, 1
+        jz      short L_fx_dnoneg
+        mov     edi, 1
+        jmp     short L_fx_dnsetup
+    L_fx_dnoneg:
+        xor     edi, edi
+    L_fx_dnsetup:
+        mov     bl, byte ptr [esp + 0x16]
+        mov     al, 0x10
+        test    bl, al
+        jne     short L_fx_dndone
+    L_fx_dnloop:
+        shl     edx, 1
+        test    ecx, 0x80000000
+        mov     [esp + 0x14], edx
+        jz      short L_fx_dnsave
+        or      edx, 1
+        mov     [esp + 0x14], edx
+    L_fx_dnsave:
+        mov     bl, byte ptr [esp + 0x16]
+        shl     ecx, 1
+        dec     esi
+        test    bl, al
+        jz      short L_fx_dnloop
+    L_fx_dndone:
+        _emit   66h
+        _emit   81h
+        _emit   64h
+        _emit   24h
+        _emit   16h
+        _emit   0efh
+        _emit   0ffh
+        test    edi, edi
+        jz      short L_fx_dnPos
+        or      byte ptr [esp + 0x17], 0x80
+    L_fx_dnPos:
+        mov     eax, dword ptr [esp + 0x14]
+        push    0
+        push    eax
+        push    ecx
+        call    PackDoubleFromInts_004cde40
+        mov     ecx, [esp + 0x24]
+        add     esp, 0xc
+        fstp    qword ptr [esp + 0x10]
+        fld     qword ptr [esp + 0x10]
+        mov     [ecx], esi
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_fx_normal:
+        push    0
+        push    edx
+        push    ecx
+        call    PackDoubleFromInts_004cde40
+        mov     ecx, [esp + 0x24]
+        add     esp, 0xc
+        shr     esi, 4
+        fstp    qword ptr [esp + 0x10]
+        and     esi, 0x7ff
+        pop     edi
+        movsx   esi, si
+        fld     qword ptr [esp + 0xc]
+        sub     esi, 0x3fe
+        mov     [ecx], esi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004cc780 (254b crt) - CRT tolower with multibyte/locale support.
  *   If g_data_00f9fc10 (LC_CTYPE locale) is NULL: simple ASCII path -

@@ -16074,10 +16074,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cdee0
-    name: func_004cdee0
+    name: Frexp_004cdee0
     size: 259
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cdff0
     name: RoundDouble_004cdff0
     size: 21
