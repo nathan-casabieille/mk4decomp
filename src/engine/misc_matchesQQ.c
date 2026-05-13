@@ -59957,6 +59957,110 @@ extern void *g_iat_004d21b8;
 extern void *g_iat_004d202c;
 extern void RendererTeardownSW_004b2a40(void);
 
+extern unsigned int g_data_0058c7e0;
+extern unsigned int g_data_0058c7ec;
+extern unsigned int g_data_0058c7b4;
+extern unsigned int g_data_0058c7b0;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_data_004f4788;
+
+/* @addr 0x004ad4a0 (234b engine.install) - DSound capture buffer setup gate.
+ *   Frame: sub esp, 0x6c; push ebx/ebp/esi/edi.
+ *   Validate: g_data_0058c7e0!=0, arg1!=0, arg2!=0, arg3!=0, g_data_0058c7ec==0; else fail.
+ *   Zero local 108-byte struct ([esp+0x10]); set struct[0]=0x6c (size).
+ *   Depending on arg0 (esi): if esi!=0 use [0x58c7b4]; else use [0x58c7b0].
+ *   vtbl call ([ecx+0x64]: object_ptr, 0, struct_ptr, flag, 0) and store result
+ *   in g_data_0058c7dc.
+ *   If [esp+0x34] (returned blob) != 0 and [esp+0x20] >= 0x280:
+ *     *arg1 = blob; *arg2 = field; *arg3 = [0x004f4788]; g_data_0058c7ec = (esi?2:1).
+ *     Return 1. Else return 0.
+ */
+__declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0058c7e0]
+        sub     esp, 0x6c
+        test    eax, eax
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        jz      L_dcg_fail
+        mov     eax, [esp + 0x84]
+        test    eax, eax
+        jz      L_dcg_fail
+        mov     ebp, [esp + 0x88]
+        test    ebp, ebp
+        jz      L_dcg_fail
+        mov     ebx, [esp + 0x8c]
+        test    ebx, ebx
+        jz      L_dcg_fail
+        mov     eax, dword ptr [g_data_0058c7ec]
+        test    eax, eax
+        jne     L_dcg_fail
+        mov     esi, [esp + 0x80]
+        mov     ecx, 0x1b
+        xor     eax, eax
+        lea     edi, [esp + 0x10]
+        rep     stosd
+        test    esi, esi
+        mov     dword ptr [esp + 0x10], 0x6c
+        jz      short L_dcg_pickB
+        mov     eax, dword ptr [g_data_0058c7b4]
+        test    eax, eax
+        jz      short L_dcg_skipCall
+        mov     ecx, [eax]
+        push    0
+        push    0x21
+        jmp     short L_dcg_doCall
+    L_dcg_pickB:
+        mov     eax, dword ptr [g_data_0058c7b0]
+        test    eax, eax
+        jz      short L_dcg_skipCall
+        mov     ecx, [eax]
+        push    0
+        push    0x11
+    L_dcg_doCall:
+        lea     edx, [esp + 0x18]
+        push    edx
+        push    0
+        push    eax
+        call    dword ptr [ecx + 0x64]
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dcg_skipCall:
+        mov     eax, [esp + 0x34]
+        test    eax, eax
+        jz      short L_dcg_fail
+        mov     ecx, [esp + 0x20]
+        cmp     ecx, 0x280
+        jl      short L_dcg_fail
+        mov     edx, [esp + 0x84]
+        mov     [edx], eax
+        mov     [ebp], ecx
+        mov     eax, dword ptr [g_data_004f4788]
+        xor     ecx, ecx
+        test    esi, esi
+        setne   cl
+        inc     ecx
+        mov     [ebx], eax
+        mov     dword ptr [g_data_0058c7ec], ecx
+        mov     eax, 1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x6c
+        ret
+    L_dcg_fail:
+        pop     edi
+        pop     esi
+        pop     ebp
+        xor     eax, eax
+        pop     ebx
+        add     esp, 0x6c
+        ret
+    }
+}
+
 /* @addr 0x004b2950 (232b engine.app) - SW renderer one-shot init.
  *   If g_data_007af940 != 0: already initialized -> return 1.
  *   If arg0 == 0: return 0.
