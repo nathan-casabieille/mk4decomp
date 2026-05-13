@@ -57542,3 +57542,112 @@ __declspec(naked) void BootChainBuildAndStep_004124c0(void)
         ret
     }
 }
+
+extern void SetOnePairJmp_004a0420(void);
+extern void TripleTestInstallJmp_004a0440(void);
+extern unsigned int g_state_00541d88;
+
+/*
+ * AudioInstall2BodyDualSetup_004a0300 — 276b audio 2-entry install with dual-fork body.
+ *   Entry 0x004a0300: g_x_0054206c = g_data_00542004; if 0: call CallSetPause; pop+ret.
+ *     Else g_x_0054206c = g_data_0053a1bc; if !=0: call CallSetPause; pop+ret.
+ *     Else: g_data_0053a1bc=1; g_state_00541d88=0; g_x_00541dd4=0; g_x_00537f88=2;
+ *       g_x_0054206c=0; chain[+0xc]=0; call func_0049e7e0; if paused: call CallSetPause; pop+ret.
+ *   Body 0x004a0370 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
+ *     If state==0: push 0x238; g_x_00542054 = g_state_00537e90; call DualPushSetCallDualPop;
+ *       cl=g_state_0054208c; eax=1; if al&cl: edx=g_x_00542054; ecx=g_x_00537f88;
+ *         if edx==ecx: install-self body; chain->state=1; g_data_0054204c=1; pause=1; pop+ret.
+ *     Common: eax=g_data_00542004; g_x_0054206c=eax; if 0: call SetOnePairJmp_004a0420; pop+ret.
+ *       Else: g_x_0054206c=g_data_0053a354; if !=0: call TripleTestInstallJmp_004a0440; pop+ret.
+ *       Else call SetOnePairJmp_004a0420; pop+ret.
+ */
+__declspec(naked) void AudioInstall2BodyDualSetup_004a0300(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542004]
+        push    esi
+        xor     esi, esi
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, esi
+        je      short L_a0_callPause
+        mov     eax, dword ptr [g_data_0053a1bc]
+        cmp     eax, esi
+        mov     dword ptr [g_x_0054206c], eax
+        jne     short L_a0_callPause
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_data_0053a1bc], 1
+        mov     dword ptr [g_state_00541d88], esi
+        mov     dword ptr [g_x_00541dd4], esi
+        mov     dword ptr [g_x_00537f88], 2
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [eax*4 + 0xc], esi
+        call    func_0049e7e0
+        cmp     dword ptr [g_pause_00541e6c], esi
+        jne     short L_a0_popRet
+    L_a0_callPause:
+        call    CallSetPause_0041f830
+    L_a0_popRet:
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_a0_body:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        jne     short L_a0_common
+        mov     ecx, dword ptr [g_state_00537e90]
+        push    0x238
+        mov     dword ptr [g_x_00542054], ecx
+        call    DualPushSetCallDualPop_00404b10
+        mov     cl, byte ptr [g_state_0054208c]
+        mov     eax, 1
+        add     esp, 4
+        test    cl, al
+        je      short L_a0_common
+        mov     edx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_x_00537f88]
+        cmp     edx, ecx
+        je      short L_a0_installSelf
+    L_a0_common:
+        mov     eax, dword ptr [g_data_00542004]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        jne     short L_a0_checkSec
+        call    SetOnePairJmp_004a0420
+        pop     esi
+        ret
+    L_a0_checkSec:
+        mov     eax, dword ptr [g_data_0053a354]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        jne     short L_a0_tripleCall
+        call    SetOnePairJmp_004a0420
+        pop     esi
+        ret
+    L_a0_tripleCall:
+        call    TripleTestInstallJmp_004a0440
+        pop     esi
+        ret
+    L_a0_installSelf:
+        mov     dword ptr [esi + 8], offset L_a0_body
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

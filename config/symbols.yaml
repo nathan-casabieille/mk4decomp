@@ -12021,10 +12021,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0300
-    name: func_004a0300
+    name: AudioInstall2BodyDualSetup_004a0300
     size: 276
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0420
     name: SetOnePairJmp_004a0420
     size: 20
