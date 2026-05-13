@@ -14243,10 +14243,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8730
-    name: func_004b8730
+    name: MenuFlagBitDispatchSearch_004b8730
     size: 255
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8830
     name: func_004b8830
     size: 255
