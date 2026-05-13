@@ -11900,10 +11900,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f7b0
-    name: func_0049f7b0
+    name: LinkedListIndirectDirtyToggle_0049f7b0
     size: 333
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f900
     name: DispatcherComplex115_0049f900
     size: 115
