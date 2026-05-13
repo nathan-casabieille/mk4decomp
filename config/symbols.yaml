@@ -2045,10 +2045,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004245b0
-    name: func_004245b0
+    name: Atan2QuadrantLookup_004245b0
     size: 390
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424740
     name: TripleMod411262_00424740
     size: 285

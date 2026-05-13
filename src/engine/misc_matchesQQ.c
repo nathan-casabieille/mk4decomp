@@ -74399,3 +74399,161 @@ __declspec(naked) void SixEntryYieldThunks_00461090(void) {
         jmp     MstackPopScaledChainPlusThunks_00471250
     }
 }
+
+extern unsigned int g_data_00542030;
+extern unsigned int g_data_00542034;
+extern void Alldiv_004c5690(void);
+extern void UllShlAndInit_004c5740(void);
+
+/* @addr 0x004245b0 (390b game) - mstack-push-3 + 2D angle to table lookup.
+ *   Pushes g_data_00542070/0054207c/00542044 onto mstack, then computes
+ *   the quadrant code based on signs of g_data_00542074 (y) and
+ *   g_data_00542078 (x):
+ *     edx = (y < 0) ? 2 : 0
+ *     edi = (x < 0) ? 4 : 0
+ *     0x54207c = edi + edx (quadrant base 0/2/4/6)
+ *   Computes the line-slope: take absolute values, compare. If |y| <= |x|:
+ *     0x542070 = y, eax=x (the larger); slope = abs(y)/abs(x).
+ *   Else: 0x542070 = x, eax=y, edi++; slope = abs(x)/abs(y) (octant
+ *   correction).
+ *   Slope computation:
+ *     if 0 → eax=0, skip to angle table.
+ *     if abs <= 0x7fff → eax = (slope_num << 16) / slope_den (signed
+ *       64/32 divide via cdq+idiv).
+ *     else: call UllShlAndInit_004c5740(slope, 16) → (high, low) and
+ *       Alldiv_004c5690(high, low, num, 0) (64-bit /32-bit divide).
+ *   Then `eax = abs(eax) << 9`, looks up angle in
+ *   [g_data_00542030[(eax >> 16) + ebx]] (atan table). Negates result
+ *   if the original 0x54207c quadrant says so, sums in the +0x542034
+ *   quadrant base. Stores into 0x54206c.
+ *   Pops the 3 mstack entries back.
+ */
+__declspec(naked) void Atan2QuadrantLookup_004245b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        xor     edx, edx
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_data_00542074]
+        test    eax, eax
+        jge     short L_a2q_yPos
+        mov     edx, 2
+    L_a2q_yPos:
+        mov     ecx, dword ptr [g_data_00542078]
+        xor     edi, edi
+        test    ecx, ecx
+        jge     short L_a2q_xPos
+        mov     edi, 4
+    L_a2q_xPos:
+        add     edi, edx
+        mov     esi, eax
+        test    eax, eax
+        mov     dword ptr [g_data_0054207c], edi
+        jge     short L_a2q_skipNegY
+        neg     esi
+    L_a2q_skipNegY:
+        test    ecx, ecx
+        mov     edx, ecx
+        jge     short L_a2q_skipNegX
+        neg     edx
+    L_a2q_skipNegX:
+        cmp     edx, esi
+        jg      short L_a2q_xLarger
+        mov     esi, eax
+        mov     eax, ecx
+        mov     dword ptr [g_data_00542070], esi
+        jmp     short L_a2q_checkZero
+    L_a2q_xLarger:
+        mov     esi, ecx
+        inc     edi
+        mov     dword ptr [g_data_00542070], esi
+        mov     dword ptr [g_data_0054207c], edi
+    L_a2q_checkZero:
+        test    esi, esi
+        jne     short L_a2q_haveDenom
+        xor     eax, eax
+        jmp     short L_a2q_postDiv
+    L_a2q_haveDenom:
+        cmp     eax, 0xffff8000
+        jl      short L_a2q_useAllDiv
+        cmp     eax, 0x8000
+        jge     short L_a2q_useAllDiv
+        shl     eax, 0x10
+        cdq
+        idiv    esi
+        jmp     short L_a2q_postDiv
+    L_a2q_useAllDiv:
+        cdq
+        mov     ecx, 0x10
+        call    UllShlAndInit_004c5740
+        mov     ecx, eax
+        mov     eax, esi
+        mov     ebx, edx
+        cdq
+        push    edx
+        push    eax
+        push    ebx
+        push    ecx
+        call    Alldiv_004c5690
+    L_a2q_postDiv:
+        test    eax, eax
+        jge     short L_a2q_posAng
+        neg     eax
+    L_a2q_posAng:
+        mov     ebx, dword ptr [g_data_00542030]
+        mov     edx, dword ptr [g_data_00542034]
+        shl     eax, 9
+        mov     dword ptr [g_data_0054206c], eax
+        sar     eax, 0x10
+        add     eax, ebx
+        shl     edi, 1
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4]
+        lea     eax, [edx + edi]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_0054207c], edi
+        mov     dword ptr [g_data_00542044], eax
+        cmp     dword ptr [eax*4], 0
+        jge     short L_a2q_noNeg
+        neg     ecx
+        mov     dword ptr [g_data_0054206c], ecx
+    L_a2q_noNeg:
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edi, dword ptr [eax*4]
+        mov     eax, dword ptr [g_state_004d57ac]
+        add     ecx, edi
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     ecx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        pop     edi
+        pop     esi
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     ebx
+        ret
+    }
+}
