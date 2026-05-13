@@ -68854,3 +68854,140 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00542aa8;
+extern unsigned int g_data_004eb8f8;
+extern unsigned int g_data_004eb900;
+extern unsigned int g_data_004eb90c;
+extern unsigned int g_data_004eb910;
+extern void Wrapper_0048a300(void);
+extern void CallPauseScaledStoreJmp_004288b0(void);
+extern void Mul10TailPairChain_00470390(void);
+extern void IterStepDualStore_00490b40(void);
+extern void TripleScaledChainStore_004908f0(void);
+extern void ConstStoreCallJmp_0046ff60(void);
+
+/* @addr 0x0046fdf0 (360b game) - 3-entry packed phase chain (slot-event tags).
+ *   Entry 1 (offset 0, 89b): writes [scaled+0x74]=0x2008, calls
+ *     SlotPhaseResetInstallChain_0048e0e0 → Wrapper_0048a300 →
+ *     push 0x542aa8 → GuardedPackedSlotInit_00428760; tail-jmp
+ *     CallPauseScaledStoreJmp_004288b0 with g_data_00542070=0x12.
+ *   7b NOP align pad.
+ *   Entry 2 (offset 0x60, 134b): calls Mul10TailPairChain_00470390;
+ *     on no-error sets g_data_00542060*4+0x5c = 1, pushes 0x4eb8f8,
+ *     calls IterStepDualStore_00490b40; sets [scaled+0x74]=0x2009 →
+ *     ScaledAndAlfe_00490390; pushes 0x4eb900 →
+ *     TripleScaledChainStore_004908f0; tail-jmp ConstStoreCallJmp_0046ff60
+ *     with g_data_00542088=0x4ccc.
+ *   10b NOP align pad.
+ *   Entry 3 (offset 0xf0, 120b): mirror of entry 2 but pushes
+ *     0x4eb90c and 0x4eb910, sets [scaled+0x74]=0x200a, and ends with
+ *     g_data_00542088 = 0xffffb334 before tail-jmp 0046ff60.
+ */
+__declspec(naked) void SlotEvent3EntryChain_0046fdf0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x2008
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    SlotPhaseResetInstallChain_0048e0e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_se3_e1End
+        call    Wrapper_0048a300
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_se3_e1End
+        push    offset g_data_00542aa8
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_se3_e1End
+        mov     dword ptr [g_data_00542070], 0x12
+        jmp     CallPauseScaledStoreJmp_004288b0
+    L_se3_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x60) */
+    L_se3_entry2:
+        call    Mul10TailPairChain_00470390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_se3_e2End
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_004eb8f8
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_se3_e2End
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, 0x2009
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x74], eax
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_se3_e2End
+        push    offset g_data_004eb900
+        call    TripleScaledChainStore_004908f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_se3_e2End
+        mov     dword ptr [g_data_00542088], 0x4ccc
+        jmp     ConstStoreCallJmp_0046ff60
+    L_se3_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0xf0) */
+    L_se3_entry3:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_004eb90c
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_se3_e3End
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, 0x200a
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x74], eax
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_se3_e3End
+        push    offset g_data_004eb910
+        call    TripleScaledChainStore_004908f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_se3_e3End
+        mov     dword ptr [g_data_00542088], 0xffffb334
+        jmp     ConstStoreCallJmp_0046ff60
+    L_se3_e3End:
+        ret
+    }
+}
