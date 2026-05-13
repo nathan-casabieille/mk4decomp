@@ -75597,3 +75597,119 @@ __declspec(naked) void AudioPhaseDispatch_004a1150(void)
         ret
     }
 }
+
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void Wrapper_0048a330(void);
+extern void InstallSelfStoreTwoCall_0049a410(void);
+extern void CondPickDualStore_0049c670(void);
+extern void InstallSelfDualPathInit_0049a2f0(void);
+
+__declspec(naked) void ClampNegPair_0049a170(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0054205c]
+        push    esi
+        mov     dword ptr [g_data_00542070], 0xfffd0000
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x58]
+        cmp     eax, 0xfffd0000
+        mov     dword ptr [g_data_0054206c], eax
+        jl      short L_cnp_doCall
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], 0
+        jl      short L_cnp_ret
+    L_cnp_doCall:
+        push    0x117d11
+        call    ThreeChanPackClamp_00404cc0
+        mov     ecx, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    ecx
+        call    CopyThreeFields_00404df0
+        mov     eax, dword ptr [esi + 0x70]
+        mov     edx, dword ptr [g_data_00542070]
+        neg     eax
+        mov     dword ptr [esi + 0x58], edx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x70], eax
+        mov     eax, dword ptr [esi + 0x68]
+        neg     eax
+        add     esp, 4
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x68], eax
+        call    Wrapper_0048a330
+    L_cnp_ret:
+        pop     esi
+        ret
+        nop
+        nop
+    L_tpisd_entry:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        je      short L_tpisd_phase0
+        dec     eax
+        je      short L_tpisd_phase1
+        dec     eax
+        je      short L_tpisd_phase2
+        call    InstallSelfStoreTwoCall_0049a410
+        pop     edi
+        pop     esi
+        ret
+    L_tpisd_phase2:
+        mov     dword ptr [esi + 8], offset L_tpisd_entry
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_tpisd_entry
+        mov     dword ptr [ecx*4 + 0x84], 3
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        add     edx, 0x3000000
+        jmp     short L_tpisd_pushAndStep
+    L_tpisd_phase1:
+        mov     dword ptr [esi + 8], offset L_tpisd_entry
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_tpisd_entry
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        add     edx, 0x2000000
+        jmp     short L_tpisd_pushAndStep
+    L_tpisd_phase0:
+        call    CondPickDualStore_0049c670
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_tpisd_ret
+        mov     dword ptr [esi + 8], offset L_tpisd_entry
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_tpisd_entry
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        add     edx, 0x1000000
+    L_tpisd_pushAndStep:
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edi
+        call    InstallSelfDualPathInit_0049a2f0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_tpisd_ret:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
