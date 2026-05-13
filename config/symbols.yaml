@@ -7151,10 +7151,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0046b360
-    name: func_0046b360
+    name: StateRemapPackedInstall_0046b360
     size: 374
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046b4e0
     name: Install3StateRouterTail_0046b4e0
     size: 325

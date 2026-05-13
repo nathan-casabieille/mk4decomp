@@ -72532,3 +72532,132 @@ __declspec(naked) void MStackPush2LLWalkCompare_004069b0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_005019d0;
+extern unsigned int g_data_00542a70;
+extern unsigned int g_data_00542a78;
+extern unsigned int g_data_004eaee0;
+extern void ArgScaledTestStore_00494140(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void Install3StateRouterTail_0046b4e0(void);
+
+/* @addr 0x0046b360 (374b game) - 3-entry packed: state-remap + install +
+ *   state-remap-call.
+ *   Entry 1 (offset 0, 80b): sets g_data_00542048 = &g_data_005019d0>>2,
+ *     reads [g_data_00542060*4 + 0x34] as state code; if 0x10 → 2, if
+ *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore_00494140.
+ *   Entry 2 (offset 0x50, 219b): phase-state install. Phase != 0 tail-jmps
+ *     StackPopDispatchTagged_0041f780. Phase 0: writes [scaled+0x74]=0x2002,
+ *     ScaledAndAlfe_00490390 → push 0x542a78 → ArgScaledTestStore. On
+ *     no-error writes g_data_00542048 → [0x54205c*4 + 0x24], installs Self
+ *     entry 1 (0x46b3b0) with packed_ptr (Self + 0x01000000), calls
+ *     ScaledClearJmp_00428d60.
+ *   5b NOP align pad.
+ *   Entry 3 (offset 0x130, 70b): FiveCallScaledChainTailJmp_0045f8d0;
+ *     on no-error reads [scaled+0x34] as state code; if 0x11 → 7. If
+ *     != 0xf, tail-call Install3StateRouterTail_0046b4e0; else pushes
+ *     0x4eaee0 → ArgSarStoreJmp_004594f0.
+ */
+__declspec(naked) void StateRemapPackedInstall_0046b360(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, offset g_data_005019d0
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        cmp     eax, 0x10
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_srp_check11
+        mov     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+    L_srp_check11:
+        cmp     eax, 0x11
+        jne     short L_srp_check15
+        mov     eax, 7
+        mov     dword ptr [g_data_0054206c], eax
+    L_srp_check15:
+        cmp     eax, 0xf
+        je      short L_srp_e1End
+        push    offset g_data_00542a70
+        call    ArgScaledTestStore_00494140
+        add     esp, 4
+    L_srp_e1End:
+        ret
+    L_srp_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_srp_e2phase0
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_srp_e2phase0:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x2002
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_srp_e2End
+        push    offset g_data_00542a78
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_srp_e2End
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     dword ptr [esi + 8], offset L_srp_entry2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_srp_entry2
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    ScaledClearJmp_00428d60
+        mov     dword ptr [g_data_00541e6c], 1
+    L_srp_e2End:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x130) */
+    L_srp_entry3:
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_srp_e3End
+        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        cmp     eax, 0x11
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_srp_e3check15
+        mov     eax, 7
+        mov     dword ptr [g_data_0054206c], eax
+    L_srp_e3check15:
+        cmp     eax, 0xf
+        jne     short L_srp_e3pushAlarm
+        jmp     Install3StateRouterTail_0046b4e0
+    L_srp_e3pushAlarm:
+        push    offset g_data_004eaee0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_srp_e3End:
+        ret
+    }
+}
