@@ -65638,3 +65638,170 @@ __declspec(naked) void LinkSiblingsAndInstallSelf_00414670(void) {
         ret
     }
 }
+
+extern void Flsbuf_004c77f0(void);
+
+/* @addr 0x004c5fc0 (326b crt) - _fwrite_nolock.
+ *   Stack args: size, count, buf, stream. Multiplies size*count into total
+ *   bytes. Handles 3 cases on stream flags (FILE.flags @ +0xc):
+ *     - dirty/text translation bits (0x10c): take the buffered fast path
+ *       (rep movsd/movsb into [ebx], decrement remaining at [ebx+4]).
+ *     - line-buffered/needs-flush bits (0x108): walk one byte at a time via
+ *       Flsbuf_004c77f0 (the slow path).
+ *     - otherwise: chunk via IOWrapper_004c9ae0 (write syscall), passing the
+ *       file descriptor at [ebx+0x10].
+ *   On error sets the FILE error flag (or 0x20) and returns count of bytes
+ *   transferred via div by 'size'.
+ */
+__declspec(naked) void FWriteNoLock_004c5fc0(void) {
+    __asm {
+        push    ecx
+        push    ebx
+        push    ebp
+        mov     ebp, dword ptr [esp + 0x18]
+        push    esi
+        imul    ebp, dword ptr [esp + 0x18]
+        mov     esi, dword ptr [esp + 0x14]
+        push    edi
+        test    ebp, ebp
+        mov     dword ptr [esp + 0x18], esi
+        mov     dword ptr [esp + 0x10], ebp
+        jne     short L_fwr_haveBytes
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fwr_haveBytes:
+        mov     ebx, dword ptr [esp + 0x24]
+        test    dword ptr [ebx + 0xc], 0x10c
+        je      short L_fwr_unbuffered
+        mov     edi, dword ptr [ebx + 0x18]
+        mov     dword ptr [esp + 0x24], edi
+        jmp     short L_fwr_topLoop
+    L_fwr_unbuffered:
+        mov     dword ptr [esp + 0x24], 0x1000
+    L_fwr_loopHead:
+        mov     edi, dword ptr [esp + 0x24]
+    L_fwr_topLoop:
+        mov     ecx, dword ptr [ebx + 0xc]
+        and     ecx, 0x108
+        je      short L_fwr_noBufCase
+        mov     eax, dword ptr [ebx + 4]
+        test    eax, eax
+        je      short L_fwr_noBufCase
+        cmp     ebp, eax
+        jae     short L_fwr_useEax
+        mov     eax, ebp
+    L_fwr_useEax:
+        mov     edi, dword ptr [ebx]
+        mov     ecx, eax
+        mov     edx, ecx
+        sub     ebp, eax
+        shr     ecx, 2
+        rep movsd
+        mov     ecx, edx
+        and     ecx, 3
+        rep movsb
+        mov     esi, dword ptr [ebx + 4]
+        mov     edx, dword ptr [ebx]
+        mov     ecx, dword ptr [esp + 0x18]
+        sub     esi, eax
+        add     edx, eax
+        add     ecx, eax
+        mov     dword ptr [ebx + 4], esi
+        mov     dword ptr [ebx], edx
+        mov     dword ptr [esp + 0x18], ecx
+        mov     esi, ecx
+        jmp     short L_fwr_loopBottom
+    L_fwr_noBufCase:
+        cmp     ebp, edi
+        jb      short L_fwr_byteSlow
+        test    ecx, ecx
+        je      short L_fwr_doIO
+        push    ebx
+        call    FFlushImpl_004c69a0
+        add     esp, 4
+        test    eax, eax
+        jne     L_fwr_errPath
+    L_fwr_doIO:
+        test    edi, edi
+        je      short L_fwr_useEbp
+        mov     eax, ebp
+        xor     edx, edx
+        div     edi
+        mov     edi, ebp
+        sub     edi, edx
+        jmp     short L_fwr_callIO
+    L_fwr_useEbp:
+        mov     edi, ebp
+    L_fwr_callIO:
+        mov     eax, dword ptr [ebx + 0x10]
+        push    edi
+        push    esi
+        push    eax
+        call    IOWrapper_004c9ae0
+        add     esp, 0xc
+        cmp     eax, -1
+        je      short L_fwr_setErr
+        sub     ebp, eax
+        add     esi, eax
+        cmp     eax, edi
+        mov     dword ptr [esp + 0x18], esi
+        jb      short L_fwr_setErr
+        jmp     short L_fwr_loopBottom
+    L_fwr_byteSlow:
+        movsx   ecx, byte ptr [esi]
+        push    ebx
+        push    ecx
+        call    Flsbuf_004c77f0
+        add     esp, 8
+        cmp     eax, -1
+        je      short L_fwr_errPath
+        mov     eax, dword ptr [ebx + 0x18]
+        inc     esi
+        dec     ebp
+        mov     dword ptr [esp + 0x18], esi
+        test    eax, eax
+        mov     dword ptr [esp + 0x24], eax
+        jg      short L_fwr_loopBottom
+        mov     dword ptr [esp + 0x24], 1
+    L_fwr_loopBottom:
+        test    ebp, ebp
+        jne     L_fwr_loopHead
+        mov     eax, dword ptr [esp + 0x20]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fwr_setErr:
+        mov     edx, dword ptr [ebx + 0xc]
+        mov     eax, dword ptr [esp + 0x10]
+        or      edx, 0x20
+        sub     eax, ebp
+        mov     dword ptr [ebx + 0xc], edx
+        xor     edx, edx
+        div     dword ptr [esp + 0x1c]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_fwr_errPath:
+        mov     eax, dword ptr [esp + 0x10]
+        xor     edx, edx
+        sub     eax, ebp
+        div     dword ptr [esp + 0x1c]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
