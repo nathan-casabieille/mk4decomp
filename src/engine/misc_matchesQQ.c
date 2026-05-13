@@ -52893,3 +52893,144 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
         ret
     }
 }
+
+extern void ScaledAndAlfe_00490390(void);
+extern void TripleCallPauseJmp_00470500(void);
+extern void Wrapper_0048a3c0(void);
+extern void func_004709e0(void);
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void func_0046ee00(void);
+extern void MStackJmpInstallSelf_0046ed40(void);
+extern unsigned int g_data_004eb6c8;
+
+/* @addr 0x0046eac0 (339b game) - 5-thunk dispatcher with mstack-push chain (state-machine via mstack callback ptrs).
+ *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_x_0054206c=0x603.
+ *     Call TripleCallPauseJmp; if pause ret. Push 0x004eb6b8; call ArgSarStoreJmp; pop; ret. 15-NOP pad.
+ *   Thunk B (+0x50): call Wrapper_0048a3c0; if pause ret.
+ *     g_x_00542054 = (0x004eb6c8 >> 2); tail-jmp func_004709e0. ret. 15-NOP pad.
+ *   Thunk C (+0x80): if bit0(0054208c): jmp CallPauseDirtyMStackPushFn.
+ *     g_state_00542080=g_state_0054207c=7. Mstack-push body_eb80; tail-jmp InstallSelfMStackOverwrite. 8-NOP pad.
+ *   Thunk D body_eb80 (+0xc0): if bit0: jmp func_0046ee00.
+ *     g_state_00542080=8; g_state_0054207c=7. Mstack-push body_ebc0; tail-jmp InstallSelfMStackOverwrite. 3-NOP pad.
+ *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
+ *   Thunk F body_ec00 (+0x140): if bit0 jmp func_0046ee00; else jmp MStackJmpInstallSelf.
+ */
+__declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
+    __asm {
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   32h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x603
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    TripleCallPauseJmp_00470500
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004eb6b8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Wrapper_0048a3c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        mov     eax, offset g_data_004eb6c8
+        sar     eax, 2
+        mov     dword ptr [g_x_00542054], eax
+        jmp     func_004709e0
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+        mov     eax, 7
+        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_state_0054207c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0xc0
+        jmp     InstallSelfMStackOverwrite_0046e9a0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_eb80:
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046ee00
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_state_00542080], 8
+        inc     eax
+        mov     dword ptr [g_state_0054207c], 7
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
+        jmp     InstallSelfMStackOverwrite_0046e9a0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_ebc0:
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046ee00
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_state_00542080], 9
+        inc     eax
+        mov     dword ptr [g_state_0054207c], 7
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
+        jmp     InstallSelfMStackOverwrite_0046e9a0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_ec00:
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_0046ee00
+        jmp     MStackJmpInstallSelf_0046ed40
+    }
+}
