@@ -58946,6 +58946,113 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     }
 }
 
+extern void MStackCall_004062a0(void);
+extern void DualPushCallBitDispatch_00427ee0(void);
+
+/*
+ * AudioInstallSelf3StateWithSubcall_004a0870 — 328b audio 3-state install-self.
+ *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
+ *   state 0: g_cj_00542058 = g_x_00542054; g_x_00542054 = 8; g_x_0054206c = ecx;
+ *     call func_004069b0; if paused: pop+ret. g_state_0054208c |= 4.
+ *     If g_x_00542044 != 0: g_state_0054208c ^= 4; jmp midChain.
+ *     Else: jmp StackPopDispatchTagged; pop+ret.
+ *   midChain: g_x_0054205c = eax; g_x_0054206c = g_cj_00542058; call DualPushCallBitDispatch;
+ *     if paused: pop+ret. install-self at entry; chain->state = 1; g_data_0054204c = 2;
+ *     g_pause_00541e6c = 1; pop+ret.
+ *   state 1: decrement g_x_00542054; if !=0: jmp midChain (after decrement).
+ *     Else: g_x_0054206c = g_cj_00542058; call func_004069b0; if paused: pop+ret.
+ *       Else call func_00406790; if paused: pop+ret. Else jmp midChain.
+ *   state 2: g_x_00542044 = g_x_0054205c; call MStackCall_004062a0; if paused: pop+ret.
+ *     Else install-self at entry; chain->state = 2; g_data_0054204c = 2; pause = 1; pop+ret.
+ */
+__declspec(naked) void AudioInstallSelf3StateWithSubcall_004a0870(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_a0870_state0
+        dec     eax
+        je      short L_a0870_state2
+        mov     eax, dword ptr [g_x_00542054]
+        dec     eax
+        mov     dword ptr [g_x_00542054], eax
+        jne     L_a0870_midChain
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_a0870_popRet
+        call    func_00406790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        je      L_a0870_callPop
+        pop     esi
+        ret
+    L_a0870_state2:
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542044], edx
+        call    MStackCall_004062a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_a0870_popRet
+        mov     eax, 2
+        mov     dword ptr [esi + 8], offset AudioInstallSelf3StateWithSubcall_004a0870
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    L_a0870_state0:
+        mov     eax, dword ptr [g_x_00542054]
+        mov     dword ptr [g_x_00542054], 8
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_cj_00542058], eax
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a0870_popRet
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     ecx, 4
+        or      eax, ecx
+        mov     dword ptr [g_state_0054208c], eax
+        mov     eax, dword ptr [g_x_00542044]
+        test    eax, eax
+        je      short L_a0870_callPop
+        mov     edx, dword ptr [g_state_0054208c]
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        jne     short L_a0870_setG54205c
+    L_a0870_callPop:
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_a0870_setG54205c:
+        mov     dword ptr [g_x_0054205c], eax
+    L_a0870_midChain:
+        mov     eax, dword ptr [g_cj_00542058]
+        mov     dword ptr [g_x_0054206c], eax
+        call    DualPushCallBitDispatch_00427ee0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a0870_popRet
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset AudioInstallSelf3StateWithSubcall_004a0870
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_a0870_popRet:
+        pop     esi
+        ret
+    }
+}
+
 /*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
