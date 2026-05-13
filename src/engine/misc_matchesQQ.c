@@ -57383,3 +57383,86 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         ret
     }
 }
+
+extern void ScaledTestPauseStore_00408860(void);
+
+/*
+ * MStackPush3LinkedListWalk_004088b0 — 268b boot mstack-push3 + linked-list iterator.
+ *   Push g_x_00542044, g_x_00542048, g_data_0054204c to mstack.
+ *   g_data_0054204c = g_x_00542044[+0x1c]; g_data_00542070 = chain[+0]; g_data_0054204c = chain[+4].
+ *   Loop: g_x_0054206c = chain[+0]; g_data_0054204c = chain[+4].
+ *     If chain[0] > 0: g_x_00542044 = chain[0]; call ScaledTestPauseStore_00408860;
+ *       if paused or g_state_0054208c & 4: pop+ret.
+ *     Else: --g_data_00542070; if > 0: loop again.
+ *     Else: g_x_0054206c=1; g_state_0054208c &= 0xfb; pop+ret.
+ *   Pop3 mstack into g_data_0054204c, g_x_00542048, g_x_00542044; ret.
+ */
+__declspec(naked) void MStackPush3LinkedListWalk_004088b0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [edx*4 + 0x1c]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_0054204c], eax
+    L_iter:
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_0054204c], eax
+        jle     short L_dec
+        mov     dword ptr [g_x_00542044], ecx
+        call    ScaledTestPauseStore_00408860
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_walk_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_pop3
+        mov     eax, dword ptr [g_data_0054204c]
+    L_dec:
+        mov     ecx, dword ptr [g_data_00542070]
+        dec     ecx
+        test    ecx, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        jg      short L_iter
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_x_0054206c], 1
+        and     al, 0xfb
+        mov     dword ptr [g_state_0054208c], eax
+    L_pop3:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_walk_ret:
+        ret
+    }
+}
