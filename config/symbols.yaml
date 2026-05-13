@@ -10903,10 +10903,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00492280
-    name: func_00492280
+    name: MStackLoopFieldInit_00492280
     size: 297
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004923b0
     name: Push1eCallTestDirtyLoop_004923b0
     size: 63

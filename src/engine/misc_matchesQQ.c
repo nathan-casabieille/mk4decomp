@@ -46701,3 +46701,120 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         ret
     }
 }
+
+extern void PushPopWalkDecMod_004923f0(void);
+extern void DispatcherComplex260_00407400(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern unsigned int g_data_00543198;
+
+/* @addr 0x00492280 (297b game) - mstack-bounded loop with field-init per iteration.
+ *   Init counter eax = g_state_004d57ac + 1; push ebx/esi/edi; set globals (74=0xffc40000, 78=0x760000, 6c=6);
+ *     store 6 at mstack[++eax].
+ *   Call PushPopWalkDecMod; if pause: tail-ret.
+ *   esi = offset g_data_00543198 >> 2; bl = 4; edi = 0x1e.
+ *   Loop:
+ *     g_x_0054206c->g_data_00535e48; eax+=esi -> [eax*4+0]->g_x_00542048; g_scaledInit=esi.
+ *     Call DispatcherComplex260; if pause ret. If bit2(0054208c) set: ret.
+ *     Set chain[+0x54]=g_x_00542074; chain[+0x58]=g_acc_00542078; chain[+0x30]=edi=0x1e; g_x_0054206c=edi.
+ *     Call MStackPushComplexCallPop; if pause ret. g_x_00542074 += 0x180000.
+ *     dec g_state_004d57ac; dec ecx; if ecx==0: ret.
+ *     Else: re-push to mstack; call PushPopWalkDecMod; if !pause: loop again.
+ *   Pop edi/esi/ebx; ret.
+ */
+__declspec(naked) void MStackLoopFieldInit_00492280(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        push    ebx
+        inc     eax
+        push    esi
+        push    edi
+        mov     dword ptr [g_x_00542074], 0xffc40000
+        mov     dword ptr [g_acc_00542078], 0x760000
+        mov     dword ptr [g_x_0054206c], 6
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], 6
+        call    PushPopWalkDecMod_004923f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0dch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     esi, offset g_data_00543198
+        mov     bl, 4
+        shr     esi, 2
+        mov     edi, 0x1e
+    loop_top:
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, esi
+        mov     dword ptr [g_data_00535e48], eax
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   0fh
+        _emit   85h
+        _emit   8fh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_acc_00542078]
+        mov     dword ptr [eax*4 + 0x58], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], edi
+        mov     dword ptr [edx*4 + 0x30], edi
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   49h
+        mov     eax, dword ptr [g_x_00542074]
+        add     eax, 0x180000
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        dec     ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   74h
+        _emit   1fh
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    PushPopWalkDecMod_004923f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   84h
+        _emit   33h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
