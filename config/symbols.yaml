@@ -7561,10 +7561,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00471350
-    name: func_00471350
+    name: MStackPush4VecInitPop4_00471350
     size: 385
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004714e0
     name: func_004714e0
     size: 398

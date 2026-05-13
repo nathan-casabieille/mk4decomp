@@ -73689,3 +73689,92 @@ __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
         ret
     }
 }
+
+/* @addr 0x00471350 (385b game) - mstack-push-4 + scoped slot vec-init + pop-4.
+ *   Pushes g_data_0054207c/00542058/00542054/00542044 onto mstack, then
+ *   sets g_data_00542054 = old g_data_0054205c, 0x542058 = old 0x542070,
+ *   g_data_0054207c = 0xc1. Pushes 0xc0 and 0x49db40 → StoreTwoCall_0049cb40.
+ *
+ *   On bit 0 of g_data_0054208c clear: copies the 3-component vector at
+ *   [g_data_00542048*4 + 0/4/8] into [g_data_00542044*4 + 0x38/0x3c/0x40],
+ *   then zeroes [scaled+0x44/0x48/0x4c]. Pops the 4 mstack entries back.
+ */
+__declspec(naked) void MStackPush4VecInitPop4_00471350(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054207c]
+        inc     eax
+        push    0xc0
+        mov     dword ptr [g_state_004d57ac], eax
+        push    0x49db40
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_data_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     L_m4v_pop4
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [ecx*4 + 0x40], eax
+        mov     edx, dword ptr [g_data_00542044]
+        xor     eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x44], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x48], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x4c], eax
+    L_m4v_pop4:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
