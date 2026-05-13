@@ -76657,3 +76657,148 @@ __declspec(naked) void PerSlotPhaseRouter_004605d0(void)
         ret
     }
 }
+
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0054205c;
+extern void Thunk_0049cbd0(void);
+extern void CallSetPause_0041f830(void);
+extern void func_004216a0(void);
+
+__declspec(naked) void TriDispatchSetupChain_00421500(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0053a6e0]
+        mov     ecx, dword ptr [g_data_004f3608]
+        cmp     eax, ecx
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_tdsc_ret
+        mov     eax, dword ptr [g_data_00537ea4]
+        cmp     eax, ecx
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_tdsc_ret
+        mov     eax, dword ptr [g_data_0053a6dc]
+        mov     dword ptr [g_data_00542074], 0x26
+        test    eax, eax
+        mov     dword ptr [g_data_0054204c], offset L_tdsc_sub2
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_tdsc_a1
+        mov     dword ptr [g_data_0054207c], 1
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tdsc_ret
+    L_tdsc_a1:
+        mov     eax, dword ptr [g_data_00537f2c]
+        mov     dword ptr [g_data_0054204c], offset L_tdsc_sub3
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_tdsc_a2
+        mov     dword ptr [g_data_00542080], 1
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tdsc_ret
+    L_tdsc_a2:
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [g_data_00542048], 0x421830
+        test    eax, eax
+        jne     short L_tdsc_a3
+        mov     eax, dword ptr [g_data_00542080]
+        test    eax, eax
+        je      short L_tdsc_a4
+        mov     eax, dword ptr [g_data_00538038]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x74]
+        cmp     eax, 0x2012
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_tdsc_a3
+        call    Thunk_0049cbd0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tdsc_ret
+    L_tdsc_a3:
+        mov     eax, dword ptr [g_data_00542080]
+        test    eax, eax
+        jne     short L_tdsc_ret
+    L_tdsc_a4:
+        mov     eax, dword ptr [g_data_0054207c]
+        test    eax, eax
+        je      short L_tdsc_ret
+        mov     eax, dword ptr [g_data_0053803c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x74]
+        cmp     eax, 0x2012
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_tdsc_ret
+        jmp     Thunk_0049cbd0
+    L_tdsc_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tdsc_sub2:
+        mov     eax, dword ptr [g_data_0053815c]
+        mov     ecx, dword ptr [g_data_0053803c]
+        mov     edx, dword ptr [g_data_00538158]
+        mov     dword ptr [g_data_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_0054205c], edx
+        je      short L_tdsc_sub2_fall
+        test    ecx, ecx
+        je      short L_tdsc_sub2_fall
+        test    edx, edx
+        je      short L_tdsc_sub2_fall
+        jmp     func_004216a0
+    L_tdsc_sub2_fall:
+        jmp     CallSetPause_0041f830
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tdsc_sub3:
+        mov     eax, dword ptr [g_data_00538158]
+        mov     ecx, dword ptr [g_data_00538038]
+        mov     edx, dword ptr [g_data_0053815c]
+        mov     dword ptr [g_data_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_0054205c], edx
+        je      short L_tdsc_sub3_fall
+        test    ecx, ecx
+        je      short L_tdsc_sub3_fall
+        test    edx, edx
+        je      short L_tdsc_sub3_fall
+        jmp     func_004216a0
+    L_tdsc_sub3_fall:
+        jmp     CallSetPause_0041f830
+    }
+}
