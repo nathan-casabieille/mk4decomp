@@ -7557,10 +7557,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00472e10
-    name: func_00472e10
+    name: MStackPush4ChainCopyPop4_00472e10
     size: 300
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00472f40
     name: ScaledSaveCallRestoreJmp_00472f40
     size: 50

@@ -47218,3 +47218,96 @@ __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
         ret
     }
 }
+
+extern void func_004089e0(void);
+extern void func_004b8fa0(void);
+extern void func_00426b60(void);
+
+/* @addr 0x00472e10 (300b game) - mstack-push 4 + chain calls + chain copy + mstack-pop 4.
+ *   Push g_acc_00542078, g_state_0054207c, g_x_00542048, g_cj_0054205c onto mstack.
+ *   Load g_cj = [baseSel*4 + 0x64].
+ *   Call func_004089e0; if pause ret. Call func_004b8fa0; if pause ret.
+ *   g_x_0054206c=3; call ChainDirtyBitWalker; if pause ret.
+ *   Copy [g_x_00542048*4 + 0x3c]->g_acc, [g_x_00542048*4 + 0x44]->g_state_0054207c.
+ *   Call func_00426b60; if pause ret.
+ *   Mstack-pop 4: g_cj_0054205c, g_x_00542048, g_state_0054207c, g_acc_00542078; ret.
+ */
+__declspec(naked) void MStackPush4ChainCopyPop4_00472e10(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_acc_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_cj_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_cj_0054205c], ecx
+        call    func_004089e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 3
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7dh
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_acc_00542078], edx
+        mov     eax, dword ptr [eax*4 + 0x44]
+        mov     dword ptr [g_state_0054207c], eax
+        call    func_00426b60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_cj_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_0054207c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
