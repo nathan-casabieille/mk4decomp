@@ -8957,10 +8957,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00483c90
-    name: func_00483c90
+    name: QuadBlockInstallChainThunks_00483c90
     size: 334
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483de0
     name: DualBlockChainCallInstall_00483de0
     size: 308

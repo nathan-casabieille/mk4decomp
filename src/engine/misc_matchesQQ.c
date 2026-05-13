@@ -52548,3 +52548,124 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         ret
     }
 }
+
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void func_00481070(void);
+extern void func_00416e20(void);
+extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void func_00482000(void);
+
+/* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
+__declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
+    __asm {
+        call    CjTableThresholdDispatch_00488f00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee7b8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_cb0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   08h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        pop     ebx
+        ret
+        call    func_00481070
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0afh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_00416e20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 1
+        _emit   84h
+        _emit   0c3h
+        mov     dword ptr [g_x_0054206c], 0
+        _emit   75h
+        _emit   08h
+        call    DualBlockChainCallInstall_00483de0
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_x_0054206c], ebx
+        call    ByteWordTableTaggedDispatch_0048a050
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   57h
+        mov     dword ptr [esi + 8], offset body_cb0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset body_cb0
+        mov     dword ptr [ecx*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00482000
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+        _emit   90h
+        call    func_00481070
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_x_0054206c], 0x2013
+        jmp     DualBlockChainCallInstall_00483de0
+        ret
+        _emit   90h
+        _emit   90h
+        call    func_00481070
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_x_0054206c], 0x1013
+        jmp     DualBlockChainCallInstall_00483de0
+        ret
+    }
+}
