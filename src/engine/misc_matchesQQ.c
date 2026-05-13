@@ -66995,3 +66995,151 @@ __declspec(naked) void TailJmpInstallSelfPair_0047e690(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_00537ea8;
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void func_0049e7e0(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void CallSetPause_0041f830(void);
+extern void IndirectStateDispatcher_0049f6a0(void);
+
+/* @addr 0x0049f530 (354b game) - 3-entry indirect dispatcher with state walk.
+ *   Entry 1 (offset 0, 260b): cache [g_data_00541fc0] into g_data_00542048,
+ *     index it by [g_data_00535e48] base, deref once, save in 0x542048
+ *     and [edx*4+4] in g_data_00542044 then `call eax` (indirect). On
+ *     no-error AND bit 0 of g_data_0054208c set: walks an outer state
+ *     loop comparing eax to {1,6,11,16} (each takes the install path);
+ *     other values get dec'd, call LinkedListIndirectDirtyToggle_0049f7b0,
+ *     and on bit 0 still set may re-enter the loop. Else writes ecx into
+ *     [eax*4], copies g_data_00535e48 into g_data_00542070, calls
+ *     func_0049e7e0 then GuardedScaledCall_0048a020 with [scaled+8] prep.
+ *     Both successful tails fall through to CallSetPause_0041f830.
+ *   (12b NOP align pad.)
+ *   Entry 2 (offset 0x110, 34b): if g_data_00541d88 != 0 tail-jmp
+ *     CallSetPause_0041f830; else zero g_data_00535e48 and tail-jmp
+ *     IndirectStateDispatcher_0049f6a0.
+ *   (14b NOP align pad.)
+ *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_data_00537ea8.
+ *     If non-zero tail-jmp CallSetPause_0041f830; else set g_data_00535e48
+ *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
+ */
+__declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00541fc0]
+        mov     ecx, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_data_00542048], eax
+        add     eax, ecx
+        push    ebx
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], eax
+        call    eax
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_id3_doneNoPop
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        je      L_id3_freshPath
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4]
+        cmp     eax, ebx
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_id3_freshPath
+    L_id3_loopHead:
+        cmp     eax, 6
+        je      L_id3_freshPath
+        cmp     eax, 0xb
+        je      short L_id3_freshPath
+        cmp     eax, 0x10
+        je      short L_id3_freshPath
+        dec     eax
+        mov     dword ptr [g_data_0054206c], eax
+        call    LinkedListIndirectDirtyToggle_0049f7b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_id3_doneNoPop
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_id3_writeCx
+        mov     eax, dword ptr [g_data_0054206c]
+        cmp     eax, ebx
+        jne     short L_id3_loopHead
+        call    CallSetPause_0041f830
+        pop     ebx
+        ret
+    L_id3_writeCx:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00535e48]
+        mov     dword ptr [g_data_00542070], edx
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_id3_doneNoPop
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_id3_doneNoPop
+    L_id3_freshPath:
+        call    CallSetPause_0041f830
+    L_id3_doneNoPop:
+        pop     ebx
+        ret
+        /* 12b NOP align pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x110) */
+    L_id3_entry2:
+        mov     eax, dword ptr [g_data_00541d88]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_id3_e2zero
+        jmp     CallSetPause_0041f830
+    L_id3_e2zero:
+        mov     dword ptr [g_data_00535e48], 0
+        jmp     IndirectStateDispatcher_0049f6a0
+        /* 14b NOP align pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x140) */
+    L_id3_entry3:
+        mov     eax, dword ptr [g_data_00537ea8]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_id3_e3one
+        jmp     CallSetPause_0041f830
+    L_id3_e3one:
+        mov     dword ptr [g_data_00535e48], 1
+        jmp     IndirectStateDispatcher_0049f6a0
+    }
+}

@@ -11947,10 +11947,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049f530
-    name: func_0049f530
+    name: IndirectDispatch3Entry_0049f530
     size: 354
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f6a0
     name: IndirectStateDispatcher_0049f6a0
     size: 259
