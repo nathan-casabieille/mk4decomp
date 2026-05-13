@@ -58407,6 +58407,103 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
 }
 
 /*
+ * BootChainPushAddSignFlag_004077b0 — 297b boot mstack-push1 + sign-add + bit-flag toggle.
+ *   g_state_00542094 = (g_x_0054206c < 0); push g_x_00542048 to mstack.
+ *   ecx = g_x_0054205c[+0x24]; g_x_00542048 = ecx. If sign flag was set:
+ *     edx = g_x_00542044[+0x28] + g_x_0054206c; g_x_0054206c = edx. If sign cleared (jns):
+ *       pop mstack → g_x_00542048; g_state_0054208c &= 0xfe; pop+ret.
+ *     Else: ecx = ecx[+4]; pop mstack into edx; ecx--; g_state_0054208c |= 1;
+ *       g_x_00542048 = edx; g_x_0054206c = ecx; pop+ret.
+ *   Otherwise (positive branch): eax = g_x_0054206c + g_x_00542044[+0x28]; g_x_0054206c = eax.
+ *     esi = ecx[+4]; ecx = g_state_004d57ac--; g_state_00542094 = (eax < esi);
+ *     edx = mstack at top; g_x_00542048 = edx; g_state_0054208c &= 0xfffffffe;
+ *     commit g_state_004d57ac. If sign result = 0: g_x_0054206c = 0; g_state_0054208c |= 1.
+ *     pop+ret.
+ */
+__declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
+{
+    __asm
+    {
+        mov     edx, dword ptr [g_x_0054206c]
+        xor     eax, eax
+        test    edx, edx
+        mov     ecx, dword ptr [g_x_00542048]
+        push    esi
+        setl    al
+        mov     dword ptr [g_state_00542094], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_state_00542094]
+        mov     ecx, dword ptr [edx*4 + 0x24]
+        test    eax, eax
+        mov     dword ptr [g_x_00542048], ecx
+        je      short L_77_pos
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     edx, dword ptr [g_x_0054206c]
+        add     edx, eax
+        mov     dword ptr [g_x_0054206c], edx
+        jns     short L_77_signClear
+        mov     ecx, dword ptr [ecx*4 + 4]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        dec     ecx
+        or      al, 1
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+    L_77_signClear:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+    L_77_pos:
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     esi, dword ptr [edx*4 + 0x28]
+        add     eax, esi
+        xor     edx, edx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     esi, dword ptr [ecx*4 + 4]
+        mov     ecx, dword ptr [g_state_004d57ac]
+        cmp     eax, esi
+        setl    dl
+        mov     eax, edx
+        dec     ecx
+        mov     dword ptr [g_state_00542094], eax
+        mov     edx, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_x_00542048], edx
+        mov     edx, dword ptr [g_state_0054208c]
+        and     edx, 0xfffffffe
+        mov     dword ptr [g_state_004d57ac], ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        jne     short L_77_done
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, edx
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+    L_77_done:
+        pop     esi
+        ret
+    }
+}
+
+/*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
  *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
