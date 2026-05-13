@@ -15552,10 +15552,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8650
-    name: func_004c8650
+    name: CfltcvtFormat_004c8650
     size: 242
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8750
     name: FormatHelper_004c8750
     size: 102

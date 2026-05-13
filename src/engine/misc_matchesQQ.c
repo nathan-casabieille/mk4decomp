@@ -59973,6 +59973,128 @@ extern void DSEnumeratorThunk_004d12cc(void);  /* IAT thunk to DirectSoundEnumer
 extern void DSCreateThunk_004d12d2(void);      /* IAT thunk to DirectSoundCreate */
 extern void Shl96By1_004ce290(void);
 extern void TimeValAdd3_004ce220(void);
+extern unsigned int g_data_004d2b90;
+extern unsigned short g_data_004d2b94;
+
+/* @addr 0x004c8650 (242b crt) - _cfltcvt scientific-notation formatter.
+ *   args: struct (edi: digits ptr+exp+sign), buf (ebp), digit_count (esi),
+ *         use_uppercase (eax flag), padflag (bl).
+ *   Steps: if bl set, pad buf via StrSearchCall.
+ *   Copy first digit (or '-' then digit), insert decimal sep (g_byte_00522bb4),
+ *   emit 'e' (lowercase 0x65 from g_data_004d2b90) or 'E' (uppercase),
+ *   then exponent with sign and up to 3 digits using reciprocal-mul divisions.
+ */
+__declspec(naked) void CfltcvtFormat_004c8650(void) {
+    __asm {
+        push    ebx
+        mov     bl, byte ptr [esp + 0x18]
+        push    ebp
+        mov     ebp, [esp + 0xc]
+        push    esi
+        mov     esi, [esp + 0x14]
+        push    edi
+        mov     edi, [esp + 0x20]
+        test    bl, bl
+        jz      short L_cv_afterPad
+        mov     edx, [edi]
+        xor     eax, eax
+        cmp     edx, 0x2d
+        sete    al
+        add     eax, ebp
+        xor     ecx, ecx
+        test    esi, esi
+        setg    cl
+        push    ecx
+        push    eax
+        call    StrSearchCall_004c89b0
+        add     esp, 8
+    L_cv_afterPad:
+        mov     ecx, [edi]
+        mov     eax, ebp
+        cmp     ecx, 0x2d
+        jne     short L_cv_noSign
+        mov     byte ptr [ebp], 0x2d
+        lea     eax, [ebp + 1]
+    L_cv_noSign:
+        test    esi, esi
+        jle     short L_cv_skipDec
+        mov     dl, [eax + 1]
+        mov     [eax], dl
+        mov     cl, byte ptr [g_byte_00522bb4]
+        inc     eax
+        mov     [eax], cl
+    L_cv_skipDec:
+        xor     edx, edx
+        mov     ecx, dword ptr [g_data_004d2b90]
+        test    bl, bl
+        sete    dl
+        add     edx, eax
+        add     esi, edx
+        mov     eax, esi
+        mov     [eax], ecx
+        mov     dx, word ptr [g_data_004d2b94]
+        mov     [eax + 4], dx
+        mov     eax, [esp + 0x1c]
+        test    eax, eax
+        jz      short L_cv_lower
+        mov     byte ptr [esi], 0x45
+    L_cv_lower:
+        mov     eax, [edi + 0xc]
+        inc     esi
+        cmp     byte ptr [eax], 0x30
+        jz      short L_cv_zeroExp
+        mov     ecx, [edi + 4]
+        dec     ecx
+        jns     short L_cv_posExp
+        neg     ecx
+        mov     byte ptr [esi], 0x2d
+    L_cv_posExp:
+        inc     esi
+        cmp     ecx, 100
+        jl      short L_cv_skipHundreds
+        mov     eax, 0x51eb851f
+        imul    ecx
+        sar     edx, 5
+        mov     eax, edx
+        shr     eax, 31
+        add     edx, eax
+        mov     al, [esi]
+        add     al, dl
+        mov     [esi], al
+        mov     eax, ecx
+        cdq
+        mov     ecx, 100
+        idiv    ecx
+        mov     ecx, edx
+    L_cv_skipHundreds:
+        inc     esi
+        cmp     ecx, 10
+        jl      short L_cv_ones
+        mov     eax, 0x66666667
+        imul    ecx
+        sar     edx, 2
+        mov     eax, edx
+        shr     eax, 31
+        add     edx, eax
+        mov     al, [esi]
+        add     al, dl
+        mov     [esi], al
+        mov     eax, ecx
+        cdq
+        mov     ecx, 10
+        idiv    ecx
+        mov     ecx, edx
+    L_cv_ones:
+        add     [esi + 1], cl
+    L_cv_zeroExp:
+        pop     edi
+        mov     eax, ebp
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004ce2f0 (241b crt) - decimal-string → 96-bit fixed-point parser.
  *   Builds a 12-byte accumulator at *FILE (esi): clears 12 bytes, then for each
