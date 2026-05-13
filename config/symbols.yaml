@@ -842,10 +842,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00409740
-    name: func_00409740
+    name: VertexSlotInitFlagWalk_00409740
     size: 298
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00409870
     name: MStackPush2ChainInsert_00409870
     size: 243

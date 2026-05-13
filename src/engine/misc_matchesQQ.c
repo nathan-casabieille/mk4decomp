@@ -65427,3 +65427,98 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0054208c;
+
+/* @addr 0x00409740 (298b boot) - vertex slot init, OR-flag enable, optional fill.
+ *   Uses g_data_00542050 (scaled) as base of a 16-byte struct: writes 0/0/x/y
+ *   into the first 4 dwords. Sets bit 2 of g_data_0054208c (OR with 4). If
+ *   g_data_00542054 != 0 takes the no-op path: pops scope and returns. Else
+ *   clears bit 2 again (xor) and re-tests; if still nonzero returns. Otherwise
+ *   walks a loop of length [edx*4+0xc]-2 stored in g_data_0053a1ac, with two
+ *   scaled-index stride pointers (esi, edi at +2 / +1) and an accumulator
+ *   chain through (ebx, eax, ecx). Tail writes [esi*4]=0, [edi*4]=edx,
+ *   [edx*4+4]=eax before exit.
+ */
+__declspec(naked) void VertexSlotInitFlagWalk_00409740(void) {
+    __asm {
+        sub     esp, 0xc
+        mov     edx, dword ptr [g_data_00542050]
+        push    ebx
+        mov     ebx, dword ptr [g_data_00542048]
+        push    ebp
+        mov     ebp, dword ptr [g_data_0054204c]
+        mov     dword ptr [edx*4], 0
+        mov     dword ptr [edx*4 + 4], 0
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 8], eax
+        mov     ecx, dword ptr [g_data_00542054]
+        push    esi
+        push    edi
+        mov     dword ptr [edx*4 + 0xc], ecx
+        mov     edi, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, 4
+        or      edi, ecx
+        mov     dword ptr [esp + 0x10], ebp
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], edi
+        je      L_vsf_done
+        mov     esi, edi
+        xor     esi, ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], esi
+        je      L_vsf_done
+        mov     eax, dword ptr [g_data_00542044]
+        mov     esi, ebx
+        mov     edi, ebx
+        add     ebx, 2
+        inc     edi
+        mov     dword ptr [edx*4], eax
+        lea     ecx, [ebx + eax]
+        mov     dword ptr [esp + 0x18], esi
+        mov     dword ptr [esp + 0x14], edi
+        mov     dword ptr [ecx*4], 0
+        lea     ecx, [edi + eax]
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [edx*4 + 0xc]
+        cmp     ecx, 1
+        mov     dword ptr [g_data_0053a1ac], ecx
+        jle     short L_vsf_tailFill
+        sub     ecx, 2
+        mov     dword ptr [g_data_0053a1ac], ecx
+        lea     ecx, [eax + ebp]
+        js      short L_vsf_tailFill
+        shl     esi, 2
+        shl     edi, 2
+        shl     ebx, 2
+        jmp     short L_vsf_loopFirst
+    L_vsf_loopReload:
+        mov     ebp, dword ptr [esp + 0x10]
+    L_vsf_loopFirst:
+        mov     dword ptr [edi + eax*4], edx
+        mov     dword ptr [esi + eax*4], ecx
+        mov     dword ptr [ebx + ecx*4], eax
+        mov     eax, ecx
+        add     ecx, ebp
+        mov     ebp, dword ptr [g_data_0053a1ac]
+        dec     ebp
+        mov     dword ptr [g_data_0053a1ac], ebp
+        jns     short L_vsf_loopReload
+        mov     edi, dword ptr [esp + 0x14]
+        mov     esi, dword ptr [esp + 0x18]
+    L_vsf_tailFill:
+        add     esi, eax
+        add     edi, eax
+        mov     dword ptr [esi*4], 0
+        mov     dword ptr [edi*4], edx
+        mov     dword ptr [edx*4 + 4], eax
+    L_vsf_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0xc
+        ret
+    }
+}
