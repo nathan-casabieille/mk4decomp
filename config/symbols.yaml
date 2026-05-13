@@ -14525,10 +14525,11 @@ functions:
     status: matched
     file: src/engine/call_jmp.c
   - addr: 0x004bd9a0
-    name: func_004bd9a0
+    name: ChainStreamMatMulVecAdd_004bd9a0
     size: 208
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bda70
     name: WtSnapshotPushCall_004bda70
     size: 98

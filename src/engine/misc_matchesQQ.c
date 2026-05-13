@@ -54513,3 +54513,62 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         jmp     AudioTriEntryFlagPairInit_004a22f0
     }
 }
+
+extern void Mat3x3VecMul6Bit_004b3590(void);
+extern unsigned int g_x_00542050;
+
+/*
+ * ChainStreamMatMulVecAdd_004bd9a0 — 208b engine.geo chain-stream MatMul+Vec3Add.
+ *   stream = g_x_00542050; advance: g_x_0054206c = stream[0]; g_data_00542070 = stream[1];
+ *   g_x_00542050 = stream[2] (next stream ptr). Unpack g_x_00542048 base:
+ *   load 4 dwords + 1 word into g_x_007af990..g_word_007af9a0.
+ *   Push (g_data_0054204c<<2, g_x_00542044<<2); call Mat3x3VecMul6Bit; restore.
+ *   Add g_x_0054206c into target[0], g_data_00542070 into target[1], g_x_00542050 into target[2].
+ */
+__declspec(naked) void ChainStreamMatMulVecAdd_004bd9a0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 4]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_data_00542070], edx
+        mov     eax, dword ptr [eax*4 + 8]
+        lea     edx, [ecx*4]
+        mov     dword ptr [g_x_00542050], eax
+        mov     eax, dword ptr [edx]
+        mov     dword ptr [g_x_007af990], eax
+        mov     ecx, dword ptr [edx + 4]
+        mov     dword ptr [g_x_007af994], ecx
+        mov     eax, dword ptr [edx + 8]
+        mov     dword ptr [g_x_007af998], eax
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [edx + 0xc]
+        mov     dword ptr [g_x_007af99c], ecx
+        lea     ecx, [eax*4]
+        mov     dx, word ptr [edx + 0x10]
+        push    ecx
+        mov     word ptr [g_word_007af9a0], dx
+        mov     edx, dword ptr [g_data_0054204c]
+        lea     eax, [edx*4]
+        push    eax
+        call    Mat3x3VecMul6Bit_004b3590
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     edx, dword ptr [eax*4]
+        add     edx, ecx
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [eax*4 + 4]
+        add     ecx, edx
+        mov     dword ptr [eax*4 + 4], ecx
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_x_00542050]
+        add     dword ptr [eax*4 + 8], ecx
+        ret
+    }
+}
