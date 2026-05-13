@@ -68316,3 +68316,145 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004f17c0;
+extern unsigned int g_data_004f17c8;
+extern unsigned int g_data_004f17d8;
+extern unsigned int g_data_004f17f8;
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void func_00494830(void);
+extern void InstallSelfMStackPush_004968a0(void);
+extern void ScaledInit_0048d490(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+
+/* @addr 0x00496960 (357b game) - 4-entry packed alarm + countdown install.
+ *   Entry 1 (offset 0, 28b): calls PushPopWalkSet1006_00470ee0; on no-error
+ *     pushes 0x4f17c0 (alarm str) and ArgSarStoreJmp_004594f0.
+ *   4b NOP pad.
+ *   Entry 2 (offset 0x20, 75b): pushes 0x4f17c8, sets [scaled+0x68]=0x30b,
+ *     [scaled+0x74]=0x112, calls func_00494830; on no-error pushes
+ *     0x4f17d8 and ArgSarStoreJmp_004594f0.
+ *   5b NOP pad.
+ *   Entry 3 / body (offset 0x70, 202b): phase-state install.
+ *     phase != 0: dec g_data_00542080; if zero tail-call
+ *       InstallSelfMStackPush_004968a0; else fall to mstack-push body.
+ *     phase 0: reset g_data_00542080 = 2. Push it, call ScaledInit_0048d490;
+ *       on no-error pop snapshot, if bit 0 of g_data_0054208c set tail-call
+ *       InstallSelfMStackPush_004968a0; else call ScaledLoadIncJmp_00429840,
+ *       install Self at offset 0x70 (this entry) and arm 0x541e6c=1.
+ *   6b NOP pad.
+ *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
+ *     0x4f17f8 → ScaledLookupGuardJmpIndirect_004949f0.
+ */
+__declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
+    __asm {
+        call    PushPopWalkSet1006_00470ee0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e1End
+        push    offset g_data_004f17c0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_aei_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_aei_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    offset g_data_004f17c8
+        mov     dword ptr [eax*4 + 0x68], 0x30b
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x112
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    func_00494830
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_aei_e2End
+        push    offset g_data_004f17d8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_aei_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_aei_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_aei_phase0
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_aei_pushSnapshot
+        call    InstallSelfMStackPush_004968a0
+        pop     esi
+        pop     ebx
+        ret
+    L_aei_phase0:
+        mov     dword ptr [g_data_00542080], 2
+    L_aei_pushSnapshot:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [g_data_0054206c], 0xb
+        call    ScaledInit_0048d490
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e3End
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ebx, 1
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, bl
+        mov     dword ptr [g_data_00542080], edx
+        je      short L_aei_notBit0
+        call    InstallSelfMStackPush_004968a0
+        pop     esi
+        pop     ebx
+        ret
+    L_aei_notBit0:
+        call    ScaledLoadIncJmp_00429840
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aei_e3End
+        mov     dword ptr [esi + 8], offset L_aei_body
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_aei_e3End:
+        pop     esi
+        pop     ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_aei_entry4:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x112
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_004f17f8
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+        ret
+    }
+}

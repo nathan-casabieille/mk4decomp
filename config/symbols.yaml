@@ -11379,10 +11379,11 @@ functions:
     status: matched
     file: src/engine/dirty_guard_lit_or_jmp.c
   - addr: 0x00496960
-    name: func_00496960
+    name: Alarm4EntryInstallCountdown_00496960
     size: 357
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00496ad0
     name: func_00496ad0
     size: 686
