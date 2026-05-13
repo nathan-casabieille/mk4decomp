@@ -15321,10 +15321,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesR.c
   - addr: 0x004c5e00
-    name: func_004c5e00
+    name: SplitPath_004c5e00
     size: 369
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5f80
     name: WrapThreeDispatch_004c5f80
     size: 55
