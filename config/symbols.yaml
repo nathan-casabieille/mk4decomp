@@ -9713,10 +9713,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048af60
-    name: func_0048af60
+    name: MStackPush6OpPop6_0048af60
     size: 292
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048b090
     name: func_0048b090
     size: 949

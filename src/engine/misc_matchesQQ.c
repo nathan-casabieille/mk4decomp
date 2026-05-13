@@ -48326,3 +48326,75 @@ __declspec(naked) void PrefixThunkInstallSelf3State_00438f80(void) {
         ret
     }
 }
+
+/* @addr 0x0048af60 (292b game) - mstack-push 6 + middle-op + mstack-pop 6.
+ *   Push 6 globals onto mstack: 70, 74, 78, 80, 4c, 7c.
+ *   Op: g_x_0054204c = g_state_0054207c; g_x_00542084 += g_state_00542088.
+ *   Pop 6 in reverse: 7c, 4c, 80, 78, 74, 70.
+ */
+__declspec(naked) void MStackPush6OpPop6_0048af60(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_acc_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_state_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [g_state_00542088]
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, dword ptr [g_x_00542084]
+        add     eax, ecx
+        mov     dword ptr [g_x_00542084], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
