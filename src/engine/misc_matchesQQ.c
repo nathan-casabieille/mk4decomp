@@ -60024,6 +60024,164 @@ extern unsigned int g_data_007af4fc;
 extern unsigned int g_data_007af502;
 extern unsigned int g_data_007af508;
 extern void SubmitDrawEntry(void);
+extern void FpFormatRound_004ccda0(void);
+extern void FormatHelper_004c8750(void);
+extern void PrintfStubSigned_004c85d0(void);
+extern void CfltcvtFormat_004c8650(void);
+
+/* @addr 0x004c8880 (293b crt) - bundled float-to-string dispatcher.
+ *   sub-1 (~182b at 0x4c8880): performs digit conversion via TmFillStringCopy+0x60
+ *     helper, then either FcvtFormatDecimal or CfltcvtFormat based on exponent range.
+ *   sub-2 (~101b at 0x4c8940): format dispatch on 'e'/'E'/'f'/'g' char.
+ *   Bundled into one 293-byte entry (with 10-byte nop pad between subs).
+ */
+__declspec(naked) void FloatToStringBundle_004c8880(void) {
+    __asm {
+        /* sub-1: digit conversion + format dispatch */
+        sub     esp, 0x28
+        lea     eax, [esp + 0x10]
+        _emit   8dh
+        _emit   4ch
+        _emit   24h
+        _emit   0h
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        push    eax
+        mov     eax, [esp + 0x40]
+        push    ecx
+        mov     edx, [eax + 4]
+        mov     eax, [eax]
+        push    edx
+        push    eax
+        _emit   0e8h
+        _emit   09fh
+        _emit   045h
+        _emit   000h
+        _emit   000h
+        mov     ecx, [esp + 0x24]
+        mov     ebp, [esp + 0x50]
+        mov     ebx, [esp + 0x54]
+        add     esp, 0x10
+        lea     edi, [ecx - 1]
+        mov     ecx, [esp + 0x10]
+        xor     edx, edx
+        cmp     ecx, 0x2d
+        sete    dl
+        add     edx, ebp
+        lea     eax, [esp + 0x10]
+        mov     esi, edx
+        push    eax
+        push    ebx
+        push    esi
+        call    FpFormatRound_004ccda0
+        mov     ecx, [esp + 0x20]
+        add     esp, 0xc
+        lea     eax, [ecx - 1]
+        xor     ecx, ecx
+        cmp     edi, eax
+        setl    cl
+        cmp     eax, -4
+        jl      short L_fts_eform
+        cmp     eax, ebx
+        jge     short L_fts_eform
+        test    cl, cl
+        jz      short L_fts_fcvt
+        mov     dl, [esi]
+        inc     esi
+        test    dl, dl
+        jz      short L_fts_term
+    L_fts_skip:
+        mov     al, [esi]
+        inc     esi
+        test    al, al
+        jne     short L_fts_skip
+    L_fts_term:
+        mov     byte ptr [esi - 2], 0
+    L_fts_fcvt:
+        lea     ecx, [esp + 0x10]
+        push    1
+        push    ecx
+        push    ebx
+        push    ebp
+        call    FcvtFormatDecimal_004c87c0
+        add     esp, 0x10
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x28
+        ret
+    L_fts_eform:
+        mov     eax, [esp + 0x48]
+        lea     edx, [esp + 0x10]
+        push    1
+        push    edx
+        push    eax
+        push    ebx
+        push    ebp
+        call    CfltcvtFormat_004c8650
+        add     esp, 0x14
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x28
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2 at 0x4c8940: format selector */
+        mov     eax, [esp + 0xc]
+        cmp     eax, 0x65
+        jz      short L_fts_eFmt
+        cmp     eax, 0x45
+        jz      short L_fts_eFmt
+        cmp     eax, 0x66
+        jne     short L_fts_gFmt
+        mov     eax, [esp + 0x10]
+        mov     ecx, [esp + 8]
+        mov     edx, [esp + 4]
+        push    eax
+        push    ecx
+        push    edx
+        call    FormatHelper_004c8750
+        add     esp, 0xc
+        ret
+    L_fts_gFmt:
+        mov     eax, [esp + 0x14]
+        mov     ecx, [esp + 0x10]
+        mov     edx, [esp + 8]
+        push    eax
+        mov     eax, [esp + 8]
+        push    ecx
+        push    edx
+        push    eax
+        call    FloatToStringBundle_004c8880
+        add     esp, 0x10
+        ret
+    L_fts_eFmt:
+        mov     ecx, [esp + 0x14]
+        mov     edx, [esp + 0x10]
+        mov     eax, [esp + 8]
+        push    ecx
+        mov     ecx, [esp + 8]
+        push    edx
+        push    eax
+        push    ecx
+        call    PrintfStubSigned_004c85d0
+        add     esp, 0x10
+        ret
+    }
+}
 
 /* @addr 0x004b21d0 (272b engine.app) - per-char glyph emitter for HUD text.
  *   args: (esp+8)=screen_x, (esp+0xc)=string ptr, (esp+0x10)=screen_y, (esp+0x14) bp=z, (esp+0x18) sign_flag.

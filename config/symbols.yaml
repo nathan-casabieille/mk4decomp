@@ -15574,10 +15574,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8880
-    name: func_004c8880
+    name: FloatToStringBundle_004c8880
     size: 293
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c89b0
     name: StrSearchCall_004c89b0
     size: 41
