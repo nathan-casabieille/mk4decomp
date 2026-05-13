@@ -73122,3 +73122,112 @@ __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
         ret
     }
 }
+
+extern void SplitHi8Lo24_004abfc0(void);
+extern void MStackInitCallToggle_00408ad0(void);
+extern void ScaledStoreThree_00409260(void);
+
+/* @addr 0x004090e0 (384b boot) - mstack-push-4 + linked-list walk + pop-4.
+ *   Pushes g_data_00542044/00542048/0054204c/0054205c onto mstack, then
+ *   walks the linked list rooted at g_data_00542048 stepping through
+ *   [cur*4]. For each non-zero entry:
+ *     - SplitHi8Lo24_004abfc0 (with bl=4 sentinel for bit-2 toggle)
+ *     - MStackInitCallToggle_00408ad0 (with g_data_00542070 primed)
+ *     - if bit 2 of g_data_0054208c clear, also reads [scaled+0x28]; if
+ *       non-zero advances g_data_00542048 to it (sar 2), saves the prior
+ *       in 0x54206c, calls ScaledStoreThree_00409260.
+ *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
+ */
+__declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054205c], eax
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_0054204c], eax
+        je      L_m4w_pop4
+        mov     bl, 4
+    L_m4w_loopTop:
+        call    SplitHi8Lo24_004abfc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_m4w_doneNoPop
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_m4w_doneNoPop
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_m4w_loopAdv
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_m4w_loopAdv
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     edx, dword ptr [ecx*4 + 0x28]
+        sar     eax, 2
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    ScaledStoreThree_00409260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_m4w_doneNoPop
+    L_m4w_loopAdv:
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_0054204c], eax
+        jne     L_m4w_loopTop
+    L_m4w_pop4:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_m4w_doneNoPop:
+        pop     ebx
+        ret
+    }
+}
