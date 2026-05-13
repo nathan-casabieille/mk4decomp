@@ -71444,3 +71444,162 @@ __declspec(naked) void Phase3InstallPackedSelf_00471010(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00fa0dc0;
+extern unsigned int g_data_00f9f838;
+extern unsigned int g_data_004d20f0;
+extern void Calloc_004c6110(void);
+extern void CmpCallPushIATCall_004c6e60(void);
+extern void PushConstCall_004c6a10(void);
+extern void DivMod32IAT_004cd320(void);
+
+/* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
+__declspec(naked) void FileTableClose_004cb700(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00fa0ee0]
+        push    ebp
+        push    esi
+        push    edi
+        mov     edi, dword ptr [esp + 0x10]
+        cmp     edi, eax
+        jae     short L_ftc_failEBADF
+        mov     eax, edi
+        sar     eax, 5
+        lea     ebp, [eax*4 + g_data_00fa0de0]
+        mov     eax, edi
+        and     eax, 0x1f
+        mov     ecx, dword ptr [ebp]
+        lea     esi, [eax + eax*8]
+        shl     esi, 2
+        test    byte ptr [ecx + esi + 4], 1
+        je      short L_ftc_failEBADF
+        push    edi
+        call    CritSecLazyEnter_004cd2b0
+        mov     edx, dword ptr [ebp]
+        add     esp, 4
+        test    byte ptr [edx + esi + 4], 1
+        je      short L_ftc_setErr9
+        push    edi
+        call    CRTHandleLookup_004cd260
+        add     esp, 4
+        push    eax
+        call    dword ptr [g_data_004d20f0]
+        test    eax, eax
+        jne     short L_ftc_clearErr
+        call    dword ptr [g_data_004d209c]
+        mov     esi, eax
+        jmp     short L_ftc_checkErr
+    L_ftc_clearErr:
+        xor     esi, esi
+    L_ftc_checkErr:
+        test    esi, esi
+        je      short L_ftc_skipErr
+        call    CallAddC_004c8bb0
+        mov     dword ptr [eax], esi
+    L_ftc_setErr9:
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 9
+        or      esi, 0xffffffff
+    L_ftc_skipErr:
+        push    edi
+        call    DivMod32IAT_004cd320
+        add     esp, 4
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        ret
+    L_ftc_failEBADF:
+        call    CallAdd8_004c8ba0
+        pop     edi
+        mov     dword ptr [eax], 9
+        pop     esi
+        or      eax, 0xffffffff
+        pop     ebp
+        ret
+        nop
+        nop
+        /* entry 2 (offset 0xa0) */
+    L_ftc_entry2:
+        mov     eax, dword ptr [g_data_00fa0dc0]
+        push    esi
+        test    eax, eax
+        jne     short L_ftc_haveSize
+        mov     eax, 0x200
+        jmp     short L_ftc_doAlloc
+    L_ftc_haveSize:
+        cmp     eax, 0x14
+        jge     short L_ftc_skipClamp
+        mov     eax, 0x14
+    L_ftc_doAlloc:
+        mov     dword ptr [g_data_00fa0dc0], eax
+    L_ftc_skipClamp:
+        push    4
+        push    eax
+        call    Calloc_004c6110
+        add     esp, 8
+        mov     dword ptr [g_data_00f9fdb4], eax
+        test    eax, eax
+        jne     short L_ftc_initTable
+        push    4
+        push    0x14
+        mov     dword ptr [g_data_00fa0dc0], 0x14
+        call    Calloc_004c6110
+        add     esp, 8
+        mov     dword ptr [g_data_00f9fdb4], eax
+        test    eax, eax
+        jne     short L_ftc_initTable
+        push    0x1a
+        call    CmpCallPushIATCall_004c6e60
+        mov     eax, dword ptr [g_data_00f9fdb4]
+        add     esp, 4
+    L_ftc_initTable:
+        xor     edx, edx
+        mov     ecx, 0x522600
+        jmp     short L_ftc_writeFirst
+    L_ftc_writePtr:
+        mov     eax, dword ptr [g_data_00f9fdb4]
+    L_ftc_writeFirst:
+        mov     dword ptr [eax + edx], ecx
+        add     ecx, 0x20
+        add     edx, 4
+        cmp     ecx, 0x522880
+        jl      short L_ftc_writePtr
+        xor     ecx, ecx
+        mov     edx, 0x522610
+    L_ftc_walkInit:
+        mov     esi, ecx
+        mov     eax, ecx
+        sar     esi, 5
+        and     eax, 0x1f
+        mov     esi, dword ptr [esi*4 + g_data_00fa0de0]
+        lea     eax, [eax + eax*8]
+        mov     eax, dword ptr [esi + eax*4]
+        cmp     eax, -1
+        je      short L_ftc_setNeg1
+        test    eax, eax
+        jne     short L_ftc_skipNeg1
+    L_ftc_setNeg1:
+        mov     dword ptr [edx], 0xffffffff
+    L_ftc_skipNeg1:
+        add     edx, 0x20
+        inc     ecx
+        cmp     edx, 0x522670
+        jl      short L_ftc_walkInit
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x160) */
+    L_ftc_entry3:
+        call    PushConstCall_004c6a10
+        mov     al, byte ptr [g_data_00f9f838]
+        test    al, al
+        je      short L_ftc_e3End
+        jmp     StreamCleanupLoop_004ce0b0
+    L_ftc_e3End:
+        ret
+    }
+}
