@@ -51065,3 +51065,122 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         ret
     }
 }
+
+extern void MStackPushPtr1Jmp_00438e70(void);
+extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+extern void GuardedSeq_00433bb0(void);
+extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void InstallSelfCountdownCascade_00439fd0(void);
+extern void InstallSelfThreeStateLeaPlus22_00437970(void);
+extern void func_0045f650(void);
+extern void InstallSelfChainSetB333v2_00437f00(void);
+
+/* @addr 0x00434350 (325b game) - install-self + cascade-call sequence + tail jmp.
+ *   state!=0: tail-call MStackPushPtr1Jmp; pop+ret.
+ *   state==0: call Cmp2CallDirtyCall; if !=0 ret.
+ *   Call StoreCallPauseDirtyStoreJmp; if pause ret.
+ *   If !bit0(0054208c): tail-call GuardedSeq; pop+ret.
+ *   g_x_00542084=0x78000; install-self at entry+0x01000000; state=1; call EsiInstallTwoCallCmpInstall; pause=1; ret.
+ *   Tail (+0xc0, 1-NOP pad): set g_data_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
+ *     If [0053a478]!=0 ret; call Cmp2CallDirtyCall; if !=0 ret.
+ *     If [baseSel*4+0x34]!=0: jmp InstallSelfThreeStateLeaPlus22.
+ *     Else: g_x_0054206c=0x1f4; call AudioVolumeRescale; if pause ret.
+ *       If bit0(0054208c): jmp InstallSelfChainSetB333v3 (0x00437fb0).
+ *       Else: g_state_0054207c=0x10028; jmp func_0045f650.
+ *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
+ */
+__declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    MStackPushPtr1Jmp_00438e70
+        pop     esi
+        ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    StoreCallPauseDirtyStoreJmp_004396c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   79h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   75h
+        _emit   07h
+        call    GuardedSeq_00433bb0
+        pop     esi
+        ret
+        mov     dword ptr [g_x_00542084], 0x78000
+        mov     dword ptr [esi + 8], offset InstallSelfCascadeSequence_00434350
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelfCascadeSequence_00434350
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    EsiInstallTwoCallCmpInstall_00438b10
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        _emit   90h
+        mov     dword ptr [g_data_0053a478], 0
+        call    InstallSelfCountdownCascade_00439fd0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   61h
+        mov     eax, dword ptr [g_data_0053a478]
+        test    eax, eax
+        _emit   75h
+        _emit   58h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfThreeStateLeaPlus22_00437970
+        mov     dword ptr [g_x_0054206c], 0x1f4
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1dh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     InstallSelfChainSetB333v3_00437fb0
+        mov     dword ptr [g_state_0054207c], 0x10028
+        jmp     func_0045f650
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     InstallSelfChainSetB333v2_00437f00
+    }
+}
