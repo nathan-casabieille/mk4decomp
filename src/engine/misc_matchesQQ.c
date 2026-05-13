@@ -54439,3 +54439,77 @@ __declspec(naked) void RecursiveMStackByteStream_00406d00(void)
         ret
     }
 }
+
+extern unsigned int g_x_0054356c;
+extern unsigned int g_x_005433a8;
+
+/*
+ * AudioTriEntryFlagPairInit_004a22f0 — 207b audio 3-entry init variant of AudioModeInit_004a2610.
+ *   Entry 0x004a22f0: same FlagPair logic, but g_data_00542004=0 and tail-jmp InstallSelfTableWalk_004200d0.
+ *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1; jmp entry1.
+ *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1, g_x_0054356c=1;
+ *     g_x_005433a8=0, g_x_005433e8=0; jmp entry1.
+ */
+__declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
+{
+    __asm
+    {
+        cmp     byte ptr [g_x_00543590], 1
+        jne     short L_modeB
+        mov     eax, 0x0053a408
+        mov     ecx, 0x0053a3e0
+        shr     eax, 2
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        jmp     short L_common
+    L_modeB:
+        mov     edx, 0x00537e88
+        mov     eax, 0x0053a700
+        shr     edx, 2
+        shr     eax, 2
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_x_00542048], eax
+    L_common:
+        call    DualScaledStoreConst_004a22c0
+        call    ClearTwoCallSetStore_004a2270
+        mov     dword ptr [g_data_00542004], 0
+        call    SixCallSeqPushImm_004a1d80
+        mov     dword ptr [g_x_00542074], 0
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e1_ret
+        jmp     InstallSelfTableWalk_004200d0
+    L_e1_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    6
+        call    TableWalkBoundedCmp_004bd890
+        mov     eax, 1
+        add     esp, 4
+        mov     dword ptr [g_x_00543714], eax
+        mov     dword ptr [g_x_005433ec], eax
+        jmp     AudioTriEntryFlagPairInit_004a22f0
+        _emit   90h
+        _emit   90h
+        push    6
+        call    TableWalkBoundedCmp_004bd890
+        mov     eax, 1
+        add     esp, 4
+        mov     dword ptr [g_x_00543714], eax
+        mov     dword ptr [g_x_005433ec], eax
+        mov     dword ptr [g_x_0054356c], eax
+        xor     eax, eax
+        mov     dword ptr [g_x_005433a8], eax
+        mov     dword ptr [g_x_005433e8], eax
+        jmp     AudioTriEntryFlagPairInit_004a22f0
+    }
+}

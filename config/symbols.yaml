@@ -12325,10 +12325,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004a22f0
-    name: func_004a22f0
+    name: AudioTriEntryFlagPairInit_004a22f0
     size: 207
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a23c0
     name: func_004a23c0
     size: 592
