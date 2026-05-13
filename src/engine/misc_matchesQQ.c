@@ -47905,3 +47905,97 @@ __declspec(naked) void InstallSelf3StateDualBody_00434a30(void) {
         ret
     }
 }
+
+extern void NotMaskStorePair_0045f440(void);
+extern unsigned int g_data_005424c0;
+
+/* @addr 0x0045f310 (303b game) - arg-table indexed setup with conditional double-init + bitmask result.
+ *   Init: eax=[esp+4]>>2; g_x_00542050=eax. Load 4 from [eax*4+0]: g_x_00542074, g_acc, g_state_0054207c, g_state_00542080.
+ *   Load g_state_00538158 into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
+ *   Else load 4 more from [eax*4+0] into same globals. Call NotMaskStorePair.
+ *   If pause: ret. Compute (g_x_0054206c & g_state_0054207c) and (g_data_00542070 & g_state_00542080).
+ *   If g_data_005424c0 != 0: jmp set-bit branch (or al,1).
+ *   Else: cmp g_x_00542074 with eax (g_x_0054206c & 7c).
+ *     If equal: cmp g_acc with ecx. If equal: set bit. Else clear bit. Ret.
+ *     If first not equal: clear bit, ret.
+ */
+__declspec(naked) void ArgIndexedBitmaskInit_0045f310(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 4]
+        sar     eax, 2
+        mov     dword ptr [g_x_00542050], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_x_00542050], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_state_0054207c], ecx
+        mov     ecx, dword ptr [g_state_00538158]
+        mov     dword ptr [g_x_00542050], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_state_00542080], edx
+        mov     edx, dword ptr [g_cj_0054205c]
+        inc     eax
+        cmp     edx, ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        _emit   74h
+        _emit   4ch
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_x_00542050], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_state_0054207c], ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_x_00542050], eax
+        call    NotMaskStorePair_0045f440
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   66h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_state_0054207c]
+        mov     edx, dword ptr [g_state_00542080]
+        and     eax, ecx
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_x_0054206c], eax
+        and     ecx, edx
+        mov     edx, dword ptr [g_data_005424c0]
+        test    edx, edx
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   75h
+        _emit   2ah
+        cmp     dword ptr [g_x_00542074], eax
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        cmp     dword ptr [g_acc_00542078], ecx
+        _emit   74h
+        _emit   0dh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}

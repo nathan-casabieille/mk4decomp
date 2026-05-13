@@ -6242,10 +6242,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045f310
-    name: func_0045f310
+    name: ArgIndexedBitmaskInit_0045f310
     size: 303
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045f440
     name: NotMaskStorePair_0045f440
     size: 38
