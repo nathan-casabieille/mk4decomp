@@ -50629,3 +50629,93 @@ __declspec(naked) void Install3StateAudioChain_00424200(void) {
         ret
     }
 }
+
+extern void DualMul10ChainAcc_0042d010(void);
+
+/* @addr 0x0042cec0 (322b game) - sibling of Distance3DMul10Chain with chain-field setup + dot-product. */
+__declspec(naked) void ChainMul10DotProd_0042cec0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     edx, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_00542074], edx
+        call    DualMul10ChainAcc_0042d010
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   04h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_0054207c]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_data_0053a3dc]
+        mov     dword ptr [g_state_00542080], eax
+        mov     eax, dword ptr [g_data_0053a41c]
+        mov     dword ptr [g_state_0054207c], ecx
+        push    eax
+        push    edx
+        mov     dword ptr [g_acc_00542078], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_acc_00542078], eax
+        mov     eax, dword ptr [g_state_0054207c]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_data_00542070]
+        add     ecx, edx
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], ecx
+        mov     ecx, dword ptr [g_x_00542074]
+        add     ecx, eax
+        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_x_00542074], ecx
+        call    DualMul10ChainAcc_0042d010
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   81h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [g_state_00542080]
+        cmp     eax, ecx
+        mov     eax, dword ptr [g_x_0054206c]
+        _emit   7fh
+        _emit   07h
+        neg     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [g_data_0053a41c]
+        mov     edx, dword ptr [g_data_0053a3dc]
+        push    ecx
+        push    eax
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_state_0054207c], edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_acc_00542078], eax
+        mov     eax, dword ptr [g_state_0054207c]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_state_0054207c], eax
+        mov     eax, dword ptr [g_acc_00542078]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x6c], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_state_0054207c]
+        mov     dword ptr [ecx*4 + 0x74], edx
+        ret
+    }
+}
