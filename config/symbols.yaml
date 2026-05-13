@@ -6374,10 +6374,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004602b0
-    name: func_004602b0
+    name: Install3StateDualArmQuad_004602b0
     size: 323
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460400
     name: Init3333Jmp_00460400
     size: 30

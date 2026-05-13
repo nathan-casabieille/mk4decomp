@@ -50719,3 +50719,137 @@ __declspec(naked) void ChainMul10DotProd_0042cec0(void) {
         ret
     }
 }
+
+extern void CjInstallSelfRouter_00470480(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void CallPauseTriCmpJmp_00460910(void);
+extern void ScaledInit_0048f720(void);
+extern void PushCallStoreClearJmp_00460420(void);
+
+/* @addr 0x004602b0 (323b game) - 3-state install-self with bit0 dual-arm + state-0 quad-chain.
+ *   state==0 (sub-eax-0 je): call func_0048e0e0; if pause ret. Call ScaledInit_0048f720; if pause ret.
+ *     Call PushCallStoreClearJmp; if pause ret. Tail install: state=1; pause=1; ret.
+ *   state==1 (dec,je): call DualGatedStateYield; if !=0 ret. Call CjMaskedFlagProbe; if pause ret.
+ *     If bit0(0054208c) set: call GuardedDualConst2AndToggle; if pause ret.
+ *       If bit0 still set: tail-call CallPauseMStackPushSet0Jmp; else call CallPauseTriCmpJmp; if pause ret; jmp tail-install.
+ *     Else (bit0 clear): call func_0048e0e0; if pause ret.
+ *       Install-self at entry+0x02000000; state=2; call Init3333Jmp; pause=ebx=1; ret.
+ *   state>=2 (fall): tail-call CjInstallSelfRouter_00470480; pop esi/ebx; ret.
+ */
+__declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   0fh
+        _emit   84h
+        _emit   0d0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   08h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        pop     ebx
+        ret
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0fbh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CjMaskedFlagProbe_0048ecf0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   75h
+        _emit   70h
+        call    func_0048e0e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cfh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad_004602b0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset Install3StateDualArmQuad_004602b0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    Init3333Jmp_00460400
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+        call    GuardedDualConst2AndToggle_0048eba0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        test    byte ptr [g_state_0054208c], bl
+        _emit   74h
+        _emit   08h
+        call    CallPauseMStackPushSet0Jmp_0045fcf0
+        pop     esi
+        pop     ebx
+        ret
+        call    CallPauseTriCmpJmp_00460910
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        _emit   0ebh
+        _emit   2ah
+        call    func_0048e0e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   35h
+        call    ScaledInit_0048f720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        call    PushCallStoreClearJmp_00460420
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [esi + 8], offset Install3StateDualArmQuad_004602b0
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
