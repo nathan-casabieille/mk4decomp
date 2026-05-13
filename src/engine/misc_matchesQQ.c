@@ -57939,6 +57939,97 @@ __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
     }
 }
 
+extern void FramePauseScaledStore_00406c10(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void TestEqJmpInitFightGroup_004a1740(void);
+extern unsigned int g_data_0050f1bc;
+
+/*
+ * AudioChainStateInitSequence_004a1610 — 294b audio multi-stage chain init.
+ *   g_x_00542048 = (0x0050f1bc >> 2); call FramePauseScaledStore. If paused: ret.
+ *   If g_state_0054208c & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
+ *   Else: chain[g_x_00542044 + 0x1c] = g_data_0054204c; g_x_00542048 = g_x_00542050;
+ *     call func_00409970. If paused: ret.
+ *   chain[+0x30] = g_x_0054206c = 0x80000; chain[+0x34] = g_x_0054206c;
+ *   chain[+0x38] = g_x_0054206c = 0x83; g_x_00542044 = g_x_0054205c; call func_00408600.
+ *   If paused: ret. If g_state_0054208c & 4: jmp 0x004a173f.
+ *   Else call MStackPush3LinkedListWalk_004088b0. If paused: ret.
+ *   If g_state_0054208c & 4: tail-jmp TestEqJmpInitFightGroup_004a1740.
+ *   Else g_x_0054206c = g_data_0054204c; call ChainDirtyBitWalker. If paused: ret.
+ *   chain[g_x_00542048*4 + 0x14] = 0x80; chain[+0x10] = g_x_0054206c = 0x004ba0e0;
+ *   tail-jmp TestEqJmpInitFightGroup_004a1740.
+ */
+__declspec(naked) void AudioChainStateInitSequence_004a1610(void)
+{
+    __asm
+    {
+        mov     eax, offset g_data_0050f1bc
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    FramePauseScaledStore_00406c10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_a16_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      short L_a16_continue
+        jmp     TestEqJmpInitFightGroup_004a1740
+    L_a16_continue:
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [ecx*4 + 0x1c], edx
+        mov     eax, dword ptr [g_x_00542050]
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00409970
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_a16_ret
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, 0x80000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     eax, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x34], edx
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, 0x83
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542044], edx
+        call    func_00408600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a16_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      short L_a16_callPush3
+        jmp     TestEqJmpInitFightGroup_004a1740
+    L_a16_callPush3:
+        call    MStackPush3LinkedListWalk_004088b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a16_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      short L_a16_callDirty
+        jmp     TestEqJmpInitFightGroup_004a1740
+    L_a16_callDirty:
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_x_0054206c], eax
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a16_ret
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x004ba0e0
+        mov     dword ptr [ecx*4 + 0x14], 0x80
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x10], eax
+        jmp     TestEqJmpInitFightGroup_004a1740
+    L_a16_ret:
+        ret
+    }
+}
+
 /*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
