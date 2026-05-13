@@ -71025,3 +71025,179 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004f25d8;
+extern unsigned int g_data_004f2640;
+extern unsigned int g_data_004f2650;
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void CondPickDualStore_0049c670(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void func_0049bc60(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void func_0040c260(void);
+extern void BootCallChainDoubleMul10_0040b890(void);
+extern void Triple3PathDispatch_0049bf90(void);
+extern void MStackCall_00406740(void);
+
+/* @addr 0x0049be10 (370b game) - 5-entry packed alarm + scoped chain.
+ *   Entry 1 (offset 0, 20b): MStackCall_00406740; on no-error tail-jmps
+ *     CallSetPause_0041f830.
+ *   12b NOP pad.
+ *   Entry 2 (offset 0x20, 51b): writes 0x305 into [scaled+0x74], calls
+ *     CondPickDualStore_0049c670; on no-error pushes 0x4f25d8 and
+ *     ArgSarStoreJmp_004594f0.
+ *   13b NOP pad.
+ *   Entry 3 (offset 0x60, 190b): DualCmpSwapStore_0049c5a0 → push
+ *     0x4f2640 → ScaledStackCallPause_0049c360. If bit 2 of 0x54208c
+ *     set, tail-call CallSetPause_0041f830. Else does two Mul10Tail
+ *     calls multiplying g_data_00542084 / 00542088 by 0x3333 (interp
+ *     factor) then stores results back. Writes them into [esi+0x6c]
+ *     and [esi+0x74], writes g_data_00542044 → g_data_0054205c, sets
+ *     [g_data_00542060*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp_0049c6f0.
+ *   2b NOP pad.
+ *   Entry 4 (offset 0xf0, 40b): func_0049bc60 → on no-error compare
+ *     g_data_00542070 vs g_data_00542074: if le tail-jmp func_0040ca70,
+ *     else tail-jmp ScaledIndirectJmp_0049c850.
+ *   8b NOP pad.
+ *   Entry 5 (offset 0x150, 34b): func_0040c260 + BootCallChainDoubleMul10_0040b890;
+ *     on no-error tail-jmps Triple3PathDispatch_0049bf90.
+ */
+__declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
+    __asm {
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a5e_e1End
+        jmp     CallSetPause_0041f830
+    L_a5e_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x20) */
+    L_a5e_entry2:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x305
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a5e_e2End
+        push    offset g_data_004f25d8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_a5e_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x60) */
+    L_a5e_entry3:
+        push    esi
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_a5e_e3End
+        push    offset g_data_004f2640
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_a5e_e3End
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_a5e_doInterp
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_a5e_doInterp:
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     eax, dword ptr [g_data_00542044]
+        push    ecx
+        push    0x3333
+        lea     esi, [eax*4]
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542088]
+        add     esp, 8
+        mov     dword ptr [g_data_00542084], eax
+        push    edx
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_data_00542088], eax
+        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [esi + 0x6c], eax
+        mov     ecx, dword ptr [g_data_00542088]
+        add     esp, 8
+        mov     dword ptr [esi + 0x74], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x30
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_004f2650
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        call    ArgSar_Set0_Jmp_0049c6f0
+        add     esp, 4
+    L_a5e_e3End:
+        pop     esi
+        ret
+        nop
+        nop
+        /* entry 4 (offset 0xf0) */
+    L_a5e_entry4:
+        call    func_0049bc60
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a5e_e4End
+        mov     eax, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542074]
+        cmp     eax, ecx
+        jle     short L_a5e_e4tail2
+        jmp     ScaledIndirectJmp_0049c850
+    L_a5e_e4tail2:
+        jmp     func_0040ca70
+    L_a5e_e4End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 5 (offset 0x150) */
+    L_a5e_entry5:
+        call    func_0040c260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a5e_e5End
+        call    BootCallChainDoubleMul10_0040b890
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a5e_e5End
+        jmp     Triple3PathDispatch_0049bf90
+    L_a5e_e5End:
+        ret
+    }
+}
