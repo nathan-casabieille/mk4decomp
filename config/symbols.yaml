@@ -9157,10 +9157,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00486130
-    name: func_00486130
+    name: Phase3Packed3EntryDispatch_00486130
     size: 352
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486290
     name: ChainDispatcher4Call_00486290
     size: 215

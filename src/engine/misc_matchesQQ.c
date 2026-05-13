@@ -66618,3 +66618,134 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_004eed08;
+extern void ScaledTestCallPauseJmpFar_00487150(void);
+extern void CopyJmp_0048ef90(void);
+extern void TwoCallTail_00481380(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void func_00483650(void);
+extern void ChainDispatcher4Call_00486290(void);
+
+/* @addr 0x00486130 (352b game) - 3-entry packed phase-state install w/ tails.
+ *   Entry 1 (offset 0, 247b): phase from [scaled g_data_00542060 + 0x84].
+ *     phase 0: tail-calls StackPopDispatchTagged_0041f780.
+ *     phase 1: add g_data_00542084 into [g_data_0054205c*4 + 0x58] AND into
+ *              [g_data_00542054*4 + 0x58] (both mirrored through 0x54206c),
+ *              installs Self at [eax+8], slot[+0x84]=2, g_data_0054204c=3,
+ *              arms g_data_00541e6c=1.
+ *     phase 2: sub g_data_00542084 from the same +0x58 fields, installs
+ *              Self, slot[+0x84]=1, g_data_0054204c=3, arms 0x541e6c=1.
+ *   (9-byte NOP align pad.)
+ *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar_00487150
+ *     then CopyJmp_0048ef90, both gated by 0x541e6c. If bit 0 of
+ *     g_data_0054208c set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
+ *     and call ArgSarStoreJmp_004594f0.
+ *   (8-byte NOP align pad.)
+ *   Entry 3 (offset 0x140, 36b): if [scaled g_data_00542060 + 0x7c] > 3
+ *     tail-jmp func_00483650; else fall through to the next adjacent
+ *     function ChainDispatcher4Call_00486290 via jmp.
+ */
+__declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        sub     ecx, 0
+        je      short L_p3p_phase2
+        dec     ecx
+        je      short L_p3p_phase1
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_p3p_phase1:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542084]
+        add     ecx, dword ptr [edx*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x58], ecx
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542084]
+        add     ecx, dword ptr [edx*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x58], ecx
+        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
+        mov     dword ptr [eax + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_p3p_phase2:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     esi, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [edx*4 + 0x58]
+        sub     ecx, esi
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x58], ecx
+        mov     edx, dword ptr [g_data_00542054]
+        mov     esi, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [edx*4 + 0x58]
+        sub     ecx, esi
+        pop     esi
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x58], ecx
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], ecx
+        ret
+        /* 9-byte NOP pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x100) */
+    L_p3p_entry2:
+        call    ScaledTestCallPauseJmpFar_00487150
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p3p_e2End
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p3p_e2End
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_p3p_pushPath
+        jmp     TwoCallTail_00481380
+    L_p3p_pushPath:
+        push    offset g_data_004eed08
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_p3p_e2End:
+        ret
+        /* 8-byte NOP pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x140) */
+    L_p3p_entry3:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [eax*4 + 0x7c]
+        cmp     eax, 3
+        mov     dword ptr [g_data_0054206c], eax
+        jle     short L_p3p_jumpNext
+        jmp     func_00483650
+    L_p3p_jumpNext:
+        jmp     ChainDispatcher4Call_00486290
+    }
+}
