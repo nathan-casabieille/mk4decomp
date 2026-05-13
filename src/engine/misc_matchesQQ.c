@@ -49937,3 +49937,123 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         ret
     }
 }
+
+extern unsigned int g_state_00535df0;
+
+/* @addr 0x0045f950 (314b game) - linked-list walker with 4-condition + distance check + flag set/clear.
+ *   g_scaledInit = eax = g_state_00535df0. esi=4.
+ *   Loop: ecx = [eax*4 + 0x30]; if ecx<0x60 or >0x6f: clear flag bit0.
+ *     If [eax*4 + 0x6c/0x70/0x74] != 0: set flag bit0.
+ *     Distance2 = Mul10Tail(g_cj[+0x54]-eax[+0x54]) + Mul10Tail(g_cj[+0x5c]-eax[+0x5c]).
+ *     If distance > 0x10000: set flag bit0; else: walk to next via [scaledInit*4]; loop while nonzero.
+ *   Set flag: or al, 1; ret. Clear flag: and al, 0xfe; pop esi; ret.
+ */
+__declspec(naked) void LinkedListDistanceWalker_0045f950(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535df0]
+        push    esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     esi, 4
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        cmp     ecx, 0x60
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   0fh
+        _emit   8ch
+        _emit   0c8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     ecx, 0x6f
+        _emit   0fh
+        _emit   8fh
+        _emit   0bfh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   0fh
+        _emit   85h
+        _emit   0dah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [eax*4 + 0x70]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   0fh
+        _emit   85h
+        _emit   0c5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [eax*4 + 0x74]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   0fh
+        _emit   85h
+        _emit   0b0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x54]
+        sub     eax, ecx
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542070], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_data_00542070], eax
+        add     esp, 8
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     eax, dword ptr [edx*4 + 0x5c]
+        sub     eax, ecx
+        push    eax
+        push    eax
+        mov     dword ptr [g_x_00542074], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542070]
+        add     esp, 8
+        add     ecx, eax
+        mov     dword ptr [g_x_00542074], eax
+        cmp     ecx, 0x10000
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   7eh
+        _emit   43h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [eax*4 + 0]
+        or      edx, esi
+        mov     dword ptr [g_scaledInit_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   12h
+        mov     ecx, edx
+        xor     ecx, esi
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   0fh
+        _emit   85h
+        _emit   0f2h
+        _emit   0feh
+        _emit   0ffh
+        _emit   0ffh
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        pop     esi
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
