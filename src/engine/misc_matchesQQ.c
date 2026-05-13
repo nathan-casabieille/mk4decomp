@@ -56380,3 +56380,86 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         ret
     }
 }
+
+extern unsigned int g_data_00506c14;
+extern unsigned int g_data_005080d8;
+extern unsigned int g_data_005080bc;
+extern void RegistryPushBindPop_00403c20(void);
+extern void PushSetCallPop_00406530(void);
+
+/*
+ * BootMultiAssetLoadStateInit_00403b10 — 258b boot multi-asset loader chain.
+ *   push 8; TableWalkBoundedCmp; g_x_00542044 = (0x00506c14>>2);
+ *   call LoadGeoAsset_Default; if paused: ret. g_x_00542044 = (0x00506c14>>2) again;
+ *   call LoadGeoAsset_Default; if paused: ret. g_x_00542048 = (0x005080d8>>2);
+ *   call DispatcherComplex260_00407400; if paused: ret. esi=0x1f; chain[g_x_00542044*4 + 0x54] = 0x00627d70;
+ *   g_x_0054206c=0x1f; chain[g_x_00542044*4 + 0x30]=0x1f; call PushSetCallPop_00406530; if paused: ret.
+ *   call RegistryPushBindPop_00403c20; if paused: ret. g_x_00542048 = (0x005080bc>>2);
+ *   call DispatcherComplex260; if paused: ret. chain[g_x_00542044*4 + 0x54] = 0x8bff9b80;
+ *   g_x_0054206c=0x1f; chain[+0x30]=0x1f; call PushSetCallPop; if paused: ret. Tail-call RegistryPushBindPop.
+ */
+__declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
+{
+    __asm
+    {
+        push    esi
+        push    8
+        call    TableWalkBoundedCmp_004bd890
+        mov     eax, offset g_data_00506c14
+        add     esp, 4
+        shr     eax, 2
+        mov     dword ptr [g_x_00542044], eax
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ml_ret
+        mov     ecx, offset g_data_00506c14
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542044], ecx
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ml_ret
+        mov     edx, offset g_data_005080d8
+        shr     edx, 2
+        mov     dword ptr [g_x_00542048], edx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ml_ret
+        mov     eax, dword ptr [g_x_00542044]
+        mov     esi, 0x1f
+        mov     dword ptr [eax*4 + 0x54], 0x00627d70
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [ecx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ml_ret
+        call    RegistryPushBindPop_00403c20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ml_ret
+        mov     edx, offset g_data_005080bc
+        shr     edx, 2
+        mov     dword ptr [g_x_00542048], edx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ml_ret
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4 + 0x54], 0xff9b8000
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [ecx*4 + 0x30], esi
+        call    PushSetCallPop_00406530
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ml_ret
+        call    RegistryPushBindPop_00403c20
+    L_ml_ret:
+        pop     esi
+        ret
+    }
+}
