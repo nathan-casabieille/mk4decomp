@@ -12758,10 +12758,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8310
-    name: func_004a8310
+    name: Phase3InstallVolToggle_004a8310
     size: 377
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8490
     name: AudioSwap2ChainBank3State_004a8490
     size: 293

@@ -71603,3 +71603,139 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00543590;
+extern unsigned int g_data_005433c8;
+extern unsigned int g_data_0054359c;
+extern unsigned int g_data_004d50b4;
+extern unsigned int g_data_005435a0;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0053a50c;
+extern void AudioSwap2ChainBank3State_004a8490(void);
+extern void DualListInit_004a8290(void);
+extern void DebugStub_NoOp_A(void);
+extern void DebugStub_NoOp_B(void);
+extern void SetJmp_004a1ad0(void);
+extern void TripleCallByteCheck_004a1bf0(void);
+extern void AudioMicroEntries_004a7600(void);
+extern void ScaledChainStore24_004a7d40(void);
+
+/* @addr 0x004a8310 (377b audio) - phase-state install w/ vol-up/down on input.
+ *   Phase 0: sets [0x52aac4]=2, [0x53a50c]=0xe, installs Self with
+ *     slot[+0x84]=1, g_data_0054204c=1, arms 0x541e6c=1.
+ *   Phase 1+: AudioSwap2ChainBank3State_004a8490; reads slot[+0x30]:
+ *     if 4 → reads vol byte at [g_data_005435a0 + 0x542070*0x18],
+ *     if 3 → similar with g_data_0054359c stride. Then
+ *     DualListInit_004a8290 + [g_data_00543590]==1 ? DebugStub_NoOp_A :
+ *     DebugStub_NoOp_B. Tests [g_data_004d50b4] al/ah bit 2 / 3 for
+ *     vol-down / vol-up (via dec/inc cl on the 0x18-stride byte table),
+ *     wrapping at 0/0xe. Final call TripleCallByteCheck_004a1bf0; on
+ *     zero, calls AudioMicroEntries_004a7600 with the current vol byte
+ *     and tail-jmps StackPopDispatchTagged_0041f780. Else: stores
+ *     g_data_00542054 into 0x542044, vol byte into 0x54206c, calls
+ *     ScaledChainStore24_004a7d40 and falls through to install tail.
+ */
+__declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_p3v_phase0
+        call    AudioSwap2ChainBank3State_004a8490
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        sub     eax, 3
+        je      short L_p3v_phase3
+        dec     eax
+        jne     short L_p3v_afterSnap
+        mov     eax, dword ptr [g_data_005433c8]
+        add     ecx, eax
+        add     eax, 5
+        mov     edx, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [g_data_00542054], edx
+        jmp     short L_p3v_storeVol
+    L_p3v_phase3:
+        mov     eax, dword ptr [g_data_0054359c]
+        add     ecx, eax
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_data_00542054], edx
+    L_p3v_storeVol:
+        mov     dword ptr [g_data_00542070], eax
+    L_p3v_afterSnap:
+        call    DualListInit_004a8290
+        cmp     byte ptr [g_data_00543590], 1
+        jne     short L_p3v_useStubB
+        call    DebugStub_NoOp_A
+        jmp     short L_p3v_postStub
+    L_p3v_useStubB:
+        call    DebugStub_NoOp_B
+    L_p3v_postStub:
+        mov     eax, dword ptr [g_data_004d50b4]
+        test    al, 4
+        jne     short L_p3v_doDown
+        test    ah, 4
+        je      short L_p3v_checkUp
+    L_p3v_doDown:
+        call    SetJmp_004a1ad0
+        mov     eax, dword ptr [g_data_00542070]
+        lea     eax, [eax + eax*2]
+        mov     cl, byte ptr [eax*8 + g_data_005435a0]
+        dec     cl
+        mov     byte ptr [eax*8 + g_data_005435a0], cl
+        jns     short L_p3v_okDown
+        mov     byte ptr [eax*8 + g_data_005435a0], 0xe
+    L_p3v_okDown:
+        mov     eax, dword ptr [g_data_004d50b4]
+    L_p3v_checkUp:
+        test    al, 8
+        jne     short L_p3v_doUp
+        test    ah, 8
+        je      short L_p3v_postUp
+    L_p3v_doUp:
+        call    SetJmp_004a1ad0
+        mov     eax, dword ptr [g_data_00542070]
+        lea     eax, [eax + eax*2]
+        mov     dl, byte ptr [eax*8 + g_data_005435a0]
+        inc     dl
+        mov     cl, dl
+        mov     byte ptr [eax*8 + g_data_005435a0], dl
+        cmp     cl, 0xf
+        jne     short L_p3v_postUp
+        mov     byte ptr [eax*8 + g_data_005435a0], 0
+    L_p3v_postUp:
+        call    TripleCallByteCheck_004a1bf0
+        test    eax, eax
+        mov     eax, dword ptr [g_data_00542070]
+        je      short L_p3v_storeAndCall
+        lea     eax, [eax + eax*2]
+        movsx   ecx, byte ptr [eax*8 + g_data_005435a0]
+        push    ecx
+        call    AudioMicroEntries_004a7600
+        add     esp, 4
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_p3v_storeAndCall:
+        mov     ecx, dword ptr [g_data_00542054]
+        lea     edx, [eax + eax*2]
+        mov     dword ptr [g_data_00542044], ecx
+        movsx   eax, byte ptr [edx*8 + g_data_005435a0]
+        mov     dword ptr [g_data_0054206c], eax
+        call    ScaledChainStore24_004a7d40
+        jmp     short L_p3v_installTail
+    L_p3v_phase0:
+        mov     dword ptr [g_data_0052aac4], 2
+        mov     dword ptr [g_data_0053a50c], 0xe
+    L_p3v_installTail:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset Phase3InstallVolToggle_004a8310
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
