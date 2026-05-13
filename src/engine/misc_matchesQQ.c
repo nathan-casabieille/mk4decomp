@@ -53629,3 +53629,77 @@ __declspec(naked) void FlagThunk4EntryDispatcher_0040a470(void)
         ret
     }
 }
+
+extern void func_004a3400(void);
+extern void Thunk_004c48b0(void);
+
+/*
+ * AudioFlagPair3EntryDeinit_004a2720 — 149b audio deinit variant of AudioModeInit_004a2610.
+ *   Main (0x004a2720): if g_x_00543590 == 1 → store (0x53a408,0x53a3e0)>>2 to
+ *     (g_x_00542044,g_x_00542048); else (0x537e88,0x53a700)>>2; call
+ *     DualScaledStoreConst, ClearTwoCallSetStore; g_data_00542004=0; call
+ *     SixCallSeqPushImm; g_x_00542074=0; call Push16Call; if !paused
+ *     tail-jmp func_004a3400; ret.
+ *   Pad-aligned bare-ret entry (0x004a27a0).
+ *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
+ */
+__declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
+{
+    __asm
+    {
+        cmp     byte ptr [g_x_00543590], 1
+        jne     short L_modeB
+        mov     eax, 0x0053a408
+        mov     ecx, 0x0053a3e0
+        shr     eax, 2
+        shr     ecx, 2
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        jmp     short L_common
+    L_modeB:
+        mov     edx, 0x00537e88
+        mov     eax, 0x0053a700
+        shr     edx, 2
+        shr     eax, 2
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_x_00542048], eax
+    L_common:
+        call    DualScaledStoreConst_004a22c0
+        call    ClearTwoCallSetStore_004a2270
+        mov     dword ptr [g_data_00542004], 0
+        call    SixCallSeqPushImm_004a1d80
+        mov     dword ptr [g_x_00542074], 0
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_main_ret
+        jmp     func_004a3400
+    L_main_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     Thunk_004c48b0
+    }
+}

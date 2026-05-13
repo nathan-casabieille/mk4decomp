@@ -12341,10 +12341,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2720
-    name: func_004a2720
+    name: AudioFlagPair3EntryDeinit_004a2720
     size: 149
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a27c0
     name: func_004a27c0
     size: 260
