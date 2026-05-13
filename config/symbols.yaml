@@ -3694,10 +3694,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00435df0
-    name: func_00435df0
+    name: TripleBlockInstallThresholdMasked_00435df0
     size: 302
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00435f20
     name: DualCallPauseDirtyJmp_00435f20
     size: 43

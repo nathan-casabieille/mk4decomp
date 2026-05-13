@@ -47604,3 +47604,108 @@ __declspec(naked) void Bit2GatedChainInit_00453620(void) {
         ret
     }
 }
+
+extern void CallPauseConstStoreJmp_00438170(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void func_00438cd0(void);
+extern void func_004355f0(void);
+extern void InstallSelfPacked0x2005_00437a90(void);
+extern void JumpTableDispatch_0043a550(void);
+
+/* @addr 0x00435df0 (302b game) - 3-block install-self + threshold cascade + masked dispatch.
+ *   Block A (0..0x83): load state at [base*4+0x84]; clear state. If state!=0 jmp Wrapper_00438ee0.
+ *     Else: g_x_00542084=0x5cccc; g_state_00542080=0x3c; install-self at entry+0x01000000.
+ *     state=1; call CallPauseConstStoreJmp; pause=1; pop edi; ret.
+ *   Block B (+0xa0): call Cmp2CallDirtyCall; if !=0 ret. Cascade on g_state_00535ddc:
+ *     <0x10000 jmp CallPauseTestByteJmpCalls; <0x20000 jmp func_00438cd0;
+ *     <0x40000 jmp func_004355f0; else jmp InstallSelfPacked0x2005_00437a90.
+ *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_data_00542070=[chain+0x40];
+ *     and 0x200 -> g_state_00542094. If nonzero jmp func_00438f80.
+ *     Else: g_x_0054206c &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
+ */
+__declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        mov     dword ptr [g_x_00542084], 0x5cccc
+        mov     dword ptr [g_state_00542080], 0x3c
+        mov     dword ptr [eax + 8], offset TripleBlockInstallThresholdMasked_00435df0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, offset TripleBlockInstallThresholdMasked_00435df0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    CallPauseConstStoreJmp_00438170
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   33h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x10000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     CallPauseTestByteJmpCalls_004390f0
+        cmp     eax, 0x20000
+        _emit   7dh
+        _emit   05h
+        jmp     func_00438cd0
+        cmp     eax, 0x40000
+        _emit   7dh
+        _emit   05h
+        jmp     func_004355f0
+        jmp     InstallSelfPacked0x2005_00437a90
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_data_00542070], eax
+        and     eax, 0x200
+        mov     dword ptr [g_state_00542094], eax
+        _emit   74h
+        _emit   05h
+        jmp     func_00438f80
+        mov     edx, dword ptr [g_x_0054206c]
+        push    0x004e4668
+        and     edx, 0xff
+        mov     dword ptr [g_x_0054206c], edx
+        call    JumpTableDispatch_0043a550
+        add     esp, 4
+        ret
+    }
+}
