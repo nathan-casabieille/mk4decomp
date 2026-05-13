@@ -56212,3 +56212,88 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         ret
     }
 }
+
+extern void DirtyDoubleDeref_00408cb0(void);
+
+/*
+ * BootChainMaskAndDispatch_00416cb0 — 250b boot 2-body chain dispatch.
+ *   Entry 0x00416cb0: g_x_0054206c=2; DirtyDoubleDeref; if paused or g_x_00542044==0: ret.
+ *     chain[+0x20] &= 0xfffffffb; g_x_0054206c=-0x14; MStackInitCallToggle; if paused: ret.
+ *     If !(g_state_0054208c & 4): func_00405e70; if paused: ret.
+ *     g_x_0054206c=-0x16; MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *       tail-jmp func_00405e70. Ret.
+ *   Entry 0x00416d40 (16b-aligned): g_x_0054206c=-0x14; MStackInitCallToggle; if paused: ret.
+ *     If !(g_state_0054208c & 4): chain[+0x3c] = 0x00800000. g_x_0054206c=-0x15;
+ *     MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *       chain[+0x3c] = -0x16666 = g_x_0054206c; ret.
+ */
+__declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
+{
+    __asm
+    {
+        mov     dword ptr [g_x_0054206c], 2
+        call    DirtyDoubleDeref_00408cb0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b1_ret
+        mov     eax, dword ptr [g_x_00542044]
+        test    eax, eax
+        je      short L_b1_ret
+        mov     ecx, dword ptr [eax*4 + 0x20]
+        and     ecx, 0xfffffffb
+        mov     dword ptr [eax*4 + 0x20], ecx
+        mov     dword ptr [g_x_0054206c], 0xffffffec
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b1_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_b1_callMid
+        call    func_00405e70
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b1_ret
+    L_b1_callMid:
+        mov     dword ptr [g_x_0054206c], 0xffffffea
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b1_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_b1_ret
+        jmp     func_00405e70
+    L_b1_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0xffffffec
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_b2_step2
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4 + 0x3c], 0x00008000
+    L_b2_step2:
+        mov     dword ptr [g_x_0054206c], 0xffffffeb
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_b2_ret
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, 0xfffe999a
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+    L_b2_ret:
+        ret
+    }
+}
