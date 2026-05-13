@@ -45651,3 +45651,90 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         ret
     }
 }
+
+/* @addr 0x00430d30 (289b game) - mstack-push 4 + dual call + abs-diff store + pop 4.
+ *   Push g_state_00542080, g_x_0054206c, g_data_00542070, g_x_00542074 onto mstack.
+ *   Call func_00430e60; if pause: ret.
+ *   Call func_00407510; if pause: ret. Save current 6c->70, load [g_cj*4+0x64]->6c.
+ *   Call func_00407510; if pause: ret. Compute |6c - 70|; store to 6c and g_acc_00542078.
+ *   Pop 4 entries back: mstack[top..top-3] -> g_x_00542074, g_data_00542070, g_x_0054206c, g_state_00542080.
+ */
+__declspec(naked) void MStackPush4DualCallAbsPop4_00430d30(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    func_00430e60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0aeh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_00407510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9ch
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_data_00542070], eax
+        mov     edx, dword ptr [ecx*4 + 0x64]
+        mov     dword ptr [g_x_0054206c], edx
+        call    func_00407510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   71h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_data_00542070]
+        sub     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_acc_00542078], eax
+        _emit   79h
+        _emit   07h
+        neg     eax
+        mov     dword ptr [g_acc_00542078], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
