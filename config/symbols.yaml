@@ -7627,10 +7627,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x004730c0
-    name: func_004730c0
+    name: ChainDiff3Mul10Install_004730c0
     size: 347
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473220
     name: func_00473220
     size: 547

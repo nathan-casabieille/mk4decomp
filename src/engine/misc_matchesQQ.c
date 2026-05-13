@@ -53356,3 +53356,117 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         jmp     DualSave_00461840
     }
 }
+
+/*
+ * ChainDiff3Mul10Install_004730c0 — 347b state-machine.
+ *   eax = g_baseSel_00542060 (packed_ptr); edi = unpacked chain; eax = chain->state; chain->state = 0;
+ *   if (state == 0): g_x_0054206c=0; chain->field_6c=0; chain->field_70=0; chain->field_74=0;
+ *                    tail StackPopDispatchTagged; ret.
+ *   else: compute three g_state diffs from chain->field_54/58/5c minus g_state_0054207c/g_data_00542070/g_x_00542074;
+ *         call DivLongPushCall_004ab320; if paused → ret;
+ *         else 3x Mul10Tail → write chain->field_6c/70/74; install-self; chain->state=1;
+ *         g_data_0054204c = g_acc_00542078; g_pause_00541e6c = 1; ret.
+ */
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_acc_00542078;
+extern unsigned int g_state_0054207c;
+extern unsigned int g_state_00542080;
+extern unsigned int g_data_00542084;
+extern unsigned int g_state_00542088;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern void StackPopDispatchTagged_0041f780(void);
+extern void DivLongPushCall_004ab320(void);
+extern void Mul10Tail_00404af0(unsigned int a, unsigned int b);
+
+__declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        lea     edi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [edi + 0x84], 0
+        test    eax, eax
+        je      short L_nonzero_state
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x6c], 0
+        mov     edx, dword ptr [g_x_0054206c]
+        lea     eax, [ecx*4]
+        mov     dword ptr [eax + 0x70], edx
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax + 0x74], ecx
+        call    StackPopDispatchTagged_0041f780
+        pop     edi
+        pop     esi
+        ret
+    L_nonzero_state:
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [edx*4 + 0x54]
+        lea     esi, [edx*4]
+        mov     edx, dword ptr [g_data_00542070]
+        sub     ecx, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_state_00542080], ecx
+        mov     eax, dword ptr [esi + 0x58]
+        sub     edx, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     eax, dword ptr [g_x_00542074]
+        mov     dword ptr [g_data_00542084], edx
+        mov     ecx, dword ptr [esi + 0x5c]
+        sub     eax, ecx
+        mov     ecx, dword ptr [g_acc_00542078]
+        shl     ecx, 0x10
+        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    DivLongPushCall_004ab320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_paused_skip
+        mov     edx, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_x_0054206c]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_state_00542080], eax
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_x_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_data_00542084], eax
+        mov     eax, dword ptr [g_state_00542088]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_state_00542080]
+        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [esi + 0x6c], edx
+        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [esi + 0x70], eax
+        mov     ecx, dword ptr [g_state_00542088]
+        mov     dword ptr [esi + 0x74], ecx
+        mov     edx, dword ptr [g_acc_00542078]
+        mov     eax, 1
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [edi + 8], offset ChainDiff3Mul10Install_004730c0
+        mov     dword ptr [edi + 0x84], eax
+        add     esp, 8
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_paused_skip:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
