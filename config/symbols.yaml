@@ -6022,10 +6022,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0045a010
-    name: func_0045a010
+    name: Phase3IndirectInstallChain_0045a010
     size: 360
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045a180
     name: DualEntryStateMachine_0045a180
     size: 313

@@ -68707,3 +68707,150 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         ret
     }
 }
+
+extern void func_00459510(void);
+extern void CallDualStoreXorBit_004285e0(void);
+extern void ScaledArrStore_004285c0(void);
+extern void ScaledIterStep_0045c020(void);
+extern void DualEntryStateMachine_0045a180(void);
+
+/* @addr 0x0045a010 (360b game) - 4-entry packed phase-state with indirect.
+ *   Entry 1 (offset 0, 187b): phase from [scaled g_data_00542060+0x84].
+ *     phase 2: tail-call func_00459510.
+ *     phase 1: indirect-call [g_data_00542054].
+ *     phase 0: pop mstack into g_data_00542054 (saving the prior
+ *       function-ptr), call CallDualStoreXorBit_004285e0; on no-error AND
+ *       bit 2 of 0x54208c clear, call ScaledArrStore_004285c0. Tail
+ *       installs Self with slot[+0x84] = 2 (bit-2 path) or 1 (clean path).
+ *   5b NOP pad.
+ *   Entry 2 (offset 0xc0, 70b): ScaledIterStep_0045c020; on no-error writes
+ *     g_data_0054206c into [g_data_0054205c*4+0x24], zeroes +0x28, sets
+ *     g_data_00542080=0xc8, tail-jmp DualEntryStateMachine_0045a180.
+ *   10b NOP pad.
+ *   Entry 3 (offset 0x110, 40b): mask g_data_00542070 with 0xff; on
+ *     no-error set g_data_00542080 = that and tail-jmp ScaledIterStep.
+ *   8b NOP pad.
+ *   Entry 4 (offset 0x140, 40b): same shape as entry 3 but tail-jmp
+ *     DualEntryStateMachine_0045a180.
+ */
+__declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_p3i_phase0
+        dec     eax
+        je      short L_p3i_phase1
+        call    func_00459510
+        pop     esi
+        ret
+    L_p3i_phase1:
+        call    dword ptr [g_data_00542054]
+        pop     esi
+        ret
+    L_p3i_phase0:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    CallDualStoreXorBit_004285e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p3i_done
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_p3i_bit2Set
+        call    ScaledArrStore_004285c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p3i_done
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_p3i_clean
+    L_p3i_bit2Set:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    L_p3i_clean:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p3i_done:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0xc0) */
+    L_p3i_entry2:
+        call    ScaledIterStep_0045c020
+        mov     ecx, dword ptr [g_data_00541e6c]
+        xor     eax, eax
+        cmp     ecx, eax
+        jne     short L_p3i_e2End
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x24], ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     dword ptr [g_data_00542080], 0xc8
+        jmp     DualEntryStateMachine_0045a180
+    L_p3i_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x110) */
+    L_p3i_entry3:
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_data_00541e6c]
+        and     ecx, 0xff
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], ecx
+        jne     short L_p3i_e3End
+        mov     eax, ecx
+        mov     dword ptr [g_data_00542080], eax
+        jmp     ScaledIterStep_0045c020
+    L_p3i_e3End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 (offset 0x140) */
+    L_p3i_entry4:
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_data_00541e6c]
+        and     ecx, 0xff
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], ecx
+        jne     short L_p3i_e4End
+        mov     eax, ecx
+        mov     dword ptr [g_data_00542080], eax
+        jmp     DualEntryStateMachine_0045a180
+    L_p3i_e4End:
+        ret
+    }
+}
