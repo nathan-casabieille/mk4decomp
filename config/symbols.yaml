@@ -8013,10 +8013,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00475990
-    name: func_00475990
+    name: MStackBracketed3StoreCall_00475990
     size: 412
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00475b30
     name: func_00475b30
     size: 416
