@@ -54957,3 +54957,91 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         ret
     }
 }
+
+extern void ShiftDownThreeAndAppend_004aa3f0(void);
+extern unsigned char g_byte_004d50d4;
+extern unsigned char g_byte_004d50d8;
+extern unsigned int g_data_00543398;
+
+/*
+ * AudioFlagDispatchAggregator_004aa430 — 226b audio multi-bit-flag dispatcher.
+ *   Six independent bit tests on g_byte_004d50d4/d8; for each set bit, push (channel<<16, &table)
+ *   and call ShiftDownThreeAndAppend.
+ *   Final aggregator: combine low nibble of g_byte_004d50d4 into a 4-bit value, shl 16; if nonzero,
+ *   push (combined, &table) and call again. Ret.
+ */
+__declspec(naked) void AudioFlagDispatchAggregator_004aa430(void)
+{
+    __asm
+    {
+        test    byte ptr [g_byte_004d50d4], 0x10
+        je      short L_skip0
+        push    0x000b0000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip0:
+        test    byte ptr [g_byte_004d50d4], 0x40
+        je      short L_skip1
+        push    0x000c0000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip1:
+        test    byte ptr [g_byte_004d50d8], 0x01
+        je      short L_skip2
+        push    0x000d0000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip2:
+        test    byte ptr [g_byte_004d50d8], 0x02
+        je      short L_skip3
+        push    0x000e0000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip3:
+        test    byte ptr [g_byte_004d50d8], 0x04
+        je      short L_skip4
+        push    0x000f0000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip4:
+        test    byte ptr [g_byte_004d50d4], 0x20
+        je      short L_skip5
+        push    0x00100000
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_skip5:
+        mov     cl, byte ptr [g_byte_004d50d4]
+        xor     eax, eax
+        test    cl, 1
+        je      short L_bit1
+        mov     eax, 1
+    L_bit1:
+        test    cl, 2
+        je      short L_bit2
+        add     eax, 2
+    L_bit2:
+        test    cl, 4
+        je      short L_bit3
+        add     eax, 4
+    L_bit3:
+        test    cl, 8
+        je      short L_bit4
+        add     eax, 8
+    L_bit4:
+        test    eax, eax
+        je      short L_done
+        shl     eax, 0x10
+        push    eax
+        push    offset g_data_00543398
+        call    ShiftDownThreeAndAppend_004aa3f0
+        add     esp, 8
+    L_done:
+        ret
+    }
+}
