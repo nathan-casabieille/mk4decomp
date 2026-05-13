@@ -57858,6 +57858,87 @@ __declspec(naked) void AudioByteTable5Loop_004a8970(void)
     }
 }
 
+extern unsigned int g_x_005433c8;
+extern unsigned int g_x_0054359c;
+extern unsigned char g_byte_0053a498;
+
+/*
+ * AudioSwap2ChainBank3State_004a8490 — 293b audio chain double-zero + 3-state setup.
+ *   chain1 = base[+0x7c]: zero chain1[+0x54], +0x58, +0x5c. chain2 = base[+0x80]: zero same fields.
+ *   Switch on base[+0x30] - 3: case 0 → g_x_0054206c = g_x_0054359c+0xd; edx=base[+0x7c].
+ *                              case 1 → g_x_0054206c = g_x_005433c8+0x12; edx=base[+0x80].
+ *                              default → ret.
+ *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_x_0054206c]; g_x_00542044=chain3;
+ *   copy chain3[+0x54/+0x58/+0x5c] → g_x_0054206c/g_data_00542070/g_x_00542074 → chain2[+0x54/+0x58/+0x5c].
+ *   Pop+ret.
+ */
+__declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        mov     ecx, dword ptr [eax*4 + 0x7c]
+        xor     eax, eax
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_cj_00542058]
+        mov     dword ptr [edx*4 + 0x5c], eax
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [ecx*4 + 0x80]
+        mov     dword ptr [g_cj_00542058], ecx
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_cj_00542058]
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        sub     ecx, 3
+        je      short L_a84_case3
+        dec     ecx
+        jne     L_a84_ret
+        mov     edx, dword ptr [g_x_005433c8]
+        lea     ecx, [edx + 0x12]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x80]
+        jmp     short L_a84_common
+    L_a84_case3:
+        mov     ecx, dword ptr [g_x_0054359c]
+        add     ecx, 0xd
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x7c]
+    L_a84_common:
+        mov     bl, byte ptr [g_byte_0053a498]
+        mov     dword ptr [g_cj_00542058], edx
+        test    bl, 8
+        je      short L_a84_ret
+        add     ecx, eax
+        mov     eax, dword ptr [ecx*4]
+        mov     dword ptr [g_x_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     esi, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_data_00542070], esi
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [edx*4 + 0x54], ecx
+        mov     ecx, dword ptr [g_cj_00542058]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     dword ptr [ecx*4 + 0x58], edx
+        mov     eax, dword ptr [g_cj_00542058]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [eax*4 + 0x5c], ecx
+    L_a84_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
+
 /*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;

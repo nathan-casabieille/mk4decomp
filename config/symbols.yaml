@@ -12709,10 +12709,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a8490
-    name: func_004a8490
+    name: AudioSwap2ChainBank3State_004a8490
     size: 293
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a85c0
     name: func_004a85c0
     size: 943
