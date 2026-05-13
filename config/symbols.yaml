@@ -11570,10 +11570,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0049c710
-    name: func_0049c710
+    name: InstallSelfBit2LoopIndirect_0049c710
     size: 305
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c850
     name: ScaledIndirectJmp_0049c850
     size: 19

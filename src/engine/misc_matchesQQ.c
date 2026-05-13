@@ -48778,3 +48778,118 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         ret
     }
 }
+
+extern void ScaledChain3c74_0048f910(void);
+extern void func_0049c870(void);
+
+/* @addr 0x0049c710 (305b game) - install-self body with state-machine, bit2-loop, indirect-call dispatch.
+ *   Load state; clear. state==0: call TripleBlockChainDiffMStackThunks; if pause ret.
+ *   ebx=1. If g_state_00542080==0: call ScaledChain3c74; if pause ret.
+ *     If g_x_0054206c==0x2001: jmp bit2-loop block.
+ *   Else (state!=0 OR not 0x2001): mstack-push g_state_00542080; load chain[g_x_00542054*4+0] -> g_x_0054206c.
+ *     Call func_0049c870; if pause ret. Mstack-pop into g_state_00542080.
+ *     If bit0(0054208c): chain[g_x_00542054*4+8] -> g_scaledInit; indirect call; pop; ret.
+ *   bit2-loop: eax = [g_x_00542054*4+4]; ecx=4; set bit2 of g_state_0054208c.
+ *     If eax!=0: toggle bit2 off; call eax; if pause ret.
+ *     Install-self at entry; state=1; g_x_0054204c=1; pause=1; pop esi/ebx; ret.
+ */
+__declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   75h
+        _emit   12h
+        call    TripleBlockChainDiffMStackThunks_0049ca10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_00542080]
+        mov     ebx, 1
+        test    eax, eax
+        _emit   75h
+        _emit   1eh
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     dword ptr [g_x_0054206c], 0x2001
+        _emit   74h
+        _emit   74h
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     edx, dword ptr [ecx*4 + 0]
+        mov     ecx, dword ptr [g_state_00542080]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        call    func_0049c870
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   90h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_state_0054208c]
+        _emit   84h
+        _emit   0c3h
+        mov     dword ptr [g_state_00542080], edx
+        _emit   74h
+        _emit   16h
+        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    eax
+        pop     esi
+        pop     ebx
+        ret
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [ecx*4 + 4]
+        mov     ecx, 4
+        or      edx, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   0eh
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   02h
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   19h
+        mov     dword ptr [esi + 8], offset InstallSelfBit2LoopIndirect_0049c710
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
