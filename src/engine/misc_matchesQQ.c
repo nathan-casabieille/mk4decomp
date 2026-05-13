@@ -75139,3 +75139,114 @@ __declspec(naked) void MStackBracketedStoreTwoCall_004714e0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern void DispatcherComplex260_00407400(void);
+extern void func_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void BootStateTriple_00408d30(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void ScaledStoreThree_00409260(void);
+
+__declspec(naked) void BootDispatchSlotInit_004071a0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_0054204c], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bdsi_pop
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     ebx, 4
+        mov     dword ptr [g_data_0054205c], ecx
+        test    al, bl
+        jne     L_bdsi_finalize
+        mov     ecx, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [ecx*4 + 0x1c], 1
+        call    func_00408600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bdsi_pop
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_bdsi_chain2
+        call    MStackPush3LinkedListWalk_004088b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bdsi_pop
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_bdsi_chain2
+        mov     dword ptr [g_data_0054206c], 1
+        call    BootStateTriple_00408d30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bdsi_pop
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_bdsi_finishOK
+    L_bdsi_chain2:
+        call    MStackPush2ChainLLInsert_00406790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bdsi_pop
+        xor     ecx, ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054205c], ecx
+        jmp     short L_bdsi_finalize
+    L_bdsi_finishOK:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x20]
+        or      ch, 6
+        mov     dword ptr [eax*4 + 0x20], ecx
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    ScaledStoreThree_00409260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bdsi_pop
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], ecx
+    L_bdsi_finalize:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     edx, dword ptr [g_data_0054208c]
+        or      edx, ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_bdsi_pop
+        mov     eax, edx
+        xor     eax, ebx
+        mov     dword ptr [g_data_0054208c], eax
+    L_bdsi_pop:
+        pop     ebx
+        ret
+    }
+}
