@@ -494,10 +494,11 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x00406790
-    name: func_00406790
+    name: MStackPush2ChainLLInsert_00406790
     size: 377
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00406910
     name: MStackInstallBodyEqCheck_00406910
     size: 159

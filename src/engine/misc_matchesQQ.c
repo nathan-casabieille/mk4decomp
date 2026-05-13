@@ -72289,3 +72289,119 @@ __declspec(naked) void Phase4EntryInstallChain_0043bbb0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541e80;
+extern void GuardedChainPushSetCallPop_00406bb0(void);
+extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void func_00425db0(void);
+extern void func_00405e70(void);
+extern void LinkedListInsert_004ab440(void);
+
+/* @addr 0x00406790 (377b boot) - mstack-push-2 scope + 2-call chain + LL insert.
+ *   Sets bit 2 of g_data_0054208c. If g_data_00542044 is zero, takes the
+ *   short path: clears bit 2 again and returns. Otherwise pushes
+ *   g_data_00542048 / g_data_0054205c onto mstack, calls
+ *   GuardedChainPushSetCallPop_00406bb0 + ScaledLoadGuardedJmp_004066d0.
+ *   Sets g_data_0054205c = old g_data_00542044, reads [scaled+0x1c]; if
+ *   non-zero, toggles bit 2 off and calls func_00425db0. Zeroes
+ *   g_data_0054206c and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
+ *   toggles bit 2 off and calls func_00405e70. Then writes g_data_00541e80
+ *   into g_data_00542048 and calls LinkedListInsert_004ab440. Pops the 2
+ *   mstack entries back and clears bit 0 of g_data_0054208c via and 0xfe.
+ */
+__declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
+    __asm {
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_data_00542044]
+        push    edi
+        mov     edi, 4
+        or      edx, edi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], edx
+        je      L_mpl_finalAndFE
+        mov     ecx, edx
+        xor     ecx, edi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      L_mpl_finalAndFE
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        call    GuardedChainPushSetCallPop_00406bb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpl_doneNoFE
+        call    ScaledLoadGuardedJmp_004066d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpl_doneNoFE
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_data_0054205c], eax
+        or      edx, edi
+        mov     eax, dword ptr [eax*4 + 0x1c]
+        mov     dword ptr [g_data_0054208c], edx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_mpl_skipCall1
+        mov     ecx, edx
+        xor     ecx, edi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      short L_mpl_skipCall1
+        call    func_00425db0
+    L_mpl_skipCall1:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [eax*4 + 0x1c], 0
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        or      edx, edi
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_mpl_skipCall2
+        mov     ecx, edx
+        xor     ecx, edi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      short L_mpl_skipCall2
+        call    func_00405e70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mpl_doneNoFE
+    L_mpl_skipCall2:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00541e80]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_00542048], eax
+        call    LinkedListInsert_004ab440
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mpl_doneNoFE
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mpl_finalAndFE:
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+    L_mpl_doneNoFE:
+        pop     edi
+        ret
+    }
+}
