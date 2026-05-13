@@ -74123,3 +74123,129 @@ __declspec(naked) void IndirectOpcodeDispatch3Entry_0049f3a0(void) {
         jmp     IndirectDispatch3Entry_0049f530
     }
 }
+
+extern unsigned int g_data_004e6070;
+extern void AudioVolumeRescale_004ab690(void);
+extern void MStackPush2VolumeCascade_00444e00(void);
+
+/* @addr 0x00446980 (389b game) - 2-entry packed: vec-scale helper +
+ *   mstack-push + 3-call rescale.
+ *   Entry 1 (offset 0, 85b): scales a vec component. Pushes
+ *     g_data_00542070 onto Mul10Tail_00404af0 with 0x13333 weight, then
+ *     0x54206c = 0xf5c → StoreDoubleNegPauseSubStore_004ab750. On
+ *     no-error adds 0x10000 to 0x54206c, calls Mul10Tail again with that
+ *     value, stores result in g_data_00542070.
+ *   11b NOP align pad.
+ *   Entry 2 (offset 0x60, 293b): pushes g_data_0054205c onto mstack,
+ *     calls ChainWalkPushPop_00405a40. On no-error sets 0x54206c=0x12c
+ *     → AudioVolumeRescale_004ab690. If bit 0 of 0x54208c set also
+ *     calls MStackPush2VolumeCascade_00444e00. Then for each of the
+ *     3 components at [g_data_0054205c*4 + 0x6c/0x70/0x74]:
+ *       - copy into g_data_00542070
+ *       - call entry 1 (the scaler)
+ *       - store result back
+ *     Then clamps the scaled +0x58 field at -0x2666 (0xffffd99a) and
+ *     zeroes +0x70 when clamped. Sets g_data_00542048-pointed slot's
+ *     +0x10=0, +0x14=&g_data_004e6070>>2. Pops mstack and returns.
+ */
+__declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    0x13333
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_data_0054206c], 0xf5c
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_vsm_e1End
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_00542070]
+        add     eax, 0x10000
+        push    ecx
+        push    eax
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+    L_vsm_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x60) */
+    L_vsm_entry2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        call    ChainWalkPushPop_00405a40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_vsm_pop1
+        mov     dword ptr [g_data_0054206c], 0x12c
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_vsm_pop1
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_vsm_doVecScale
+        call    MStackPush2VolumeCascade_00444e00
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_vsm_pop1
+    L_vsm_doVecScale:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x6c]
+        lea     esi, [edx*4]
+        mov     dword ptr [g_data_00542070], eax
+        call    VecScaleMStackTripleCall_00446980
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [esi + 0x70]
+        mov     dword ptr [esi + 0x6c], ecx
+        mov     dword ptr [g_data_00542070], edx
+        call    VecScaleMStackTripleCall_00446980
+        mov     eax, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [esi + 0x74]
+        mov     dword ptr [esi + 0x70], eax
+        mov     dword ptr [g_data_00542070], ecx
+        call    VecScaleMStackTripleCall_00446980
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, 0xffffd99a
+        mov     dword ptr [esi + 0x74], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        cmp     dword ptr [eax*4 + 0x58], ecx
+        jl      short L_vsm_skipClamp
+        mov     dword ptr [eax*4 + 0x58], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [eax*4 + 0x70], 0
+    L_vsm_skipClamp:
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, offset g_data_004e6070
+        shr     eax, 2
+        mov     dword ptr [ecx*4 + 0x10], 0
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x14], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_vsm_pop1:
+        pop     esi
+        ret
+    }
+}

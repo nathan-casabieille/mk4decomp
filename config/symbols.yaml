@@ -5204,10 +5204,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesU.c
   - addr: 0x00446980
-    name: func_00446980
+    name: VecScaleMStackTripleCall_00446980
     size: 389
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00446b10
     name: SevenEntrySelfCallTable_00446b10
     size: 224
