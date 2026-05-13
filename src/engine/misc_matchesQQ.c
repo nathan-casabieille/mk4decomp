@@ -60059,6 +60059,122 @@ extern unsigned short g_data_00f9eb80[];
 extern unsigned int g_data_00f8fac8[];
 extern unsigned char g_data_00f8fadf[];
 extern unsigned char g_data_00f8fade[];
+extern short g_data_00f85b60[];
+
+/* @addr 0x004c3d00 (293b engine.render) - 3D sound volume/pan setter via vtbl 0x3c/0x40.
+ *   args: id (word), vol (byte, clamped to 100), group_idx (byte), pan (byte, clamped to 100).
+ *   If id >= 0x898: single-source path (look up via 0xf9eb80 table, compute scale via
+ *     LEA chain producing eax*101, index volume/pan from g_data_00f85b60 table, vtbl call).
+ *   Else: iterate 4 slots in batch.
+ */
+__declspec(naked) void Snd3DVolumePanSet_004c3d00(void) {
+    __asm {
+        mov     dl, byte ptr [esp + 0xc]
+        push    ebx
+        push    ebp
+        push    esi
+        cmp     dl, 0x64
+        push    edi
+        jbe     short L_s3vp_dlOk
+        mov     dl, 0x64
+    L_s3vp_dlOk:
+        mov     bl, byte ptr [esp + 0x20]
+        cmp     bl, 0x64
+        jbe     short L_s3vp_blOk
+        mov     bl, 0x64
+    L_s3vp_blOk:
+        mov     eax, [esp + 0x14]
+        cmp     ax, 0x898
+        jb      L_s3vp_iter
+        mov     al, byte ptr [esp + 0x18]
+        cmp     al, 0x10
+        jae     L_s3vp_done
+        movsx   ebp, al
+        shl     ebp, 2
+        mov     ax, word ptr [ebp + g_data_00f9eb80]
+        cmp     ax, 0xffff
+        jz      L_s3vp_done
+        movsx   ecx, ax
+        mov     esi, ecx
+        shl     esi, 3
+        sub     esi, ecx
+        mov     ecx, dword ptr [esi*4 + g_data_00f8fac8]
+        test    ecx, ecx
+        jz      L_s3vp_done
+        movsx   eax, ax
+        mov     esi, eax
+        shl     esi, 3
+        sub     esi, eax
+        movsx   eax, word ptr [ebp + g_data_00f9eb80 + 2]
+        mov     ecx, esi
+        add     ecx, eax
+        movsx   eax, dl
+        mov     ecx, dword ptr [ecx*4 + g_data_00f8fac8]
+        lea     edx, [eax + eax*4]
+        lea     edx, [edx + edx*4]
+        lea     edi, [eax + edx*4]
+        mov     edx, [ecx]
+        movsx   eax, bl
+        add     edi, eax
+        shl     edi, 2
+        movsx   eax, word ptr [edi + g_data_00f85b60]
+        push    eax
+        push    ecx
+        call    dword ptr [edx + 0x3c]
+        movsx   ecx, word ptr [ebp + g_data_00f9eb80 + 2]
+        movsx   eax, word ptr [edi + g_data_00f85b60 + 2]
+        add     esi, ecx
+        push    eax
+        mov     esi, dword ptr [esi*4 + g_data_00f8fac8]
+        push    esi
+        mov     edx, [esi]
+        call    dword ptr [edx + 0x40]
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_s3vp_iter:
+        movsx   eax, ax
+        mov     ecx, eax
+        shl     ecx, 3
+        sub     ecx, eax
+        mov     eax, dword ptr [ecx*4 + g_data_00f8fac8]
+        test    eax, eax
+        lea     edi, [ecx*4 + g_data_00f8fac8]
+        jz      short L_s3vp_done
+        movsx   eax, dl
+        lea     ecx, [eax + eax*4]
+        lea     edx, [ecx + ecx*4]
+        lea     esi, [eax + edx*4]
+        movsx   eax, bl
+        add     esi, eax
+        mov     ebx, 4
+        shl     esi, 2
+    L_s3vp_loop:
+        movsx   edx, word ptr [esi + g_data_00f85b60]
+        mov     eax, [edi]
+        push    edx
+        push    eax
+        mov     ecx, [eax]
+        call    dword ptr [ecx + 0x3c]
+        movsx   edx, word ptr [esi + g_data_00f85b60 + 2]
+        mov     eax, [edi]
+        push    edx
+        push    eax
+        mov     ecx, [eax]
+        call    dword ptr [ecx + 0x40]
+        add     edi, 4
+        dec     ebx
+        jne     short L_s3vp_loop
+    L_s3vp_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004c3be0 (286b engine.render) - twin of Snd3DSourceCleanup_004c3ad0 with extra flag-check.
  *   Same structure but adds `shl ecx,2; cmp [ecx+g_data_00f8fac8], 0; je;

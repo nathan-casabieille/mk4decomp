@@ -14963,10 +14963,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3d00
-    name: func_004c3d00
+    name: Snd3DVolumePanSet_004c3d00
     size: 293
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3e30
     name: DSoundBufferDescBuild_004c3e30
     size: 118
