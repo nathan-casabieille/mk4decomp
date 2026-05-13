@@ -49680,3 +49680,139 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         ret
     }
 }
+
+extern void func_0048e0e0(void);
+extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void Wrapper_0043abf0(void);
+extern void Wrapper_0043ac00(void);
+extern void func_0043ac10(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern unsigned int g_data_00541e20;
+
+/* @addr 0x0043aab0 (313b game) - state-machine: 4-arm cascade dispatcher + install-self.
+ *   state==0: g_x_00542048=(0x0053a408>>2); g_x_0054204c=(0x00537e88>>2).
+ *     If g_cj!=g_state_00538158: g_x_00542048=g_x_0054204c. eax=[*4+0].
+ *     If eax!=0: call func_0048e0e0; if pause ret. Tail-call ZeroScaledZeroCallPauseJmp; pop+ret.
+ *     Else: g_x_0054206c=[0x00541e20]; cmp 0x78; if >: jmp body.
+ *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
+ *     Call DualCallPauseDirtyJmp; if pause ret.
+ *     Cascade g_state_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
+ *       <0x30000 -> func_0043ac10 -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
+ *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
+ *     state=1; g_x_0054204c=5; pause=1; pop+ret.
+ */
+__declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   75h
+        _emit   6bh
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     edi, dword ptr [g_state_00538158]
+        mov     eax, offset g_state_0053a408
+        mov     ecx, offset g_state_00537e88
+        shr     eax, 2
+        shr     ecx, 2
+        cmp     edx, edi
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_x_0054204c], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   1ah
+        call    func_0048e0e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bfh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    ZeroScaledZeroCallPauseJmp_0045fa90
+        pop     edi
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_data_00541e20]
+        cmp     eax, 0x78
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   79h
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   9bh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   89h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x10000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   08h
+        call    Wrapper_0043abf0
+        pop     edi
+        pop     esi
+        ret
+        cmp     eax, 0x20000
+        _emit   7dh
+        _emit   08h
+        call    Wrapper_0043ac00
+        pop     edi
+        pop     esi
+        ret
+        cmp     eax, 0x30000
+        _emit   7dh
+        _emit   08h
+        call    func_0043ac10
+        pop     edi
+        pop     esi
+        ret
+        push    0x004e4a38
+        call    PackedAdvanceCallTailJmp_004392c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        pop     edi
+        pop     esi
+        ret
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   21h
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset StateMachine4ArmCascade_0043aab0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 5
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     edi
+        pop     esi
+        ret
+    }
+}

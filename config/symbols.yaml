@@ -4466,10 +4466,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x0043aab0
-    name: func_0043aab0
+    name: StateMachine4ArmCascade_0043aab0
     size: 313
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043abf0
     name: Wrapper_0043abf0
     size: 14
