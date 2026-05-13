@@ -75841,3 +75841,119 @@ __declspec(naked) void TwinMStackPushScaledChain_00422110(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern void StackPopDispatchTagged_0041f780(void);
+extern void BootFrameSetup_00408190(void);
+extern void CopyJmp_00406ba0(void);
+extern void func_00407d50(void);
+
+__declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_sipd3_phase0
+        mov     eax, dword ptr [g_data_00542088]
+        mov     edx, dword ptr [g_data_00542084]
+        add     eax, edx
+        cmp     eax, 0x10000
+        mov     dword ptr [g_data_00542088], eax
+        jle     L_sipd3_common
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_sipd3_phase0:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x24]
+        mov     ecx, dword ptr [g_state_004d57ac]
+        inc     ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [edx*4 + 0x28]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_00542048], eax
+        call    BootFrameSetup_00408190
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd3_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [edx*4 + 0x28], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x24], ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x2c]
+        mov     dword ptr [g_data_0054207c], edx
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd3_ret
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     eax, dword ptr [g_data_00542088]
+        mov     dword ptr [g_data_00542044], ecx
+    L_sipd3_common:
+        mov     edx, dword ptr [g_data_00542080]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_data_00542050], eax
+        call    func_00407d50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd3_ret
+        mov     eax, dword ptr [g_data_00542058]
+        test    eax, eax
+        je      short L_sipd3_afterPtr
+        call    eax
+    L_sipd3_afterPtr:
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sipd3_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_00428990
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_sipd3_ret:
+        pop     esi
+        ret
+    }
+}
