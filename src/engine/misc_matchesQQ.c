@@ -54804,3 +54804,80 @@ __declspec(naked) void MStackPushTwoEntryChainCall_004058c0(void)
         ret
     }
 }
+
+extern void GuardedSetupCallTailJmp_004a1fa0(int, int);
+
+/*
+ * AudioStoreXfer3SelfInstall_004a2060 — 221b audio 2-entry helper + body.
+ *   Entry 0x004a2060: copies *(struct{u32 a,b,c}*)arg2 to chain[ecx*4+0x54..+0x5c]; ret.
+ *   Body 0x004a2090: chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
+ *     If was nonzero: ecx = *g_x_00542054; ecx = (ecx == 0x00870000) ? 0xff540000 : 0x01f40000;
+ *       (uses neg/sbb idiom on ecx); *g_x_00542054 = ecx; jmp installSelf.
+ *     Else: GuardedSetupCallTailJmp(0x004d2258, 0xff9c0000); GuardedSetupCallTailJmp(0x004d2268,
+ *       0x00870000); g_x_00542044*4 chain[+0x5c] = 0x14000; g_x_00542054 = &chain[+0x58].
+ *   InstallSelf: install-self at body; chain->state=1; g_data_0054204c=0xf; g_pause_00541e6c=1; ret.
+ */
+__declspec(naked) void AudioStoreXfer3SelfInstall_004a2060(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [esp + 8]
+        mov     ecx, dword ptr [esp + 4]
+        mov     edx, dword ptr [eax]
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     edx, dword ptr [eax + 4]
+        mov     dword ptr [ecx*4 + 0x58], edx
+        mov     eax, dword ptr [eax + 8]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body2:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_setup
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax]
+        sub     ecx, 0x00870000
+        neg     ecx
+        sbb     ecx, ecx
+        and     ecx, 0xfe930000
+        add     ecx, 0x01f40000
+        mov     dword ptr [eax], ecx
+        jmp     short L_install
+    L_setup:
+        push    0xff9c0000
+        push    0x004d2258
+        call    GuardedSetupCallTailJmp_004a1fa0
+        add     esp, 8
+        push    0x00870000
+        push    0x004d2268
+        call    GuardedSetupCallTailJmp_004a1fa0
+        mov     edx, dword ptr [g_x_00542044]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x5c], 0x00014000
+        mov     eax, dword ptr [g_x_00542044]
+        lea     ecx, [eax*4 + 0x58]
+        mov     dword ptr [g_x_00542054], ecx
+    L_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_body2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0xf
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
