@@ -78008,3 +78008,120 @@ __declspec(naked) void MStackBracketed3StoreCall_00475990(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0053a730;
+extern unsigned int g_data_0054205c;
+extern void Mul10Tail_00404af0(void);
+
+__declspec(naked) void Mul10SumStoreNegCommit_00490970(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542044]
+        push    esi
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_00542088], edx
+        mov     edx, dword ptr [eax*4 + 0x40]
+        mov     dword ptr [g_data_00542048], edx
+        mov     esi, dword ptr [eax*4 + 0x44]
+        mov     dword ptr [g_data_0054204c], esi
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     esi, dword ptr [esi*4]
+        push    eax
+        push    ecx
+        mov     dword ptr [g_data_00542070], esi
+        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_data_00542074], esi
+        mov     dword ptr [g_data_00542078], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542084]
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_data_0053a730]
+        add     esp, 8
+        mov     dword ptr [g_data_0054207c], eax
+        test    eax, eax
+        mov     eax, dword ptr [g_data_00542078]
+        je      L_msc_zeroPath
+        test    eax, eax
+        jl      L_msc_neg74
+    L_msc_negA:
+        neg     eax
+        mov     dword ptr [g_data_00542078], eax
+        mov     eax, dword ptr [g_data_00542074]
+    L_msc_afterNeg:
+        mov     edx, dword ptr [g_data_00542088]
+        push    eax
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542088]
+        add     esp, 8
+        mov     dword ptr [g_data_00542074], eax
+        mov     eax, dword ptr [g_data_00542078]
+        push    eax
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     esi, dword ptr [g_data_00542074]
+        add     edx, eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     edx, dword ptr [g_data_0054205c]
+        add     ecx, esi
+        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x6c], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x74], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_0054205c]
+        pop     esi
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [edx*4 + 0x70], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x4c], ecx
+        ret
+    L_msc_zeroPath:
+        test    eax, eax
+        jl      L_msc_negA
+    L_msc_neg74:
+        mov     eax, dword ptr [g_data_00542074]
+        neg     eax
+        mov     dword ptr [g_data_00542074], eax
+        jmp     L_msc_afterNeg
+    }
+}

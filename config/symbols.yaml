@@ -10840,10 +10840,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00490970
-    name: func_00490970
+    name: Mul10SumStoreNegCommit_00490970
     size: 412
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00490b10
     name: IterStepNegStore_00490b10
     size: 38
