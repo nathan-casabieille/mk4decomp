@@ -3500,10 +3500,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x00434560
-    name: func_00434560
+    name: FlagInitTableSelector_00434560
     size: 298
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434690
     name: InstallSelfFlagCountdown_00434690
     size: 154

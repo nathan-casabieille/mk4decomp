@@ -46818,3 +46818,102 @@ __declspec(naked) void MStackLoopFieldInit_00492280(void) {
         ret
     }
 }
+
+extern void AudioVolumeRescale_004ab690(void);
+extern void InstallSelfAbsDiff_00434730(void);
+extern void Push80SetWalkNegDualCallPop_004393b0(void);
+extern void InstallSelfFlagCountdown_00434690(void);
+extern unsigned int g_data_004e4df8;
+extern unsigned int g_data_004e4e38;
+
+/* @addr 0x00434560 (298b game) - flag-init + table selector + threshold dispatch.
+ *   Init: g_data_00ab51f8=1; g_x_0054206c=0x258; call AudioVolumeRescale.
+ *   If pause: ret. al=bit0(0054208c); edx=0; if al set then edx=1.
+ *   eax=g_x_0052aac4; if eax==2 then edx=1; g_data_00542070=edx.
+ *   Push entry on [baseSel*4+4] chain.
+ *   Select between 0x004e4df8 (edx==0) or 0x004e4e38, >>2 -> scaledInit.
+ *   Load [baseSel*4+0x34]: if ==0xf : ecx=0xe; if ==0x10: ecx=2; eax += ecx.
+ *   Compare g_state_00535ddc with eax: if greater jmp InstallSelfAbsDiff.
+ *   Else call Push80SetWalkNegDualCallPop; g_state_00542080=0x78; tail-jmp InstallSelfFlagCountdown.
+ */
+__declspec(naked) void FlagInitTableSelector_00434560(void) {
+    __asm {
+        mov     dword ptr [g_data_00ab51f8], 1
+        mov     dword ptr [g_x_0054206c], 0x258
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   03h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        xor     edx, edx
+        test    al, 1
+        mov     dword ptr [g_data_00542070], edx
+        _emit   74h
+        _emit   0bh
+        mov     edx, 1
+        mov     dword ptr [g_data_00542070], edx
+        mov     eax, dword ptr [g_x_0052aac4]
+        cmp     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0bh
+        mov     edx, 1
+        mov     dword ptr [g_data_00542070], edx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [eax], ecx
+        mov     edx, dword ptr [g_data_00542070]
+        mov     eax, offset g_data_004e4df8
+        mov     ecx, offset g_data_004e4e38
+        shr     eax, 2
+        shr     ecx, 2
+        test    edx, edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        _emit   74h
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [edx*4 + 0x34]
+        cmp     ecx, 0xf
+        mov     dword ptr [g_x_0054206c], ecx
+        _emit   75h
+        _emit   0bh
+        mov     ecx, 0xe
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, 0x10
+        _emit   75h
+        _emit   0bh
+        mov     ecx, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        add     eax, ecx
+        mov     ecx, dword ptr [g_state_00535ddc]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        cmp     ecx, eax
+        mov     dword ptr [g_x_00542084], eax
+        _emit   7eh
+        _emit   05h
+        jmp     InstallSelfAbsDiff_00434730
+        call    Push80SetWalkNegDualCallPop_004393b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0fh
+        mov     dword ptr [g_state_00542080], 0x78
+        jmp     InstallSelfFlagCountdown_00434690
+        ret
+    }
+}
