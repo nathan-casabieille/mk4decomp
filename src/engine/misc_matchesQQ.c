@@ -53930,3 +53930,65 @@ __declspec(naked) void MenuTableReplaceScan_004b71b0(void)
         ret
     }
 }
+
+extern void func_0041b610(void);
+
+/*
+ * EntryBodyInstallSelfMidRef_0041b550 — 178b boot 2-body trampoline.
+ *   Entry 0x0041b550: call ScaledZeroFour; if not paused, push 0x004d7ca0 (config name) and tail
+ *     ArgSarStoreJmp_004594f0; ret. 4 NOP align to 16b.
+ *   Body 0x0041b570: chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0;
+ *     if saved != 0: push 0x004d7cc8 (different config name), tail ArgSarStoreJmp; ret.
+ *     Otherwise install-self at offset of L_body into chain->callback[+8]; stash chain into g_x_00542044;
+ *     install (&L_body + 0x01000000) packed into mstack slot[g_x_00542044]; inc cursor;
+ *     clear g_baseSel_00542060*4 + 0x84; call func_0041b610; g_pause_00541e6c = 1; ret.
+ */
+__declspec(naked) void EntryBodyInstallSelfMidRef_0041b550(void)
+{
+    __asm
+    {
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e0_ret
+        push    0x004d7ca0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_e0_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_install
+        push    0x004d7cc8
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        ret
+    L_install:
+        mov     dword ptr [eax + 8], offset L_body
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset L_body
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     ecx
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_0041b610
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}
