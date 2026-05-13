@@ -7381,10 +7381,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00470b90
-    name: func_00470b90
+    name: InstallSelfMStackBranchIndirect_00470b90
     size: 291
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470cc0
     name: PackedLoadAdvanceJmp_00470cc0
     size: 71
