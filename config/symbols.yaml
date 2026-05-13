@@ -7527,10 +7527,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00471010
-    name: func_00471010
+    name: Phase3InstallPackedSelf_00471010
     size: 372
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471190
     name: StateDispatchYield_00471190
     size: 187

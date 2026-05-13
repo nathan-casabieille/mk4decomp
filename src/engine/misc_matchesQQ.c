@@ -71339,3 +71339,108 @@ __declspec(naked) void MStackInstallBodyChain_0046a3a0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004eb920;
+extern unsigned int g_data_00542ab0;
+extern void ScaledChainNegStore_00470310(void);
+extern void DualFieldAddSubStore_00470340(void);
+extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void ScaledClearJmp_00428d60(void);
+
+/* @addr 0x00471010 (372b game) - phase-state install-self with packed_ptr.
+ *   Dispatches on [g_data_00542060*4 + 0x84]:
+ *     phase 0: pushes 0x4eb920 → TripleScaledChainStore_004908f0; on
+ *       no-error sets g_data_0054206c=4, calls ByteWordTableTaggedDispatch_0048a050,
+ *       pushes 0x542ab0 → GuardedPackedSlotInit_00428760, installs Self
+ *       with slot[+0x84]=1 and packed_ptr (Self + 0x01000000) at bumped
+ *       scaled slot, calls ScaledClearJmp_00428d60, arms 0x541e6c=1.
+ *     phase 1: writes [g_data_0054205c*4+0x78]=0xffffb334, sets 0x54206c=
+ *       0x3333, calls DualFieldAddSubStore_00470340; on no-error
+ *       installs Self with slot[+0x84]=2 and g_data_0054204c=0xa,
+ *       arms 0x541e6c=1.
+ *     phase 2: OR's bit 2 into [g_data_0054205c*4+0x34], calls
+ *       ScaledZeroFour_00490740 → ScaledChainNegStore_00470310 → tail-call
+ *       CallSetPause_0041f830.
+ */
+__declspec(naked) void Phase3InstallPackedSelf_00471010(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_pis_phase0
+        dec     eax
+        je      short L_pis_phase1
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        or      al, 4
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis_done
+        call    ScaledChainNegStore_00470310
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis_done
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_pis_phase1:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xffffb334
+        mov     dword ptr [g_data_00542088], eax
+        mov     dword ptr [ecx*4 + 0x78], eax
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    DualFieldAddSubStore_00470340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis_done
+        mov     dword ptr [esi + 8], offset Phase3InstallPackedSelf_00471010
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 0xa
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_pis_phase0:
+        push    offset g_data_004eb920
+        call    TripleScaledChainStore_004908f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_pis_done
+        mov     dword ptr [g_data_0054206c], 4
+        call    ByteWordTableTaggedDispatch_0048a050
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pis_done
+        push    offset g_data_00542ab0
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_pis_done
+        mov     dword ptr [esi + 8], offset Phase3InstallPackedSelf_00471010
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset Phase3InstallPackedSelf_00471010
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledClearJmp_00428d60
+        mov     dword ptr [g_data_00541e6c], 1
+    L_pis_done:
+        pop     esi
+        ret
+    }
+}
