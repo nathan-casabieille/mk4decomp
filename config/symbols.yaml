@@ -13071,10 +13071,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac650
-    name: func_004ac650
+    name: MidiSetPosition_004ac650
     size: 290
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac780
     name: func_004ac780
     size: 357
