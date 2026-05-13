@@ -70279,3 +70279,139 @@ __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
         ret
     }
 }
+
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_00ab4d58;
+extern unsigned int g_data_00ab4d5c;
+extern unsigned int g_data_00ab4d60;
+extern unsigned int g_data_00ab4d64;
+extern unsigned int g_data_00ab4d68;
+extern unsigned int g_data_00ab4e24;
+extern unsigned int g_data_00ab4878;
+extern unsigned int g_data_00ab487c;
+extern unsigned int g_data_00ab4880;
+extern unsigned int g_data_00ab4884;
+extern unsigned int g_data_00ab4888;
+extern unsigned int g_data_004f623c;
+extern void Mat3x3VecMul6Bit_004b3590(void);
+
+/* @addr 0x004b9840 (367b engine.render) - alt-camera-matrix project pass.
+ *   On arg [esp+8] non-zero (use-alt-matrix flag): snapshots current
+ *   camera matrix at g_data_007af990..7af9a0 into local stack 0x10/0x14/
+ *   0x18/0x1c (and high-bytes), loads alternate camera matrix from
+ *   g_data_00ab4d58/5c/60/64/68 into g_data_007af990..7af9a0, then calls
+ *   Mat3x3VecMul6Bit_004b3590(arg, &local_vec) to project the vertex
+ *   buffer at [esp+0x40] through it.
+ *
+ *   On arg == 0: loads 4 dwords from [arg] (mat row 0..2) and the
+ *   reflected vec at [arg+8] into local stack, populates the alt
+ *   camera fields, then calls Mat3x3VecMul6Bit again.
+ *
+ *   Always restores the original camera matrix afterward if used,
+ *   writes 0x1e0 into g_data_004f623c (screen pitch?), and clamps
+ *   a derived value: takes local[0x14] (negated z), shl 9, idiv ecx,
+ *   then computes `(eax * 15) << 13 >> 16 + 0xf0` and clamps to
+ *   (0, 0x1e0) before storing into g_data_004f623c as a u16.
+ */
+__declspec(naked) void AltCamMatrixProject_004b9840(void) {
+    __asm {
+        mov     eax, dword ptr [esp + 8]
+        sub     esp, 0x2c
+        test    eax, eax
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        je      short L_acm_noAlt
+        mov     eax, dword ptr [g_data_007af990]
+        mov     ecx, dword ptr [g_data_00ab4d58]
+        mov     ebx, dword ptr [g_data_007af998]
+        mov     edi, dword ptr [g_data_007af99c]
+        mov     edx, dword ptr [g_data_00ab4d5c]
+        mov     ebp, dword ptr [g_data_007af994]
+        mov     si, word ptr [g_data_007af9a0]
+        mov     dword ptr [esp + 0x1c], eax
+        mov     eax, dword ptr [g_data_00ab4d60]
+        mov     dword ptr [g_data_007af990], ecx
+        mov     ecx, dword ptr [g_data_00ab4d64]
+        mov     dword ptr [g_data_007af998], eax
+        mov     dword ptr [g_data_007af99c], ecx
+        mov     ecx, dword ptr [esp + 0x40]
+        lea     eax, [esp + 0x10]
+        mov     dword ptr [g_data_007af994], edx
+        mov     dx, word ptr [g_data_00ab4d68]
+        push    eax
+        push    ecx
+        mov     word ptr [g_data_007af9a0], dx
+        call    Mat3x3VecMul6Bit_004b3590
+        add     esp, 8
+        jmp     short L_acm_postCall
+    L_acm_noAlt:
+        mov     eax, dword ptr [esp + 0x40]
+        mov     si, word ptr [esp + 0x2c]
+        mov     edi, dword ptr [esp + 0x28]
+        mov     ebx, dword ptr [esp + 0x24]
+        mov     edx, dword ptr [eax]
+        mov     eax, dword ptr [eax + 8]
+        mov     ebp, dword ptr [esp + 0x20]
+        mov     dword ptr [esp + 0x10], edx
+        mov     dword ptr [esp + 0x18], eax
+    L_acm_postCall:
+        mov     ecx, dword ptr [g_data_00ab4e24]
+        mov     edx, dword ptr [g_data_00ab4878]
+        mov     eax, dword ptr [g_data_00ab487c]
+        mov     dword ptr [g_data_007af990], edx
+        mov     edx, dword ptr [g_data_00ab4884]
+        mov     dword ptr [g_data_007af994], eax
+        neg     ecx
+        mov     ax, word ptr [g_data_00ab4888]
+        mov     dword ptr [esp + 0x14], ecx
+        mov     ecx, dword ptr [g_data_00ab4880]
+        mov     dword ptr [g_data_007af99c], edx
+        mov     dword ptr [g_data_007af998], ecx
+        lea     ecx, [esp + 0x10]
+        lea     edx, [esp + 0x10]
+        push    ecx
+        push    edx
+        mov     word ptr [g_data_007af9a0], ax
+        call    Mat3x3VecMul6Bit_004b3590
+        mov     eax, dword ptr [esp + 0x4c]
+        add     esp, 8
+        test    eax, eax
+        je      short L_acm_skipRestore
+        mov     eax, dword ptr [esp + 0x1c]
+        mov     dword ptr [g_data_007af994], ebp
+        mov     dword ptr [g_data_007af990], eax
+        mov     dword ptr [g_data_007af998], ebx
+        mov     dword ptr [g_data_007af99c], edi
+        mov     word ptr [g_data_007af9a0], si
+    L_acm_skipRestore:
+        mov     ecx, dword ptr [esp + 0x18]
+        mov     word ptr [g_data_004f623c], 0x1e0
+        test    ecx, ecx
+        jle     short L_acm_done
+        mov     eax, dword ptr [esp + 0x14]
+        shl     eax, 9
+        cdq
+        idiv    ecx
+        lea     eax, [eax + eax*2]
+        lea     eax, [eax + eax*4]
+        shl     eax, 0xd
+        sar     eax, 0x10
+        add     eax, 0xf0
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jle     short L_acm_done
+        cmp     eax, 0x1e0
+        jge     short L_acm_done
+        mov     word ptr [g_data_004f623c], ax
+    L_acm_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x2c
+        ret
+    }
+}
