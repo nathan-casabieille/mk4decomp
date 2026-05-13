@@ -7624,10 +7624,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00473da0
-    name: func_00473da0
+    name: TripleChainSetupDualCall_00473da0
     size: 291
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473ed0
     name: ScaledLoadStore_00473ed0
     size: 19

@@ -46141,3 +46141,96 @@ __declspec(naked) void InstallSelfMStackBranchIndirect_00470b90(void) {
         ret
     }
 }
+
+extern void MStackCall_00406600(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void ScaledLoadStore_00473ed0(void);
+
+/* @addr 0x00473da0 (291b game) - 3-chain setup with field copy + dual paused-call + jmp tail.
+ *   Call PushSetXfmMaskCallPop_00407140; if pause ret.
+ *   If bit2(g_state_0054208c): tail-jmp ScaledLoadStore_00473ed0.
+ *   Else: call MStackCall_00406600; if pause ret.
+ *     Save g_x_00542054 to g_x_0054206c; load [g_baseSel*4+0x68] -> g_cj_0054205c;
+ *     call ChainDirtyBitWalker_00408c10; if pause ret.
+ *     Copy [g_x_00542048*4 + 0x3c/0x40/0x44] -> [g_scaledInit*4 + 0x54/0x58/0x5c];
+ *     chain[+0x70] = -2949; g_x_0054206c = 0x560.
+ *     Call StoreDoubleNegPauseSubStore; if pause ret; chain[+0x6c]=g_x_0054206c.
+ *     g_x_0054206c = 0x560; call again; if pause ret; chain[+0x74]=g_x_0054206c.
+ *     Tail-jmp ScaledLoadStore_00473ed0; ret.
+ */
+__declspec(naked) void TripleChainSetupDualCall_00473da0(void) {
+    __asm {
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   10h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     ScaledLoadStore_00473ed0
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f0h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [ecx*4 + 0x68]
+        mov     dword ptr [g_cj_0054205c], edx
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0c1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x40]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x44]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [edx*4 + 0x70], 0xfffff47b
+        mov     dword ptr [g_x_0054206c], 0x560
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   41h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     dword ptr [g_x_0054206c], 0x560
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   17h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x74], edx
+        jmp     ScaledLoadStore_00473ed0
+        ret
+    }
+}
