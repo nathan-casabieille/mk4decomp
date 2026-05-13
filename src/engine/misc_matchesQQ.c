@@ -49816,3 +49816,124 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         ret
     }
 }
+
+extern void func_0045a2c0(void);
+extern void ScaledStoreOrFlagXor_00428560(void);
+extern void func_00459510(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+
+/* @addr 0x0045a180 (313b game) - dual-entry: mstack-push prefix + state-machine body.
+ *   Prefix (0..0x1f): mstack-push body addr (0x0045a1a0); tail-jmp func_0045a2c0.
+ *   Body (+0x20): load state. state==0: tail block; state!=0: dual-call sequence:
+ *     Call ScaledStoreOrFlagXor; if pause ret. If bit2(0054208c): tail-call func_00459510, ret.
+ *     Dec g_state_00542080; if 0: tail-call func_00459510, ret.
+ *     Call ScaledStoreOrFlagXor again; if pause ret. Same bit2 + counter sequence.
+ *     Then recursive tail-call self (prefix entry); ret.
+ *   Tail block (state==0): g_data_00542070=g_x_0054206c+1; cmp with chain[scaledInit*4+4].
+ *     If equal: mstack-push func_00459510 addr; tail-call func_0045a2c0; ret.
+ *     Else: g_x_00542054=[g_cj*4+0x24]; g_x_0054206c=0x8000; call MStackPushZeroCallPop;
+ *       if pause ret. Install-self at body; state=1; g_x_0054204c=1; pause=1; ret.
+ */
+__declspec(naked) void DualEntryStateMachine_0045a180(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset body_1a0
+        jmp     func_0045a2c0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_1a0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   73h
+        call    ScaledStoreOrFlagXor_00428560
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   07h
+        call    func_00459510
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_00542080]
+        dec     eax
+        mov     dword ptr [g_state_00542080], eax
+        _emit   75h
+        _emit   07h
+        call    func_00459510
+        pop     esi
+        ret
+        call    ScaledStoreOrFlagXor_00428560
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0adh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   07h
+        call    func_00459510
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_00542080]
+        dec     eax
+        mov     dword ptr [g_state_00542080], eax
+        _emit   75h
+        _emit   07h
+        call    func_00459510
+        pop     esi
+        ret
+        call    DualEntryStateMachine_0045a180
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        lea     eax, [ecx + 1]
+        mov     dword ptr [g_data_00542070], eax
+        mov     ecx, dword ptr [edx*4 + 4]
+        cmp     eax, ecx
+        _emit   75h
+        _emit   1dh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset func_00459510
+        call    func_0045a2c0
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_x_0054206c], 0x8000
+        mov     dword ptr [g_x_00542054], ecx
+        call    MStackPushZeroCallPop_00407d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset body_1a0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

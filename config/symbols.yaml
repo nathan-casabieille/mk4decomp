@@ -5967,10 +5967,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045a180
-    name: func_0045a180
+    name: DualEntryStateMachine_0045a180
     size: 313
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045a2c0
     name: func_0045a2c0
     size: 759
