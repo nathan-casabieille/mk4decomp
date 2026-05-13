@@ -58698,6 +58698,115 @@ __declspec(naked) void AudioSnapshotGlobals_004ace60(void)
 }
 
 /*
+ * AudioState50b4BitDispatcher_004a32c0 — 309b 4-bit dispatcher on g_state_004d50b4 (cl/ch).
+ *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
+ *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_state_00542080 = edi.
+ *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_x_00542044): if !=0: clear
+ *     g_state_0054208c bit 0; call eax (indirect); if paused: pop+ret; test bit 1, if not set:
+ *     call 0x004a1ac0 (sister). Then g_state_00542080 = edi.
+ *   Pop+ret.
+ */
+__declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_state_004d50b4]
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        push    edi
+        test    cl, 1
+        mov     edi, 0x1c20
+        jne     short L_a32_b1_do
+        test    ch, 1
+        je      short L_a32_b1_outerSkip
+    L_a32_b1_do:
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        lea     eax, [eax + eax*8]
+        movsx   eax, byte ptr [esi + eax*4]
+        cmp     eax, -1
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_a32_b1_innerSkip
+        mov     dword ptr [edx*4 + 0x30], eax
+        call    SetJmp_004a1ad0
+        mov     ecx, dword ptr [g_state_004d50b4]
+    L_a32_b1_innerSkip:
+        mov     dword ptr [g_state_00542080], edi
+    L_a32_b1_outerSkip:
+        test    cl, 2
+        jne     short L_a32_b2_do
+        test    ch, 2
+        je      short L_a32_b2_outerSkip
+    L_a32_b2_do:
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        lea     eax, [eax + eax*8]
+        movsx   eax, byte ptr [esi + eax*4 + 1]
+        cmp     eax, -1
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_a32_b2_innerSkip
+        mov     dword ptr [edx*4 + 0x30], eax
+        call    SetJmp_004a1ad0
+        mov     ecx, dword ptr [g_state_004d50b4]
+    L_a32_b2_innerSkip:
+        mov     dword ptr [g_state_00542080], edi
+    L_a32_b2_outerSkip:
+        test    cl, 4
+        jne     short L_a32_b4_do
+        test    ch, 4
+        je      short L_a32_b4_outerSkip
+    L_a32_b4_do:
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        lea     eax, [eax + eax*8]
+        mov     eax, dword ptr [esi + eax*4 + 4]
+        test    eax, eax
+        mov     dword ptr [g_x_00542044], eax
+        je      short L_a32_b4_innerSkip
+        and     dword ptr [g_state_0054208c], 0xfffffffe
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a32_popRet
+        test    byte ptr [g_state_0054208c], 1
+        jne     short L_a32_b4_skipSetJmp
+        call    SetJmp_004a1ad0
+    L_a32_b4_skipSetJmp:
+        mov     ecx, dword ptr [g_state_004d50b4]
+    L_a32_b4_innerSkip:
+        mov     dword ptr [g_state_00542080], edi
+    L_a32_b4_outerSkip:
+        test    cl, 8
+        jne     short L_a32_b8_do
+        test    ch, 8
+        je      short L_a32_popRet
+    L_a32_b8_do:
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        lea     edx, [eax + eax*8]
+        mov     eax, dword ptr [esi + edx*4 + 8]
+        test    eax, eax
+        mov     dword ptr [g_x_00542044], eax
+        je      short L_a32_b8_innerSkip
+        and     dword ptr [g_state_0054208c], 0xfffffffe
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a32_popRet
+        test    byte ptr [g_state_0054208c], 1
+        jne     short L_a32_b8_skipSetJmp
+        call    SetJmp_004a1ad0
+    L_a32_b8_skipSetJmp:
+    L_a32_b8_innerSkip:
+        mov     dword ptr [g_state_00542080], edi
+    L_a32_popRet:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
+
+/*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
  *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
