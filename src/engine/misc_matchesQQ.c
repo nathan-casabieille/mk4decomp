@@ -49479,3 +49479,99 @@ __declspec(naked) void ChainInitMul10BulkStore_00442740(void) {
         ret
     }
 }
+
+extern unsigned int g_load_0052ab04;
+extern unsigned int g_load_0052ab08;
+extern unsigned int g_x_0053815c;
+
+/* @addr 0x004300a0 (312b game) - distance2D Mul10 clamp / 3-branch saturation.
+ *   Sub esi=g_cj. dx=[cj*4+0x54]-g_load_0052ab04; dy=[cj*4+0x5c]-g_load_0052ab08.
+ *   Mul10Tail(dx,dx)+Mul10Tail(dy,dy)->g_acc.
+ *   If sum > 0x370000: jump to saturation_high.
+ *   Else: load g_state_00538158 / g_x_0053815c (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
+ *     if a>c: a=c. If a<=-0x20000: jump to saturation_low. Else jump to high path.
+ *   saturation_high: cmp [cj*4+0x58], -0x18000; if >=: store -0x18000, set fields=0, ret.
+ *     Else: ecx=0x7ae, store at cj[+0x70]=ecx; pop+ret.
+ *   saturation_low: cmp ecx with 0xfffe3334; if < 0: eax=0; mov [cj*4+0x70]=eax; pop+ret.
+ *     Else: eax stays -0x7ae, mov to g_x_0054206c, store at cj[+0x70]=-0x7ae; pop+ret.
+ */
+__declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_load_0052ab04]
+        mov     edx, dword ptr [g_load_0052ab08]
+        push    esi
+        mov     esi, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_data_00542070], edx
+        mov     eax, dword ptr [esi*4 + 0x54]
+        mov     dword ptr [g_x_00542074], eax
+        mov     esi, dword ptr [esi*4 + 0x5c]
+        sub     eax, ecx
+        sub     esi, edx
+        push    eax
+        push    eax
+        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_acc_00542078], esi
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_acc_00542078]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_x_00542074]
+        add     esp, 8
+        add     eax, edx
+        cmp     eax, 0x370000
+        mov     dword ptr [g_acc_00542078], eax
+        _emit   7fh
+        _emit   41h
+        mov     eax, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_x_0053815c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x58]
+        cmp     eax, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   7eh
+        _emit   07h
+        mov     eax, ecx
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, 0xfffe0000
+        _emit   7eh
+        _emit   4fh
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        cmp     ecx, 0xfffe8000
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   7ch
+        _emit   21h
+        mov     dword ptr [eax*4 + 0x58], 0xfffe8000
+        mov     ecx, dword ptr [g_cj_0054205c]
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        pop     esi
+        ret
+        mov     ecx, 0x7ae
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x70], ecx
+        pop     esi
+        ret
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, 0xfffff852
+        mov     dword ptr [g_x_0054206c], eax
+        mov     ecx, dword ptr [edx*4 + 0x58]
+        cmp     ecx, 0xfffe3334
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   7dh
+        _emit   07h
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x70], eax
+        pop     esi
+        ret
+    }
+}

@@ -3168,10 +3168,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004300a0
-    name: func_004300a0
+    name: Distance2DSaturationClamp_004300a0
     size: 312
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004301e0
     name: func_004301e0
     size: 760
