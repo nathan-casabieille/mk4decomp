@@ -55699,6 +55699,73 @@ __declspec(naked) void AudioByteTableLoop_004a76e0(void)
     }
 }
 
+extern unsigned int g_x_0053a168;
+
+/*
+ * MStackPush2ChainInsert_00409870 — 243b boot linked-list insert with mstack push2.
+ *   Push g_x_0053a168, g_data_0054204c to mstack. base=g_x_00542048 (packed_ptr).
+ *   esi = base[+8]; ecx = g_x_00542044 + esi; chain[ecx*4 + 4] = base; g_x_0054206c = 0;
+ *   chain[ecx*4 + 8] = 0; esi = base[0]; g_x_0054206c = esi; chain[ecx*4] = esi.
+ *   If base[0] == 0: base[+4] = g_x_00542044; else walk: g_data_0054204c = base->key + esi;
+ *     chain[g_data_0054204c*4 + 8] = g_x_00542044. base[0] = g_x_00542044. base[+0xc]++.
+ *   Pop2 mstack into g_data_0054204c and g_x_0053a168; ret.
+ */
+__declspec(naked) void MStackPush2ChainInsert_00409870(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_x_00542048]
+        push    esi
+        mov     esi, dword ptr [g_x_0053a168]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     esi, dword ptr [g_data_0054204c]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     esi, dword ptr [eax*4 + 8]
+        mov     ecx, edx
+        add     ecx, esi
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [ecx*4 + 8], 0
+        mov     esi, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [ecx*4], esi
+        cmp     dword ptr [eax*4], 0
+        jne     short L_walk
+        mov     dword ptr [eax*4 + 4], edx
+        jmp     short L_after
+    L_walk:
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     esi, dword ptr [eax*4 + 8]
+        add     ecx, esi
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [ecx*4 + 8], edx
+    L_after:
+        mov     dword ptr [eax*4], edx
+        mov     esi, dword ptr [eax*4 + 0xc]
+        inc     esi
+        mov     dword ptr [eax*4 + 0xc], esi
+        mov     eax, dword ptr [g_state_004d57ac]
+        pop     esi
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_0053a168], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
 extern void func_00414a00(void);
 
 /*
