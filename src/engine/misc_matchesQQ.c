@@ -60089,6 +60089,102 @@ extern void *g_iat_004d20e4;
 extern unsigned int g_data_00522620;
 extern unsigned int g_data_00522640;
 extern void TestHandleBit_004cc2b0(void);
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_table_004d5e40[];
+extern unsigned int g_table_004d57b0[];
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void SetJmp_00405420(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void PushSetDualDeref_00406650(void);
+extern void MStackCall_00406600(void);
+
+/* @addr 0x0040bde0 (309b boot) - boot one-shot setup pushing 3 args via mstack.
+ *   Calls ThreeChanPackClamp(0x806000), CopyThreeFields([0x5420 5c]), SetJmp().
+ *   If g_data_00541e6c is set, return. If g_state_0054208c bit2 set, return.
+ *   Push 3 mstack frames ([0x542048], [0x542054], [0x54205c]),
+ *   set [0x542054]=[0x54205c], set [0x54206c] = 0x4d5e40>>2,
+ *   call PushSetXfmMaskCallPop_00407140; check 0x541e6c, ScaledTripleCopy54
+ *   (unless 0x54208c bit2), check 0x541e6c, set 0x54206c=0xff and 0x542044=[0x54205c],
+ *   call PushSetDualDeref, MStackCall_00406600. Pop the 3 mstack frames.
+ */
+__declspec(naked) void BootOneShotSetup_0040bde0(void) {
+    __asm {
+        push    0x00806000
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bos_pop
+        test    byte ptr [g_state_0054208c], 4
+        jz      L_bos_pop
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_table_004d5e40
+        mov     dword ptr [g_data_00542054], edx
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bos_pop
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_bos_doPop
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bos_pop
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0xff
+        mov     dword ptr [g_data_00542044], ecx
+        call    PushSetDualDeref_00406650
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bos_pop
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bos_pop
+    L_bos_doPop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bos_pop:
+        ret
+    }
+}
 
 /* @addr 0x004c77f0 (304b crt) - CRT _flsbuf: flush stream buffer, writing single byte.
  *   Reads FILE flags, validates 0x82 set and 0x40 clear; for "type 1" (alloc'd):

@@ -945,10 +945,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040bde0
-    name: func_0040bde0
+    name: BootOneShotSetup_0040bde0
     size: 309
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040bf20
     name: PushCallScaledClearJmp_0040bf20
     size: 66
