@@ -53542,3 +53542,90 @@ __declspec(naked) void MStackInstallBodyEqCheck_00406910(void)
         ret
     }
 }
+
+/*
+ * FlagThunk4EntryDispatcher_0040a470 — 174b, four entry bodies separated by 16b-aligned NOP padding.
+ *   Entry 0x0040a470: if g_x_004f360c byte != 0: call MStackPush8_004ab790; if not paused:
+ *     save g_x_0054205c → g_x_00542054; compute g_x_00542044 = (0x004d5818>>2) + g_x_0054206c;
+ *     dispatch *(int*)(g_x_00542044*4); if not paused: tail jmp MStackPop8_004ab860; ret.
+ *   Entry 0x0040a4d0: call SetJmp_00405420; if not paused and !(g_state_0054208c & 4):
+ *     tail jmp MStackPushCallCallPop_00405dd0; ret.
+ *   Entry 0x0040a4f0: g_x_0054206c=0; (g_x_00542048*4 + 4) = 0; ret.
+ *   Entry 0x0040a510: (g_x_00542044*4 + 0x20) &= 0xfffffffb; ret.
+ */
+extern void MStackPushCallCallPop_00405dd0(void);
+extern unsigned int g_data_004d5818;
+
+__declspec(naked) void FlagThunk4EntryDispatcher_0040a470(void)
+{
+    __asm
+    {
+        mov     al, byte ptr [g_x_004f360c]
+        test    al, al
+        je      short L_e0_ret
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e0_ret
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542054], eax
+        mov     eax, offset g_data_004d5818
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_00542044], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        call    eax
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e0_ret
+        jmp     MStackPop8_004ab860
+    L_e0_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e1_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_e1_ret
+        jmp     MStackPushCallCallPop_00405dd0
+    L_e1_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_x_00542048]
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 4], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_x_00542044]
+        and     dword ptr [eax*4 + 0x20], 0xfffffffb
+        ret
+    }
+}
