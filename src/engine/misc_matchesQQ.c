@@ -54720,3 +54720,87 @@ __declspec(naked) void BootCallChainDoubleMul10_0040b890(void)
         ret
     }
 }
+
+extern void ScaledMaskOrStore_00405880(void);
+
+/*
+ * MStackPushTwoEntryChainCall_004058c0 — 221b boot 2-body chain walker.
+ *   Entry 0x004058c0: mstack-push g_x_00542044; eax = chain[+0x18]; g_x_0054206c = eax.
+ *     If eax==0: skip to pop. Else: g_x_00542044=eax; g_x_0054206c=0x09000000;
+ *     call ScaledMaskOrStore; if paused: pop+ret. Set g_x_0054206c=offset of body2;
+ *     eax=chain[0]; g_data_00542070=eax. If eax==0: pop+ret. Else call func_004bae90;
+ *     if paused: pop+ret. Pop mstack into g_x_00542044; ret.
+ *   Body 0x00405960: g_x_0054206c=0x0a000000; call ScaledMaskOrStore; if paused: ret.
+ *     Set g_x_0054206c=offset of self (body); eax=chain[0]; g_data_00542070=eax.
+ *     If eax==0: ret. Else: tail-jmp func_004bae90.
+ */
+__declspec(naked) void MStackPushTwoEntryChainCall_004058c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_pop
+        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_x_0054206c], 0x09000000
+        call    ScaledMaskOrStore_00405880
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e1_ret
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], offset L_body2
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        je      short L_pop
+        call    func_004bae90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e1_ret
+    L_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_e1_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body2:
+        mov     dword ptr [g_x_0054206c], 0x0a000000
+        call    ScaledMaskOrStore_00405880
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], offset L_body2
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        je      short L_b2_ret
+        jmp     func_004bae90
+    L_b2_ret:
+        ret
+    }
+}
