@@ -56063,3 +56063,81 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         ret
     }
 }
+
+extern void ExtractBitsToVec3_00407c00(void);
+extern void ThreeChan11BitPack_00407c60(void);
+
+/*
+ * BootChainTripleStoreThenDispatch_004076b0 — 247b boot chain step + bit-dispatch.
+ *   Reads 4 successive packed_ptrs from g_x_00542048 (auto-incrementing), stores them as:
+ *     chain[ecx*4 + 0x30], +0x34, +0x38, then loads chain[ecx*4 + 0x20] for AH bit-1 dispatch.
+ *   g_data_0054204c = g_x_00542044 + 0xf. After incrementing g_x_00542048 once more.
+ *   If AH bit 1 set: call ExtractBitsToVec3; else: call ThreeChan11BitPack. If paused: ret.
+ *   g_x_0054206c = self entry; g_data_00542070 = chain[0]; if !=0: call func_004bae90;
+ *     if paused: ret. g_state_0054208c &= 0xfe; ret.
+ */
+__declspec(naked) void BootChainTripleStoreThenDispatch_004076b0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_x_00542048]
+        inc     eax
+        lea     edx, [ecx + 0xf]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     edx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        test    ah, 1
+        je      short L_b1
+        call    ExtractBitsToVec3_00407c00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done
+        jmp     short L_after
+    L_b1:
+        call    ThreeChan11BitPack_00407c60
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done
+    L_after:
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [g_x_0054206c], offset BootChainTripleStoreThenDispatch_004076b0
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        je      short L_andMask
+        call    func_004bae90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_done
+    L_andMask:
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+    L_done:
+        ret
+    }
+}
