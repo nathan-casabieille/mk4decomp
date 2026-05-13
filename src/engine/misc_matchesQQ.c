@@ -48224,3 +48224,105 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         ret
     }
 }
+
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void DualCallPauseJmpDual_00439190(void);
+extern void Init3333Jmp_00460400(void);
+extern void InstallSelfDecBitCheck_004391d0(void);
+
+/* @addr 0x00438f80 (304b game) - prefix thunk + 3-state install-self body.
+ *   Prefix (0..0x33): call LeaPlus22StoreSelf; if pause ret.
+ *     Push body addr (0x00438fc0) onto mstack; g_x_0054206c=0xc; tail-jmp MstackPopScaledChainPlusThunks.
+ *   Body (+0x40): state-machine entry.
+ *   state==0: g_state_00542080=0x78; install-self at body+0x01000000; call InstallSelfDecBitCheck;
+ *     pause=esi=1; pop edi/esi; ret.
+ *   state==1 (dec then je): install-self at body+0x02000000; call Init3333Jmp;
+ *     pause=1; pop edi/esi; ret.
+ *   state>=2 (fall): call DualCallPauseJmpDual; pop edi/esi; ret.
+ */
+__declspec(naked) void PrefixThunkInstallSelf3State_00438f80(void) {
+    __asm {
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_x_0054206c], 0xc
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset body_fc0
+        jmp     MstackPopScaledChainPlusThunks_00471250
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_fc0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        _emit   74h
+        _emit   6ch
+        dec     ecx
+        _emit   74h
+        _emit   08h
+        call    DualCallPauseJmpDual_00439190
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [eax + 8], offset body_fc0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, offset body_fc0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        add     esi, 0x02000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], esi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    Init3333Jmp_00460400
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [g_state_00542080], 0x78
+        mov     dword ptr [eax + 8], offset body_fc0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 1
+        mov     edi, offset body_fc0
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfDecBitCheck_004391d0
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
