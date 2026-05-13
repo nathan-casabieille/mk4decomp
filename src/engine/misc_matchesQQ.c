@@ -49273,3 +49273,110 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         ret
     }
 }
+
+extern void InstallSelfThreeStateScaledLoad_0047f2e0(void);
+extern void func_0047f4e0(void);
+extern void InstallSelfStateMachine_0047f3f0(void);
+
+/* @addr 0x0047f1a0 (309b game) - 4-state install-self with common merge tail.
+ *   Load state at [base*4+0x84]; clear. state==0: cmp g_state_00542088 with 1, if eq tail-call func_0047f4e0;
+ *     else install-self at entry+0x01000000, jmp merge.
+ *   state==1: g_x_0054206c=0x5e; call ScaledLitLoadCall; if pause ret. Install at entry+0x02000000; jmp merge.
+ *   state==2: g_x_0054206c=0x5f; call ScaledLitLoadCall; if pause ret. Install at entry+0x03000000; jmp merge.
+ *   state>=3: tail-call InstallSelfThreeStateScaledLoad; pop edi/esi; ret.
+ *   Merge: [scaledInit*4]=edx; inc scaledInit; chain[esi+4]=scaledInit;
+ *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
+ */
+__declspec(naked) void Install4StateMerge_0047f1a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        _emit   0fh
+        _emit   84h
+        _emit   0a1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   56h
+        dec     eax
+        _emit   74h
+        _emit   08h
+        call    InstallSelfThreeStateScaledLoad_0047f2e0
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x5f
+        call    ScaledLitLoadCall_00480fe0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   0e4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     dword ptr [ecx*4 + 0x84], 3
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x03000000
+        _emit   0e9h
+        _emit   84h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0x5e
+        call    ScaledLitLoadCall_00480fe0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   99h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x02000000
+        _emit   0ebh
+        _emit   3ch
+        cmp     dword ptr [g_state_00542088], 1
+        _emit   75h
+        _emit   08h
+        call    func_0047f4e0
+        pop     edi
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], offset Install4StateMerge_0047f1a0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset Install4StateMerge_0047f1a0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     edx, 0x01000000
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edi
+        call    InstallSelfStateMachine_0047f3f0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    }
+}

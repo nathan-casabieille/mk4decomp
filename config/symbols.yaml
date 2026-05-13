@@ -8512,10 +8512,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047f1a0
-    name: func_0047f1a0
+    name: Install4StateMerge_0047f1a0
     size: 309
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047f2e0
     name: InstallSelfThreeStateScaledLoad_0047f2e0
     size: 267
