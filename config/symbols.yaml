@@ -11155,10 +11155,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00494290
-    name: func_00494290
+    name: InstallSelfCmdStreamInterp_00494290
     size: 343
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004943f0
     name: func_004943f0
     size: 399

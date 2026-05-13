@@ -53137,3 +53137,107 @@ __declspec(naked) void EntryThunkBodyStateMachine_00457bb0(void) {
         ret
     }
 }
+
+extern void func_004943f0(void);
+extern unsigned int g_data_004f1a20;
+
+/* @addr 0x00494290 (343b game) - install-self with cmd-stream interpreter.
+ *   state!=0: load eax = (0x004f1a20>>2) + ([cj*4+0x30] - 0x60); call indirect via TableLookupCall.
+ *     If pause ret.
+ *   state==0 (or after table call): iterate g_x_00542054 stream:
+ *     read ecx; if == 0xffff0000: tail-call StackPopDispatchTagged.
+ *     if != 0xfffe0000: install-self at entry+0x01000000; state=1; call func_004943f0; pause=1; ret.
+ *     Else (0xfffe0000): load function ptr from next stream slot; indirect call; if pause ret.
+ *     Read next; if == 0xffff0000: tail-call StackPopDispatchTagged. Else loop.
+ */
+__declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   44h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, offset g_data_004f1a20
+        shr     eax, 2
+        mov     ecx, dword ptr [ecx*4 + 0x30]
+        sub     ecx, 0x60
+        add     eax, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], edx
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0efh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        cmp     ecx, 0xffff0000
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_x_00542054], eax
+        _emit   74h
+        _emit   4ah
+        cmp     ecx, 0xfffe0000
+        mov     ecx, dword ptr [eax*4 + 0]
+        _emit   75h
+        _emit   42h
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_x_00542054], eax
+        call    ecx
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        cmp     ecx, 0xffff0000
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_x_00542054], eax
+        _emit   75h
+        _emit   0b6h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        inc     eax
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_x_00542054], eax
+        mov     ecx, offset InstallSelfCmdStreamInterp_00494290
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_state_00542088], edx
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [esi + 8], offset InstallSelfCmdStreamInterp_00494290
+        mov     eax, dword ptr [g_baseSel_00542060]
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    func_004943f0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
