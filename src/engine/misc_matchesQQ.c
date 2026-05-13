@@ -50546,3 +50546,86 @@ __declspec(naked) void MStackChainSwapTraversal_00493d00(void) {
         ret
     }
 }
+
+extern void func_004be250(void);
+extern void PushPopScaledInit343c_004aa940(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+
+/* @addr 0x00424200 (321b game) - 3-state install-self with chain pop + audio dispatch. */
+__declspec(naked) void Install3StateAudioChain_00424200(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   46h
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    1
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     eax, dword ptr [g_state_0054207c]
+        add     eax, 0x13
+        push    eax
+        call    func_004be250
+        add     esp, 8
+        _emit   0ebh
+        _emit   10h
+        mov     edx, dword ptr [g_state_0054207c]
+        cmp     edx, 0xf
+        _emit   74h
+        _emit   05h
+        cmp     edx, 0x11
+        _emit   75h
+        _emit   27h
+        mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 1
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00543550], 0x100
+        lea     eax, [ecx*4 + 4]
+        mov     ecx, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        call    PushPopScaledInit343c_004aa940
+        mov     dword ptr [esi + 8], offset Install3StateAudioChain_00424200
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset Install3StateAudioChain_00424200
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    AudioInstallSelfStatePush_004aa8a0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

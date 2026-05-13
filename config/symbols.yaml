@@ -1968,10 +1968,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00424200
-    name: func_00424200
+    name: Install3StateAudioChain_00424200
     size: 321
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424350
     name: ModMagicMul10Index_00424350
     size: 188
