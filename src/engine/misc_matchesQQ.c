@@ -57198,3 +57198,109 @@ __declspec(naked) void AudioStateClearAndChainStep_004a10b0(void)
         jmp     IncWrap0fJmp_004a1120
     }
 }
+
+extern void IterLoad_0048e680(void);
+extern void MStackPushMul10TailSqrt_00424a90(void);
+extern void Wrapper_0048ff30(void);
+
+/*
+ * GameInstall2BodyMul10ScaledInit_00475590 — 347b 2-entry game state init.
+ *   Entry 0x00475590: g_x_0054206c = g_x_00542054[+0x30]; call SetJmp_0049cb90; if paused: ret.
+ *     edx = g_x_00542044, eax = g_x_00542084; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
+ *     call IterLoad_0048e680; pop; ret.
+ *   Body 0x004755d0 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
+ *     If state == 0: setup g_x_00542074 = g_x_0054205c+0x15; eax = chain[+0x38];
+ *       g_x_00542044 = eax; g_data_0054204c = eax+0x15. Call MStackPushMul10TailSqrt; if paused: ret.
+ *       g_x_00542084 -= g_x_0054206c; push (eax, 0x1999); g_x_00542088 = eax; Mul10Tail; restore;
+ *       g_x_00542088 = result; g_x_00542080 = 0xa. Fall through.
+ *     If state == 1: decrement g_x_00542080; if !=0 jump to chain-step.
+ *     Otherwise install-self at body; chain->state=2; g_data_0054204c = 0x28; pause=1; ret.
+ *     Chain-step: g_x_00542084 += g_x_00542088; g_data_00542070 = 0; g_x_0054206c = g_x_00542084;
+ *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_data_0054204c=1;
+ *       pause=1; ret.
+ */
+__declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    SetJmp_0049cb90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e1_ret
+        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_data_00542084]
+        push    0x004ec890
+        mov     dword ptr [edx*4 + 0x1c], eax
+        call    IterLoad_0048e680
+        add     esp, 4
+    L_e1_ret:
+        ret
+    L_body2:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_state0
+        dec     eax
+        jne     short L_install2
+        mov     eax, dword ptr [g_state_00542080]
+        dec     eax
+        mov     dword ptr [g_state_00542080], eax
+        jne     L_chainStep
+    L_install2:
+        mov     dword ptr [esi + 8], offset L_body2
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 0x28
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    L_state0:
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_x_0054205c]
+        add     edx, 0x15
+        mov     eax, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_x_00542044], eax
+        add     eax, 0x15
+        mov     dword ptr [g_data_0054204c], eax
+        call    MStackPushMul10TailSqrt_00424a90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_b2_ret
+        mov     eax, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_x_0054206c]
+        sub     eax, ecx
+        mov     dword ptr [g_data_00542084], ecx
+        push    eax
+        push    0x1999
+        mov     dword ptr [g_state_00542088], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_state_00542080], 0xa
+    L_chainStep:
+        mov     eax, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_state_00542088]
+        add     eax, ecx
+        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_x_0054206c], eax
+        call    Wrapper_0048ff30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_body2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_b2_ret:
+        pop     esi
+        ret
+    }
+}

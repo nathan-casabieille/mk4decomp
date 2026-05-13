@@ -7913,10 +7913,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00475590
-    name: func_00475590
+    name: GameInstall2BodyMul10ScaledInit_00475590
     size: 347
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004756f0
     name: DualSlotCopyChain_004756f0
     size: 91
