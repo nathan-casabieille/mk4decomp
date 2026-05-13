@@ -60081,6 +60081,169 @@ extern void FSYS_fread(void);
 extern void FSYS_fseek(void);
 extern void func_004b5ce0(void);
 extern void SpriteBlitDispatch_004bf370(void);
+extern unsigned int g_data_00f9fd9c;
+extern unsigned int g_data_00f9fc20;
+extern void *g_iat_004d2130;
+extern void *g_iat_004d2134;
+extern void *g_iat_004d20e4;
+
+/* @addr 0x004d0f50 (304b other) - CRT mbstowcs / mb-to-wide convert dispatcher.
+ *   Caches result of GetCPInfo (or similar) in g_data_00f9fd9c (1/2 state).
+ *   If state=1: simple passthrough call. If state=2: full conversion via
+ *     IAT[0x4d2134] + IAT[0x4d20e4] (MultiByteToWideChar). Uses g_data_00f9fc20
+ *     as default codepage when arg is 0.
+ */
+__declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00f9fd9c]
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, dword ptr [g_iat_004d2130]
+        push    edi
+        test    eax, eax
+        jne     short L_mw_haveState
+        push    0
+        push    0
+        push    1
+        push    0
+        call    esi
+        test    eax, eax
+        jz      short L_mw_tryAlt
+        mov     eax, 1
+        jmp     short L_mw_setState
+    L_mw_tryAlt:
+        push    0
+        push    0
+        push    1
+        push    0
+        call    dword ptr [g_iat_004d2134]
+        test    eax, eax
+        jz      L_mw_returnZero
+        mov     eax, 2
+    L_mw_setState:
+        mov     dword ptr [g_data_00f9fd9c], eax
+    L_mw_haveState:
+        cmp     eax, 1
+        jne     short L_mw_state2
+        mov     eax, [esp + 0x20]
+        mov     ecx, [esp + 0x1c]
+        mov     edx, [esp + 0x18]
+        push    eax
+        mov     eax, [esp + 0x18]
+        push    ecx
+        push    edx
+        push    eax
+        call    esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_mw_state2:
+        cmp     eax, 2
+        jne     L_mw_fail
+        mov     eax, [esp + 0x24]
+        test    eax, eax
+        jne     short L_mw_haveCP
+        mov     ecx, dword ptr [g_data_00f9fc20]
+        mov     [esp + 0x24], ecx
+    L_mw_haveCP:
+        mov     ebx, [esp + 0x18]
+        mov     ebp, [esp + 0x14]
+        push    0
+        push    0
+        push    ebx
+        push    ebp
+        call    dword ptr [g_iat_004d2134]
+        mov     esi, eax
+        test    esi, esi
+        jne     short L_mw_alloc
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_mw_alloc:
+        push    esi
+        call    LoadArgPushCall_004c54b0
+        mov     edi, eax
+        add     esp, 4
+        test    edi, edi
+        jne     short L_mw_doConv
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_mw_doConv:
+        push    esi
+        push    edi
+        push    ebx
+        push    ebp
+        call    dword ptr [g_iat_004d2134]
+        test    eax, eax
+        jz      short L_mw_cleanupZero
+        mov     eax, [esp + 0x20]
+        test    eax, eax
+        jne     short L_mw_useEax
+        mov     edx, [esp + 0x24]
+        push    eax
+        push    eax
+        push    -1
+        push    edi
+        push    1
+        push    edx
+        call    dword ptr [g_iat_004d20e4]
+        mov     esi, eax
+        test    esi, esi
+        jz      short L_mw_cleanupZero
+        push    edi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_mw_useEax:
+        mov     ecx, [esp + 0x24]
+        push    eax
+        mov     eax, [esp + 0x20]
+        push    eax
+        push    -1
+        push    edi
+        push    1
+        push    ecx
+        call    dword ptr [g_iat_004d20e4]
+        mov     esi, eax
+        test    esi, esi
+        jne     short L_mw_freeAndReturn
+    L_mw_cleanupZero:
+        push    edi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+    L_mw_returnZero:
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_mw_freeAndReturn:
+        push    edi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, esi
+    L_mw_fail:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004b6180 (300b game.menu) - HUD font precache: trims dot-prefix names,
  *   opens font file, fread'd page-by-page into a backbuffer, then issues two
