@@ -63630,6 +63630,117 @@ extern void Thunk_004ca77b_helper(void);
 extern void Thunk_004ca701_helper(void);
 extern void FmodHelper_004ccb7d(void);
 extern unsigned int g_data_00f9f7fc;
+extern unsigned int g_data_00523ae4;
+extern unsigned int g_data_00523ae0;
+extern unsigned int g_data_00523b1c;
+extern unsigned int g_data_00523b20;
+extern unsigned int g_data_00523b24;
+extern unsigned char g_data_00523b18;
+extern void func_004013a0(void);
+
+/* @addr 0x00401000 (282b boot) - voice slot picker: finds or evicts a voice for sound source.
+ *   Reads param 0 (packed_ptr) → if [edi*4]==0, use default g_data_004ffe88>>2.
+ *   Validates channel param[1] < cap [edi*4+4]; clamps to 0.
+ *   Reads flags at [edi*4+8]: if bit 0x8000 clear, take alt path
+ *     (imul ebx, ebp; sar eax, 2; ret eax + ebx).
+ *   Else: scan voice table [0x523b28..0x523b58] for existing match (esi=cur source).
+ *   If not found (idx==12), find oldest via [0x523ae8] timestamps.
+ *   Install voice: update tables at indices, call func_004013a0, return slot ptr.
+ */
+__declspec(naked) void VoicePicker_00401000(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        mov     edi, [esp + 0x14]
+        mov     eax, [edi*4]
+        test    eax, eax
+        jne     short L_vp_haveTbl
+        mov     edi, 0x004ffe88
+        sar     edi, 2
+        mov     [esp + 0x14], edi
+        mov     eax, [edi*4]
+    L_vp_haveTbl:
+        mov     ebp, [esp + 0x18]
+        mov     ecx, [edi*4 + 4]
+        cmp     ebp, ecx
+        jl      short L_vp_chk2
+        xor     ebp, ebp
+        mov     [esp + 0x18], ebp
+    L_vp_chk2:
+        mov     ebx, [edi*4 + 8]
+        mov     ecx, ebx
+        and     ecx, 0x8000
+        shr     ebx, 16
+        test    ecx, ecx
+        jz      L_vp_alt
+        mov     esi, dword ptr [g_data_0054205c]
+        xor     ecx, ecx
+        mov     edx, 0x00523b28
+    L_vp_findLoop:
+        cmp     [edx], esi
+        jz      short L_vp_found
+        add     edx, 4
+        inc     ecx
+        cmp     edx, 0x00523b58
+        jl      short L_vp_findLoop
+    L_vp_found:
+        cmp     ecx, 0x0c
+        jl      short L_vp_install
+        xor     ecx, ecx
+        mov     edx, 1
+        xor     edi, edi
+    L_vp_oldestLoop:
+        lea     esi, [edx*4]
+        mov     ebp, dword ptr [esi + 0x00523ae8]
+        cmp     ebp, dword ptr [edi + 0x00523ae8]
+        jae     short L_vp_skipUpdate
+        mov     ecx, edx
+        mov     edi, esi
+    L_vp_skipUpdate:
+        inc     edx
+        cmp     edx, 0x0c
+        jl      short L_vp_oldestLoop
+        mov     edi, [esp + 0x14]
+        mov     ebp, [esp + 0x18]
+        mov     esi, dword ptr [g_data_0054205c]
+    L_vp_install:
+        mov     edx, dword ptr [ecx*4 + 0x00523ae8]
+        mov     dword ptr [ecx*4 + 0x00523b28], esi
+        inc     edx
+        mov     dword ptr [g_data_00523ae4], eax
+        mov     dword ptr [ecx*4 + 0x00523ae8], edx
+        mov     eax, [edi*4 + 4]
+        shl     ecx, 7
+        add     ecx, 0x00523b58
+        add     ebx, -3
+        mov     esi, ecx
+        mov     cl, byte ptr [esp + 0x1c]
+        mov     dword ptr [g_data_00523b24], eax
+        mov     dword ptr [g_data_00523b20], ebx
+        mov     dword ptr [g_data_00523ae0], ebp
+        mov     dword ptr [g_data_00523b1c], esi
+        mov     byte ptr [g_data_00523b18], cl
+        call    func_004013a0
+        sar     esi, 2
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_vp_alt:
+        imul    ebx, ebp
+        sar     eax, 2
+        pop     edi
+        pop     esi
+        add     eax, ebx
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004c6760 (144b boot) - CRT _close bundle + 2 thunks + fmod/fprem helper.
  *   sub-1 (76b @ 0x4c6760): _close(fd). Calls CloseHandle via IAT[0x4d2150];
