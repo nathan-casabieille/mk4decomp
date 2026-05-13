@@ -76926,3 +76926,116 @@ __declspec(naked) void EntryThenDispatcherPair_00438cd0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_004d5320;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542094;
+extern void func_0042b000(void);
+extern void RandSarMod0xFFF_0041f230(void);
+extern void RandSarMod0xFFFSub400_0041f1f0(void);
+extern void Mul10Tail_00404af0(void);
+
+__declspec(naked) void RandPushTrigPair_0043f120(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_data_004d5320]
+        sub     eax, dword ptr [ecx*4 + 0x64]
+        add     eax, 0xa666
+        push    eax
+        mov     dword ptr [g_data_00542074], eax
+        call    func_0042b000
+        add     esp, 4
+        mov     dword ptr [g_data_00542074], eax
+        call    RandSarMod0xFFF_0041f230
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_rptp_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_data_004d5320]
+        sub     eax, dword ptr [ecx*4 + 0x64]
+        add     eax, 0xa666
+        push    eax
+        mov     dword ptr [g_data_00542074], eax
+        call    func_0042b000
+        add     esp, 4
+        mov     dword ptr [g_data_00542074], eax
+        call    RandSarMod0xFFFSub400_0041f1f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_rptp_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_00542070], 0x1cccc
+        neg     eax
+        push    eax
+        push    0x1cccc
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     ecx, dword ptr [edx*4 + 0x5c]
+        add     eax, ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        push    ecx
+        push    edx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     ecx, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_data_00542070], ecx
+        and     ecx, 1
+        mov     dword ptr [g_data_00542094], ecx
+        je      short L_rptp_pos1
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+    L_rptp_pos1:
+        mov     ecx, dword ptr [edx*4 + 0x54]
+        add     eax, ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_data_004d5320]
+        mov     ecx, dword ptr [edx*4 + 0x64]
+        sub     eax, ecx
+        mov     ecx, dword ptr [g_data_00542070]
+        sub     eax, 0xf333
+        and     ecx, 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542094], ecx
+        je      short L_rptp_pos2
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+    L_rptp_pos2:
+        push    eax
+        call    func_0042b000
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 4
+        mov     dword ptr [edx*4 + 0x64], eax
+    L_rptp_ret:
+        ret
+    }
+}
