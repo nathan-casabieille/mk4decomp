@@ -14820,10 +14820,11 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004bf370
-    name: func_004bf370
+    name: SpriteBlitDispatch_004bf370
     size: 237
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bf460
     name: FlushDrawQueue
     size: 3825
