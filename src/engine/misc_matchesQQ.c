@@ -69237,3 +69237,159 @@ __declspec(naked) void TextModeReadStream_004cef10(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00ab5214;
+extern unsigned int g_data_00ab5210;
+extern unsigned int g_data_004f7b38;
+extern unsigned int g_data_00ab5218;
+extern unsigned int g_data_004d2078;
+extern unsigned int g_data_004d204c;
+extern unsigned int g_data_004f7d3c;
+extern unsigned int g_data_00ab5340;
+extern unsigned int g_data_004f78c8;
+extern unsigned int g_data_004f7d30;
+extern unsigned int g_data_00ab5238;
+extern unsigned int g_data_00ab533c;
+extern void CloseAndThunksBundle_004c6760(void);
+extern void PrintfStub_004c5580(void);
+
+/* @addr 0x004be440 (335b engine.scenegraph) - scene record lookup w/ rand init.
+ *   First call: on first invocation (bit 0 of g_data_00ab5214 clear),
+ *   seeds g_data_00ab5210 via IAT call [0x4d204c] (likely time() / rand
+ *   seed). If stack arg < 0x27, may generate a 26-element shuffle table
+ *   at g_data_00ab5218 using LCG-style bit-shift on the seed and an
+ *   indirect call via [0x4d2078] (probably a "test if exists" probe),
+ *   filtering with count compare to 5.
+ *   Then loads g_data_004f78c8[arg*0x10], calls
+ *   CloseAndThunksBundle_004c6760 to probe it; on hit returns the
+ *   pointer. Otherwise formats a "%s%s%d.X" filename via PrintfStub_004c5580
+ *   into g_data_00ab5238 and re-probes. On failure walks the 0xab5218
+ *   shuffle table to try each candidate name and returns 0x00ab5238 or 0.
+ */
+__declspec(naked) void SceneRecordLookupRandInit_004be440(void) {
+    __asm {
+        mov     al, byte ptr [g_data_00ab5214]
+        push    ebx
+        push    ebp
+        push    esi
+        test    al, 1
+        push    edi
+        jne     short L_srl_haveSeed
+        or      al, 1
+        mov     byte ptr [g_data_00ab5214], al
+        call    dword ptr [g_data_004d204c]
+        mov     dword ptr [g_data_00ab5210], eax
+    L_srl_haveSeed:
+        mov     ebp, dword ptr [esp + 0x14]
+        cmp     ebp, 0x27
+        jge     L_srl_zeroRet
+        mov     al, byte ptr [g_data_004f7b38]
+        test    al, al
+        je      short L_srl_skipShuffle
+        mov     ecx, 6
+        xor     eax, eax
+        mov     edi, offset g_data_00ab5218
+        mov     esi, dword ptr [g_data_004d2078]
+        rep stosd
+        mov     byte ptr [g_data_004f7b38], 0
+        xor     ebx, ebx
+        stosw
+    L_srl_shuffleLoop:
+        mov     edx, dword ptr [g_data_00ab5210]
+        mov     eax, dword ptr [g_data_004f7d3c]
+        mov     ecx, ebx
+        mov     dword ptr [esp + 0x14], eax
+        mov     al, byte ptr [esp + 0x14]
+        shr     edx, cl
+        add     al, bl
+        mov     byte ptr [esp + 0x14], al
+        test    dl, 1
+        je      short L_srl_skipProbe
+        lea     eax, [esp + 0x14]
+        push    eax
+        call    esi
+        cmp     eax, 5
+        jne     short L_srl_skipProbe
+        mov     eax, dword ptr [g_data_00ab5340]
+        mov     cl, byte ptr [esp + 0x14]
+        mov     byte ptr [eax + g_data_00ab5218], cl
+        inc     eax
+        mov     dword ptr [g_data_00ab5340], eax
+    L_srl_skipProbe:
+        inc     ebx
+        cmp     ebx, 0x1a
+        jl      short L_srl_shuffleLoop
+    L_srl_skipShuffle:
+        shl     ebp, 4
+        push    0
+        mov     edx, dword ptr [ebp + g_data_004f78c8]
+        lea     esi, [ebp + g_data_004f78c8]
+        push    edx
+        call    CloseAndThunksBundle_004c6760
+        add     esp, 8
+        test    eax, eax
+        mov     eax, dword ptr [esi]
+        je      L_srl_finalZero
+        push    eax
+        push    offset g_data_004f7d30
+        push    offset g_data_00ab5238
+        call    PrintfStub_004c5580
+        mov     al, byte ptr [g_data_00ab533c]
+        add     esp, 0xc
+        test    al, al
+        je      short L_srl_walkShuffle
+        push    0
+        push    offset g_data_00ab5238
+        mov     byte ptr [g_data_00ab5238], al
+        call    CloseAndThunksBundle_004c6760
+        add     esp, 8
+        test    eax, eax
+        jne     short L_srl_walkShuffle
+        mov     eax, offset g_data_00ab5238
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_srl_walkShuffle:
+        mov     eax, dword ptr [g_data_00ab5340]
+        xor     esi, esi
+        test    eax, eax
+        jle     short L_srl_zeroRet
+    L_srl_walkLoop:
+        mov     al, byte ptr [esi + g_data_00ab5218]
+        push    0
+        push    offset g_data_00ab5238
+        mov     byte ptr [g_data_00ab533c], al
+        mov     byte ptr [g_data_00ab5238], al
+        call    CloseAndThunksBundle_004c6760
+        add     esp, 8
+        test    eax, eax
+        je      short L_srl_walkHit
+        mov     eax, dword ptr [g_data_00ab5340]
+        inc     esi
+        cmp     esi, eax
+        jl      short L_srl_walkLoop
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_srl_walkHit:
+        mov     eax, offset g_data_00ab5238
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_srl_zeroRet:
+        xor     eax, eax
+    L_srl_finalZero:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}

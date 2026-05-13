@@ -14733,10 +14733,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004be440
-    name: func_004be440
+    name: SceneRecordLookupRandInit_004be440
     size: 335
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be590
     name: TwinRecordIter_004be590
     size: 126
