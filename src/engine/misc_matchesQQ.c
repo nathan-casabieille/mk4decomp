@@ -70570,3 +70570,146 @@ __declspec(naked) void Alarm4EntryInstallChain_00481d40(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d62e8;
+extern unsigned int g_data_004d61d8;
+extern unsigned int g_data_0053813c;
+extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void ZeroThreeFields_0040a8b0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void func_0040e310(void);
+extern void StoreTwoCall_0049cb40(void);
+
+/* @addr 0x0040e190 (369b boot) - 3-entry packed mstack-scoped init + alarms.
+ *   Entry 1 (offset 0, 180b): MStackPush8_004ab790, then on no-error
+ *     mstack-pushes g_data_0054207c, caches g_data_0054205c into 0x542054,
+ *     sets g_data_0054206c = &g_data_004d62e8>>2 (stored also in 0x5381 3c),
+ *     g_data_00542058 = &g_data_004d61d8>>2, g_data_0054207c = 0xc1.
+ *     Pushes 0x49db40, 0xc0 onto StoreTwoCall_0049cb40. If bit 0 of
+ *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
+ *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
+ *     MStackPop8_004ab860.
+ *   12b NOP align pad.
+ *   Entry 2 (offset 0xc0, 83b): sets 0x54207c=0x2666, 0x54206c=0x170a;
+ *     calls StoreDoubleNegPauseSubStore_004ab750; on no-error computes
+ *     g_data_0054206c += 0x10000, multiplies via Mul10Tail_00404af0
+ *     (push twice with the cur cj), negates, and tail-jmps func_0040e310.
+ *   13b NOP align pad.
+ *   Entry 3 (offset 0x120, 81b): mirror of entry 2 with 0x3333 / 0x7ae
+ *     constants; no negation before final store; tail-jmps func_0040e310.
+ */
+__declspec(naked) void MStackInitTriAlarm_0040e190(void) {
+    __asm {
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msi_e1Ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054207c]
+        inc     eax
+        push    0xc0
+        mov     dword ptr [g_state_004d57ac], eax
+        push    0x49db40
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_004d62e8
+        mov     dword ptr [g_data_00542054], edx
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_0053813c], eax
+        mov     eax, offset g_data_004d61d8
+        mov     dword ptr [g_data_0054207c], 0xc1
+        shr     eax, 2
+        mov     dword ptr [g_data_00542058], eax
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     short L_msi_skipAlarm
+        call    StackPushAdd15CallPop_0040a7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msi_e1Ret
+        call    ZeroThreeFields_0040a8b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msi_e1Ret
+    L_msi_skipAlarm:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     MStackPop8_004ab860
+    L_msi_e1Ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0xc0) */
+    L_msi_entry2:
+        mov     dword ptr [g_data_0054207c], 0x2666
+        mov     dword ptr [g_data_0054206c], 0x170a
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msi_e2End
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_0054207c]
+        add     eax, 0x10000
+        push    ecx
+        push    eax
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054207c], eax
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+        jmp     func_0040e310
+    L_msi_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x120) */
+    L_msi_entry3:
+        mov     dword ptr [g_data_0054207c], 0x3333
+        mov     dword ptr [g_data_0054206c], 0x7ae
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msi_e3End
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_0054207c]
+        add     eax, 0x10000
+        push    ecx
+        push    eax
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_data_0054206c], eax
+        jmp     func_0040e310
+    L_msi_e3End:
+        ret
+    }
+}
