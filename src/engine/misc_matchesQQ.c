@@ -53470,3 +53470,75 @@ __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
         ret
     }
 }
+
+/*
+ * MStackInstallBodyEqCheck_00406910 — 159b two-body function.
+ *   Install/push (0x00406910): mstack-push g_data_00542070; snapshot
+ *   g_x_00541e84 → g_x_00542044, g_x_0054206c → g_data_00542070, g_x_004d5134
+ *   → g_x_0054206c; call func_004bae90; if not paused, pop g_data_00542070; ret.
+ *   16-byte alignment nops.
+ *   Body (0x00406980): if g_data_00542070 != g_x_00542044->field_30: call
+ *   func_00406790; if not paused: g_state_0054208c &= 0xfe; ret.
+ */
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_x_00541e84;
+extern unsigned int g_x_004d5134;
+extern void func_004bae90(void);
+
+__declspec(naked) void MStackInstallBodyEqCheck_00406910(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_00541e84]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     ecx, dword ptr [g_x_004d5134]
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_install_end
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_install_end:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_data_00542070]
+        cmp     eax, dword ptr [ecx*4 + 0x30]
+        jne     short L_pause_check
+        call    func_00406790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_body_end
+    L_pause_check:
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+    L_body_end:
+        ret
+    }
+}
