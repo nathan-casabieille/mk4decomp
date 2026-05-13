@@ -66205,3 +66205,101 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         ret
     }
 }
+
+extern void ScaledStoreIdx24_00406ce0(void);
+
+/* @addr 0x0040a520 (353b boot) - 2-entry mstack-scoped slot setup pair.
+ *   Entry 1 (offset 0, 207b): pushes g_data_00542044 onto mstack, then on the
+ *     slot identified by g_data_00542060 writes +0x30=2, +0x34=0x18ce0000,
+ *     +0x38=0xff (also mirrored through g_data_0054206c). Snapshots a 2nd-level
+ *     slot from [g_data_0054205c*4 + 0x18] / [eax*4 + 0x28], sets bit 2 of
+ *     g_data_0054208c around the test, and on non-null also zeroes
+ *     [eax*4 + 0x10] and writes g_data_00542060 + 0xc into [g_data_00542044*4
+ *     + 0x14]. Pops the 1 mstack entry back.
+ *   1-byte NOP pad to entry 2 alignment.
+ *   Entry 2 (offset 0xd0, 145b): if [g_data_00542044*4] != 0, pushes that
+ *     index and g_data_0054206c onto the mstack, fetches [...+0x24] into
+ *     g_data_0054206c, pops one back into g_data_00542044, calls
+ *     ScaledStoreIdx24_00406ce0, then on no-error pops the second too.
+ */
+__declspec(naked) void MStackScopedSlotSetupPair_0040a520(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x30], 2
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x34], 0x18ce0000
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0xff
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, 4
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_data_00542044], eax
+        or      edx, ecx
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_0054208c], edx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_mss_pop1
+        xor     edx, ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_mss_pop1
+        mov     dword ptr [eax*4 + 0x10], 0
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_data_00542044]
+        add     eax, 0xc
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+    L_mss_pop1:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+        nop
+        /* entry 2 (offset 0xd0) */
+    L_mss_entry2:
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [ecx*4]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_mss_e2End
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x24]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    ScaledStoreIdx24_00406ce0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mss_e2End
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mss_e2End:
+        ret
+    }
+}

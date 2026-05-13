@@ -878,10 +878,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040a520
-    name: func_0040a520
+    name: MStackScopedSlotSetupPair_0040a520
     size: 353
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040a690
     name: MStackPushNegMul10_0040a690
     size: 152
