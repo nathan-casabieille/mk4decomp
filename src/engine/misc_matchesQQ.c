@@ -55437,3 +55437,66 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         ret
     }
 }
+
+extern unsigned int g_x_0053a468;
+
+/*
+ * AudioInstallSelfChannel8_004a0520 — 237b audio install-self variant for second channel.
+ *   Mirrors AudioInstallSelfShiftedChainInit_004a0210 but reads g_x_0053a2e8 (instead of g_x_00541dd4),
+ *   g_state_00537e90 (instead of g_x_00537f88), shifts on g_x_00542074-1 with starting value 8 (not 7),
+ *   AND-masks g_x_0053a468 (instead of g_x_00537eec), self-installs at own entry.
+ */
+__declspec(naked) void AudioInstallSelfChannel8_004a0520(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_ch8_inst
+        mov     eax, dword ptr [g_x_0053a2e8]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_ch8_push
+        jmp     func_004a0300
+    L_ch8_push:
+        mov     ecx, dword ptr [g_state_00537e90]
+        push    0x250
+        push    0x004a0680
+        mov     dword ptr [g_x_00542054], ecx
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        jmp     func_004a0300
+    L_ch8_inst:
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     edx, 1
+        dec     ecx
+        mov     dword ptr [g_x_00542054], 8
+        shl     edx, cl
+        mov     dword ptr [g_x_00542074], ecx
+        mov     ecx, dword ptr [g_x_0053a468]
+        and     ecx, edx
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_x_0053a468], ecx
+        mov     dword ptr [eax + 8], offset AudioInstallSelfChannel8_004a0520
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     edx, offset AudioInstallSelfChannel8_004a0520
+        mov     dword ptr [g_x_00542044], ecx
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     ecx
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_004a0870
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}

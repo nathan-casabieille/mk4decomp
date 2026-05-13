@@ -12032,10 +12032,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0520
-    name: func_004a0520
+    name: AudioInstallSelfChannel8_004a0520
     size: 237
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0610
     name: AudioInitInstallSelfPeriodic_004a0610
     size: 216
