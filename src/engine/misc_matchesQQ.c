@@ -59125,6 +59125,106 @@ extern void DSoundQueryProperty_004ac3a0(void);
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
+extern void StrSearchCall_004c89b0(void);
+extern unsigned char g_byte_00522bb4;
+
+/* @addr 0x004c87c0 (182b crt) - _fcvt-like decimal-string formatter.
+ *   args: struct* (esi: [+0]=sign/digits ptr, [+4]=exponent), width (ebp),
+ *         outbuf (ebx), flag (cl byte).
+ *   - If flag != 0 and digits=="-": write '0' + null at end-of-buffer.
+ *   - Write sign byte if needed; copy/pad digits; insert decimal separator
+ *     from g_byte_00522bb4; pad with '0' via rep stos pattern.
+ */
+__declspec(naked) void FcvtFormatDecimal_004c87c0(void) {
+    __asm {
+        mov     cl, byte ptr [esp + 0x10]
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, [esp + 0x18]
+        mov     ebp, [esp + 0x14]
+        mov     ebx, [esp + 0x10]
+        push    edi
+        mov     eax, [esi + 4]
+        dec     eax
+        test    cl, cl
+        jz      short L_fc_main
+        mov     edx, [esi]
+        xor     ecx, ecx
+        cmp     edx, 0x2d
+        sete    cl
+        add     ecx, ebx
+        cmp     eax, ebp
+        jne     short L_fc_main
+        mov     byte ptr [eax + ecx], 0x30
+        mov     byte ptr [eax + ecx + 1], 0
+    L_fc_main:
+        mov     eax, [esi]
+        mov     edi, ebx
+        cmp     eax, 0x2d
+        jne     short L_fc_noSign
+        mov     byte ptr [ebx], 0x2d
+        lea     edi, [ebx + 1]
+    L_fc_noSign:
+        mov     eax, [esi + 4]
+        test    eax, eax
+        jg      short L_fc_advance
+        push    1
+        push    edi
+        call    StrSearchCall_004c89b0
+        add     esp, 8
+        mov     byte ptr [edi], 0x30
+        inc     edi
+        jmp     short L_fc_after
+    L_fc_advance:
+        add     edi, eax
+    L_fc_after:
+        test    ebp, ebp
+        jle     short L_fc_done
+        push    1
+        push    edi
+        call    StrSearchCall_004c89b0
+        mov     al, byte ptr [g_byte_00522bb4]
+        add     esp, 8
+        mov     [edi], al
+        mov     esi, [esi + 4]
+        inc     edi
+        test    esi, esi
+        jge     short L_fc_done
+        mov     al, byte ptr [esp + 0x20]
+        test    al, al
+        jz      short L_fc_negA
+        neg     esi
+        jmp     short L_fc_clip
+    L_fc_negA:
+        neg     esi
+        cmp     ebp, esi
+        jl      short L_fc_pad
+    L_fc_clip:
+        mov     ebp, esi
+    L_fc_pad:
+        push    ebp
+        push    edi
+        call    StrSearchCall_004c89b0
+        mov     ecx, ebp
+        mov     eax, 0x30303030
+        mov     edx, ecx
+        add     esp, 8
+        shr     ecx, 2
+        rep     stosd
+        mov     ecx, edx
+        and     ecx, 3
+        rep     stosb
+    L_fc_done:
+        pop     edi
+        pop     esi
+        mov     eax, ebx
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
 /* @addr 0x004cca50 (177b crt) - multi-precision left shift on a 4-u32 array.
  *   args: count (signed dword count, [esp+0x10] pre-push), ptr (u32* base, arg0).
  *   Step 1 (loop 3 iters): shift each u32 by abs(count)&31, propagating bits via ebx temp,

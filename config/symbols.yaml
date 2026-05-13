@@ -15557,10 +15557,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c87c0
-    name: func_004c87c0
+    name: FcvtFormatDecimal_004c87c0
     size: 182
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8880
     name: func_004c8880
     size: 293
