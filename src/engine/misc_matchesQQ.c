@@ -55353,7 +55353,103 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
     }
 }
 
-extern void TableHitOrSchedule_004be7a0(void);
+extern void DispatcherComplex260_00407400(void);
+extern void SnapshotDirtyMark_004a1dc0(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void DrainQueueCallEach_004a1ec0(void);
+extern void func_004a8ca0(void);
+extern void func_004a85c0(void);
+extern unsigned int g_data_0050f114;
+extern unsigned int g_data_005433f4;
+
+/*
+ * AudioInitLoopTriple_004a7840 — 237b audio 2-entry init + triple-loop body.
+ *   Entry 0x004a7840: g_x_00542048 = (0x0050f114 >> 2); call DispatcherComplex260;
+ *     if paused: ret. push 0x13333; SnapshotDirtyMark; MStackPushComplexCallPop;
+ *     if paused: ret. chain[g_x_00542044*4 + 0x5c] = 0x00100000; ret.
+ *   16b-aligned body 0x004a7890: g_x_00542074 = 0x32a; Push16Call.
+ *     Loop1 (esi: byte-table at 0x004f3b48 to 0x004f3c20 step 0x24): chain[(g_baseSel+byte)*4],
+ *       call func_00406790. Loop2 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x34], call.
+ *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
+ *     if [0x005433f4] == 2: tail-call func_004a8ca0 else func_004a85c0.
+ */
+__declspec(naked) void AudioInitLoopTriple_004a7840(void)
+{
+    __asm
+    {
+        mov     eax, offset g_data_0050f114
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e0_ret
+        push    0x13333
+        call    SnapshotDirtyMark_004a1dc0
+        add     esp, 4
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_e0_ret
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [ecx*4 + 0x5c], 0x00100000
+    L_e0_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        push    esi
+        mov     dword ptr [g_x_00542074], 0x32a
+        call    Push16Call_00489f50
+        mov     esi, 0x004f3b48
+    L_loop1:
+        movsx   eax, byte ptr [esi]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        add     ecx, eax
+        mov     edx, dword ptr [ecx*4]
+        mov     dword ptr [g_x_00542044], edx
+        call    func_00406790
+        add     esi, 0x24
+        cmp     esi, 0x004f3c20
+        jb      short L_loop1
+        xor     esi, esi
+    L_loop2:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        lea     ecx, [esi + eax]
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_x_00542044], edx
+        call    func_00406790
+        inc     esi
+        cmp     esi, 5
+        jl      short L_loop2
+        xor     esi, esi
+    L_loop3:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        lea     ecx, [esi + eax]
+        mov     edx, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [g_x_00542044], edx
+        call    func_00406790
+        inc     esi
+        cmp     esi, 5
+        jl      short L_loop3
+        call    DrainQueueCallEach_004a1ec0
+        cmp     dword ptr [g_data_005433f4], 2
+        jne     short L_tail85c0
+        call    func_004a8ca0
+        pop     esi
+        ret
+    L_tail85c0:
+        call    func_004a85c0
+        pop     esi
+        ret
+    }
+}
+
 extern void func_00414a00(void);
 
 /*
