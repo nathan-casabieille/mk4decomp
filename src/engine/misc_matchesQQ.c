@@ -47820,3 +47820,88 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         ret
     }
 }
+
+extern void CmpJmpConstStoreJmp_004389e0(void);
+
+/* @addr 0x00434a30 (303b game) - 3-state install-self with state-1/state-0 dual install.
+ *   state==0 (load state, ecx=state, je): set g_x_00542084=0xcccc, g_state_00542080=0x1e;
+ *     install-self at entry+0x01000000; call StateGateMStackOverlap; pause=1; ret.
+ *   state==1 (dec then je): g_state_00542080=0x20; install-self at entry+0x02000000;
+ *     call CmpJmpConstStoreJmp; pause=1; ret.
+ *   state>=2 (fall): call ScaledZeroFour; if pause: ret. Tail-jmp StackPopDispatchTagged.
+ *   Tail (+0x120, 1-NOP pad): call Cmp2CallDirtyCall; if !=0 ret; jmp DispatchWcSwitch.
+ */
+__declspec(naked) void InstallSelf3StateDualBody_00434a30(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        _emit   83h
+        _emit   0e9h
+        _emit   00h
+        _emit   0fh
+        _emit   84h
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     ecx
+        _emit   74h
+        _emit   17h
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        jmp     StackPopDispatchTagged_0041f780
+        mov     dword ptr [g_state_00542080], 0x20
+        mov     dword ptr [eax + 8], offset InstallSelf3StateDualBody_00434a30
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelf3StateDualBody_00434a30
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    CmpJmpConstStoreJmp_004389e0
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+        mov     dword ptr [g_x_00542084], 0xcccc
+        mov     dword ptr [g_state_00542080], 0x1e
+        mov     dword ptr [eax + 8], offset InstallSelf3StateDualBody_00434a30
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset InstallSelf3StateDualBody_00434a30
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    StateGateMStackOverlap_00438690
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     DispatchWcSwitch_00434b60
+        ret
+    }
+}
