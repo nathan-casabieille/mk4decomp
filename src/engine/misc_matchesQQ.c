@@ -51533,3 +51533,92 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         ret
     }
 }
+
+extern void PushPopWalkSet1006_00470ee0(void);
+
+/* @addr 0x0046f560 (325b game) - 3-state install-self with state-1 mstack-pop dispatch. */
+__declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   7ah
+        dec     eax
+        _emit   74h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_state_00542088], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        cmp     dword ptr [g_state_00542088], 1
+        _emit   7fh
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0cdh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch_0046f560
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 0x1c
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        call    PushPopWalkSet1006_00470ee0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   94h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     edx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch_0046f560
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset Install3StateMStackPopDispatch_0046f560
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}
