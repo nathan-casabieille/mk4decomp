@@ -12716,10 +12716,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a9820
-    name: func_004a9820
+    name: AudioByteCounterChain_004a9820
     size: 204
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a98f0
     name: StateCmpAndStoreByte_004a98f0
     size: 70

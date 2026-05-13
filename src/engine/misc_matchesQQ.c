@@ -54212,3 +54212,82 @@ __declspec(naked) void BootInitTripleAddChain_00419bc0(void)
         ret
     }
 }
+
+extern void func_004a6080(void);
+extern unsigned char g_byte_00543840;
+extern unsigned char g_byte_0054383c;
+extern unsigned char g_byte_005435a0;
+extern unsigned char g_byte_005435b8;
+extern unsigned int g_data_00543838;
+extern unsigned int g_data_0054355c;
+extern unsigned int g_table_00543848;
+
+/*
+ * AudioByteCounterChain_004a9820 — 204b audio counter+state machine.
+ *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
+ *   If was 0: dispatch on g_state_00537f94 == 1/2 to increment indexed slots in g_table_00543848;
+ *     call BootInitGuardedCallChain; if paused: ret.
+ *     Call FiveTableWalkInit; if paused: ret.
+ *     Inc g_byte_00543840; g_data_0054355c=1; g_data_00543838=1;
+ *     if hit 0xf: inc g_byte_0054383c; if also equal to (post-inc) al: zero it.
+ *     Stash to g_byte_005435a0; push (&g_byte_005435b8, &g_byte_005435a0);
+ *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
+ *     call func_004a6080; call TwoStageAudioInit.
+ */
+__declspec(naked) void AudioByteCounterChain_004a9820(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        xor     ebx, ebx
+        mov     ecx, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [eax*4 + 0x84], ebx
+        cmp     ecx, ebx
+        jne     short L_skipInit
+        mov     eax, dword ptr [g_state_00537f94]
+        cmp     eax, 1
+        jne     short L_check2
+        mov     ecx, dword ptr [g_state_00537f48]
+        inc     dword ptr [ecx*4 + g_table_00543848]
+    L_check2:
+        cmp     eax, 2
+        jne     short L_skipInit
+        mov     eax, dword ptr [g_state_005380e0]
+        inc     dword ptr [eax*4 + g_table_00543848]
+    L_skipInit:
+        call    BootInitGuardedCallChain_004265d0
+        cmp     dword ptr [g_pause_00541e6c], ebx
+        jne     short L_end
+        call    FiveTableWalkInit_00403c90
+        cmp     dword ptr [g_pause_00541e6c], ebx
+        jne     short L_end
+        mov     al, byte ptr [g_byte_00543840]
+        mov     dword ptr [g_data_0054355c], 1
+        inc     al
+        mov     dword ptr [g_data_00543838], 1
+        cmp     al, 0xf
+        mov     byte ptr [g_byte_00543840], al
+        jne     short L_finalize
+        mov     cl, byte ptr [g_byte_0054383c]
+        inc     cl
+        cmp     cl, al
+        mov     byte ptr [g_byte_0054383c], cl
+        jne     short L_finalize
+        mov     byte ptr [g_byte_0054383c], bl
+    L_finalize:
+        mov     byte ptr [g_byte_005435a0], al
+        mov     al, byte ptr [g_byte_0054383c]
+        push    offset g_byte_005435b8
+        push    offset g_byte_005435a0
+        mov     byte ptr [g_byte_005435b8], al
+        mov     byte ptr [g_byte_005435a0 + 3], bl
+        mov     byte ptr [g_byte_005435b8 + 3], bl
+        call    func_004a6080
+        add     esp, 8
+        call    TwoStageAudioInit_004a6180
+    L_end:
+        pop     ebx
+        ret
+    }
+}
