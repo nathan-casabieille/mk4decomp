@@ -67143,3 +67143,176 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         jmp     IndirectStateDispatcher_0049f6a0
     }
 }
+
+extern unsigned int g_data_00ab4334;
+extern unsigned int g_data_00543a8c;
+extern unsigned int g_data_004f78cc;
+extern unsigned int g_data_004f78d0;
+extern unsigned int g_data_004ffd78;
+extern unsigned int g_data_004f78d4;
+extern void DrawScene(void);
+extern void Loop16Init_004c4370(void);
+extern void SetState1_004b5840(void);
+extern void func_004be440(void);
+extern void DSound_GetContext(void);
+extern void ECM_OpenTrack_004be9c0(void);
+extern void TestPushPushCall_004bea50(void);
+extern void InputKeysetProbe_004be3c0(void);
+/* Renderer_GetMode declared in game/tick.h as int */
+extern void func_004b40d0(void);
+extern void func_004bea80(void);
+extern void JumpTable5Way_004b41c0(void);
+extern void PresentFrame(void);
+extern void PumpMessages(void);
+extern void CallZero_004bea30(void);
+
+/* @addr 0x004be250 (354b engine.scenegraph) - cdecl wrapper that calls
+ *   DrawScene + Loop16Init + Audio_TimerTeardown + SetState1, then if
+ *   g_data_00ab4334 == 0 returns 0; else looks up an entry via
+ *   func_004be440 keyed by [esp+0x24]. While that pointer is non-zero
+ *   plays an ECM track and pumps the message loop: probe inputs via
+ *   InputKeysetProbe_004be3c0, advance through TestPushPushCall_004bea50
+ *   transitions, and on key-1 input dispatch a 5-way JumpTable_004b41c0
+ *   based action. On finish-condition (ebx != 0) restores state and
+ *   returns either 0 or 0xa (bit-pattern via `neg/sbb/and 0xa`).
+ */
+__declspec(naked) void SceneFrameStepWithInputs_004be250(void) {
+    __asm {
+        sub     esp, 0x10
+        push    ebx
+        push    ebp
+        push    esi
+        xor     ebp, ebp
+        push    edi
+        mov     dword ptr [esp + 0x1c], ebp
+        mov     dword ptr [esp + 0x18], ebp
+        mov     dword ptr [esp + 0x14], ebp
+        mov     dword ptr [esp + 0x10], ebp
+        xor     ebx, ebx
+        call    DrawScene
+        call    Loop16Init_004c4370
+        call    Audio_TimerTeardown_004ac5f0
+        call    SetState1_004b5840
+        cmp     dword ptr [g_data_00ab4334], ebp
+        je      short L_sfs_haveScene
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x10
+        ret
+    L_sfs_haveScene:
+        mov     esi, dword ptr [esp + 0x24]
+    L_sfs_lookupTop:
+        push    esi
+        call    func_004be440
+        mov     edi, eax
+        add     esp, 4
+        cmp     edi, ebp
+        je      L_sfs_zeroExit
+    L_sfs_innerHead:
+        cmp     dword ptr [g_data_00543a8c], ebp
+        je      short L_sfs_zeroCtx
+        call    DSound_GetContext
+        jmp     short L_sfs_haveCtx
+    L_sfs_zeroCtx:
+        xor     eax, eax
+    L_sfs_haveCtx:
+        shl     esi, 4
+        mov     ecx, dword ptr [esi + 0x4f78cc]
+        push    ecx
+        push    0x64
+        push    eax
+        push    edi
+        call    ECM_OpenTrack_004be9c0
+        add     esp, 0x10
+        call    TestPushPushCall_004bea50
+        mov     edi, eax
+        cmp     edi, ebp
+        je      L_sfs_innerDone
+    L_sfs_innerLoop:
+        mov     edx, dword ptr [esp + 0x28]
+        push    edx
+        call    InputKeysetProbe_004be3c0
+        mov     ebx, eax
+        add     esp, 4
+        cmp     ebx, ebp
+        jne     short L_sfs_innerDone
+        cmp     edi, dword ptr [esi + 0x4f78d0]
+        jg      short L_sfs_innerDone
+        call    Renderer_GetMode
+        cmp     eax, 4
+        jne     short L_sfs_notMode4
+        cmp     dword ptr [g_data_004ffd78], ebp
+        je      short L_sfs_innerDone
+    L_sfs_notMode4:
+        cmp     edi, ebp
+        jl      short L_sfs_skipCallChain
+        lea     eax, [esp + 0x10]
+        lea     ecx, [esp + 0x14]
+        push    eax
+        lea     edx, [esp + 0x1c]
+        push    ecx
+        lea     eax, [esp + 0x24]
+        push    edx
+        push    eax
+        push    1
+        call    func_004b40d0
+        add     esp, 0x14
+        test    eax, eax
+        je      short L_sfs_finishPresent
+        mov     ecx, dword ptr [esp + 0x10]
+        mov     edx, dword ptr [esp + 0x14]
+        mov     eax, dword ptr [esp + 0x18]
+        push    ecx
+        mov     ecx, dword ptr [esp + 0x20]
+        push    edx
+        push    eax
+        push    ecx
+        call    func_004bea80
+        add     esp, 0x10
+        call    JumpTable5Way_004b41c0
+        call    PresentFrame
+    L_sfs_finishPresent:
+        call    PumpMessages
+    L_sfs_skipCallChain:
+        call    TestPushPushCall_004bea50
+        mov     edi, eax
+        cmp     edi, ebp
+        jne     L_sfs_innerLoop
+    L_sfs_innerDone:
+        call    CallZero_004bea30
+        cmp     ebx, ebp
+        jne     short L_sfs_finalReturn
+        mov     esi, dword ptr [esi + 0x4f78d4]
+        cmp     esi, -1
+        je      short L_sfs_finalReturn
+        push    esi
+        call    func_004be440
+        mov     edi, eax
+        add     esp, 4
+        cmp     edi, ebp
+        jne     L_sfs_innerHead
+    L_sfs_zeroExit:
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x10
+        ret
+    L_sfs_finalReturn:
+        call    SetState1_004b5840
+        mov     eax, ebx
+        pop     edi
+        neg     eax
+        sbb     eax, eax
+        pop     esi
+        pop     ebp
+        and     eax, 0xa
+        pop     ebx
+        add     esp, 0x10
+        ret
+    }
+}

@@ -14707,10 +14707,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x004be250
-    name: func_004be250
+    name: SceneFrameStepWithInputs_004be250
     size: 354
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004be3c0
     name: InputKeysetProbe_004be3c0
     size: 125
