@@ -16124,10 +16124,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004ce2f0
-    name: func_004ce2f0
+    name: StrToLongDouble_004ce2f0
     size: 241
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ce3f0
     name: func_004ce3f0
     size: 1923
