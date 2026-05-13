@@ -52184,3 +52184,118 @@ __declspec(naked) void TripleThunkInstallBody_004551f0(void) {
         ret
     }
 }
+
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void CallPauseTripleScaledJmp_0046c520(void);
+extern void DualEntryStateGated_00460fa0(void);
+extern void func_0046bea0(void);
+extern void QuadCmpBitGateJmp_0046c560(void);
+
+/* @addr 0x0046c3d0 (332b game) - install-self with multi-thunk dispatch.
+ *   state!=0: tail-jmp FiveCallGuardSetTail. state==0: install-self at entry+0x01000000;
+ *     state=1; call ScaledLoadIncJmp_00428d00; pause=1; pop edi; ret.
+ *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_state_0054207c=[baseSel*4+0x30].
+ *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
+ *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_state_00535ddc<=0xcccc;
+ *     if yes: jmp func_0046bea0; else jmp DualEntryStateGated. Ret.
+ *   Thunk C (+0xe0): call ScaledMove48to58; if pause ret. Same state_0054207c gate.
+ *     If nonzero jmp CallPauseTripleScaledJmp; else jmp DualEntryStateGated.
+ *   Thunk D (+0x110, 2-NOP pad): call ScaledMove48to58; if pause ret. Call QuadCmpBitGateJmp; if pause ret.
+ *     Same state_0054207c gate; jmp CallPauseTripleScaledJmp or DualEntryStateGated; ret.
+ */
+__declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        mov     dword ptr [eax + 8], offset InstallSelfMultiThunkDispatch_0046c3d0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        push    edi
+        mov     edi, offset InstallSelfMultiThunkDispatch_0046c3d0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledLoadIncJmp_00428d00
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   51h
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_state_0054207c], eax
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseTripleScaledJmp_0046c520
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     DualEntryStateGated_00460fa0
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0xcccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     DualEntryStateGated_00460fa0
+        jmp     func_0046bea0
+        ret
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1fh
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_state_0054207c], eax
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseTripleScaledJmp_0046c520
+        jmp     DualEntryStateGated_00460fa0
+        ret
+        _emit   90h
+        _emit   90h
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        call    QuadCmpBitGateJmp_0046c560
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1fh
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [eax*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_state_0054207c], eax
+        _emit   74h
+        _emit   05h
+        jmp     CallPauseTripleScaledJmp_0046c520
+        jmp     DualEntryStateGated_00460fa0
+        ret
+    }
+}
