@@ -6482,10 +6482,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004605d0
-    name: func_004605d0
+    name: PerSlotPhaseRouter_004605d0
     size: 405
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460770
     name: func_00460770
     size: 413
