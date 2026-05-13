@@ -55206,3 +55206,79 @@ __declspec(naked) void MStackPush2RunCountdown_004089e0(void)
         ret
     }
 }
+
+extern void ScaledChainOr8_00404e50(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern unsigned int g_data_004d5dd8;
+
+/*
+ * MStackPush3InitCallChain_0040bcf0 — 239b boot 3-arg mstack-push + xfm chain.
+ *   Push g_x_00542048, g_x_00542054, g_x_0054205c to mstack.
+ *   Snapshot g_x_0054205c → g_x_00542054; g_x_0054206c = (0x004d5dd8 >> 2).
+ *   Call PushSetXfmMaskCallPop_00407140; if paused: pop 3 + ret.
+ *   If g_state_0054208c & 4: pop 3 + ret. Else call ScaledChainOr8_00404e50;
+ *   chain[g_x_00542048+0x48] = g_x_0054206c = 0x00018000;
+ *   call ScaledTripleCopy54_004ac040; if paused: pop+ret. Call MStackCall_004062f0;
+ *   if paused: pop+ret. Pop 3 from mstack into g_x_0054205c, g_x_00542054, g_x_00542048; ret.
+ */
+__declspec(naked) void MStackPush3InitCallChain_0040bcf0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, offset g_data_004d5dd8
+        mov     dword ptr [g_x_00542054], edx
+        shr     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_just_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_pop_ret
+        call    ScaledChainOr8_00404e50
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, 0x00018000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x48], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_just_ret
+        call    MStackCall_004062f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_just_ret
+    L_pop_ret:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_just_ret:
+        ret
+    }
+}
