@@ -55133,3 +55133,76 @@ __declspec(naked) void AudioFlagDispatchAggregatorAH_004aa520(void)
         ret
     }
 }
+
+extern unsigned int g_state_00542098;
+extern unsigned int g_data_0053a1ac;
+
+/*
+ * MStackPush2RunCountdown_004089e0 — 226b boot mstack push2 + countdown loop.
+ *   Mstack-push g_x_00542044, then g_x_00542048. Setup: g_x_00542044 = g_x_0054205c[+0x1c];
+ *   counter = chain[ecx*4] (post-incremented).
+ *   Loop: g_x_0054206c = chain->next; g_state_00542098 = (eax <= 0); g_x_00542048 = eax.
+ *   If !setle: chain[+0x28]; chain->next &= 0xdb; g_x_0054206c = result; store back.
+ *   Decrement g_data_0053a1ac; if jns: loop. After: pop two from mstack into g_x_00542048
+ *   and g_x_00542044; ret.
+ */
+__declspec(naked) void MStackPush2RunCountdown_004089e0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x1c]
+        mov     dword ptr [g_x_00542044], ecx
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        dec     eax
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_data_0053a1ac], eax
+        js      short L_pop_pair
+    L_loop:
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        xor     edx, edx
+        mov     dword ptr [g_x_0054206c], eax
+        test    eax, eax
+        setle   dl
+        test    edx, edx
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_state_00542098], edx
+        mov     dword ptr [g_x_00542048], eax
+        jne     short L_iter_end
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [ecx*4]
+        and     al, 0xdb
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        mov     ecx, dword ptr [g_x_00542044]
+    L_iter_end:
+        mov     eax, dword ptr [g_data_0053a1ac]
+        dec     eax
+        mov     dword ptr [g_data_0053a1ac], eax
+        jns     short L_loop
+    L_pop_pair:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

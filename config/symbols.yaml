@@ -700,10 +700,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x004089e0
-    name: func_004089e0
+    name: MStackPush2RunCountdown_004089e0
     size: 226
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00408ad0
     name: MStackInitCallToggle_00408ad0
     size: 191
