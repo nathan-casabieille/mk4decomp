@@ -68605,3 +68605,105 @@ __declspec(naked) void MidiTempoTimePackSend_004ac780(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d67b8;
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void AudioMixerStep_004ab700(void);
+extern void ZeroAndDirty4_00405430(void);
+extern void func_00413e60(void);
+
+/* @addr 0x00413b70 (359b boot) - MStack push-8 + slot init with callback addr.
+ *   Pushes 0x1000 to ThreeChanPackClamp_00404cc0, then [g_data_0054205c] to
+ *   CopyThreeFields_00404df0. Sets g_data_0054206c=0x3333 and calls
+ *   AudioMixerStep_004ab700, on no-error adds 0xd999 to it and calls
+ *   ZeroAndDirty4_00405430. On no-error AND bit 2 of g_data_0054208c set:
+ *   calls MStackPush8_004ab790; if it returns OK loads
+ *   g_data_00542054 = old g_data_0054205c, g_data_0054206c = &g_data_004d67b8>>2,
+ *   calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 NOT set,
+ *   writes 0x9e into [g_data_0054205c*4+0x30], calls
+ *   ScaledTripleCopy54_004ac040 then MStackPushNegMul10_0040a690.
+ *   Then for the resolved leaf slot writes 0xb333 at +0x48, OR's bit 3
+ *   into +0x0, 0xff at +0x14, and 0x00413e60 (callback addr) at +0x10.
+ *   Calls MStackCall_004065b0, tail-jmp MStackPop8_004ab860.
+ */
+__declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
+    __asm {
+        push    0x1000
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp8c_ret
+        add     dword ptr [g_data_0054206c], 0xd999
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp8c_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      L_mp8c_ret
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp8c_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, offset g_data_004d67b8
+        shr     edx, 2
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp8c_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mp8c_tailJmp
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x9e
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp8c_ret
+        mov     dword ptr [g_data_0054206c], 0xfffffeb9
+        call    MStackPushNegMul10_0040a690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mp8c_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x6c], ecx
+        lea     eax, [edx*4]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     dword ptr [eax + 0x74], edx
+        mov     eax, dword ptr [eax + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        shl     eax, 2
+        mov     ecx, dword ptr [eax]
+        mov     dword ptr [eax + 0x48], 0xb333
+        or      ecx, 8
+        mov     dword ptr [eax + 0x14], 0xff
+        mov     dword ptr [eax], ecx
+        mov     ecx, offset func_00413e60
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x10], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        call    MStackCall_004065b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mp8c_ret
+    L_mp8c_tailJmp:
+        jmp     MStackPop8_004ab860
+    L_mp8c_ret:
+        ret
+    }
+}

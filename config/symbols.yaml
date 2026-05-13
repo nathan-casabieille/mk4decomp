@@ -1198,10 +1198,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00413b70
-    name: func_00413b70
+    name: MStackPush8CallbackInit_00413b70
     size: 359
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00413ce0
     name: func_00413ce0
     size: 436
