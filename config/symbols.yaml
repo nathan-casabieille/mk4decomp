@@ -12092,10 +12092,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004a10b0
-    name: func_004a10b0
+    name: AudioStateClearAndChainStep_004a10b0
     size: 97
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a1120
     name: IncWrap0fJmp_004a1120
     size: 36

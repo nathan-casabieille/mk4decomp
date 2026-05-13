@@ -57149,3 +57149,52 @@ __declspec(naked) void MenuFlagBitDispatchSearch_004b8930(void)
         ret
     }
 }
+
+extern void IncWrap0fJmp_004a1120(void);
+extern unsigned int g_data_0053a714;
+extern unsigned int g_data_005380a8;
+
+/*
+ * AudioStateClearAndChainStep_004a10b0 — 97b 2-entry audio.
+ *   Entry 0x004a10b0: zero g_x_0054206c, g_data_0053a714, g_data_005380a8. Ret.
+ *   16b-aligned body 0x004a10d0: ecx = g_x_00541fc0; g_x_00542048 = ecx; eax = g_x_00542054;
+ *     g_data_00535e48 = eax; ecx = (ecx + eax)*4 deref; g_x_00542048 = chain[ecx*4];
+ *     g_cj_00542058 = chain[+0x1c]; g_x_0054206c = chain[chain[+0x1c]*4]; tail-jmp IncWrap0fJmp.
+ */
+__declspec(naked) void AudioStateClearAndChainStep_004a10b0(void)
+{
+    __asm
+    {
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0053a714], eax
+        mov     dword ptr [g_data_005380a8], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_x_00541fc0]
+        mov     eax, dword ptr [g_x_00542054]
+        mov     dword ptr [g_x_00542048], ecx
+        add     ecx, eax
+        mov     dword ptr [g_data_00535e48], eax
+        mov     eax, dword ptr [ecx*4]
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0x1c]
+        mov     dword ptr [g_cj_00542058], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        jmp     IncWrap0fJmp_004a1120
+    }
+}
