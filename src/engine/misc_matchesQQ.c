@@ -46422,3 +46422,76 @@ __declspec(naked) void DualEntryRecursiveInstall_00471710(void) {
         ret
     }
 }
+
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void IterLoad_0048fd30(void);
+
+/* @addr 0x0042cd30 (294b game) - mstack-push + cj-chain field swap + dual call + sceneglobal swap.
+ *   Push g_x_0054206c to mstack. scaledInit=[baseSel*4+0x38].
+ *   Copy fields between scaledInit[+0x54/+0x5c] and g_cj_0054205c[+0x54/+0x5c] via globals.
+ *   Call DualCallPauseDirtyJmp; if pause ret. Push 0x004e3698; call IterLoad; pop; if pause ret.
+ *   Swap [0x00535e70/74/78/7c] with globals (using esi); mstack pop g_x_0054206c; pop esi; ret.
+ */
+__declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [edx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x5c]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_data_00542070], edx
+        mov     edx, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_x_00542074], edx
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [eax*4 + 0x54], edx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_acc_00542078]
+        mov     dword ptr [edx*4 + 0x5c], eax
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   75h
+        push    0x004e3698
+        call    IterLoad_0048fd30
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   5fh
+        mov     eax, dword ptr [g_data_00535e78]
+        mov     edx, dword ptr [g_data_00535e70]
+        mov     ecx, dword ptr [g_data_00535e7c]
+        push    esi
+        mov     esi, dword ptr [g_data_00535e74]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_00535e70], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_acc_00542078], esi
+        mov     dword ptr [g_data_00535e78], edx
+        mov     dword ptr [g_data_00535e7c], esi
+        mov     dword ptr [g_data_00535e74], ecx
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    }
+}
