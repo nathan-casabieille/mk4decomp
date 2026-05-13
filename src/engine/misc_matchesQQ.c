@@ -57651,3 +57651,74 @@ __declspec(naked) void AudioInstall2BodyDualSetup_004a0300(void)
         ret
     }
 }
+
+extern unsigned int g_table_00543408;
+extern unsigned int g_table_00543404;
+
+/*
+ * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
+ *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
+ *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
+ *   Stack-frame: sub esp, 0x58. Holds 11 const ptrs (0x004d24bc..0x004d2578) and 11 const vals
+ *   (0xff9c0000..0x00930000 step 0x190000-ish).
+ */
+__declspec(naked) void Audio11SlotInitLoop_004a5540(void)
+{
+    __asm
+    {
+        sub     esp, 0x58
+        push    ebx
+        push    esi
+        push    edi
+        mov     ecx, 0xb
+        xor     eax, eax
+        mov     edi, offset g_table_00543408
+        rep     stosd
+        mov     dword ptr [esp + 0x38], 0x004d24bc
+        mov     dword ptr [esp + 0x3c], 0x004d24c0
+        mov     dword ptr [esp + 0x40], 0x004d24d0
+        mov     dword ptr [esp + 0x44], 0x004d24e8
+        mov     dword ptr [esp + 0x48], 0x004d24f8
+        mov     dword ptr [esp + 0x4c], 0x004d2510
+        mov     dword ptr [esp + 0x50], 0x004d2528
+        mov     dword ptr [esp + 0x54], 0x004d2538
+        mov     dword ptr [esp + 0x58], 0x004d2548
+        mov     dword ptr [esp + 0x5c], 0x004d2560
+        mov     dword ptr [esp + 0x60], 0x004d2578
+        mov     dword ptr [esp + 0x0c], 0xff9c0000
+        mov     dword ptr [esp + 0x10], 0xffb20000
+        mov     dword ptr [esp + 0x14], 0xffcb0000
+        mov     dword ptr [esp + 0x18], 0xffe40000
+        mov     dword ptr [esp + 0x1c], 0xfffd0000
+        mov     dword ptr [esp + 0x20], 0x00160000
+        mov     dword ptr [esp + 0x24], 0x002f0000
+        mov     dword ptr [esp + 0x28], 0x00480000
+        mov     dword ptr [esp + 0x2c], 0x00610000
+        mov     dword ptr [esp + 0x30], 0x007a0000
+        mov     dword ptr [esp + 0x34], 0x00930000
+        xor     esi, esi
+        mov     ebx, 0x190000
+        mov     edi, 0x18000
+    L_a5_iter:
+        mov     eax, dword ptr [esp + esi + 0x0c]
+        mov     ecx, dword ptr [esp + esi + 0x38]
+        push    eax
+        push    ecx
+        call    GuardedSetupCallTailJmp_004a1fa0
+        mov     edx, dword ptr [g_x_00542044]
+        add     esi, 4
+        add     esp, 8
+        cmp     esi, 0x2c
+        mov     dword ptr [edx*4 + 0x54], ebx
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4 + 0x5c], edi
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [esi + g_table_00543404], ecx
+        jb      short L_a5_iter
+        pop     edi
+        pop     esi
+        pop     ebx
+        add     esp, 0x58
+        ret
+    }
+}

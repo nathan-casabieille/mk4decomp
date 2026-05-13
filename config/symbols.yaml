@@ -12556,10 +12556,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a5540
-    name: func_004a5540
+    name: Audio11SlotInitLoop_004a5540
     size: 278
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a5660
     name: ZeroNDwords_004a5660
     size: 19
