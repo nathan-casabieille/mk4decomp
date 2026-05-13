@@ -12759,10 +12759,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa520
-    name: func_004aa520
+    name: AudioFlagDispatchAggregatorAH_004aa520
     size: 229
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa610
     name: func_004aa610
     size: 642
