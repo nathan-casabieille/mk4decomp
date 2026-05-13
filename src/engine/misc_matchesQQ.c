@@ -67457,3 +67457,107 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541fb0;
+extern unsigned int g_data_00541fb8;
+extern unsigned int g_data_00535e6c;
+extern void func_004069b0(void);
+extern void MStackPushSearchLoop_00463ed0(void);
+extern void MStackChainCountdownLoop_00463fb0(void);
+
+/* @addr 0x00463430 (355b game) - mstack-push-2 + scaled-array setup +
+ *   chain walk + scaled-record fill loop + mstack-pop-2.
+ *   Pushes g_data_00542044/00542048, derefs [g_data_00541fb0*4 +
+ *   g_data_00541fb8] into g_data_0054206c/00542044, calls func_004069b0.
+ *   On no-error AND bit 2 of g_data_0054208c clear, calls
+ *   MStackPushSearchLoop_00463ed0 → MStackChainCountdownLoop_00463fb0,
+ *   then sets up [g_data_00535e6c*4 + 0x54] = g_data_00542070, halves
+ *   g_data_00542074 (sar 1), writes it into +0x58, subtracts 0x38000
+ *   from g_data_00542078 and writes into +0x5c. Then walks a chained-
+ *   record loop reading [scaled+0x3c] / [scaled+0x40] with bit-4 toggle
+ *   on g_data_0054208c. Always pops mstack-2 back into 0054204c/00542044.
+ */
+__declspec(naked) void MStackPush2ScaledChainLoop_00463430(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_data_00541fb0]
+        mov     ecx, dword ptr [g_data_00541fb8]
+        shl     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        add     eax, ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_004069b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpsc_done
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 4
+        test    al, bl
+        jne     L_mpsc_pop2
+        call    MStackPushSearchLoop_00463ed0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpsc_done
+        call    MStackChainCountdownLoop_00463fb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpsc_done
+        mov     edx, dword ptr [g_data_00542074]
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542048], eax
+        sar     edx, 1
+        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_data_00542074]
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     eax, dword ptr [g_data_00542078]
+        mov     ecx, dword ptr [g_data_00542048]
+        sub     eax, 0x38000
+        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_data_00542044]
+    L_mpsc_loopHead:
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [eax*4 + 0x3c], edx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [eax*4 + 0x40]
+        or      edx, ebx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_mpsc_pop2
+        mov     ecx, edx
+        xor     ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        jne     short L_mpsc_loopHead
+    L_mpsc_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mpsc_done:
+        pop     ebx
+        ret
+    }
+}

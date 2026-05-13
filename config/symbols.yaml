@@ -6785,10 +6785,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00463430
-    name: func_00463430
+    name: MStackPush2ScaledChainLoop_00463430
     size: 355
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004635a0
     name: MStackChainOrBitLoop_004635a0
     size: 291
