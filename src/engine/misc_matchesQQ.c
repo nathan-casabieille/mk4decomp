@@ -57466,3 +57466,79 @@ __declspec(naked) void MStackPush3LinkedListWalk_004088b0(void)
         ret
     }
 }
+
+/*
+ * BootChainBuildAndStep_004124c0 — 276b boot chain build + mstack-call step.
+ *   Call PushSetXfmMaskCallPop_00407140; if paused: ret. If g_state_0054208c & 4: jump pop2.
+ *   eax = g_x_0054205c<<2; ecx = 0xa4; g_x_0054206c=0xa4; chain[+0x30]=0xa4.
+ *   Read 3 packed_ptrs from g_x_00542048 (auto-incrementing): store to chain[+0x54/+0x58/+0x5c].
+ *   eax = chain[+0x18]; g_x_00542044 = eax; ecx = chain[+0x28]; g_x_00542048 = ecx;
+ *   eax = chain[0]; eax |= 8; g_x_0054206c=eax; chain[0]=eax; chain[+0x48]=g_x_00542074.
+ *   Call MStackCall_004062f0; if paused: ret. g_x_00542044 = g_x_0054205c.
+ *   Pop2 mstack into g_x_0054205c and g_x_00542048; ret.
+ */
+__declspec(naked) void BootChainBuildAndStep_004124c0(void)
+{
+    __asm
+    {
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_124_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_124_pop2
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, 0xa4
+        shl     eax, 2
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x30], ecx
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x54], ecx
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     ecx
+        mov     dword ptr [g_x_00542048], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x58], ecx
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     ecx
+        mov     dword ptr [g_x_00542048], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [eax + 0x5c], ecx
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     ecx
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [eax + 0x18]
+        mov     dword ptr [g_x_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_x_00542048], ecx
+        mov     eax, dword ptr [ecx*4]
+        or      al, 8
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_x_00542074]
+        mov     dword ptr [edx*4 + 0x48], eax
+        call    MStackCall_004062f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_124_ret
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542044], ecx
+    L_124_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_124_ret:
+        ret
+    }
+}
