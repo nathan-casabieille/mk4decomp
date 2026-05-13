@@ -12002,10 +12002,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0210
-    name: func_004a0210
+    name: AudioInstallSelfShiftedChainInit_004a0210
     size: 237
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0300
     name: func_004a0300
     size: 276
