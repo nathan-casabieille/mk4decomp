@@ -1262,10 +1262,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00414a00
-    name: func_00414a00
+    name: BootSlotInstallChainTail_00414a00
     size: 398
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00414b90
     name: func_00414b90
     size: 1097

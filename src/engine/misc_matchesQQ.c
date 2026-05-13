@@ -75250,3 +75250,103 @@ __declspec(naked) void BootDispatchSlotInit_004071a0(void)
         ret
     }
 }
+
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_004d6a50;
+extern void AudioMixerStep_004ab700(void);
+extern void ZeroAndDirty4_00405430(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void MStackCall_00406600(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+
+__declspec(naked) void BootSlotInstallChainTail_00414a00(void)
+{
+    __asm
+    {
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsict_ret
+        add     dword ptr [g_data_0054206c], 0xd999
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsict_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      L_bsict_ret
+        mov     eax, offset g_data_004d6a50
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsict_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bsict_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xa0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsict_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [edx*4 + 0x58], 0
+        mov     eax, dword ptr [g_data_004d5324]
+        mov     dword ptr [g_data_0054206c], eax
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsict_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x64], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_data_0054206c], 0x7ae
+        mov     dword ptr [g_data_00542048], ecx
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsict_ret
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_data_0054205c]
+        add     edx, 0xffffdc29
+        mov     dword ptr [eax*4 + 0x70], edx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xffffe667
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x7c], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, 0xff
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        shl     eax, 2
+        mov     dword ptr [eax + 0x10], offset ClampMulShiftStore_004ba0e0
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x14], ecx
+        mov     ecx, dword ptr [eax]
+        or      ecx, 8
+        mov     dword ptr [eax], ecx
+        mov     ecx, 0x10000
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x48], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        jmp     MStackCall_00406600
+    L_bsict_ret:
+        ret
+    }
+}
