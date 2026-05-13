@@ -47311,3 +47311,103 @@ __declspec(naked) void MStackPush4ChainCopyPop4_00472e10(void) {
         ret
     }
 }
+
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void func_0047d9a0(void);
+extern void func_0047a2e0(void);
+
+/* @addr 0x0047a090 (300b game) - 3-state install-self with field-set + sibling-tail.
+ *   state==0: call ScaledAndAldf_00490330; if pause ret.
+ *     If g_state_00542088==1: tail-call func_0047d9a0; ret.
+ *     Else: install-self at entry+0x01000000; call func_0047a2e0; pause=1; ret.
+ *   state==1: g_x_0054206c=0x5e; call ScaledLitLoadCall; if pause ret.
+ *     Install-self at entry+0x02000000; jmp common chain-push tail.
+ *   state>=2: g_x_0054206c=0x51e; call ScaledLitLoadCall; if pause ret.
+ *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain_0047a1c0; pop+ret.
+ */
+__declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   0fh
+        _emit   84h
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        dec     eax
+        _emit   74h
+        _emit   3ah
+        mov     dword ptr [g_x_0054206c], 0x5f
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0e4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, 0x51e
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        call    InstallSelf3StateDualChain_0047a1c0
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x5e
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0aah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet_0047a090
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset InstallSelf3StateFieldSet_0047a090
+        mov     dword ptr [edx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     ecx, 0x02000000
+        _emit   0ebh
+        _emit   48h
+        call    ScaledAndAldf_00490330
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6fh
+        cmp     dword ptr [g_state_00542088], 1
+        _emit   75h
+        _emit   07h
+        call    func_0047d9a0
+        pop     esi
+        ret
+        mov     dword ptr [esi + 8], offset InstallSelf3StateFieldSet_0047a090
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset InstallSelf3StateFieldSet_0047a090
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    func_0047a2e0
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+    }
+}

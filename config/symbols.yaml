@@ -8161,10 +8161,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047a090
-    name: func_0047a090
+    name: InstallSelf3StateFieldSet_0047a090
     size: 300
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a1c0
     name: InstallSelf3StateDualChain_0047a1c0
     size: 285
