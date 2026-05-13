@@ -65522,3 +65522,119 @@ __declspec(naked) void VertexSlotInitFlagWalk_00409740(void) {
         ret
     }
 }
+
+extern void func_004143f0(void);
+extern void BootCountdownPeriodicInstall_00414810(void);
+extern void CallSetPause_0041f830(void);
+
+/* @addr 0x00414670 (311b boot) - linked-list sibling-fixup helper + main entry.
+ *   Two-entry-point function:
+ *     - 0x00414670 (helper, 84b): fixes up sibling pointers at +0x54/+0x5c on
+ *       the records identified by g_data_0054205{4,8,c}*4 (with the side-effect
+ *       of mirroring each write through g_data_0054206c).
+ *     - 0x004146d0 (install-self entry): if [g_data_00542060*4 + g_data_004XX]
+ *       is already installed, takes the recursion path. Otherwise zeroes
+ *       g_data_0054204c, copies cj into g_data_00542058, calls func_004143f0,
+ *       and on success calls 0x414810 or this function's own helper at
+ *       0x00414670. After the success path it installs itself at offset
+ *       0x004146d0 into [esi + 8] (DIR32 reloc to func+0x60) and sets the
+ *       "installed" flag in [esi + 0x84].
+ */
+__declspec(naked) void LinkSiblingsAndInstallSelf_00414670(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_data_0054205c]
+        push    esi
+        shl     eax, 2
+        shl     ecx, 2
+        shl     edx, 2
+        test    eax, eax
+        je      short L_lsi_skipEcx
+        mov     esi, dword ptr [eax + 0x54]
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [ecx + 0x54], esi
+        mov     esi, dword ptr [eax + 0x5c]
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [ecx + 0x5c], esi
+    L_lsi_skipEcx:
+        test    edx, edx
+        je      short L_lsi_helperEnd
+        mov     ecx, dword ptr [eax + 0x54]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx + 0x54], ecx
+        mov     eax, dword ptr [eax + 0x5c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx + 0x5c], eax
+    L_lsi_helperEnd:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_lsi_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_lsi_freshPath
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x74]
+        cmp     eax, 0x20a
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_lsi_skipCall
+        cmp     eax, 0x1000
+        je      short L_lsi_skipCall
+        call    BootCountdownPeriodicInstall_00414810
+        pop     esi
+        ret
+    L_lsi_freshPath:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054204c], 0
+        mov     dword ptr [g_data_00542054], edx
+        call    func_004143f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_lsi_bodyEnd
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542058], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, 4
+        je      short L_lsi_skipPause
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_lsi_skipPause:
+        mov     dword ptr [g_data_0054204c], 6
+        call    func_004143f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_lsi_bodyEnd
+    L_lsi_skipCall:
+        call    LinkSiblingsAndInstallSelf_00414670
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_lsi_bodyEnd
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_lsi_body
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_lsi_bodyEnd:
+        pop     esi
+        ret
+    }
+}
