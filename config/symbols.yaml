@@ -13230,10 +13230,11 @@ functions:
     status: matched
     file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004aeae0
-    name: func_004aeae0
+    name: DSoundModeSetup_004aeae0
     size: 297
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aec10
     name: DSoundSetAxisPan123_004aec10
     size: 123
