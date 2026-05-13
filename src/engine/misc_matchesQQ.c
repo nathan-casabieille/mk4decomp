@@ -67919,3 +67919,164 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         jmp     func_0045ec10
     }
 }
+
+extern unsigned int g_data_004eb6f8;
+extern unsigned int g_data_004eb710;
+extern unsigned int g_data_004eb720;
+extern unsigned int g_data_004eb738;
+extern unsigned int g_data_004eb740;
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void ScaledMove74to70_0046eaa0(void);
+extern void FiveBlockDispatchChain_0046ec20(void);
+extern void TripleCallPauseJmp_00470500(void);
+extern void func_00470530(void);
+extern void func_004709e0(void);
+extern void IterStepScaledStore_0048e600(void);
+
+/* @addr 0x0046ee00 (356b game) - 5-entry packed install-self + alarm chain.
+ *   Entry 1 (offset 0, 135b): phase from [scaled g_data_00542060+0x84].
+ *     phase != 0: writes 0x28f into [g_data_0054205c*4+0x4c], pushes
+ *       0x0046e2a0 (callback addr) onto mstack via g_state_004d57ac, then
+ *       tail-call InstallSelfIndirectJmp_0048f3f0.
+ *     phase 0: calls ScaledZeroFour_00490740; on no-error installs Self at
+ *       [esi+8], slot[+0x84]=1, g_data_0054204c=0xc, arms 0x541e6c=1.
+ *   9b NOP align pad.
+ *   Entry 2 (offset 0x90, 106b): ScaledMove74to70_0046eaa0; on no-error
+ *     sets [g_data_00542060*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
+ *     FiveBlockDispatchChain_0046ec20; else chain ScaledAndAlfe_00490390 →
+ *     TripleCallPauseJmp_00470500 → push 0x4eb6f8 →
+ *     ArgSarStoreJmp_004594f0.
+ *   6b NOP align pad.
+ *   Entry 3 (offset 0x100, 18b): sets g_data_00542054 = &g_data_004eb710>>2
+ *     and tail-jmp func_004709e0.
+ *   14b NOP align pad.
+ *   Entry 4 (offset 0x120, 32b): if bit 0 of g_data_0054208c set tail-jmp
+ *     CallPauseDirtyMStackPushFn_0046e2a0; else set g_data_00542054 =
+ *     &g_data_004eb720>>2 and tail-jmp func_00470530.
+ *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
+ *     on no-error push 0x4eb740, call ArgSarStoreJmp_004594f0.
+ */
+__declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_fea_phase0
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x28f
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseDirtyMStackPushFn_0046e2a0
+        call    InstallSelfIndirectJmp_0048f3f0
+        pop     esi
+        ret
+    L_fea_phase0:
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea_e1End
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset FiveEntryAlarmInstallChain_0046ee00
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0xc
+        mov     dword ptr [g_data_00541e6c], eax
+    L_fea_e1End:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x90) */
+    L_fea_entry2:
+        call    ScaledMove74to70_0046eaa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea_e2End
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x604
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_fea_skipJmp
+        jmp     FiveBlockDispatchChain_0046ec20
+    L_fea_skipJmp:
+        call    ScaledAndAlfe_00490390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea_e2End
+        call    TripleCallPauseJmp_00470500
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea_e2End
+        push    offset g_data_004eb6f8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fea_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x100) */
+    L_fea_entry3:
+        mov     eax, offset g_data_004eb710
+        sar     eax, 2
+        mov     dword ptr [g_data_00542054], eax
+        jmp     func_004709e0
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 (offset 0x120) */
+    L_fea_entry4:
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_fea_e4second
+        jmp     CallPauseDirtyMStackPushFn_0046e2a0
+    L_fea_e4second:
+        mov     eax, offset g_data_004eb720
+        sar     eax, 2
+        mov     dword ptr [g_data_00542054], eax
+        jmp     func_00470530
+        /* entry 5 (offset 0x140) */
+    L_fea_entry5:
+        push    offset g_data_004eb738
+        call    IterStepScaledStore_0048e600
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fea_e5End
+        push    offset g_data_004eb740
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fea_e5End:
+        ret
+    }
+}
