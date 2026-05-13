@@ -1581,10 +1581,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x0041f570
-    name: func_0041f570
+    name: BootScheduledNodeTimerWalk_0041f570
     size: 408
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041f710
     name: NodeUnlink_0041f710
     size: 106

@@ -77424,3 +77424,121 @@ __declspec(naked) void IndirectListWalk_004bae90(void)
         ret
     }
 }
+
+extern unsigned int g_data_0052ab3c;
+extern unsigned int g_data_00543800;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00535d14;
+extern unsigned int g_data_0054204c;
+extern void NodeUnlink_0041f710(void);
+
+__declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
+{
+    __asm
+    {
+        push    ebx
+        push    esi
+        mov     esi, dword ptr [g_data_0052ab3c]
+        xor     ebx, ebx
+        cmp     esi, ebx
+        je      L_bsntw_done
+        push    edi
+        push    ebp
+        or      ebp, 0xffffffff
+    L_bsntw_loop:
+        mov     eax, dword ptr [g_data_00543800]
+        cmp     eax, ebx
+        je      short L_bsntw_proc
+        cmp     eax, dword ptr [esi + 0xd8]
+        je      short L_bsntw_proc
+        cmp     dword ptr [esi + 0xe0], 0x11
+        jne     L_bsntw_nextNode
+    L_bsntw_proc:
+        dec     word ptr [esi + 0xdc]
+        cmp     word ptr [esi + 0xdc], bx
+        jg      L_bsntw_checkDead
+        mov     eax, esi
+        sar     eax, 2
+        mov     dword ptr [g_data_00542060], eax
+        mov     ecx, dword ptr [eax*4 + 0x14]
+        mov     dword ptr [g_data_0054207c], ecx
+        mov     edx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542080], edx
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     edx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542058], edx
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 0x2c]
+        mov     dword ptr [g_data_0054205c], edx
+        mov     ecx, dword ptr [eax*4 + 0x1c]
+        mov     dword ptr [g_data_00542084], ecx
+        mov     edx, dword ptr [eax*4 + 0x20]
+        mov     dword ptr [g_data_00542088], edx
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [esi + 0xd8], eax
+        mov     dword ptr [g_data_00541e6c], ebx
+        mov     ecx, dword ptr [esi + 0xd8]
+        mov     dword ptr [g_data_00535d14], ecx
+        call    dword ptr [esi + 0xd8]
+        mov     eax, dword ptr [esi + 0xd8]
+        cmp     eax, ebp
+        je      short L_bsntw_checkDead
+        cmp     eax, ebx
+        jbe     short L_bsntw_checkDead
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [esi + 0xd8], eax
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_0054207c]
+        lea     eax, [ecx*4]
+        mov     dword ptr [eax + 0x14], edx
+        mov     ecx, dword ptr [g_data_00542080]
+        mov     dword ptr [eax + 0x18], ecx
+        mov     edx, dword ptr [g_data_00542084]
+        mov     dword ptr [eax + 0x1c], edx
+        mov     ecx, dword ptr [g_data_00542088]
+        mov     dword ptr [eax + 0x20], ecx
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [eax + 0x10], edx
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     dword ptr [eax + 0x24], ecx
+        mov     edx, dword ptr [g_data_00542058]
+        mov     dword ptr [eax + 0x28], edx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [eax + 0x2c], ecx
+        mov     dx, word ptr [g_data_0054204c]
+        mov     word ptr [esi + 0xdc], dx
+    L_bsntw_checkDead:
+        cmp     dword ptr [esi + 0xd8], ebp
+        jne     short L_bsntw_nextNode
+        mov     edi, dword ptr [esi + 0xe4]
+        push    esi
+        call    NodeUnlink_0041f710
+        add     esp, 4
+        mov     esi, edi
+        jmp     short L_bsntw_loopEnd
+    L_bsntw_nextNode:
+        mov     esi, dword ptr [esi + 0xe4]
+    L_bsntw_loopEnd:
+        cmp     esi, ebx
+        jne     L_bsntw_loop
+        pop     ebp
+        pop     edi
+    L_bsntw_done:
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
