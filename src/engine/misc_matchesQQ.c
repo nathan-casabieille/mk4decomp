@@ -63612,6 +63612,101 @@ extern unsigned int g_data_0054207c;
 extern void GuardedSeq_00471670(void);
 extern void ChainListVecAdd_0049d200(void);
 extern void Filbuf_004c8ed0(void);
+extern void Thunk_0049cb70(void);
+extern void Thunk_0049cb80(void);
+extern unsigned int g_data_00542074;
+/* @addr 0x0041fb10 (318b boot) - boot 3-mstack-frame init for game/scene
+ *   (g_data_0054206c/0x542070/0x542074), with conditional vector copy if
+ *   g_state_0054208c bit0 set. Calls Thunk_0049cb70 / Thunk_0049cb80 /
+ *   (AllocNode-1) as init steps, each guarded by g_data_00541e6c == 0.
+ *   Pops 3 mstack frames at end (with state-flag toggle).
+ */
+__declspec(naked) void BootMstackInit_0041fb10(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054206c]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     esi, [esp + 0x10]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542074]
+        inc     eax
+        push    edi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edi, 0xffff
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_data_00542070], edi
+        call    Thunk_0049cb70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmsi_bareTail
+        mov     bl, 1
+    L_bmsi_loopTop:
+        test    byte ptr [g_state_0054208c], bl
+        jz      short L_bmsi_altPath
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054204c], edx
+        call    Thunk_0049cb80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmsi_bareTail
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_data_00542070], edi
+        call    Thunk_0049cb70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jz      short L_bmsi_loopTop
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_bmsi_altPath:
+        mov     eax, [esp + 0x10]
+        mov     dword ptr [g_data_00542074], esi
+        mov     dword ptr [g_data_0054204c], eax
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmsi_bareTail
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 4
+        or      edx, eax
+        test    ecx, ecx
+        mov     dword ptr [g_state_0054208c], edx
+        jz      short L_bmsi_bareTail
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_state_0054208c], ecx
+    L_bmsi_bareTail:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004c5bb0 (316b boot) - CRT fread: read count*size bytes from buffered stream.
  *   Multiplies count*size, returns 0 if 0. Buffered path drains pending bytes via

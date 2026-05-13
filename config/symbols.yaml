@@ -1626,10 +1626,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041fb10
-    name: func_0041fb10
+    name: BootMstackInit_0041fb10
     size: 318
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041fc50
     name: StructArrayWalkCondCall_0041fc50
     size: 100
