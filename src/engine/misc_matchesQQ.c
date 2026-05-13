@@ -59125,6 +59125,100 @@ extern void DSoundQueryProperty_004ac3a0(void);
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
+extern void func_004c6e60_helper(void);  /* placeholder; tail call from 0x4ccf90 */
+
+/* @addr 0x004cced0 (203b crt) - IEEE 754 double → 80-bit long-double conversion.
+ *   Reads double from [esi]:[esi+4]:[esi+6] (low32, high32-mantissa, sign+exp);
+ *   produces 80-bit at *out: mantissa64 + 16-bit sign/exp.
+ *   Handles zero, infinity, NaN, and denormal cases. Final 11 bytes form a
+ *   stub thunk (push 2; call helper; ret) that appears to be tail-padding code.
+ */
+__declspec(naked) void DoubleToLongDouble_004cced0(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, [esp + 0x14]
+        push    edi
+        mov     ebx, 0x80000000
+        mov     cx, word ptr [esi + 6]
+        mov     edx, [esi + 4]
+        mov     eax, ecx
+        mov     edi, [esi]
+        shr     eax, 4
+        and     ecx, 0x8000
+        and     eax, 0x7ff
+        mov     ebp, ecx
+        mov     ecx, eax
+        and     edx, 0xfffff
+        and     ecx, 0xffff
+        jz      short L_d2_zero
+        cmp     ecx, 0x7ff
+        jz      short L_d2_infnan
+        lea     esi, [eax + 0x3c00]
+        jmp     short L_d2_assemble
+    L_d2_infnan:
+        mov     esi, 0x7fff
+        jmp     short L_d2_assemble
+    L_d2_zero:
+        xor     ebx, ebx
+        cmp     edx, ebx
+        jne     short L_d2_denorm
+        cmp     edi, ebx
+        jne     short L_d2_denorm
+        mov     eax, [esp + 0x14]
+        mov     [eax + 4], ebx
+        mov     [eax], ebx
+        mov     word ptr [eax + 8], bx
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_d2_denorm:
+        lea     esi, [eax + 0x3c01]
+    L_d2_assemble:
+        mov     eax, [esp + 0x14]
+        mov     ecx, edi
+        shr     ecx, 21
+        shl     edx, 11
+        or      ecx, edx
+        or      ecx, ebx
+        shl     edi, 11
+        test    ecx, 0x80000000
+        mov     [eax + 4], ecx
+        mov     [eax], edi
+        jne     short L_d2_signapply
+    L_d2_norm:
+        mov     edx, [eax]
+        add     ecx, ecx
+        mov     edi, edx
+        add     edx, edx
+        shr     edi, 31
+        or      edi, ecx
+        add     esi, 0xffff
+        mov     ecx, edi
+        mov     [eax + 4], edi
+        test    ecx, 0x80000000
+        mov     [eax], edx
+        jz      short L_d2_norm
+    L_d2_signapply:
+        or      esi, ebp
+        pop     edi
+        mov     word ptr [eax + 8], si
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+        _emit   90h
+        _emit   90h
+        push    2
+        call    func_004c6e60_helper
+        add     esp, 4
+        ret
+    }
+}
+
 extern void StrSearchCall_004c89b0(void);
 extern unsigned char g_byte_00522bb4;
 

@@ -15973,10 +15973,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cced0
-    name: func_004cced0
+    name: DoubleToLongDouble_004cced0
     size: 203
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ccfa0
     name: func_004ccfa0
     size: 360
