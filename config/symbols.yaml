@@ -12185,10 +12185,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x004a1150
-    name: func_004a1150
+    name: AudioPhaseDispatch_004a1150
     size: 393
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a12e0
     name: PushCallPauseStorePushDispatch_004a12e0
     size: 63

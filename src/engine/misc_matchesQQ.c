@@ -75473,3 +75473,127 @@ __declspec(naked) void SelfInstallPhaseDispatch_0045fd30(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_004a0370;
+extern unsigned int g_data_004e2864;
+extern void Ten404c40_404bd0_00426780(void);
+extern void PushCallPauseStorePushDispatch_004a12e0(void);
+extern void TripleStageRollback_00404a50(void);
+extern void func_0049e7e0(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void TaggedSceneDispatch_004be690(void);
+extern void InstallSelf3WaySubDec_004a1320(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void IncWrap0fJmp_004a1120(void);
+extern void Eleven404b90_404c00_004266d0(void);
+extern void func_004a13d0(void);
+
+__declspec(naked) void AudioPhaseDispatch_004a1150(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_apd_phase0
+        call    Ten404c40_404bd0_00426780
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_apd_ret
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4 + 0x1c]
+        mov     dword ptr [g_data_00542058], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542054]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_apd_subPath
+        call    PushCallPauseStorePushDispatch_004a12e0
+        pop     esi
+        pop     ebx
+        ret
+    L_apd_subPath:
+        push    0x230
+        call    TripleStageRollback_00404a50
+        add     esp, 4
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_apd_ret
+        push    0x16
+        push    offset g_data_004a0370
+        call    StoreTwoCall_0049cb40
+        mov     cx, word ptr [g_data_004e2864]
+        add     esp, 8
+        push    ecx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        call    InstallSelf3WaySubDec_004a1320
+        pop     esi
+        pop     ebx
+        ret
+    L_apd_phase0:
+        call    LinkedListIndirectDirtyToggle_0049f7b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_apd_ret
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        je      short L_apd_continue
+        call    IncWrap0fJmp_004a1120
+        pop     esi
+        pop     ebx
+        ret
+    L_apd_continue:
+        mov     eax, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4], edx
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     eax, dword ptr [ecx*4 + 0x14]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ebx
+        call    Eleven404b90_404c00_004266d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_apd_ret
+        mov     dword ptr [esi + 8], offset AudioPhaseDispatch_004a1150
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset AudioPhaseDispatch_004a1150
+        mov     dword ptr [edx*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    func_004a13d0
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_apd_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
