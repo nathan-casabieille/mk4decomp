@@ -75957,3 +75957,115 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00535e78;
+extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054207c;
+extern void ScaledZeroFour_00490740(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void Mul10Tail_00404af0(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+
+__declspec(naked) void SelfInstallPhaseDispatch_004943f0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        mov     ecx, dword ptr [g_data_0054205c]
+        test    eax, eax
+        je      L_sipd4_phase0
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        add     eax, 0x28f
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        js      L_sipd4_install
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        cmp     ecx, edx
+        mov     dword ptr [g_data_0054206c], ecx
+        jl      L_sipd4_install
+        mov     dword ptr [eax*4 + 0x58], edx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x80], 0
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542088]
+        mov     dword ptr [edx*4 + 0x68], eax
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd4_ret
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_sipd4_phase0:
+        mov     edx, dword ptr [g_data_00542074]
+        mov     dword ptr [ecx*4 + 0x80], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542078]
+        mov     dword ptr [eax*4 + 0x70], ecx
+        mov     dword ptr [g_data_0054206c], 0xa3d
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sipd4_ret
+        mov     eax, dword ptr [g_data_00535e78]
+        mov     edx, dword ptr [g_data_00535e7c]
+        mov     dword ptr [g_data_00542070], eax
+        push    eax
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_00542074], edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542074]
+        mov     edx, dword ptr [g_data_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        push    ecx
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542074], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x6c], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542074]
+        mov     dword ptr [edx*4 + 0x74], eax
+    L_sipd4_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_004943f0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_sipd4_ret:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sipd4_tail:
+        mov     dword ptr [g_data_0054207c], 0
+        jmp     EntryThunkBodyStateMachine_00457bb0
+    }
+}

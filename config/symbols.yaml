@@ -11261,10 +11261,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004943f0
-    name: func_004943f0
+    name: SelfInstallPhaseDispatch_004943f0
     size: 399
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494580
     name: GateDispatch6c_00494580
     size: 107
