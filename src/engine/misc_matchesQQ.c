@@ -57304,3 +57304,82 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         ret
     }
 }
+
+extern void InstallSelfChainAddSigned_004a18d0(void);
+extern void ScaledInitOrSelfPtrSetType14_004a1940(void);
+
+/*
+ * AudioInstall3StateSubXform_004a17d0 — 245b audio 3-state install-self.
+ *   chain = g_baseSel_00542060<<2; saved=chain->state; chain->state=0.
+ *   state 2+: ecx=g_x_0054205c; eax=chain[+0x6c]-0x4000; g_x_0054206c=eax; chain[+0x6c]=eax;
+ *     if eax>0 jump installSelf; else call ScaledInitOrSelfPtrSetType14; pop+ret.
+ *   state 1: eax=g_x_00542054; g_x_0054206c=eax; if 0 jump installSelf; else call
+ *     InstallSelfChainAddSigned; pop+ret.
+ *   state 0: chain[+0x54]=g_x_00542074; chain[+0x58]=g_x_0054206c=0; g_x_00542044=ecx;
+ *     MStackPushComplexCallPop; if !paused: install-self at entry; chain->state=1;
+ *     g_data_0054204c=0x1c; pause=1. pop+ret.
+ *   installSelf: install-self at entry; chain->state=2; g_data_0054204c=1; pause=1; pop+ret.
+ */
+__declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_a17_state0
+        dec     eax
+        je      short L_a17_state1
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x6c]
+        sub     eax, 0x4000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     eax, dword ptr [g_x_0054206c]
+        test    eax, eax
+        jg      short L_a17_installSelf
+        call    ScaledInitOrSelfPtrSetType14_004a1940
+        pop     esi
+        ret
+    L_a17_state1:
+        mov     eax, dword ptr [g_x_00542054]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_a17_installSelf
+        call    InstallSelfChainAddSigned_004a18d0
+        pop     esi
+        ret
+    L_a17_installSelf:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+    L_a17_state0:
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_x_00542074]
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     eax, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [eax*4 + 0x58], 0
+        mov     ecx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542044], ecx
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_a17_s0_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x1c
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_a17_s0_ret:
+        pop     esi
+        ret
+    }
+}
