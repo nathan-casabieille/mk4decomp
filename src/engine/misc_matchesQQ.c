@@ -54291,3 +54291,74 @@ __declspec(naked) void AudioByteCounterChain_004a9820(void)
         ret
     }
 }
+
+/*
+ * MStackPushDispatchBitGate_00407330 — 205b boot mstack-push + 3-way dispatch with bit-4 gate.
+ *   Push g_x_00542048 to mstack; call DispatcherComplex260; if paused: pop ebx, ret.
+ *   bl=4; save g_x_00542044 → g_x_0054205c. If g_state_0054208c & 4: skip to pop chain.
+ *   Else call func_00408600; if paused: ret. If g_state_0054208c & 4 still: skip to func_00406790.
+ *   Else call func_004088b0; if paused: ret. If !(g_state_0054208c & 4): skip pop chain.
+ *   Otherwise call func_00406790; if paused: ret. Zero g_x_00542044, g_x_0054205c.
+ *   Pop mstack into g_x_00542048; g_state_0054208c |= 4; if g_x_00542044 != 0:
+ *   g_state_0054208c ^= 4.
+ */
+__declspec(naked) void MStackPushDispatchBitGate_00407330(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_pop_ret
+        mov     al, byte ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_x_00542044]
+        mov     ebx, 4
+        mov     dword ptr [g_x_0054205c], edx
+        _emit   84h
+        _emit   0c3h
+        jne     short L_skipDispatch
+        call    func_00408600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret
+        test    byte ptr [g_state_0054208c], bl
+        jne     short L_call6790
+        call    func_004088b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret
+        test    byte ptr [g_state_0054208c], bl
+        je      short L_skipDispatch
+    L_call6790:
+        call    func_00406790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_pop_ret
+        mov     dword ptr [g_x_00542044], 0
+        mov     dword ptr [g_x_0054205c], 0
+    L_skipDispatch:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_x_00542044]
+        or      ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        je      short L_pop_ret
+        mov     eax, ecx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+    L_pop_ret:
+        pop     ebx
+        ret
+    }
+}
