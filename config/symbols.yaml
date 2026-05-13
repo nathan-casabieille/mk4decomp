@@ -12750,10 +12750,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesCC.c
   - addr: 0x004a9270
-    name: func_004a9270
+    name: AudioBank2StatePickerWalk_004a9270
     size: 324
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a93c0
     name: func_004a93c0
     size: 1116
