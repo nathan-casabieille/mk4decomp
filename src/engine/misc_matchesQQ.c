@@ -50942,3 +50942,126 @@ __declspec(naked) void AudioBridgeMStackChainCopy_00440730(void) {
         ret
     }
 }
+
+extern void ChainGatedNegAccum_0048b740(void);
+extern void TripleVecAccCallStore_00476880(void);
+extern void ScaledInit_00450ed0(void);
+extern void ScaledInit_00450ef0(void);
+extern void func_00451060(void);
+
+/* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
+__declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
+    __asm {
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   0fh
+        _emit   85h
+        _emit   0e5h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     dword ptr [g_cj_0054205c], eax
+        mov     eax, dword ptr [g_x_00542054]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     edx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_acc_00542078], edx
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_state_0054207c], eax
+        call    ChainGatedNegAccum_0048b740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   8dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_acc_00542078]
+        mov     dword ptr [ecx*4 + 0x54], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_state_0054207c]
+        mov     dword ptr [eax*4 + 0x5c], ecx
+        mov     edx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0xc]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_00542074], 0x1999
+        add     edx, 0x15
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    TripleVecAccCallStore_00476880
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   22h
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   0ah
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    ScaledInit_00450ed0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00451060
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    ScaledInit_00450ef0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_00451060
+        ret
+    }
+}
