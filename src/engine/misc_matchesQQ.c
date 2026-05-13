@@ -56141,3 +56141,74 @@ __declspec(naked) void BootChainTripleStoreThenDispatch_004076b0(void)
         ret
     }
 }
+
+extern unsigned int g_data_005420e8;
+
+/*
+ * BootSetJmpStoreThenChainTriple_0040b970 — 250b boot SetJmp + StoreTwo + chain triple-step.
+ *   Call SetJmp; if paused: ret. If !(g_state_0054208c & 4): ret. Call MStackPush8;
+ *     if paused: ret. Snapshot g_x_00542044 → g_x_00542054; g_x_00542048 → g_x_00542050;
+ *     g_cj_00542058 = (0x005420e8 >> 2); g_state_0054207c = 0xc1; push (0xc0, 0x0049db40);
+ *     call StoreTwoCall. If al bit 0: tail-jmp MStackPop8. Else call MStackPushCallPop;
+ *     if paused: ret. Three iterations: g_x_0054206c = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
+ *     g_x_00542050++. Tail-jmp MStackPop8.
+ */
+__declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
+{
+    __asm
+    {
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_b970_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      L_b970_ret
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_b970_ret
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     edx, offset g_data_005420e8
+        push    0xc0
+        shr     edx, 2
+        push    0x0049db40
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_x_00542050], ecx
+        mov     dword ptr [g_cj_00542058], edx
+        mov     dword ptr [g_state_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     short L_b970_pop8
+        call    MStackPushCallPop_0040a830
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b970_ret
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x44], eax
+        mov     eax, dword ptr [g_x_00542050]
+        mov     edx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542050], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     eax, dword ptr [g_x_00542050]
+        mov     ecx, dword ptr [g_x_00542044]
+        inc     eax
+        mov     dword ptr [g_x_00542050], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        inc     dword ptr [g_x_00542050]
+    L_b970_pop8:
+        jmp     MStackPop8_004ab860
+    L_b970_ret:
+        ret
+    }
+}
