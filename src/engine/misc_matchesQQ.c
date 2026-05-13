@@ -60087,6 +60087,161 @@ extern void *g_iat_004d2130;
 extern void *g_iat_004d2134;
 extern void *g_iat_004d20e4;
 extern unsigned int g_data_00522620;
+extern unsigned int g_data_00f9fc30;
+extern void *g_iat_004d20bc;
+extern void *g_iat_004d20b8;
+extern unsigned int g_data_004d2f20;
+extern unsigned int g_data_004d2f24;
+
+/* @addr 0x004cdae0 (312b crt) - WideCharToMultiByte dispatcher (mbslen/wcsstr style).
+ *   Caches state in g_data_00f9fc30 (1/2). Probes via IAT[0x4d20b8] with ".A"/".A0"
+ *   buffers (0x4d2f20/0x4d2f24). State 2 fast path: direct IAT[0x4d20bc] call.
+ *   State 1 conversion path: allocate via func_004c6110, WideCharToMultiByte via
+ *   IAT[0x4d20e4], MultiByteToWideChar(?) via IAT[0x4d20b8], free temp via FreeImpl.
+ */
+__declspec(naked) void WcToMbDispatcher_004cdae0(void) {
+    __asm {
+        push    ecx
+        mov     eax, dword ptr [g_data_00f9fc30]
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, dword ptr [g_iat_004d20bc]
+        push    edi
+        xor     edi, edi
+        cmp     eax, edi
+        jne     short L_wm_haveState
+        lea     eax, [esp + 0x12]
+        push    eax
+        push    1
+        push    offset g_data_004d2f24
+        push    1
+        call    dword ptr [g_iat_004d20b8]
+        test    eax, eax
+        jz      L_wm_tryAlt
+        mov     eax, 1
+        mov     dword ptr [g_data_00f9fc30], eax
+    L_wm_haveState:
+        cmp     eax, 2
+        jne     short L_wm_state1
+        mov     eax, [esp + 0x2c]
+        cmp     eax, edi
+        jne     short L_wm_haveCP1
+        mov     eax, dword ptr [g_data_00f9fc10]
+    L_wm_haveCP1:
+        mov     edx, [esp + 0x24]
+        mov     ecx, [esp + 0x20]
+        push    edx
+        mov     edx, [esp + 0x20]
+        push    ecx
+        mov     ecx, [esp + 0x20]
+        push    edx
+        push    ecx
+        push    eax
+        call    esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_wm_state1:
+        cmp     eax, 1
+        jne     L_wm_popRet
+        mov     ebx, [esp + 0x28]
+        mov     [esp + 0x2c], edi
+        cmp     ebx, edi
+        jne     short L_wm_haveCP2
+        mov     ebx, dword ptr [g_data_00f9fc20]
+    L_wm_haveCP2:
+        mov     eax, [esp + 0x30]
+        mov     ebp, [esp + 0x20]
+        mov     edx, [esp + 0x1c]
+        push    edi
+        neg     eax
+        sbb     eax, eax
+        push    edi
+        and     eax, 8
+        push    ebp
+        inc     eax
+        push    edx
+        push    eax
+        push    ebx
+        call    dword ptr [g_iat_004d20e4]
+        mov     esi, eax
+        test    esi, esi
+        jz      short L_wm_freeNul
+        push    esi
+        push    2
+        call    func_004c6110
+        mov     edi, eax
+        add     esp, 8
+        test    edi, edi
+        jz      short L_wm_freeNul
+        mov     ecx, [esp + 0x1c]
+        push    esi
+        push    edi
+        push    ebp
+        push    ecx
+        push    1
+        push    ebx
+        call    dword ptr [g_iat_004d20e4]
+        test    eax, eax
+        jz      short L_wm_freeNul
+        mov     edx, [esp + 0x24]
+        push    edx
+        push    eax
+        mov     eax, [esp + 0x20]
+        push    edi
+        push    eax
+        call    dword ptr [g_iat_004d20b8]
+        push    edi
+        mov     esi, eax
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_wm_freeNul:
+        mov     esi, [esp + 0x2c]
+        push    edi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, esi
+    L_wm_popRet:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_wm_tryAlt:
+        lea     ecx, [esp + 0x12]
+        push    ecx
+        push    1
+        push    offset g_data_004d2f20
+        push    1
+        push    edi
+        call    esi
+        test    eax, eax
+        jz      short L_wm_returnZero
+        mov     eax, 2
+        mov     dword ptr [g_data_00f9fc30], eax
+        jmp     L_wm_haveState
+    L_wm_returnZero:
+        pop     edi
+        pop     esi
+        pop     ebp
+        xor     eax, eax
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
 extern unsigned int g_data_00522640;
 extern void TestHandleBit_004cc2b0(void);
 extern unsigned int g_data_00541e6c;

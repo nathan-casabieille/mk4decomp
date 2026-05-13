@@ -16061,10 +16061,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cdae0
-    name: func_004cdae0
+    name: WcToMbDispatcher_004cdae0
     size: 312
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cdc20
     name: func_004cdc20
     size: 256
