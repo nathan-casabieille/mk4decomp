@@ -4631,10 +4631,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d620
-    name: func_0043d620
+    name: StateMachineDualModuloInstall_0043d620
     size: 338
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d780
     name: DoubleCallChainInit_0043d780
     size: 169

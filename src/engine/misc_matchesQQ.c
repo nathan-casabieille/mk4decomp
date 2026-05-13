@@ -52774,3 +52774,122 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         ret
     }
 }
+
+extern void ModuloMagic_0042afc0(void);
+extern void GuardedSeq_00472820(void);
+extern void Thunk_0049cc00(void);
+extern void func_0043d830(void);
+
+/* @addr 0x0043d620 (338b game) - state-machine + dual ModuloMagic + 3-state install.
+ *   state>=2: jne to second dual-call block.
+ *   state<2: compute (g_cj[+0x64]-g_x_00542084) -> push -> ModuloMagic; if result <= 0: install state=1.
+ *   Second block: same compute again; if result > 0: install state=2.
+ *   Else: g_x_0054206c=0xa; call GuardedSeq; if pause ret.
+ *     g_x_0054206c=0x91, g_data_00542070=-1; call Thunk_0049cc00; if pause ret.
+ *     Push 0x91, push (func_0043d830 + 0x340); call StoreTwoCall; pop. Push 0x004e5130; call ArgSarStoreJmp; pop; ret.
+ *   Tail (+0x130, 10-NOP pad): g_x_0054206c=0; chain[g_cj*4+0x7c]=0; push 0x004e5140; call ArgSarStoreJmp; pop; ret.
+ */
+__declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   03h
+        dec     eax
+        _emit   75h
+        _emit   30h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [ecx*4 + 0x64]
+        sub     eax, edx
+        push    eax
+        mov     dword ptr [g_x_0054206c], eax
+        call    ModuloMagic_0042afc0
+        add     esp, 4
+        mov     dword ptr [g_x_0054206c], eax
+        test    eax, eax
+        _emit   0fh
+        _emit   8eh
+        _emit   0b2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x64]
+        mov     edx, dword ptr [g_x_00542084]
+        sub     eax, edx
+        push    eax
+        mov     dword ptr [g_x_0054206c], eax
+        call    ModuloMagic_0042afc0
+        add     esp, 4
+        mov     dword ptr [g_x_0054206c], eax
+        test    eax, eax
+        _emit   7fh
+        _emit   64h
+        mov     dword ptr [g_x_0054206c], 0xa
+        call    GuardedSeq_00472820
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0x91
+        mov     dword ptr [g_data_00542070], 0xffffffff
+        call    Thunk_0049cc00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   64h
+        push    0x91
+        push    offset func_0043d830 + 0x340
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        push    0x004e5130
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset StateMachineDualModuloInstall_0043d620
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset StateMachineDualModuloInstall_0043d620
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004e5140
+        mov     dword ptr [ecx*4 + 0x7c], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
