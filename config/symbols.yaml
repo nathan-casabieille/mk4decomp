@@ -11941,10 +11941,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049e1c0
-    name: func_0049e1c0
+    name: PhaseClampInstallSlot_0049e1c0
     size: 411
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049e360
     name: GuardedCmpDualToggle_0049e360
     size: 83

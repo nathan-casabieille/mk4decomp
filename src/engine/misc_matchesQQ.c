@@ -77542,3 +77542,113 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541d88;
+extern unsigned int g_data_00537ea8;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_0050f184;
+extern void DispatcherComplex260_00407400(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void StackPopDispatchTagged_0041f780(void);
+
+__declspec(naked) void PhaseClampInstallSlot_0049e1c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        shl     eax, 2
+        xor     esi, esi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], esi
+        sub     ecx, esi
+        je      L_pcis_phase0
+        dec     ecx
+        je      L_pcis_phase1
+        dec     ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_data_0054206c], edx
+        je      L_pcis_phase2
+        cmp     edx, 0xfff50000
+        jl      L_pcis_phase3
+        mov     dword ptr [ecx*4 + 0x74], esi
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xfff60000
+        mov     edx, offset g_data_0050f184
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        shr     edx, 2
+        mov     dword ptr [g_data_00542048], edx
+        call    DispatcherComplex260_00407400
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_pcis_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_pcis_tail
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x54], esi
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 0xff8a0000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        call    MStackPushComplexCallPop_00406430
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_pcis_ret
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_data_00541d88], esi
+        mov     dword ptr [g_data_00537ea8], esi
+    L_pcis_tail:
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_pcis_phase2:
+        cmp     edx, 0xffee0000
+        jl      short L_pcis_install2
+        mov     edx, 0x10000
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [ecx*4 + 0x74], edx
+    L_pcis_phase3:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset PhaseClampInstallSlot_0049e1c0
+        mov     dword ptr [eax + 0x84], 3
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+        pop     esi
+        ret
+    L_pcis_phase1:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, 0x29999
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x74], ecx
+    L_pcis_install2:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset PhaseClampInstallSlot_0049e1c0
+        mov     dword ptr [eax + 0x84], 2
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+        pop     esi
+        ret
+    L_pcis_phase0:
+        mov     ecx, dword ptr [g_data_0052ab10]
+        mov     edx, 0x53333
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [ecx*4 + 0x74], edx
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset PhaseClampInstallSlot_0049e1c0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0xc
+        mov     dword ptr [g_data_00541e6c], ecx
+    L_pcis_ret:
+        pop     esi
+        ret
+    }
+}
