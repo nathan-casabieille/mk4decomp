@@ -46342,3 +46342,83 @@ __declspec(naked) void TripleBlockInstallSelfMidBody_00482f60(void) {
         ret
     }
 }
+
+extern void TripleCallBitJmp_00471690(void);
+extern void InstallSelfBranchCascade_00471840(void);
+
+/* @addr 0x00471710 (294b game) - dual-entry: scaledInit field-setter + install-self via self-call.
+ *   Entry (0..0x74): set scaledInit/[cj*4+0x18] chain; or-mask fields; cj[+0x48]=g_x_00542074; ret.
+ *   Body (+0x80): load idx state; clear state.
+ *   state==0: g_data_00542070=0, g_x_00542074=0x10000; call entry recursively; if pause ret.
+ *     Tail-jmp InstallSelfBranchCascade.
+ *   state!=0: install-self at body+0x01000000; state=1; call TripleCallBitJmp; pause=1; ret.
+ */
+__declspec(naked) void DualEntryRecursiveInstall_00471710(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      ah, 6
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [eax*4 + 0x2c], edx
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [ecx*4 + 0]
+        or      al, 0xa
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [eax*4 + 0x48], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_790:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   27h
+        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_x_00542074], 0x10000
+        call    DualEntryRecursiveInstall_00471710
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   67h
+        jmp     InstallSelfBranchCascade_00471840
+        mov     dword ptr [eax + 8], offset body_790
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset body_790
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    TripleCallBitJmp_00471690
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}

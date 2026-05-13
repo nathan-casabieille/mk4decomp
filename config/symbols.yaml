@@ -7474,10 +7474,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00471710
-    name: func_00471710
+    name: DualEntryRecursiveInstall_00471710
     size: 294
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00471840
     name: InstallSelfBranchCascade_00471840
     size: 212
