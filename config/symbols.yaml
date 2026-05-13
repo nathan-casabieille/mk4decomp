@@ -5906,10 +5906,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00459030
-    name: func_00459030
+    name: TableWalkMatchInsert_00459030
     size: 296
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00459160
     name: MStackPush2ClampLookup_00459160
     size: 150
