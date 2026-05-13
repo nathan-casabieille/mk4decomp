@@ -13820,10 +13820,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b31e0
-    name: func_004b31e0
+    name: MatVec2Multiply_004b31e0
     size: 301
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3310
     name: TransformVertex
     size: 383

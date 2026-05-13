@@ -60265,6 +60265,128 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_data_00542044;
 extern void ScaledNegThreeWords_004be210(void);
 extern void WtSnapshotPushCall_004bda70(void);
+extern void Word9Reorder_004b3b30(void);
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af9c0;
+extern unsigned int g_data_007af9c4;
+extern unsigned int g_data_007af9c8;
+extern unsigned int g_data_007af9cc;
+extern unsigned int g_data_007af9d0;
+extern unsigned int g_data_007af9d4;
+extern unsigned int g_data_007af9d8;
+extern unsigned int g_data_007af9dc;
+extern unsigned int g_data_007af9e0;
+extern unsigned int g_data_007af9e4;
+extern unsigned int g_data_007af9e8;
+extern unsigned int g_data_007af9ec;
+
+/* @addr 0x004b31e0 (301b engine.app) - 2x3-vector × 3x3-matrix Q12 multiply.
+ *   Calls Word9Reorder_004b3b30(0x007af990, &local) to pull 9 words into local
+ *   stack buf. Computes 6 Q12 dot products:
+ *     out[0..2] = M_row0 . v0,  M_row0 . v1
+ *     out[3..5] = M_row1 . v0,  M_row1 . v1
+ *   (where v0 is words at +0x18, v1 at +0x1c). Matrix is in
+ *   g_data_007af9c0..d4. Results stored to g_data_007af9d8..ec.
+ */
+__declspec(naked) void MatVec2Multiply_004b31e0(void) {
+    __asm {
+        sub     esp, 0x20
+        _emit   8dh
+        _emit   44h
+        _emit   24h
+        _emit   0h
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        push    eax
+        push    offset g_data_007af990
+        call    Word9Reorder_004b3b30
+        movsx   esi, word ptr [esp + 0x18]
+        movsx   edx, word ptr [esp + 0x1a]
+        mov     eax, dword ptr [g_data_007af9c0]
+        mov     ecx, dword ptr [g_data_007af9c4]
+        mov     ebx, eax
+        mov     ebp, ecx
+        imul    ebx, esi
+        imul    ebp, edx
+        movsx   edi, word ptr [esp + 0x1c]
+        mov     edx, dword ptr [g_data_007af9c8]
+        add     ebx, ebp
+        mov     ebp, edx
+        add     esp, 8
+        imul    ebp, edi
+        movsx   edi, word ptr [esp + 0x16]
+        add     ebx, ebp
+        mov     ebp, eax
+        sar     ebx, 0x0c
+        imul    ebp, edi
+        mov     dword ptr [g_data_007af9d8], ebx
+        mov     edi, ecx
+        movsx   ebx, word ptr [esp + 0x18]
+        imul    edi, ebx
+        add     ebp, edi
+        mov     ebx, edx
+        movsx   edi, word ptr [esp + 0x1a]
+        imul    ebx, edi
+        add     ebp, ebx
+        movsx   ebx, word ptr [esp + 0x1c]
+        sar     ebp, 0x0c
+        imul    eax, ebx
+        movsx   ebx, word ptr [esp + 0x1e]
+        mov     dword ptr [g_data_007af9dc], ebp
+        imul    ecx, ebx
+        movsx   ebp, word ptr [esp + 0x20]
+        imul    edx, ebp
+        add     eax, ecx
+        mov     ecx, dword ptr [g_data_007af9d0]
+        add     eax, edx
+        movsx   edx, word ptr [esp + 0x12]
+        sar     eax, 0x0c
+        mov     dword ptr [g_data_007af9e0], eax
+        mov     eax, dword ptr [g_data_007af9cc]
+        mov     ebx, eax
+        imul    ebx, esi
+        mov     esi, ecx
+        imul    esi, edx
+        mov     edx, dword ptr [g_data_007af9d4]
+        add     ebx, esi
+        movsx   esi, word ptr [esp + 0x14]
+        mov     ebp, edx
+        imul    ebp, esi
+        movsx   esi, word ptr [esp + 0x16]
+        add     ebx, ebp
+        mov     ebp, ecx
+        sar     ebx, 0x0c
+        mov     dword ptr [g_data_007af9e4], ebx
+        mov     ebx, eax
+        imul    ebx, esi
+        movsx   esi, word ptr [esp + 0x18]
+        imul    ebp, esi
+        mov     esi, edx
+        add     ebx, ebp
+        imul    esi, edi
+        add     ebx, esi
+        movsx   esi, word ptr [esp + 0x1c]
+        imul    eax, esi
+        movsx   esi, word ptr [esp + 0x1e]
+        imul    ecx, esi
+        sar     ebx, 0x0c
+        mov     dword ptr [g_data_007af9e8], ebx
+        add     eax, ecx
+        movsx   ecx, word ptr [esp + 0x20]
+        imul    edx, ecx
+        add     eax, edx
+        pop     edi
+        sar     eax, 0x0c
+        pop     esi
+        pop     ebp
+        mov     dword ptr [g_data_007af9ec], eax
+        pop     ebx
+        add     esp, 0x20
+        ret
+    }
+}
 
 /* @addr 0x004b9510 (301b engine.render) - per-frame model render path.
  *   Pushes 2 mstack frames, looks up dispatch in g_table_004f7868[idx], runs
