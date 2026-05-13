@@ -53703,3 +53703,70 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
         jmp     Thunk_004c48b0
     }
 }
+
+extern unsigned int g_state_004d50b4;
+extern signed char g_byteTab_004f3080;
+extern void SetJmp_004a1ad0(void);
+extern void Helper_AudioStub_2960(void);
+
+/*
+ * DualBitFlagAudioChain_004a29d0 — 175b audio dispatcher with two parallel bit-flag branches.
+ *   Reads g_state_004d50b4 as byte pair (al,ah).
+ *   Branch 0 (al bit 0 OR ah bit 0): movsx slot from g_byteTab_004f3080[edx*4];
+ *     if slot != -1 set chain->field_30 = slot and SetJmp; push 0x00160000;
+ *     g_state_00542080 = 0x708; call Helper_AudioStub_2960.
+ *   Branch 1 (al bit 1 OR ah bit 1): same with g_byteTab_004f3080+1 and push 0xffea0000.
+ */
+__declspec(naked) void DualBitFlagAudioChain_004a29d0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d50b4]
+        test    al, 1
+        jne     short L_b0_enter
+        test    ah, 1
+        je      short L_b1_check
+    L_b0_enter:
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        mov     edx, eax
+        shl     edx, 3
+        sub     edx, eax
+        movsx   eax, byte ptr [edx*4 + g_byteTab_004f3080]
+        cmp     eax, -1
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_b0_skip
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    SetJmp_004a1ad0
+    L_b0_skip:
+        push    0x00160000
+        mov     dword ptr [g_state_00542080], 0x00000708
+        call    Helper_AudioStub_2960
+        mov     eax, dword ptr [g_state_004d50b4]
+        add     esp, 4
+    L_b1_check:
+        test    al, 2
+        jne     short L_b1_enter
+        test    ah, 2
+        je      short L_ret
+    L_b1_enter:
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        mov     edx, eax
+        shl     edx, 3
+        sub     edx, eax
+        movsx   eax, byte ptr [edx*4 + g_byteTab_004f3080 + 1]
+        cmp     eax, -1
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_b1_skip
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    SetJmp_004a1ad0
+    L_b1_skip:
+        push    0xffea0000
+        mov     dword ptr [g_state_00542080], 0x00000708
+        call    Helper_AudioStub_2960
+        add     esp, 4
+    L_ret:
+        ret
+    }
+}
