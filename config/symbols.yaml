@@ -14163,10 +14163,11 @@ functions:
     group: engine.geo
     status: stub
   - addr: 0x004b6180
-    name: func_004b6180
+    name: HudFontPrecache_004b6180
     size: 300
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b62b0
     name: Helper_MenuStub_62B0
     size: 1
