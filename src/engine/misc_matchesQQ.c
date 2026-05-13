@@ -45738,3 +45738,121 @@ __declspec(naked) void MStackPush4DualCallAbsPop4_00430d30(void) {
         ret
     }
 }
+
+extern void DualMul10Tail_004395d0(void);
+extern void DispatchWcSwitch_00434b60(void);
+
+/* @addr 0x00436120 (289b game) - threshold prefix + install-self dispatcher.
+ *   Prefix (0..0x1b): g_x_0054206c = g_state_00535ddc; if eax<0x12666: jmp PushCallPauseSet1Jmp;
+ *     else jmp InstallSelfChainSetB333v3_00437fb0. (5 NOPs pad to 0x20.)
+ *   Body (0x20..): state-machine entry.
+ *   See @addr 0x00436140 for body details. Install-self target is body (offset 0x20).
+ */
+__declspec(naked) void ThresholdInitInstallSelfChain_00436120(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x12666
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     PushCallPauseSet1Jmp_00438f20
+        jmp     InstallSelfChainSetB333v3_00437fb0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_0x20:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   3dh
+        call    DualMul10Tail_004395d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   6ah
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   07h
+        call    DispatchWcSwitch_00434b60
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   07h
+        call    InstallSelfChainSet13333Alt_004377d0
+        pop     esi
+        ret
+        call    Wrapper_00438ee0
+        pop     esi
+        ret
+        push    0x004e4a0c
+        call    func_0043a950
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1ch
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset body_0x20
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x14ccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00437c10
+        jmp     func_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x14ccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     func_00437c10
+        cmp     eax, 0x2b333
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     func_00438f80
+        ret
+    }
+}

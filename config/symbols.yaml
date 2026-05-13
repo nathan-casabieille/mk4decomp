@@ -3714,10 +3714,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00436120
-    name: func_00436120
+    name: ThresholdInitInstallSelfChain_00436120
     size: 289
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436250
     name: CmpRangeJmpStateInit_00436250
     size: 85
