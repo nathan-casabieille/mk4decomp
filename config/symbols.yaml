@@ -13420,10 +13420,11 @@ functions:
     status: matched
     file: src/engine/com_release_pair.c
   - addr: 0x004afd10
-    name: func_004afd10
+    name: DSoundModeSetup_004afd10
     size: 297
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004afe40
     name: DialogProbeDispatch_004afe40
     size: 123
