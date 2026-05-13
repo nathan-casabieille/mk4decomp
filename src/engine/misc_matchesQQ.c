@@ -49575,3 +49575,108 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         ret
     }
 }
+
+extern void func_0049a670(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+
+/* @addr 0x0049a4e0 (312b game) - dual-block: install-self entry + sibling-tail with Mul10 chain.
+ *   Entry (0..0x96): load state; clear. state!=0: tail-jmp FiveCallGuardSetTail.
+ *     state==0: g_x_0054206c=0x1016; chain[baseSel*4+0x74]=0x1016; install-self at entry+0x01000000.
+ *     state=1; call ScaledLoadJmp; pause=1; pop esi/edi; ret.
+ *   Tail (+0xa0): call func_0049a670; if pause ret.
+ *     Mul10Tail(0x3333, g_x_00542084)->[g_x_00542084 + scaledInit chain offset +0x6c].
+ *     Mul10Tail(0x3333, g_state_00542088)->chain[+0x74].
+ *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
+ *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
+ */
+__declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     FiveCallGuardSetTail_0046f6b0
+        push    edi
+        push    esi
+        mov     esi, dword ptr [g_baseSel_00542060]
+        mov     ecx, 0x1016
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     edi, offset DualBlockInstallMul10Tail_0049a4e0
+        mov     dword ptr [esi*4 + 0x74], ecx
+        mov     dword ptr [eax + 8], offset DualBlockInstallMul10Tail_0049a4e0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     esi, 1
+        add     edi, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_pause_00541e6c], esi
+        pop     esi
+        pop     edi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    func_0049a670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        push    ecx
+        push    0x3333
+        lea     esi, [eax*4 + 0]
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [g_x_00542084], eax
+        push    edx
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_state_00542088], eax
+        mov     eax, dword ptr [g_x_00542084]
+        mov     dword ptr [esi + 0x6c], eax
+        mov     ecx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [esi + 0x74], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        push    0x23fb23
+        mov     dword ptr [g_cj_0054205c], edx
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_cj_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        push    0x004f2410
+        call    ArgSar_Set0_Jmp_0049c6f0
+        add     esp, 4
+        pop     esi
+        ret
+    }
+}
