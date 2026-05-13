@@ -11578,10 +11578,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049ca10
-    name: func_0049ca10
+    name: TripleBlockChainDiffMStackThunks_0049ca10
     size: 302
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049cb40
     name: StoreTwoCall_0049cb40
     size: 28

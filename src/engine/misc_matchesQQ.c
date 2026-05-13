@@ -47709,3 +47709,114 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         ret
     }
 }
+
+extern void func_004245b0(void);
+extern void CondPickDualStore_0049c670(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void DualMul10AndDispatchChain_0049c220(void);
+extern void ArgSar_Set1_Jmp_0049c6d0(void);
+
+/* @addr 0x0049ca10 (302b game) - 3-block: chain-diff mstack-push + push-call thunks.
+ *   Block A (0..0x6c): mstack-push g_state_00542080. Compute diffs between [baseSel*4+0x38] and g_cj fields.
+ *     g_x_00542074 = [scaledInit*4+0x54] - [cj*4+0x54]; g_acc = [scaledInit*4+0x5c] - [cj*4+0x5c].
+ *     Call func_004245b0; if pause skip. Call func_00407510; if pause skip.
+ *     chain[baseSel*4+0x70] = g_x_0054206c. Mstack-pop into g_state_00542080. Pop esi; ret.
+ *   Block B (+0xc0): call CondPickDualStore; if pause ret. Push 0x004f2778; call ArgSarStoreJmp; pop; ret.
+ *   Block C (+0xe0): call DualCmpSwapStore; if pause ret. Push 0x004f27b8; call ScaledStackCallPause; pop; if pause ret.
+ *     If bit2(0054208c): jmp CallSetPause. Else call DualMul10AndDispatchChain; if pause ret.
+ *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
+ */
+__declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_state_00542080]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x38]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_data_00542070], ecx
+        mov     esi, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_x_00542074], esi
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        sub     esi, edx
+        sub     eax, ecx
+        mov     dword ptr [g_x_00542074], esi
+        mov     dword ptr [g_acc_00542078], eax
+        call    func_004245b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   38h
+        call    func_00407510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2ah
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x70], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004f2778
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        push    0x004f27b8
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        call    DualMul10AndDispatchChain_0049c220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004f27c8
+        call    ArgSar_Set1_Jmp_0049c6d0
+        add     esp, 4
+        ret
+    }
+}
