@@ -8781,10 +8781,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x00480d50
-    name: func_00480d50
+    name: TwoPhaseInstallScaledPackedPtr_00480d50
     size: 416
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480ef0
     name: CallPauseDirtyScaledSet7_00480ef0
     size: 47

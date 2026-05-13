@@ -78796,3 +78796,119 @@ __declspec(naked) void MStackBracketedScaledStores_00475b30(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00500c74;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054204c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void CopyJmp_0048ef90(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void CallDualStoreXorBit_004285e0(void);
+
+__declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_tpisp_phase0
+        dec     eax
+        je      short L_tpisp_phase1
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        pop     ebx
+        ret
+    L_tpisp_phase1:
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpisp_ret
+        test    byte ptr [g_data_0054208c], bl
+        jne     L_tpisp_final
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x12
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_00500c74
+        mov     ecx, offset TwoPhaseInstallScaledPackedPtr_00480d50
+        shr     eax, 2
+        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr_00480d50
+        mov     eax, dword ptr [g_data_00542060]
+        add     ecx, 0x2000000
+        mov     dword ptr [eax*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    L_tpisp_phase0:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, 0x1005
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x74], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [eax*4 + 0x70], ecx
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpisp_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_00500c74
+        shr     eax, 2
+        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [edx*4 + 0x24], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 7
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+    L_tpisp_final:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x28]
+        cmp     eax, 0x12
+        mov     dword ptr [g_data_0054206c], eax
+        jge     short L_tpisp_install
+        call    CallDualStoreXorBit_004285e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpisp_ret
+    L_tpisp_install:
+        mov     dword ptr [esi + 8], offset TwoPhaseInstallScaledPackedPtr_00480d50
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_tpisp_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
