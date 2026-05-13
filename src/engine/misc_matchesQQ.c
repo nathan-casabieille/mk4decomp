@@ -47006,3 +47006,110 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
         ret
     }
 }
+
+/* @addr 0x0049d550 (299b game) - linked-list walk: 2 unrolled iterations with triple Mul10Tail per node.
+ *   Init: g_data_00542070=eax=g_scaledInit_00542044; if zero ret.
+ *   Each iteration: esi=eax*4 (node), edi=ecx*4 (chain ptr, ecx=g_x_00542048).
+ *     mul10[node+0x10] with [chain*4]; mul10[node+0x14] with [chain+4]; mul10[node+0x18] with [chain+8].
+ *     Advance scaledInit via [scaledInit*4]; if zero ret.
+ *   Unrolled to 2 iterations: 2nd block loops back to 1st on continue.
+ *   Pop edi/esi; ret.
+ */
+__declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
+    __asm {
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        push    esi
+        test    eax, eax
+        push    edi
+        mov     dword ptr [g_data_00542070], eax
+        _emit   0fh
+        _emit   84h
+        _emit   14h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00542048]
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [ecx*4 + 0]
+        lea     edi, [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [esi + 0x10]
+        push    eax
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x10], eax
+        mov     eax, dword ptr [edi + 4]
+        mov     dword ptr [g_x_0054206c], eax
+        push    eax
+        mov     eax, dword ptr [esi + 0x14]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi + 0x14], eax
+        mov     edi, dword ptr [edi + 8]
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], edi
+        mov     ecx, dword ptr [esi + 0x18]
+        push    edi
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi + 0x18], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     eax, dword ptr [edx*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   0fh
+        _emit   84h
+        _emit   8ah
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_00542048]
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [ecx*4 + 0]
+        lea     edi, [ecx*4 + 0]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     edx, dword ptr [esi + 0x10]
+        push    eax
+        push    edx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x10], eax
+        mov     eax, dword ptr [edi + 4]
+        mov     dword ptr [g_x_0054206c], eax
+        push    eax
+        mov     eax, dword ptr [esi + 0x14]
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi + 0x14], eax
+        mov     edi, dword ptr [edi + 8]
+        add     esp, 8
+        mov     dword ptr [g_x_0054206c], edi
+        mov     ecx, dword ptr [esi + 0x18]
+        push    edi
+        push    ecx
+        call    Mul10Tail_00404af0
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [esi + 0x18], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     eax, dword ptr [edx*4 + 0]
+        test    eax, eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   0fh
+        _emit   85h
+        _emit   76h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        pop     edi
+        pop     esi
+        ret
+    }
+}

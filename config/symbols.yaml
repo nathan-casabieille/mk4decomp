@@ -11738,10 +11738,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d550
-    name: func_0049d550
+    name: LoopUnrolledTripleMul10_0049d550
     size: 299
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d680
     name: func_0049d680
     size: 596
