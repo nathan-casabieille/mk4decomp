@@ -60028,6 +60028,136 @@ extern void FpFormatRound_004ccda0(void);
 extern void FormatHelper_004c8750(void);
 extern void PrintfStubSigned_004c85d0(void);
 extern void CfltcvtFormat_004c8650(void);
+extern void LeaScaledCall_004bd510(void);
+extern void Mem_Malloc(void);
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00ab4e34;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+
+/* @addr 0x004bc470 (294b engine.render) - per-tri vertex/UV building from indexed source.
+ *   arg0 (esp+8): poly index. Reads [0x542048]+4 (base table); fetches 16-byte
+ *   entry; reads bp = count (entry+0xe), ebx = entry+0xc. If ebp == 0, free slot
+ *   in [edx*4 + 0x48] table and return.
+ *   Allocates a vertex block via LeaScaledCall_004bd510 + Mem_Malloc; iterates
+ *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
+ *   byte, masking into output.
+ */
+__declspec(naked) void VertexQuadBuilder_004bc470(void) {
+    __asm {
+        push    ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, [esp + 8]
+        shl     eax, 4
+        mov     edx, [ecx + 4]
+        push    ebx
+        push    ebp
+        xor     ebp, ebp
+        mov     bp, word ptr [eax + edx + 0xe]
+        lea     ebx, [eax + edx + 0xc]
+        push    esi
+        push    edi
+        test    ebp, ebp
+        mov     [esp + 0x10], ecx
+        jz      L_vqb_freeRet
+        mov     esi, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00ab4e34]
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edi, ebp
+        sar     esi, 0x10
+        and     esi, 8
+        lea     eax, [eax*4 + 0x48]
+        shl     edi, 3
+        or      esi, edx
+        mov     edx, [esp + 0x1c]
+        sub     edi, ebp
+        mov     [esp + 0x18], eax
+        shl     edi, 2
+        test    edx, edx
+        jz      short L_vqb_directAlloc
+        mov     eax, [eax]
+        mov     edx, [eax]
+        and     edx, 9
+        cmp     edx, esi
+        jne     short L_vqb_allocFallback
+        cmp     edi, [eax + 4]
+        jle     short L_vqb_useExisting
+    L_vqb_allocFallback:
+        push    2
+        call    LeaScaledCall_004bd510
+        mov     eax, [esp + 0x1c]
+        add     esp, 4
+    L_vqb_directAlloc:
+        lea     ecx, [edi + 0xc]
+        push    2
+        push    ecx
+        push    eax
+        call    Mem_Malloc
+        add     esp, 0xc
+        test    eax, eax
+        jne     short L_vqb_store
+    L_vqb_freeRet:
+        mov     edx, dword ptr [g_data_00542044]
+        xor     eax, eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     [edx*4 + 0x48], eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_vqb_store:
+        mov     ecx, [esp + 0x10]
+        mov     [eax + 4], edi
+    L_vqb_useExisting:
+        mov     edx, ebx
+        mov     dword ptr [g_data_0054204c], eax
+        shl     edx, 5
+        or      edx, esi
+        mov     [eax], edx
+        lea     edx, [eax + 8]
+        mov     eax, [ebx + 0xc]
+        test    ebp, ebp
+        lea     esi, [eax + ebx + 0xc]
+        mov     eax, [ecx + 4]
+        mov     ecx, [eax + 4]
+        lea     ebx, [ecx + eax + 8]
+        jle     short L_vqb_done
+    L_vqb_loop:
+        mov     ecx, 7
+        xor     eax, eax
+        mov     edi, edx
+        add     edx, 0x1c
+        rep     stosd
+        mov     ax, word ptr [esi + 2]
+        add     esi, 8
+        mov     word ptr [edx - 0x10], ax
+        mov     cx, word ptr [esi - 4]
+        mov     word ptr [edx - 0x0e], cx
+        mov     ax, word ptr [esi - 2]
+        mov     word ptr [edx - 0x0c], ax
+        movsx   ecx, byte ptr [esi - 8]
+        mov     al, byte ptr [ebx + ecx*4 + 2]
+        xor     cx, cx
+        and     al, 0x0f
+        mov     cl, al
+        mov     ax, word ptr [edx - 2]
+        and     eax, 0xfff0
+        or      ecx, eax
+        dec     ebp
+        mov     word ptr [edx - 2], cx
+        jne     short L_vqb_loop
+    L_vqb_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
 
 /* @addr 0x004c8880 (293b crt) - bundled float-to-string dispatcher.
  *   sub-1 (~182b at 0x4c8880): performs digit conversion via TmFillStringCopy+0x60

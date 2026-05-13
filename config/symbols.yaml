@@ -14445,10 +14445,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004bc470
-    name: func_004bc470
+    name: VertexQuadBuilder_004bc470
     size: 294
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc5a0
     name: func_004bc5a0
     size: 569
