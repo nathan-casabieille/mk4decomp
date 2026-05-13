@@ -50164,3 +50164,111 @@ __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
         ret
     }
 }
+
+extern void GuardedCallStoreSlotsCmp_00440990(void);
+extern void GDispatch4_004089c0(void);
+extern void ThreeCallChainCopy_004409e0(void);
+extern void func_00440aa0(void);
+extern void func_00443320(void);
+
+/* @addr 0x004431e0 (316b game) - mstack-push + 3-call chain + bit2-gate + nested mstack-push + last-call sequence.
+ *   Push g_x_00542054 onto mstack. g_cj=g_x_00542054. Load chain[g_x_00542050*4]->g_x_0054206c.
+ *   Call GuardedCallStoreSlotsCmp; if pause ret. If bit2(0054208c): jmp set_bit2_pop.
+ *   Call GDispatch4; if pause ret. Same bit2 check.
+ *   Call ThreeCallChainCopy; if pause ret. g_data_00542070=0.
+ *   If [g_scaledInit*4+0x18]==0: set bit2, restore g_x_00542054 from [stack-1+4], pop mstack; ret.
+ *   Else: push g_x_00542074. Call func_00440aa0; if pause ret. Pop g_x_00542074 and g_x_00542054 from mstack.
+ *   Call func_00443320; if pause ret. Clear bit2: g_x_0054206c=1; and al, 0xfb. ret.
+ */
+__declspec(naked) void MStackPush3CallChainBit2_004431e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     edx, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_x_00542050]
+        mov     dword ptr [g_cj_0054205c], edx
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    GuardedCallStoreSlotsCmp_00440990
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0f3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   4dh
+        call    GDispatch4_004089c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d8h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   75h
+        _emit   32h
+        call    ThreeCallChainCopy_004409e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bdh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_data_00542070], 0
+        mov     eax, dword ptr [edx*4 + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   28h
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_state_004d57ac]
+        or      edx, 4
+        dec     eax
+        mov     dword ptr [g_state_0054208c], edx
+        mov     ecx, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        call    func_00440aa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4fh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    func_00443320
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   16h
+        mov     eax, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_x_0054206c], 1
+        and     al, 0xfb
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
