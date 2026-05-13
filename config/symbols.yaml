@@ -8828,10 +8828,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00482f60
-    name: func_00482f60
+    name: TripleBlockInstallSelfMidBody_00482f60
     size: 291
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483090
     name: QuadBlockDispatch_00483090
     size: 146

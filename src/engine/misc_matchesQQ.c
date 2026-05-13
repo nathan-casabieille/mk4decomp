@@ -46234,3 +46234,111 @@ __declspec(naked) void TripleChainSetupDualCall_00473da0(void) {
         ret
     }
 }
+
+extern void TableLookupCall_0048a160(void);
+extern void GateDispatch6c_00494580(void);
+extern void CopyJmp_0048ef90(void);
+extern void QuadBlockDispatch_00483090(void);
+extern void CallPauseDirtyLit_00488c70(void);
+extern void ScaledChainCmp61_00482740(void);
+extern void LiteralPushCallEntZero_00488c00(void);
+extern void CallPauseScaledStoreJmp_00428820(void);
+
+/* @addr 0x00482f60 (291b game) - triple-block: chain calls + install-self with mid-fn body.
+ *   Block A (0..0x5a): g_x_0054206c=0x10; call TableLookupCall; if pause ret.
+ *     Call GateDispatch6c; if pause ret. Call CopyJmp; if pause ret.
+ *     If bit0(0054208c): tail-jmp QuadBlockDispatch.
+ *     Else push 0x004ee390; call ArgSarStoreJmp; pop; if !pause: tail-jmp CallPauseDirtyLit.
+ *   Block B (+0x60): call GateDispatch6c; if pause ret. Call ScaledChainCmp61; if pause ret.
+ *     Push 0x004ee3c0; call ArgSarStoreJmp; pop; ret.
+ *   Block C (+0x90): xor edx; load state at [base*4+0x84]; clear state. If state!=0 jmp LiteralPushCallEntZero.
+ *     Else copy [cj*4+0x28] to g_data_00542070; install-self at body (Block C entry)+0x01000000.
+ *     Set state=1; chain ecx=scaledInit+1, store edi at [ecx*4]; call CallPauseScaledStoreJmp; pause=1; ret.
+ */
+__declspec(naked) void TripleBlockInstallSelfMidBody_00482f60(void) {
+    __asm {
+        mov     dword ptr [g_x_0054206c], 0x10
+        call    TableLookupCall_0048a160
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   37h
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     QuadBlockDispatch_00483090
+        push    0x004ee390
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallPauseDirtyLit_00488c70
+        ret
+        _emit   90h
+        _emit   90h
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        call    ScaledChainCmp61_00482740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee3c0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_ff0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        _emit   74h
+        _emit   05h
+        jmp     LiteralPushCallEntZero_00488c00
+        mov     ecx, dword ptr [g_cj_0054205c]
+        push    edi
+        mov     edi, offset body_ff0
+        mov     ecx, dword ptr [ecx*4 + 0x28]
+        add     edi, 0x01000000
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [eax + 8], offset body_ff0
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edi
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    CallPauseScaledStoreJmp_00428820
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     edi
+        ret
+    }
+}
