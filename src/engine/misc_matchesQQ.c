@@ -51753,3 +51753,117 @@ __declspec(naked) void SevenThunkDispatcher_00495770(void) {
         ret
     }
 }
+
+extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
+extern void func_00475cd0(void);
+extern void func_0048d0f0(void);
+extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void TripleStringPauseChain_004468c0(void);
+extern void func_0043cd60(void);
+
+/* @addr 0x0043cc10 (326b game) - dual-block: state-0 chain-init + state-1 body.
+ *   state==0: if g_x_0052aac4==2: set byte g_x_00538148=1. g_x_0053a430=g_x_0054206c.
+ *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call func_0048e380; if pause ret.
+ *     g_x_00542058=g_cj; push 0x90, push body addr; g_x_00542054=[baseSel*4+0x38]; call StoreTwoCall.
+ *     Install-self at entry; state=1; g_x_0054204c=0x64; pause=1; pop+ret. 15-NOP pad.
+ *   Body (+0xc0): chain[baseSel*4+0x64]=g_x_00542054; chain[baseSel*4+0x68]=g_x_00542058.
+ *     Call func_00475cd0; if pause ret. Call func_0048d0f0; if pause ret.
+ *     g_cj=g_x_00542054. Call func_0048d0f0; if pause ret.
+ *     g_x_0054206c=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
+ *     Call TripleStringPauseChain; if pause ret. Tail-jmp func_0043cd60.
+ */
+__declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   75h
+        _emit   68h
+        cmp     dword ptr [g_x_0052aac4], 2
+        _emit   75h
+        _emit   07h
+        mov     byte ptr [g_x_00538148], 1
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_0053a430], ecx
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        call    PushCallPauseSetMaxThenCallPauseJmp_0048e380
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   55h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_x_00542058], edx
+        push    0x90
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        push    offset body_cd0
+        mov     dword ptr [g_x_00542054], ecx
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        mov     dword ptr [esi + 8], offset DualBlockChainInitBody_0043cc10
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_x_0054204c], 0x64
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_cd0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     dword ptr [eax*4 + 0x64], ecx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [g_x_00542058]
+        mov     dword ptr [edx*4 + 0x68], eax
+        call    func_00475cd0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   53h
+        call    func_0048d0f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   45h
+        mov     ecx, dword ptr [g_x_00542054]
+        mov     dword ptr [g_cj_0054205c], ecx
+        call    func_0048d0f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     dword ptr [g_x_0054206c], 0x80
+        call    PushPopCurrentSetFFFFFFFF_00473070
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   13h
+        call    TripleStringPauseChain_004468c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     func_0043cd60
+        ret
+    }
+}

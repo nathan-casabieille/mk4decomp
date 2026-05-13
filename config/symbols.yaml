@@ -4590,10 +4590,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043cc10
-    name: func_0043cc10
+    name: DualBlockChainInitBody_0043cc10
     size: 326
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043cd60
     name: func_0043cd60
     size: 732
