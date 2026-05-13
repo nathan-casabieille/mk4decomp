@@ -16190,10 +16190,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004cf770
-    name: func_004cf770
+    name: FpuFlagBundle_004cf770
     size: 270
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf880
     name: func_004cf880
     size: 881

@@ -59996,6 +59996,134 @@ extern unsigned int g_data_0058c7c0;
 extern unsigned int g_data_00544298[];
 extern unsigned int g_data_00544258[];
 extern unsigned int g_iid_004d28f0[4];
+extern unsigned int g_data_00522e58[2];  /* tbyte fp constant */
+extern unsigned int g_data_00522e68[2];
+extern unsigned int g_data_00f9fc1c;
+extern unsigned int g_data_00f9fc64;
+extern unsigned int g_data_005236ac;
+extern unsigned int g_data_00523600;
+extern void func_004c6110(void);
+extern void func_004cf880(void);
+extern void func_004cfc00(void);
+
+/* @addr 0x004cf770 (270b crt) - bundled fpenv-flag-based loader + slot manager.
+ *   Sub-1 (89b): conditional FPU loads/stores from tbyte constants based on cl
+ *     flag bits 1, 8, 0x10, 4, 0x20. Sub-2 (174b): per-thread slot management.
+ *   For consolidation, both bundled into one 270-byte symbol entry.
+ */
+__declspec(naked) void FpuFlagBundle_004cf770(void) {
+    __asm {
+        /* sub-1: FPU flag-driven constant loader (0x4cf770..0x4cf7c8) */
+        push    ebp
+        mov     ebp, esp
+        sub     esp, 8
+        mov     cl, byte ptr [ebp + 8]
+        test    cl, 1
+        jz      short L_fp1
+        fld     tbyte ptr [g_data_00522e58]
+        fistp   dword ptr [ebp + 8]
+        fwait
+    L_fp1:
+        test    cl, 8
+        jz      short L_fp2
+        fwait
+        fnstsw  ax
+        fld     tbyte ptr [g_data_00522e58]
+        fstp    qword ptr [ebp - 8]
+        fwait
+        fwait
+        fnstsw  ax
+    L_fp2:
+        test    cl, 0x10
+        jz      short L_fp3
+        fld     tbyte ptr [g_data_00522e68]
+        fstp    qword ptr [ebp - 8]
+        fwait
+    L_fp3:
+        test    cl, 4
+        jz      short L_fp4
+        fldz
+        fld1
+        fdivrp  st(1), st(0)
+        fstp    st(0)
+        fwait
+    L_fp4:
+        test    cl, 0x20
+        jz      short L_fp5
+        fldpi
+        fstp    qword ptr [ebp - 8]
+        fwait
+    L_fp5:
+        mov     esp, ebp
+        pop     ebp
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2: slot management (0x4cf7d0..0x4cf87d) */
+        mov     eax, dword ptr [g_data_00f9fc1c]
+        push    esi
+        test    eax, eax
+        jz      short L_sm_clearPath
+        push    0xac
+        push    1
+        call    func_004c6110
+        mov     esi, eax
+        add     esp, 8
+        test    esi, esi
+        jne     short L_sm_install
+        mov     eax, 1
+        pop     esi
+        ret
+    L_sm_install:
+        push    esi
+        call    func_004cf880
+        add     esp, 4
+        test    eax, eax
+        jz      short L_sm_storePath
+        push    esi
+        call    func_004cfc00
+        add     esp, 4
+        push    esi
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     eax, 1
+        pop     esi
+        ret
+    L_sm_storePath:
+        mov     eax, dword ptr [g_data_00f9fc64]
+        mov     dword ptr [g_data_005236ac], esi
+        push    eax
+        call    func_004cfc00
+        mov     ecx, dword ptr [g_data_00f9fc64]
+        add     esp, 4
+        push    ecx
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     dword ptr [g_data_00f9fc64], esi
+        xor     eax, eax
+        pop     esi
+        ret
+    L_sm_clearPath:
+        mov     edx, dword ptr [g_data_00f9fc64]
+        mov     dword ptr [g_data_005236ac], offset g_data_00523600
+        push    edx
+        call    func_004cfc00
+        mov     eax, dword ptr [g_data_00f9fc64]
+        add     esp, 4
+        push    eax
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        mov     dword ptr [g_data_00f9fc64], 0
+        xor     eax, eax
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x004af020 (263b engine.install) - DSound slot init: per-slot capture/buffer setup.
  *   arg0 byte: slot index (0..0x10). If slot already has buffer ptr, return 1.
