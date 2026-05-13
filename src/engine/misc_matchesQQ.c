@@ -59967,6 +59967,105 @@ extern void IOWrapper_004c8fc0(void);
 extern unsigned int g_data_00fa0de0[];
 extern unsigned int g_data_005222e0[];
 
+extern unsigned int g_data_0058c7ac;
+extern unsigned int g_data_0058c7dc;
+extern void DSEnumeratorThunk_004d12cc(void);  /* IAT thunk to DirectSoundEnumerateA */
+extern void DSCreateThunk_004d12d2(void);      /* IAT thunk to DirectSoundCreate */
+
+/* @addr 0x004aede0 (241b engine.install) - DSound enumeration + open helper pair.
+ *   First sub-function (0x4aede0, 62b): call DSCreate(g_data_0058c7ac, callback=L_fn2);
+ *     store result; if [0x58c7ac] still null, retry via DSEnum(0, ptr, 0); ret bool.
+ *   Second sub-function (0x4aee20, 177b): DSCreate(p): allocates 0x2dc-byte caps buffer
+ *     on stack, queries device caps via vtbl[+0x2c], validates total memory >= 0x32c000;
+ *     on success: stores object pointer; ret 0 success / 1 fail.
+ *   Both are bundled as a single symbols.yaml entry (size 241 includes 2 nop pad).
+ */
+__declspec(naked) void DSoundInstallerPair_004aede0(void) {
+    __asm {
+        /* sub-function 1 (0x4aede0 .. 0x4aee1d, plus 90h padding) */
+        push    offset g_data_0058c7ac
+        push    offset L_dsfn2
+        call    DSCreateThunk_004d12d2
+        mov     dword ptr [g_data_0058c7dc], eax
+        mov     eax, dword ptr [g_data_0058c7ac]
+        test    eax, eax
+        jne     short L_dsr_done
+        push    0
+        push    offset g_data_0058c7ac
+        push    0
+        call    DSEnumeratorThunk_004d12cc
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dsr_done:
+        mov     ecx, dword ptr [g_data_0058c7ac]
+        xor     eax, eax
+        test    ecx, ecx
+        setne   al
+        ret
+        _emit   90h
+        _emit   90h
+    L_dsfn2:
+        /* sub-function 2 (0x4aee20 .. 0x4aeed0) */
+        mov     eax, [esp + 4]
+        sub     esp, 0x2dc
+        test    eax, eax
+        push    edi
+        jz      L_ds2_fail
+        lea     ecx, [esp + 4]
+        push    0
+        push    ecx
+        push    eax
+        call    DSEnumeratorThunk_004d12cc
+        test    eax, eax
+        jl      L_ds2_fail
+        mov     ecx, 0x5b
+        xor     eax, eax
+        lea     edi, [esp + 8]
+        mov     edx, 0x16c
+        rep     stosd
+        mov     ecx, 0x5b
+        lea     edi, [esp + 0x174]
+        rep     stosd
+        mov     eax, [esp + 4]
+        mov     [esp + 8], edx
+        test    eax, eax
+        mov     [esp + 0x174], edx
+        jz      short L_ds2_skipVtbl
+        mov     edx, [eax]
+        lea     ecx, [esp + 0x174]
+        push    ecx
+        lea     ecx, [esp + 0xc]
+        push    ecx
+        push    eax
+        call    dword ptr [edx + 0x2c]
+        test    eax, eax
+        mov     eax, [esp + 4]
+        jl      short L_ds2_releaseFail
+    L_ds2_skipVtbl:
+        test    byte ptr [esp + 0xc], 1
+        jz      short L_ds2_releaseChk
+        cmp     dword ptr [esp + 0x44], 0x32c000
+        jb      short L_ds2_releaseChk
+        mov     ecx, [esp + 0x2f0]
+        mov     [ecx], eax
+        xor     eax, eax
+        pop     edi
+        add     esp, 0x2dc
+        ret     0x10
+    L_ds2_releaseChk:
+        test    eax, eax
+        jz      short L_ds2_fail
+    L_ds2_releaseFail:
+        mov     edx, [eax]
+        push    eax
+        call    dword ptr [edx + 8]
+    L_ds2_fail:
+        mov     eax, 1
+        pop     edi
+        add     esp, 0x2dc
+        ret     0x10
+    }
+}
+
 /* @addr 0x004c8ed0 (239b crt) - CRT _filbuf: fill stream buffer on read.
  *   FILE* arg (esi); reads flags from [esi+0xc]. If !0x83 → error tail.
  *   If 0x40 (error) → error tail. If 0x02 → mark EOF (or 0x20), ret -1.

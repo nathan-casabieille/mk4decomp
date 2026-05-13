@@ -13258,10 +13258,11 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004aede0
-    name: func_004aede0
+    name: DSoundInstallerPair_004aede0
     size: 241
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aeee0
     name: ComReleaseCapture_004aeee0
     size: 31
