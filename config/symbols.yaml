@@ -8049,10 +8049,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00476320
-    name: func_00476320
+    name: DualLinkedBlockCopyBracketed_00476320
     size: 420
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004764d0
     name: Vec3PackedTripleCallBracket_004764d0
     size: 403

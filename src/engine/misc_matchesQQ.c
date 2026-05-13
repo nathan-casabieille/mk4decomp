@@ -78912,3 +78912,115 @@ __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054207c;
+
+__declspec(naked) void DualLinkedBlockCopyBracketed_00476320(void)
+{
+    __asm
+    {
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        and     ecx, 1
+        and     al, 0xfe
+        or      eax, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x1c]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     edx, dword ptr [ecx*4 + 0x1c]
+        inc     eax
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     eax, dword ptr [edx*4]
+        inc     edx
+        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_data_00542050], edx
+    L_dlbcb_loop:
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     ecx, dword ptr [edx*4]
+        inc     edx
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542050], edx
+        je      short L_dlbcb_skip
+        test    ecx, ecx
+        je      short L_dlbcb_skip
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542058], ecx
+        shl     eax, 2
+        shl     ecx, 2
+        mov     edx, dword ptr [eax + 0x3c]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [ecx + 0x3c], edx
+        mov     edx, dword ptr [eax + 0x40]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [ecx + 0x40], edx
+        mov     eax, dword ptr [eax + 0x44]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx + 0x44], eax
+        mov     edx, dword ptr [g_data_00542050]
+    L_dlbcb_skip:
+        mov     eax, dword ptr [g_data_0054207c]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], eax
+        jne     short L_dlbcb_loop
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
