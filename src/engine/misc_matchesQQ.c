@@ -71201,3 +71201,141 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004f3608;
+extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
+extern void InstallSelfOrCmpJmp_0048f570(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void SwapOrPassSet_0048fbf0(void);
+extern void CallPauseCmpStateJmp_0046a520(void);
+extern void PushArgClearSetCallJmp_0046a580(void);
+
+/* @addr 0x0046a3a0 (372b game) - mstack-prefix install-self body + chain.
+ *   Entry 1 (offset 0, 46b): writes 0x83 into [g_data_0054205c*4 + 0x4c],
+ *     pushes the body-label 0x46a3e0 (DIR32 reloc to self+0x40) onto the
+ *     mstack, then tail-jmps InstallSelfIndirectJmpNeg_0048f4f0 — i.e.
+ *     pushes a continuation that runs at the body.
+ *   14b NOP align pad.
+ *   Entry 2 / body (offset 0x40, 239b): phase-state install dispatched
+ *     on [scaled g_data_00542060 + 0x84].
+ *       phase 0: install Self at body, slot[+0x84]=1, g_data_0054204c=0xa,
+ *                arm 0x541e6c=1.
+ *       phase 1: writes [0x54205c*4 + 0x4c] = 0xffffff7d, installs Self
+ *                with packed_ptr (body + 0x02000000), slot[+0x84]=2,
+ *                advances 0x542044, calls InstallSelfOrCmpJmp_0048f570,
+ *                arms 0x541e6c=1.
+ *       phase 2: install Self at body, slot[+0x84]=3, g_data_0054204c=0xa,
+ *                arm 0x541e6c=1.
+ *       phase 3+: self-call entry 1.
+ *   1b NOP align pad.
+ *   Entry 3 (offset 0x130, 68b): chain DualCallPauseDirtyJmp_00490c30 +
+ *     MStackPushSet0008_004901a0 + SwapOrPassSet_0048fbf0. On no-error,
+ *     compare g_data_0054206c == g_data_004f3608: equal → tail-jmp
+ *     PushArgClearSetCallJmp_0046a580; else tail-jmp
+ *     CallPauseCmpStateJmp_0046a520.
+ */
+__declspec(naked) void MStackInstallBodyChain_0046a3a0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x83
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset L_msb_body
+        jmp     InstallSelfIndirectJmpNeg_0048f4f0
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_msb_body:
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        je      L_msb_phase0
+        dec     ecx
+        je      short L_msb_phase1
+        dec     ecx
+        je      short L_msb_phase2
+        call    MStackInstallBodyChain_0046a3a0
+        pop     esi
+        ret
+    L_msb_phase2:
+        mov     dword ptr [eax + 8], offset L_msb_body
+        mov     dword ptr [eax + 0x84], 3
+        mov     dword ptr [g_data_0054204c], 0xa
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_msb_phase1:
+        mov     esi, dword ptr [g_data_0054205c]
+        mov     ecx, 0xffffff7d
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi*4 + 0x4c], ecx
+        mov     dword ptr [eax + 8], offset L_msb_body
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, offset L_msb_body
+        add     esi, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfOrCmpJmp_0048f570
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_msb_phase0:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_msb_body
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 0xa
+        mov     dword ptr [g_data_00541e6c], ecx
+        pop     esi
+        ret
+        nop
+        /* entry 3 (offset 0x130) */
+    L_msb_entry3:
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msb_e3End
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msb_e3End
+        call    SwapOrPassSet_0048fbf0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_msb_e3End
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_004f3608]
+        cmp     eax, ecx
+        jne     short L_msb_e3jmp2
+        jmp     PushArgClearSetCallJmp_0046a580
+    L_msb_e3jmp2:
+        jmp     CallPauseCmpStateJmp_0046a520
+    L_msb_e3End:
+        ret
+    }
+}
