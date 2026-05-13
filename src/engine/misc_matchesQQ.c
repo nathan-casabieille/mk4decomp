@@ -69523,3 +69523,103 @@ __declspec(naked) void MenuPollStateMachine_004b8d70(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004d5ed0;
+extern void SetJmp_00405420(void);
+extern void ScaledChainOr8_00404e50(void);
+extern void PushSetDualDeref_00406650(void);
+extern void MStackCall_00406600(void);
+
+/* @addr 0x0040c100 (337b boot) - boot one-shot setup w/ MStack-push-3.
+ *   Pushes 0x806000 onto ThreeChanPackClamp_00404cc0 (audio volume?),
+ *   passes g_data_0054205c to CopyThreeFields_00404df0, then calls
+ *   SetJmp_00405420. On no-error AND bit 2 of g_data_0054208c set:
+ *   mstack-pushes g_data_00542048/00542054/0054205c (3 entries). Caches
+ *   g_data_0054205c into g_data_00542054, sets g_data_0054206c =
+ *   &g_data_004d5ed0>>2, calls PushSetXfmMaskCallPop_00407140.
+ *   On no-error AND bit 2 NOT set: calls ScaledChainOr8_00404e50,
+ *   writes 0x18000 into [g_data_00542048*4 + 0x48], calls
+ *   ScaledTripleCopy54_004ac040. On no-error sets g_data_00542044 =
+ *   g_data_0054205c, g_data_0054206c=0xff, calls
+ *   PushSetDualDeref_00406650 → MStackCall_00406600. Pops the 3
+ *   mstack entries back into 0054205c/00542054/00542048 in reverse.
+ */
+__declspec(naked) void BootOneShotMStackPush3_0040c100(void) {
+    __asm {
+        push    0x806000
+        call    ThreeChanPackClamp_00404cc0
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    eax
+        call    CopyThreeFields_00404df0
+        add     esp, 4
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_b1s_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      L_b1s_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_004d5ed0
+        mov     dword ptr [g_data_00542054], edx
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_b1s_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_b1s_pop3
+        call    ScaledChainOr8_00404e50
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x18000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x48], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_b1s_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0xff
+        mov     dword ptr [g_data_00542044], edx
+        call    PushSetDualDeref_00406650
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_b1s_ret
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_b1s_ret
+    L_b1s_pop3:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_b1s_ret:
+        ret
+    }
+}
