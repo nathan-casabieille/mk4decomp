@@ -10179,10 +10179,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e8f0
-    name: func_0048e8f0
+    name: MStackChainBit2Cascade_0048e8f0
     size: 329
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ea40
     name: GuardedWalkSwitchDirty_0048ea40
     size: 67
