@@ -66874,3 +66874,124 @@ __declspec(naked) void InstallSelfWithBody_00438780(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00537e94;
+extern unsigned int g_data_00500c74;
+extern unsigned int g_data_00542ba4;
+extern void CopyJmp_0048ee80(void);
+extern void func_0040ca70(void);
+extern void ScaledZeroFour_00490740(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
+extern void InstallSelfDualBranch_0047e800(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_0048a130(void);
+extern void ScaledArrStore_00429930(void);
+
+/* @addr 0x0047e690 (354b game) - 2-entry tail-jmp + install-self phase.
+ *   Entry 1 (offset 0, 16b): set g_data_0054206c = 3 and g_data_00537e94 = 3,
+ *     then tail-jmp CopyJmp_0048ee80.
+ *   12b NOP align pad.
+ *   Entry 2 / body (offset 0x20, 322b): phase from [scaled g_data_00542060
+ *     + 0x84]. Phase 0 first: sets [scaled+0x68]=0x401, [scaled+0x74]=0x205,
+ *     chains TableLookupCall_00489ff0 → TableLookupCall_0048a130 →
+ *     ScaledArrStore_00429930 (with the second arg primed via
+ *     &g_data_00500c74>>2). Writes 0xffffd99a into [g_data_0054205c*4 + 0x70].
+ *     Then unconditionally installs Self body at [esi+8], slot[+0x84]=1,
+ *     g_data_0054204c=1, arms 0x541e6c=1.
+ *     Phase 1 branch: calls func_0040ca70, on no-error checks
+ *     [g_data_0054205c*4+0x58] vs 0xfffd8000: if greater jumps to the
+ *     install tail; else calls ScaledZeroFour_00490740 →
+ *     MStackFrameCdeclDouble_004903f0 (with 0x3333 prep) → push 0x542ba4 →
+ *     GuardedPackedSlotInit_00428760 → InstallSelfDualBranch_0047e800.
+ */
+__declspec(naked) void TailJmpInstallSelfPair_0047e690(void) {
+    __asm {
+        mov     eax, 3
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00537e94], eax
+        jmp     CopyJmp_0048ee80
+        /* 12b NOP align pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tji_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_tji_phase0
+        call    func_0040ca70
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tji_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x58]
+        cmp     eax, 0xfffd8000
+        mov     dword ptr [g_data_0054206c], eax
+        jg      L_tji_install
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tji_done
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tji_done
+        push    offset g_data_00542ba4
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_tji_done
+        call    InstallSelfDualBranch_0047e800
+        pop     esi
+        ret
+    L_tji_phase0:
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x68], 0x401
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x74], 0x205
+        mov     dword ptr [g_data_0054206c], 6
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tji_done
+        mov     dword ptr [g_data_0054206c], 0xc
+        call    TableLookupCall_0048a130
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tji_done
+        mov     ecx, offset g_data_00500c74
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    ScaledArrStore_00429930
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tji_done
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, 0xffffd99a
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x70], eax
+    L_tji_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_tji_body
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_tji_done:
+        pop     esi
+        ret
+    }
+}

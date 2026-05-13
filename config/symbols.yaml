@@ -8521,10 +8521,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0047e690
-    name: func_0047e690
+    name: TailJmpInstallSelfPair_0047e690
     size: 354
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e800
     name: InstallSelfDualBranch_0047e800
     size: 148
