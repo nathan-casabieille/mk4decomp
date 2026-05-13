@@ -63637,6 +63637,117 @@ extern unsigned int g_data_00523b20;
 extern unsigned int g_data_00523b24;
 extern unsigned char g_data_00523b18;
 extern void func_004013a0(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void DispatcherComplex260_00407400(void);
+extern unsigned int g_data_00542058;
+extern void func_0047f830(void);
+extern void MStackCall_00406340(void);
+extern void func_00410340(void);
+
+/* @addr 0x004101f0 (329b boot) - bundled boot installer pair.
+ *   sub-1 (~20b @ 0x4101f0): pushes 0x88 and callback ptr (sub-2 @ 0x00410210),
+ *     calls StoreTwoCall_0049cb40 to register the callback.
+ *   sub-2 (~309b @ 0x00410210): boot countdown state machine.
+ *     If [esi+0x84] non-zero (already installed): decrement g_data_00542054
+ *     countdown, jns to chain-walk, else call GuardedSeq_00471670.
+ *     Else: setup pipeline with DispatcherComplex260_00407400, MStackCall_00406340,
+ *     install self at [esi+8] = 0x00410210, set state flags.
+ */
+__declspec(naked) void BootInstallerPair_004101f0(void) {
+    __asm {
+        /* sub-1: trampoline */
+        push    0x88
+        push    offset L_bip_callback
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2: callback */
+    L_bip_callback:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        jz      short L_bip_init
+        mov     eax, dword ptr [g_data_00542054]
+        dec     eax
+        mov     dword ptr [g_data_00542054], eax
+        jns     L_bip_resume
+        call    GuardedSeq_00471670
+        pop     esi
+        ret
+    L_bip_init:
+        mov     ecx, 0x004d57f8
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bip_done
+        test    byte ptr [g_state_0054208c], 4
+        jz      short L_bip_doMain
+        call    func_0047f830
+        pop     esi
+        ret
+    L_bip_doMain:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054205c], eax
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        or      ecx, 2
+        mov     dword ptr [eax*4 + 0x34], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, 0x00100000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x5c], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bip_done
+        mov     eax, 0x004d57c8
+        mov     dword ptr [g_data_0054206c], 0x00ffffff
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], 0x00ffffff
+        mov     eax, 0x004d6e20
+        shr     eax, 2
+        mov     dword ptr [g_data_00542054], 6
+        mov     dword ptr [g_data_00542058], eax
+        jmp     short L_bip_loadIdx
+    L_bip_resume:
+        mov     eax, dword ptr [g_data_00542058]
+    L_bip_loadIdx:
+        mov     ecx, [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542058], eax
+        call    func_00410340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bip_done
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_bip_callback
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_bip_done:
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x00401000 (282b boot) - voice slot picker: finds or evicts a voice for sound source.
  *   Reads param 0 (packed_ptr) → if [edi*4]==0, use default g_data_004ffe88>>2.
