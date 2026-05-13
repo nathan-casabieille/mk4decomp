@@ -75041,3 +75041,101 @@ __declspec(naked) void PhaseDispatchPair_004799c0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e64;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern void StoreTwoCall_0049cb40(void);
+
+__declspec(naked) void MStackBracketedStoreTwoCall_004714e0(void)
+{
+    __asm
+    {
+        cmp     dword ptr [g_data_00541e64], 0x38
+        jg      L_mbstc_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054207c]
+        inc     eax
+        push    0xc0
+        mov     dword ptr [g_state_004d57ac], eax
+        push    0x49ddf0
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_data_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     L_mbstc_popOnly
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [ecx*4 + 0x40], eax
+        mov     edx, dword ptr [g_data_00542044]
+        xor     eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x44], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x48], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x4c], eax
+    L_mbstc_popOnly:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mbstc_ret:
+        ret
+    }
+}
