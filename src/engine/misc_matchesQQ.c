@@ -63623,6 +63623,76 @@ extern unsigned int g_data_00522154;
 extern unsigned int g_data_00fa0ee4;
 extern unsigned int g_data_00f9f850;
 extern void IndirectCall_004c6ec0(void);
+extern void Helper_MemMalloc_Post(void);
+
+/* @addr 0x004b5b10 (174b engine.geo) - Mem_Free: free a chunk into the heap free-list with coalesce.
+ *   Range-check ptr in [0x7b41a0, 0xab4194]. Header at [eax-12]; size in low 24
+ *   bits, free bit = 0x80000000. Mark free. If [eax+8] (next) points to free
+ *   block, coalesce forward (or-with-mask trick). If [eax + size + offset]
+ *   (prev) is free, coalesce backward.
+ *   Calls Helper_MemMalloc_Post.
+ */
+__declspec(naked) void Mem_Free_004b5b10(void) {
+    __asm {
+        mov     eax, [esp + 4]
+        cmp     eax, 0x007b41a0
+        jb      L_mf_done
+        cmp     eax, 0x00ab4194
+        ja      L_mf_done
+        mov     ecx, [eax - 8]
+        add     eax, -12
+        push    esi
+        mov     esi, [eax]
+        or      esi, 0x80000000
+        test    ecx, ecx
+        mov     [eax], esi
+        jz      short L_mf_skipPrevClear
+        mov     dword ptr [ecx], 0
+    L_mf_skipPrevClear:
+        mov     ecx, [eax + 8]
+        cmp     ecx, eax
+        jz      short L_mf_checkBwd
+        test    dword ptr [ecx], 0x80000000
+        jz      short L_mf_checkBwd
+        mov     edx, [eax]
+        and     edx, 0x00ffffff
+        mov     [edx + eax + 8], ecx
+        mov     edx, [eax + 8]
+        mov     esi, [eax]
+        mov     ecx, [edx]
+        add     esi, ecx
+        xor     esi, ecx
+        and     esi, 0x00ffffff
+        xor     esi, ecx
+        mov     [edx], esi
+        mov     eax, [eax + 8]
+    L_mf_checkBwd:
+        mov     edx, [eax]
+        mov     ecx, edx
+        and     ecx, 0x00ffffff
+        add     ecx, eax
+        cmp     ecx, 0x00ab4194
+        jae     short L_mf_callPost
+        mov     ecx, [ecx]
+        test    ecx, 0x80000000
+        jz      short L_mf_callPost
+        add     ecx, edx
+        xor     ecx, edx
+        and     ecx, 0x00ffffff
+        xor     ecx, edx
+        mov     [eax], ecx
+        and     ecx, 0x00ffffff
+        add     ecx, eax
+        cmp     ecx, 0x00ab4194
+        jae     short L_mf_callPost
+        mov     [ecx + 8], eax
+    L_mf_callPost:
+        call    Helper_MemMalloc_Post
+        pop     esi
+    L_mf_done:
+        ret
+    }
+}
 
 /* @addr 0x004c6110 (171b boot) - CRT calloc: nelem * size with zero-fill.
  *   Multiplies args; overflow → use heap fallback (HeapAlloc).
