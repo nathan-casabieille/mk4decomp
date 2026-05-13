@@ -6647,10 +6647,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00461b70
-    name: func_00461b70
+    name: DualEntryInstallSelfScaled_00461b70
     size: 296
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461ca0
     name: func_00461ca0
     size: 1996

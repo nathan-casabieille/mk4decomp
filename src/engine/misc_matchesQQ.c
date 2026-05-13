@@ -46495,3 +46495,112 @@ __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
         ret
     }
 }
+
+extern void StoreTwoCall_0049cb40(void);
+extern void MStackCall_00406740(void);
+extern void Push70CallScaleArith_00457ad0(void);
+extern unsigned int g_data_0053a748;
+extern unsigned int g_data_00542998;
+extern unsigned char g_data_00543720;
+
+/* @addr 0x00461b70 (296b game) - dual entry: thunk + install-self with scaled init.
+ *   Entry (0..0x35): if g_data_0053a748!=0: dec; push 0x26, push body addr; call StoreTwoCall;
+ *     pop; chain[scaledInit*4+0x14]=g_data_0054207c; ret.
+ *   Body (+0x40): load state at [base*4+0x84]; clear state.
+ *   state!=0: call MStackCall; if pause ret. Tail-call CallSetPause; pop esi; ret.
+ *   state==0: load eax=offset g_data_00542998>>2 + g_data_0054207c -> g_scaledInit.
+ *     Init multiple globals; call Push70CallScaleArith; if pause ret.
+ *     Set chain[+0x5c]=0x1b333; g_cj=scaledInit; install-self at body; state=1;
+ *     g_x_0054204c=0xb4; pause=1; ret.
+ *   Tail (+0x120): set g_data_00543720=1; ret.
+ */
+__declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0053a748]
+        test    eax, eax
+        mov     dword ptr [g_state_0054207c], eax
+        _emit   74h
+        _emit   27h
+        dec     eax
+        push    0x26
+        push    offset body_bb0
+        mov     dword ptr [g_state_0054207c], eax
+        call    StoreTwoCall_0049cb40
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_state_0054207c]
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x14], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_bb0:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   19h
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a1h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+        mov     ecx, dword ptr [g_state_0054207c]
+        mov     eax, offset g_data_00542998
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], 0x5f
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_acc_00542078], 0
+        mov     dword ptr [g_state_0054207c], 0xc80000
+        call    Push70CallScaleArith_00457ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   42h
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0x1b333
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_cj_0054205c], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset body_bb0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_x_0054204c], 0xb4
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     byte ptr [g_data_00543720], 1
+        ret
+    }
+}
