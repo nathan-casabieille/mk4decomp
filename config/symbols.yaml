@@ -3144,10 +3144,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0042f8a0
-    name: func_0042f8a0
+    name: PhaseInstall2DInterpDispatch_0042f8a0
     size: 355
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042fa10
     name: Mul10Triple0xd999Interp_0042fa10
     size: 183

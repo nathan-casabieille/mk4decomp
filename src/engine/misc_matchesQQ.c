@@ -67316,3 +67316,144 @@ __declspec(naked) void SceneFrameStepWithInputs_004be250(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0053815c;
+extern void Distance2DSaturationClamp_004300a0(void);
+extern void ChainFieldTest2Branch_0042fbc0(void);
+extern void LoadSetCallPauseStoreJmp_0042fea0(void);
+extern void MStackPush4DualCallAbsPop4_00430d30(void);
+extern void func_004301e0(void);
+extern void DualMul10ChainAcc7C_00430020(void);
+extern void EsiInstallChainCallCmpThreshold_0042fad0(void);
+extern void GuardedSeq_0042fba0(void);
+extern void Mul10Triple0xd999Interp_0042fa10(void);
+extern void SubCmpCallPauseJmp_0042fc40(void);
+extern void GuardedSeq_0042fb80(void);
+
+/* @addr 0x0042f8a0 (355b game) - install-self phase dispatcher with 2D
+ *   interpolation tails. Phase 0: installs Self at [eax+8] with slot[+0x84]=1
+ *   and arms g_data_00541e6c.
+ *   Phase 1+ path: chains Distance2DSaturationClamp_004300a0 → load
+ *   g_data_00538158 → ChainFieldTest2Branch_0042fbc0 → load g_data_0053815c
+ *   → ChainFieldTest2Branch_0042fbc0 → LoadSetCallPauseStoreJmp_0042fea0 →
+ *   MStackPush4DualCallAbsPop4_00430d30. After the chain:
+ *     - if g_data_00542078 > 0xa3d, tail-call func_004301e0.
+ *     - else call DualMul10ChainAcc7C_00430020, then if g_data_0054207c <
+ *       0x300000 tail-call EsiInstallChainCallCmpThreshold_0042fad0.
+ *     - else (>= 0x370000): compute eax = g_data_00542074 - 0x1999,
+ *       store into g_data_00542078, compare 0x54206c/0x542070 against it
+ *       and select one of three tails:
+ *         - if 0x54206c <  threshold: GuardedSeq_0042fba0
+ *         - else if 0x542070 < threshold: GuardedSeq_0042fba0
+ *         - else if 0x54206c < 0x542074: pick Mul10Triple0xd999Interp_0042fa10
+ *           or SubCmpCallPauseJmp_0042fc40 (after stashing 0x5381cc into
+ *           g_data_00542044)
+ *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
+ */
+__declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      L_pii_phase0
+        call    Distance2DSaturationClamp_004300a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        mov     ecx, dword ptr [g_data_00538158]
+        mov     dword ptr [g_data_00542044], ecx
+        call    ChainFieldTest2Branch_0042fbc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        mov     edx, dword ptr [g_data_0053815c]
+        mov     dword ptr [g_data_00542044], edx
+        call    ChainFieldTest2Branch_0042fbc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        call    LoadSetCallPauseStoreJmp_0042fea0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        call    MStackPush4DualCallAbsPop4_00430d30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        cmp     dword ptr [g_data_00542078], 0xa3d
+        jle     short L_pii_check2
+        call    func_004301e0
+        pop     esi
+        ret
+    L_pii_check2:
+        call    DualMul10ChainAcc7C_00430020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pii_done
+        mov     eax, dword ptr [g_data_0054207c]
+        cmp     eax, 0x300000
+        jge     short L_pii_check3
+        call    EsiInstallChainCallCmpThreshold_0042fad0
+        pop     esi
+        ret
+    L_pii_check3:
+        mov     ecx, dword ptr [g_data_00542074]
+        mov     esi, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542070]
+        cmp     eax, 0x370000
+        jl      short L_pii_sample
+        lea     eax, [ecx - 0x1999]
+        cmp     esi, eax
+        mov     dword ptr [g_data_00542078], eax
+        jge     short L_pii_eaxOk
+        call    GuardedSeq_0042fba0
+        pop     esi
+        ret
+    L_pii_eaxOk:
+        cmp     edx, eax
+        jge     short L_pii_sample
+        call    GuardedSeq_0042fba0
+        pop     esi
+        ret
+    L_pii_sample:
+        cmp     esi, ecx
+        jge     short L_pii_storeEdx
+        cmp     edx, ecx
+        jge     short L_pii_storeEsi
+        call    Mul10Triple0xd999Interp_0042fa10
+        pop     esi
+        ret
+    L_pii_storeEsi:
+        mov     eax, dword ptr [g_data_0053815c]
+        mov     dword ptr [g_data_00542078], esi
+        mov     dword ptr [g_data_00542044], eax
+        call    SubCmpCallPauseJmp_0042fc40
+        pop     esi
+        ret
+    L_pii_storeEdx:
+        cmp     edx, ecx
+        jle     short L_pii_writeEdx
+        call    GuardedSeq_0042fb80
+        pop     esi
+        ret
+    L_pii_writeEdx:
+        mov     dword ptr [g_data_00542078], edx
+        call    SubCmpCallPauseJmp_0042fc40
+        pop     esi
+        ret
+    L_pii_phase0:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset PhaseInstall2DInterpDispatch_0042f8a0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+    L_pii_done:
+        pop     esi
+        ret
+    }
+}
