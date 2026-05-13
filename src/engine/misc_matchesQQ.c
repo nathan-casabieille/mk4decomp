@@ -67561,3 +67561,150 @@ __declspec(naked) void MStackPush2ScaledChainLoop_00463430(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004ed590;
+extern unsigned int g_data_004ed5a8;
+extern void MStackPushSet0008_004901a0(void);
+extern void MStackPushSet0020_004901d0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void func_0047e420(void);
+extern void TailJmpInstallSelfPair_0047e690(void);
+extern void ScaledAndAldf_00490330(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void InstallSelfThresholdDispatch_0047e310(void);
+
+/* @addr 0x0047e1a0 (355b game) - 3-entry packed phase chain w/ alarms.
+ *   Entry 1 (offset 0, 51b): writes 0x1012 into [g_data_00542060*4+0x74]
+ *     (mirrored 0x54206c), calls MStackPushSet0008_004901a0, on no-error
+ *     pushes 0x4ed590 (alarm string) and calls ArgSarStoreJmp_004594f0.
+ *   13b NOP align pad.
+ *   Entry 2 (offset 0x40, 67b): same shape but writes [scaled+0x68]=0x402,
+ *     [scaled+0x74]=0x201 first, calls MStackPushSet0020_004901d0, then
+ *     conditionally pushes 0x4ed5a8.
+ *   13b NOP align pad.
+ *   Entry 3 / body (offset 0x90, 211b): phase-state install. Phase 0 →
+ *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 →
+ *     CmpEqInitCallElseJmp_0048d4b0, on no-error: if bit 0 of 0x54208c set
+ *     tail-call func_0047e420; else call TailJmpInstallSelfPair_0047e690.
+ *     If g_data_0054206c < 0x26666 (threshold) tail-installs Self.
+ *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10_004906b0,
+ *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
+ *     InstallSelfThresholdDispatch_0047e310.
+ */
+__declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x1012
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    MStackPushSet0008_004901a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3e_e1End
+        push    offset g_data_004ed590
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_a3e_e1End:
+        ret
+        /* 13b NOP pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x40) */
+    L_a3e_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x68], 0x402
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x201
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    MStackPushSet0020_004901d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3e_e2End
+        push    offset g_data_004ed5a8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_a3e_e2End:
+        ret
+        /* 13b NOP pad */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 / body (offset 0x90) */
+    L_a3e_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_a3e_installPhase0
+        mov     dword ptr [g_data_0054206c], 2
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_a3e_doneNoPop
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_a3e_e3InitChain
+        call    func_0047e420
+        pop     esi
+        pop     ebx
+        ret
+    L_a3e_e3InitChain:
+        call    TailJmpInstallSelfPair_0047e690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3e_doneNoPop
+        cmp     dword ptr [g_data_0054206c], 0x26666
+        jl      short L_a3e_installPhase0
+        call    ScaledAndAldf_00490330
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3e_doneNoPop
+        mov     dword ptr [g_data_0054206c], 0x4ccc
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3e_doneNoPop
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x28f
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        call    InstallSelfThresholdDispatch_0047e310
+        pop     esi
+        pop     ebx
+        ret
+    L_a3e_installPhase0:
+        mov     dword ptr [esi + 8], offset L_a3e_body
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_a3e_doneNoPop:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
