@@ -6731,10 +6731,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004636d0
-    name: func_004636d0
+    name: PlayerCharSelector_004636d0
     size: 309
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463810
     name: DualPathDownloadChar_00463810
     size: 94

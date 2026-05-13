@@ -49162,3 +49162,114 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         ret
     }
 }
+
+extern void BitShiftExtract_00464090(void);
+extern unsigned int g_data_00541ec4;
+extern unsigned int g_data_00541ec8;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_00535cfc_arr;
+extern unsigned int g_data_0053a178;
+extern unsigned int g_data_0053a1d0_arr;
+extern unsigned int g_data_0053a250;
+
+/* @addr 0x004636d0 (309b game) - player-char selector with cmp/branch tables.
+ *   Call BitShiftExtract; if pause ret.
+ *   If g_state_0053a408==0: setup player1 (537f48). g_x_00542054 = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
+ *   Else: setup player2 (005380e0). g_x_00542054 = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
+ *   Both arms normalize g_x_0054206c via cmp on 0xf/6/8 and write to g_data_00535d10.
+ */
+__declspec(naked) void PlayerCharSelector_004636d0(void) {
+    __asm {
+        push    esi
+        call    BitShiftExtract_00464090
+        mov     eax, dword ptr [g_pause_00541e6c]
+        xor     esi, esi
+        cmp     eax, esi
+        _emit   0fh
+        _emit   85h
+        _emit   1eh
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        cmp     dword ptr [g_state_0053a408], esi
+        _emit   0fh
+        _emit   85h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_data_005380e0]
+        mov     dword ptr [g_data_00541ec4], esi
+        cmp     eax, 0xf
+        mov     eax, dword ptr [g_x_0054206c]
+        _emit   75h
+        _emit   0fh
+        cmp     eax, 0xf
+        _emit   75h
+        _emit   0ah
+        mov     eax, 6
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, 6
+        mov     dword ptr [g_data_00537f48], eax
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 8
+        cmp     eax, 0xf
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 0xe
+        cmp     eax, 8
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 0xa
+        mov     eax, dword ptr [g_data_00535d10]
+        mov     ecx, offset g_data_00535cfc_arr
+        shr     ecx, 2
+        mov     dword ptr [g_data_0053a178], eax
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_data_00542070], esi
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_pause_00541e6c]
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_data_00537f48]
+        mov     dword ptr [g_data_00541ec8], esi
+        cmp     eax, 0xf
+        mov     eax, dword ptr [g_x_0054206c]
+        _emit   75h
+        _emit   0fh
+        cmp     eax, 0xf
+        _emit   75h
+        _emit   0ah
+        mov     eax, 6
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, 6
+        mov     dword ptr [g_data_005380e0], eax
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 8
+        cmp     eax, 0xf
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 0xe
+        cmp     eax, 8
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_data_00535d10], 0xa
+        mov     edx, dword ptr [g_data_00535d10]
+        mov     eax, offset g_data_0053a1d0_arr
+        shr     eax, 2
+        mov     dword ptr [g_data_0053a250], edx
+        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_data_00542070], 1
+        call    DownloadPlayerChar
+        cmp     dword ptr [g_pause_00541e6c], esi
+        _emit   75h
+        _emit   0ch
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [g_state_00537e88], esi
+        pop     esi
+        ret
+    }
+}
