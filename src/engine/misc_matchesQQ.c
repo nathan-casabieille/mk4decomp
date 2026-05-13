@@ -55912,3 +55912,80 @@ __declspec(naked) void AudioInstallSelfChannel8_004a0520(void)
         ret
     }
 }
+
+extern int g_data_004f3ac8;
+
+/*
+ * AudioMode2BankSetup_004a6080 — 245b audio dual-channel bank initialization.
+ *   For each voice descriptor (arg1, arg2): movsx byte at +4 → g_x_005433f0/g_x_00543444.
+ *   If either voice[+3] != 0: g_x_0053a3c0 = 7 else 0xa.
+ *   High bank: g_x_00542044 = (0x0053a408>>2); g_x_00542048 = (0x0053a3e0>>2); zero both slots;
+ *     if voice1[+3] != 0: call DualScaledStoreConst.
+ *   Low bank: g_x_00542044 = (0x00537e88>>2); g_x_00542048 = (0x0053a700>>2); zero both slots;
+ *     if voice2[+3] != 0: call DualScaledStoreConst.
+ *   ClearTwoCallSetStore; g_data_00542004=0; byte-table-lookup table[voice1[0]] → g_state_00537f48,
+ *   table[voice2[0]] → g_state_005380e0; ret.
+ */
+__declspec(naked) void AudioMode2BankSetup_004a6080(void)
+{
+    __asm
+    {
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        push    edi
+        mov     edi, dword ptr [esp + 0x10]
+        movsx   eax, byte ptr [esi + 4]
+        mov     dword ptr [g_x_005433f0], eax
+        movsx   ecx, byte ptr [edi + 4]
+        mov     dword ptr [g_x_00543444], ecx
+        mov     al, byte ptr [esi + 3]
+        test    al, al
+        jne     short L_setSeven
+        mov     al, byte ptr [edi + 3]
+        mov     dword ptr [g_x_0053a3c0], 0xa
+        test    al, al
+        je      short L_chHigh
+    L_setSeven:
+        mov     dword ptr [g_x_0053a3c0], 7
+    L_chHigh:
+        mov     edx, 0x0053a408
+        mov     eax, 0x0053a3e0
+        shr     edx, 2
+        shr     eax, 2
+        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [eax*4], 0
+        mov     eax, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4], 0
+        mov     al, byte ptr [esi + 3]
+        test    al, al
+        je      short L_chLow
+        call    DualScaledStoreConst_004a22c0
+    L_chLow:
+        mov     ecx, 0x00537e88
+        mov     eax, 0x0053a700
+        shr     ecx, 2
+        shr     eax, 2
+        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [eax*4], 0
+        mov     edx, dword ptr [g_x_00542044]
+        mov     dword ptr [edx*4], 0
+        mov     al, byte ptr [edi + 3]
+        test    al, al
+        je      short L_dual_done
+        call    DualScaledStoreConst_004a22c0
+    L_dual_done:
+        call    ClearTwoCallSetStore_004a2270
+        mov     dword ptr [g_data_00542004], 0
+        movsx   eax, byte ptr [esi]
+        movsx   ecx, byte ptr [eax + g_data_004f3ac8]
+        mov     dword ptr [g_state_00537f48], ecx
+        movsx   edx, byte ptr [edi]
+        pop     edi
+        pop     esi
+        movsx   eax, byte ptr [edx + g_data_004f3ac8]
+        mov     dword ptr [g_state_005380e0], eax
+        ret
+    }
+}

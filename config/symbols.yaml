@@ -12575,10 +12575,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a6080
-    name: func_004a6080
+    name: AudioMode2BankSetup_004a6080
     size: 245
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a6180
     name: TwoStageAudioInit_004a6180
     size: 162
