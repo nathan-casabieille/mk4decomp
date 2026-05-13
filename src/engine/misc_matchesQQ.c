@@ -54572,3 +54572,87 @@ __declspec(naked) void ChainStreamMatMulVecAdd_004bd9a0(void)
         ret
     }
 }
+
+extern void InstallSelfStride5_004a06f0(void);
+extern unsigned int g_x_00537ea8;
+extern unsigned int g_state_00537e90;
+
+/*
+ * AudioInitInstallSelfPeriodic_004a0610 — 216b audio 2-body install/periodic.
+ *   Entry 0x004a0610: g_x_0054206c=g_data_00542004. If eax==0 OR g_data_0053a354 != 0:
+ *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel_00542060;
+ *     g_data_0053a354=1, g_x_00537ea8=0, g_x_0053a2e8=0, g_state_00537e90=4,
+ *     g_x_0054206c=0, chain[+0xc]=0; call func_0049e7e0; if !paused: pop+ret;
+ *     else CallSetPause; pop+ret.
+ *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
+ *     If was 0: countdown g_x_00542054; if not yet 0: skip; else tail-jmp CallSetPause.
+ *     Else: ecx=g_x_00538090; g_x_0054206c=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
+ *     Else: install-self at body; chain->state=1; g_data_0054204c=2; g_pause_00541e6c=1; ret.
+ */
+__declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542004]
+        push    esi
+        xor     esi, esi
+        mov     dword ptr [g_x_0054206c], eax
+        cmp     eax, esi
+        je      short L_pause
+        mov     eax, dword ptr [g_data_0053a354]
+        cmp     eax, esi
+        mov     dword ptr [g_x_0054206c], eax
+        jne     short L_pause
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [g_data_0053a354], 1
+        mov     dword ptr [g_x_00537ea8], esi
+        mov     dword ptr [g_x_0053a2e8], esi
+        mov     dword ptr [g_state_00537e90], 4
+        mov     dword ptr [g_x_0054206c], esi
+        mov     dword ptr [eax*4 + 0xc], esi
+        call    func_0049e7e0
+        cmp     dword ptr [g_pause_00541e6c], esi
+        jne     short L_pop_ret
+    L_pause:
+        call    CallSetPause_0041f830
+    L_pop_ret:
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        jne     short L_checkRollover
+        mov     ecx, dword ptr [g_x_00542054]
+        dec     ecx
+        mov     dword ptr [g_x_00542054], ecx
+        jns     short L_checkRollover
+        jmp     CallSetPause_0041f830
+    L_checkRollover:
+        mov     ecx, dword ptr [g_x_00538090]
+        test    ecx, ecx
+        mov     dword ptr [g_x_0054206c], ecx
+        jne     short L_install
+        jmp     InstallSelfStride5_004a06f0
+    L_install:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_body
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
