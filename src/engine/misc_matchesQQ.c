@@ -65965,3 +65965,124 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_004a2090;
+extern unsigned int g_data_004a2180;
+extern void GuardedScaledLookupCallJmp_004220a0(void);
+extern void AndShlStore_00409280(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void DualScaledLitInitJmp_00464800(void);
+extern void TableWalkPause_004bd850(void);
+extern void QuadCallPhase2_004be800(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void func_004228b0(void);
+
+/* @addr 0x00403170 (348b boot) - 3-state install-self phase dispatcher.
+ *   Reads phase from [g_data_00542060*4 + 0x84], zeroes it, then dispatches
+ *   on phase = 0, 1, 2, 3.
+ *     - phase 0 / 1: jump to the heavy "first-time init" path that pushes 4
+ *       on TableWalkBoundedCmp_004bd890, calls BootInitGuardedCallChain_004265d0,
+ *       DualScaledLitInitJmp_00464800, TableWalkPause_004bd850, then runs
+ *       QuadCallPhase2_004be800 with args (g_data_00537f48, g_data_005380e0,
+ *       g_data_0053a51c + 0x12, 0x1d). Pushes two StoreTwoCall_0049cb40 calls
+ *       with table pointers 0x004a2090 / 0x004a2180. Installs self at
+ *       [esi+8]=0x403170 and sets [eax*4+0x84]=2 (with packed_ptr +
+ *       0x02000000 tag), then calls func_004228b0 and asserts the error
+ *       flag g_data_00541e6c = 1.
+ *     - phase 2: install self at [esi+8]=0x403170, zero [esi+0x84]=3,
+ *       set g_data_0054204c=4, set g_data_00541e6c=1, return.
+ *     - phase 3: call GuardedScaledLookupCallJmp_004220a0, on no-error set
+ *       g_data_0054206c=3, call AndShlStore_00409280, call
+ *       StackPopDispatchTagged_0041f780, return.
+ */
+__declspec(naked) void Phase3InstallSelf_00403170(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        je      L_p3i_initPath
+        dec     eax
+        je      L_p3i_initPath
+        dec     eax
+        je      short L_p3i_phase2
+        call    GuardedScaledLookupCallJmp_004220a0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_p3i_done
+        mov     dword ptr [g_data_0054206c], 3
+        call    AndShlStore_00409280
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_p3i_done
+        call    StackPopDispatchTagged_0041f780
+        pop     edi
+        pop     esi
+        ret
+    L_p3i_phase2:
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_data_00541dc8], edi
+        mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
+        mov     dword ptr [esi + 0x84], 3
+        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_p3i_initPath:
+        push    4
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    BootInitGuardedCallChain_004265d0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_p3i_done
+        call    DualScaledLitInitJmp_00464800
+        call    TableWalkPause_004bd850
+        mov     ecx, dword ptr [g_data_0053a51c]
+        mov     edx, dword ptr [g_data_005380e0]
+        mov     eax, dword ptr [g_data_00537f48]
+        add     ecx, 0x12
+        push    0x1d
+        push    ecx
+        push    edx
+        push    eax
+        call    QuadCallPhase2_004be800
+        add     esp, 0x10
+        call    BootInitGuardedCallChain_004265d0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_p3i_done
+        push    edi
+        push    offset g_data_004a2090
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        push    edi
+        push    offset g_data_004a2180
+        call    StoreTwoCall_0049cb40
+        mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset Phase3InstallSelf_00403170
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     edx, 0x02000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edi
+        call    func_004228b0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_p3i_done:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
