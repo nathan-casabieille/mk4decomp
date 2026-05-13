@@ -76802,3 +76802,127 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         jmp     CallSetPause_0041f830
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542080;
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void DualCallPauseJmpDual_00439190(void);
+extern void Init3333Jmp_00460400(void);
+extern void InstallSelfNoCheck_00439250(void);
+extern void InstallSelfDecBitCheck_004391d0(void);
+
+__declspec(naked) void EntryThenDispatcherPair_00438cd0(void)
+{
+    __asm
+    {
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_etdp_ret1
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], 0xc
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], offset L_etdp_entry2
+        jmp     MstackPopScaledChainPlusThunks_00471250
+    L_etdp_ret1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_etdp_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        je      L_etdp_phase0
+        dec     ecx
+        je      short L_etdp_phase1
+        dec     ecx
+        je      short L_etdp_phase2
+        call    DualCallPauseJmpDual_00439190
+        pop     edi
+        pop     esi
+        ret
+    L_etdp_phase2:
+        mov     dword ptr [eax + 8], offset L_etdp_entry2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, offset L_etdp_entry2
+        mov     dword ptr [ecx*4 + 0x84], 3
+        mov     ecx, dword ptr [eax + 4]
+        add     esi, 0x3000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    Init3333Jmp_00460400
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_etdp_phase1:
+        mov     dword ptr [eax + 8], offset L_etdp_entry2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, offset L_etdp_entry2
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        add     esi, 0x2000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfNoCheck_00439250
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_etdp_phase0:
+        mov     dword ptr [g_data_00542080], 0x50
+        mov     dword ptr [eax + 8], offset L_etdp_entry2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, 1
+        mov     edi, offset L_etdp_entry2
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    InstallSelfDecBitCheck_004391d0
+        mov     dword ptr [g_data_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}
