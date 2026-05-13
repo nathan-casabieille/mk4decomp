@@ -70153,3 +70153,129 @@ __declspec(naked) void MStackPush3LinkedListZeroWalk_0049ce00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054380c;
+extern unsigned int g_data_0052ab40;
+extern void func_0045f650(void);
+extern void ClearBit2x34_00490130(void);
+extern void Wrapper_00471340(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void func_0046a3a0(void);
+
+/* @addr 0x0046a230 (367b game) - 3-entry packed install chain w/ countdown.
+ *   Entry 1 (offset 0, 15b): sets g_data_0054207c = 0x20012 and tail-jmps
+ *     func_0045f650.
+ *   1b NOP align pad.
+ *   Entry 2 / body1 (offset 0x10, 159b): phase-state install. Phase 0:
+ *     calls State6Latch_0048e240, then reads g_data_0052ab40 → 0x54206c,
+ *     AND with 0x10 → g_data_00542094; if bit-4 set goes to phase-1 body.
+ *     Otherwise chain ClearBit2x34_00490130 → ScaledZeroFour_00490740 →
+ *     sets byte 0x54380c = 1 → tail-call Wrapper_00471340.
+ *   Phase non-0: chain CallPauseScaledStoreCopyJmp_00461220, install Self
+ *     at body1 with slot[+0x84] = 1 and g_data_0054204c = 0x78, arm
+ *     g_data_00541e6c = 1.
+ *   1b NOP align pad.
+ *   Entry 3 / body2 (offset 0xb0, 191b): phase-state install with
+ *     countdown via g_data_00542080. Phase 0: sets g_data_0054205c*4+0x4c
+ *     = 0xfffffd71, install Self at body2 with slot[+0x84] = 1, arm
+ *     g_data_00541e6c = 1. Phase 1: counts down g_data_00542080 from 0xa;
+ *     when reaches 0, tail-jmps state-tail at +0x100 (≈0x46a3a0). Else
+ *     installs Self with slot[+0x84] = 2 and re-arms 0x541e6c.
+ *     Phase 2: increments [g_data_0054205c*4 + 0x4c] by 0x41, sets
+ *     g_data_00542070 = 0x41, then continues into the phase-1 countdown.
+ */
+__declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
+    __asm {
+        mov     dword ptr [g_data_0054207c], 0x20012
+        jmp     func_0045f650
+        nop
+    L_tec_body1:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        jne     short L_tec_b1install
+        call    State6Latch_0048e240
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tec_b1done
+        mov     eax, dword ptr [g_data_0052ab40]
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 0x10
+        mov     dword ptr [g_data_00542094], eax
+        jne     short L_tec_b1nonzero
+    L_tec_b1install:
+        call    ClearBit2x34_00490130
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tec_b1done
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tec_b1done
+        mov     byte ptr [g_data_0054380c], 1
+        call    Wrapper_00471340
+        pop     esi
+        ret
+    L_tec_b1nonzero:
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tec_b1done
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_tec_body1
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x78
+        mov     dword ptr [g_data_00541e6c], eax
+    L_tec_b1done:
+        pop     esi
+        ret
+        nop
+    L_tec_body2:
+        mov     eax, dword ptr [g_data_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        sub     ecx, 0
+        je      short L_tec_b2phase0
+        dec     ecx
+        je      short L_tec_b2phase1
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [edx*4 + 0x4c]
+        mov     dword ptr [g_data_00542070], 0x41
+        add     ecx, 0x41
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x4c], ecx
+        mov     ecx, dword ptr [g_data_00542080]
+        dec     ecx
+        mov     dword ptr [g_data_00542080], ecx
+        jne     short L_tec_b2install2
+        jmp     func_0046a3a0
+    L_tec_b2phase1:
+        mov     dword ptr [g_data_00542080], 0xa
+    L_tec_b2install2:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_tec_body2
+        mov     dword ptr [eax + 0x84], 2
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+        ret
+    L_tec_b2phase0:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, 0xfffffd71
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 0x4c], ecx
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_tec_body2
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+        ret
+    }
+}

@@ -7091,10 +7091,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesAA.c
   - addr: 0x0046a230
-    name: func_0046a230
+    name: TripleEntryCountdownInstall_0046a230
     size: 367
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046a3a0
     name: func_0046a3a0
     size: 372
