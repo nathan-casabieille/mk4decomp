@@ -55450,6 +55450,73 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
     }
 }
 
+/*
+ * MStackPushChainStepIndex_004ab510 — 240b audio chain-step with mstack push2.
+ *   ecx = g_x_00542044[0]; g_x_0054206c = ecx; g_state_0054208c |= 4.
+ *   If ecx == 0: g_x_00542044 = 0; ret. Else: g_state_0054208c ^= 4.
+ *   If ecx == 0 (still): g_x_00542044 = 0; ret. Else: mstack-push ecx, then g_x_00542048;
+ *   ecx = g_x_00542044; eax = chain[ecx*4 + 4] + g_x_0054206c → g_x_00542048; chain[0] = chain[eax*4];
+ *   chain[g_x_00542048*4 + 4] = 0; chain[g_x_00542048*4] = g_x_0054206c; pop2 mstack into
+ *   g_x_00542048 and g_x_0054206c; g_x_00542044 = (last popped); ret.
+ */
+__declspec(naked) void MStackPushChainStepIndex_004ab510(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_state_0054208c]
+        push    esi
+        mov     ecx, dword ptr [eax*4]
+        mov     eax, 4
+        or      edx, eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_0054208c], edx
+        xor     edx, edx
+        cmp     ecx, edx
+        je      L_setG44
+        mov     esi, dword ptr [g_state_0054208c]
+        xor     esi, eax
+        cmp     ecx, edx
+        mov     dword ptr [g_state_0054208c], esi
+        je      L_setG44
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     esi, dword ptr [g_x_0054206c]
+        mov     eax, dword ptr [ecx*4 + 4]
+        add     eax, esi
+        mov     dword ptr [g_x_00542048], eax
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [ecx*4], eax
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_0054206c], edx
+        mov     dword ptr [ecx*4 + 4], edx
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [edx*4], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_setG44:
+        mov     dword ptr [g_x_00542044], ecx
+        pop     esi
+        ret
+    }
+}
+
 extern void func_00414a00(void);
 
 /*

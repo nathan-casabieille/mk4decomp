@@ -12847,10 +12847,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab510
-    name: func_004ab510
+    name: MStackPushChainStepIndex_004ab510
     size: 240
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab600
     name: DualAddSar_004ab600
     size: 39
