@@ -52669,3 +52669,108 @@ __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
         ret
     }
 }
+
+extern void InstallSelfTwoTailJmp_00483f30(void);
+extern void func_004933d0(void);
+extern void func_00484150(void);
+
+/* @addr 0x00484000 (336b game) - install-self with multi-call cascade + chain field-copy thunk.
+ *   state!=0: tail-call FiveCallGuardSetTail; pop+ret.
+ *   state==0: dec g_state_0054207c; if non-zero tail-call InstallSelfTwoTailJmp_00483f30.
+ *     Call func_0048e0e0; if pause ret.
+ *     g_data_00542070=[cj*4+0x28]. Install-self at entry+0x01000000; state=1; call CallPauseScaledStoreJmp; pause=1; ret.
+ *   Tail (+0xc0): g_x_0054206c=3; call ByteWordTableTaggedDispatch; if pause ret.
+ *     Call func_004933d0; if pause ret. g_x_00542054=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
+ *     Push 0x70, push (func_00484150 + 0x10); call StoreTwoCall; pop. Copy chain[baseSel*4+0x3c] to [scaledInit*4+0x3c].
+ *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp func_00484150.
+ *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
+ */
+__declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   07h
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_state_0054207c]
+        dec     eax
+        mov     dword ptr [g_state_0054207c], eax
+        _emit   74h
+        _emit   07h
+        call    InstallSelfTwoTailJmp_00483f30
+        pop     esi
+        ret
+        call    func_0048e0e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   72h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x28]
+        mov     ecx, offset InstallSelfMultiCascadeChainCopy_00484000
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [esi + 8], offset InstallSelfMultiCascadeChainCopy_00484000
+        mov     eax, dword ptr [g_baseSel_00542060]
+        add     ecx, 0x01000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    CallPauseScaledStoreJmp_00428820
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 3
+        call    ByteWordTableTaggedDispatch_0048a050
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   77h
+        call    func_004933d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   69h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        test    eax, eax
+        mov     dword ptr [g_x_00542054], eax
+        _emit   75h
+        _emit   05h
+        jmp     CjInstallSelfRouter_00470480
+        push    0x70
+        push    offset func_00484150 + 0x10
+        call    StoreTwoCall_0049cb40
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        add     esp, 8
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   1bh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     func_00484150
+        push    0x004ee800
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}

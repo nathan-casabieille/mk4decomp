@@ -8981,10 +8981,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00484000
-    name: func_00484000
+    name: InstallSelfMultiCascadeChainCopy_00484000
     size: 336
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484150
     name: func_00484150
     size: 793
