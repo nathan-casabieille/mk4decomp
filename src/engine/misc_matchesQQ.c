@@ -58030,6 +58030,108 @@ __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
     }
 }
 
+extern signed char g_byteTab_004f3940;
+extern unsigned int g_data_004f3928;
+
+/*
+ * AudioByteTable7LoopChainPick_004a5160 — 300b 7-iter audio byte-table loop with extra picks.
+ *   Loops edi 0..6: chain index from g_byteTab_004f3940[esi=edi*9*4]; g_x_00542044=chain[ecx*4].
+ *   Call func_00406790; load chain pointer (esi-table+0xc) and value (esi-table+0x4).
+ *   Special pick when edi==2: ecx = (g_data_004f3928 != 0) ? 0x004d2420 : 0x004d2438.
+ *   For edi in {5,6}: override g_x_0054206c with 0x03e80000 based on chain[+0x30] == 1 or 2.
+ *   Push (eax, ecx); GuardedSetupCallTailJmp; restore. chain[+0x5c] = esi-table[+0x10];
+ *   chain[+0x54] → esi-table[+0x8]; movsx ecx = byte tab; chain[+(baseSel+ecx)*4] = chain.
+ *   inc edi; if < 7: loop.
+ */
+__declspec(naked) void AudioByteTable7LoopChainPick_004a5160(void)
+{
+    __asm
+    {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        xor     edi, edi
+        mov     ebx, 2
+        mov     ebp, 1
+    L_a51_iter:
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        lea     esi, [edi*8 + edi]
+        shl     esi, 2
+        movsx   eax, byte ptr [esi + g_byteTab_004f3940]
+        add     ecx, eax
+        mov     edx, dword ptr [ecx*4]
+        mov     dword ptr [g_x_00542044], edx
+        call    func_00406790
+        mov     eax, dword ptr [esi + 0x004f394c]
+        mov     ecx, dword ptr [esi + 0x004f3944]
+        cmp     edi, ebx
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00542044], ecx
+        jne     short L_a51_skipPick
+        mov     ecx, dword ptr [g_data_004f3928]
+        test    ecx, ecx
+        mov     ecx, 0x004d2420
+        jne     short L_a51_storeChan
+        mov     ecx, 0x004d2438
+    L_a51_storeChan:
+        mov     dword ptr [g_x_00542044], ecx
+    L_a51_skipPick:
+        mov     edx, dword ptr [g_baseSel_00542060]
+        cmp     edi, 5
+        jne     short L_a51_chk6_eq
+        cmp     dword ptr [edx*4 + 0x30], ebp
+        jne     short L_a51_chk6_eq
+        mov     eax, 0x03e80000
+        mov     dword ptr [g_x_0054206c], eax
+    L_a51_chk6_eq:
+        cmp     edi, 6
+        jne     short L_a51_chk5_ne
+        cmp     dword ptr [edx*4 + 0x30], ebp
+        je      short L_a51_chk5_ne
+        mov     eax, 0x03e80000
+        mov     dword ptr [g_x_0054206c], eax
+    L_a51_chk5_ne:
+        cmp     edi, 5
+        jne     short L_a51_chk6_ne
+        cmp     dword ptr [edx*4 + 0x30], ebx
+        jne     short L_a51_chk6_ne
+        mov     eax, 0x03e80000
+        mov     dword ptr [g_x_0054206c], eax
+    L_a51_chk6_ne:
+        cmp     edi, 6
+        jne     short L_a51_callGuard
+        cmp     dword ptr [edx*4 + 0x30], ebx
+        jne     short L_a51_callGuard
+        mov     eax, 0x03e80000
+        mov     dword ptr [g_x_0054206c], eax
+    L_a51_callGuard:
+        push    eax
+        push    ecx
+        call    GuardedSetupCallTailJmp_004a1fa0
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [esi + 0x004f3950]
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     eax, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [esi + 0x004f3948], edx
+        mov     edx, dword ptr [g_baseSel_00542060]
+        movsx   ecx, byte ptr [esi + g_byteTab_004f3940]
+        mov     dword ptr [g_data_00542070], ecx
+        add     ecx, edx
+        inc     edi
+        cmp     edi, 7
+        mov     dword ptr [ecx*4], eax
+        jb      L_a51_iter
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
 /*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
