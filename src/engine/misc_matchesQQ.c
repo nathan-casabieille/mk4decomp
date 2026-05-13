@@ -47113,3 +47113,108 @@ __declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
         ret
     }
 }
+
+extern void InstallSelfTableDispatch_00461a60(void);
+extern void CallPauseInc_004ab670(void);
+
+/* @addr 0x00461930 (300b game) - triple-block: arg-init thunk + install-self body + tail body.
+ *   Block A (0..0x44): push 0x30, push tail_a00 entry; call StoreTwoCall.
+ *     g_x_0054206c=0; chain[scaledInit*4+0x1c]=0; chain[+0x20]=0;
+ *     g_x_0054206c=g_data_0053a748=1; ret.
+ *   Block B (0x50..0xc4): install-self body. state!=0: load g_state_0054207c->g_x_0054206c;
+ *     tail-call InstallSelfTableDispatch; pop+ret.
+ *   state==0: g_x_0054206c=0x14; call CallPauseInc; if pause ret.
+ *     g_x_0054206c += 0x78; g_x_0054204c = result. Install-self at body+0; state=1; pause=1; ret.
+ *   Block C (0xd0..end): tail body. Load state; clear. state!=0: g_x_0054206c=0xf;
+ *     call StorePauseImulShr16; if pause: skip; else tail-jmp InstallSelfTableDispatch.
+ *   state==0: install-self at tail+0; state=1; g_x_0054204c=0x78; pause=1; ret.
+ */
+__declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
+    __asm {
+        push    0x30
+        push    offset tail_a00
+        call    StoreTwoCall_0049cb40
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        xor     eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x1c], eax
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x20], edx
+        mov     eax, 1
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0053a748], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    body_980:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        _emit   74h
+        _emit   13h
+        mov     ecx, dword ptr [g_state_0054207c]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    InstallSelfTableDispatch_00461a60
+        pop     esi
+        ret
+        mov     dword ptr [g_x_0054206c], 0x14
+        call    CallPauseInc_004ab670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   29h
+        mov     eax, dword ptr [g_x_0054206c]
+        add     eax, 0x78
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset body_980
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    tail_a00:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   1dh
+        mov     dword ptr [g_x_0054206c], 0xf
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        jmp     InstallSelfTableDispatch_00461a60
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset tail_a00
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_x_0054204c], 0x78
+        mov     dword ptr [g_pause_00541e6c], ecx
+        ret
+    }
+}
