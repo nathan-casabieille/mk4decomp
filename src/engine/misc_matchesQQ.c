@@ -59126,6 +59126,101 @@ extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
 extern void func_004c6e60_helper(void);  /* placeholder; tail call from 0x4ccf90 */
+extern unsigned int g_data_00520134;
+extern unsigned int g_data_00f9f8b8;
+extern void HeapRegionTeardown_004c7240(void);
+
+/* @addr 0x004c72a0 (205b crt) - heap shrink/decommit scan.
+ *   Walks the heap-region list head [g_data_00520134]; for each region with
+ *   handle != -1, scans its 2KB page-state array (1024 entries × 8 bytes)
+ *   at +0x2010, looking for entries marked 0xf0 (free). Decommit each via
+ *   IAT[0x4d2168] (VirtualFree); on success, mark slot 0xffffffff, decrement
+ *   counter [g_data_00f9f8b8], update head ptr at [region+0xc]. Decrement
+ *   target count [esp+0x14]; if region fully empty (all -1), call
+ *   HeapRegionTeardown_004c7240(region).
+ */
+__declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        push    edi
+        mov     edi, dword ptr [g_data_00520134]
+    L_hs_check:
+        cmp     dword ptr [edi + 0x10], -1
+        jz      L_hs_outer_check
+        xor     ebp, ebp
+        lea     esi, [edi + 0x2010]
+        mov     ebx, 0x003ff000
+    L_hs_loop:
+        cmp     dword ptr [esi], 0xf0
+        jne     short L_hs_nextpage
+        mov     eax, [edi + 0x10]
+        push    0x4000
+        add     eax, ebx
+        push    0x1000
+        push    eax
+        call    dword ptr [g_iat_004d2168]
+        test    eax, eax
+        jz      short L_hs_nextpage
+        mov     dword ptr [esi], 0xffffffff
+        mov     edx, dword ptr [g_data_00f9f8b8]
+        dec     edx
+        mov     dword ptr [g_data_00f9f8b8], edx
+        mov     eax, [edi + 0xc]
+        test    eax, eax
+        jz      short L_hs_setHead
+        cmp     eax, esi
+        jbe     short L_hs_after
+    L_hs_setHead:
+        mov     [edi + 0xc], esi
+    L_hs_after:
+        mov     eax, [esp + 0x14]
+        inc     ebp
+        dec     eax
+        mov     [esp + 0x14], eax
+        jz      short L_hs_done
+    L_hs_nextpage:
+        sub     ebx, 0x1000
+        sub     esi, 8
+        test    ebx, ebx
+        jge     short L_hs_loop
+    L_hs_done:
+        mov     edx, edi
+        mov     edi, [edi + 4]
+        test    ebp, ebp
+        jz      short L_hs_outer_check
+        cmp     dword ptr [edx + 0x18], -1
+        jne     short L_hs_outer_check
+        mov     eax, 1
+        lea     ecx, [edx + 0x20]
+    L_hs_scanempty:
+        cmp     dword ptr [ecx], -1
+        jne     short L_hs_emptyCk
+        inc     eax
+        add     ecx, 8
+        cmp     eax, 0x400
+        jl      short L_hs_scanempty
+    L_hs_emptyCk:
+        cmp     eax, 0x400
+        jne     short L_hs_outer_check
+        push    edx
+        call    HeapRegionTeardown_004c7240
+        add     esp, 4
+    L_hs_outer_check:
+        cmp     edi, dword ptr [g_data_00520134]
+        jz      short L_hs_ret
+        mov     eax, [esp + 0x14]
+        test    eax, eax
+        jg      L_hs_check
+    L_hs_ret:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004cced0 (203b crt) - IEEE 754 double → 80-bit long-double conversion.
  *   Reads double from [esi]:[esi+4]:[esi+6] (low32, high32-mantissa, sign+exp);
