@@ -59125,6 +59125,100 @@ extern void DSoundQueryProperty_004ac3a0(void);
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
+/* @addr 0x004c5690 (176b boot) - __alldiv: MSVC CRT 64-bit signed integer divide.
+ *   Stack: ret addr, dvdnd_lo, dvdnd_hi, dvr_lo, dvr_hi.
+ *   Absolutize both operands tracking sign in edi, divide via div/shift,
+ *   conditionally negate result. Returns edx:eax (quotient), ret 0x10.
+ */
+__declspec(naked) void Alldiv_004c5690(void) {
+    __asm {
+        push    edi
+        push    esi
+        push    ebx
+        xor     edi, edi
+        mov     eax, [esp + 0x14]
+        or      eax, eax
+        jge     short L_div_a_pos
+        inc     edi
+        mov     edx, [esp + 0x10]
+        neg     eax
+        neg     edx
+        sbb     eax, 0
+        mov     [esp + 0x14], eax
+        mov     [esp + 0x10], edx
+    L_div_a_pos:
+        mov     eax, [esp + 0x1c]
+        or      eax, eax
+        jge     short L_div_b_pos
+        inc     edi
+        mov     edx, [esp + 0x18]
+        neg     eax
+        neg     edx
+        sbb     eax, 0
+        mov     [esp + 0x1c], eax
+        mov     [esp + 0x18], edx
+    L_div_b_pos:
+        or      eax, eax
+        jne     short L_div_big
+        mov     ecx, [esp + 0x18]
+        mov     eax, [esp + 0x14]
+        xor     edx, edx
+        div     ecx
+        mov     ebx, eax
+        mov     eax, [esp + 0x10]
+        div     ecx
+        mov     edx, ebx
+        jmp     short L_div_sign
+    L_div_big:
+        mov     ebx, eax
+        mov     ecx, [esp + 0x18]
+        mov     edx, [esp + 0x14]
+        mov     eax, [esp + 0x10]
+    L_div_shift:
+        shr     ebx, 1
+        rcr     ecx, 1
+        shr     edx, 1
+        rcr     eax, 1
+        or      ebx, ebx
+        jne     short L_div_shift
+        div     ecx
+        mov     esi, eax
+        mul     dword ptr [esp + 0x1c]
+        mov     ecx, eax
+        mov     eax, [esp + 0x18]
+        mul     esi
+        add     edx, ecx
+        jb      short L_div_dec
+        cmp     edx, [esp + 0x14]
+        ja      short L_div_dec
+        jb      short L_div_done
+        cmp     eax, [esp + 0x10]
+        jbe     short L_div_done
+    L_div_dec:
+        dec     esi
+    L_div_done:
+        xor     edx, edx
+        mov     eax, esi
+    L_div_sign:
+        dec     edi
+        jne     short L_div_ret
+        neg     edx
+        neg     eax
+        sbb     edx, 0
+    L_div_ret:
+        pop     ebx
+        pop     esi
+        pop     edi
+        ret     0x10
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+    }
+}
+
 /* @addr 0x004c51f0 (171b boot) - aux audio reference-window probe.
  *   Frame: sub esp, 0x3c; push esi, edi.
  *   Init 15-dword reference window on stack: buf[0]=0, buf[1..8]=0x5c,

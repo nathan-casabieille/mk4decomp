@@ -15155,10 +15155,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004c5690
-    name: func_004c5690
+    name: Alldiv_004c5690
     size: 176
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5740
     name: UllShlAndInit_004c5740
     size: 65
