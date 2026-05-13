@@ -58577,6 +58577,126 @@ __declspec(naked) void MStackPush2ChainPrepend_00409970(void)
     }
 }
 
+extern int g_data_00543930;
+extern int g_data_00543f7c;
+extern int g_table_0053a53c;
+extern int g_table_00543934;
+extern unsigned char g_byte_004f3238;
+extern int g_table_004f3f28;
+extern int g_table_00543a6c;
+extern int g_data_004f31d0;
+extern int g_data_004f31cc;
+extern unsigned char g_byte_00543a24;
+extern int g_data_005437f8;
+extern int g_data_00543a28;
+extern int g_data_005437fc;
+extern int g_data_00543a2c;
+extern int g_data_004f3234;
+extern int g_data_00543a30;
+extern unsigned char g_byte_00543724;
+extern int g_data_00543a34;
+extern unsigned char g_byte_0054372c;
+extern int g_data_00543a38;
+extern unsigned char g_byte_00543730;
+extern unsigned char g_byte_00543a3c;
+extern int g_data_00543734;
+extern unsigned char g_byte_00543a3d;
+extern int g_data_00543738;
+extern unsigned char g_byte_00543a3e;
+extern int g_data_0054373c;
+extern int g_data_00543a40;
+extern int g_data_00543740;
+extern int g_data_00543a44;
+extern int g_data_004f3814;
+extern int g_data_00543a48;
+extern int g_data_004f3818;
+extern int g_data_00543a4c;
+extern int g_data_004f381c;
+extern int g_data_00543a50;
+extern int g_data_004f3820;
+extern int g_data_00543a54;
+extern int g_data_00543a58;
+extern int g_data_00543a5c;
+extern int g_data_0052ab40;
+extern int g_data_00543a60;
+extern int g_data_00543a64;
+extern int g_data_00543a68;
+
+/*
+ * AudioSnapshotGlobals_004ace60 — 292b audio global-to-global snapshot.
+ *   If g_data_00543930 == 0 OR g_data_00543f7c == 0: ret.
+ *   rep movsd: copy 0x3c dwords from 0x0053a53c → 0x00543934.
+ *   movsb 1 byte; rep movsd: copy 5 dwords from 0x004f3f28 → 0x00543a6c.
+ *   Copy ~18 more globals into destinations 0x00543a24-0x00543a68.
+ */
+__declspec(naked) void AudioSnapshotGlobals_004ace60(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00543930]
+        test    eax, eax
+        je      L_ace_ret
+        mov     eax, dword ptr [g_data_00543f7c]
+        test    eax, eax
+        je      L_ace_ret
+        push    edi
+        push    esi
+        mov     ecx, 0x3c
+        mov     esi, offset g_table_0053a53c
+        mov     edi, offset g_table_00543934
+        mov     al, byte ptr [g_byte_004f3238]
+        rep     movsd
+        mov     ecx, 5
+        mov     esi, offset g_table_004f3f28
+        mov     edi, offset g_table_00543a6c
+        mov     edx, dword ptr [g_data_004f31d0]
+        rep     movsd
+        mov     ecx, dword ptr [g_data_004f31cc]
+        movsb
+        mov     byte ptr [g_byte_00543a24], al
+        mov     eax, dword ptr [g_data_005437f8]
+        mov     dword ptr [g_data_00543a28], ecx
+        mov     ecx, dword ptr [g_data_005437fc]
+        mov     dword ptr [g_data_00543a2c], edx
+        mov     edx, dword ptr [g_data_004f3234]
+        mov     dword ptr [g_data_00543a30], eax
+        mov     al, byte ptr [g_byte_00543724]
+        mov     dword ptr [g_data_00543a34], ecx
+        mov     cl, byte ptr [g_byte_0054372c]
+        mov     dword ptr [g_data_00543a38], edx
+        mov     dl, byte ptr [g_byte_00543730]
+        mov     byte ptr [g_byte_00543a3c], al
+        mov     eax, dword ptr [g_data_00543734]
+        mov     byte ptr [g_byte_00543a3d], cl
+        mov     ecx, dword ptr [g_data_00543738]
+        mov     byte ptr [g_byte_00543a3e], dl
+        mov     edx, dword ptr [g_data_0054373c]
+        mov     dword ptr [g_data_00543a40], eax
+        mov     eax, dword ptr [g_data_00543740]
+        mov     dword ptr [g_data_00543a44], ecx
+        mov     ecx, dword ptr [g_data_004f3814]
+        mov     dword ptr [g_data_00543a48], edx
+        mov     edx, dword ptr [g_data_004f3818]
+        mov     dword ptr [g_data_00543a4c], eax
+        mov     eax, dword ptr [g_data_004f381c]
+        mov     dword ptr [g_data_00543a50], ecx
+        mov     ecx, dword ptr [g_data_004f3820]
+        mov     dword ptr [g_data_00543a54], edx
+        mov     edx, dword ptr [g_x_004f3ae4]
+        mov     dword ptr [g_data_00543a58], eax
+        mov     eax, dword ptr [g_x_004f3ae8]
+        mov     dword ptr [g_data_00543a5c], ecx
+        mov     ecx, dword ptr [g_data_0052ab40]
+        pop     esi
+        mov     dword ptr [g_data_00543a60], edx
+        mov     dword ptr [g_data_00543a64], eax
+        mov     dword ptr [g_data_00543a68], ecx
+        pop     edi
+    L_ace_ret:
+        ret
+    }
+}
+
 /*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
