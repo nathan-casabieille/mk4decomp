@@ -60055,6 +60055,106 @@ extern unsigned int g_data_0058c8dc;
 extern unsigned int g_data_0058c8e0;
 extern unsigned int g_data_0058c8fc;
 extern unsigned int g_data_0058c8f8;
+extern unsigned short g_data_00f9eb80[];
+extern unsigned int g_data_00f8fac8[];
+extern unsigned char g_data_00f8fadf[];
+
+/* @addr 0x004c3ad0 (262b engine.render) - 3D sound source vtbl Stop+Release dispatcher.
+ *   Arg 0 (word at [esp+4]): id. If id < 0x898: iterate 4 slots in batch (single source).
+ *   Else: arg byte [esp+0x18] = group_idx (must be < 0x10);
+ *     base = id idx in g_data_00f9eb80 (word table), bail if 0xffff;
+ *     look up object via [eax*7] indexing into g_data_00f8fac8 table,
+ *     call vtbl+0x48 (Stop), then vtbl+0x34 (Release). Mark slot freed.
+ */
+__declspec(naked) void Snd3DSourceCleanup_004c3ad0(void) {
+    __asm {
+        mov     ax, word ptr [esp + 4]
+        push    ebx
+        push    ebp
+        push    esi
+        cmp     ax, 0x898
+        push    edi
+        jb      L_s3d_iter
+        mov     al, byte ptr [esp + 0x18]
+        cmp     al, 0x10
+        jae     L_s3d_done
+        movsx   esi, al
+        shl     esi, 2
+        mov     ax, word ptr [esi + g_data_00f9eb80]
+        cmp     ax, 0xffff
+        jz      L_s3d_done
+        movsx   eax, ax
+        xor     ebx, ebx
+        lea     ecx, [eax*8]
+        sub     ecx, eax
+        cmp     dword ptr [ecx*4 + g_data_00f8fac8], ebx
+        jz      L_s3d_done
+        lea     edx, [eax*8]
+        sub     edx, eax
+        movsx   eax, word ptr [esi + g_data_00f9eb80 + 2]
+        add     edx, eax
+        mov     eax, dword ptr [edx*4 + g_data_00f8fac8]
+        push    eax
+        mov     ecx, [eax]
+        call    dword ptr [ecx + 0x48]
+        movsx   eax, word ptr [esi + g_data_00f9eb80]
+        mov     edx, eax
+        push    ebx
+        shl     edx, 3
+        sub     edx, eax
+        movsx   eax, word ptr [esi + g_data_00f9eb80 + 2]
+        add     edx, eax
+        mov     eax, dword ptr [edx*4 + g_data_00f8fac8]
+        push    eax
+        mov     ecx, [eax]
+        call    dword ptr [ecx + 0x34]
+        movsx   eax, word ptr [esi + g_data_00f9eb80]
+        mov     edx, eax
+        shl     edx, 3
+        sub     edx, eax
+        movsx   eax, word ptr [esi + g_data_00f9eb80 + 2]
+        mov     word ptr [esi + g_data_00f9eb80], 0xffff
+        mov     byte ptr [eax + edx*4 + g_data_00f8fadf], bl
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_s3d_iter:
+        movsx   eax, ax
+        mov     ebp, eax
+        xor     ebx, ebx
+        shl     ebp, 3
+        sub     ebp, eax
+        shl     ebp, 2
+        mov     eax, dword ptr [ebp + g_data_00f8fac8]
+        lea     edi, [ebp + g_data_00f8fac8]
+        cmp     eax, ebx
+        jz      short L_s3d_done
+        xor     esi, esi
+    L_s3d_loop:
+        mov     byte ptr [esi + ebp + g_data_00f8fadf], bl
+        mov     eax, [edi]
+        push    eax
+        mov     ecx, [eax]
+        call    dword ptr [ecx + 0x48]
+        mov     eax, [edi]
+        push    ebx
+        push    eax
+        mov     edx, [eax]
+        call    dword ptr [edx + 0x34]
+        inc     esi
+        add     edi, 4
+        cmp     esi, 4
+        jl      short L_s3d_loop
+    L_s3d_done:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004b0540 (297b engine.ecm) - third twin DSoundModeSetup for 640x480
  *   with ECM-group state globals. Same shape as 0x4aeae0/0x4afd10.

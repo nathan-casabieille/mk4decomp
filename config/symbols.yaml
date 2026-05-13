@@ -14951,10 +14951,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004c3ad0
-    name: func_004c3ad0
+    name: Snd3DSourceCleanup_004c3ad0
     size: 262
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3be0
     name: func_004c3be0
     size: 286
