@@ -16240,10 +16240,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0270
-    name: func_004d0270
+    name: LocaleInfoFill_004d0270
     size: 331
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004d03c0
     name: StringDigitConvert_004d03c0
     size: 51

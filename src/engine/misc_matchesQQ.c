@@ -63616,6 +63616,165 @@ extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
 extern unsigned int g_data_00542074;
 extern void Transform9Words_004b3a90(void);
+extern void func_004d0bc0(void);
+extern void StringDigitConvert_004d03c0(void);
+extern unsigned short g_data_00f9fc94;
+
+/* @addr 0x004d0270 (331b other) - locale info struct populator (GetLocaleInfo loop).
+ *   Reads cached LCID-locale from g_data_00f9fc94 into si. Bails if arg0 (struct ptr) null.
+ *   For each LCID field (LOCALE_SLANGUAGE=0x14/SLANGUAGE_NATIVE=0x15/SENGLANGUAGE=0x16/SABBREVLANGNAME=0x17/SNATIVELANGNAME=0x18),
+ *     call func_004d0bc0(1, lcid, id, &struct[offset]). Convert "SENGCOUNTRY"+0 via
+ *     StringDigitConvert_004d03c0. Then more fields with flag=0. ORs all return
+ *     values into edi (error tracker). Returns edi (0 = success, else error).
+ */
+__declspec(naked) void LocaleInfoFill_004d0270(void) {
+    __asm {
+        push    ebx
+        mov     ebx, [esp + 8]
+        push    esi
+        xor     esi, esi
+        mov     si, word ptr [g_data_00f9fc94]
+        test    ebx, ebx
+        jne     short L_lif_setup
+        or      eax, -1
+        pop     esi
+        pop     ebx
+        ret
+    L_lif_setup:
+        push    edi
+        lea     eax, [ebx + 0x0c]
+        push    ebp
+        push    eax
+        push    0x15
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     ecx, [ebx + 0x10]
+        mov     edi, eax
+        push    ecx
+        push    0x14
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     edx, [ebx + 0x14]
+        or      edi, eax
+        push    edx
+        push    0x16
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        or      edi, eax
+        lea     eax, [ebx + 0x18]
+        push    eax
+        push    0x17
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     ebp, [ebx + 0x1c]
+        or      edi, eax
+        push    ebp
+        push    0x18
+        push    esi
+        push    1
+        call    func_004d0bc0
+        mov     ecx, [ebp]
+        add     esp, 0x10
+        or      edi, eax
+        push    ecx
+        call    StringDigitConvert_004d03c0
+        add     esp, 4
+        lea     edx, [ebx + 0x20]
+        push    edx
+        push    0x50
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        or      edi, eax
+        lea     eax, [ebx + 0x24]
+        push    eax
+        push    0x51
+        push    esi
+        push    1
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     ecx, [ebx + 0x28]
+        or      edi, eax
+        push    ecx
+        push    0x1a
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     edx, [ebx + 0x29]
+        or      edi, eax
+        push    edx
+        push    0x19
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        or      edi, eax
+        lea     eax, [ebx + 0x2a]
+        push    eax
+        push    0x54
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     ecx, [ebx + 0x2b]
+        or      edi, eax
+        push    ecx
+        push    0x55
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     edx, [ebx + 0x2c]
+        or      edi, eax
+        push    edx
+        push    0x56
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        or      edi, eax
+        lea     eax, [ebx + 0x2d]
+        push    eax
+        push    0x57
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        lea     ecx, [ebx + 0x2e]
+        or      edi, eax
+        push    ecx
+        push    0x52
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        add     ebx, 0x2f
+        or      edi, eax
+        push    ebx
+        push    0x53
+        push    esi
+        push    0
+        call    func_004d0bc0
+        add     esp, 0x10
+        or      edi, eax
+        mov     eax, edi
+        pop     ebp
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
 extern unsigned int g_data_004f6508[];
 extern unsigned int g_data_004f6570;
 extern unsigned int g_data_004f6574;
