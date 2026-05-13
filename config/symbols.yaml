@@ -13294,10 +13294,11 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004af020
-    name: func_004af020
+    name: DSoundSlotSetup_004af020
     size: 263
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004af130
     name: ReleaseVtableSlots_004af130
     size: 88
