@@ -7383,10 +7383,11 @@ functions:
     status: matched
     file: src/engine/misc_matches4.c
   - addr: 0x0046ff80
-    name: func_0046ff80
+    name: Phase3PackedInstallSelf_0046ff80
     size: 350
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004700e0
     name: func_004700e0
     size: 548

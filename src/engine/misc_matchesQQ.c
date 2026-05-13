@@ -66516,3 +66516,105 @@ __declspec(naked) void MStackPush2BiasResolveChain_0048cca0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004ec0c0;
+extern unsigned int g_data_00500c08;
+extern unsigned int g_data_00542aac;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542058;
+extern void func_004700e0(void);
+extern void GuardedSeq_00428480(void);
+extern void GuardedPackedSlotInit_00428760(void);
+
+/* @addr 0x0046ff80 (350b game) - 3-phase install-self via packed_ptr tag.
+ *   Reads phase from [g_data_00542060*4 + 0x84], zeroes it, then dispatches:
+ *     - phase 2 (eax-2=0): writes g_data_00542088 into [g_data_0054205c*4+0x78]
+ *       and tail-calls func_004700e0.
+ *     - phase 1 (eax-1=0): loads &g_data_004ec0c0>>2 (the reloc-survives-shr
+ *       packed_ptr base), calls GuardedDirtyXformFromTable_0048f6d0; on success
+ *       sets g_data_00542080=4, installs Self at [esi+8], sets slot[+0x84]=2,
+ *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
+ *       g_data_00542044 bumped after); zeroes slot[+0x84] and calls
+ *       GuardedSeq_00428480, arms g_data_00541e6c=1.
+ *     - phase 0 (eax==0): pushes 0x00542aac, calls GuardedPackedSlotInit_00428760;
+ *       on success sets g_data_00542080=2, sets g_data_00542058 = &g_data_00500c08>>2,
+ *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
+ *       at [eax*4], zeroes slot[+0x84], and arms 0x541e6c=1 via GuardedSeq.
+ */
+__declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_pis_phase0
+        dec     eax
+        je      short L_pis_phase1
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542088]
+        mov     dword ptr [ecx*4 + 0x78], edx
+        call    func_004700e0
+        pop     esi
+        ret
+    L_pis_phase1:
+        mov     eax, offset g_data_004ec0c0
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        call    GuardedDirtyXformFromTable_0048f6d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis_done
+        mov     dword ptr [g_data_00542080], 4
+        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset Phase3PackedInstallSelf_0046ff80
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    GuardedSeq_00428480
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_pis_phase0:
+        push    offset g_data_00542aac
+        call    GuardedPackedSlotInit_00428760
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_pis_done
+        mov     ecx, offset g_data_00500c08
+        mov     dword ptr [g_data_00542080], 2
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [esi + 8], offset Phase3PackedInstallSelf_0046ff80
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset Phase3PackedInstallSelf_0046ff80
+        add     ecx, 0x01000000
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    GuardedSeq_00428480
+        mov     dword ptr [g_data_00541e6c], 1
+    L_pis_done:
+        pop     esi
+        ret
+    }
+}
