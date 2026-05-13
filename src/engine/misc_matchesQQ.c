@@ -54362,3 +54362,80 @@ __declspec(naked) void MStackPushDispatchBitGate_00407330(void)
         ret
     }
 }
+
+extern void ScaledStoreIdx24_00406ce0(void);
+
+/*
+ * RecursiveMStackByteStream_00406d00 — 207b boot recursive byte-stream interpreter.
+ *   Reads ecx = [g_x_00542048*4]; eax = ecx; ecx >>= 0x14 (sar);
+ *   g_data_00542070 = eax (low/full); g_x_0054206c = ecx (high opcode).
+ *   If eax == 0: skip to mstack-push branch.
+ *   Else: call MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *     g_x_0054206c = g_x_00542048; call ScaledStoreIdx24; if paused: ret.
+ *   Common: g_x_00542048 += 7 (then renamed); g_state_00542094 = (eax & 8); if not 0: ret.
+ *   Else: push eax to mstack; call self; if paused: ret.
+ *     Loop: g_state_00542094 = g_data_00542070 & 0x10; if not 0: pop mstack into g_data_00542070; ret.
+ *     Else: call self; if paused: ret. Loop back to test mask.
+ */
+__declspec(naked) void RecursiveMStackByteStream_00406d00(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4]
+        mov     eax, ecx
+        sar     ecx, 0x14
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_x_0054206c], ecx
+        je      short L_skipToggle
+        call    MStackInitCallToggle_00408ad0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     L_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     short L_advance
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    ScaledStoreIdx24_00406ce0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ret
+    L_advance:
+        mov     eax, dword ptr [g_data_00542070]
+    L_skipToggle:
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     edx, eax
+        add     ecx, 7
+        and     edx, 8
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_00542094], edx
+        jne     short L_ret
+        mov     ecx, dword ptr [g_state_004d57ac]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        call    RecursiveMStackByteStream_00406d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_ret
+    L_loop:
+        mov     eax, dword ptr [g_data_00542070]
+        and     eax, 0x10
+        mov     dword ptr [g_state_00542094], eax
+        jne     short L_pop_mstack
+        call    RecursiveMStackByteStream_00406d00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        je      short L_loop
+        ret
+    L_pop_mstack:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_ret:
+        ret
+    }
+}
