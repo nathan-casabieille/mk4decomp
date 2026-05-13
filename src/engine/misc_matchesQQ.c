@@ -56463,3 +56463,94 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         ret
     }
 }
+
+/*
+ * BootMod6487eClampAndChainMul10_00407510 — 261b 2-entry boot.
+ *   Entry 0x00407510: clamps g_x_0054206c into range [0, 0x6487e) via modulo using
+ *     reciprocal multiplication (0xa2f99905 magic, shr 0x12). Negative-side uses imul fixup,
+ *     positive-side uses a sub-and-decrement loop. Ret.
+ *   Body 0x00407560 (16b-padded): chain = g_x_00542044*4; compute
+ *     chain[+0x54..+0x5c] += chain[+0x6c..+0x74] (vec3 add); then for each component of
+ *     chain[+0x60..+0x68] compute sum with chain[+0x78..+0x80], call self entry 1 to clamp,
+ *     store back. g_state_0054208c &= 0xfe; ret.
+ */
+__declspec(naked) void BootMod6487eClampAndChainMul10_00407510(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_x_0054206c]
+        test    ecx, ecx
+        jge     short L_posBranch
+        mov     edx, 0x6487d
+        mov     eax, 0xa2f99905
+        sub     edx, ecx
+        mul     edx
+        shr     edx, 0x12
+        imul    edx, edx, 0x6487e
+        add     ecx, edx
+        mov     dword ptr [g_x_0054206c], ecx
+    L_posBranch:
+        cmp     ecx, 0x6487e
+        jl      short L_e1_ret
+        mov     eax, 0xa2f99905
+        mul     ecx
+        shr     edx, 0x12
+    L_posLoop:
+        sub     ecx, 0x6487e
+        dec     edx
+        jne     short L_posLoop
+        mov     dword ptr [g_x_0054206c], ecx
+    L_e1_ret:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_x_00542044]
+        push    esi
+        push    edi
+        mov     edx, dword ptr [ecx*4 + 0x6c]
+        mov     edi, dword ptr [ecx*4 + 0x54]
+        lea     eax, [ecx*4 + 0x54]
+        lea     ecx, [ecx*4 + 0x6c]
+        add     edi, edx
+        mov     esi, dword ptr [eax + 4]
+        mov     dword ptr [eax], edi
+        mov     edx, dword ptr [ecx + 4]
+        add     esi, edx
+        mov     edx, dword ptr [eax + 8]
+        mov     dword ptr [eax + 4], esi
+        mov     ecx, dword ptr [ecx + 8]
+        add     edx, ecx
+        mov     dword ptr [eax + 8], edx
+        mov     eax, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [eax*4 + 0x60]
+        lea     esi, [eax*4 + 0x60]
+        lea     edi, [eax*4 + 0x78]
+        mov     eax, dword ptr [eax*4 + 0x78]
+        add     edx, eax
+        mov     dword ptr [g_x_0054206c], edx
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [esi], eax
+        mov     ecx, dword ptr [edi + 4]
+        add     ecx, dword ptr [esi + 4]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [esi + 4], edx
+        mov     eax, dword ptr [edi + 8]
+        add     eax, dword ptr [esi + 8]
+        mov     dword ptr [g_x_0054206c], eax
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     ecx, dword ptr [g_x_0054206c]
+        pop     edi
+        mov     dword ptr [esi + 8], ecx
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        pop     esi
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}
