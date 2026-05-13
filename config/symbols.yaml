@@ -11162,10 +11162,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00492e60
-    name: func_00492e60
+    name: DualTableMappedDispatch_00492e60
     size: 413
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493000
     name: StateMachineInit_00493000
     size: 216

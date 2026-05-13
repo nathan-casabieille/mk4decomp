@@ -78395,3 +78395,128 @@ __declspec(naked) void AtanDualDeltaThreshold_0049c870(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0050b13c;
+extern unsigned int g_data_00543088;
+extern unsigned int g_data_0052ab10;
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void LoadGeoAsset_Default(void);
+extern void Thunk_004bd5c0(void);
+extern void ZeroThreeFields_00404ed0(void);
+
+__declspec(naked) void DualTableMappedDispatch_00492e60(void)
+{
+    __asm
+    {
+        push    esi
+        push    5
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    BootInitGuardedCallChain_004265d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dtmd_ret
+        mov     eax, offset g_data_0050b13c
+        shr     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        call    LoadGeoAsset_Default
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dtmd_ret
+        mov     eax, dword ptr [g_data_00537f48]
+        mov     esi, offset g_data_00543088
+        shr     esi, 2
+        cmp     eax, 0xf
+        mov     ecx, esi
+        jne     short L_dtmd_skip1
+        mov     eax, 6
+    L_dtmd_skip1:
+        cmp     eax, 0x10
+        jne     short L_dtmd_skip2
+        mov     eax, 2
+    L_dtmd_skip2:
+        cmp     eax, 0x11
+        jne     short L_dtmd_skip3
+        mov     eax, 7
+    L_dtmd_skip3:
+        add     eax, eax
+        add     ecx, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     edx, dword ptr [ecx*4]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542048], 0x7e20000
+        call    Thunk_004bd5c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dtmd_ret
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00542048], 0x7e00000
+        call    Thunk_004bd5c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dtmd_ret
+        mov     eax, dword ptr [g_data_005380e0]
+        cmp     eax, 0xf
+        jne     short L_dtmd_skip4
+        mov     eax, 6
+    L_dtmd_skip4:
+        cmp     eax, 0x10
+        jne     short L_dtmd_skip5
+        mov     eax, 2
+    L_dtmd_skip5:
+        cmp     eax, 0x11
+        jne     short L_dtmd_skip6
+        mov     eax, 7
+    L_dtmd_skip6:
+        add     eax, eax
+        add     esi, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_0054204c], esi
+        mov     edx, dword ptr [esi*4]
+        inc     esi
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054204c], esi
+        mov     dword ptr [g_data_00542048], 0x7f10000
+        call    Thunk_004bd5c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dtmd_ret
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00542048], 0x7e10000
+        call    Thunk_004bd5c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dtmd_ret
+        mov     eax, dword ptr [g_data_0052ab10]
+        mov     dword ptr [g_data_00542044], eax
+        lea     esi, [eax*4]
+        call    ZeroThreeFields_00404ed0
+        mov     eax, 0xfff88000
+        mov     dword ptr [esi + 0x54], 0
+        mov     dword ptr [esi + 0x58], 0x1999
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x5c], eax
+    L_dtmd_ret:
+        pop     esi
+        ret
+    }
+}
