@@ -47492,3 +47492,115 @@ __declspec(naked) void MStackPush2DualModMul10Pop2_00424860(void) {
         ret
     }
 }
+
+extern void func_00406dd0(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void func_00408600(void);
+extern unsigned int g_data_004ec8f8;
+
+/* @addr 0x00453620 (301b game) - bit2-gated chain init + dual call + iter chain advance.
+ *   Init: g_x_00542048 = (0x004ec8f8>>2). Call func_00406dd0; if pause ret.
+ *   If bit2(0054208c) set: ret.
+ *   chain[scaledInit*4 + 0x1c]=0; chain[+0x30]=0; chain[+0x38]=0; chain[+0x34]=0xffff0000.
+ *   Call ScaledTestPauseStore; if pause ret. If bit2 set ret.
+ *   ecx = [g_cj*4 + 0x18] -> g_x_00542048. Call PushPopScaled1cDoubleCall; if pause ret.
+ *   Advance chain iter: eax = [cj*4+0x1c]; g_x_0054204c=eax; eax = [eax*4]+1; chain[+0x1c]=eax.
+ *   scaledInit = g_cj. Call func_00408600; if pause ret.
+ *   Toggle bit2 atomically: ecx=g_state_0054208c|=4; if scaledInit==0: clear bit; pop ebx; ret.
+ */
+__declspec(naked) void Bit2GatedChainInit_00453620(void) {
+    __asm {
+        mov     eax, offset g_data_004ec8f8
+        push    ebx
+        shr     eax, 2
+        mov     dword ptr [g_x_00542048], eax
+        call    func_00406dd0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0bh
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   0fh
+        _emit   85h
+        _emit   0f9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [ecx*4 + 0x1c], 0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [edx*4 + 0x30], 0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [ecx*4 + 0x38], eax
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, 0xffff0000
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        call    ScaledTestPauseStore_00408860
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   92h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   0fh
+        _emit   85h
+        _emit   86h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_x_00542048], ecx
+        call    PushPopScaled1cDoubleCall_00408510
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   66h
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x1c]
+        mov     dword ptr [g_x_0054204c], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x1c], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], edx
+        call    func_00408600
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   20h
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        or      ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   74h
+        _emit   09h
+        mov     eax, ecx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+        pop     ebx
+        ret
+    }
+}

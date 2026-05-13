@@ -5666,10 +5666,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesU.c
   - addr: 0x00453620
-    name: func_00453620
+    name: Bit2GatedChainInit_00453620
     size: 301
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00453750
     name: CallPauseScaledStoreXJmp_00453750
     size: 38
