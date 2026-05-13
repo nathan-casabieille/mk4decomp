@@ -66086,3 +66086,122 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00541eb0;
+extern void MStackPushChainStepIndex_004ab510(void);
+
+/* @addr 0x00405450 (348b boot) - mstack-push-2 + 6/13-dword burst init.
+ *   Pushes g_data_00542044 and g_data_0053a1ac onto the mstack, snapshots
+ *   g_data_00541eb0 to g_data_00542044, calls MStackPushChainStepIndex_004ab510.
+ *   On no-error AND bit 2 of g_data_0054208c clear: bursts 6 dwords of 0 at
+ *   the scaled g_data_00542044 base via unrolled 4-store loop with rep stosd
+ *   tail; advances 0x542044 by 6, sets g_data_0053a1ac=0xd, bursts 13 dwords
+ *   of 0 at the new scaled base (using a 12+remainder pattern); then restores
+ *   from g_data_00542044-6 storing g_data_00542060 at offset +0x14.
+ *   Always: pops the 2 mstack entries back, sets bit 2 of 0x54208c then
+ *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
+ */
+__declspec(naked) void MStackPush2Burst6Init_00405450(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0053a1ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_data_00541eb0]
+        mov     dword ptr [g_data_00542044], eax
+        call    MStackPushChainStepIndex_004ab510
+        mov     eax, dword ptr [g_data_00541e6c]
+        xor     edx, edx
+        cmp     eax, edx
+        jne     L_mpb_pop2
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mpb_skipBursts
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, 6
+        lea     edi, [eax*4]
+        mov     eax, 1
+    L_mpb_burst1:
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        sub     ecx, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        dec     eax
+        jne     short L_mpb_burst1
+        cmp     ecx, edx
+        jle     short L_mpb_after1
+        xor     eax, eax
+        rep stosd
+    L_mpb_after1:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, 0xd
+        add     eax, 6
+        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], edx
+        lea     edi, [eax*4]
+        mov     eax, 3
+    L_mpb_burst2:
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        sub     ecx, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        dec     eax
+        jne     short L_mpb_burst2
+        cmp     ecx, edx
+        jle     short L_mpb_after2
+        xor     eax, eax
+        rep stosd
+    L_mpb_after2:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542060]
+        sub     eax, 6
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4 + 0x14], ecx
+    L_mpb_skipBursts:
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0053a1ac], esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542044], esi
+        mov     esi, dword ptr [g_data_0054208c]
+        or      esi, 4
+        cmp     ecx, edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_data_0054208c], esi
+        je      short L_mpb_zeroOut
+        mov     eax, esi
+        xor     eax, 4
+        cmp     ecx, edx
+        mov     dword ptr [g_data_0054208c], eax
+        jne     short L_mpb_pop2
+    L_mpb_zeroOut:
+        mov     dword ptr [g_data_00542048], edx
+    L_mpb_pop2:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
