@@ -73355,3 +73355,140 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004e9f78;
+extern unsigned int g_data_004e9f80;
+extern unsigned int g_data_00500c50;
+extern void NineEntryFlagDispatch_00461260(void);
+extern void GatedScaledSubSat_0048fb40(void);
+extern void StateSnapshotDispatch_00460b60(void);
+extern void GuardedScaledChainJmpIndirect_00460e40(void);
+extern void DispatchThroughBaseSel6c_00460f20(void);
+extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void DualScaledStoreZero_00491080(void);
+
+/* @addr 0x004609e0 (383b game) - 2-entry packed: 3-call chain + countdown
+ *   install. Entry 1 (offset 0, 104b): writes g_data_0054206c into
+ *     [scaled+0x6c], sets 0x54206c=0x2147, chains
+ *     MStackFrameCdeclDouble_004903f0 → NineEntryFlagDispatch_00461260 →
+ *     0x54206c=0x51e / 0x542070=0x28 / GatedScaledSubSat_0048fb40 → push
+ *     0x4e9f78 → StateSnapshotDispatch_00460b60.
+ *   8b NOP align pad.
+ *   Entry 2 / body (offset 0x70, 271b): phase-state install.
+ *     phase != 0: push 0x4e9f80 → GuardedScaledChainJmpIndirect_00460e40
+ *       → DispatchThroughBaseSel6c_00460f20. If bit 0 of 0x54208c set,
+ *       0x54206c=0x51e + 0x542070=0x28 + GatedScaledSubSat. If
+ *       g_data_00542070 > 0: decrement g_data_00542080; if zero call
+ *       NineEntryFlagDispatch_00461260; else fall through to install
+ *       success tail. Else tail-call ZeroScaledZeroCallPauseJmp_0045fa90.
+ *     phase 0: sets g_data_00542048 = &g_data_00500c50>>2, calls
+ *       DualScaledStoreZero_00491080. On no-error writes 0xb into
+ *       [g_data_0054205c*4 + 0x28], g_data_00542080=1, installs Self
+ *       at body, arms 0x541e6c=1.
+ */
+__declspec(naked) void AlarmCountdownInstall_004609e0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x6c], eax
+        mov     dword ptr [g_data_0054206c], 0x2147
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aci_e1End
+        call    NineEntryFlagDispatch_00461260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aci_e1End
+        mov     dword ptr [g_data_0054206c], 0x51e
+        mov     dword ptr [g_data_00542070], 0x28
+        call    GatedScaledSubSat_0048fb40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aci_e1End
+        push    offset g_data_004e9f78
+        call    StateSnapshotDispatch_00460b60
+        add     esp, 4
+    L_aci_e1End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 / body (offset 0x70) */
+    L_aci_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_aci_phase0
+        push    offset g_data_004e9f80
+        call    GuardedScaledChainJmpIndirect_00460e40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_aci_doneNoPop
+        call    DispatchThroughBaseSel6c_00460f20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_aci_doneNoPop
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        je      short L_aci_checkVel
+        mov     dword ptr [g_data_0054206c], 0x51e
+        mov     dword ptr [g_data_00542070], 0x28
+        call    GatedScaledSubSat_0048fb40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_aci_doneNoPop
+        mov     eax, dword ptr [g_data_00542070]
+        test    eax, eax
+        jg      short L_aci_doCountdown
+    L_aci_checkVel:
+        call    ZeroScaledZeroCallPauseJmp_0045fa90
+        pop     esi
+        pop     ebx
+        ret
+    L_aci_doCountdown:
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_aci_installTail
+        call    NineEntryFlagDispatch_00461260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aci_doneNoPop
+        jmp     short L_aci_installTail
+    L_aci_phase0:
+        mov     ecx, offset g_data_00500c50
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    DualScaledStoreZero_00491080
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aci_doneNoPop
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, 0xb
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ebx, 1
+        mov     dword ptr [edx*4 + 0x28], eax
+        mov     dword ptr [g_data_00542080], ebx
+    L_aci_installTail:
+        mov     dword ptr [esi + 8], offset L_aci_body
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_aci_doneNoPop:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

@@ -6506,10 +6506,11 @@ functions:
     status: matched
     file: src/engine/setjmp_wrappers.c
   - addr: 0x004609e0
-    name: func_004609e0
+    name: AlarmCountdownInstall_004609e0
     size: 383
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00460b60
     name: StateSnapshotDispatch_00460b60
     size: 148
