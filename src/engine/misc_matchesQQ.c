@@ -72912,3 +72912,213 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00f9fc2c;
+extern unsigned int g_data_004d20b8;
+extern unsigned int g_data_004d2f24;
+extern unsigned int g_data_004d2f20;
+extern unsigned int g_data_004d20bc;
+extern unsigned int g_data_004d20e0;
+extern unsigned int g_data_00f9fc20;
+extern unsigned int g_data_00f9fc10;
+extern void Calloc_004c6110(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void FreeImpl_004c55f0(void);
+extern void func_004c61c0(void);
+
+/* @addr 0x004cd950 (388b crt) - MultiByteToWideChar wrapper w/ probing.
+ *   On first call, probes IAT [0x4d20b8] (MultiByteToWideChar-like) with
+ *   "test 1" sample 0x4d2f24; if it works → g_data_00f9fc2c = 1 (NT path).
+ *   Else probes IAT [0x4d20bc] (CompareStringA-like) with 0x4d2f20;
+ *   if that works → 2 (9x path). Else returns 0.
+ *
+ *   On subsequent calls (state cached at 0x00f9fc2c):
+ *     state 1: direct call IAT [0x4d20b8] with (cp, flags, src, srclen).
+ *     state 2: lookup string length via IAT [0x4d20e0] (LCMapStringA-like)
+ *              with code-page 0x220; on failure return 0. Else
+ *              calloc(len*2+2) via LoadArgPushCall_004c54b0, populate via
+ *              [0x4d20e0] again with proper Unicode flags, verify the
+ *              sentinel 0xffff at end+0, end-1 if intact, call func_004c61c0
+ *              (likely WideCharToMultiByte). Free both bufs via FreeImpl.
+ */
+__declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
+    __asm {
+        push    ecx
+        mov     eax, dword ptr [g_data_00f9fc2c]
+        push    ebx
+        xor     ebx, ebx
+        push    ebp
+        push    esi
+        mov     esi, dword ptr [g_data_004d20b8]
+        cmp     eax, ebx
+        push    edi
+        jne     short L_mbw_haveState
+        lea     eax, [esp + 0x10]
+        push    eax
+        push    1
+        push    offset g_data_004d2f24
+        push    1
+        call    esi
+        test    eax, eax
+        je      short L_mbw_tryAlt
+        mov     eax, 1
+        jmp     short L_mbw_setCache
+    L_mbw_tryAlt:
+        lea     ecx, [esp + 0x10]
+        push    ecx
+        push    1
+        push    offset g_data_004d2f20
+        push    1
+        push    ebx
+        call    dword ptr [g_data_004d20bc]
+        test    eax, eax
+        je      L_mbw_zeroRet
+        mov     eax, 2
+    L_mbw_setCache:
+        mov     dword ptr [g_data_00f9fc2c], eax
+    L_mbw_haveState:
+        cmp     eax, 1
+        jne     short L_mbw_state2
+        mov     edx, dword ptr [esp + 0x24]
+        mov     eax, dword ptr [esp + 0x20]
+        mov     ecx, dword ptr [esp + 0x1c]
+        push    edx
+        mov     edx, dword ptr [esp + 0x1c]
+        push    eax
+        push    ecx
+        push    edx
+        call    esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_mbw_state2:
+        cmp     eax, 2
+        jne     L_mbw_simpleRet
+        mov     eax, dword ptr [esp + 0x28]
+        mov     dword ptr [esp + 0x10], ebx
+        cmp     eax, ebx
+        jne     short L_mbw_haveArg28
+        mov     eax, dword ptr [g_data_00f9fc20]
+        mov     dword ptr [esp + 0x28], eax
+    L_mbw_haveArg28:
+        mov     edi, dword ptr [esp + 0x20]
+        mov     ecx, dword ptr [esp + 0x1c]
+        mov     edx, dword ptr [esp + 0x28]
+        push    ebx
+        push    ebx
+        push    ebx
+        push    ebx
+        push    edi
+        push    ecx
+        push    0x220
+        push    edx
+        call    dword ptr [g_data_004d20e0]
+        mov     esi, eax
+        cmp     esi, ebx
+        jne     short L_mbw_havelen
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_mbw_havelen:
+        push    esi
+        push    1
+        call    Calloc_004c6110
+        mov     ebp, eax
+        add     esp, 8
+        test    ebp, ebp
+        jne     short L_mbw_haveBuf1
+    L_mbw_zeroRet:
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    L_mbw_haveBuf1:
+        mov     eax, dword ptr [esp + 0x1c]
+        mov     ecx, dword ptr [esp + 0x28]
+        push    0
+        push    0
+        push    esi
+        push    ebp
+        push    edi
+        push    eax
+        push    0x220
+        push    ecx
+        call    dword ptr [g_data_004d20e0]
+        test    eax, eax
+        je      short L_mbw_freeAndExit
+        lea     edx, [esi + esi + 2]
+        push    edx
+        call    LoadArgPushCall_004c54b0
+        mov     ebx, eax
+        add     esp, 4
+        test    ebx, ebx
+        je      short L_mbw_freeAndExit
+        mov     eax, dword ptr [esp + 0x2c]
+        test    eax, eax
+        jne     short L_mbw_haveCp
+        mov     eax, dword ptr [g_data_00f9fc10]
+    L_mbw_haveCp:
+        mov     ecx, dword ptr [esp + 0x18]
+        push    ebx
+        add     edi, edi
+        push    esi
+        push    ebp
+        push    ecx
+        mov     word ptr [ebx + edi], 0xffff
+        push    eax
+        mov     word ptr [ebx + edi - 2], 0xffff
+        call    dword ptr [g_data_004d20bc]
+        /* MASM picks cmp r/m16, imm8 (66 83) for 0xffff sign-extension; orig
+         * uses the full 7-byte imm16 form (66 81). Emit raw bytes to match. */
+        _emit 0x66
+        _emit 0x81
+        _emit 0x7c
+        _emit 0x3b
+        _emit 0xfe
+        _emit 0xff
+        _emit 0xff
+        mov     dword ptr [esp + 0x10], eax
+        je      short L_mbw_zeroFinal
+        _emit 0x66
+        _emit 0x81
+        _emit 0x3c
+        _emit 0x3b
+        _emit 0xff
+        _emit 0xff
+        jne     short L_mbw_zeroFinal
+        mov     edx, dword ptr [esp + 0x24]
+        push    edi
+        push    ebx
+        push    edx
+        call    func_004c61c0
+        add     esp, 0xc
+        jmp     short L_mbw_freeAndExit
+    L_mbw_zeroFinal:
+        mov     dword ptr [esp + 0x10], 0
+    L_mbw_freeAndExit:
+        push    ebp
+        call    FreeImpl_004c55f0
+        add     esp, 4
+        push    ebx
+        call    FreeImpl_004c55f0
+        mov     eax, dword ptr [esp + 0x14]
+        add     esp, 4
+    L_mbw_simpleRet:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}
