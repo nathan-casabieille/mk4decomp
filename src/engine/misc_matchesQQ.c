@@ -63615,6 +63615,98 @@ extern void Filbuf_004c8ed0(void);
 extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
 extern unsigned int g_data_00542074;
+extern void Transform9Words_004b3a90(void);
+extern unsigned int g_data_004f6508[];
+extern unsigned int g_data_004f6570;
+extern unsigned int g_data_004f6574;
+extern unsigned int g_data_004f6578;
+extern unsigned int g_data_004f657c;
+extern unsigned int g_data_004d2a00;
+extern unsigned int g_data_004d2a10;
+
+/* @addr 0x004b9640 (301b engine.render) - vibration/feedback frame update.
+ *   Reads g_data_0054205c & 0x180000; if both bits 0, skip. Else loads
+ *   [esp+0x14] as `i`; if [i*4+0x1c]==-20, set i=2. Validate i in [1,0x18].
+ *   Lookup pattern entry at [i*4 + g_data_004f6508]; bail if 0x10000.
+ *   If i==2: load FP, fadd to g_data_004f6570, fcomp 0x004d2a00; if FP overflow,
+ *     re-init constants to 0x3fec_cccccccd / 0x3f90_624d_d2f1_a9fc.
+ *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
+ *     / 0xbf78_9374_bc6a_7efa.
+ *   Convert via DoubleToInt64, write to g_data_0054206c, shift right by 4,
+ *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_state_0054208c.
+ */
+__declspec(naked) void VibrationFrameUpdate_004b9640(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0054205c]
+        sub     esp, 0x0c
+        test    eax, 0x180000
+        push    esi
+        jz      L_vfu_done
+        mov     eax, [esp + 0x14]
+        mov     ecx, dword ptr [eax*4 + 0x1c]
+        cmp     ecx, -0x14
+        jne     short L_vfu_chk
+        mov     ecx, 2
+    L_vfu_chk:
+        test    ecx, ecx
+        jle     L_vfu_done
+        cmp     ecx, 0x18
+        jg      L_vfu_done
+        mov     eax, dword ptr [ecx*4 + g_data_004f6508]
+        cmp     eax, 0x10000
+        mov     dword ptr [g_data_0054206c], eax
+        jz      L_vfu_done
+        mov     edx, dword ptr [g_data_0054204c]
+        cmp     ecx, 2
+        lea     esi, [edx*4]
+        jne     L_vfu_pathB_sar
+        fld     qword ptr [g_data_004f6578]
+        fadd    qword ptr [g_data_004f6570]
+        fst     qword ptr [g_data_004f6570]
+        fcomp   qword ptr [g_data_004d2a00]
+        fnstsw  ax
+        test    ah, 1
+        jz      short L_vfu_skipReinitA
+        mov     dword ptr [g_data_004f6570], 0xcccccccd
+        mov     dword ptr [g_data_004f6574], 0x3feccccc
+        mov     dword ptr [g_data_004f6578], 0xd2f1a9fc
+        mov     dword ptr [g_data_004f657c], 0x3f90624d
+    L_vfu_skipReinitA:
+        fld     qword ptr [g_data_004f6570]
+        fcomp   qword ptr [g_data_004d2a10]
+        fnstsw  ax
+        test    ah, 0x41
+        jne     short L_vfu_doConv
+        mov     dword ptr [g_data_004f6570], 0x9999999a
+        mov     dword ptr [g_data_004f6574], 0x3ff19999
+        mov     dword ptr [g_data_004f6578], 0xbc6a7efa
+        mov     dword ptr [g_data_004f657c], 0xbf789374
+    L_vfu_doConv:
+        fild    dword ptr [g_data_0054206c]
+        fmul    qword ptr [g_data_004f6570]
+        call    DoubleToInt64_004c57d0
+        mov     dword ptr [g_data_0054206c], eax
+    L_vfu_pathB_sar:
+        sar     eax, 4
+        mov     [esp + 0x0c], eax
+        mov     [esp + 0x08], eax
+        mov     [esp + 0x04], eax
+        lea     eax, [esp + 4]
+        push    eax
+        push    esi
+        call    Transform9Words_004b3a90
+        mov     eax, dword ptr [g_state_0054208c]
+        add     esp, 8
+        or      al, 0x30
+        mov     dword ptr [g_state_0054208c], eax
+    L_vfu_pathB:
+    L_vfu_done:
+        pop     esi
+        add     esp, 0x0c
+        ret
+    }
+}
+
 /* @addr 0x0041fb10 (318b boot) - boot 3-mstack-frame init for game/scene
  *   (g_data_0054206c/0x542070/0x542074), with conditional vector copy if
  *   g_state_0054208c bit0 set. Calls Thunk_0049cb70 / Thunk_0049cb80 /
