@@ -65805,3 +65805,163 @@ __declspec(naked) void FWriteNoLock_004c5fc0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_005433c8;
+extern unsigned int g_data_00541dc4;
+extern void DecOrDirty_004a7d90(void);
+extern void IncBoundedDirty_004a7db0(void);
+extern void DecOrDirty_004a7de0(void);
+extern void SetJmp_004a1ac0(void);
+extern void DrainQueueCallEach_004a1ec0(void);
+extern void func_00406790(void);
+extern void CallSetMultiGlobalsJmp_004a9230(void);
+
+/* @addr 0x004a7e00 (333b audio) - 4-entry audio scope dispatcher.
+ *   Entry 1 (offset 0): if g_data_005433c8 < g_data_004f3ae8 - 1, just bumps
+ *     the counter; otherwise OR-sets bit 0 of g_data_0054208c.
+ *   (10b NOP padding to 0x4a7e30.)
+ *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_data_0054208c
+ *     into g_data_00541dc4, clears bit 0, calls DecOrDirty_004a7de0; if the
+ *     slot[+0x30] == 3 restores from snapshot.
+ *   (9b NOP padding to 0x4a7e70.)
+ *   Entry 3 (offset 0x70): mirror of entry 2 but calls IncBoundedDirty_004a7db0
+ *     first, then this function's own entry 1 (call -0x8b → 0x4a7e00); same
+ *     +0x30==3 conditional restore tail.
+ *   (9b NOP padding to 0x4a7eb0.)
+ *   Entry 5 (offset 0xb0, big): calls SetJmp_004a1ac0 and DrainQueueCallEach_004a1ec0,
+ *     walks 24-byte-stride records at 0x004f3c20..0x004f3d40 calling
+ *     func_00406790 for each; then iterates g_data_004f3ae4 records at +0x34
+ *     stride 0x24, then g_data_004f3ae8 records at +0x48 stride 0x24, and
+ *     finally calls CallSetMultiGlobalsJmp_004a9230.
+ */
+__declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
+    __asm {
+        /* entry 1 (offset 0) */
+        mov     eax, dword ptr [g_data_004f3ae8]
+        mov     ecx, dword ptr [g_data_005433c8]
+        dec     eax
+        cmp     ecx, eax
+        jge     short L_a4s_setBit
+        mov     eax, ecx
+        inc     eax
+        mov     dword ptr [g_data_005433c8], eax
+        ret
+    L_a4s_setBit:
+        mov     eax, dword ptr [g_data_0054208c]
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+        /* 10b NOP pad to 0x4a7e30 */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x30) */
+    L_a4s_entry2:
+        call    DecOrDirty_004a7d90
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_data_00541dc4], eax
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        call    DecOrDirty_004a7de0
+        mov     eax, dword ptr [g_data_00542060]
+        cmp     dword ptr [eax*4 + 0x30], 3
+        jne     short L_a4s_e2End
+        mov     ecx, dword ptr [g_data_00541dc4]
+        mov     dword ptr [g_data_0054208c], ecx
+    L_a4s_e2End:
+        ret
+        /* 9b NOP pad to 0x4a7e70 */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0x70) */
+    L_a4s_entry3:
+        call    IncBoundedDirty_004a7db0
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_data_00541dc4], eax
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        call    Audio4EntryScopeDispatch_004a7e00
+        mov     eax, dword ptr [g_data_00542060]
+        cmp     dword ptr [eax*4 + 0x30], 3
+        jne     short L_a4s_e3End
+        mov     ecx, dword ptr [g_data_00541dc4]
+        mov     dword ptr [g_data_0054208c], ecx
+    L_a4s_e3End:
+        ret
+        /* 9b NOP pad to 0x4a7eb0 */
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 5 (offset 0xb0) */
+    L_a4s_entry5:
+        push    esi
+        call    SetJmp_004a1ac0
+        call    DrainQueueCallEach_004a1ec0
+        mov     esi, 0x004f3c20
+    L_a4s_loop1:
+        movsx   eax, byte ptr [esi]
+        mov     ecx, dword ptr [g_data_00542060]
+        add     ecx, eax
+        mov     edx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_00542044], edx
+        call    func_00406790
+        add     esi, 0x24
+        cmp     esi, 0x004f3d40
+        jb      short L_a4s_loop1
+        mov     eax, dword ptr [g_data_004f3ae4]
+        xor     esi, esi
+        test    eax, eax
+        jle     short L_a4s_skip2
+    L_a4s_loop2:
+        mov     eax, dword ptr [g_data_00542060]
+        lea     ecx, [esi + eax]
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_data_00542044], edx
+        call    func_00406790
+        mov     eax, dword ptr [g_data_004f3ae4]
+        inc     esi
+        cmp     esi, eax
+        jl      short L_a4s_loop2
+    L_a4s_skip2:
+        mov     eax, dword ptr [g_data_004f3ae8]
+        xor     esi, esi
+        test    eax, eax
+        jle     short L_a4s_skip3
+    L_a4s_loop3:
+        mov     eax, dword ptr [g_data_00542060]
+        lea     ecx, [esi + eax]
+        mov     edx, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [g_data_00542044], edx
+        call    func_00406790
+        mov     eax, dword ptr [g_data_004f3ae8]
+        inc     esi
+        cmp     esi, eax
+        jl      short L_a4s_loop3
+    L_a4s_skip3:
+        call    CallSetMultiGlobalsJmp_004a9230
+        pop     esi
+        ret
+    }
+}
