@@ -50463,3 +50463,86 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         ret
     }
 }
+
+extern void func_00409aa0(void);
+extern void func_00405e70(void);
+
+/* @addr 0x00493d00 (319b game) - mstack-push 2 + scaledInit traversal + dual call + chain swap.
+ *   Push g_scaledInit and g_x_00542048. scaledInit=[cj*4+0x18]; clear [+0x44].
+ *   If [+0x1c]!=-10: skip. Else scaledInit=[*4]; g_x_00542048=4; call func_00409aa0.
+ *   Adjust chain, swap pointers, call func_00405e70. Mstack-pop 2; ret.
+ */
+__declspec(naked) void MStackChainSwapTraversal_00493d00(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0x44], 0
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x1c]
+        cmp     eax, 0xfffffff6
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a2h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [ecx*4 + 0]
+        mov     dword ptr [g_x_00542048], 4
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        call    func_00409aa0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0a4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_00542048], eax
+        mov     ecx, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     edx, dword ptr [eax*4 + 0x34]
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        add     edx, ecx
+        mov     dword ptr [eax*4 + 0x34], edx
+        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_00405e70
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   50h
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [ecx*4 + 0x18], edx
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [eax*4 + 0x18], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}

@@ -11087,10 +11087,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00493d00
-    name: func_00493d00
+    name: MStackChainSwapTraversal_00493d00
     size: 319
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493e40
     name: PushSetCallTailJmp_00493e40
     size: 98
