@@ -1221,10 +1221,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00414920
-    name: func_00414920
+    name: BootInstallPeriodicTriple_00414920
     size: 223
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00414a00
     name: func_00414a00
     size: 398

@@ -55352,3 +55352,88 @@ __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
         ret
     }
 }
+
+extern void TableHitOrSchedule_004be7a0(void);
+extern void func_00414a00(void);
+
+/*
+ * BootInstallPeriodicTriple_00414920 — 223b boot 2-body periodic with triple call.
+ *   Entry 0x00414920: push (0xb0, &body); StoreTwoCall; chain[+0x34] = g_baseSel_00542060; ret.
+ *   Body 0x00414950: chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
+ *     If was nonzero: eax = chain[+0x34]; g_x_00542044 = eax; eax = eax->field_74; if 0x1001:
+ *       just snapshot g_x_0054205c to g_x_00542054. Else: push 0x1392; TableHitOrSchedule;
+ *       CallSetPause; pop+ret.
+ *     Common: call func_00414a00 three times with pause-checks between. If completed unpaused:
+ *       install-self at body; chain->state=1; g_data_0054204c=1; g_pause_00541e6c=1.
+ *     Pop+ret.
+ */
+__declspec(naked) void BootInstallPeriodicTriple_00414920(void)
+{
+    __asm
+    {
+        push    0xb0
+        push    offset L_body2
+        call    StoreTwoCall_0049cb40
+        mov     eax, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x34], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_body2:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_branchB
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        mov     dword ptr [g_x_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x74]
+        cmp     eax, 0x1001
+        mov     dword ptr [g_x_0054206c], eax
+        je      short L_callTrip
+        push    0x1392
+        call    TableHitOrSchedule_004be7a0
+        add     esp, 4
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_branchB:
+        mov     edx, dword ptr [g_x_0054205c]
+        mov     dword ptr [g_x_00542054], edx
+    L_callTrip:
+        call    func_00414a00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        call    func_00414a00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        call    func_00414a00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_b2_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_body2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pause_00541e6c], eax
+    L_b2_ret:
+        pop     esi
+        ret
+    }
+}
