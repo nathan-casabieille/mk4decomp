@@ -63619,6 +63619,109 @@ extern void Transform9Words_004b3a90(void);
 extern void func_004d0bc0(void);
 extern void StringDigitConvert_004d03c0(void);
 extern unsigned short g_data_00f9fc94;
+extern unsigned int g_data_00522154;
+extern unsigned int g_data_00fa0ee4;
+extern unsigned int g_data_00f9f850;
+extern void IndirectCall_004c6ec0(void);
+
+/* @addr 0x004c6110 (171b boot) - CRT calloc: nelem * size with zero-fill.
+ *   Multiplies args; overflow → use heap fallback (HeapAlloc).
+ *   Round up size to 16-byte multiple (min 0x10). Cache IAT[0x4d20b4] (HeapAlloc).
+ *   If size <= g_data_00522154 threshold: take heap-pool lock (Lock 9), call
+ *   bucket allocator (mid-function at 0x4c7430), unlock; if got buffer, rep stos zero.
+ *   Else fallback: HeapAlloc(g_data_00fa0ee4, HEAP_ZERO_MEMORY=8, size). On
+ *   failure, retry via IndirectCall_004c6ec0(size) loop until success or
+ *   g_data_00f9f850 == 0.
+ */
+__declspec(naked) void Calloc_004c6110(void) {
+    __asm {
+        push    ebx
+        mov     ebx, [esp + 0x0c]
+        imul    ebx, dword ptr [esp + 8]
+        push    ebp
+        push    esi
+        cmp     ebx, -0x20
+        push    edi
+        ja      short L_cal_setup
+        test    ebx, ebx
+        jbe     short L_cal_minSize
+        add     ebx, 0x0f
+        _emit   83h
+        _emit   0e3h
+        _emit   0f0h
+        jmp     short L_cal_setup
+    L_cal_minSize:
+        mov     ebx, 0x10
+    L_cal_setup:
+        mov     ebp, dword ptr [g_iat_004d20b4]
+    L_cal_retry:
+        xor     esi, esi
+        cmp     ebx, -0x20
+        ja      short L_cal_testEsi2
+        cmp     ebx, dword ptr [g_data_00522154]
+        ja      short L_cal_testEsi1
+        push    9
+        call    Lock_004c6f50
+        mov     eax, ebx
+        add     esp, 4
+        shr     eax, 4
+        push    eax
+        _emit   0e8h
+        _emit   0d3h
+        _emit   12h
+        _emit   00h
+        _emit   00h
+        add     esp, 4
+        mov     esi, eax
+        push    9
+        call    TableLookupIatCall_004c6fd0
+        add     esp, 4
+        test    esi, esi
+        jz      short L_cal_heap
+        mov     ecx, ebx
+        xor     eax, eax
+        mov     edx, ecx
+        mov     edi, esi
+        shr     ecx, 2
+        rep     stosd
+        mov     ecx, edx
+        and     ecx, 3
+        rep     stosb
+    L_cal_testEsi1:
+        test    esi, esi
+        jne     short L_cal_retEsi
+    L_cal_heap:
+        mov     eax, dword ptr [g_data_00fa0ee4]
+        push    ebx
+        push    8
+        push    eax
+        call    ebp
+        mov     esi, eax
+    L_cal_testEsi2:
+        test    esi, esi
+        jne     short L_cal_retEsi
+        mov     eax, dword ptr [g_data_00f9f850]
+        test    eax, eax
+        jz      short L_cal_retEsi
+        push    ebx
+        call    IndirectCall_004c6ec0
+        add     esp, 4
+        test    eax, eax
+        jne     L_cal_retry
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_cal_retEsi:
+        mov     eax, esi
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
 
 /* @addr 0x004d0270 (331b other) - locale info struct populator (GetLocaleInfo loop).
  *   Reads cached LCID-locale from g_data_00f9fc94 into si. Bails if arg0 (struct ptr) null.
