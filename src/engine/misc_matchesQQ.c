@@ -53241,3 +53241,118 @@ __declspec(naked) void InstallSelfCmdStreamInterp_00494290(void) {
         ret
     }
 }
+
+extern void DualSave_00461840(void);
+
+/* @addr 0x004616e0 (345b game) - init thunk + 10 state-tag thunks (each jmps DualSave_00461840).
+ *   Init (0..0x1f): g_x_0054206c=[g_state_0053a51c]; if !=4, set g_x_0054206c=g_data_0053a748=0xa; ret. 1-NOP pad.
+ *   Thunks 0..8 (offsets 0x20+i*0x20): g_x_0054206c=0x11+i; g_data_00542070=1+i; jmp DualSave; 7-NOP pad.
+ *   Thunk 9 (+0x140): g_x_0054206c=0x1b (skips 0x1a); g_data_00542070=0xa; jmp DualSave (no NOP pad).
+ */
+__declspec(naked) void TenThunkDualSave_004616e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_0053a51c]
+        cmp     eax, 4
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   0fh
+        mov     eax, 0xa
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_data_0053a748], eax
+        ret
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x11
+        mov     dword ptr [g_data_00542070], 1
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x12
+        mov     dword ptr [g_data_00542070], 2
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x13
+        mov     dword ptr [g_data_00542070], 3
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x14
+        mov     dword ptr [g_data_00542070], 4
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x15
+        mov     dword ptr [g_data_00542070], 5
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x16
+        mov     dword ptr [g_data_00542070], 6
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x17
+        mov     dword ptr [g_data_00542070], 7
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x18
+        mov     dword ptr [g_data_00542070], 8
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x19
+        mov     dword ptr [g_data_00542070], 9
+        jmp     DualSave_00461840
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x1b
+        mov     dword ptr [g_data_00542070], 0xa
+        jmp     DualSave_00461840
+    }
+}
