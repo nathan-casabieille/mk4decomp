@@ -13787,10 +13787,11 @@ functions:
     status: matched
     file: src/engine/project_two.c
   - addr: 0x004b2d20
-    name: func_004b2d20
+    name: VertexProject3D_004b2d20
     size: 338
     group: engine.app
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b2e80
     name: ProjectVertex
     size: 273
