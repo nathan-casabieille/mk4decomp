@@ -14994,10 +14994,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3960
-    name: func_004c3960
+    name: TextureSlotAllocDispatch_004c3960
     size: 362
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3ad0
     name: Snd3DSourceCleanup_004c3ad0
     size: 262
