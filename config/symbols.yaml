@@ -8864,10 +8864,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00482500
-    name: func_00482500
+    name: EightEntryAlarmDispatch_00482500
     size: 382
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482680
     name: TripleGuardSetTailJmp_00482680
     size: 101

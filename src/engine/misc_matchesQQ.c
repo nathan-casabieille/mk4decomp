@@ -73492,3 +73492,200 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004ede38;
+extern unsigned int g_data_004ede68;
+extern unsigned int g_data_004ede90;
+extern unsigned int g_data_004edec4;
+extern unsigned int g_data_004edec8;
+extern unsigned int g_data_004edef8;
+extern void DualScaledInitClear_00433c10(void);
+extern void LiteralPushCallEntZero_00488c00(void);
+extern void SaveSwapCallRestore_00489030(void);
+extern void IterStepDualStore_00490b40(void);
+extern void TripleGuardSetTailJmp_00482680(void);
+
+/* @addr 0x00482500 (382b game) - 8-entry packed mini-alarm dispatcher.
+ *   Entry 1 (offset 0, 80b): set 0x54206c=0x6666 → CmpP1DualInitStore_00482ab0
+ *     → CjTableThresholdDispatch_00488f00 → GateDispatch6c_00494580 →
+ *     SaveSwapCallRestore_00489030 → push 0x4ede38 → ArgSarStoreJmp_004594f0.
+ *   Entry 2 (offset 0x50, 70b): 0x54206c=0xfffff852 → read slot+0x7c;
+ *     if > 1 set 0x54206c=0xfffff0a4. MStackFrameCdeclDouble_004903f0
+ *     → push 0x4ede68 → ArgSarStoreJmp.
+ *   10b NOP align pad.
+ *   Entry 3 (offset 0xa0, 20b): DualScaledInitClear_00433c10 → tail-jmp
+ *     LiteralPushCallEntZero_00488c00.
+ *   12b NOP align pad.
+ *   Entry 4 (offset 0xc0, 28b): GateDispatch6c_00494580 → push 0x4ede90
+ *     → ArgSarStoreJmp.
+ *   4b NOP align pad.
+ *   Entry 5 (offset 0xe0, 50b): GateDispatch6c_00494580 → push 0x4edec4
+ *     → IterStepDualStore_00490b40 → push 0x4edec8 → ArgSarStoreJmp.
+ *   14b NOP align pad.
+ *   Entry 6 (offset 0x120, 28b): GateDispatch6c_00494580 → push 0x4edef8
+ *     → ArgSarStoreJmp.
+ *   4b NOP align pad.
+ *   Entry 7 (offset 0x140, 30b): 0x54206c=6 → TableLookupCall_0048a160
+ *     → tail-jmp TripleGuardSetTailJmp_00482680.
+ *   2b NOP align pad.
+ *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_00489ff0
+ *     → tail-jmp TripleGuardSetTailJmp_00482680.
+ */
+__declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
+    __asm {
+        mov     dword ptr [g_data_0054206c], 0x6666
+        call    CmpP1DualInitStore_00482ab0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e1End
+        call    CjTableThresholdDispatch_00488f00
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e1End
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e1End
+        call    SaveSwapCallRestore_00489030
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e1End
+        push    offset g_data_004ede38
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eae_e1End:
+        ret
+    L_eae_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_0054206c], 0xfffff852
+        mov     eax, dword ptr [eax*4 + 0x7c]
+        cmp     eax, 1
+        mov     dword ptr [g_data_00542070], eax
+        jle     short L_eae_e2NoOver
+        mov     dword ptr [g_data_0054206c], 0xfffff0a4
+    L_eae_e2NoOver:
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e2End
+        push    offset g_data_004ede68
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eae_e2End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0xa0) */
+    L_eae_entry3:
+        call    DualScaledInitClear_00433c10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e3End
+        jmp     LiteralPushCallEntZero_00488c00
+    L_eae_e3End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 (offset 0xc0) */
+    L_eae_entry4:
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e4End
+        push    offset g_data_004ede90
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eae_e4End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* entry 5 (offset 0xe0) */
+    L_eae_entry5:
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e5End
+        push    offset g_data_004edec4
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_eae_e5End
+        push    offset g_data_004edec8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eae_e5End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 6 (offset 0x120) */
+    L_eae_entry6:
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e6End
+        push    offset g_data_004edef8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eae_e6End:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* entry 7 (offset 0x140) */
+    L_eae_entry7:
+        mov     dword ptr [g_data_0054206c], 6
+        call    TableLookupCall_0048a160
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e7End
+        jmp     TripleGuardSetTailJmp_00482680
+    L_eae_e7End:
+        ret
+        nop
+        nop
+        /* entry 8 (offset 0x160) */
+    L_eae_entry8:
+        mov     dword ptr [g_data_0054206c], 8
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eae_e8End
+        jmp     TripleGuardSetTailJmp_00482680
+    L_eae_e8End:
+        ret
+    }
+}
