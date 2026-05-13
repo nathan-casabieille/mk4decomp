@@ -45955,3 +45955,106 @@ __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
         ret
     }
 }
+
+extern void MStackChainCountdownLoop_00463fb0(void);
+
+/* @addr 0x004635a0 (291b game) - mstack-push 2 + chain calls + or-bit loop + mstack-pop 2.
+ *   Push g_scaledInit_00542044 and g_x_00542048 to mstack.
+ *   Compute eax=g_x_00541fb0*4+g_data_00541fb8; load chain[eax]; call func_004069b0.
+ *   Chain: if pause? ret. If bit2 of g_state_0054208c set: branch out.
+ *   Else call MStackPushSearchLoop, pause-check; call MStackChainCountdownLoop, pause-check;
+ *   load [g_x_00542074]>>1, [g_load_0052ab10] (-> g_x_00542048).
+ *   Loop: copy scaledInit field [+0x3c]=g_x_00542048; load next; or-bit and re-test until zero.
+ *   Pop 2 entries: g_x_00542048, g_scaledInit_00542044; pop ebx; ret.
+ */
+__declspec(naked) void MStackChainOrBitLoop_004635a0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_x_00541fb0]
+        mov     ecx, dword ptr [g_data_00541fb8]
+        shl     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        add     eax, ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        mov     dword ptr [g_x_0054206c], edx
+        call    func_004069b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b7h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 4
+        _emit   84h
+        _emit   0c3h
+        _emit   75h
+        _emit   7eh
+        call    MStackPushSearchLoop_00463ed0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   97h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    MStackChainCountdownLoop_00463fb0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   85h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_00542074]
+        sar     eax, 1
+        mov     dword ptr [g_x_00542074], eax
+        mov     eax, dword ptr [g_load_0052ab10]
+        mov     dword ptr [g_x_00542048], eax
+    or_loop:
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     dword ptr [eax*4 + 0x3c], ecx
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [edx*4 + 0x40]
+        mov     edx, dword ptr [g_state_0054208c]
+        or      edx, ebx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], edx
+        _emit   74h
+        _emit   0eh
+        mov     ecx, edx
+        xor     ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        _emit   75h
+        _emit   0c1h
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     ebx
+        ret
+    }
+}
