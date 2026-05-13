@@ -1992,10 +1992,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00423ea0
-    name: func_00423ea0
+    name: OpcodeStreamDispatch_00423ea0
     size: 377
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00424020
     name: PushSetCj58CallPopWalk_00424020
     size: 87

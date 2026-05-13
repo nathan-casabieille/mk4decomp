@@ -71739,3 +71739,125 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         ret
     }
 }
+
+extern void SaveCallRestore_004049d0(void);
+extern void PushSetCj58CallPopWalk_00424020(void);
+extern void MStackPush1ChainPair_00424080(void);
+extern void TripleArgScaledShiftCall_00424170(void);
+extern void InstallSelfPackedF80_00426000(void);
+
+/* @addr 0x00423ea0 (377b game) - scripted-opcode dispatcher install-self.
+ *   Phase != 0/1: tail-jmp StackPopDispatchTagged_0041f780.
+ *   Phase 0: triple-pushes 0x5f (95) into SaveCallRestore_004049d0
+ *     (three times), then falls through.
+ *   Phase 1: reads opcode stream at g_data_00542058, increments cursor.
+ *     If opcode < 0 (0x80000000 = end): install Self with phase 2 +
+ *     packed_ptr (Self + 0x02000000) at bumped scaled slot, call
+ *     InstallSelfPackedF80_00426000.
+ *     opcode 3: read next dword as arg, store into g_data_0054204c,
+ *               install Self with slot[+0x84]=1.
+ *     opcode 4 → PushSetCj58CallPopWalk_00424020.
+ *     opcode 1 → MStackPush1ChainPair_00424080.
+ *     opcode 2 → TripleArgScaledShiftCall_00424170.
+ *     opcode 0 / other: read next opcode in the loop.
+ *   Loop continues until a negative opcode or one of the above runs the
+ *   install-self body.
+ */
+__declspec(naked) void OpcodeStreamDispatch_00423ea0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_osd_streamRead
+        dec     eax
+        je      short L_osd_triplePush
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_osd_triplePush:
+        push    0x5f
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        push    0x5f
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        push    0x5f
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+    L_osd_streamRead:
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542058], ecx
+        jl      L_osd_installCommand
+    L_osd_dispatch:
+        cmp     eax, 3
+        je      L_osd_op3
+        cmp     eax, 4
+        jne     short L_osd_check1
+        call    PushSetCj58CallPopWalk_00424020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_osd_done
+        mov     eax, dword ptr [g_data_0054206c]
+    L_osd_check1:
+        cmp     eax, 1
+        jne     short L_osd_check2
+        call    MStackPush1ChainPair_00424080
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_osd_done
+        mov     eax, dword ptr [g_data_0054206c]
+    L_osd_check2:
+        cmp     eax, 2
+        jne     short L_osd_loopTail
+        call    TripleArgScaledShiftCall_00424170
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_osd_done
+    L_osd_loopTail:
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542058], ecx
+        jge     L_osd_dispatch
+    L_osd_installCommand:
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [esi + 8], offset OpcodeStreamDispatch_00423ea0
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset OpcodeStreamDispatch_00423ea0
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfPackedF80_00426000
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_osd_op3:
+        mov     edx, dword ptr [ecx*4]
+        inc     ecx
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [esi + 8], offset OpcodeStreamDispatch_00423ea0
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_data_00541e6c], 1
+    L_osd_done:
+        pop     esi
+        ret
+    }
+}
