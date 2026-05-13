@@ -72661,3 +72661,123 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         ret
     }
 }
+
+extern void CmpP1GTSetup_00470980(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
+
+/* @addr 0x00494830 (376b game) - 2-entry packed: stream init + countdown body.
+ *   Entry 1 (offset 0, 134b): writes the body label (offset 0x90 =
+ *     0x4948c0) into [g_data_0054205c*4 + 0x44] via DIR32 reloc. Reads
+ *     stack arg sar'd /4 as a cursor into g_data_00542044, then walks 3
+ *     dwords (counter, fps, frame), copying each in sequence to
+ *     [g_data_00542060*4 + 0x5c/+0x60/+0x64] and mirroring through
+ *     g_data_0054206c.
+ *   10b NOP align pad.
+ *   Entry 2 / body (offset 0x90, 232b): CmpP1GTSetup_00470980; on
+ *     no-error decrements [g_data_00542048*4 + 0x5c]; on non-zero
+ *     returns. On zero: reads abs(|x|+|y|) from [scaled+0x6c]/+0x74
+ *     (via neg-if-negative pattern), stores into g_data_00542070. If
+ *     non-zero takes the success path: mstack-pushes
+ *     g_data_00542060, swaps to g_data_00542048, calls
+ *     MStackFrameCdeclDouble_004903f0 with [scaled+0x60] primed. On
+ *     no-error copies [scaled+0x64] back to +0x5c, pops mstack.
+ *     The "still zero" branch: ScaledZeroFour_00490740 → tail-jmp
+ *     ScaledZero44_00491500.
+ */
+__declspec(naked) void StreamInitCountdownBody_00494830(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [eax*4 + 0x44], offset L_sib_body
+        mov     eax, dword ptr [esp + 4]
+        mov     edx, dword ptr [g_data_00542060]
+        sar     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [edx*4 + 0x5c], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x60], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [edx*4 + 0x64], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sib_body:
+        call    CmpP1GTSetup_00470980
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sib_done
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [ecx*4 + 0x5c]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        jne     L_sib_done
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x6c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x74]
+        test    eax, eax
+        jge     short L_sib_xpos
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+    L_sib_xpos:
+        test    ecx, ecx
+        jge     short L_sib_ypos
+        neg     ecx
+    L_sib_ypos:
+        add     ecx, eax
+        mov     dword ptr [g_data_00542070], ecx
+        jne     short L_sib_nonZero
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542060]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_00542060], eax
+        mov     edx, dword ptr [eax*4 + 0x60]
+        mov     dword ptr [g_data_0054206c], edx
+        call    MStackFrameCdeclDouble_004903f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sib_done
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x5c], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542060], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_sib_done:
+        ret
+    L_sib_nonZero:
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sib_done
+        jmp     ScaledZero44_00491500
+    }
+}

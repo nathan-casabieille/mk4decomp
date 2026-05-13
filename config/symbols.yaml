@@ -11275,10 +11275,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesK.c
   - addr: 0x00494830
-    name: func_00494830
+    name: StreamInitCountdownBody_00494830
     size: 376
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004949b0
     name: ArgScaledChain_004949b0
     size: 55
