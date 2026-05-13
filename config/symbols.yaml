@@ -11292,10 +11292,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00496fc0
-    name: func_00496fc0
+    name: MultiThunkDispatcher_00496fc0
     size: 303
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004970f0
     name: func_004970f0
     size: 862

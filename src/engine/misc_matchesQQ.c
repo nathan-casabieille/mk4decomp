@@ -47999,3 +47999,135 @@ __declspec(naked) void ArgIndexedBitmaskInit_0045f310(void) {
         ret
     }
 }
+
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+
+/* @addr 0x00496fc0 (303b game) - multi-thunk dispatcher with 5 small blocks.
+ *   Block A (0..0x13): call MStackCall; if !pause tail-jmp CallSetPause; ret.
+ *   Block B (+0x20): call CondPickDualStore; if pause ret. Set chain[+0x74]=0x314,
+ *     g_x_0054206c=0x314; push 0x004f2078; call ArgSarStoreJmp; pop; ret.
+ *   Block C (+0x50): call DualCmpSwapStore; if pause ret. Push 0x004f20a0;
+ *     call ScaledStackCallPause; pop; if pause ret. If bit2(0054208c) jmp CallSetPause.
+ *     mul10[3333,x84]; chain[+0x6c]=result. mul10[3333,x88]; chain[+0x74]=result;
+ *     g_cj=scaledInit; push 0x004f20b0; call ArgSar_Set0_Jmp; pop; ret.
+ *   Block D (+0xd0): g_x_0054206c=0x312; jmp +0x11. (1-NOP)
+ *   Block E (+0xe5): g_x_0054206c=0x311; jmp +1 (to next fn at 0x004970f0).
+ */
+__declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
+    __asm {
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   24h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x314
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004f2078
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   91h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        push    0x004f20a0
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   7bh
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        mov     eax, dword ptr [g_x_00542084]
+        push    eax
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_state_00542088]
+        add     esp, 8
+        mov     dword ptr [g_x_00542084], eax
+        push    ecx
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_state_00542088], eax
+        mov     eax, dword ptr [g_x_00542084]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x6c], eax
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_state_00542088]
+        push    0x004f20b0
+        mov     dword ptr [ecx*4 + 0x74], edx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     dword ptr [g_cj_0054205c], eax
+        call    ArgSar_Set0_Jmp_0049c6f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x312
+        _emit   0e9h
+        _emit   11h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   90h
+        mov     dword ptr [g_x_0054206c], 0x311
+        _emit   0e9h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+    }
+}
