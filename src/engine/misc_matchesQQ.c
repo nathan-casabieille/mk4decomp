@@ -59962,6 +59962,125 @@ extern unsigned int g_data_00f85b34;
 extern unsigned int g_data_00f9f844;
 extern unsigned int g_data_00f9f820;
 extern void CmpCallPushIATCall_004c6e60(void);
+extern void StreamAllocInit_004cc250(void);
+extern void IOWrapper_004c8fc0(void);
+extern unsigned int g_data_00fa0de0[];
+extern unsigned int g_data_005222e0[];
+
+/* @addr 0x004c8ed0 (239b crt) - CRT _filbuf: fill stream buffer on read.
+ *   FILE* arg (esi); reads flags from [esi+0xc]. If !0x83 → error tail.
+ *   If 0x40 (error) → error tail. If 0x02 → mark EOF (or 0x20), ret -1.
+ *   Otherwise: ensure buffer allocated (StreamAllocInit) or reset to [esi+8].
+ *   Read via IOWrapper(buf=[esi+0x10], size=[esi+8], fd=[esi+0x18]) → eax.
+ *   If 0 or -1: set EOF/error flag, ret -1.
+ *   Otherwise: check device flags via fd lookup table (g_data_00fa0de0 or default 0x5222e0):
+ *     if 0x82 device flags set, OR 0x2000 into flags.
+ *   If buf-size == 0x200 and flag-bit 8 set and flag-bit 0x400 clear: bump size to 0x1000.
+ *   Decrement count, return first byte.
+ */
+__declspec(naked) void Filbuf_004c8ed0(void) {
+    __asm {
+        push    esi
+        mov     esi, [esp + 8]
+        push    edi
+        mov     eax, [esi + 0xc]
+        test    al, 0x83
+        jz      L_fb_err
+        test    al, 0x40
+        jne     L_fb_err
+        test    al, 2
+        jz      short L_fb_setRead
+        or      al, 0x20
+        mov     [esi + 0xc], eax
+        or      eax, -1
+        pop     edi
+        pop     esi
+        ret
+    L_fb_setRead:
+        or      al, 1
+        test    eax, 0x10c
+        mov     [esi + 0xc], eax
+        jne     short L_fb_haveBuf
+        push    esi
+        call    StreamAllocInit_004cc250
+        add     esp, 4
+        jmp     short L_fb_doRead
+    L_fb_haveBuf:
+        mov     eax, [esi + 8]
+        mov     [esi], eax
+    L_fb_doRead:
+        mov     ecx, [esi + 0x18]
+        mov     edx, [esi + 8]
+        mov     eax, [esi + 0x10]
+        push    ecx
+        push    edx
+        push    eax
+        call    IOWrapper_004c8fc0
+        add     esp, 0xc
+        mov     [esi + 4], eax
+        test    eax, eax
+        jz      short L_fb_eof
+        cmp     eax, -1
+        jz      short L_fb_eof
+        mov     edx, [esi + 0xc]
+        test    dl, 0x82
+        jne     short L_fb_sizeCk
+        mov     ecx, [esi + 0x10]
+        cmp     ecx, -1
+        jz      short L_fb_useDefault
+        mov     edi, ecx
+        sar     edi, 5
+        and     ecx, 0x1f
+        mov     edi, dword ptr [edi*4 + g_data_00fa0de0]
+        lea     ecx, [ecx + ecx*8]
+        lea     ecx, [edi + ecx*4]
+        jmp     short L_fb_checkFlags
+    L_fb_useDefault:
+        mov     ecx, offset g_data_005222e0
+    L_fb_checkFlags:
+        mov     cl, byte ptr [ecx + 4]
+        and     cl, 0x82
+        cmp     cl, 0x82
+        jne     short L_fb_sizeCk
+        or      dh, 0x20
+        mov     [esi + 0xc], edx
+    L_fb_sizeCk:
+        cmp     dword ptr [esi + 0x18], 0x200
+        jne     short L_fb_advance
+        mov     ecx, [esi + 0xc]
+        test    cl, 8
+        jz      short L_fb_advance
+        test    ch, 4
+        jne     short L_fb_advance
+        mov     dword ptr [esi + 0x18], 0x1000
+    L_fb_advance:
+        dec     eax
+        xor     edx, edx
+        mov     [esi + 4], eax
+        mov     eax, [esi]
+        mov     dl, [eax]
+        inc     eax
+        mov     [esi], eax
+        mov     eax, edx
+        pop     edi
+        pop     esi
+        ret
+    L_fb_eof:
+        mov     ecx, [esi + 0xc]
+        mov     dword ptr [esi + 4], 0
+        neg     eax
+        sbb     eax, eax
+        and     eax, 0x10
+        add     eax, 0x10
+        or      ecx, eax
+        mov     [esi + 0xc], ecx
+    L_fb_err:
+        pop     edi
+        or      eax, -1
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x004cbb30 (238b crt) - CRT environment-string parser (envp builder).
  *   Reads NUL-separated env string at [g_data_00f9f844]; counts non-'=' tokens.

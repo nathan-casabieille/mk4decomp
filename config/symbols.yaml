@@ -15632,10 +15632,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8ed0
-    name: func_004c8ed0
+    name: Filbuf_004c8ed0
     size: 239
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8fc0
     name: IOWrapper_004c8fc0
     size: 114
