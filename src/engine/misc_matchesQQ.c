@@ -51429,3 +51429,107 @@ __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
         ret
     }
 }
+
+extern void StateDispatchTable_00490fc0(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+extern unsigned int g_data_00541dc8;
+
+/* @addr 0x0046b4e0 (325b game) - 3-state install-self + dispatch state-1 (router) + tail thunk.
+ *   state==0: call StateDispatchTable; if pause ret.
+ *     g_x_00542054=g_x_0054206c; g_x_00542084=0x1999; g_state_0054207c=0.
+ *     Install-self at entry+0x01000000; state=1; call EsiInstallClampAddCall; pause=1; ret.
+ *   state==1 (dec,je): tail-call CallPauseScaledStoreCopyJmp; if pause ret.
+ *     Install-self at entry; state=2; g_x_0054204c=1; pause=1; ret.
+ *   state>=2 (fall): cmp g_x_0052aac4 with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
+ *     Else: g_x_0054206c=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
+ *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
+ */
+__declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    esi
+        lea     esi, [eax*4 + 0]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        _emit   83h
+        _emit   0e8h
+        _emit   00h
+        _emit   74h
+        _emit   67h
+        dec     eax
+        _emit   74h
+        _emit   2bh
+        mov     eax, dword ptr [g_x_0052aac4]
+        cmp     eax, 2
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   07h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        mov     eax, dword ptr [g_data_00541dc8]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   19h
+        call    CjInstallSelfRouter_00470480
+        pop     esi
+        ret
+        call    CallPauseScaledStoreCopyJmp_00461220
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0b9h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_x_0054204c], 1
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   80h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_00542084], 0x1999
+        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_state_0054207c], 0
+        mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset Install3StateRouterTail_0046b4e0
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x01000000
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    EsiInstallClampAddCall_0048fe40
+        mov     dword ptr [g_pause_00541e6c], 1
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     eax, 0x104
+        mov     dword ptr [g_x_0054206c], eax
+        push    0x004eb008
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+    }
+}
