@@ -3567,10 +3567,11 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x00434c10
-    name: func_00434c10
+    name: Install3StateMStackCounterDispatch_00434c10
     size: 329
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434d60
     name: ScaledInitOrSelfPtrSetType_00434d60
     size: 68
