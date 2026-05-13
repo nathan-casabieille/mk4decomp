@@ -14155,10 +14155,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004b71b0
-    name: func_004b71b0
+    name: MenuTableReplaceScan_004b71b0
     size: 176
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7260
     name: func_004b7260
     size: 2004

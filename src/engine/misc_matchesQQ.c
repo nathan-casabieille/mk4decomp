@@ -53835,3 +53835,98 @@ __declspec(naked) void COMVTable2CallInit_004aef50(void)
         ret
     }
 }
+
+/*
+ * MenuTableReplaceScan_004b71b0 — 176b menu helper: scans a 13-slot table
+ *   pair starting at 0x00543ac0 (outer step 4, scans offsets -8..+0x58 step 8)
+ *   and replaces any slot equal to arg2 with the saved [arg1] value, clearing
+ *   the replacement value after use. Stores final value to [arg1] before
+ *   returning. Early-out when arg2 == 0.
+ */
+__declspec(naked) void MenuTableReplaceScan_004b71b0(void)
+{
+    __asm
+    {
+        mov     edx, dword ptr [esp + 8]
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        test    edx, edx
+        mov     ecx, dword ptr [esi]
+        mov     dword ptr [esi], 0
+        je      L_done
+        mov     eax, 0x00543ac0
+    L_loop:
+        cmp     dword ptr [eax - 8], edx
+        jne     short L_s0
+        mov     dword ptr [eax - 8], ecx
+        xor     ecx, ecx
+    L_s0:
+        cmp     dword ptr [eax], edx
+        jne     short L_s1
+        mov     dword ptr [eax], ecx
+        xor     ecx, ecx
+    L_s1:
+        cmp     dword ptr [eax + 8], edx
+        jne     short L_s2
+        mov     dword ptr [eax + 8], ecx
+        xor     ecx, ecx
+    L_s2:
+        cmp     dword ptr [eax + 0x10], edx
+        jne     short L_s3
+        mov     dword ptr [eax + 0x10], ecx
+        xor     ecx, ecx
+    L_s3:
+        cmp     dword ptr [eax + 0x18], edx
+        jne     short L_s4
+        mov     dword ptr [eax + 0x18], ecx
+        xor     ecx, ecx
+    L_s4:
+        cmp     dword ptr [eax + 0x20], edx
+        jne     short L_s5
+        mov     dword ptr [eax + 0x20], ecx
+        xor     ecx, ecx
+    L_s5:
+        cmp     dword ptr [eax + 0x28], edx
+        jne     short L_s6
+        mov     dword ptr [eax + 0x28], ecx
+        xor     ecx, ecx
+    L_s6:
+        cmp     dword ptr [eax + 0x30], edx
+        jne     short L_s7
+        mov     dword ptr [eax + 0x30], ecx
+        xor     ecx, ecx
+    L_s7:
+        cmp     dword ptr [eax + 0x38], edx
+        jne     short L_s8
+        mov     dword ptr [eax + 0x38], ecx
+        xor     ecx, ecx
+    L_s8:
+        cmp     dword ptr [eax + 0x40], edx
+        jne     short L_s9
+        mov     dword ptr [eax + 0x40], ecx
+        xor     ecx, ecx
+    L_s9:
+        cmp     dword ptr [eax + 0x48], edx
+        jne     short L_sa
+        mov     dword ptr [eax + 0x48], ecx
+        xor     ecx, ecx
+    L_sa:
+        cmp     dword ptr [eax + 0x50], edx
+        jne     short L_sb
+        mov     dword ptr [eax + 0x50], ecx
+        xor     ecx, ecx
+    L_sb:
+        cmp     dword ptr [eax + 0x58], edx
+        jne     short L_sc
+        mov     dword ptr [eax + 0x58], ecx
+        xor     ecx, ecx
+    L_sc:
+        add     eax, 4
+        cmp     eax, 0x00543ac8
+        jl      L_loop
+        mov     dword ptr [esi], edx
+    L_done:
+        pop     esi
+        ret
+    }
+}
