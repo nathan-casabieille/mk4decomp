@@ -6297,10 +6297,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045ede0
-    name: func_0045ede0
+    name: DualStreamSqDistThresh_0045ede0
     size: 356
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045ef50
     name: func_0045ef50
     size: 956

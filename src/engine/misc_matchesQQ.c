@@ -67805,3 +67805,117 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         ret
     }
 }
+
+extern void func_0045ef50(void);
+extern void Mul10Tail_00404af0(void);
+extern void func_0045ec10(void);
+
+/* @addr 0x0045ede0 (356b game) - 2-entry packed dual-stream diff+mul wrapper.
+ *   Entry 1 (offset 0, 301b): for each of two streams identified by
+ *   g_data_00538158 and g_data_0053815c, stores into g_data_00542044 and
+ *   calls func_0045ef50. If both succeed and bit 0 of g_data_0054208c is
+ *   set on each, computes the per-component (x,y,z) differences between
+ *   the two stream slot's +0x54/+0x58/+0x5c fields, multiplies each diff
+ *   by itself via Mul10Tail_00404af0 (push twice → call), accumulates the
+ *   3 squares into g_data_00542074, then thresholds against 0x20000:
+ *     - sum > 0x20000: OR 0x01 into 0x54208c
+ *     - else: AND ~0x01 into 0x54208c
+ *   (3b NOP align pad.)
+ *   Entry 2 (offset 0x130, 52b): reads [g_data_0054205c*4 + 0x58] and
+ *     compares to 0xfffe3334: if greater clears bit 0 of g_data_0054208c
+ *     and returns; else sets g_data_00542070=4 and tail-jmp func_0045ec10.
+ */
+__declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00538158]
+        push    esi
+        push    edi
+        mov     dword ptr [g_data_00542044], eax
+        call    func_0045ef50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsd_skip
+        test    byte ptr [g_data_0054208c], 1
+        je      L_dsd_skip
+        mov     ecx, dword ptr [g_data_0053815c]
+        mov     dword ptr [g_data_00542044], ecx
+        call    func_0045ef50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsd_skip
+        test    byte ptr [g_data_0054208c], 1
+        je      L_dsd_skip
+        mov     ecx, dword ptr [g_data_00538158]
+        mov     edx, dword ptr [g_data_0053815c]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_00542048], edx
+        mov     eax, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     esi, dword ptr [ecx*4 + 0x58]
+        mov     dword ptr [g_data_00542070], esi
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        mov     dword ptr [g_data_00542074], ecx
+        mov     edi, dword ptr [edx*4 + 0x54]
+        sub     eax, edi
+        mov     dword ptr [g_data_0054206c], eax
+        mov     edi, dword ptr [edx*4 + 0x58]
+        sub     esi, edi
+        push    eax
+        mov     dword ptr [g_data_00542070], esi
+        mov     esi, dword ptr [edx*4 + 0x5c]
+        sub     ecx, esi
+        push    eax
+        mov     dword ptr [g_data_00542074], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_data_00542074]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     esi, dword ptr [g_data_0054206c]
+        add     ecx, esi
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_00542074], eax
+        cmp     eax, 0x20000
+        mov     eax, dword ptr [g_data_0054208c]
+        jle     short L_dsd_setBit
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        pop     edi
+        pop     esi
+        ret
+    L_dsd_setBit:
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_dsd_skip:
+        pop     edi
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+    L_dsd_entry2:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x58]
+        cmp     eax, 0xfffe3334
+        mov     dword ptr [g_data_0054206c], eax
+        jle     short L_dsd_e2tail
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+    L_dsd_e2tail:
+        mov     dword ptr [g_data_00542070], 4
+        jmp     func_0045ec10
+    }
+}
