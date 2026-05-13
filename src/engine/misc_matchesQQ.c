@@ -66749,3 +66749,128 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         jmp     ChainDispatcher4Call_00486290
     }
 }
+
+extern unsigned int g_data_005422ec;
+extern unsigned int g_data_00535ddc;
+extern void func_004339c0(void);
+extern void DecJneSetCallSetJmp_004389b0(void);
+extern void GuardedSeq_004297b0(void);
+extern void IterLoad_00491050(void);
+extern void InstallSelfMultiCascade_004388f0(void);
+
+/* @addr 0x00438780 (354b game) - install-self + scope-chain with body label.
+ *   Entry 1 (offset 0, 86b): on phase = [scaled g_data_00542060 + 0x84]
+ *     non-zero: pushes the address of L_p2_body (offset 0x60 inside the
+ *     same symbol) onto the mstack and tail-jmp func_004339c0; on phase 0
+ *     installs Self at [eax+8], slot[+0x84]=1, g_data_0054204c=1,
+ *     g_data_00541e6c=1.
+ *   10b NOP align pad.
+ *   Entry 2 / body (offset 0x60, 258b): pushes g_data_00542080 on mstack,
+ *     calls DecJneSetCallSetJmp_004389b0; on no-error pops the snapshot back
+ *     and compares against g_data_00542084 — if g_data_00535ddc < that
+ *     snapshot, calls StackPopDispatchTagged_0041f780 and exits. Otherwise
+ *     pushes the snapshot again, calls GuardedSeq_004297b0, on no-error
+ *     pops; if bit 0 of g_data_0054208c set falls through to a self-call
+ *     back to entry 1 (recursion via call 0x00438780); else pushes
+ *     0x005422ec, calls IterLoad_00491050, on no-error pops snapshot,
+ *     stores 0xb to [g_data_0054205c*4 + 0x28] and tail-calls
+ *     InstallSelfMultiCascade_004388f0.
+ */
+__declspec(naked) void InstallSelfWithBody_00438780(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_isb_phase0
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset L_isb_body
+        jmp     func_004339c0
+    L_isb_phase0:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset InstallSelfWithBody_00438780
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_isb_body:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        call    DecJneSetCallSetJmp_004389b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_isb_bodyEnd
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00535ddc]
+        mov     esi, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        cmp     edx, esi
+        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_data_0054206c], edx
+        jge     short L_isb_continue
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_isb_continue:
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        call    GuardedSeq_004297b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_isb_bodyEnd
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dl, byte ptr [g_data_0054208c]
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        test    dl, 1
+        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jne     short L_isb_pushLoad
+        call    InstallSelfWithBody_00438780
+        pop     esi
+        ret
+    L_isb_pushLoad:
+        inc     eax
+        push    offset g_data_005422ec
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        call    IterLoad_00491050
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_isb_bodyEnd
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 0xb
+        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x28], eax
+        call    InstallSelfMultiCascade_004388f0
+    L_isb_bodyEnd:
+        pop     esi
+        ret
+    }
+}

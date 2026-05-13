@@ -4075,10 +4075,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00438780
-    name: func_00438780
+    name: InstallSelfWithBody_00438780
     size: 354
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004388f0
     name: InstallSelfMultiCascade_004388f0
     size: 190
