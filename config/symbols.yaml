@@ -1834,10 +1834,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00422ce0
-    name: func_00422ce0
+    name: RecordListIterMStack_00422ce0
     size: 318
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00422e20
     name: DownloadDualPush_00422e20
     size: 196

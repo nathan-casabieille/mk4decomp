@@ -50365,3 +50365,101 @@ __declspec(naked) void Install3StateSiblingTail_00484950(void) {
         ret
     }
 }
+
+extern void StateMachineInit_00493000(void);
+
+/* @addr 0x00422ce0 (318b game) - 0xffff0000-terminated record-list iterator with 3-push call + 3-pop.
+ *   For each record from g_x_00542058 stream: read 3 fields (g_x_00542048, g_x_00542074, g_x_00542084).
+ *   If 3rd field (g_x_00542084) == 0xffff0000: terminate.
+ *   Else: read 4th field (g_state_00542088). mstack-push g_x_00542074, g_data_00542070, g_x_00542048.
+ *   g_x_0054206c=0x6c. Call StateMachineInit_00493000. If pause: ret.
+ *   Mstack-pop: g_x_00542048, g_data_00542070, g_x_00542074. If g_x_00542074!=0: [g_cj*4+0x58]=g_x_00542074.
+ *   Re-read next field from g_x_00542058 stream, if !=0xffff0000 loop. Pop edi/esi; ret.
+ */
+__declspec(naked) void RecordListIterMStack_00422ce0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_00542058]
+        push    esi
+        push    edi
+        mov     eax, dword ptr [ecx*4 + 0]
+        inc     ecx
+        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_x_00542058], ecx
+        mov     edx, dword ptr [ecx*4 + 0]
+        inc     ecx
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_x_00542058], ecx
+        mov     eax, dword ptr [ecx*4 + 0]
+        inc     ecx
+        cmp     eax, 0xffff0000
+        mov     dword ptr [g_x_00542084], eax
+        mov     dword ptr [g_x_00542058], ecx
+        _emit   0fh
+        _emit   84h
+        _emit   0eeh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+    loop_top:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edi, 0x6c
+        mov     esi, dword ptr [ecx*4 + 0]
+        inc     ecx
+        inc     eax
+        mov     dword ptr [g_state_00542088], esi
+        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [g_x_0054206c], edi
+        call    StateMachineInit_00493000
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   7fh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        dec     eax
+        test    edx, edx
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        _emit   74h
+        _emit   17h
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [eax*4 + 0x58], edx
+        mov     edx, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542058]
+        mov     esi, dword ptr [ecx*4 + 0]
+        inc     ecx
+        cmp     esi, 0xffff0000
+        mov     dword ptr [g_x_00542084], esi
+        mov     dword ptr [g_x_00542058], ecx
+        _emit   0fh
+        _emit   85h
+        _emit   1ch
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        pop     edi
+        pop     esi
+        ret
+    }
+}
