@@ -59984,6 +59984,113 @@ extern unsigned int g_data_00f9ebc8;
 extern unsigned int g_data_00f9ebc0;
 extern unsigned int g_data_00f8fac4;
 extern unsigned int g_data_00f9eb68;
+extern unsigned int g_data_00f9fc10;
+extern unsigned int g_data_00522bb0;
+extern unsigned int g_data_00522998;
+extern void func_004cd6f0(void);
+
+/* @addr 0x004cc780 (254b crt) - CRT tolower with multibyte/locale support.
+ *   If g_data_00f9fc10 (LC_CTYPE locale) is NULL: simple ASCII path -
+ *     if 'A'<=c<='Z' return c+32, else return c unchanged.
+ *   Else: if c < 0x100, check IsCType(c, 1) (alpha?); use codepage table.
+ *   Multibyte: split into hi/lo bytes, call LCMapString helper, return result.
+ */
+__declspec(naked) void Tolower_004cc780(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00f9fc10]
+        sub     esp, 8
+        test    eax, eax
+        push    ebx
+        jne     short L_tl_mb
+        mov     eax, [esp + 0x10]
+        cmp     eax, 0x41
+        jl      L_tl_passthrough
+        cmp     eax, 0x5a
+        jg      L_tl_passthrough
+        add     eax, 0x20
+        pop     ebx
+        add     esp, 8
+        ret
+    L_tl_mb:
+        mov     ebx, [esp + 0x10]
+        cmp     ebx, 0x100
+        jge     short L_tl_doMap
+        cmp     dword ptr [g_data_00522bb0], 1
+        jle     short L_tl_inlineCk
+        push    1
+        push    ebx
+        call    IsCType_004cc650
+        add     esp, 8
+        jmp     short L_tl_ckResult
+    L_tl_inlineCk:
+        mov     eax, dword ptr [g_data_00522998]
+        mov     al, byte ptr [eax + ebx*2]
+        and     eax, 1
+    L_tl_ckResult:
+        test    eax, eax
+        jne     short L_tl_doMap
+        mov     eax, ebx
+        pop     ebx
+        add     esp, 8
+        ret
+    L_tl_doMap:
+        mov     edx, dword ptr [g_data_00522998]
+        mov     eax, ebx
+        sar     eax, 8
+        mov     ecx, eax
+        and     ecx, 0xff
+        test    byte ptr [edx + ecx*2 + 1], 0x80
+        jz      short L_tl_oneByte
+        mov     [esp + 0x10], al
+        mov     [esp + 0x11], bl
+        mov     byte ptr [esp + 0x12], 0
+        mov     eax, 2
+        jmp     short L_tl_doCall
+    L_tl_oneByte:
+        mov     [esp + 0x10], bl
+        mov     byte ptr [esp + 0x11], 0
+        mov     eax, 1
+    L_tl_doCall:
+        push    1
+        push    0
+        lea     ecx, [esp + 0xc]
+        push    3
+        push    ecx
+        lea     edx, [esp + 0x20]
+        push    eax
+        mov     eax, dword ptr [g_data_00f9fc10]
+        push    edx
+        push    0x100
+        push    eax
+        call    func_004cd6f0
+        add     esp, 0x20
+        test    eax, eax
+        jne     short L_tl_packResult
+        mov     eax, ebx
+        pop     ebx
+        add     esp, 8
+        ret
+    L_tl_packResult:
+        cmp     eax, 1
+        jne     short L_tl_pack2
+        mov     eax, [esp + 4]
+        and     eax, 0xff
+        pop     ebx
+        add     esp, 8
+        ret
+    L_tl_pack2:
+        mov     eax, [esp + 5]
+        mov     ecx, [esp + 4]
+        and     eax, 0xff
+        and     ecx, 0xff
+        shl     eax, 8
+        or      eax, ecx
+    L_tl_passthrough:
+        pop     ebx
+        add     esp, 8
+        ret
+    }
+}
 
 /* @addr 0x004c4110 (252b platform.win32) - DirectSound buffer create+release dispatcher.
  *   Reads IDirectSound* from g_data_00f9efcc (return if null).

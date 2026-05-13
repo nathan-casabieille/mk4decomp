@@ -15896,10 +15896,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc780
-    name: func_004cc780
+    name: Tolower_004cc780
     size: 254
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc880
     name: BitsetTrailZeroCheck_004cc880
     size: 102
