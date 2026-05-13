@@ -48660,3 +48660,121 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   00h
     }
 }
+
+extern void func_00457bb0(void);
+extern void func_0047bc30(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+
+/* @addr 0x0047baf0 (305b game) - state-machine: 4-arm dispatcher with shared common-tail call.
+ *   Load state; clear. If state!=0: scaledInit=[baseSel*4+0x3c]; inc [scaledInit*4+0x7c] -> g_x_0054206c.
+ *     g_state_0054207c=0; call func_00457bb0; if pause ret.
+ *     g_x_0054206c=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call func_0047bc30; pop+ret.
+ *   state==0: g_state_0054207c=0; call func_00457bb0; if pause ret.
+ *     If g_state_00542088==1: tail-call func_0047bc30; pop+ret.
+ *     Else: call MStackPush3CmpCall; if pause ret.
+ *     If bit0(0054208c) set: tail-call func_0047bc30; pop+ret.
+ *     Else: g_state_00542080=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
+ *     pause=1; pop edi/esi/ebx; ret.
+ */
+__declspec(naked) void StateMachineSharedTail_0047baf0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        push    ebx
+        push    esi
+        push    edi
+        lea     esi, [eax*4 + 0]
+        xor     edi, edi
+        mov     eax, dword ptr [esi + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        cmp     eax, edi
+        _emit   74h
+        _emit   62h
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [ecx*4 + 0x3c]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x7c]
+        inc     eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x7c], eax
+        mov     dword ptr [g_state_0054207c], edi
+        call    func_00457bb0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   0ceh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     dword ptr [g_x_0054206c], 0x5f
+        call    ScaledLitLoadCall_00480fe0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   0b3h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        call    func_0047bc30
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_state_0054207c], edi
+        call    func_00457bb0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   0fh
+        _emit   85h
+        _emit   93h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_state_00542088]
+        mov     ebx, 1
+        cmp     eax, ebx
+        _emit   75h
+        _emit   09h
+        call    func_0047bc30
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        call    MStackPush3CmpCall_0048eec0
+        cmp     dword ptr [g_pause_00541e6c], edi
+        _emit   75h
+        _emit   6fh
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   74h
+        _emit   09h
+        call    func_0047bc30
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+        mov     dword ptr [g_state_00542080], 6
+        mov     dword ptr [esi + 8], offset StateMachineSharedTail_0047baf0
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, offset StateMachineSharedTail_0047baf0
+        add     ecx, 0x01000000
+        mov     dword ptr [edx*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        inc     eax
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    EsiInstallDecCallChain_004294a0
+        mov     dword ptr [g_pause_00541e6c], ebx
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

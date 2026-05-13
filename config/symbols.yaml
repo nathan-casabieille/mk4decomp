@@ -8268,10 +8268,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047baf0
-    name: func_0047baf0
+    name: StateMachineSharedTail_0047baf0
     size: 305
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047bc30
     name: func_0047bc30
     size: 1175
