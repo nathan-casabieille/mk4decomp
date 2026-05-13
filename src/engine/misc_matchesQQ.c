@@ -63624,6 +63624,93 @@ extern unsigned int g_data_00fa0ee4;
 extern unsigned int g_data_00f9f850;
 extern void IndirectCall_004c6ec0(void);
 extern void Helper_MemMalloc_Post(void);
+extern void *g_iat_004d2150;
+extern void DosMapErr_004c8b20(void);
+extern void Thunk_004ca77b_helper(void);
+extern void Thunk_004ca701_helper(void);
+extern void FmodHelper_004ccb7d(void);
+extern unsigned int g_data_00f9f7fc;
+
+/* @addr 0x004c6760 (144b boot) - CRT _close bundle + 2 thunks + fmod/fprem helper.
+ *   sub-1 (76b @ 0x4c6760): _close(fd). Calls CloseHandle via IAT[0x4d2150];
+ *     on success, checks state bits; on permission error, sets errno=0xd and
+ *     doserrno=5; returns -1 on error, 0 on success.
+ *   sub-2 (10b @ 0x4c67b0): mov edx, 0x00520000; jmp far (longjmp-like helper).
+ *   sub-3 (10b @ 0x4c67bb): another similar mov+jmp pair.
+ *   sub-4 (~30b @ 0x4c67c5): floating-point modulus via fprem (or compat helper).
+ */
+__declspec(naked) void CloseAndThunksBundle_004c6760(void) {
+    __asm {
+        /* sub-1: _close */
+        mov     eax, [esp + 4]
+        push    eax
+        call    dword ptr [g_iat_004d2150]
+        cmp     eax, -1
+        jne     short L_cl_check
+        call    dword ptr [g_iat_004d219c]
+        push    eax
+        call    DosMapErr_004c8b20
+        add     esp, 4
+        or      eax, -1
+        ret
+    L_cl_check:
+        test    al, 1
+        jz      short L_cl_zero
+        test    byte ptr [esp + 8], 2
+        jz      short L_cl_zero
+        call    CallAdd8_004c8ba0
+        mov     dword ptr [eax], 0x0d
+        call    CallAddC_004c8bb0
+        mov     dword ptr [eax], 5
+        or      eax, -1
+        ret
+    L_cl_zero:
+        xor     eax, eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2: mov edx + jmp far helper */
+        mov     edx, 0x00520000
+        jmp     Thunk_004ca77b_helper
+        /* sub-3: mov edx + jmp far helper */
+        mov     edx, 0x00520000
+        jmp     Thunk_004ca701_helper
+        /* sub-4: fmod via fprem */
+        fxch    st(1)
+    L_fmod_loop:
+        cmp     dword ptr [g_data_00f9f7fc], 1
+        jz      short L_fmod_use_helper
+        fprem
+        jmp     short L_fmod_check
+    L_fmod_use_helper:
+        call    FmodHelper_004ccb7d
+    L_fmod_check:
+        fwait
+        fnstsw  ax
+        fwait
+        sahf
+        jp      short L_fmod_loop
+        fstp    st(1)
+        ret
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+        _emit   0cch
+    }
+}
 
 /* @addr 0x004b5b10 (174b engine.geo) - Mem_Free: free a chunk into the heap free-list with coalesce.
  *   Range-check ptr in [0x7b41a0, 0xab4194]. Header at [eax-12]; size in low 24
