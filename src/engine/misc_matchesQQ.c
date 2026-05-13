@@ -73231,3 +73231,127 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         ret
     }
 }
+
+extern unsigned int g_data_004ea9c0;
+extern unsigned int g_data_004ea9d8;
+extern unsigned int g_data_004ea9e8;
+extern unsigned int g_data_004ea9f8;
+extern unsigned int g_data_00501838;
+extern void ScaledDecBranch_00466460(void);
+extern void TripleStageRollback_00404a50(void);
+
+/* @addr 0x004662e0 (384b game) - 4-entry packed: alarm + packed_ptr +
+ *   phase-install + alarm.
+ *   Entry 1 (offset 0, 96b): copies [g_data_00542060*4 + 0x34/0x38/0x3c]
+ *     into g_data_00542054/00542058/0054205c, then writes
+ *     g_data_00542054 = 0x5c-arg, g_data_00542074 = 0x267,
+ *     g_data_0054204c = 0x44ea20. Calls AllocNode; on no-error pushes
+ *     0x4ea9c0 + ArgSarStoreJmp_004594f0.
+ *   Entry 2 (offset 0x60, 40b): packs &g_data_00501838>>2 into
+ *     [g_data_0054205c*4 + 0x24], pushes 0x4ea9d8 → ArgSarStoreJmp.
+ *   8b NOP pad.
+ *   Entry 3 / body (offset 0x90, 144b): phase-state install.
+ *     phase != 0: tail-call ScaledDecBranch_00466460.
+ *     phase 0: pushes 0x267 onto TripleStageRollback_00404a50; if
+ *       slot[+0x30] == 1 → push 0x4ea9e8 + ArgSarStoreJmp; else
+ *       installs Self at body with slot[+0x84]=1, g_data_0054204c=0xf,
+ *       arms 0x541e6c=1.
+ *   Entry 4 (offset 0x120, 96b): mirror of entry 1 with alarm 0x4ea9f8.
+ */
+__declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     edx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542058], edx
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_0054205c], eax
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542074], 0x267
+        mov     dword ptr [g_data_0054204c], 0x44ea20
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea2_e1End
+        push    offset g_data_004ea9c0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fea2_e1End:
+        ret
+    L_fea2_entry2:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_00501838
+        sar     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_004ea9d8
+        mov     dword ptr [ecx*4 + 0x24], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 / body (offset 0x90) */
+    L_fea2_body:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_fea2_phase0
+        call    ScaledDecBranch_00466460
+        pop     esi
+        ret
+    L_fea2_phase0:
+        mov     ecx, dword ptr [g_data_00542060]
+        push    0x267
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        cmp     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_fea2_install
+        call    TripleStageRollback_00404a50
+        add     esp, 4
+        push    offset g_data_004ea9e8
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+    L_fea2_install:
+        call    TripleStageRollback_00404a50
+        add     esp, 4
+        mov     dword ptr [esi + 8], offset L_fea2_body
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_data_0054204c], 0xf
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_fea2_entry4:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     edx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542058], edx
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_0054205c], eax
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542074], 0x267
+        mov     dword ptr [g_data_0054204c], 0x44ea20
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fea2_e4End
+        push    offset g_data_004ea9f8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fea2_e4End:
+        ret
+    }
+}
