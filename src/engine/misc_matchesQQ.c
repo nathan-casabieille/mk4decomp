@@ -49060,3 +49060,105 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         ret
     }
 }
+
+extern void TwoCallTail_00481380(void);
+extern void ScaledMove48to58_00490720(void);
+extern void SetJmp_00483f20(void);
+extern void func_004339c0(void);
+
+/* @addr 0x00483de0 (308b game) - dual-block: entry-call chain + install-self body.
+ *   Block A (0..0x4d): chain[baseSel*4+0x74] = g_x_0054206c.
+ *     Call GateDispatch6c; if pause ret. Call CopyJmp; if pause ret.
+ *     If bit0(0054208c): tail-jmp TwoCallTail_00481380.
+ *     Else: call ScaledMove48to58; if pause ret.
+ *     Push 0x004ee7d8; call IterStepDualStore; pop; if pause ret.
+ *     Push 0x004ee7e0; call ArgSarStoreJmp; pop; ret.
+ *   Block B (+0x70): load state; clear. state!=0: call DirtyToggleByGate; if pause ret.
+ *     If bit2 of 0054208c: mstack-push SetJmp_00483f20; jmp func_004339c0.
+ *     Else: jmp SetJmp_00483f20.
+ *   state==0 (je from cmp): g_state_00542080=0x14; install-self at body+0x01000000.
+ *     state=1; call EsiInstallDecCallChain; pause=1; ret.
+ */
+__declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0x74], ecx
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4dh
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   3fh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   05h
+        jmp     TwoCallTail_00481380
+        call    ScaledMove48to58_00490720
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   23h
+        push    0x004ee7d8
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_pause_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0dh
+        push    0x004ee7e0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        _emit   90h
+        _emit   90h
+    body_e50:
+        mov     eax, dword ptr [g_baseSel_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        _emit   74h
+        _emit   3bh
+        call    DirtyToggleByGate_0048f350
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   95h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        test    byte ptr [g_state_0054208c], 4
+        _emit   74h
+        _emit   1bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     [eax*4 + g_data_004d57ac_arr], offset SetJmp_00483f20
+        jmp     func_004339c0
+        jmp     SetJmp_00483f20
+        mov     dword ptr [g_state_00542080], 0x14
+        mov     dword ptr [eax + 8], offset body_e50
+        mov     ecx, dword ptr [g_baseSel_00542060]
+        mov     edx, offset body_e50
+        add     edx, 0x01000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [ecx*4 + 0], edx
+        mov     ecx, dword ptr [g_scaledInit_00542044]
+        inc     ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    EsiInstallDecCallChain_004294a0
+        mov     dword ptr [g_pause_00541e6c], 1
+        ret
+    }
+}

@@ -8938,10 +8938,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00483de0
-    name: func_00483de0
+    name: DualBlockChainCallInstall_00483de0
     size: 308
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00483f20
     name: SetJmp_00483f20
     size: 15
