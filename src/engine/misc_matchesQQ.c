@@ -48501,3 +48501,162 @@ __declspec(naked) void ChainTableWalkStore_004917e0(void) {
         ret
     }
 }
+
+extern void func_0049f3a0(void);
+extern unsigned int g_data_00541d88;
+extern unsigned int g_state_00537ea8;
+
+/* @addr 0x0049f260 (306b game) - state cascade switch + dual-arm thunks (no prologue: continuation of 0x0049f1f0).
+ *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call func_0049f7b0; ==5 → use esi.
+ *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
+ *   After call func_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
+ *   Else: chain[scaledInit*4]=g_x_0054206c; copy g_state_00535e48 to g_data_00542070;
+ *     call func_0049e7e0; if pause CallSetPause; load chain[g_x_00542048*4+8];
+ *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
+ *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp func_0049f3a0.
+ *   Tail thunk_2 (+0x110): if g_state_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp func_0049f3a0.
+ */
+__declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
+    __asm {
+        cmp     eax, ebx
+        _emit   74h
+        _emit   3ch
+        cmp     eax, 2
+        _emit   74h
+        _emit   0ah
+        cmp     eax, 3
+        _emit   74h
+        _emit   05h
+        cmp     eax, 4
+        _emit   75h
+        _emit   28h
+        add     eax, 0xe
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_0049f7b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0aeh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   0fh
+        _emit   85h
+        _emit   9dh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        _emit   0ebh
+        _emit   2fh
+        cmp     eax, 5
+        _emit   75h
+        _emit   08h
+        mov     dword ptr [g_x_0054206c], esi
+        _emit   0ebh
+        _emit   22h
+        _emit   0fh
+        _emit   82h
+        _emit   88h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        cmp     eax, 0xa
+        _emit   76h
+        _emit   0fh
+        cmp     eax, 0xf
+        _emit   76h
+        _emit   0ah
+        cmp     eax, 0x12
+        _emit   77h
+        _emit   79h
+        sub     eax, 4
+        _emit   0ebh
+        _emit   03h
+        sub     eax, 5
+        mov     dword ptr [g_x_0054206c], eax
+        call    func_0049f7b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   63h
+        _emit   84h
+        _emit   1dh
+        _emit   8ch
+        _emit   20h
+        _emit   54h
+        _emit   00h
+        _emit   74h
+        _emit   0ah
+        mov     eax, dword ptr [g_x_0054206c]
+        _emit   0e9h
+        _emit   76h
+        _emit   0ffh
+        _emit   0ffh
+        _emit   0ffh
+        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     edx, dword ptr [g_x_00535e48]
+        mov     dword ptr [g_data_00542070], edx
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   25h
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    GuardedScaledCall_0048a020
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   05h
+        call    CallSetPause_0041f830
+        pop     esi
+        pop     ebx
+        ret
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_data_00541d88]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        mov     dword ptr [g_x_00535e48], 0
+        jmp     func_0049f3a0
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_00537ea8]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   05h
+        jmp     CallSetPause_0041f830
+        mov     dword ptr [g_x_00535e48], 1
+        _emit   0e9h
+        _emit   0eh
+        _emit   00h
+        _emit   00h
+        _emit   00h
+    }
+}
