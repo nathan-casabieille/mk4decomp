@@ -12347,10 +12347,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2140
-    name: func_004a2140
+    name: AudioInitInstallerPair_004a2140
     size: 303
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2270
     name: ClearTwoCallSetStore_004a2270
     size: 72

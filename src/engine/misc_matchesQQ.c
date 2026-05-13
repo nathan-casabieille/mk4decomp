@@ -63640,6 +63640,100 @@ extern void func_004013a0(void);
 extern void StoreTwoCall_0049cb40(void);
 extern void DispatcherComplex260_00407400(void);
 extern unsigned int g_data_00542058;
+extern void CopyGlobal_004ac1f0(void);
+extern void Test4StatesAny_004a1d20(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void Push16Call_00489f50(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void func_0041f7d0(void);
+extern void func_0041f830(void);
+
+/* @addr 0x004a2140 (303b audio) - bundled audio init pair: setup helper + self-install callback.
+ *   sub-1 (~38b @ 0x4a2140): clear/setup audio globals (0x54206c=0, 0x54204c=0x004200b0,
+ *     0x542074=0x1000), call CopyGlobal_004ac1f0 and AllocNode; on success
+ *     guard, tail-jmp to 0x41f830.
+ *   sub-2 (~265b @ 0x4a2180): callback - 3-state machine (0/1/other).
+ *     State 0: install self pointer, set countdown to 1.
+ *     State 1: call BootInitGuardedCallChain + sub-1 (recursive!).
+ *     Else: full pipeline - call audio probe, set state struct fields,
+ *     install self at 0x4a2180 in callback list, call InstallSelfPackedF80.
+ */
+__declspec(naked) void AudioInitInstallerPair_004a2140(void) {
+    __asm {
+        /* sub-1 */
+        mov     dword ptr [g_data_0054206c], 0
+        call    CopyGlobal_004ac1f0
+        mov     dword ptr [g_data_0054204c], 0x004200b0
+        mov     dword ptr [g_data_00542074], 0x1000
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_aip_ret1
+        jmp     func_0041f830
+    L_aip_ret1:
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        /* sub-2 callback */
+    L_aip_callback:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        jz      L_aip_install
+        dec     eax
+        jz      short L_aip_state1
+        call    BootInitGuardedCallChain_004265d0
+        call    AudioInitInstallerPair_004a2140
+        pop     esi
+        ret
+    L_aip_state1:
+        call    Test4StatesAny_004a1d20
+        test    eax, eax
+        jz      L_aip_install
+        mov     dword ptr [g_data_00542074], 0
+        call    Push16Call_00489f50
+        mov     dword ptr [g_data_00542074], 0x48
+        call    Push16Call_00489f50
+        call    func_0041f7d0
+        mov     dword ptr [g_data_00542070], 6
+        mov     dword ptr [esi + 8], offset L_aip_callback
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_aip_callback
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfPackedF80_00426000
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_aip_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_aip_callback
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    }
+}
 extern void func_0047f830(void);
 extern void MStackCall_00406340(void);
 extern void func_00410340(void);
