@@ -59125,6 +59125,93 @@ extern void DSoundQueryProperty_004ac3a0(void);
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern unsigned int g_x_004ffd7c;
 
+extern unsigned int g_data_00f9f840;
+extern unsigned int g_data_00f9f83c;
+extern unsigned char g_byte_00f9f838;
+extern unsigned int g_data_00fa0ef0;
+extern unsigned int g_data_00fa0eec;
+extern void (*g_iat_004d20a4)(void);
+extern void (*g_iat_004d2154)(void);
+extern void PushConstCall_004c6920(void);
+extern void PushConstCall_004c6930(void);
+extern void IterFnPtrs_004c6940(void);
+
+/* @addr 0x004c6860 (178b boot) - CRT abort/exit dispatcher with re-entry guard.
+ *   Args: ebp=arg0 (push-thru), [esp+0x14]=arg1 flag, [esp+0x18] bl=arg2 flag.
+ *   Calls PushConstCall_004c6920 to do beep/header msg, then on g_data_00f9f840==1:
+ *     ![0x4d2060](arg0); ![0x4d20a4](rv).
+ *   Sets g_data_00f9f83c=1, g_byte_00f9f838 = bl.
+ *   If arg1 == 0: walk fnptr-stack [g_data_00fa0eec..g_data_00fa0ef0] calling each non-null fn,
+ *     reloading head each iter; then push pair (0x4d5028, 0x4d5030) and IterFnPtrs.
+ *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_004c6930.
+ *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_data_00f9f840 = 1; ![0x4d2154]; pop+ret.
+ */
+__declspec(naked) void BootFatalAbortHandler_004c6860(void) {
+    __asm {
+        push    ebx
+        push    ebp
+        push    esi
+        call    PushConstCall_004c6920
+        mov     eax, dword ptr [g_data_00f9f840]
+        mov     ebp, dword ptr [esp + 0x10]
+        cmp     eax, 1
+        jne     short L_ab_set
+        push    ebp
+        call    dword ptr [g_iat_004d2060]
+        push    eax
+        call    dword ptr [g_iat_004d20a4]
+    L_ab_set:
+        mov     eax, dword ptr [esp + 0x14]
+        mov     ebx, dword ptr [esp + 0x18]
+        test    eax, eax
+        mov     dword ptr [g_data_00f9f83c], 1
+        mov     byte ptr [g_byte_00f9f838], bl
+        jne     short L_ab_skipwalk
+        mov     ecx, dword ptr [g_data_00fa0ef0]
+        test    ecx, ecx
+        jz      short L_ab_msg1
+        mov     esi, dword ptr [g_data_00fa0eec]
+        sub     esi, 4
+        cmp     esi, ecx
+        jb      short L_ab_msg1
+    L_ab_walk:
+        mov     eax, dword ptr [esi]
+        test    eax, eax
+        jz      short L_ab_nextiter
+        call    eax
+        mov     ecx, dword ptr [g_data_00fa0ef0]
+    L_ab_nextiter:
+        sub     esi, 4
+        cmp     esi, ecx
+        jae     short L_ab_walk
+    L_ab_msg1:
+        push    0x004d5030
+        push    0x004d5028
+        call    IterFnPtrs_004c6940
+        add     esp, 8
+    L_ab_skipwalk:
+        push    0x004d5038
+        push    0x004d5034
+        call    IterFnPtrs_004c6940
+        add     esp, 8
+        test    ebx, ebx
+        jz      short L_ab_reentry
+        call    PushConstCall_004c6930
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_ab_reentry:
+        push    ebp
+        mov     dword ptr [g_data_00f9f840], 1
+        call    dword ptr [g_iat_004d2154]
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
+
 /* @addr 0x004c5690 (176b boot) - __alldiv: MSVC CRT 64-bit signed integer divide.
  *   Stack: ret addr, dvdnd_lo, dvdnd_hi, dvr_lo, dvr_hi.
  *   Absolutize both operands tracking sign in edi, divide via div/shift,

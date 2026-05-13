@@ -15315,10 +15315,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c6860
-    name: func_004c6860
+    name: BootFatalAbortHandler_004c6860
     size: 178
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6920
     name: PushConstCall_004c6920
     size: 11
