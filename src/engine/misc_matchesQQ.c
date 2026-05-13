@@ -48398,3 +48398,106 @@ __declspec(naked) void MStackPush6OpPop6_0048af60(void) {
         ret
     }
 }
+
+extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void DeltaAbsCompareBitToggle_0048ea90(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern unsigned int g_data_00542fc8;
+
+/* @addr 0x004917e0 (306b game) - chain init + dual call + branching table-walk + store.
+ *   g_scaledInit = g_cj. Call ScaledLoadOrSetJmp; if pause ret. Call DeltaAbsCompareBitToggle; if pause ret.
+ *   If bit0(0054208c) set: g_x_0054206c=0x10000; else 0xb333. Call EsiEdiAliasDualMul10; if pause ret.
+ *   Load [baseSel*4+0x30] -> g_data_00542070=ecx. If nonzero: use chain[+0x14 or +0x18] based on cmp with 0x10000.
+ *   Else (ecx==0): cmp g_x_0054206c with 0x10000; if equal: skip add; else ecx=0x10.
+ *     eax=(0x00542fc8>>2)+ecx; [baseSel*4+0x34] cmp 0x11; if eq ecx=7; cmp 0x10; if ne ecx=2.
+ *     eax += ecx; eax = [eax*4+0]; jmp tail.
+ *   Tail: store eax at [g_cj*4+0x24]; g_x_0054206c=0; [g_cj*4+0x28]=0; ret.
+ */
+__declspec(naked) void ChainTableWalkStore_004917e0(void) {
+    __asm {
+        mov     eax, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_scaledInit_00542044], eax
+        call    ScaledLoadOrSetJmp_00406b20
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   15h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        call    DeltaAbsCompareBitToggle_0048ea90
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   03h
+        _emit   01h
+        _emit   00h
+        _emit   00h
+        mov     al, byte ptr [g_state_0054208c]
+        mov     dword ptr [g_x_0054206c], 0x10000
+        test    al, 1
+        _emit   75h
+        _emit   0ah
+        mov     dword ptr [g_x_0054206c], 0xb333
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   0d4h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     edx, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [edx*4 + 0x30]
+        test    ecx, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   75h
+        _emit   69h
+        mov     eax, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_data_00542070], ecx
+        cmp     eax, 0x10000
+        _emit   74h
+        _emit   0bh
+        mov     ecx, 0x10
+        mov     dword ptr [g_data_00542070], ecx
+        mov     eax, offset g_data_00542fc8
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     ecx, dword ptr [edx*4 + 0x34]
+        cmp     ecx, 0x11
+        mov     dword ptr [g_data_00542070], ecx
+        _emit   75h
+        _emit   0bh
+        mov     ecx, 7
+        mov     dword ptr [g_data_00542070], ecx
+        cmp     ecx, 0x10
+        _emit   75h
+        _emit   0bh
+        mov     ecx, 2
+        mov     dword ptr [g_data_00542070], ecx
+        add     eax, ecx
+        mov     dword ptr [g_x_00542050], eax
+        mov     eax, dword ptr [eax*4 + 0]
+        _emit   0ebh
+        _emit   27h
+        mov     edx, dword ptr [g_x_0054206c]
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     eax, dword ptr [ecx*4 + 0x14]
+        cmp     edx, 0x10000
+        mov     dword ptr [g_x_00542050], eax
+        _emit   74h
+        _emit   0ch
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_x_00542050], eax
+        mov     ecx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [ecx*4 + 0x24], eax
+        mov     edx, dword ptr [g_cj_0054205c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [edx*4 + 0x28], 0
+        ret
+    }
+}

@@ -10853,10 +10853,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004917e0
-    name: func_004917e0
+    name: ChainTableWalkStore_004917e0
     size: 306
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00491920
     name: IncCapped3e7_00491920
     size: 34
