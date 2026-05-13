@@ -72124,3 +72124,168 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00535ddc;
+extern void DualGatedStateYield_0048fc80(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void func_004339c0(void);
+extern void DualMul10Tail_004395d0(void);
+extern void Cmp2CallDirtyCall_004398b0(void);
+extern void Cmp200Jmp_0043bd30(void);
+extern void QuadStringStateGate_0043bd50(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void ScaledPopSaveJmp_0043bb20(void);
+
+/* @addr 0x0043bbb0 (379b game) - 4-entry packed install-self chain.
+ *   Entry 1 (offset 0, 95b): phase-state dispatch. Phase 1+: yield via
+ *     DualGatedStateYield_0048fc80; on success pushes the body label
+ *     (entry 2, offset 0x60 = 0x43bc10) onto the mstack and tail-jmps
+ *     func_004339c0. On error returns. Phase 0: installs Self entry 1,
+ *     arms 0x541e6c.
+ *   1b NOP align pad.
+ *   Entry 2 / body (offset 0x60, 100b): pushes g_data_00542080 onto
+ *     mstack, calls GuardedDualAndFlagToggle_0048f020; on no-error pops
+ *     snapshot back, tests bit 0 of 0x54208c. If set tail-jmps entry 1
+ *     (back to phase check). If clear decrements g_data_00542080 once;
+ *     if it hits 0, tail-jmp StackPopDispatchTagged_0041f780. Else
+ *     tail-jmp the L_bsm_body-label (= back to offset 0).
+ *   12b NOP align pad.
+ *   Entry 3 (offset 0xd0, 27b): if g_data_00535ddc < 0x20000 tail-jmps
+ *     PrefixThunkInstallSelf3State_00438f80, else tail-jmps entry 4
+ *     L_qss_e4Tail (= 0x43bd50, which is OUTSIDE this function — it's
+ *     QuadStringStateGate_0043bd50).
+ *   5b NOP align pad.
+ *   Entry 4 (offset 0xf0, 139b): another phase-state install.
+ *     Phase 1+: DualMul10Tail_004395d0; on no-error AND bit 0 set,
+ *       calls Cmp200Jmp_0043bd30 tail. Bit 0 clear: compares
+ *       g_data_00535ddc with 0x40000; le → tail-call
+ *       PrefixThunkInstallSelf3State_00438f80; gt → tail-call
+ *       QuadStringStateGate_0043bd50.
+ *     Phase 0: Cmp2CallDirtyCall_004398b0; on no-error installs Self
+ *       entry 4 at [esi+8] with slot[+0x84]=1.
+ */
+__declspec(naked) void Phase4EntryInstallChain_0043bbb0(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_p4e_phase0
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     short L_p4e_e1End
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], offset L_p4e_body
+        jmp     func_004339c0
+    L_p4e_phase0:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset Phase4EntryInstallChain_0043bbb0
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+    L_p4e_e1End:
+        ret
+        nop
+    L_p4e_body:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        call    GuardedDualAndFlagToggle_0048f020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p4e_bodyEnd
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, 1
+        mov     dword ptr [g_data_00542080], edx
+        jne     short L_p4e_bodyHasBit0
+        jmp     ScaledPopSaveJmp_0043bb20
+    L_p4e_bodyHasBit0:
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        je      short L_p4e_tailPop
+        jmp     Phase4EntryInstallChain_0043bbb0
+    L_p4e_tailPop:
+        jmp     StackPopDispatchTagged_0041f780
+    L_p4e_bodyEnd:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 3 (offset 0xd0) */
+    L_p4e_entry3:
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_data_0054206c], eax
+        jge     short L_p4e_e3JmpEntry4
+        jmp     PrefixThunkInstallSelf3State_00438f80
+    L_p4e_e3JmpEntry4:
+        jmp     QuadStringStateGate_0043bd50
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 4 (offset 0xf0) */
+    L_p4e_entry4:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_p4e_e4phase0
+        call    DualMul10Tail_004395d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p4e_e4End
+        test    byte ptr [g_data_0054208c], 1
+        jne     short L_p4e_e4bit0
+        call    Cmp200Jmp_0043bd30
+        pop     esi
+        ret
+    L_p4e_e4bit0:
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x40000
+        mov     dword ptr [g_data_0054206c], eax
+        jle     short L_p4e_e4tail4
+        call    QuadStringStateGate_0043bd50
+        pop     esi
+        ret
+    L_p4e_e4tail4:
+        call    PrefixThunkInstallSelf3State_00438f80
+        pop     esi
+        ret
+    L_p4e_e4phase0:
+        call    Cmp2CallDirtyCall_004398b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_p4e_e4End
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_p4e_entry4
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p4e_e4End:
+        pop     esi
+        ret
+    }
+}

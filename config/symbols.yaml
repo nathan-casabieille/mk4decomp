@@ -4599,10 +4599,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bbb0
-    name: func_0043bbb0
+    name: Phase4EntryInstallChain_0043bbb0
     size: 379
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bd30
     name: Cmp200Jmp_0043bd30
     size: 27
