@@ -58504,6 +58504,80 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
 }
 
 /*
+ * MStackPush2ChainPrepend_00409970 — 296b boot mstack-push2 + linked-list prepend.
+ *   Push g_x_0053a168, g_data_0054204c to mstack. base = g_x_00542048 (packed_ptr).
+ *   g_data_0054204c = g_x_00542044; eax = base[+8] + g_x_00542044; g_data_0054204c = eax;
+ *   eax[+4] = base; g_x_0054206c = 0; eax[0] = 0; g_x_0054206c = base[+4] → eax[+8] = it.
+ *   If base[+4] == 0: base[+0] = g_x_00542044. Else: g_data_0054204c = g_x_0054206c +
+ *     base[+8]; chain[g_data_0054204c*4] = g_x_00542044. base[+4] = g_x_00542044;
+ *     base[+0xc]++. Pop2 mstack into g_data_0054204c and g_x_0053a168; ret.
+ */
+__declspec(naked) void MStackPush2ChainPrepend_00409970(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_0053a168]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     eax, dword ptr [edx*4 + 8]
+        add     eax, ecx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [eax*4 + 4], edx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_x_0054206c], 0
+        mov     dword ptr [eax*4], 0
+        mov     ecx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4 + 4]
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [edx*4 + 8], eax
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 4]
+        test    ecx, ecx
+        jne     short L_99_else
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4], ecx
+        jmp     short L_99_after
+    L_99_else:
+        mov     ecx, dword ptr [g_x_0054206c]
+        mov     edx, dword ptr [g_x_00542044]
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     eax, dword ptr [eax*4 + 8]
+        add     eax, ecx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [eax*4], edx
+    L_99_after:
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_x_00542044]
+        mov     dword ptr [eax*4 + 4], ecx
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4 + 0xc]
+        inc     ecx
+        mov     dword ptr [eax*4 + 0xc], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_0053a168], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
+
+/*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
  *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
