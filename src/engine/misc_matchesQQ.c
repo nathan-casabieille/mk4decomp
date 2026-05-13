@@ -70043,3 +70043,113 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         ret
     }
 }
+
+extern unsigned int g_data_00537f24;
+
+/* @addr 0x0049ce00 (364b game) - mstack-push-3 + linked-list zero-walk.
+ *   Pushes g_data_0054204c/00542074/00542078 onto mstack, then walks
+ *   the linked list at g_data_00537f24 zeroing each node's +4..+0x18
+ *   (six dwords) up to count-limit g_data_0054206c. The list pointer
+ *   at [node*4] gives the next node, terminating when 0 is reached.
+ *   Always pops the 3 mstack entries back into 0054204c/00542074/
+ *   00542078 in reverse order, then sets bit 2 of g_data_0054208c
+ *   and conditionally clears it again (do-while-0 fork on cmp edx,
+ *   ecx — same pattern as similar reset functions).
+ */
+__declspec(naked) void MStackPush3LinkedListZeroWalk_0049ce00(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_data_00537f24]
+        xor     ecx, ecx
+        mov     dword ptr [g_data_00542044], eax
+        cmp     eax, ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        je      L_mp3ll_pop3
+        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_data_00542048], eax
+        shl     eax, 2
+        mov     dword ptr [eax + 4], ecx
+        mov     dword ptr [eax + 8], ecx
+        mov     dword ptr [eax + 0xc], ecx
+        mov     dword ptr [eax + 0x10], ecx
+        mov     dword ptr [eax + 0x14], ecx
+        mov     dword ptr [eax + 0x18], ecx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_data_0054206c]
+        inc     eax
+        cmp     edx, eax
+        mov     dword ptr [g_data_0054204c], eax
+        je      short L_mp3ll_tailLoad
+    L_mp3ll_walkLoop:
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [edx*4]
+        cmp     eax, ecx
+        mov     dword ptr [g_data_00542074], eax
+        je      short L_mp3ll_storeBack
+        mov     dword ptr [g_data_00542048], eax
+        shl     eax, 2
+        mov     dword ptr [eax + 4], ecx
+        mov     dword ptr [eax + 8], ecx
+        mov     dword ptr [eax + 0xc], ecx
+        mov     dword ptr [eax + 0x10], ecx
+        mov     dword ptr [eax + 0x14], ecx
+        mov     dword ptr [eax + 0x18], ecx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_data_0054206c]
+        inc     eax
+        cmp     edx, eax
+        mov     dword ptr [g_data_0054204c], eax
+        jne     short L_mp3ll_walkLoop
+    L_mp3ll_tailLoad:
+        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542074]
+    L_mp3ll_storeBack:
+        mov     dword ptr [g_data_00537f24], eax
+    L_mp3ll_pop3:
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542078], esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542074], esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], esi
+        mov     esi, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, 4
+        or      esi, eax
+        cmp     edx, ecx
+        mov     dword ptr [g_data_0054208c], esi
+        je      short L_mp3ll_done
+        mov     ecx, esi
+        xor     ecx, eax
+        mov     dword ptr [g_data_0054208c], ecx
+    L_mp3ll_done:
+        pop     esi
+        ret
+    }
+}

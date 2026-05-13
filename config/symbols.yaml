@@ -11788,10 +11788,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ce00
-    name: func_0049ce00
+    name: MStackPush3LinkedListZeroWalk_0049ce00
     size: 364
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049cf70
     name: MStackPush3HelperCondToggle_0049cf70
     size: 259
