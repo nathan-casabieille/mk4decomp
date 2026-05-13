@@ -65330,3 +65330,100 @@ __declspec(naked) void BootFrameSetup_00408190(void) {
         ret
     }
 }
+
+extern void ScaledTestChainDispatch_00424ba0(void);
+extern void NegateThree_00425360(void);
+extern void func_004255b0(void);
+
+/* @addr 0x00408350 (349b boot) - mstack-push-4 scope with +0x18 cj advance.
+ *   Pushes g_data_00542048/4c/50/54 onto mstack, advances cj by 0x18, sets
+ *   esi from local frame (lea [esp+4] then sar 2 - encodes "frame slot 1"),
+ *   calls ScaledTestChainDispatch_00424ba0. On no-error: reads
+ *   [g_data_0054205c*4 + 0x34] into 0x54206c, mirrors low bit to 0x542094,
+ *   conditionally calls NegateThree_00425360, then sets up a 2nd scope
+ *   advancing cj by 0x15 and calls func_004255b0. Finally pops the 4
+ *   originals back to 0054204c/50/54/48 in reverse order.
+ */
+__declspec(naked) void MStackBootPush4Init_00408350(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        sub     esp, 0x24
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        lea     esi, [esp + 4]
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542044]
+        add     ecx, 0x18
+        sar     esi, 2
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_00542044], esi
+        call    ScaledTestChainDispatch_00424ba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp4i_cleanup
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x34]
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 1
+        mov     dword ptr [g_data_00542094], eax
+        je      short L_mp4i_skipCall
+        call    NegateThree_00425360
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mp4i_cleanup
+    L_mp4i_skipCall:
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00542048], esi
+        lea     eax, [ecx + 0x15]
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_data_00542044], eax
+        call    func_004255b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mp4i_cleanup
+        mov     edx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_00542044], edx
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mp4i_cleanup:
+        pop     esi
+        add     esp, 0x24
+        ret
+    }
+}
