@@ -63607,6 +63607,97 @@ extern void func_004c3960(void);
 extern unsigned int g_data_00543b68;
 extern unsigned int g_data_00543b6c;
 extern unsigned int g_data_00ab4338;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054207c;
+extern void GuardedSeq_00471670(void);
+extern void ChainListVecAdd_0049d200(void);
+
+/* @addr 0x00412140 (316b boot) - bundled pair: descend-chain getter + countdown state-installer.
+ *   sub-1 (~40b @ 0x412140): chases entry chain - g_data_0054205c -> [+0x18]
+ *   -> [+0x28] -> [+0x48]; saves intermediate to g_data_00542044/_42048, final to
+ *   g_data_0054206c. ret.
+ *   sub-2 (~228b @ 0x412170): countdown state - if [esi+0x84] != 0 and
+ *   --g_data_0054207c > 0: ret. Else if [esi+0x84]==0: do full init (set bit
+ *   0x40 of various fields), call sub-1, subtract 0x7ae and set bit 8 in
+ *   another field, call ChainListVecAdd_0049d200; on success, mark
+ *   self-install at 0x00412170 and set g_data_00541e6c=1.
+ */
+__declspec(naked) void ChainGetterStateInstaller_00412140(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0x48]
+        mov     dword ptr [g_data_0054206c], ecx
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+    L_cgsi_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        jz      short L_cgsi_init
+        mov     eax, dword ptr [g_data_0054207c]
+        dec     eax
+        test    eax, eax
+        mov     dword ptr [g_data_0054207c], eax
+        jg      short L_cgsi_tailCall
+        call    GuardedSeq_00471670
+        pop     esi
+        ret
+    L_cgsi_init:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      al, 0x40
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x5999
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x48], eax
+        mov     dword ptr [g_data_0054207c], 0x0a
+    L_cgsi_tailCall:
+        call    ChainGetterStateInstaller_00412140
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542048]
+        sub     eax, 0x7ae
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [ecx*4]
+        or      al, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        call    ChainListVecAdd_0049d200
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_cgsi_endPop
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_cgsi_sub2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_cgsi_endPop:
+        pop     esi
+        ret
+    }
+}
 
 /* @addr 0x004b7020 (312b game.menu) - menu input poll - bits-of-state aggregator.
  *   Polls 8 VK keys (0x26 up / 0x28 down / 0x0d enter / 0x20 space / 0x25 left /
