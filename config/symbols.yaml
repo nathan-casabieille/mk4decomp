@@ -623,10 +623,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00407ae0
-    name: func_00407ae0
+    name: BootChainStreamWalkExtract_00407ae0
     size: 287
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00407c00
     name: ExtractBitsToVec3_00407c00
     size: 88

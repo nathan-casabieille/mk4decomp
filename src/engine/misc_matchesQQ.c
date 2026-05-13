@@ -58311,6 +58311,102 @@ __declspec(naked) void BootChainTreeRecurseWalk_00405b80(void)
 }
 
 /*
+ * BootChainStreamWalkExtract_00407ae0 — 287b boot mstack-push1 + chain stream walker.
+ *   Push g_x_00542050 to mstack. g_data_0054204c--; esi = chain[g_x_00542044*4] + g_x_00542044+1;
+ *   g_x_00542044++. If esi <= ecx: pop+ret.
+ *   Loop: eax = chain[ecx*4]; g_x_0054206c=eax. If eax < 0: skip pos branch.
+ *     Else: g_state_00542098 = (eax == 0); if != 0: skip to loop test.
+ *       eax = chain[eax*4 + 0x20]; g_x_0054206c=eax; g_data_0054204c += 0xf; eax &= 0x100;
+ *       g_state_00542094 = eax; if 0: skip to loop test.
+ *       g_x_0054206c = g_x_00542048[0]; call ExtractBitsToVec3; if paused: ret-noPop.
+ *     edx = g_x_00542048+1; eax = (esi > ecx); g_x_00542094 = eax; if 0: pop+ret;
+ *       g_x_00542050--; if sign: pop+ret; else loop back.
+ *   Loop test: if esi > ecx: loop.
+ *   Pop1 mstack into g_x_00542050; pop esi; ret.
+ */
+__declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542050]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_x_00542044]
+        dec     edx
+        mov     dword ptr [g_x_00542050], edx
+        mov     esi, dword ptr [ecx*4]
+        inc     ecx
+        add     esi, ecx
+        mov     dword ptr [g_x_00542044], ecx
+        cmp     esi, ecx
+        mov     dword ptr [g_x_00542074], esi
+        jle     L_7ae_pop1
+    L_7ae_loop:
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        mov     dword ptr [g_x_00542044], ecx
+        jl      short L_7ae_neg
+        xor     edx, edx
+        mov     dword ptr [g_data_0054204c], eax
+        test    eax, eax
+        sete    dl
+        test    edx, edx
+        mov     dword ptr [g_state_00542098], edx
+        jne     L_7ae_loopTest
+        mov     eax, dword ptr [eax*4 + 0x20]
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_x_0054206c], eax
+        add     edx, 0xf
+        and     eax, 0x100
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_00542094], eax
+        je      short L_7ae_loopTest
+        mov     eax, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [eax*4]
+        mov     dword ptr [g_x_0054206c], ecx
+        call    ExtractBitsToVec3_00407c00
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        jne     short L_7ae_justRet
+        mov     esi, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_x_00542044]
+    L_7ae_neg:
+        mov     edx, dword ptr [g_x_00542048]
+        xor     eax, eax
+        cmp     esi, ecx
+        setg    al
+        inc     edx
+        mov     dword ptr [g_state_00542094], eax
+        test    eax, eax
+        mov     dword ptr [g_x_00542048], edx
+        je      short L_7ae_pop1
+        mov     eax, dword ptr [g_x_00542050]
+        dec     eax
+        mov     dword ptr [g_x_00542050], eax
+        js      short L_7ae_pop1
+        jmp     L_7ae_loop
+    L_7ae_loopTest:
+        cmp     esi, ecx
+        jg      L_7ae_loop
+    L_7ae_pop1:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_x_00542050], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_7ae_justRet:
+        pop     esi
+        ret
+    }
+}
+
+/*
  * Audio11SlotInitLoop_004a5540 — 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
  *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
