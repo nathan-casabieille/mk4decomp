@@ -11339,10 +11339,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004952e0
-    name: func_004952e0
+    name: TwoEntryPhasePair_004952e0
     size: 410
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00495480
     name: InstallSelfThreeStateSiblingPair_00495480
     size: 271

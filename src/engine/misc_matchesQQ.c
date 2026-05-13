@@ -77039,3 +77039,115 @@ __declspec(naked) void RandPushTrigPair_0043f120(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054207c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void StateDispatchTable_00490fc0(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+
+__declspec(naked) void TwoEntryPhasePair_004952e0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_tepp_install1
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_tepp_install1:
+        mov     dword ptr [eax + 8], offset TwoEntryPhasePair_004952e0
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset TwoEntryPhasePair_004952e0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+    L_tepp_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        je      L_tepp_phase0
+        dec     eax
+        je      short L_tepp_phase1
+        call    CjInstallSelfRouter_00470480
+        pop     edi
+        pop     esi
+        ret
+    L_tepp_phase1:
+        call    StateDispatchTable_00490fc0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_tepp_ret2
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_00542084], 0x1999
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_data_0054207c], edi
+        mov     dword ptr [esi + 8], offset L_tepp_entry2
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset L_tepp_entry2
+        mov     dword ptr [edx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x2000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    EsiInstallClampAddCall_0048fe40
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_tepp_phase0:
+        mov     dword ptr [esi + 8], offset L_tepp_entry2
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset L_tepp_entry2
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_data_00541e6c], 1
+    L_tepp_ret2:
+        pop     edi
+        pop     esi
+        ret
+    }
+}
