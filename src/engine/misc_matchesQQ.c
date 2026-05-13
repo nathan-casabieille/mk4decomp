@@ -72405,3 +72405,130 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         ret
     }
 }
+
+extern unsigned int g_data_005420a0;
+extern unsigned int g_data_004d513c;
+extern void func_004bae90(void);
+
+/* @addr 0x004069b0 (365b boot) - 2-entry packed mstack-push-2 + LL walk.
+ *   Entry 1 (offset 0, 313b): pushes g_data_00542070 / g_data_00542048
+ *     onto mstack. Sets g_data_00542048 = &g_data_005420a0>>2.
+ *     Reads cursor at g_data_00542048, opens a loop:
+ *       - load eax = [cursor*4], increment cursor
+ *       - sets bit 2 of g_data_0054208c, write eax → g_data_00542044
+ *       - if eax == 0: break loop (skip body, go to pop)
+ *       - clear bit 2 again
+ *       - load eax = [eax*4] (deref one more level)
+ *       - g_data_0054206c = g_data_004d513c
+ *       - call func_004bae90
+ *       - on no-error: set bit 2 on, restore 0x54206c, re-test eax for 0;
+ *         if zero, re-enter the loop; else clear bit 2 again, also re-enter.
+ *     Always: pops the 2 mstack entries back into 0x542070/0x542048,
+ *     sets bit 2 again, and toggles it off conditionally on whether the
+ *     test eax flag is set (do-while-0 idiom).
+ *   7b NOP align pad.
+ *   Entry 2 (offset 0x140, 45b): clears bit 0 of g_data_0054208c via
+ *     and 0xfe, then compares g_data_00542070 with [g_data_00542044*4+0x30];
+ *     if equal, OR's bit 0 back in.
+ */
+__declspec(naked) void MStackPush2LLWalkCompare_004069b0(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, 4
+        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     ecx, offset g_data_005420a0
+        mov     dword ptr [g_state_004d57ac], eax
+        shr     ecx, 2
+        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_00542048], ecx
+        jmp     short L_mpw_loopHead
+    L_mpw_loopReload:
+        mov     ecx, dword ptr [g_data_00542048]
+    L_mpw_loopHead:
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [g_data_0054208c]
+        or      ecx, esi
+        mov     dword ptr [g_data_00542044], eax
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      short L_mpw_pop2
+        xor     ecx, esi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      short L_mpw_pop2
+        mov     eax, dword ptr [eax*4]
+        mov     ecx, dword ptr [g_data_004d513c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mpw_done
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     edx, dword ptr [g_data_00542070]
+        or      eax, esi
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_0054208c], eax
+        mov     eax, dword ptr [g_data_00542044]
+        test    eax, eax
+        je      L_mpw_loopReload
+        mov     ecx, dword ptr [g_data_0054208c]
+        xor     ecx, esi
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], ecx
+        je      L_mpw_loopReload
+    L_mpw_pop2:
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [ecx*4 + g_table_004d57b0]
+        dec     ecx
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     edx, dword ptr [ecx*4 + g_table_004d57b0]
+        dec     ecx
+        mov     dword ptr [g_data_00542070], edx
+        mov     edx, dword ptr [g_data_0054208c]
+        or      edx, esi
+        mov     dword ptr [g_state_004d57ac], ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_mpw_done
+        mov     eax, edx
+        xor     eax, esi
+        mov     dword ptr [g_data_0054208c], eax
+    L_mpw_done:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* entry 2 (offset 0x140) */
+    L_mpw_entry2:
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_data_00542044]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        cmp     eax, dword ptr [ecx*4 + 0x30]
+        jne     short L_mpw_e2End
+        mov     eax, dword ptr [g_data_0054208c]
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_mpw_e2End:
+        ret
+    }
+}

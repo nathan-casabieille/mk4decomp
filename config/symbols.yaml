@@ -506,10 +506,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004069b0
-    name: func_004069b0
+    name: MStackPush2LLWalkCompare_004069b0
     size: 365
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00406b20
     name: ScaledLoadOrSetJmp_00406b20
     size: 34
