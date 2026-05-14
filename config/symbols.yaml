@@ -14643,7 +14643,8 @@ functions:
     name: DrawMeshBlock
     size: 1070
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bb680
     name: TristripBatchEmit3Cap_004bb680
     size: 680
