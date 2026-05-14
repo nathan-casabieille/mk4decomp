@@ -12128,10 +12128,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049fd50
-    name: func_0049fd50
+    name: AudioCmpCascadeDispatcher_0049fd50
     size: 469
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ff30
     name: AudioMStackPushHandlerPair_0049ff30
     size: 468

@@ -84385,3 +84385,157 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00537ea8;
+extern unsigned int g_data_00537e90;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_00537f88;
+extern unsigned int g_data_004e2864;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542080;
+extern void Cmp3DirtyToggle_0049fa20(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void MStackPush2TableNot_00426230(void);
+extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void func_0049e7e0(void);
+extern void TripleStageRollback_00404a50(void);
+extern void TaggedSceneDispatch_004be690(void);
+extern void func_004a09c0(void);
+extern void BitSetByIndex_004a07a0(void);
+extern void AudioMStackPushHandlerPair_0049ff30(void);
+
+__declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
+{
+    __asm
+    {
+        push    ebx
+        call    Cmp3DirtyToggle_0049fa20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_acsd_ret
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        je      L_acsd_ret
+        mov     eax, dword ptr [g_data_00537e88]
+        cmp     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        jne     L_acsd_ret
+        mov     eax, dword ptr [g_data_00537ea8]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     L_acsd_ret
+        mov     eax, dword ptr [g_data_00537e90]
+        mov     dword ptr [g_data_0054207c], ebx
+        cmp     eax, 0xf
+        mov     dword ptr [g_data_00542078], eax
+        ja      L_acsd_cmp10
+        push    0x253
+        call    DualPushSetCallDualPop_00404b10
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 4
+        test    al, bl
+        jne     short L_acsd_skipPush
+        call    MStackPush2TableNot_00426230
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_acsd_ret
+        mov     eax, dword ptr [g_data_00542074]
+        and     eax, 0x20
+        mov     dword ptr [g_data_00542094], eax
+        jne     short L_acsd_callsub
+    L_acsd_skipPush:
+        push    0x16
+        push    0x4a0370
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_00537ea8], ebx
+        call    SetWalkCurCallPauseDirty_00404c70
+        add     esp, 8
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_acsd_ret
+        push    0x230
+        call    TripleStageRollback_00404a50
+        mov     cx, word ptr [g_data_004e2864]
+        add     esp, 4
+        push    ecx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        pop     ebx
+        ret
+    L_acsd_callsub:
+        call    func_004a09c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_acsd_ret
+        test    byte ptr [g_data_0054208c], bl
+        je      L_acsd_ret
+        push    0x238
+        call    DualPushSetCallDualPop_00404b10
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 4
+        test    al, bl
+        je      short L_acsd_skipCmp
+        mov     edx, dword ptr [g_data_00542078]
+        mov     eax, dword ptr [g_data_00537f88]
+        cmp     edx, eax
+        je      L_acsd_ret
+    L_acsd_skipCmp:
+        mov     dword ptr [g_data_0054206c], ebx
+        call    BitSetByIndex_004a07a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_acsd_ret
+        mov     eax, dword ptr [g_data_00542078]
+        push    0x239
+        push    0x4a0b00
+        mov     dword ptr [g_data_00542080], eax
+        call    SetWalkCurCallPauseDirty_00404c70
+        add     esp, 8
+        pop     ebx
+        ret
+    L_acsd_cmp10:
+        cmp     eax, 0x10
+        jne     short L_acsd_cmp11
+        push    0x23e
+        push    0x4a0dc0
+        mov     dword ptr [g_data_00542054], ebx
+        call    SetWalkCurCallPauseDirty_00404c70
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_00537ea8], ebx
+        pop     ebx
+        ret
+    L_acsd_cmp11:
+        cmp     eax, 0x11
+        jne     short L_acsd_cmp12
+        mov     cx, word ptr [g_data_004e2864]
+        mov     dword ptr [g_data_00542054], ebx
+        push    ecx
+        call    TaggedSceneDispatch_004be690
+        add     esp, 4
+        push    0x243
+        push    0x4a10d0
+        call    SetWalkCurCallPauseDirty_00404c70
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_00537ea8], ebx
+        pop     ebx
+        ret
+    L_acsd_cmp12:
+        cmp     eax, 0x12
+        jne     short L_acsd_ret
+        call    AudioMStackPushHandlerPair_0049ff30
+    L_acsd_ret:
+        pop     ebx
+        ret
+    }
+}
