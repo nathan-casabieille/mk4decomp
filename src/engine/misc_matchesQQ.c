@@ -79165,3 +79165,121 @@ __declspec(naked) void TwoPhasePackInstall_0047eff0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_0053a2d0;
+extern unsigned int g_data_004ecea0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_00535db0;
+extern unsigned int g_data_004eceb0;
+extern void func_00478a90(void);
+
+__declspec(naked) void MStackBracket6_DualGate_004788e0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054208c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542078]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_0053a6dc]
+        test    eax, eax
+        je      short L_mb6dg_skip1
+        cmp     eax, 0xccc
+        jge     short L_mb6dg_skip1
+        mov     eax, dword ptr [g_data_0053a2d0]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_mb6dg_skip1
+        mov     eax, offset g_data_004ecea0
+        shr     eax, 2
+        mov     dword ptr [g_data_0054205c], eax
+        call    func_00478a90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb6dg_abort
+        mov     dword ptr [g_data_0053a2d0], 1
+    L_mb6dg_skip1:
+        mov     eax, dword ptr [g_data_00537f2c]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_mb6dg_pop
+        cmp     eax, 0xccc
+        jge     short L_mb6dg_pop
+        mov     eax, dword ptr [g_data_00535db0]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_mb6dg_pop
+        mov     ecx, offset g_data_004eceb0
+        shr     ecx, 2
+        mov     dword ptr [g_data_0054205c], ecx
+        call    func_00478a90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb6dg_abort
+        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_data_00535db0], 1
+    L_mb6dg_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542078], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mb6dg_abort:
+        ret
+    }
+}
