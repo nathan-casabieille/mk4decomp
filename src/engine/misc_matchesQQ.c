@@ -94934,3 +94934,189 @@ __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
         ret
     }
 }
+
+/* ============================================================
+ * DirectXObjInitChain_004af480 — 453b engine.install.
+ *
+ * COM-style DirectX object init chain. Issues 5 vtable calls
+ * across 4 objects (ebx, edx, esi, eax) with vtbl offsets
+ * +0x14/+0x18/+0x20/+0x34/+0x44 and a +0x0c/+0x14. Allocates a
+ * 0x80-byte stack frame for two structs at [esp+0x10] (size 0x2C,
+ * with embedded fields like 0x280/0x1E0/0x44200000/0x43F00000/
+ * 0x3F800000) and [esp+0x3C] (size 0x50, then memset-cleared).
+ * Multiple null-check skip paths; returns 1 on full success, 0
+ * on failure.
+ *
+ *   - if g_data_0058c7bc != 0: call obj1->vtbl[0x18]
+ *     (g_data_0058c7c4 outptr, 0); g_data_0058c7dc := result.
+ *   - if g_data_0058c7c4 && g_data_0058c7c0:
+ *     call obj2->vtbl[0x18] (obj1); g_data_0058c7dc := result.
+ *   - Build 0x2C-byte struct in stack at +0x10 (memset 11 dwords;
+ *     paint with constants), then call obj3->vtbl[0x44]
+ *     (struct, obj1); g_data_0058c7dc := result.
+ *   - If obj3 && obj2: call obj2->vtbl[0x34] (obj3);
+ *     g_data_0058c7dc := result.
+ *   - If obj1 != 0: call obj1->vtbl[0x14] (g_data_0058c7d4
+ *     outptr, 0); g_data_0058c7dc := result.
+ *   - Build 0x50-byte struct at +0x3C (memset 20 dwords; size
+ *     header 0x50); if obj4: call obj4->vtbl[0x0C] (struct, obj4);
+ *     g_data_0058c7dc := result.
+ *   - If obj2 && obj4: call obj4->vtbl[0x14] (obj4, obj2, &[esp+0xc])
+ *     — produces a sub-obj into [esp+0xc]; g_data_0058c7dc := result.
+ *   - If sub-obj && obj3: call obj3->vtbl[0x20] (sub-obj);
+ *     g_data_0058c7dc := result.
+ *   - Final success: obj3 && obj4 && sub-obj && obj2 all non-zero
+ *     → return 1; else return 0.
+ * ============================================================ */
+
+extern unsigned int g_data_0058c7bc;
+extern unsigned int g_data_0058c7c4;
+extern unsigned int g_data_0058c7d4;
+
+__declspec(naked) void DirectXObjInitChain_004af480(void)
+{
+    __asm {
+        sub     esp, 0x80
+        push    ebx
+        mov     ebx, dword ptr [g_data_0058c7bc]
+        push    esi
+        push    edi
+        test    ebx, ebx
+        mov     dword ptr [esp + 0x0C], 0
+        je      L_dxic_after_obj1
+        mov     eax, dword ptr [ebx]
+        push    0
+        push    offset g_data_0058c7c4
+        push    ebx
+        call    dword ptr [eax + 0x18]
+        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dxic_after_obj1:
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        test    edx, edx
+        je      L_dxic_after_obj2
+        test    esi, esi
+        je      L_dxic_after_obj2
+        mov     ecx, dword ptr [esi]
+        push    edx
+        push    esi
+        call    dword ptr [ecx + 0x18]
+        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dxic_after_obj2:
+        mov     ecx, 0x0B
+        xor     eax, eax
+        lea     edi, [esp + 0x10]
+        rep     stosd
+        test    edx, edx
+        mov     dword ptr [esp + 0x10], 0x2C
+        mov     dword ptr [esp + 0x1C], 0x280
+        mov     dword ptr [esp + 0x20], 0x01E0
+        mov     dword ptr [esp + 0x2C], 0x44200000
+        mov     dword ptr [esp + 0x30], 0x43F00000
+        mov     dword ptr [esp + 0x34], eax
+        mov     dword ptr [esp + 0x38], 0x3F800000
+        je      L_dxic_after_obj3
+        mov     eax, dword ptr [edx]
+        lea     ecx, [esp + 0x10]
+        push    ecx
+        push    edx
+        call    dword ptr [eax + 0x44]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     dword ptr [g_data_0058c7dc], eax
+        test    edx, edx
+        je      L_dxic_after_obj3
+        test    esi, esi
+        je      L_dxic_after_obj3
+        mov     eax, dword ptr [esi]
+        push    edx
+        push    esi
+        call    dword ptr [eax + 0x34]
+        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dxic_after_obj3:
+        test    ebx, ebx
+        je      L_dxic_after_obj4
+        mov     ecx, dword ptr [ebx]
+        push    0
+        push    offset g_data_0058c7d4
+        push    ebx
+        call    dword ptr [ecx + 0x14]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     dword ptr [g_data_0058c7dc], eax
+    L_dxic_after_obj4:
+        mov     ecx, 0x14
+        xor     eax, eax
+        lea     edi, [esp + 0x3C]
+        rep     stosd
+        mov     eax, dword ptr [g_data_0058c7d4]
+        mov     dword ptr [esp + 0x3C], 0x50
+        test    eax, eax
+        je      L_dxic_after_obj5
+        mov     edx, dword ptr [eax]
+        lea     ecx, [esp + 0x3C]
+        push    ecx
+        push    eax
+        call    dword ptr [edx + 0x0C]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     dword ptr [g_data_0058c7dc], eax
+        mov     eax, dword ptr [g_data_0058c7d4]
+    L_dxic_after_obj5:
+        test    esi, esi
+        je      L_dxic_after_obj6
+        test    eax, eax
+        je      L_dxic_after_obj6
+        mov     edx, dword ptr [eax]
+        lea     ecx, [esp + 0x0C]
+        push    ecx
+        push    esi
+        push    eax
+        call    dword ptr [edx + 0x14]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     dword ptr [g_data_0058c7dc], eax
+        mov     eax, dword ptr [g_data_0058c7d4]
+    L_dxic_after_obj6:
+        mov     ecx, dword ptr [esp + 0x0C]
+        test    ecx, ecx
+        je      L_dxic_after_obj7
+        test    edx, edx
+        je      L_dxic_fail
+        mov     eax, dword ptr [edx]
+        push    ecx
+        push    edx
+        call    dword ptr [eax + 0x20]
+        mov     edx, dword ptr [g_data_0058c7c4]
+        mov     dword ptr [g_data_0058c7dc], eax
+        mov     eax, dword ptr [g_data_0058c7d4]
+    L_dxic_after_obj7:
+        test    edx, edx
+        je      L_dxic_fail
+        test    eax, eax
+        je      L_dxic_fail
+        mov     eax, dword ptr [esp + 0x0C]
+        test    eax, eax
+        je      L_dxic_fail
+        mov     eax, 1
+        pop     edi
+        pop     esi
+        pop     ebx
+        add     esp, 0x80
+        ret
+    L_dxic_fail:
+        pop     edi
+        pop     esi
+        xor     eax, eax
+        pop     ebx
+        add     esp, 0x80
+        ret
+    }
+}
