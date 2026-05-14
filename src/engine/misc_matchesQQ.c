@@ -109107,3 +109107,132 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
     }
 }
 
+/* ============================================================
+ * VoicePoolTickDispatch_004a4c10 — 264b audio.
+ *
+ * Per-frame voice-pool processor (sister of VoiceMixerTick_
+ * 004a27c0). Iterates the voice-slot array at g_data_004f3844
+ * ..391c (36-byte stride). Per slot: calls func_00406790 to
+ * advance state, then dispatches via 16-byte jump table on
+ * (counter-1) ∈ [0..3]:
+ *   - case 0: parameter source at 0x543734, output 0x4f4374
+ *   - case 1: parameter source at 0x543738, output 0x4f4364
+ *   - case 2: parameter source at 0x54373c, output 0x4f4350
+ *   - case 3: parameter source at 0x543740, output 0x4f433c
+ * Each case calls func_004c5580(0x543450, OFFSET <out>,
+ * [src*4+0x4f2fc0]). Then per-iter calls func_004a1fa0,
+ * updates voice-slot+0x5c/0x54 fields, and indexes into
+ * g_data_00542070 slot table.
+ *
+ * Quirk: 1-byte nop (0x90) before 16-byte jump table at end.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_00406790(void);
+extern unsigned int g_data_004f2fc0;
+extern unsigned int g_data_004f3844;
+extern unsigned int g_data_004f391c;
+extern unsigned int g_data_004f433c;
+extern unsigned int g_data_004f4350;
+extern unsigned int g_data_004f4364;
+extern unsigned int g_data_004f4374;
+extern unsigned int g_data_00543450;
+extern unsigned int g_data_00543734;
+extern unsigned int g_data_00543738;
+extern unsigned int g_data_0054373c;
+extern unsigned int g_data_00543740;
+
+__declspec(naked) void VoicePoolTickDispatch_004a4c10(void)
+{
+    __asm {
+        push     esi
+        push     edi
+        xor      edi, edi
+        mov      esi, OFFSET g_data_004f3844
+    L_4c19:
+        movsx    eax, byte ptr [esi - 4]
+        mov      ecx, dword ptr [g_data_00542060]
+        add      ecx, eax
+        mov      edx, dword ptr [ecx*4]
+        mov      dword ptr [g_data_00542044], edx
+        call     func_00406790
+        lea      eax, [edi - 1]
+        cmp      eax, 3
+        ja       L_4ca3
+        jmp      dword ptr [eax*4 + L_a4_jmptbl]
+    L_4c46:
+        mov      eax, dword ptr [g_data_00543734]
+        mov      ecx, dword ptr [eax*4 + g_data_004f2fc0]
+        push     ecx
+        push     OFFSET g_data_004f4374
+        jmp      L_4c96
+    L_4c5a:
+        mov      edx, dword ptr [g_data_00543738]
+        mov      eax, dword ptr [edx*4 + g_data_004f2fc0]
+        push     eax
+        push     OFFSET g_data_004f4364
+        jmp      L_4c96
+    L_4c6f:
+        mov      ecx, dword ptr [g_data_0054373c]
+        mov      edx, dword ptr [ecx*4 + g_data_004f2fc0]
+        push     edx
+        push     OFFSET g_data_004f4350
+        jmp      L_4c96
+    L_4c84:
+        mov      eax, dword ptr [g_data_00543740]
+        mov      ecx, dword ptr [eax*4 + g_data_004f2fc0]
+        push     ecx
+        push     OFFSET g_data_004f433c
+    L_4c96:
+        push     OFFSET g_data_00543450
+        call     func_004c5580
+        add      esp, 0xc
+    L_4ca3:
+        mov      eax, dword ptr [esi + 8]
+        mov      ecx, dword ptr [esi]
+        push     eax
+        push     ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_004a1fa0
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [esi + 0xc]
+        add      esp, 8
+        add      esi, 0x24
+        mov      dword ptr [eax*4 + 0x5c], edx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [eax*4 + 0x54]
+        mov      dword ptr [esi - 0x20], ecx
+        movsx    ecx, byte ptr [esi - 0x28]
+        mov      dword ptr [g_data_00542070], ecx
+        add      ecx, edx
+        inc      edi
+        cmp      esi, OFFSET g_data_004f391c
+        mov      dword ptr [ecx*4], eax
+        jb       L_4c19
+        pop      edi
+        pop      esi
+        ret
+        nop
+    L_a4_jmptbl:
+        _emit 0x46
+        _emit 0x4c
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x5a
+        _emit 0x4c
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x6f
+        _emit 0x4c
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x84
+        _emit 0x4c
+        _emit 0x4a
+        _emit 0x00
+    }
+}
+
