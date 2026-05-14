@@ -16021,10 +16021,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004ca080
-    name: func_004ca080
+    name: FpExceptionFilter_004ca080
     size: 464
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca250
     name: TwinEntryFpHelper_004ca250
     size: 96

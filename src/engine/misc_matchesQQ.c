@@ -113665,3 +113665,200 @@ __declspec(naked) void SehUnwindCluster_004c6ae0(void)
         ret      4
     }
 }
+
+/* ============================================================
+ * FpExceptionFilter_004ca080 — 464b crt (packed: dual-entry +
+ * 10 packed FPU exception sub-handlers).
+ *
+ * MSVC 5 floating-point exception filter cluster. Two entries
+ * (single-operand at 0x4ca080 / dual-operand at 0x4ca0bb) load
+ * the rounding-precision word from [ebp-0xa4], compute the
+ * intermediate via `xlatb` over a class table at OFFSET
+ * g_data_0052248c, then dispatch via `jmp [edx + eax + 0x10]`
+ * into one of the per-class FPU recovery sub-helpers below:
+ *
+ *   - 0x4ca174: tail-call L_a239, fxch, fstp st(0), ret.
+ *   - 0x4ca17a: shared "fstp + ret" tail.
+ *   - 0x4ca180: tail-call L_a239, jmp L_a17a.
+ *   - 0x4ca189: fstp/fstp/fldz/ret (zero result).
+ *   - 0x4ca18e: fstp/fstp/fld1/ret (one result).
+ *   - 0x4ca194: tbyte spill + qNaN-bit-test + +∞ or +0.0
+ *     return.
+ *   - 0x4ca1b8: dual-operand variant of the previous.
+ *   - 0x4ca1e6: dual-operand with double tbyte spill +
+ *     conditional code 1/7.
+ *   - 0x4ca226: load qword [OFFSET g_data_00522470] then
+ *     conditional flag-set.
+ *   - 0x4ca239: shared "set code = 1, or cl, cl, ret" tail.
+ *   - 0x4ca244: cl test → fchs sign-flip → ret.
+ *
+ * Tail filled with 6 int3 (0xcc) bytes to size 464.
+ *
+ * Linear (per sub-helper), no mstack.
+ * ============================================================ */
+
+extern unsigned int g_data_00522470;
+extern unsigned int g_data_00522484;
+extern unsigned int g_data_0052248c;
+
+__declspec(naked) void FpExceptionFilter_004ca080(void)
+{
+    __asm {
+    /* Entry A: single-operand */
+        cmp      byte ptr [edx + 0xe], 5
+        jne      short L_a097
+        mov      bx, word ptr [ebp - 0xa4]
+        or       bh, 2
+        and      bh, 0xfe
+        mov      bl, 0x3f
+        jmp      short L_a09b
+    L_a097:
+        mov      bx, 0x133f
+    L_a09b:
+        mov      word ptr [ebp - 0xa2], bx
+        fldcw    word ptr [ebp - 0xa2]
+        mov      ebx, OFFSET g_data_0052248c
+        fxam
+        mov      dword ptr [ebp - 0x94], edx
+        wait
+        fnstsw   word ptr [ebp - 0xa0]
+        mov      byte ptr [ebp - 0x90], 0
+        wait
+        mov      cl, byte ptr [ebp - 0x9f]
+        shl      cl, 1
+        sar      cl, 1
+        rol      cl, 1
+        mov      al, cl
+        and      al, 0xf
+        xlatb
+        movsx    eax, al
+        and      ecx, 0x404
+        mov      ebx, edx
+        add      ebx, eax
+        add      ebx, 0x10
+        jmp      dword ptr [ebx]
+    /* Entry B: dual-operand */
+        cmp      byte ptr [edx + 0xe], 5
+        jne      short L_a0fe
+        mov      bx, word ptr [ebp - 0xa4]
+        or       bh, 2
+        and      bh, 0xfe
+        mov      bl, 0x3f
+        jmp      short L_a102
+    L_a0fe:
+        mov      bx, 0x133f
+    L_a102:
+        mov      word ptr [ebp - 0xa2], bx
+        fldcw    word ptr [ebp - 0xa2]
+        mov      ebx, OFFSET g_data_0052248c
+        fxam
+        mov      dword ptr [ebp - 0x94], edx
+        wait
+        fnstsw   word ptr [ebp - 0xa0]
+        mov      byte ptr [ebp - 0x90], 0
+        fxch     st(1)
+        mov      cl, byte ptr [ebp - 0x9f]
+        fxam
+        wait
+        fnstsw   word ptr [ebp - 0xa0]
+        fxch     st(1)
+        mov      ch, byte ptr [ebp - 0x9f]
+        shl      ch, 1
+        sar      ch, 1
+        rol      ch, 1
+        mov      al, ch
+        and      al, 0xf
+        xlatb
+        mov      ah, al
+        shl      cl, 1
+        sar      cl, 1
+        rol      cl, 1
+        mov      al, cl
+        and      al, 0xf
+        xlatb
+        shl      ah, 1
+        shl      ah, 1
+        or       al, ah
+        movsx    eax, al
+        and      ecx, 0x404
+        mov      ebx, edx
+        add      ebx, eax
+        add      ebx, 0x10
+        jmp      dword ptr [ebx]
+    /* Sub-handlers (each its own dispatch target). */
+        call     L_a239
+        fxch     st(1)
+    L_a17a:
+        fstp     st(0)
+        ret
+        call     L_a239
+        jmp      short L_a17a
+        fstp     st(0)
+        fstp     st(0)
+        fldz
+        ret
+        fstp     st(0)
+        fstp     st(0)
+        fld1
+        ret
+        fstp     tbyte ptr [ebp - 0x9e]
+        fld      tbyte ptr [ebp - 0x9e]
+        test     byte ptr [ebp - 0x97], 0x40
+        je       short L_a1af
+        mov      byte ptr [ebp - 0x90], 7
+        ret
+    L_a1af:
+        mov      byte ptr [ebp - 0x90], 1
+        fadd     qword ptr [g_data_00522484]
+        ret
+        fxch     st(1)
+        fstp     tbyte ptr [ebp - 0x9e]
+        fld      tbyte ptr [ebp - 0x9e]
+        test     byte ptr [ebp - 0x97], 0x40
+        je       short L_a1dd
+        mov      byte ptr [ebp - 0x90], 7
+        jmp      short L_a1e4
+    L_a1dd:
+        mov      byte ptr [ebp - 0x90], 1
+    L_a1e4:
+        faddp    st(1), st
+        ret
+        fstp     tbyte ptr [ebp - 0x9e]
+        fld      tbyte ptr [ebp - 0x9e]
+        test     byte ptr [ebp - 0x97], 0x40
+        je       short L_a21c
+        fxch     st(1)
+        fstp     tbyte ptr [ebp - 0x9e]
+        fld      tbyte ptr [ebp - 0x9e]
+        test     byte ptr [ebp - 0x97], 0x40
+        je       short L_a21c
+        mov      byte ptr [ebp - 0x90], 7
+        jmp      short L_a223
+    L_a21c:
+        mov      byte ptr [ebp - 0x90], 1
+    L_a223:
+        faddp    st(1), st
+        ret
+        fstp     st(0)
+        fstp     st(0)
+        fld      tbyte ptr [g_data_00522470]
+        cmp      byte ptr [ebp - 0x90], 0
+        jg       short L_a240
+    L_a239:
+        mov      byte ptr [ebp - 0x90], 1
+    L_a240:
+        or       cl, cl
+        ret
+        or       cl, cl
+        je       short L_a249
+        fchs
+    L_a249:
+        ret
+        int      3
+        int      3
+        int      3
+        int      3
+        int      3
+        int      3
+    }
+}
