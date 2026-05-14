@@ -16112,10 +16112,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004cc070
-    name: func_004cc070
+    name: RaiseAbortLocalized_004cc070
     size: 470
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cc250
     name: StreamAllocInit_004cc250
     size: 93

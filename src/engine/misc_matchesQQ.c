@@ -113862,3 +113862,226 @@ __declspec(naked) void FpExceptionFilter_004ca080(void)
         int      3
     }
 }
+
+/* ============================================================
+ * RaiseAbortLocalized_004cc070 — 470b crt.
+ *
+ * MSVC 5 `_NMSG_WRITE`-style fatal-message dispatcher used by
+ * abort(), _ASSERT, _CrtCheckMemory, and the unhandled-exception
+ * filter. Steps:
+ *   1. Walk the error-code table at g_data_00522908 (8-byte
+ *      stride) looking for matching arg1 (error code). If found,
+ *      ebp = index; else jump to the silent-exit at L_c23b.
+ *   2. Inspect g_data_00f9f84c (NMSG dispatch flag):
+ *        - == 0: skip console branch only if g_data_00520064 != 1.
+ *        - == 1: take the console branch.
+ *        - else: take the dialog branch.
+ *   3. Console branch (L_c0c0..L_c1fd):
+ *      - GetModuleFileNameA([0x4d20a0]) into [esp+0xb4]; on
+ *        failure copy fallback string at OFFSET g_const_004d2f08.
+ *      - Trim leading path components if the basename exceeds
+ *        0x3c bytes via func_004cdc20.
+ *      - Build the dialog format from three concatenated chunks
+ *        at OFFSET g_const_004d2ee8 / 004d2ee4 / 004d2ebc plus
+ *        the per-code message string at [ebp*8+g_data_0052290c].
+ *      - Call func_004ce150(format, flags=0x12010) and return.
+ *   4. Dialog branch (L_c1fd..L_c218): get stderr from
+ *      g_data_00fa0de0[0]+0x48, fall back to func_004d2148(-0xc),
+ *      then call `WriteFile([0x4d2108], stderr, msg, len, NULL)`.
+ *
+ * Frame: sub esp, 0x1a8 + push ebx/ebp/esi/edi. Returns: void.
+ *
+ * Uses Windows API via IAT: g_iat_004d20a0 (GetModuleFileNameA),
+ * g_iat_004d2108 (WriteFile), g_iat_004d2148 (_get_osfhandle).
+ * ============================================================ */
+
+extern void func_004cdc20(void);
+extern void func_004ce150(void);
+extern unsigned int g_data_00520064;
+extern unsigned int g_data_00522908;
+extern unsigned int g_data_0052290c;
+extern unsigned int g_data_00f9f84c;
+extern unsigned int g_const_004d2ebc;
+extern unsigned int g_const_004d2ee4;
+extern unsigned int g_const_004d2ee8;
+extern unsigned int g_const_004d2f04;
+extern unsigned int g_const_004d2f08;
+extern void *g_iat_004d20a0;
+extern void *g_iat_004d2108;
+extern void *g_iat_004d2148;
+
+__declspec(naked) void RaiseAbortLocalized_004cc070(void)
+{
+    __asm {
+        mov      ecx, dword ptr [esp + 4]
+        sub      esp, 0x1a8
+        mov      eax, OFFSET g_data_00522908
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        xor      ebp, ebp
+    L_c085:
+        cmp      ecx, dword ptr [eax]
+        je       short L_c094
+        add      eax, 8
+        inc      ebp
+        cmp      eax, OFFSET g_data_00522998
+        jb       short L_c085
+    L_c094:
+        cmp      ecx, dword ptr [ebp*8 + g_data_00522908]
+        jne      L_c23b
+        mov      eax, dword ptr [g_data_00f9f84c]
+        cmp      eax, 1
+        je       L_c1fd
+        test     eax, eax
+        jne      short L_c0c0
+        cmp      dword ptr [g_data_00520064], 1
+        je       L_c1fd
+    L_c0c0:
+        cmp      ecx, 0xfc
+        je       L_c23b
+        lea      eax, [esp + 0xb4]
+        push     0x104
+        push     eax
+        push     0
+        call     dword ptr [g_iat_004d20a0]
+        test     eax, eax
+        jne      short L_c0fb
+        mov      ecx, 5
+        mov      esi, OFFSET g_const_004d2f08
+        lea      edi, [esp + 0xb4]
+        rep movsd
+        movsw
+        movsb
+    L_c0fb:
+        lea      edi, [esp + 0xb4]
+        or       ecx, 0xffffffff
+        xor      eax, eax
+        lea      ebx, [esp + 0xb4]
+        repne scasb
+        not      ecx
+        cmp      ecx, 0x3c
+        jbe      short L_c144
+        lea      edi, [esp + 0xb4]
+        or       ecx, 0xffffffff
+        repne scasb
+        not      ecx
+        dec      ecx
+        push     3
+        mov      ebx, ecx
+        lea      ecx, [esp + 0xb8]
+        sub      ecx, 0x3b
+        push     OFFSET g_const_004d2f04
+        add      ebx, ecx
+        push     ebx
+        call     func_004cdc20
+        add      esp, 0xc
+    L_c144:
+        mov      ecx, 6
+        mov      esi, OFFSET g_const_004d2ee8
+        lea      edi, [esp + 0x14]
+        xor      eax, eax
+        rep movsd
+        movsw
+        or       ecx, 0xffffffff
+        mov      edi, ebx
+        repne scasb
+        not      ecx
+        sub      edi, ecx
+        lea      edx, [esp + 0x14]
+        mov      ebx, ecx
+        mov      esi, edi
+        or       ecx, 0xffffffff
+        mov      edi, edx
+        repne scasb
+        mov      ecx, ebx
+        dec      edi
+        shr      ecx, 2
+        rep movsd
+        mov      ecx, ebx
+        lea      edx, [esp + 0x14]
+        and      ecx, 3
+        push     0x12010
+        rep movsb
+        mov      edi, OFFSET g_const_004d2ee4
+        or       ecx, 0xffffffff
+        repne scasb
+        not      ecx
+        sub      edi, ecx
+        push     OFFSET g_const_004d2ebc
+        mov      esi, edi
+        mov      ebx, ecx
+        mov      edi, edx
+        or       ecx, 0xffffffff
+        repne scasb
+        mov      ecx, ebx
+        dec      edi
+        shr      ecx, 2
+        rep movsd
+        mov      ecx, ebx
+        lea      edx, [esp + 0x1c]
+        and      ecx, 3
+        rep movsb
+        mov      edi, dword ptr [ebp*8 + g_data_0052290c]
+        or       ecx, 0xffffffff
+        repne scasb
+        not      ecx
+        sub      edi, ecx
+        mov      esi, edi
+        mov      ebx, ecx
+        mov      edi, edx
+        or       ecx, 0xffffffff
+        repne scasb
+        mov      ecx, ebx
+        dec      edi
+        shr      ecx, 2
+        rep movsd
+        mov      ecx, ebx
+        lea      eax, [esp + 0x1c]
+        and      ecx, 3
+        push     eax
+        rep movsb
+        call     func_004ce150
+        add      esp, 0xc
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x1a8
+        ret
+    L_c1fd:
+        mov      eax, dword ptr [g_data_00fa0de0]
+        test     eax, eax
+        je       short L_c20e
+        mov      esi, dword ptr [eax + 0x48]
+        cmp      esi, -1
+        jne      short L_c218
+    L_c20e:
+        push     -0xc
+        call     dword ptr [g_iat_004d2148]
+        mov      esi, eax
+    L_c218:
+        mov      edx, dword ptr [ebp*8 + g_data_0052290c]
+        lea      ecx, [esp + 0x10]
+        push     0
+        push     ecx
+        mov      edi, edx
+        or       ecx, 0xffffffff
+        xor      eax, eax
+        repne scasb
+        not      ecx
+        dec      ecx
+        push     ecx
+        push     edx
+        push     esi
+        call     dword ptr [g_iat_004d2108]
+    L_c23b:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x1a8
+        ret
+    }
+}
