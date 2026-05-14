@@ -1545,10 +1545,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041b610
-    name: func_0041b610
+    name: Phase4DispatchMultiInit_0041b610
     size: 739
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041b900
     name: func_0041b900
     size: 922

@@ -91609,3 +91609,227 @@ __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase4DispatchMultiInit_0041b610 — 739b boot.
+ *
+ * Two packed dispatchers:
+ *
+ *   Main A at 0x41b610 (588b + 4 nops): 4-way phase dispatch
+ *     on slot_60[+0x84]:
+ *       phase==0: chain bookkeeping, advance index, then call
+ *         func_0040a470, func_0040c100, func_004101f0,
+ *         func_0040cd20, each pause-gated; install self phase=1.
+ *       phase==1: call func_0040cd20; install self phase=2,
+ *         g_data_0054204c=3, signal.
+ *       phase==2: call func_0040cd20; g_data_0054206c=8; call
+ *         func_0040a470; install self phase=3; signal.
+ *       phase==3+ (default): 10 sequential calls to phase-init
+ *         subroutines (func_004101f0, func_0041aa80,
+ *         func_00419720, func_00419b60, func_00419aa0,
+ *         func_004199e0, func_004197e0, func_004198a0,
+ *         func_00419900, Phase1SlotLinkAndInit_00419470), each
+ *         pause-gated; then advance the chain (slot_60[+4] -=
+ *         1, dereference, store to g_data_0054205c); tail-call
+ *         func_0041f780.
+ *
+ *   Main B at 0x41b860 (147b): 2-way dispatch (phase==0 / !=0)
+ *     - phase==0: g_data_00542054=0x14, g_data_0054207c=0;
+ *       call func_0041b900; pause-gate; install self phase=1;
+ *       g_data_0054204c=2; signal.
+ *     - phase!=0: dec g_data_00542054; if not negative: same as
+ *       phase==0 (re-call func_0041b900);
+ *       if negative: g_data_0054207c=1; call func_0041b900;
+ *       pause-gate; tail-call func_0041f830.
+ *
+ * Callbacks 0x0041B610 and 0x0041B860 emitted as raw imm32
+ * [[feedback_packed_helpers_one_naked]].
+ * ============================================================ */
+
+extern void func_004101f0(void);
+extern void func_0041aa80(void);
+extern void func_00419720(void);
+extern void func_00419b60(void);
+extern void func_00419aa0(void);
+extern void func_004199e0(void);
+extern void func_004197e0(void);
+extern void func_004198a0(void);
+extern void func_00419900(void);
+extern void Phase1SlotLinkAndInit_00419470(void);
+extern void func_0040cd20(void);
+extern void func_0040c100(void);
+extern void func_0041b900(void);
+
+__declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_p4dmi_A_phase0
+        dec     eax
+        je      L_p4dmi_A_phase1
+        dec     eax
+        je      L_p4dmi_A_phase2
+        call    func_004101f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_0041aa80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_00419720
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_00419b60
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_00419aa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_004199e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_004197e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_004198a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_00419900
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    Phase1SlotLinkAndInit_00419470
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        call    func_0041f780
+        pop     esi
+        ret
+    L_p4dmi_A_phase2:
+        call    func_0040cd20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        mov     dword ptr [g_data_0054206c], 8
+        call    func_0040a470
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0041B610
+        mov     dword ptr [esi + 0x84], 3
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    L_p4dmi_A_phase1:
+        call    func_0040cd20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        mov     dword ptr [esi + 8], 0x0041B610
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_p4dmi_A_phase0:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_0054205c], ecx
+        call    func_0040a470
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_0040c100
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_004101f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        call    func_0040cd20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_A_exit
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0041B610
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p4dmi_A_exit:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_p4dmi_B:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_p4dmi_B_phase0
+        mov     eax, dword ptr [g_data_00542054]
+        dec     eax
+        mov     dword ptr [g_data_00542054], eax
+        jns     L_p4dmi_B_call
+        mov     dword ptr [g_data_0054207c], 1
+        call    func_0041b900
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_B_exit
+        call    func_0041f830
+        pop     esi
+        ret
+    L_p4dmi_B_phase0:
+        mov     dword ptr [g_data_00542054], 0x14
+        mov     dword ptr [g_data_0054207c], 0
+    L_p4dmi_B_call:
+        call    func_0041b900
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dmi_B_exit
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x0041B860
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p4dmi_B_exit:
+        pop     esi
+        ret
+    }
+}
