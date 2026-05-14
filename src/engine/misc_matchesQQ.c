@@ -87465,3 +87465,175 @@ __declspec(naked) void Phase1ContextSetupHelper_0040c260(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase1ContextSetup3Helpers_0040d990 — 544b boot.
+ *
+ * Three packed entries (16-byte aligned with `nop` padding):
+ *
+ *   Main at 0x40d990 (185b):
+ *     - func_00404cc0(0xFB43FB);
+ *     - func_00404df0(g_data_0054205c);
+ *     - call func_004ab790; pause-gate;
+ *     - g_data_00542054 := [g_data_00542060*4 + 0x38];
+ *     - g_data_00542058 := packed_ptr(&g_data_004d6c50 >> 2);
+ *     - call func_00405420; pause-gate;
+ *     - if bit 2 of g_state_0054208c is set: KEEP the
+ *       g_data_004d6c50 packed_ptr; else: rewrite it as
+ *       packed_ptr(&g_data_004d6c58 >> 2);
+ *     - func_0049cb40(&g_data_0049db40, 0xC0); g_data_0054207c
+ *       := 0xC1;
+ *     - if bit 0 of g_state_0054208c is set: skip the two
+ *       func_0040a7e0 / func_0040a8b0 calls; else: call both
+ *       (each pause-gated);
+ *     - jmp func_004ab860.
+ *
+ *   Helper A at 0x40da50 (186b): installed elsewhere as a
+ *     callback. Sets slot[+0x80] := 0xFFFFB334, paints the
+ *     state-bits of slot[+0x18]'s +0x20 field (ah&=0xBF,
+ *     al|=0x40), slot[+0x14]:=0xFF, slot[0]|=8, slot[+0x48]
+ *     := 0x2666, slot[+0x18] := g_data_00542054, then installs
+ *     callback 0x0040DBF0 at slot[+0x10] and tail-jmps
+ *     func_0041f830.
+ *
+ *   Helper B at 0x40db10 (160b): similar to A but skips the
+ *     ah-mask, sets slot[+0x48] := 0x6666, installs callback
+ *     0x0040DCF0. Tail-jmps func_0041f830.
+ *
+ * Callback addresses (0x40dbf0, 0x40dcf0) are emitted as raw
+ * literals — no DIR32 reloc, the originals are also literal
+ * imm32 [[feedback_packed_helpers_one_naked]].
+ * ============================================================ */
+
+extern void func_0040a7e0(void);
+extern void func_0040a8b0(void);
+extern unsigned int g_data_004d6c50;
+extern unsigned int g_data_004d6c58;
+extern unsigned int g_data_0049db40;
+
+__declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
+{
+    __asm {
+        push    0x00FB43FB
+        call    func_00404cc0
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    eax
+        call    func_00404df0
+        add     esp, 4
+        call    func_004ab790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p13_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, offset g_data_004d6c50
+        shr     eax, 2
+        mov     edx, dword ptr [ecx*4 + 0x38]
+        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_data_00542054], edx
+        call    func_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p13_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_p13_after_select
+        mov     ecx, offset g_data_004d6c58
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542058], ecx
+    L_p13_after_select:
+        push    0xC0
+        push    offset g_data_0049db40
+        mov     dword ptr [g_data_0054207c], 0xC1
+        call    func_0049cb40
+        mov     al, byte ptr [g_state_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     L_p13_tailjmp
+        call    func_0040a7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p13_ret
+        call    func_0040a8b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p13_ret
+    L_p13_tailjmp:
+        jmp     func_004ab860
+    L_p13_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_p13_helperA:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xFFFFB334
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x80], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        and     ah, 0xBF
+        or      al, 0x40
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, 0xFF
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [eax*4 + 0x14], ecx
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [ecx*4 + 0x48], 0x2666
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [edx*4 + 0x18], eax
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x0040DBF0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x10], eax
+        jmp     func_0041f830
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_p13_helperB:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      al, 0x40
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        mov     ecx, 0xFF
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x14], ecx
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 0x48], 0x6666
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     dword ptr [eax*4 + 0x18], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x0040DCF0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x10], eax
+        jmp     func_0041f830
+    }
+}
