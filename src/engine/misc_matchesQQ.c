@@ -83566,3 +83566,143 @@ __declspec(naked) void StoreTwoCallSubMain_00426b60(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_0054371c;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0050b25c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern void GateDispatch6c_00494580(void);
+extern void IterLoad_0048fd30(void);
+extern void Cmp2OrSet0b_0048e3e0(void);
+extern void DualPushCallCjPop_0048c400(void);
+extern void Cascade4StepBitTest_0048c370(void);
+extern void MStackPushInstall_0048c260(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void DownloadPlayerChar(void);
+extern void PushScaledIdxStoreCallPop_0048c1b0(void);
+extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
+extern void MStackPush4IndirectCall_0048fd60(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void ScaledZeroFour_00490740(void);
+extern void func_0048d0f0(void);
+extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void func_00475cd0(void);
+
+__declspec(naked) void BootStateInitLongChain_0041ab90(void)
+{
+    __asm
+    {
+        push    esi
+        push    edi
+        call    GateDispatch6c_00494580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        push    0x4d7be8
+        call    IterLoad_0048fd30
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_bsilc_ret
+        call    Cmp2OrSet0b_0048e3e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        call    DualPushCallCjPop_0048c400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        call    Cascade4StepBitTest_0048c370
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        call    MStackPushInstall_0048c260
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        push    2
+        mov     dword ptr [g_data_00542070], eax
+        mov     esi, eax
+        mov     edi, eax
+        call    TableWalkBoundedCmp_004bd890
+        mov     eax, dword ptr [g_data_00537f48]
+        add     esp, 4
+        mov     byte ptr [g_data_0054371c], 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542070], 0
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        mov     ecx, dword ptr [g_data_005380e0]
+        mov     dword ptr [g_data_00542070], 1
+        mov     dword ptr [g_data_0054206c], ecx
+        call    DownloadPlayerChar
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        mov     edx, offset g_data_0050b25c
+        mov     byte ptr [g_data_0054371c], 0
+        sar     edx, 2
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [g_data_00542070], edi
+        mov     dword ptr [g_data_00542044], edx
+        call    PushScaledIdxStoreCallPop_0048c1b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        call    PushCallPauseSetMaxThenCallPauseJmp_0048e380
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        mov     dword ptr [g_data_00542044], 0x490740
+        call    MStackPush4IndirectCall_0048fd60
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bsilc_ret
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542054], ecx
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsilc_ret
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsilc_ret
+        call    func_0048d0f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsilc_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [g_data_0054205c], eax
+        call    func_0048d0f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsilc_ret
+        mov     dword ptr [g_data_0054206c], 0x80
+        call    PushPopCurrentSetFFFFFFFF_00473070
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bsilc_ret
+        mov     ecx, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_0054205c], ecx
+        call    func_00475cd0
+    L_bsilc_ret:
+        pop     edi
+        pop     esi
+        ret
+    }
+}

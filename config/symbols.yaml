@@ -1492,10 +1492,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041ab90
-    name: func_0041ab90
+    name: BootStateInitLongChain_0041ab90
     size: 464
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041ad60
     name: func_0041ad60
     size: 609
