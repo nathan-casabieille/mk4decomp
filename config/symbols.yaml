@@ -15074,7 +15074,8 @@ functions:
     name: FlushDrawQueue
     size: 3825
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bfc00
     name: func_004bfc00
     size: 1873
