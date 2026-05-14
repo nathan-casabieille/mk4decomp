@@ -109699,3 +109699,218 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
     }
 }
 
+/* ============================================================
+ * MenuPageEnterDispatch_004b84d0 — 346b game.menu.
+ *
+ * Per-frame entry transition for the menu state machine at
+ * g_data_00ab4360. On first call (bit 0 of flag byte
+ * g_data_00ab42f4 clear) bootstraps the active record by
+ * calling func_004b6300(0, &g_data_004f5128) and stashing the
+ * pointer at g_data_00ab41c4; otherwise reloads the cached
+ * pointer. Then dispatches the state (in [0..0x45]) through a
+ * 70-byte index array (g_data_004b85e4) → 5-entry jump table
+ * (g_data_004b85d0):
+ *   - index 0 → set state = 2, jump to L_85ba.
+ *   - index 1 → call func_004b7020(1), examine the returned
+ *     flags: bit 15 short-circuits; bit 0/1/4/5 each gate a
+ *     follow-up (transition, finalize, lookup, force-end).
+ *   - index 2/3 → set state = 0 (terminal).
+ *   - index 4 → fall through to L_85ba (no-op).
+ * L_85ba finally calls func_004b65c0(record, &g_data_004f5128)
+ * and returns the (possibly updated) state at g_data_00ab4360.
+ *
+ * Frame: push ebx/esi, no esp adjust. Returns: int (next state).
+ *
+ * Layout quirks: 20-byte jump table at 0x4b85d0 immediately
+ * followed by 70-byte byte-index dispatch array at 0x4b85e4.
+ * Both live inside the function size.
+ * ============================================================ */
+
+extern void func_004b62c0(void);
+extern void func_004b6300(void);
+extern void func_004b65c0(void);
+extern void func_004b7020(void);
+extern unsigned int g_data_004f5128;
+extern unsigned int g_data_004f512c;
+extern unsigned int g_data_00ab41c4;
+extern unsigned int g_data_00ab42f4;
+extern unsigned int g_data_00ab4360;
+
+__declspec(naked) void MenuPageEnterDispatch_004b84d0(void)
+{
+    __asm {
+        mov      al, byte ptr [g_data_00ab42f4]
+        push     ebx
+        test     al, 1
+        push     esi
+        jne      short L_84fc
+        mov      bl, al
+        push     OFFSET g_data_004f5128
+        or       bl, 1
+        push     0
+        mov      byte ptr [g_data_00ab42f4], bl
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab41c4], eax
+        jmp      short L_8501
+    L_84fc:
+        mov      eax, dword ptr [g_data_00ab41c4]
+    L_8501:
+        mov      ecx, dword ptr [g_data_00ab4360]
+        cmp      ecx, 0x45
+        ja       L_85ba
+        xor      edx, edx
+        mov      dl, byte ptr [ecx + L_4d0_byidx]
+        jmp      dword ptr [edx*4 + L_4d0_jmptbl]
+    L_851f:
+        mov      dword ptr [g_data_00ab4360], 2
+        jmp      L_85ba
+    L_852e:
+        push     1
+        call     func_004b7020
+        mov      ebx, eax
+        add      esp, 4
+        mov      esi, ebx
+        and      esi, 0x8000
+        jne      short L_8563
+        test     bl, 1
+        je       short L_8563
+        mov      eax, dword ptr [g_data_00ab41c4]
+        push     OFFSET g_data_004f5128
+        push     eax
+        call     func_004b62c0
+        add      esp, 8
+        mov      dword ptr [g_data_00ab41c4], eax
+        jmp      short L_8568
+    L_8563:
+        mov      eax, dword ptr [g_data_00ab41c4]
+    L_8568:
+        test     esi, esi
+        jne      short L_85ba
+        test     bl, 2
+        je       short L_8584
+        push     OFFSET g_data_004f5128
+        push     eax
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab41c4], eax
+    L_8584:
+        test     esi, esi
+        jne      short L_85ba
+        test     bl, 0x10
+        je       short L_859b
+        movsx    ecx, word ptr [eax*8 + g_data_004f512c]
+        mov      dword ptr [g_data_00ab4360], ecx
+    L_859b:
+        test     esi, esi
+        jne      short L_85ba
+        test     bl, 0x20
+        je       short L_85ba
+        mov      dword ptr [g_data_00ab4360], 0x45
+        jmp      short L_85ba
+    L_85b0:
+        mov      dword ptr [g_data_00ab4360], 0
+    L_85ba:
+        push     eax
+        push     OFFSET g_data_004f5128
+        call     func_004b65c0
+        mov      eax, dword ptr [g_data_00ab4360]
+        add      esp, 8
+        pop      esi
+        pop      ebx
+        ret
+    L_4d0_jmptbl:
+        _emit 0x1f
+        _emit 0x85
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x2e
+        _emit 0x85
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xb0
+        _emit 0x85
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xb0
+        _emit 0x85
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xba
+        _emit 0x85
+        _emit 0x4b
+        _emit 0x00
+    L_4d0_byidx:
+        _emit 0x00
+        _emit 0x04
+        _emit 0x01
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x02
+        _emit 0x02
+        _emit 0x02
+        _emit 0x02
+        _emit 0x02
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x04
+        _emit 0x03
+    }
+}
+
