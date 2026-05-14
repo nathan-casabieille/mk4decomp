@@ -15100,10 +15100,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c0e10
-    name: func_004c0e10
+    name: ScanlineTexBlitAdditive_004c0e10
     size: 798
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c1130
     name: ScanlineTexBlitInterlaced_004c1130
     size: 691
