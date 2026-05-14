@@ -86520,3 +86520,195 @@ __declspec(naked) void Chain13PauseGateTailJmp_004051e0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket2_TreeWalkRecursive_00405e70 — 580b boot.
+ *
+ * Recursive tree-walker (calls itself) that unlinks a chain of
+ * nodes via MStackBracket5_LinkedListUnlink_00409aa0, then
+ * descends into the first-child link [node*4] and recursively
+ * processes the subtree. mstack-bracketed (2 slots, abort-leak
+ * style on the 4 internal pause-gates).
+ *
+ *   mstack pushes: g_data_00542048, g_data_0054204c.
+ *
+ *   Quick-exit if g_data_00542044 is 0 (already toggled in
+ *   g_state_0054208c bit 4): goto pop2_clean.
+ *
+ *   Body:
+ *     - check node[+0x1c] > 0 and previous-node ([0x54205c]) has
+ *       same field; if both met: allocate combined size at
+ *       [eax+ecx]*4 (push 0 into the new slot).
+ *     - if node[+0x14] != 0: bump g_data_00542048=4 and call
+ *       MStackBracket5_LinkedListUnlink_00409aa0 (unlink current
+ *       node's right neighbor); update g_data_0054204c.
+ *     - else: if node[+0x18] != 0: clear prev-node's +0x18.
+ *     - while ([curr*4] != 0): recurse on first child.
+ *     - if node[+0x2c] != 0: call func_0049d0a0.
+ *     - read node[+0x28] into g_data_00541dc4; if non-zero,
+ *       clear node[+0x28].
+ *     - update g_data_00542044=saved_ptr; set bit 4 in
+ *       g_state_0054208c (toggle off if the cached ptr was 0).
+ *     - if bit 0 of g_state_0054208c is 0: call func_004055b0.
+ *     - call func_004ab440(curr, g_data_00541ea8).
+ *     - func_004bd510(2); clear bit 0 of g_state_0054208c.
+ *
+ *   Errors (4 pause-gates) skip the 2 mstack pops via
+ *   [[feedback_mstack_abort_leak]].
+ * ============================================================ */
+
+extern void func_0049d0a0(void);
+extern void func_004055b0(void);
+extern void func_004bd510(int);
+extern unsigned int g_data_00541ea8;
+void MStackBracket2_TreeWalkRecursive_00405e70(void);
+
+__declspec(naked) void MStackBracket2_TreeWalkRecursive_00405e70(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4], edx
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ebx, 4
+        xor     edi, edi
+        or      edx, ebx
+        cmp     eax, edi
+        mov     dword ptr [g_state_0054208c], edx
+        je      L_twr_pop2
+        mov     ecx, edx
+        xor     ecx, ebx
+        cmp     eax, edi
+        mov     dword ptr [g_state_0054208c], ecx
+        je      L_twr_pop2
+        mov     edx, dword ptr [eax*4 + 0x1C]
+        mov     esi, dword ptr [g_data_0054205c]
+        cmp     edx, edi
+        mov     dword ptr [g_data_00542070], edx
+        jle     L_twr_post_combine
+        cmp     esi, edi
+        mov     dword ptr [g_data_0054206c], esi
+        je      L_twr_post_combine
+        mov     ecx, dword ptr [esi*4 + 0x1C]
+        cmp     ecx, edi
+        mov     dword ptr [g_data_0054206c], ecx
+        je      L_twr_post_combine
+        lea     eax, [edx + ecx]
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [eax*4], edi
+        mov     eax, dword ptr [g_data_00542044]
+        mov     esi, dword ptr [g_data_0054205c]
+    L_twr_post_combine:
+        mov     dword ptr [g_data_0054204c], eax
+        mov     ecx, dword ptr [eax*4 + 0x14]
+        cmp     ecx, edi
+        mov     dword ptr [g_data_0054206c], ecx
+        je      L_twr_test_18
+        mov     dword ptr [g_data_00542048], ebx
+        call    MStackBracket5_LinkedListUnlink_00409aa0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_twr_abort
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054204c], eax
+        jmp     L_twr_recurse_check
+    L_twr_test_18:
+        mov     eax, dword ptr [eax*4 + 0x18]
+        cmp     eax, edi
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_twr_recurse_check
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [esi*4 + 0x18], edi
+    L_twr_recurse_check:
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4]
+        cmp     eax, edi
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_twr_skip_recurse
+    L_twr_recurse_loop:
+        mov     dword ptr [g_data_00542044], eax
+        call    MStackBracket2_TreeWalkRecursive_00405e70
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_twr_abort
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4]
+        cmp     eax, edi
+        mov     dword ptr [g_data_0054206c], eax
+        jne     L_twr_recurse_loop
+    L_twr_skip_recurse:
+        mov     eax, ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [ecx*4 + 0x2C]
+        cmp     ecx, edi
+        mov     dword ptr [g_data_0054206c], ecx
+        je      L_twr_check_28
+        call    func_0049d0a0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_twr_abort
+        mov     eax, dword ptr [g_data_00542044]
+    L_twr_check_28:
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00541dc4], ecx
+        mov     edx, dword ptr [eax*4 + 0x28]
+        cmp     edx, edi
+        je      L_twr_skip_clear_28
+        mov     dword ptr [eax*4 + 0x28], edi
+        mov     ecx, dword ptr [g_data_00541dc4]
+    L_twr_skip_clear_28:
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_data_00542044], ecx
+        or      edx, ebx
+        cmp     ecx, edi
+        mov     dword ptr [g_state_0054208c], edx
+        je      L_twr_test_bit
+        mov     eax, edx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+    L_twr_test_bit:
+        test    byte ptr [g_state_0054208c], bl
+        jne     L_twr_skip_4055b0
+        call    func_004055b0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_twr_abort
+    L_twr_skip_4055b0:
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_data_00541ea8]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_00542048], edx
+        call    func_004ab440
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_twr_abort
+        push    2
+        call    func_004bd510
+        mov     eax, dword ptr [g_state_0054208c]
+        add     esp, 4
+        and     al, 0xFE
+        mov     dword ptr [g_state_0054208c], eax
+    L_twr_pop2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_twr_abort:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

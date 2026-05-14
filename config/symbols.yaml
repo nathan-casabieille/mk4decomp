@@ -398,10 +398,11 @@ functions:
     status: matched
     file: src/engine/mstack_push_call_call_pop.c
   - addr: 0x00405e70
-    name: func_00405e70
+    name: MStackBracket2_TreeWalkRecursive_00405e70
     size: 580
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004060c0
     name: BootPhaseGateBracketedInit_004060c0
     size: 398
