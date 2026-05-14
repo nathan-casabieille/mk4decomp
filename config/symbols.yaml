@@ -8423,10 +8423,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047c0d0
-    name: func_0047c0d0
+    name: PairedSubInstallSelfBigChain_0047c0d0
     size: 448
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c290
     name: func_0047c290
     size: 845

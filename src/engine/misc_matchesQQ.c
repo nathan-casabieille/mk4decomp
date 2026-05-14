@@ -81658,3 +81658,129 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_004ed8d8;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054204c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void func_0047c290(void);
+extern void Vec2ChainComputeStores_00480b80(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void ScaledChainTwoStores_00480d20(void);
+extern void InstallSelfCmpJgJmp_00480ac0(void);
+
+__declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x20e
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4ed2a0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_psisbc_entry2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_psisbc_phase0
+        dec     eax
+        mov     eax, dword ptr [g_data_0054205c]
+        je      short L_psisbc_phase1
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x48]
+        cmp     ecx, eax
+        mov     dword ptr [g_data_00542070], eax
+        jg      L_psisbc_install2
+        mov     ecx, offset g_data_004ed8d8
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542044], ecx
+        call    GuardedDirtyXformFromTable_0048f6d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_psisbc_ret
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, 0x51e
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x4c], eax
+        call    func_0047c290
+        pop     esi
+        ret
+    L_psisbc_phase1:
+        mov     dword ptr [eax*4 + 0x58], 0
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_data_00542088]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542070], edx
+        call    Vec2ChainComputeStores_00480b80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_psisbc_ret
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_psisbc_ret
+    L_psisbc_install2:
+        mov     dword ptr [esi + 8], offset L_psisbc_entry2
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 1
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_psisbc_phase0:
+        call    ScaledChainTwoStores_00480d20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_psisbc_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_data_00542088], ecx
+        mov     dword ptr [g_data_0054207c], 0xfffc0000
+        mov     dword ptr [esi + 8], offset L_psisbc_entry2
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset L_psisbc_entry2
+        add     ecx, 0x1000000
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfCmpJgJmp_00480ac0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_psisbc_ret:
+        pop     esi
+        ret
+    }
+}
