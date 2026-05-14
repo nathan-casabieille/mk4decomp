@@ -112140,3 +112140,197 @@ __declspec(naked) void FileTellAdjusted_004c58e0(void)
         ret
     }
 }
+
+/* ============================================================
+ * GameModeAdvanceCluster_00482000 — 430b game (packed: 7 helpers).
+ *
+ * Cluster of FSM-advance helpers, each 16-byte-aligned:
+ *
+ *   1. 0x482000 (~13b): push &g_data_004eda60; func_004594f0.
+ *   2. 0x482010 (~5b):  jmp func_0041f780 (trampoline).
+ *   3. 0x482020 (~167b): big "advance to state 0xe (cleanup)"
+ *      handler. Sets state := 0x9999 sentinel, calls
+ *      func_00482ab0; on success reads per-entity [+0x7c] state
+ *      and if >2 picks between g_data_00535d04 / g_data_0053a774
+ *      depending on g_data_0054205c vs g_data_00538158; finally
+ *      compares to g_data_0053a180 - 0xa0000 and trips state := 0xe
+ *      + func_00480fe0 when below. Tail: func_00494580 then
+ *      push &g_data_004edaa0 + func_004594f0.
+ *   4. 0x4820d0 (~95b): state 0x9999 + state 2 path. func_00482ab0 →
+ *      func_00488ed0 (state 2) → func_00494580 → func_0048fbc0 →
+ *      push &g_data_004edae8 + func_004594f0.
+ *   5. 0x482130 (~63b): static-state init. Sets state := 0x1b333
+ *      and g_data_00542070 := 0xffffe667 (-0x1999), runs
+ *      func_0048ff30 → func_00494580 → push &g_data_004edb20 +
+ *      func_004594f0.
+ *   6. 0x482170 (~30b): state := 6, func_0048a160, tail-jmp
+ *      func_004821b0.
+ *   7. 0x482190 (~31b): state := 8, func_00489ff0, tail-jmp
+ *      func_004821b0.
+ *
+ * Linear, no mstack. Returns void.
+ * ============================================================ */
+
+extern void func_0041f780(void);
+extern void func_004594f0(void);
+extern void func_00480fe0(void);
+extern void func_004821b0(void);
+extern void func_00482ab0(void);
+extern void func_00488ed0(void);
+extern void func_00489ff0(void);
+extern void func_0048a160(void);
+extern void func_0048fbc0(void);
+extern void func_0048ff30(void);
+extern unsigned int g_data_004eda60;
+extern unsigned int g_data_004edaa0;
+extern unsigned int g_data_004edae8;
+extern unsigned int g_data_004edb20;
+extern unsigned int g_data_00535d04;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053a180;
+extern unsigned int g_data_0053a774;
+
+__declspec(naked) void GameModeAdvanceCluster_00482000(void)
+{
+    __asm {
+        /* H1: */
+        push     OFFSET g_data_004eda60
+        call     func_004594f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H2: */
+        jmp      func_0041f780
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3: */
+        mov      dword ptr [g_data_0054206c], 0x9999
+        call     func_00482ab0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_20c6
+        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [eax*4 + 0x7c]
+        cmp      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+        jle      short L_20ab
+        mov      eax, dword ptr [g_data_00538158]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_data_0053a774]
+        cmp      edx, eax
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542044], eax
+        je       short L_207e
+        mov      ecx, dword ptr [g_data_00535d04]
+        mov      dword ptr [g_data_0054206c], ecx
+    L_207e:
+        mov      edx, dword ptr [g_data_0053a180]
+        lea      eax, [edx - 0xa0000]
+        cmp      ecx, eax
+        mov      dword ptr [g_data_00542070], eax
+        jl       short L_20ab
+        mov      dword ptr [g_data_0054206c], 0xe
+        call     func_00480fe0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_20c6
+    L_20ab:
+        call     func_00494580
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_20c6
+        push     OFFSET g_data_004edaa0
+        call     func_004594f0
+        add      esp, 4
+    L_20c6:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4: */
+        mov      dword ptr [g_data_0054206c], 0x9999
+        call     func_00482ab0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_2129
+        mov      dword ptr [g_data_0054206c], 2
+        call     func_00488ed0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_2129
+        call     func_00494580
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_2129
+        call     func_0048fbc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_2129
+        push     OFFSET g_data_004edae8
+        call     func_004594f0
+        add      esp, 4
+    L_2129:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H5: */
+        mov      dword ptr [g_data_0054206c], 0x1b333
+        mov      dword ptr [g_data_00542070], 0xffffe667
+        call     func_0048ff30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_216d
+        call     func_00494580
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_216d
+        push     OFFSET g_data_004edb20
+        call     func_004594f0
+        add      esp, 4
+    L_216d:
+        ret
+        nop
+        nop
+        /* H6: */
+        mov      dword ptr [g_data_0054206c], 6
+        call     func_0048a160
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_218d
+        jmp      func_004821b0
+    L_218d:
+        ret
+        nop
+        nop
+        /* H7: */
+        mov      dword ptr [g_data_0054206c], 8
+        call     func_00489ff0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_21ad
+        jmp      func_004821b0
+    L_21ad:
+        ret
+    }
+}
+

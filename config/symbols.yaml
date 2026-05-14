@@ -8964,10 +8964,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00482000
-    name: func_00482000
+    name: GameModeAdvanceCluster_00482000
     size: 430
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004821b0
     name: func_004821b0
     size: 846
