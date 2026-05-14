@@ -15135,10 +15135,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004c2650
-    name: func_004c2650
+    name: TexturedTriRasterizeDithered_004c2650
     size: 1626
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c2cb0
     name: func_004c2cb0
     size: 1702
