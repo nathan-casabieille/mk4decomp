@@ -1372,10 +1372,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00418af0
-    name: func_00418af0
+    name: Phase4MultiHelperInit_00418af0
     size: 779
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00418e00
     name: BootSetupWithMStackBody_00418e00
     size: 379
