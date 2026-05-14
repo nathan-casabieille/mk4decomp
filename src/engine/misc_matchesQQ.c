@@ -86212,3 +86212,151 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket3_ChainSwapAdvance_0041d560 — 519b boot.
+ *
+ * 3-slot mstack-bracketed routine that swaps chain[g_data_00542054]'s
+ * +0x3C and +0x64 fields into chain[g_data_00542044] and clears
+ * the +0x28 slot.
+ *
+ * mstack pushes: g_data_00542048, g_data_00542054, g_data_0054205c.
+ *
+ * Body:
+ *   - g_data_00542054 := g_data_0054205c (snapshot the "current" idx);
+ *   - g_data_00542048 := packed_ptr(&g_data_005114b4 >> 2);
+ *   - call func_00407330; pause-gate (mstack-abort-leak — error
+ *     paths jump straight to the final ret, skipping the 3 pops);
+ *   - if g_state_0054208c bit 4 is set: skip body and go to pops
+ *     (clean phase-skip, NOT abort — passes through pops);
+ *   - OR chain[new]+0x34 with bit 0 of chain[old]+0x34;
+ *   - call func_004058c0, func_004059a0, func_004092a0;
+ *   - chain[old_5c]+0x48 := chain[old_5c]+0x58 (copy field);
+ *   - g_data_0054205c := g_data_00542044 (advance to new node);
+ *   - chain[new]+0x3c := chain[old_54]+0x3c;
+ *   - chain[new]+0x34 |= 0x180000;
+ *   - call func_004ac040; pause-gate;
+ *   - chain[new]+0x64 := chain[old_54]+0x64;
+ *   - chain[new]+0x24 := chain[old_54]+0x24;
+ *   - chain[new]+0x28 := 0;
+ *   - call MStackCall_00406340; pause-gate;
+ *   - g_state_0054208c |= 4; if g_data_00542044 != 0:
+ *     g_state_0054208c ^= 4 (toggle the bit back off, matches
+ *     the same toggle pattern as MStackBracket2_StateAdvance6).
+ *
+ * Pause-gate errors skip the 3 mstack pops directly to ret
+ * [[feedback_mstack_abort_leak]].
+ * ============================================================ */
+
+extern void func_004059a0(void);
+extern void func_004ac040(void);
+
+__declspec(naked) void MStackBracket3_ChainSwapAdvance_0041d560(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, offset g_data_005114b4
+        mov     dword ptr [g_data_00542054], edx
+        sar     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00407330
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_msb3csa_pop
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        mov     ecx, dword ptr [g_data_00542044]
+        and     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        or      eax, edx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        call    func_004058c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        call    func_004059a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        call    func_004092a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x48], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054205c], eax
+        mov     ecx, dword ptr [edx*4 + 0x3C]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x3C], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        or      dword ptr [eax*4 + 0x34], 0x00180000
+        call    func_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x64]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x64], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x24]
+        mov     dword ptr [ecx*4 + 0x24], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [edx*4 + 0x28], 0
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb3csa_abort
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_data_00542044]
+        or      ecx, 4
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        je      L_msb3csa_pop
+        mov     eax, ecx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+    L_msb3csa_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_msb3csa_abort:
+        ret
+    }
+}
