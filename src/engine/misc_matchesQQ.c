@@ -84539,3 +84539,205 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054204c;
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void ScaledChainCmpDispatch_0048e4f0(void);
+extern void MStackPushCallPopDirtyJmp_0042cc90(void);
+extern void TwoCallTail_0042b690(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void StateDispatchTable_00490fc0(void);
+extern void BootFrameSetup_00408190(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void State208cBit0Flag_0048f160(void);
+extern void func_0042b930(void);
+
+__declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
+{
+    __asm
+    {
+        call    FiveCallScaledChainTailJmp_0045f8d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub1_ret
+        push    0x4e2fa0
+        call    ScaledChainCmpDispatch_0048e4f0
+        add     esp, 4
+    L_eps_sub1_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub2:
+        call    MStackPushCallPopDirtyJmp_0042cc90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub2_ret
+        call    TwoCallTail_0042b690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub2_ret
+        push    0x4e33b8
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eps_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub3:
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub3_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_00542048], eax
+        call    BootFrameSetup_00408190
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub3_ret
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_eps_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub4:
+        call    MStackPushCallPopDirtyJmp_0042cc90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub4_ret
+        call    TwoCallTail_0042b690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub4_ret
+        push    0x4e2fe0
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eps_sub4_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub5:
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub5_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_00542048], eax
+        call    BootFrameSetup_00408190
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub5_ret
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_eps_sub5_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub6:
+        call    TwoCallTail_0042b690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub6_ret
+        push    0x4e3020
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eps_sub6_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub7:
+        call    State208cBit0Flag_0048f160
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub7_ret
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_eps_sub7_skipCall
+        call    func_0042b930
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub7_ret
+    L_eps_sub7_skipCall:
+        push    0x4e3048
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_eps_sub7_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_eps_sub8:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_eps_sub8_phase0
+        call    FiveCallGuardSetTail_0046f6b0
+        pop     esi
+        ret
+    L_eps_sub8_phase0:
+        call    StateDispatchTable_00490fc0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub8_ret
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_00542048], ecx
+        call    BootFrameSetup_00408190
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_eps_sub8_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_eps_sub8
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_eps_sub8_ret:
+        pop     esi
+        ret
+    }
+}

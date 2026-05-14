@@ -2909,10 +2909,11 @@ functions:
     status: matched
     file: src/engine/guarded_dispatch.c
   - addr: 0x0042b6f0
-    name: func_0042b6f0
+    name: EightPackedSubInstallSelfWalk_0042b6f0
     size: 473
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b8d0
     name: GuardedRangeCmpFpuJmp_0042b8d0
     size: 89
