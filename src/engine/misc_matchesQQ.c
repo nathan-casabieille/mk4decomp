@@ -112495,3 +112495,236 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
     }
 }
 
+/* ============================================================
+ * GameSectionSwitcher_0042cac0 — 450b game (computed-jump dispatch + 7 helpers).
+ *
+ * Entry helper (0x42cac0) walks an in-progress "section index"
+ * at [ecx*4 + 0x68] (ecx = active entity index). If the index
+ * reaches 4 it clears bit 0 of g_data_0054208c and returns;
+ * otherwise it increments the index, snapshots the new value
+ * into g_data_00542070, runs func_0048f350 (open-section), and
+ * dispatches via an unscaled jump table:
+ *     `mov eax, OFFSET g_data_004e3830; shr eax, 2; add eax, ecx;
+ *      mov eax, [eax*4]; jmp eax`
+ * (i.e. eax holds (g_data_004e3830>>2 + section_index)*4, fed
+ * by an external dispatch table at g_data_004e3830).
+ *
+ * Then 7 small target helpers (packed, 16-byte aligned):
+ *  - 0x42cb40 (~14b): push &g_data_004e3570; call func_0045f310.
+ *  - 0x42cb50 (~14b): push &g_data_004e3590; call func_0045f310.
+ *  - 0x42cb60 (~14b): push &g_data_004e35b0; call func_0045f310.
+ *  - 0x42cb70 (~14b): push &g_data_004e35d0; call func_0045f310.
+ *  - 0x42cb80 (~52b): set g_data_00542084 := 0x280000, call
+ *    func_0042d1c0; if g_data_0054208c & 1 tail-jmp func_0042ce60,
+ *    else push &g_data_004e35f8 + func_004594f0.
+ *  - 0x42cbd0 (~50b): func_00490fc0; on success stash old state
+ *    into g_data_00542048, call func_00408190, tail-jmp
+ *    func_0046f6b0.
+ *  - 0x42cc10 (~52b): clone of the 0x42cb80 helper but pushing
+ *    &g_data_004e3628 instead.
+ *  - 0x42cc50 (~50b): push &g_data_004e364c + func_0048fd30; on
+ *    success push &g_data_004e3650 + func_004594f0; tail-jmp
+ *    func_00470480.
+ *
+ * Linear, no mstack. Returns void.
+ *
+ * Layout quirk: heavy 16-byte nop alignment between every helper.
+ * ============================================================ */
+
+extern void func_00408190(void);
+extern void func_0042ce60(void);
+extern void func_0042d1c0(void);
+extern void func_0045f310(void);
+extern void func_0046f6b0(void);
+extern void func_0048f350(void);
+extern void func_0048fd30(void);
+extern unsigned int g_data_004e3570;
+extern unsigned int g_data_004e3590;
+extern unsigned int g_data_004e35b0;
+extern unsigned int g_data_004e35d0;
+extern unsigned int g_data_004e35f8;
+extern unsigned int g_data_004e3628;
+extern unsigned int g_data_004e364c;
+extern unsigned int g_data_004e3650;
+extern unsigned int g_data_004e3830;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542084;
+
+__declspec(naked) void GameSectionSwitcher_0042cac0(void)
+{
+    __asm {
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x68]
+        cmp      eax, 4
+        mov      dword ptr [g_data_0054206c], eax
+        jl       short L_cae4
+        mov      eax, dword ptr [g_data_0054208c]
+        and      al, 0xfe
+        mov      dword ptr [g_data_0054208c], eax
+    L_cae3:
+        ret
+    L_cae4:
+        inc      eax
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [ecx*4 + 0x68], eax
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542078], eax
+        call     func_0048f350
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cae3
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_cb1f
+        mov      eax, dword ptr [g_data_0054208c]
+        or       al, 1
+        mov      dword ptr [g_data_0054208c], eax
+        ret
+    L_cb1f:
+        mov      ecx, dword ptr [g_data_00542078]
+        mov      eax, OFFSET g_data_004e3830
+        shr      eax, 2
+        add      eax, ecx
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_00542044], eax
+        jmp      eax
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H1: */
+        push     OFFSET g_data_004e3570
+        call     func_0045f310
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H2: */
+        push     OFFSET g_data_004e3590
+        call     func_0045f310
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H3: */
+        push     OFFSET g_data_004e35b0
+        call     func_0045f310
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H4: */
+        push     OFFSET g_data_004e35d0
+        call     func_0045f310
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H5: */
+        mov      dword ptr [g_data_00542084], 0x280000
+        call     func_0042d1c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cbc3
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_cbb6
+        jmp      func_0042ce60
+    L_cbb6:
+        push     OFFSET g_data_004e35f8
+        call     func_004594f0
+        add      esp, 4
+    L_cbc3:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H6: */
+        call     func_00490fc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cc05
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_data_00542048], eax
+        call     func_00408190
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cc05
+        jmp      func_0046f6b0
+    L_cc05:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H7: */
+        mov      dword ptr [g_data_00542084], 0x280000
+        call     func_0042d1c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cc43
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_cc36
+        jmp      func_0042ce60
+    L_cc36:
+        push     OFFSET g_data_004e3628
+        call     func_004594f0
+        add      esp, 4
+    L_cc43:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H8: */
+        push     OFFSET g_data_004e364c
+        call     func_0048fd30
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_cc81
+        push     OFFSET g_data_004e3650
+        call     func_004594f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_cc81
+        jmp      func_00470480
+    L_cc81:
+        ret
+    }
+}
+

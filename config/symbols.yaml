@@ -3040,10 +3040,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042cac0
-    name: func_0042cac0
+    name: GameSectionSwitcher_0042cac0
     size: 450
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042cc90
     name: MStackPushCallPopDirtyJmp_0042cc90
     size: 77
