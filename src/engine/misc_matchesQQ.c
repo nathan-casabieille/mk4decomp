@@ -81784,3 +81784,134 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054207c;
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void EsiInstallSetCallChain_0047aef0(void);
+extern void TripleFieldCopyHi_0048f7b0(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void InstallSelfPauseTwoCall_0047af70(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void TripleFieldCopyJmpHi_0048f740(void);
+
+__declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_tpdcla_phase0
+        dec     eax
+        je      short L_tpdcla_phase1
+        mov     dword ptr [g_data_0054206c], 0x9d
+        call    ScaledLitLoadCall_00480fe0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpdcla_abort
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     L_tpdcla_chain
+        call    EsiInstallSetCallChain_0047aef0
+        pop     esi
+        pop     ebx
+        ret
+    L_tpdcla_phase1:
+        call    TripleFieldCopyHi_0048f7b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpdcla_abort
+        mov     dword ptr [g_data_0054206c], 0xe666
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpdcla_abort
+        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 5
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        pop     ebx
+        ret
+    L_tpdcla_phase0:
+        cmp     dword ptr [g_data_00542088], ebx
+        jne     short L_tpdcla_phase0_dispatch
+        call    InstallSelfPauseTwoCall_0047af70
+        pop     esi
+        pop     ebx
+        ret
+    L_tpdcla_phase0_dispatch:
+        call    MStackPush3CmpCall_0048eec0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpdcla_abort
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_tpdcla_p0_skip
+        call    EsiInstallSetCallChain_0047aef0
+        pop     esi
+        pop     ebx
+        ret
+    L_tpdcla_p0_skip:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x28]
+        cmp     eax, 0x18
+        mov     dword ptr [g_data_0054206c], eax
+        jg      short L_tpdcla_storeBack
+        mov     eax, 0x18
+        mov     dword ptr [g_data_0054206c], eax
+    L_tpdcla_storeBack:
+        mov     dword ptr [ecx*4 + 0x28], eax
+        mov     dword ptr [g_data_00542080], 2
+    L_tpdcla_chain:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     dword ptr [g_data_0054207c], 6
+        call    EntryThunkBodyStateMachine_00457bb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpdcla_abort
+        call    TripleFieldCopyJmpHi_0048f740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpdcla_abort
+        mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], 5
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_tpdcla_abort:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
