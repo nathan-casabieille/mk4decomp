@@ -14280,10 +14280,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5650
-    name: func_004b5650
+    name: PadPollDispatcher_004b5650
     size: 494
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5840
     name: SetState1_004b5840
     size: 11

@@ -95293,7 +95293,7 @@ __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
  * Per-frame input pump. If g_data_004ffd7c (input-enabled flag)
  * is set and g_data_007af918 (pause-gate) is zero:
  *  - reset 4 accumulators (g_data_004d50a4/a8/ac/b0) to 0
- *  - call func_004b5650(0/1) twice  (pad poll for player 0/1)
+ *  - call PadPollDispatcher_004b5650(0/1) twice  (pad poll for player 0/1)
  *  - call InputBitMaskDispatcher_004b5470(0/1) twice
  *  - if all 4 accumulators are 0 AND func_004b5450 for keys
  *    0x1B(ESC) / 0x20(SPACE) / 0x0D(ENTER) all returned 0,
@@ -95309,7 +95309,7 @@ __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
  * Linear no mstack. Returns: void.
  * ============================================================ */
 
-extern void func_004b5650(int player);
+extern void PadPollDispatcher_004b5650(int player);
 extern void func_004b5450(int key);
 extern unsigned int g_data_007af918;
 extern unsigned int g_data_007af920;
@@ -95354,10 +95354,10 @@ __declspec(naked) void InputDispatchEntryPoint_004b5850(void)
         cmp     dword ptr [g_data_007af918], esi
         jne     L_idep_after_clear_masks
         push    esi
-        call    func_004b5650
+        call    PadPollDispatcher_004b5650
         add     esp, 4
         push    1
-        call    func_004b5650
+        call    PadPollDispatcher_004b5650
         add     esp, 4
         push    esi
         call    InputBitMaskDispatcher_004b5470
@@ -95469,3 +95469,200 @@ __declspec(naked) void InputDispatchEntryPoint_004b5850(void)
         ret
     }
 }
+
+/* ============================================================
+ * PadPollDispatcher_004b5650 — 494b engine.geo.
+ *
+ * Per-player pad-poll dispatcher (called by
+ * InputDispatchEntryPoint_004b5850 with arg=0/1). Polls the
+ * pad-active IAT slot (0x4d21c0) with VK 0x12; if focus bit
+ * 0x8001 set, bail. Otherwise iterates 13 (key_id, payload)
+ * pair groups indexed by player slot esi (arg1):
+ *   for i in 0..12:
+ *     key = g_table_00543ab8[esi*4 + i*8]   ; sparse but step 8
+ *     if (CallShrAnd_004b5450(key)) {
+ *         *g_table_004f4dcc[esi*8 + i*0x10] |= g_table_004f4dc8[esi*8 + i*0x10];
+ *     }
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_iat_004d21c0;
+extern unsigned int g_data_004f4e08;
+extern unsigned int g_data_004f4e0c;
+extern unsigned int g_data_004f4e18;
+extern unsigned int g_data_004f4e1c;
+extern unsigned int g_data_004f4e28;
+extern unsigned int g_data_004f4e2c;
+extern unsigned int g_data_004f4e38;
+extern unsigned int g_data_004f4e3c;
+extern unsigned int g_data_004f4e48;
+extern unsigned int g_data_004f4e4c;
+extern unsigned int g_data_004f4e58;
+extern unsigned int g_data_004f4e5c;
+extern unsigned int g_data_004f4e68;
+extern unsigned int g_data_004f4e6c;
+extern unsigned int g_data_004f4e78;
+extern unsigned int g_data_004f4e7c;
+extern unsigned int g_data_004f4e88;
+extern unsigned int g_data_004f4e8c;
+extern unsigned int g_table_00543ab8;
+extern unsigned int g_table_00543ac0;
+extern unsigned int g_table_00543ac8;
+extern unsigned int g_table_00543ad0;
+extern unsigned int g_table_00543ad8;
+extern unsigned int g_table_00543ae0;
+extern unsigned int g_table_00543ae8;
+extern unsigned int g_table_00543af0;
+extern unsigned int g_table_00543af8;
+extern unsigned int g_table_00543b00;
+extern unsigned int g_table_00543b08;
+extern unsigned int g_table_00543b10;
+extern unsigned int g_table_00543b18;
+
+__declspec(naked) void PadPollDispatcher_004b5650(void)
+{
+    __asm {
+        push    esi
+        push    0x12
+        call    dword ptr [g_iat_004d21c0]
+        test    eax, 0x8001
+        jne     L_ppd_end
+        mov     esi, dword ptr [esp + 8]
+
+        mov     eax, dword ptr [esi*4 + g_table_00543ab8]
+        push    eax
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip1
+        mov     eax, dword ptr [esi*8 + g_data_004f4dcc]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4dc8]
+        or      dword ptr [eax], ecx
+    L_ppd_skip1:
+        mov     edx, dword ptr [esi*4 + g_table_00543ac0]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip2
+        mov     eax, dword ptr [esi*8 + g_data_004f4ddc]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4dd8]
+        or      dword ptr [eax], ecx
+    L_ppd_skip2:
+        mov     edx, dword ptr [esi*4 + g_table_00543ac8]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip3
+        mov     eax, dword ptr [esi*8 + g_data_004f4dec]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4de8]
+        or      dword ptr [eax], ecx
+    L_ppd_skip3:
+        mov     edx, dword ptr [esi*4 + g_table_00543ad0]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip4
+        mov     eax, dword ptr [esi*8 + g_data_004f4dfc]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4df8]
+        or      dword ptr [eax], ecx
+    L_ppd_skip4:
+        mov     edx, dword ptr [esi*4 + g_table_00543ad8]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip5
+        mov     eax, dword ptr [esi*8 + g_data_004f4e0c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e08]
+        or      dword ptr [eax], ecx
+    L_ppd_skip5:
+        mov     edx, dword ptr [esi*4 + g_table_00543ae0]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip6
+        mov     eax, dword ptr [esi*8 + g_data_004f4e1c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e18]
+        or      dword ptr [eax], ecx
+    L_ppd_skip6:
+        mov     edx, dword ptr [esi*4 + g_table_00543ae8]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip7
+        mov     eax, dword ptr [esi*8 + g_data_004f4e2c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e28]
+        or      dword ptr [eax], ecx
+    L_ppd_skip7:
+        mov     edx, dword ptr [esi*4 + g_table_00543af0]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip8
+        mov     eax, dword ptr [esi*8 + g_data_004f4e3c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e38]
+        or      dword ptr [eax], ecx
+    L_ppd_skip8:
+        mov     edx, dword ptr [esi*4 + g_table_00543af8]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip9
+        mov     eax, dword ptr [esi*8 + g_data_004f4e4c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e48]
+        or      dword ptr [eax], ecx
+    L_ppd_skip9:
+        mov     edx, dword ptr [esi*4 + g_table_00543b00]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip10
+        mov     eax, dword ptr [esi*8 + g_data_004f4e5c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e58]
+        or      dword ptr [eax], ecx
+    L_ppd_skip10:
+        mov     edx, dword ptr [esi*4 + g_table_00543b08]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip11
+        mov     eax, dword ptr [esi*8 + g_data_004f4e6c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e68]
+        or      dword ptr [eax], ecx
+    L_ppd_skip11:
+        mov     edx, dword ptr [esi*4 + g_table_00543b10]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_skip12
+        mov     eax, dword ptr [esi*8 + g_data_004f4e7c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e78]
+        or      dword ptr [eax], ecx
+    L_ppd_skip12:
+        mov     edx, dword ptr [esi*4 + g_table_00543b18]
+        push    edx
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        je      L_ppd_end
+        mov     eax, dword ptr [esi*8 + g_data_004f4e8c]
+        mov     ecx, dword ptr [esi*8 + g_data_004f4e88]
+        or      dword ptr [eax], ecx
+    L_ppd_end:
+        pop     esi
+        ret
+    }
+}
+
+
