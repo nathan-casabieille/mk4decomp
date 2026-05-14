@@ -88574,3 +88574,165 @@ __declspec(naked) void SlotInitAndChainLink_004191b0(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase2InitSlotTreeWalk_0041ad60 — 609b boot.
+ *
+ * Linear initialization sequence: prepares the current slot
+ * (g_data_00542044) and recurses into its [+0x24] children
+ * via MStackBracket1_TreeWalkRecursive2_00406dd0. Either tail-
+ * jmps func_0041afd0 (success/skip path) or simply ret (abort).
+ *
+ *   - g_data_0054206c=0; call func_0040a470; pause-gate;
+ *   - g_data_0054206c=8; call func_0040a470; pause-gate;
+ *   - g_data_0054206c=2; call func_00408cb0; pause-gate;
+ *   - g_data_00542048 := slot_44[+0x24];
+ *   - call func_00407400; pause-gate;
+ *   - if bit 2 of g_state_0054208c is set: tail-jmp 0x41afd0;
+ *   - else: paint slot fields (+0x30=0x80, +0x3c=g_data_00535e6c,
+ *     +0x80=0x147A); paint OR-bit-0 of slot_5c[+0x34] into
+ *     slot_44[+0x34]; (g_data_0054207c = sign-toggled 0x10000
+ *     or 0xFFFF0000 based on bit 0 of slot_5c[+0x34]);
+ *     g_data_00542054 := g_data_00542044;
+ *   - MStackPush2RunCountdown_004089e0; pause-gate;
+ *   - call func_004b8fa0; pause-gate;
+ *   - g_data_0054206c=2; func_00408d30; pause-gate;
+ *   - 3-field copy from slot_48 [+0x3c/+0x40/+0x44] into
+ *     slot_54 [+0x54/+0x58/+0x5c];
+ *   - slot_54[+0x18] -> g_data_00542050; clear its [+0x30],
+ *     [+0x34], [+0x38];
+ *   - g_data_00542048 := packed_ptr(&g_data_00542378 >> 2);
+ *     advance by slot_60[+0x34]; deref to fetch child ptr;
+ *   - call MStackBracket1_TreeWalkRecursive2_00406dd0;
+ *     pause-gate;
+ *   - if bit 2 set: tail-jmp 0x41afd0;
+ *   - else: g_data_00542048 := g_data_00542050; call
+ *     func_00405ac0; pause-gate; tail-jmp 0x41afd0.
+ *
+ *   Pause-gate `jne 0x41afc0` → final `c3 ret`.
+ *   Success/skip → `jmp 0x41afd0` (next function, outside).
+ * ============================================================ */
+
+extern void func_0041afd0(void);
+extern unsigned int g_data_00542378;
+
+__declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
+{
+    __asm {
+        mov     dword ptr [g_data_0054206c], 0
+        call    func_0040a470
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        mov     dword ptr [g_data_0054206c], 8
+        call    func_0040a470
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        mov     dword ptr [g_data_0054206c], 2
+        call    func_00408cb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_data_00542048], ecx
+        call    func_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      L_p2is_continue
+        jmp     func_0041afd0
+    L_p2is_continue:
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x30], 0x80
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3C], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054207c], 0x10000
+        mov     eax, dword ptr [edx*4 + 0x34]
+        and     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_p2is_after_select
+        mov     dword ptr [g_data_0054207c], 0xFFFF0000
+    L_p2is_after_select:
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        or      edx, eax
+        mov     eax, 0x147A
+        mov     dword ptr [ecx*4 + 0x34], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x80], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542054], edx
+        call    MStackPush2RunCountdown_004089e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        mov     dword ptr [g_data_0054206c], 2
+        call    func_00408d30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [eax*4 + 0x3C]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x40]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x44]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5C], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [eax*4 + 0x30], 0
+        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     eax, dword ptr [g_data_00542050]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4 + 0x38], edx
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, offset g_data_00542378
+        sar     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        add     eax, edx
+        mov     dword ptr [g_data_00542048], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542048], edx
+        call    MStackBracket1_TreeWalkRecursive2_00406dd0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        test    byte ptr [g_state_0054208c], 4
+        je      L_p2is_after_walk
+        jmp     func_0041afd0
+    L_p2is_after_walk:
+        mov     eax, dword ptr [g_data_00542050]
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00405ac0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p2is_ret
+        jmp     func_0041afd0
+    L_p2is_ret:
+        ret
+    }
+}
