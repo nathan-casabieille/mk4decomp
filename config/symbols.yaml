@@ -8030,10 +8030,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x004757c0
-    name: func_004757c0
+    name: MStackBracket3PackedSlotInit_004757c0
     size: 462
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00475990
     name: MStackBracketed3StoreCall_00475990
     size: 412

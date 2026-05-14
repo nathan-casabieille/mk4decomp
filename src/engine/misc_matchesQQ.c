@@ -83706,3 +83706,127 @@ __declspec(naked) void BootStateInitLongChain_0041ab90(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_004ec898;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_004d5324;
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void MStackCall_00406340(void);
+extern void AudioMixerStep_004ab700(void);
+
+__declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054206c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     edx, offset g_data_004ec898
+        mov     dword ptr [g_state_004d57ac], eax
+        shr     edx, 2
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3p_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_mb3p_doBody
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    L_mb3p_doBody:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     dword ptr [edx*4 + 0x3c], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 0x7f
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3p_ret
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        lea     esi, [edx*4]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [esi + 0x18]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        and     ah, 0xf9
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [esi + 0x60], 0x1921f
+        mov     eax, dword ptr [g_data_004d5324]
+        mov     dword ptr [g_data_0054206c], eax
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mb3p_ret
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     eax, 0xfffffae2
+        mov     dword ptr [esi + 0x64], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x58], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [esi + 0x5c], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [esi + 0x54], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mb3p_ret:
+        pop     esi
+        ret
+    }
+}
