@@ -11732,10 +11732,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c3d0
-    name: func_0049c3d0
+    name: Vec3AccMul10ChainBlend_0049c3d0
     size: 457
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049c5a0
     name: DualCmpSwapStore_0049c5a0
     size: 199

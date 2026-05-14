@@ -82572,3 +82572,139 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         ret
     }
 }
+
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_004d531c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054208c;
+extern void Mul10Tail_00404af0(void);
+extern void BootMod6487eClampAndChainMul10_00407510(void);
+extern void PushSetDualDeref_00406650(void);
+extern void MStackCall_00406600(void);
+extern void MStackPush4LLWalkPop4_004090e0(void);
+
+__declspec(naked) void Vec3AccMul10ChainBlend_0049c3d0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542088]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [g_data_00542084]
+        push    edi
+        lea     edi, [ecx*4]
+        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_data_00542080], edx
+        mov     ecx, dword ptr [esi + 0x54]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     edx, dword ptr [esi + 0x58]
+        mov     dword ptr [g_data_00542070], edx
+        mov     ecx, dword ptr [esi + 0x5c]
+        mov     dword ptr [g_data_00542074], ecx
+        mov     ecx, dword ptr [g_data_00542050]
+        push    eax
+        mov     edx, dword ptr [ecx*4]
+        inc     ecx
+        push    edx
+        mov     dword ptr [g_data_00542078], edx
+        mov     dword ptr [g_data_00542050], ecx
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542080]
+        add     esp, 8
+        mov     dword ptr [g_data_0054207c], eax
+        mov     eax, dword ptr [g_data_00542078]
+        push    edx
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542074]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     ebx, dword ptr [g_data_0054207c]
+        mov     dword ptr [g_data_00542080], eax
+        add     edx, eax
+        mov     eax, dword ptr [g_data_00542050]
+        add     ecx, ebx
+        mov     ebx, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542074], edx
+        mov     edx, dword ptr [eax*4]
+        add     esp, 8
+        add     ebx, edx
+        inc     eax
+        mov     dword ptr [g_data_00542070], ebx
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [edi + 0x54], ecx
+        mov     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [edi + 0x58], eax
+        mov     ecx, dword ptr [g_data_00542074]
+        mov     dword ptr [edi + 0x5c], ecx
+        mov     edx, dword ptr [esi + 0x64]
+        add     edx, dword ptr [g_data_004d531c]
+        mov     dword ptr [g_data_0054206c], edx
+        call    BootMod6487eClampAndChainMul10_00407510
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3acb_pop
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edi + 0x30], 0x43
+        mov     dword ptr [edi + 0x64], eax
+        mov     dword ptr [g_data_0054206c], 0xff
+        call    PushSetDualDeref_00406650
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3acb_pop
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3acb_pop
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        mov     ecx, dword ptr [g_data_00542044]
+        and     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     esi, dword ptr [ecx*4 + 0x34]
+        or      eax, esi
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     eax, dword ptr [g_data_00542050]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_00542050], eax
+        je      short L_v3acb_skipCall
+        call    MStackPush4LLWalkPop4_004090e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v3acb_pop
+    L_v3acb_skipCall:
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 4
+        or      edx, eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_v3acb_pop
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_data_0054208c], ecx
+    L_v3acb_pop:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
