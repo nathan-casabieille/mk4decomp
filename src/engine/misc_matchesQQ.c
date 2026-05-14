@@ -101584,4 +101584,356 @@ __declspec(naked) void RouteRibbonEmit_004bc7e0(void)
     }
 }
 
+/* ============================================================
+ * PaletteFillLineHybrid_004b5ce0 — 1171b engine.geo.
+ *
+ * Hybrid palette-fill line rasterizer for textured surfaces.
+ * Walks a 3-pixel row in the 256x256 palette LUT at
+ * g_data_00f4d050[y*256+x]: for each NULL (zero) entry, computes
+ * RGB565 word from current (R,G,B) FPU stack triple via 4-call
+ * sequence (fld, fsub 0x4d29f0, func_004c57d0 = float-to-int)
+ * with Q5 channel packing. Then iterates remaining steps from
+ * arg2 (or arg3 if arg2<1, swapping x/y dominance), running 2 or
+ * more more rows by incrementing FPU stack with (R-end,G-end,
+ * B-end)/steps deltas, filling LUT entries at adjacent pixels.
+ *
+ * Linear no mstack. Returns: void. Args: (x, y, end_x, end_y,
+ * R, G, B start fp; R_end, G_end, B_end fp).
+ * ============================================================ */
+
+extern unsigned int g_const_004d29f0;
+extern unsigned int g_data_00f4d050;
+
+__declspec(naked) void PaletteFillLineHybrid_004b5ce0(void)
+{
+    __asm {
+        sub      esp, 0x28
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        mov      edi, dword ptr [esp + 0x3c]
+        mov      dword ptr [esp + 0x10], 1
+        mov      eax, edi
+        mov      dword ptr [esp + 0x14], 0
+        and      eax, 0xff
+        lea      ecx, [edi - 1]
+        mov      dword ptr [esp + 0x20], eax
+        lea      eax, [edi + 1]
+        and      eax, 0xff
+        and      ecx, 0xff
+        mov      dword ptr [esp + 0x24], eax
+        mov      eax, dword ptr [esp + 0x44]
+        add      eax, edi
+        mov      dword ptr [esp + 0x1c], ecx
+        fld      dword ptr [esp + 0x54]
+        lea      edx, [eax - 1]
+        mov      dword ptr [esp + 0x18], 3
+        and      edx, 0xff
+        mov      dword ptr [esp + 0x28], edx
+        mov      edx, eax
+        and      edx, 0xff
+        inc      eax
+        and      eax, 0xff
+        mov      dword ptr [esp + 0x2c], edx
+        mov      edx, dword ptr [esp + 0x48]
+        mov      dword ptr [esp + 0x30], eax
+        mov      eax, dword ptr [esp + 0x40]
+        fld      dword ptr [esp + 0x50]
+        lea      ebx, [edx + eax]
+        shl      ebx, 8
+        fld      dword ptr [esp + 0x4c]
+        sub      ebx, 0x100
+        shl      eax, 8
+        mov      dword ptr [esp + 0x34], eax
+        lea      esi, [eax - 0x100]
+        mov      dword ptr [esp + 0x3c], esi
+        jmp      L_5d87
+    L_5d83:
+        mov      ecx, dword ptr [esp + 0x1c]
+    L_5d87:
+        and      esi, 0xff00
+        mov      eax, esi
+        or       eax, ecx
+        cmp      word ptr [eax*2 + g_data_00f4d050], 0
+        lea      eax, [eax*2 + g_data_00f4d050]
+        mov      dword ptr [esp + 0x54], eax
+        jne      L_5deb
+        fld      st(0)
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      st(1)
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      st(2)
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        mov      ecx, dword ptr [esp + 0x54]
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      word ptr [ecx], bp
+    L_5deb:
+        mov      ebp, dword ptr [esp + 0x20]
+        mov      edx, esi
+        or       edx, ebp
+        cmp      word ptr [edx*2 + g_data_00f4d050], 0
+        lea      eax, [edx*2 + g_data_00f4d050]
+        mov      dword ptr [esp + 0x54], eax
+        jne      L_5e4d
+        fld      st(0)
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      st(1)
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      st(2)
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      eax, dword ptr [esp + 0x54]
+        mov      word ptr [eax], bp
+    L_5e4d:
+        mov      ecx, dword ptr [esp + 0x24]
+        or       esi, ecx
+        cmp      word ptr [esi*2 + g_data_00f4d050], 0
+        lea      esi, [esi*2 + g_data_00f4d050]
+        jne      L_5ea5
+        fld      st(0)
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      st(1)
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      st(2)
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      word ptr [esi], bp
+    L_5ea5:
+        mov      edx, dword ptr [esp + 0x28]
+        mov      esi, ebx
+        and      esi, 0xff00
+        mov      ecx, esi
+        or       ecx, edx
+        cmp      word ptr [ecx*2 + g_data_00f4d050], 0
+        lea      eax, [ecx*2 + g_data_00f4d050]
+        mov      dword ptr [esp + 0x54], eax
+        jne      L_5f15
+        fld      dword ptr [esp + 0x58]
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x5c]
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x60]
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        mov      edx, dword ptr [esp + 0x54]
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      word ptr [edx], bp
+    L_5f15:
+        mov      edx, dword ptr [esp + 0x2c]
+        mov      eax, esi
+        or       eax, edx
+        cmp      word ptr [eax*2 + g_data_00f4d050], 0
+        lea      eax, [eax*2 + g_data_00f4d050]
+        mov      dword ptr [esp + 0x54], eax
+        jne      L_5f7d
+        fld      dword ptr [esp + 0x58]
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x5c]
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x60]
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        mov      ecx, dword ptr [esp + 0x54]
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      word ptr [ecx], bp
+    L_5f7d:
+        mov      ecx, dword ptr [esp + 0x30]
+        or       esi, ecx
+        cmp      word ptr [esi*2 + g_data_00f4d050], 0
+        lea      esi, [esi*2 + g_data_00f4d050]
+        jne      L_5fdb
+        fld      dword ptr [esp + 0x58]
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x5c]
+        fsub     qword ptr [g_const_004d29f0]
+        mov      bp, ax
+        and      ebp, 0x1f
+        shl      ebp, 5
+        call     func_004c57d0
+        fld      dword ptr [esp + 0x60]
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       ebp, eax
+        shl      ebp, 5
+        call     func_004c57d0
+        and      eax, 0x1f
+        or       ebp, eax
+        mov      word ptr [esi], bp
+    L_5fdb:
+        mov      esi, dword ptr [esp + 0x3c]
+        mov      eax, dword ptr [esp + 0x18]
+        add      esi, 0x100
+        add      ebx, 0x100
+        dec      eax
+        mov      dword ptr [esp + 0x3c], esi
+        mov      dword ptr [esp + 0x18], eax
+        jne      L_5d83
+        mov      ecx, dword ptr [esp + 0x44]
+        cmp      ecx, 1
+        jge      L_601f
+        mov      ecx, dword ptr [esp + 0x48]
+        mov      dword ptr [esp + 0x10], 0
+        mov      dword ptr [esp + 0x44], ecx
+        mov      dword ptr [esp + 0x14], 1
+    L_601f:
+        fld      dword ptr [esp + 0x58]
+        fld      dword ptr [esp + 0x5c]
+        fld      dword ptr [esp + 0x60]
+        fxch     st(2)
+        fsub     st, st(3)
+        fxch     st(1)
+        fsub     st, st(4)
+        fxch     st(2)
+        fsub     st, st(5)
+        fild     dword ptr [esp + 0x44]
+        fxch     st(2)
+        fdiv     st, st(2)
+        fxch     st(3)
+        test     ecx, ecx
+        fdiv     st, st(2)
+        fxch     st(1)
+        fdiv     st, st(2)
+        fxch     st(3)
+        fstp     dword ptr [esp + 0x58]
+        fstp     dword ptr [esp + 0x5c]
+        fxch     st(1)
+        fstp     dword ptr [esp + 0x60]
+        fstp     st(0)
+        jle      L_6165
+        mov      eax, dword ptr [esp + 0x14]
+        mov      ebx, dword ptr [esp + 0x34]
+        shl      eax, 8
+        mov      dword ptr [esp + 0x48], eax
+        lea      ebp, [edi + 1]
+        mov      dword ptr [esp + 0x44], ecx
+    L_6077:
+        fld      st(0)
+        fsub     qword ptr [g_const_004d29f0]
+        call     func_004c57d0
+        fld      st(1)
+        fsub     qword ptr [g_const_004d29f0]
+        mov      si, ax
+        and      esi, 0x1f
+        shl      esi, 5
+        call     func_004c57d0
+        fld      st(2)
+        fsub     qword ptr [g_const_004d29f0]
+        and      eax, 0x1f
+        or       esi, eax
+        shl      esi, 5
+        call     func_004c57d0
+        and      eax, 0x1f
+        mov      ecx, edi
+        or       esi, eax
+        mov      eax, dword ptr [esp + 0x40]
+        and      eax, 0xff
+        and      ecx, 0xff
+        shl      eax, 8
+        mov      edx, eax
+        or       edx, ecx
+        mov      word ptr [edx*2 + g_data_00f4d050], si
+        mov      edx, dword ptr [esp + 0x10]
+        test     edx, edx
+        je       L_6101
+        lea      eax, [ebx - 0x100]
+        lea      edx, [ebx + 0x100]
+        and      eax, 0xff00
+        and      edx, 0xff00
+        or       eax, ecx
+        or       edx, ecx
+        mov      word ptr [eax*2 + g_data_00f4d050], si
+        jmp      L_611e
+    L_6101:
+        lea      ecx, [edi - 1]
+        mov      edx, ebp
+        and      ecx, 0xff
+        and      edx, 0xff
+        or       ecx, eax
+        or       edx, eax
+        mov      word ptr [ecx*2 + g_data_00f4d050], si
+    L_611e:
+        fld      dword ptr [esp + 0x58]
+        fld      dword ptr [esp + 0x5c]
+        fld      dword ptr [esp + 0x60]
+        fxch     st(2)
+        faddp    st(3), st
+        mov      eax, dword ptr [esp + 0x10]
+        mov      ecx, dword ptr [esp + 0x48]
+        mov      word ptr [edx*2 + g_data_00f4d050], si
+        mov      edx, dword ptr [esp + 0x40]
+        add      edi, eax
+        add      ebp, eax
+        mov      eax, dword ptr [esp + 0x14]
+        add      ebx, ecx
+        add      edx, eax
+        mov      eax, dword ptr [esp + 0x44]
+        faddp    st(3), st
+        dec      eax
+        mov      dword ptr [esp + 0x40], edx
+        mov      dword ptr [esp + 0x44], eax
+        faddp    st(3), st
+        jne      L_6077
+    L_6165:
+        fstp     st(0)
+        pop      edi
+        pop      esi
+        fstp     st(0)
+        pop      ebp
+        pop      ebx
+        fstp     st(0)
+        add      esp, 0x28
+        ret
+    }
+}
+
 

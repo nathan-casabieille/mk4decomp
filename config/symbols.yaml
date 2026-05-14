@@ -14365,10 +14365,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004b5ce0
-    name: func_004b5ce0
+    name: PaletteFillLineHybrid_004b5ce0
     size: 1171
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b6180
     name: HudFontPrecache_004b6180
     size: 300
