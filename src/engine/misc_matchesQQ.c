@@ -114469,3 +114469,168 @@ __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
         ret
     }
 }
+
+/* ============================================================
+ * GameStateProgressCluster_0043aff0 — 476b game (packed: 5 helpers).
+ *
+ * Game-mode FSM advance helpers, 16-byte aligned:
+ *
+ *   1. 0x43aff0 (~26b): sets state code 0x5fa, runs
+ *      func_00489f50 (animate) + func_0045f8d0 (transition);
+ *      on success pushes &g_data_004e4b48 and calls
+ *      func_004594f0 (audio).
+ *
+ *   2. 0x43b020 (L_b020, ~136b): dual-state advance dispatcher.
+ *      Reads [esi+0x84] state, clears it, then:
+ *        - state 0 (L_b0a8): set g_data_0054207c := 3,
+ *          g_data_00542080 := 0x20, install OFFSET L_b020 + state
+ *          1, call func_0043b9a0, mark sync.
+ *        - state 1 (L_b047): install OFFSET L_b020 + state 2,
+ *          call func_00428d00, mark sync.
+ *        - state >= 2: call func_0043aab0 and exit.
+ *
+ *   3. 0x43b120 (L_b120, ~131b): per-entity clear + advance.
+ *      Reads [esi+0x84]; if non-zero calls func_0043b1d0; else
+ *      runs func_00490c30, on success: g_data_00542084 := 0x18000,
+ *      g_data_00542080 := 0x78, install OFFSET L_b120 + state 1,
+ *      call func_00438530, mark sync.
+ *
+ * Linear, no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_00428d00(void);
+extern void func_00438530(void);
+extern void func_0043aab0(void);
+extern void func_0043b1d0(void);
+extern void func_0043b9a0(void);
+extern void func_0045f8d0(void);
+extern void func_00489f50(void);
+extern void func_00490c30(void);
+extern unsigned int g_data_004e4b48;
+
+__declspec(naked) void GameStateProgressCluster_0043aff0(void)
+{
+    __asm {
+        /* H1 */
+        mov      dword ptr [g_data_00542074], 0x5fa
+        call     func_00489f50
+        call     func_0045f8d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b01a
+        push     OFFSET g_data_004e4b48
+        call     func_004594f0
+        add      esp, 4
+    L_b01a:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2 (L_b020): dual-state advance */
+    L_b020:
+        mov      eax, dword ptr [g_data_00542060]
+        xor      edx, edx
+        shl      eax, 2
+        push     esi
+        push     edi
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], edx
+        sub      ecx, edx
+        je       short L_b0a8
+        dec      ecx
+        je       short L_b047
+        call     func_0043aab0
+        pop      edi
+        pop      esi
+        ret
+    L_b047:
+        mov      dword ptr [eax + 8], OFFSET L_b020
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      esi, OFFSET L_b020
+        mov      dword ptr [ecx*4 + 0x84], 2
+        mov      ecx, dword ptr [eax + 4]
+        add      esi, 0x2000000
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [ecx*4], esi
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [eax + 4], ecx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], edx
+        call     func_00428d00
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_b0a8:
+        mov      dword ptr [g_data_0054207c], 3
+        mov      dword ptr [g_data_00542080], 0x20
+        mov      dword ptr [eax + 8], OFFSET L_b020
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      esi, 1
+        mov      edi, OFFSET L_b020
+        mov      dword ptr [ecx*4 + 0x84], esi
+        mov      ecx, dword ptr [eax + 4]
+        add      edi, 0x1000000
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [ecx*4], edi
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [eax + 4], ecx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], edx
+        call     func_0043b9a0
+        mov      dword ptr [g_data_00541e6c], esi
+        pop      edi
+        pop      esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3 (L_b120): per-entity clear + advance */
+    L_b120:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_b149
+        call     func_0043b1d0
+        pop      esi
+        ret
+    L_b149:
+        call     func_00490c30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b1ca
+        mov      dword ptr [g_data_00542084], 0x18000
+        mov      dword ptr [g_data_00542080], 0x78
+        mov      dword ptr [esi + 8], OFFSET L_b120
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET L_b120
+        mov      dword ptr [ecx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        add      edx, 0x1000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], 0
+        call     func_00438530
+        mov      dword ptr [g_data_00541e6c], 1
+    L_b1ca:
+        pop      esi
+        ret
+    }
+}
