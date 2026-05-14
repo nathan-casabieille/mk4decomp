@@ -14642,10 +14642,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004bb680
-    name: func_004bb680
+    name: TristripBatchEmit3Cap_004bb680
     size: 680
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bb930
     name: TristripBatchEmit2_004bb930
     size: 578
