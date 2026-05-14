@@ -1075,10 +1075,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0040fe40
-    name: func_0040fe40
+    name: Phase4FivePackedDispatch_0040fe40
     size: 933
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004101f0
     name: BootInstallerPair_004101f0
     size: 329
