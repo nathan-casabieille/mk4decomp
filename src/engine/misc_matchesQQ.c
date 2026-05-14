@@ -85636,3 +85636,161 @@ __declspec(naked) void MStackBracket2_StateAdvance6_004094d0(void)
         ret
     }
 }
+
+/* ============================================================
+ * Strncpy_004cdc20 — 256b crt (254 code + 2 int3 pad).
+ *
+ * Microsoft CRT strncpy: word-at-a-time fast path using the
+ * 0x7EFEFEFF magic constant for null-byte detection in a dword.
+ * Copies up to count bytes from src to dst; if a null is hit
+ * before count, the remainder of dst is zero-padded.
+ * Returns dst (the original pointer).
+ *
+ *   args: [esp+0x08]=dst (after push edi), [esp+0xc]=src (after
+ *         push edi), [esp+0x10]=count — but read after push edi
+ *         only, then after push esi/ebx the offsets shift to
+ *         [esp+0x10]=dst, [esp+0x14]=src.
+ *
+ *   layout: byte-by-byte alignment loop until src is 4-aligned,
+ *   then a dword loop using the (x + 0x7EFEFEFF) ^ ~x ^ x trick
+ *   to detect a zero byte. After zero, mask edx to keep only
+ *   the bytes up to and including the null, store, then pad
+ *   the rest with zeros (dword-at-a-time, then byte tail).
+ * ============================================================ */
+
+__declspec(naked) void Strncpy_004cdc20(void)
+{
+    __asm {
+        mov     ecx, dword ptr [esp + 0x0C]
+        push    edi
+        test    ecx, ecx
+        je      L_strncpy_zero_count
+        push    esi
+        push    ebx
+        mov     ebx, ecx
+        mov     esi, dword ptr [esp + 0x14]
+        test    esi, 3
+        mov     edi, dword ptr [esp + 0x10]
+        jne     L_strncpy_align_byte
+        shr     ecx, 2
+        jne     L_strncpy_dword_loop
+        jmp     L_strncpy_tail_byte_loop
+    L_strncpy_align_byte:
+        mov     al, byte ptr [esi]
+        inc     esi
+        mov     byte ptr [edi], al
+        inc     edi
+        dec     ecx
+        je      L_strncpy_ret_dst
+        test    al, al
+        je      L_strncpy_null_pad
+        test    esi, 3
+        jne     L_strncpy_align_byte
+        mov     ebx, ecx
+        shr     ecx, 2
+        jne     L_strncpy_dword_loop
+    L_strncpy_after_dwords:
+        and     ebx, 3
+        je      L_strncpy_ret_dst
+    L_strncpy_tail_byte_loop:
+        mov     al, byte ptr [esi]
+        inc     esi
+        mov     byte ptr [edi], al
+        inc     edi
+        test    al, al
+        je      L_strncpy_pad_inner
+        dec     ebx
+        jne     L_strncpy_tail_byte_loop
+    L_strncpy_ret_dst:
+        mov     eax, dword ptr [esp + 0x10]
+        pop     ebx
+        pop     esi
+        pop     edi
+        ret
+    L_strncpy_null_pad:
+        test    edi, 3
+        je      L_strncpy_pad_dword
+    L_strncpy_pad_align:
+        mov     byte ptr [edi], al
+        inc     edi
+        dec     ecx
+        je      L_strncpy_ret_orig
+        test    edi, 3
+        jne     L_strncpy_pad_align
+    L_strncpy_pad_dword:
+        mov     ebx, ecx
+        shr     ecx, 2
+        jne     L_strncpy_pad_dword_init
+    L_strncpy_pad_byte:
+        mov     byte ptr [edi], al
+        inc     edi
+    L_strncpy_pad_inner:
+        dec     ebx
+        jne     L_strncpy_pad_byte
+        pop     ebx
+        pop     esi
+    L_strncpy_zero_count:
+        mov     eax, dword ptr [esp + 8]
+        pop     edi
+        ret
+    L_strncpy_dword_store:
+        mov     dword ptr [edi], edx
+        add     edi, 4
+        dec     ecx
+        je      L_strncpy_after_dwords
+    L_strncpy_dword_loop:
+        mov     edx, 0x7EFEFEFF
+        mov     eax, dword ptr [esi]
+        add     edx, eax
+        xor     eax, 0xFFFFFFFF
+        xor     eax, edx
+        mov     edx, dword ptr [esi]
+        add     esi, 4
+        test    eax, 0x81010100
+        je      L_strncpy_dword_store
+        test    dl, dl
+        je      L_strncpy_zero_b0
+        test    dh, dh
+        je      L_strncpy_zero_b1
+        test    edx, 0x00FF0000
+        je      L_strncpy_zero_b2
+        test    edx, 0xFF000000
+        jne     L_strncpy_dword_store
+        mov     dword ptr [edi], edx
+        jmp     L_strncpy_after_zero
+    L_strncpy_zero_b2:
+        and     edx, 0x0000FFFF
+        mov     dword ptr [edi], edx
+        jmp     L_strncpy_after_zero
+    L_strncpy_zero_b1:
+        and     edx, 0x000000FF
+        mov     dword ptr [edi], edx
+        jmp     L_strncpy_after_zero
+    L_strncpy_zero_b0:
+        xor     edx, edx
+        mov     dword ptr [edi], edx
+    L_strncpy_after_zero:
+        add     edi, 4
+        xor     eax, eax
+        dec     ecx
+        je      L_strncpy_check_tail
+    L_strncpy_pad_dword_init:
+        xor     eax, eax
+    L_strncpy_pad_dword_loop:
+        mov     dword ptr [edi], eax
+        add     edi, 4
+        dec     ecx
+        jne     L_strncpy_pad_dword_loop
+    L_strncpy_check_tail:
+        and     ebx, 3
+        jne     L_strncpy_pad_byte
+    L_strncpy_ret_orig:
+        mov     eax, dword ptr [esp + 0x10]
+        pop     ebx
+        pop     esi
+        pop     edi
+        ret
+        int     3
+        int     3
+    }
+}
