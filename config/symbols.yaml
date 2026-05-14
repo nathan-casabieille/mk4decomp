@@ -959,10 +959,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040ba70
-    name: func_0040ba70
+    name: Phase2InitDispatchInstallSelf_0040ba70
     size: 629
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040bcf0
     name: MStackPush3InitCallChain_0040bcf0
     size: 239
