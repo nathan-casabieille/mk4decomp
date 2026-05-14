@@ -85052,3 +85052,127 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         ret
     }
 }
+
+extern unsigned int g_data_004d6808;
+extern unsigned int g_data_004d6828;
+
+__declspec(naked) void BootPackedDispatchPair_00413580(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, offset g_data_004d6808
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        je      short L_bpdp2_skipReplace
+        mov     edx, offset g_data_004d6828
+        shr     edx, 2
+        mov     dword ptr [g_data_0054206c], edx
+    L_bpdp2_skipReplace:
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bpdp2_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bpdp2_ret
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x34]
+        and     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        mov     edx, dword ptr [ecx*4 + 0x34]
+        or      eax, edx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        call    ScaledTripleCopy54_004ac040
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bpdp2_ret
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        add     ecx, 0xffffe667
+        mov     dword ptr [eax*4 + 0x58], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [eax*4 + 0x14], 0xff
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x4ba0e0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x10], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        jmp     MStackCall_00406600
+    L_bpdp2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_bpdp2_main:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_bpdp2_main_phase0
+        mov     eax, dword ptr [g_data_00542058]
+        dec     eax
+        mov     dword ptr [g_data_00542058], eax
+        jns     short L_bpdp2_main_chain
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_bpdp2_main_phase0:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [g_data_00541ffc]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [edx*4 + 0x30], eax
+        mov     dword ptr [g_data_00542058], 4
+    L_bpdp2_main_chain:
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bpdp2_main_ret
+        add     dword ptr [g_data_0054206c], 0xd999
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bpdp2_main_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_bpdp2_main_install
+        call    BootPackedDispatchPair_00413580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bpdp2_main_ret
+    L_bpdp2_main_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_bpdp2_main
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_data_00541e6c], eax
+    L_bpdp2_main_ret:
+        pop     esi
+        ret
+    }
+}

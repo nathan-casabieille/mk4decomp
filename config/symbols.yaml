@@ -1195,10 +1195,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x00413580
-    name: func_00413580
+    name: BootPackedDispatchPair_00413580
     size: 472
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00413760
     name: func_00413760
     size: 818
