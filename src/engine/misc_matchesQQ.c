@@ -81521,3 +81521,140 @@ __declspec(naked) void QuadPackedInstallSelfChain_0048aa20(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern void ScaledDecBranch_00466770(void);
+extern void TagDispatchPairedPacked_004667f0(void);
+extern void func_004668b0(void);
+extern void GuardedSeq_00476f10(void);
+
+__declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     edx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_data_00542054], edx
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542058], ecx
+        mov     edx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_data_00542074], 0x26b
+        mov     dword ptr [g_data_0054204c], 0x4678b0
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_ret1
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054206c], 3
+        mov     dword ptr [g_data_0054205c], eax
+        call    GuardedSeq_00476f10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_ret1
+        call    TagDispatchPairedPacked_004667f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_ret1
+        push    0x4eaa10
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fpsicd_ret1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpsicd_sub2:
+        push    0x4eaa28
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+    L_fpsicd_sub3:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_fpsicd_sub3_phase0
+        call    ScaledDecBranch_00466770
+        pop     esi
+        ret
+    L_fpsicd_sub3_phase0:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        cmp     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_fpsicd_sub3_nonOne
+        call    func_004668b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_sub3_ret
+        push    0x4eaa38
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+    L_fpsicd_sub3_nonOne:
+        call    func_004668b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_sub3_ret
+        mov     dword ptr [esi + 8], offset L_fpsicd_sub3
+        mov     dword ptr [esi + 0x84], 1
+        mov     dword ptr [g_data_0054204c], 0xf
+        mov     dword ptr [g_data_00541e6c], 1
+    L_fpsicd_sub3_ret:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpsicd_sub4:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542058], ecx
+        mov     edx, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_data_00542074], 0x26b
+        mov     dword ptr [g_data_0054204c], 0x4678b0
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_sub4_ret
+        call    TagDispatchPairedPacked_004667f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsicd_sub4_ret
+        mov     eax, dword ptr [g_data_00542060]
+        push    0x4eaa48
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_data_0054205c], ecx
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fpsicd_sub4_ret:
+        ret
+    }
+}

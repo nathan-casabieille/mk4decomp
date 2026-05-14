@@ -6978,10 +6978,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004665b0
-    name: func_004665b0
+    name: FourPackedSubInitCmpDispatch_004665b0
     size: 447
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00466770
     name: ScaledDecBranch_00466770
     size: 38
