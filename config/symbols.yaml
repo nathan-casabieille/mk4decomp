@@ -14691,10 +14691,11 @@ functions:
     group: engine.render
     status: stub
   - addr: 0x004bd270
-    name: func_004bd270
+    name: SunbeamSpriteEmit_004bd270
     size: 551
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bd4a0
     name: ChainWalkCleanup_004bd4a0
     size: 110
