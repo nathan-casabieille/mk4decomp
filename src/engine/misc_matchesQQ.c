@@ -110331,3 +110331,211 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
     }
 }
 
+/* ============================================================
+ * BucketBlockAllocSplit_004c7670 — 370b crt.
+ *
+ * Allocator inside a 256-cell bucket: arg1=allocation size,
+ * arg2=cell base, arg3=cell-end-byte limit. Each cell starts
+ * with a header (head=[edi+0], avail=[edi+4]) and is followed
+ * by 0xf8 bytes of payload split into chunks marked by their
+ * leading length byte (00 = free, non-zero = used run).
+ *
+ * Strategy:
+ *   1. If avail >= size, allocate from the current run, advance
+ *      head/avail in place (or zero them when run is exactly
+ *      consumed), tag the new chunk with size at [esi], return
+ *      ((esi + 8) << 4) - (edi*15).
+ *   2. Otherwise walk the cell's chunks scanning for a free
+ *      block ≥ size: short runs of 0x00 are coalesced
+ *      counting-up; once a free run of ≥ size is found, tag,
+ *      record remainder back into head/avail. Two passes (a
+ *      cursor walk from current head, then a wrap-around walk
+ *      from cell+8) to handle the ring case.
+ *   3. Return 0 on failure (all four pop-then-return tails).
+ *
+ * Frame: push ebx/ebp/esi/edi, no esp adjust. Linear, no
+ * mstack. Returns: void* (cell-relative encoded handle).
+ * ============================================================ */
+
+__declspec(naked) void BucketBlockAllocSplit_004c7670(void)
+{
+    __asm {
+        mov      edx, dword ptr [esp + 0xc]
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        mov      edi, dword ptr [esp + 0x14]
+        mov      eax, dword ptr [edi + 4]
+        mov      ecx, dword ptr [edi]
+        cmp      eax, edx
+        mov      dword ptr [esp + 0x14], ecx
+        mov      esi, ecx
+        lea      ebx, [edi + 0xf8]
+        jb       short L_76cb
+        lea      eax, [ecx + edx]
+        mov      byte ptr [ecx], dl
+        cmp      eax, ebx
+        jae      short L_76aa
+        mov      esi, dword ptr [edi]
+        mov      eax, dword ptr [edi + 4]
+        add      esi, edx
+        sub      eax, edx
+        mov      dword ptr [edi], esi
+        mov      dword ptr [edi + 4], eax
+        jmp      short L_76b6
+    L_76aa:
+        lea      edx, [edi + 8]
+        mov      dword ptr [edi + 4], 0
+        mov      dword ptr [edi], edx
+    L_76b6:
+        lea      eax, [edi + edi*2]
+        lea      eax, [eax + eax*4]
+        mov      edx, eax
+        lea      eax, [ecx + 8]
+        shl      eax, 4
+        sub      eax, edx
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_76cb:
+        add      eax, ecx
+        cmp      byte ptr [eax], 0
+        je       short L_76d4
+        mov      esi, eax
+    L_76d4:
+        lea      eax, [esi + edx]
+        cmp      eax, ebx
+        mov      ebx, dword ptr [esp + 0x18]
+        jae      short L_7754
+    L_76df:
+        mov      al, byte ptr [esi]
+        test     al, al
+        jne      short L_7721
+        cmp      byte ptr [esi + 1], 0
+        lea      eax, [esi + 1]
+        mov      ecx, 1
+        jne      short L_76fa
+    L_76f3:
+        inc      eax
+        inc      ecx
+        cmp      byte ptr [eax], 0
+        je       short L_76f3
+    L_76fa:
+        cmp      ecx, edx
+        jae      short L_7737
+        mov      ebp, dword ptr [esp + 0x14]
+        cmp      esi, ebp
+        jne      short L_770f
+        mov      dword ptr [edi + 4], ecx
+        mov      esi, eax
+        mov      ecx, ebp
+        jmp      short L_7728
+    L_770f:
+        sub      ebx, ecx
+        cmp      ebx, edx
+        jb       L_77db
+        mov      ecx, dword ptr [esp + 0x14]
+        mov      esi, eax
+        jmp      short L_7728
+    L_7721:
+        and      eax, 0xff
+        add      esi, eax
+    L_7728:
+        lea      ebp, [esi + edx]
+        lea      eax, [edi + 0xf8]
+        cmp      ebp, eax
+        jb       short L_76df
+        jmp      short L_7754
+    L_7737:
+        lea      eax, [esi + edx]
+        lea      ebx, [edi + 0xf8]
+        cmp      eax, ebx
+        jae      short L_774d
+        sub      ecx, edx
+        mov      dword ptr [edi], eax
+        mov      dword ptr [edi + 4], ecx
+        jmp      short L_77c6
+    L_774d:
+        lea      ecx, [edi + 8]
+        mov      dword ptr [edi], ecx
+        jmp      short L_77bf
+    L_7754:
+        lea      ebp, [edi + 8]
+        mov      esi, ebp
+        cmp      esi, ecx
+        jae      short L_77db
+    L_775d:
+        lea      ecx, [esi + edx]
+        lea      eax, [edi + 0xf8]
+        cmp      ecx, eax
+        jae      short L_77db
+        mov      al, byte ptr [esi]
+        test     al, al
+        jne      short L_7793
+        cmp      byte ptr [esi + 1], 0
+        lea      eax, [esi + 1]
+        mov      ecx, 1
+        jne      short L_7785
+    L_777e:
+        inc      eax
+        inc      ecx
+        cmp      byte ptr [eax], 0
+        je       short L_777e
+    L_7785:
+        cmp      ecx, edx
+        jae      short L_77a7
+        sub      ebx, ecx
+        cmp      ebx, edx
+        jb       short L_77db
+        mov      esi, eax
+        jmp      short L_779a
+    L_7793:
+        and      eax, 0xff
+        add      esi, eax
+    L_779a:
+        cmp      esi, dword ptr [esp + 0x14]
+        jb       short L_775d
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_77a7:
+        lea      eax, [esi + edx]
+        lea      ebx, [edi + 0xf8]
+        cmp      eax, ebx
+        jae      short L_77bd
+        sub      ecx, edx
+        mov      dword ptr [edi], eax
+        mov      dword ptr [edi + 4], ecx
+        jmp      short L_77c6
+    L_77bd:
+        mov      dword ptr [edi], ebp
+    L_77bf:
+        mov      dword ptr [edi + 4], 0
+    L_77c6:
+        lea      eax, [edi + edi*2]
+        mov      byte ptr [esi], dl
+        lea      edx, [eax + eax*4]
+        lea      eax, [esi + 8]
+        shl      eax, 4
+        sub      eax, edx
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_77db:
+        pop      edi
+        pop      esi
+        pop      ebp
+        xor      eax, eax
+        pop      ebx
+        ret
+    }
+}
+
