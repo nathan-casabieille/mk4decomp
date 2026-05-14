@@ -99026,4 +99026,220 @@ __declspec(naked) void ScanlineTexBlitInterlaced_004c1130(void)
     }
 }
 
+/* ============================================================
+ * RegionFlushChain_004b9250 — 698b engine.render.
+ *
+ * Per-frame region/sector chain flush. Walks the
+ * g_data_00542044-rooted slot tree using the descent regs at
+ * 0054204c/2050/2054/2070. For each slot, dispatches
+ * func_004bd9a0 (block-render) or func_004bd9a0/00542070
+ * lookup for terminal slots, and func_004bda70/func_004bae90
+ * for parent slots. Self-installs into g_data_0054206c when
+ * a leaf-slot's bit 0x10 is clear (mark slot as visited via
+ * the current func address). Bails out early on any
+ * g_data_00541e6c (abort flag) transition.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004bae90(void);
+extern void func_004bd9a0(void);
+extern void func_004bda70(void);
+extern unsigned int g_data_004f7888;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542098;
+
+__declspec(naked) void RegionFlushChain_004b9250(void)
+{
+    __asm {
+        sub      esp, 0x1c
+        push     ebx
+        mov      eax, dword ptr [g_data_00542048]
+        push     ebp
+        push     esi
+        mov      esi, dword ptr [g_data_00542044]
+        mov      ebx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_data_00542054]
+        push     edi
+        mov      edx, dword ptr [esi*4 + 0x3c]
+        lea      edi, [esi*4]
+        mov      ebp, eax
+        mov      dword ptr [esp + 0x1c], ebx
+        test     edx, edx
+        mov      dword ptr [esp + 0x18], ebp
+        mov      dword ptr [esp + 0x14], ecx
+        jne      L_92a9
+        mov      edx, dword ptr [edi + 0x40]
+        test     edx, edx
+        jne      L_92a9
+        mov      edx, dword ptr [edi + 0x44]
+        test     edx, edx
+        jne      L_92a9
+        shl      eax, 2
+        mov      dword ptr [g_data_00542054], eax
+        jmp      L_9333
+    L_92a9:
+        add      ecx, 0x14
+        mov      dword ptr [g_data_00542048], esi
+        mov      dword ptr [g_data_00542054], ecx
+        mov      edx, dword ptr [esi*4 + 0x20]
+        mov      eax, edx
+        mov      dword ptr [g_data_00542070], edx
+        sar      eax, 0x18
+        and      eax, 7
+        test     dh, 1
+        je       L_92d5
+        add      eax, 8
+    L_92d5:
+        mov      edx, OFFSET g_data_004f7888
+        sar      edx, 2
+        add      eax, edx
+        lea      edx, [esi + 0xf]
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_00542048], edx
+        sar      ecx, 2
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_data_00542044], ecx
+        call     eax
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9502
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_00542048], ebp
+        mov      dword ptr [g_data_0054204c], eax
+        call     func_004bda70
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9502
+    L_9333:
+        lea      ebp, [esp + 0x20]
+        lea      ecx, [esi + 0xc]
+        sar      ebp, 2
+        mov      dword ptr [g_data_00542050], ebx
+        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [esp + 0x10], ebp
+        mov      dword ptr [g_data_00542044], ebp
+        call     func_004bd9a0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9502
+        mov      dword ptr [g_data_0054204c], esi
+        mov      eax, dword ptr [esi*4 + 0x28]
+        test     eax, eax
+        mov      dword ptr [g_data_00542048], eax
+        mov      ebx, eax
+        je       L_948d
+        mov      ecx, dword ptr [eax*4]
+        lea      ebp, [eax*4]
+        test     cl, 4
+        mov      dword ptr [g_data_00542070], ecx
+        je       L_93da
+        mov      ecx, dword ptr [esp + 0x10]
+        lea      edx, [eax + 0xf]
+        mov      dword ptr [g_data_00542044], edx
+        mov      edx, dword ptr [g_data_00542054]
+        add      eax, 0xc
+        mov      dword ptr [g_data_00542050], ecx
+        sar      edx, 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00542048], edx
+        call     func_004bd9a0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        je       L_9432
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x1c
+        ret
+    L_93da:
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [ecx*4]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [eax*4 + 0x3c], ecx
+        mov      edx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [edx*4 + 4]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x40], eax
+        mov      edx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [edx*4 + 8]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x44], eax
+    L_9432:
+        mov      dword ptr [g_data_00542048], ebx
+        mov      eax, dword ptr [ebp]
+        test     al, 0x10
+        mov      dword ptr [g_data_0054206c], eax
+        je       L_9489
+        mov      eax, dword ptr [g_data_00542054]
+        lea      ecx, [ebx + 6]
+        mov      dword ptr [g_data_00542048], ecx
+        mov      edx, dword ptr [eax]
+        shl      ecx, 2
+        mov      dword ptr [ecx], edx
+        mov      edx, dword ptr [eax + 4]
+        mov      dword ptr [ecx + 4], edx
+        mov      edx, dword ptr [eax + 8]
+        mov      dword ptr [ecx + 8], edx
+        mov      edx, dword ptr [eax + 0xc]
+        mov      dword ptr [ecx + 0xc], edx
+        mov      edx, dword ptr [eax + 0x10]
+        mov      dword ptr [ecx + 0x10], edx
+        mov      edx, dword ptr [eax + 0x14]
+        mov      dword ptr [ecx + 0x14], edx
+        mov      edx, dword ptr [eax + 0x18]
+        mov      dword ptr [ecx + 0x18], edx
+        mov      edx, dword ptr [eax + 0x1c]
+        mov      dword ptr [ecx + 0x1c], edx
+        mov      eax, dword ptr [eax + 0x20]
+        mov      dword ptr [ecx + 0x20], eax
+    L_9489:
+        mov      ebp, dword ptr [esp + 0x10]
+    L_948d:
+        mov      edx, dword ptr [g_data_00542054]
+        mov      dword ptr [g_data_00542044], esi
+        mov      eax, dword ptr [edi]
+        xor      ecx, ecx
+        test     eax, eax
+        sete     cl
+        mov      dword ptr [g_data_0054206c], eax
+        mov      eax, ecx
+        sar      edx, 2
+        test     eax, eax
+        mov      dword ptr [g_data_00542098], eax
+        mov      dword ptr [g_data_00542048], edx
+        jne      L_94d9
+        mov      dword ptr [g_data_0054206c], OFFSET RegionFlushChain_004b9250
+        mov      dword ptr [g_data_0054204c], ebp
+        call     func_004bae90
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9502
+    L_94d9:
+        mov      eax, dword ptr [esp + 0x14]
+        mov      ecx, dword ptr [esp + 0x18]
+        mov      edx, dword ptr [esp + 0x1c]
+        mov      dword ptr [g_data_00542054], eax
+        mov      eax, dword ptr [g_data_0054208c]
+        mov      dword ptr [g_data_00542048], ecx
+        and      al, 0xfe
+        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_data_0054208c], eax
+    L_9502:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x1c
+        ret
+    }
+}
+
 
