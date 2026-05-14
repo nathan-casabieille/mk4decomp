@@ -1499,10 +1499,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x0041a610
-    name: func_0041a610
+    name: Phase4ThreePackedInstallSelf_0041a610
     size: 1068
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041aa40
     name: Copy3FieldsNeg_0041aa40
     size: 60
