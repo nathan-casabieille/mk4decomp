@@ -97172,4 +97172,184 @@ __declspec(naked) void DSoundDualEntryRelease_004af210(void)
     }
 }
 
+/* ============================================================
+ * BboxProjectAndStash_004bc5a0 — 569b engine.geo.
+ *
+ * Per-frame bounding-box projection helper. Reads vis-state
+ * slot N from g_data_00542048's slot+0x1c. Bails if N is out of
+ * range (≤0 or >0x10), or if the slot has the 'no-bbox' flag set
+ * at g_data_004f63e8[N*16]+0. Reads two 16-bit (x,z) world-space
+ * pairs from g_data_004f63ea/ee[N*16], applies the camera 3x3
+ * matrix at g_data_007af992..9a0 (Q12 fixed-point), then stashes
+ * the 6 projected words (one front and one back corner) into
+ * g_data_00ab44f8..4502 at index g_data_00ab51f4*6, bumping that
+ * index by 2. Also writes the front-bbox z to g_data_007af984
+ * and stash slot at 00542070.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_data_004f6264;
+extern unsigned int g_data_004f63e8;
+extern unsigned int g_data_004f63ea;
+extern unsigned int g_data_004f63ec;
+extern unsigned int g_data_004f63ee;
+extern unsigned int g_data_004f63f0;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_007af96c;
+extern unsigned int g_data_007af978;
+extern unsigned int g_data_00ab44f8;
+extern unsigned int g_data_00ab44fa;
+extern unsigned int g_data_00ab44fc;
+extern unsigned int g_data_00ab44fe;
+extern unsigned int g_data_00ab4500;
+extern unsigned int g_data_00ab4502;
+extern unsigned int g_data_00ab4e2c;
+extern unsigned int g_data_00ab51f4;
+extern unsigned int g_data_00ab51f8;
+
+__declspec(naked) void BboxProjectAndStash_004bc5a0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542048]
+        sub      esp, 0xc
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        mov      edi, dword ptr [eax*4 + 0x1c]
+        test     edi, edi
+        mov      dword ptr [g_data_0054206c], edi
+        jle      L_c7d1
+        cmp      edi, 0x10
+        jg       L_c7d1
+        shl      edi, 4
+        mov      al, byte ptr [edi + g_data_004f63e8]
+        test     al, al
+        jne      L_c7d1
+        mov      eax, dword ptr [g_data_00ab4e2c]
+        cmp      eax, OFFSET g_data_004f6264
+        jne      L_c5f6
+        mov      eax, dword ptr [g_data_00ab51f8]
+        test     eax, eax
+        jne      L_c7d1
+        jmp      L_c60b
+    L_c5f6:
+        mov      dword ptr [g_data_00ab51f8], 0
+        mov      cl, byte ptr [eax]
+        cmp      cl, 1
+        jne      L_c7d1
+    L_c60b:
+        mov      cx, word ptr [edi + g_data_004f63ea]
+        mov      dx, word ptr [edi + g_data_004f63ee]
+        movsx    eax, word ptr [g_data_007af992]
+        movsx    ebp, word ptr [g_data_007af994]
+        movsx    ebx, cx
+        movsx    ecx, dx
+        mov      dword ptr [esp + 0x10], ebx
+        mov      dword ptr [esp + 0x14], ecx
+        imul     ebx, eax
+        mov      eax, dword ptr [esp + 0x14]
+        mov      word ptr [g_data_007af958], 0
+        imul     eax, ebp
+        movsx    ecx, word ptr [g_data_007af998]
+        movsx    esi, word ptr [g_data_007af99a]
+        add      ebx, eax
+        mov      eax, dword ptr [g_data_007af9a4]
+        sar      ebx, 0xc
+        add      ebx, eax
+        mov      ebp, esi
+        movsx    eax, bx
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [esp + 0x14]
+        mov      ebx, ecx
+        imul     ebp, eax
+        imul     ebx, dword ptr [esp + 0x10]
+        movsx    edx, word ptr [g_data_007af99e]
+        add      ebx, ebp
+        mov      ebp, dword ptr [g_data_007af9a8]
+        sar      ebx, 0xc
+        add      ebx, ebp
+        mov      dword ptr [esp + 0x18], edx
+        movsx    edx, word ptr [g_data_007af9a0]
+        movsx    ebx, bx
+        mov      dword ptr [g_data_00542048], ebx
+        mov      ebx, edx
+        imul     ebx, eax
+        mov      eax, dword ptr [esp + 0x18]
+        mov      bp, word ptr [g_data_00542044]
+        imul     eax, dword ptr [esp + 0x10]
+        add      ebx, eax
+        mov      eax, dword ptr [g_data_007af9ac]
+        sar      ebx, 0xc
+        add      ebx, eax
+        mov      eax, dword ptr [g_data_00ab51f4]
+        movsx    ebx, bx
+        lea      eax, [eax + eax*2]
+        shl      eax, 1
+        mov      word ptr [eax + g_data_00ab44f8], bp
+        mov      bp, word ptr [g_data_00542048]
+        mov      word ptr [eax + g_data_00ab44fa], bp
+        mov      word ptr [eax + g_data_00ab44fc], bx
+        mov      bx, word ptr [edi + g_data_004f63ec]
+        mov      di, word ptr [edi + g_data_004f63f0]
+        mov      word ptr [g_data_007af95e], bx
+        mov      word ptr [g_data_007af964], di
+        movsx    ebx, bx
+        mov      dword ptr [esp + 0x10], ebx
+        mov      ebp, ebx
+        movsx    ebx, word ptr [g_data_007af992]
+        movsx    edi, di
+        imul     ebp, ebx
+        mov      dword ptr [esp + 0x14], edi
+        mov      ebx, edi
+        movsx    edi, word ptr [g_data_007af994]
+        imul     ebx, edi
+        mov      edi, dword ptr [g_data_007af9a4]
+        add      ebp, ebx
+        mov      ebx, dword ptr [esp + 0x14]
+        sar      ebp, 0xc
+        imul     esi, ebx
+        add      ebp, edi
+        mov      edi, dword ptr [esp + 0x10]
+        imul     ecx, edi
+        add      ecx, esi
+        mov      esi, dword ptr [g_data_007af9a8]
+        sar      ecx, 0xc
+        add      ecx, esi
+        movsx    ebp, bp
+        movsx    esi, cx
+        mov      dword ptr [g_data_007af96c], ebp
+        mov      dword ptr [g_data_007af978], esi
+        mov      ecx, dword ptr [esp + 0x18]
+        imul     edx, ebx
+        imul     ecx, edi
+        add      edx, ecx
+        mov      ecx, dword ptr [g_data_007af9ac]
+        sar      edx, 0xc
+        add      edx, ecx
+        mov      dword ptr [g_data_00542044], ebp
+        movsx    ecx, dx
+        mov      dx, word ptr [g_data_007af978]
+        mov      dword ptr [g_data_007af984], ecx
+        mov      dword ptr [g_data_00542070], ecx
+        mov      cx, word ptr [g_data_007af96c]
+        mov      word ptr [eax + g_data_00ab44fe], cx
+        mov      cx, word ptr [g_data_007af984]
+        mov      word ptr [eax + g_data_00ab4500], dx
+        mov      word ptr [eax + g_data_00ab4502], cx
+        mov      eax, dword ptr [g_data_00ab51f4]
+        mov      dword ptr [g_data_00542048], esi
+        add      eax, 2
+        mov      dword ptr [g_data_00ab51f4], eax
+    L_c7d1:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0xc
+        ret
+    }
+}
+
 

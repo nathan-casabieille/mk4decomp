@@ -14668,10 +14668,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc5a0
-    name: func_004bc5a0
+    name: BboxProjectAndStash_004bc5a0
     size: 569
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc7e0
     name: func_004bc7e0
     size: 1123
