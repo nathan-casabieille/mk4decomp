@@ -97743,4 +97743,200 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
     }
 }
 
+/* ============================================================
+ * GlideTriColorFlush_004b46f0 — 681b engine.geo.
+ *
+ * Glide 3 triangle-color flush. Bails on three D3D state gates
+ * (007affe4/fff4/fff0). Then for arg2 (color-mode byte ≤ 0x10)
+ * different from cached g_data_004f4b4c, calls Glide setup at
+ * fnptr g_data_007b0074 with reformatted color args. For arg3
+ * (texture-mode byte) different from cached g_data_007affe8,
+ * dispatches to Glide via g_data_007b0004 with 4-arg recipes.
+ * Then loads 3 vertex colors (R,G,B,A from byte args expanded
+ * to floats via g_data_007afaa8[c*4]) and 3 vertex UVs (5-bit
+ * fields x/y/z packed in word args via g_data_007aff50[c*4]),
+ * stuffs them into 3 GrVertex-like structs and calls Glide
+ * triangle-draw at g_data_007b0078.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_data_004f4b4c;
+extern unsigned int g_data_007afa28;
+extern unsigned int g_data_007afaa8;
+extern unsigned int g_data_007aff50;
+extern unsigned int g_data_007affe4;
+extern unsigned int g_data_007affe8;
+extern unsigned int g_data_007afff0;
+extern unsigned int g_data_007afff4;
+extern unsigned int g_data_007b0004;
+extern unsigned int g_data_007b0074;
+extern unsigned int g_data_007b0078;
+
+__declspec(naked) void GlideTriColorFlush_004b46f0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_007affe4]
+        sub      esp, 0xb4
+        test     eax, eax
+        je       L_4992
+        mov      eax, dword ptr [g_data_007afff4]
+        test     eax, eax
+        je       L_4992
+        mov      eax, dword ptr [g_data_007afff0]
+        test     eax, eax
+        jne      L_4992
+        push     ebx
+        mov      bl, byte ptr [esp + 0xbc]
+        cmp      bl, 0x10
+        jbe      L_4733
+        xor      bl, bl
+        mov      byte ptr [esp + 0xbc], bl
+    L_4733:
+        cmp      byte ptr [g_data_004f4b4c], bl
+        je       L_4764
+        mov      eax, dword ptr [esp + 0xbc]
+        push     OFFSET g_data_007affd0
+        and      eax, 0xff
+        push     3
+        mov      ecx, dword ptr [eax*4 + g_data_007afa28]
+        push     ecx
+        push     0
+        call     dword ptr [g_data_007b0074]
+        mov      byte ptr [g_data_004f4b4c], bl
+    L_4764:
+        mov      ebx, dword ptr [esp + 0xc0]
+        mov      al, byte ptr [g_data_007affe8]
+        cmp      bl, al
+        je       L_47ad
+        test     bl, bl
+        jne      L_4782
+        push     0
+        push     4
+        push     0
+        push     4
+        jmp      L_47a1
+    L_4782:
+        cmp      bl, 0xff
+        jne      L_4791
+        push     0
+        push     4
+        push     4
+        push     4
+        jmp      L_47a1
+    L_4791:
+        test     al, al
+        je       L_4799
+        cmp      al, 0xff
+        jne      L_47a7
+    L_4799:
+        push     0
+        push     0
+        push     1
+        push     5
+    L_47a1:
+        call     dword ptr [g_data_007b0004]
+    L_47a7:
+        mov      byte ptr [g_data_007affe8], bl
+    L_47ad:
+        mov      eax, dword ptr [esp + 0xc8]
+        mov      edx, dword ptr [esp + 0xc4]
+        mov      dword ptr [esp + 0x80], eax
+        and      ebx, 0xff
+        movsx    eax, word ptr [esp + 0xd4]
+        fld      dword ptr [ebx*4 + g_data_007afaa8]
+        fst      dword ptr [esp + 0x5c]
+        fst      dword ptr [esp + 0x20]
+        fstp     dword ptr [esp + 0x98]
+        mov      ecx, eax
+        mov      dword ptr [esp + 0x7c], edx
+        sar      ecx, 0xa
+        and      ecx, 0x1f
+        mov      edx, eax
+        sar      edx, 5
+        fld      dword ptr [ecx*4 + g_data_007aff50]
+        and      edx, 0x1f
+        and      eax, 0x1f
+        fstp     dword ptr [esp + 0x88]
+        fld      dword ptr [edx*4 + g_data_007aff50]
+        mov      ecx, dword ptr [esp + 0xd0]
+        mov      edx, dword ptr [esp + 0xd8]
+        fstp     dword ptr [esp + 0x8c]
+        fld      dword ptr [eax*4 + g_data_007aff50]
+        mov      eax, dword ptr [esp + 0xcc]
+        and      ecx, 0xff
+        fstp     dword ptr [esp + 0x90]
+        and      eax, 0xff
+        mov      dword ptr [esp + 4], edx
+        mov      dword ptr [esp + 0x60], 0x3f800000
+        mov      dword ptr [esp + 0x24], 0x3f800000
+        fld      dword ptr [eax*4 + g_data_007afaa8]
+        mov      eax, dword ptr [esp + 0xdc]
+        mov      dword ptr [esp + 0x9c], 0x3f800000
+        fstp     dword ptr [esp + 0xa0]
+        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        mov      dword ptr [esp + 8], eax
+        movsx    eax, word ptr [esp + 0xe8]
+        fstp     dword ptr [esp + 0xa4]
+        mov      ecx, eax
+        mov      edx, eax
+        sar      ecx, 0xa
+        and      ecx, 0x1f
+        and      eax, 0x1f
+        sar      edx, 5
+        fld      dword ptr [ecx*4 + g_data_007aff50]
+        and      edx, 0x1f
+        mov      ecx, dword ptr [esp + 0xe4]
+        fstp     dword ptr [esp + 0x10]
+        fld      dword ptr [edx*4 + g_data_007aff50]
+        mov      edx, dword ptr [esp + 0xec]
+        and      ecx, 0xff
+        fstp     dword ptr [esp + 0x14]
+        fld      dword ptr [eax*4 + g_data_007aff50]
+        mov      eax, dword ptr [esp + 0xe0]
+        mov      dword ptr [esp + 0x40], edx
+        fstp     dword ptr [esp + 0x18]
+        and      eax, 0xff
+        fld      dword ptr [eax*4 + g_data_007afaa8]
+        mov      eax, dword ptr [esp + 0xf0]
+        fstp     dword ptr [esp + 0x28]
+        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        mov      dword ptr [esp + 0x44], eax
+        movsx    eax, word ptr [esp + 0xfc]
+        fstp     dword ptr [esp + 0x2c]
+        mov      ecx, eax
+        mov      edx, eax
+        sar      ecx, 0xa
+        and      ecx, 0x1f
+        and      eax, 0x1f
+        sar      edx, 5
+        fld      dword ptr [ecx*4 + g_data_007aff50]
+        and      edx, 0x1f
+        fstp     dword ptr [esp + 0x4c]
+        fld      dword ptr [edx*4 + g_data_007aff50]
+        fstp     dword ptr [esp + 0x50]
+        fld      dword ptr [eax*4 + g_data_007aff50]
+        mov      eax, dword ptr [esp + 0xf4]
+        fstp     dword ptr [esp + 0x54]
+        and      eax, 0xff
+        fld      dword ptr [eax*4 + g_data_007afaa8]
+        mov      ecx, dword ptr [esp + 0xf8]
+        lea      edx, [esp + 0x40]
+        fstp     dword ptr [esp + 0x64]
+        and      ecx, 0xff
+        lea      eax, [esp + 4]
+        push     edx
+        push     eax
+        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        lea      ecx, [esp + 0x84]
+        fstp     dword ptr [esp + 0x70]
+        push     ecx
+        call     dword ptr [g_data_007b0078]
+        pop      ebx
+    L_4992:
+        add      esp, 0xb4
+        ret
+    }
+}
+
 

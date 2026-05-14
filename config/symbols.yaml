@@ -14208,10 +14208,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004b46f0
-    name: func_004b46f0
+    name: GlideTriColorFlush_004b46f0
     size: 681
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b49a0
     name: Renderer1_Init_Glide
     size: 618
