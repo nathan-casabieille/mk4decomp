@@ -80949,3 +80949,128 @@ __declspec(naked) void BootMStackBracket3SubdispatchPair_00407920(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_004ecc38;
+extern unsigned int g_data_004ec950;
+extern unsigned int g_data_0054208c;
+extern void Mul10Tail_00404af0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void AudioMixerStep_004ab700(void);
+extern void ScaledStoreThree_00409260(void);
+extern void IndirectListWalk_004bae90(void);
+extern void func_00473640(void);
+
+__declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542078]
+        push    esi
+        xor     esi, esi
+        mov     ecx, dword ptr [eax*4 + 0x1c]
+        cmp     ecx, edx
+        mov     dword ptr [g_data_0054206c], ecx
+        jl      L_sgis_lateTail
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4 + 0x40]
+        cmp     eax, esi
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_sgis_after40
+        push    eax
+        push    0x1999
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x48], eax
+        mov     eax, dword ptr [g_data_00542048]
+        or      dword ptr [eax*4], 8
+    L_sgis_after40:
+        mov     dword ptr [g_data_0054206c], 0x10000
+        call    StoreDoubleNegPauseSubStore_004ab750
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sgis_ret
+        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4 + 0x18], edx
+        mov     dword ptr [g_data_0054206c], 0xccc
+        call    AudioMixerStep_004ab700
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_sgis_ret
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542048]
+        add     ecx, 0xccc
+        mov     dword ptr [edx*4 + 0x1c], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        shl     eax, 2
+        mov     ecx, offset g_data_004ecc38
+        shr     ecx, 2
+        mov     dword ptr [eax + 0x3c], esi
+        mov     dword ptr [eax + 0x40], esi
+        mov     dword ptr [eax + 0x44], esi
+        mov     dword ptr [g_data_0054206c], ecx
+        call    ScaledStoreThree_00409260
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     short L_sgis_ret
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, offset g_data_004ec950
+        shr     eax, 2
+        mov     dword ptr [edx*4 + 0x10], esi
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+        mov     eax, dword ptr [g_data_00542044]
+    L_sgis_lateTail:
+        mov     eax, dword ptr [eax*4 + 0xc]
+        cmp     eax, esi
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_sgis_clear
+        mov     dword ptr [g_data_0054206c], offset SizeGateInstallSelfThenSubMul10_00473480
+        call    IndirectListWalk_004bae90
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     short L_sgis_ret
+    L_sgis_clear:
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+    L_sgis_ret:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sgis_sub2:
+        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [eax*4 + 0x48]
+        push    eax
+        push    0x13f35
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x48], eax
+        jmp     func_00473640
+    }
+}

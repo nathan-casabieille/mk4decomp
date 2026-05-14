@@ -7747,10 +7747,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x00473480
-    name: func_00473480
+    name: SizeGateInstallSelfThenSubMul10_00473480
     size: 438
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473640
     name: func_00473640
     size: 1608
