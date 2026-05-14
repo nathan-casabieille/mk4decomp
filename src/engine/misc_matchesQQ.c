@@ -79891,3 +79891,145 @@ __declspec(naked) void DualSeqBranchInit_00477a20(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542080;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_005422e0;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_004e4790;
+extern void MStackPushPtr1Jmp_00438ef0(void);
+extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void ScaledZeroFour_00490740(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void InstallSelfMStackPushDispatch_00436910(void);
+extern void func_004335f0(void);
+
+__declspec(naked) void TriPhaseGateInstallSelfBig_00437140(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_tpgisb_phase0
+        dec     eax
+        je      short L_tpgisb_phase1
+        call    MStackPushPtr1Jmp_00438ef0
+        pop     esi
+        pop     ebx
+        ret
+    L_tpgisb_phase1:
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_tpgisb_p1cont
+        call    MStackPushPtr1Jmp_00438ef0
+        pop     esi
+        pop     ebx
+        ret
+    L_tpgisb_p1cont:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    StoreCallPauseDirtyStoreJmp_004396c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tpgisb_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, bl
+        mov     dword ptr [g_data_00542080], edx
+        je      L_tpgisb_finalInstall
+        mov     dword ptr [esi + 8], offset TriPhaseGateInstallSelfBig_00437140
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 0x28
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    L_tpgisb_phase0:
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpgisb_ret
+        call    ScaledZeroFour_00490740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpgisb_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x2001
+        mov     dword ptr [g_data_0054206c], eax
+        push    offset g_data_005422e0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgScaledTestStore_00494140
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_tpgisb_ret
+        call    DualScaledStoreZero_00491080
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpgisb_ret
+        mov     dword ptr [g_data_00542080], 0x3c
+    L_tpgisb_finalInstall:
+        mov     dword ptr [esi + 8], offset TriPhaseGateInstallSelfBig_00437140
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_tpgisb_ret:
+        pop     esi
+        pop     ebx
+        ret
+        nop
+        nop
+        nop
+    L_tpgisb_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_tpgisb_sub2_phase0
+        mov     ecx, offset g_data_004e4790
+        sar     ecx, 2
+        mov     dword ptr [g_data_00542054], ecx
+        call    InstallSelfMStackPushDispatch_00436910
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpgisb_sub2_ret
+        call    func_004335f0
+        pop     esi
+        ret
+    L_tpgisb_sub2_phase0:
+        call    LeaPlus22StoreSelf_0048e4d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tpgisb_sub2_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_tpgisb_sub2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_tpgisb_sub2_ret:
+        pop     esi
+        ret
+    }
+}

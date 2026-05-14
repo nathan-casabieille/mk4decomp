@@ -3923,10 +3923,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesOO.c
   - addr: 0x00437140
-    name: func_00437140
+    name: TriPhaseGateInstallSelfBig_00437140
     size: 433
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437300
     name: func_00437300
     size: 996
