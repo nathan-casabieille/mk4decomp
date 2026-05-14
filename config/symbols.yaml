@@ -11455,10 +11455,11 @@ functions:
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x004955d0
-    name: func_004955d0
+    name: GameModeHandlerCluster_004955d0
     size: 412
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00495770
     name: SevenThunkDispatcher_00495770
     size: 325

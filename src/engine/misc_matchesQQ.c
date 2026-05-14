@@ -111530,3 +111530,203 @@ __declspec(naked) void MenuChoiceEnterDispatch_004b8bd0(void)
     }
 }
 
+/* ============================================================
+ * GameModeHandlerCluster_004955d0 — 412b game (packed: 6 helpers).
+ *
+ * Six tiny FSM helpers sharing one symbol, each separated by
+ * 16-byte nop alignment:
+ *
+ *   1. 0x4955d0 (~64b): Computed-jump dispatcher.  Indirects
+ *      through the entity's handler table at [eax*4 + 0x30] then
+ *      reads the global subtable at base g_data_00542048; loads
+ *      sub-state code [..*4]-0x60, stamps a bunch of mirror
+ *      slots, then `jmp ecx` to the resolved C handler.
+ *
+ *   2. 0x495610 (~37b): Stamps state code 0x111 in [ecx*4 + 0x74]
+ *      and g_data_0054206c, then pushes &g_data_004f1408 and
+ *      calls func_004949f0 (state-install).
+ *
+ *   3. 0x495640 (~37b): Calls func_00494830(&g_data_004f1420); if
+ *      g_data_00541e6c == 0 (success), also calls
+ *      func_004949b0(&g_data_004f1430).
+ *
+ *   4. 0x495670 (~129b): Calls func_0046dc10; on success, pushes
+ *      0x20016/0x20017 into the global stack rooted at
+ *      g_data_004d57ac, calls func_0048ec30, then pops two
+ *      values back into g_data_0054207c/g_data_00542080 with
+ *      a parity swap driven by bit 0 of g_data_0054208c. Tail-
+ *      jumps to func_0045f650.
+ *
+ *   5. 0x495720 (~37b): Sister of helper 2, but with
+ *      &g_data_004f1440 as the state-install argument.
+ *
+ *   6. 0x495750 (~28b): Sister of helper 3, but with
+ *      &g_data_004f1458; on success tail-jumps to func_00495770.
+ *
+ * Linear, no mstack. Layout uses heavy 0x90 nop alignment to
+ * round each helper to the next 16-byte boundary.
+ * ============================================================ */
+
+extern void func_0045f650(void);
+extern void func_0046dc10(void);
+extern void func_0048ec30(void);
+extern void func_00494830(void);
+extern void func_004949b0(void);
+extern void func_004949f0(void);
+extern void func_00495770(void);
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004f1408;
+extern unsigned int g_data_004f1420;
+extern unsigned int g_data_004f1430;
+extern unsigned int g_data_004f1440;
+extern unsigned int g_data_004f1458;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+
+__declspec(naked) void GameModeHandlerCluster_004955d0(void)
+{
+    __asm {
+        /* Helper 1: Computed-jump dispatcher. */
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [eax*4 + 0x30]
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4]
+        sub      eax, 0x60
+        add      ecx, eax
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542048], ecx
+        mov      ecx, dword ptr [ecx*4]
+        mov      dword ptr [g_data_00542044], ecx
+        jmp      ecx
+        nop
+        nop
+        nop
+        /* Helper 2: install handler 0x111 with g_data_004f1408. */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x111
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_004f1408
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     func_004949f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 3: func_00494830 + conditional func_004949b0. */
+        push     OFFSET g_data_004f1420
+        call     func_00494830
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_5663
+        push     OFFSET g_data_004f1430
+        call     func_004949b0
+        add      esp, 4
+    L_5663:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 4: heavy func_0046dc10 + state-stack manipulation. */
+        call     func_0046dc10
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_5711
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      dword ptr [g_data_0054207c], 0x20016
+        inc      eax
+        mov      dword ptr [g_data_00542080], 0x20017
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], 0x20016
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542080]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        call     func_0048ec30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5711
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      al, byte ptr [g_data_0054208c]
+        test     al, 1
+        mov      dword ptr [g_data_0054207c], edx
+        je       short L_570c
+        mov      dword ptr [g_data_0054207c], ecx
+    L_570c:
+        jmp      func_0045f650
+    L_5711:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 5: sister of helper 2, with g_data_004f1440. */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x111
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_004f1440
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     func_004949f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 6: sister of helper 3, with g_data_004f1458; tail-jumps. */
+        push     OFFSET g_data_004f1458
+        call     func_00494830
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_576b
+        jmp      func_00495770
+    L_576b:
+        ret
+    }
+}
+
