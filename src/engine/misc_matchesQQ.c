@@ -104675,3 +104675,483 @@ __declspec(naked) void TexturedTriRasterizeShaded_004c2cb0(void)
     }
 }
 
+/* ============================================================
+ * BillboardSheetDualEmit_004bbda0 — 1735b engine.render.
+ *
+ * Per-frame dual-face billboard sheet emitter. Walks
+ * g_data_00542044 chain (next-ptr at slot 0). For each node:
+ *   - reads anchor offset from slot+0x2c (next list head),
+ *     plus 16-bit billboard data at slot+4/8/0xc projected
+ *     via camera transform g_data_00ab4398/9c/a0
+ *   - sets up vertex globals 007af958..968
+ *   - calls func_004b2af0 (project+transform), then either
+ *     func_004b3d90 (Q3 reverse-z) and func_004b2ff0 (back-face
+ *     project) — emits a single quad if front and back colors
+ *     converge (same RGB565), or 2 quads otherwise
+ *   - per-quad func_004c3360 render gated by camera positional
+ *     limits (007af984/8/c) and 00542084 visibility flags
+ *
+ * Two distinct branches based on 00542084 bit 0x40 (skip
+ * second-vert recompute) and bit 0x60 (use centered vs view-
+ * relative reference).
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004b2ff0(void);
+extern unsigned int g_data_00542084;
+
+__declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_007af92c]
+        sub      esp, 0x58
+        test     eax, eax
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        jne      L_c45f
+        mov      eax, dword ptr [g_data_00ab4e60]
+        cmp      eax, 0x10
+        jl       L_bdca
+        cdq
+        and      edx, 7
+        add      eax, edx
+        sar      eax, 3
+        dec      eax
+        jmp      L_bdcc
+    L_bdca:
+        xor      eax, eax
+    L_bdcc:
+        mov      ecx, eax
+        shl      ecx, 5
+        or       ecx, eax
+        shl      ecx, 5
+        or       eax, ecx
+        mov      cl, byte ptr [g_data_0054205c]
+        test     cl, 0x60
+        je       L_be12
+        mov      edx, dword ptr [g_data_00ab4398]
+        mov      ecx, dword ptr [g_data_00ab439c]
+        sar      edx, 0x10
+        mov      dword ptr [g_data_007af9a4], edx
+        mov      edx, dword ptr [g_data_00ab43a0]
+        sar      ecx, 0x10
+        sar      edx, 7
+        mov      dword ptr [g_data_007af9a8], ecx
+        mov      dword ptr [g_data_007af9ac], edx
+        jmp      L_be3f
+    L_be12:
+        mov      ecx, dword ptr [g_data_00ab4398]
+        mov      edx, dword ptr [g_data_00ab439c]
+        sar      ecx, 7
+        mov      dword ptr [g_data_007af9a4], ecx
+        mov      ecx, dword ptr [g_data_00ab43a0]
+        sar      edx, 7
+        sar      ecx, 7
+        mov      dword ptr [g_data_007af9a8], edx
+        mov      dword ptr [g_data_007af9ac], ecx
+    L_be3f:
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      esi, dword ptr [esp + 0x6c]
+        mov      ecx, dword ptr [ecx + 4]
+        mov      bp, word ptr [esi + 0xa]
+        mov      dword ptr [esp + 0x18], ebp
+        mov      edx, dword ptr [ecx + 4]
+        mov      word ptr [esp + 0x5c], ax
+        mov      word ptr [esp + 0x3c], ax
+        mov      al, byte ptr [esi + 1]
+        and      eax, 3
+        lea      edi, [edx + ecx + 8]
+        xor      edx, edx
+        mov      cl, byte ptr [eax + g_data_004f6238]
+        mov      dl, byte ptr [esi + 2]
+        and      cl, 3
+        movsx    ax, cl
+        shl      eax, 7
+        mov      word ptr [esp + 0x62], ax
+        mov      ecx, dword ptr [esp + 0x62]
+        mov      bl, byte ptr [esp + 0x62]
+        and      ecx, 0x180
+        mov      word ptr [esp + 0x42], cx
+        mov      dl, byte ptr [edi + edx*4 + 2]
+        xor      dl, bl
+        mov      bl, byte ptr [esp + 0x42]
+        and      edx, 0xf
+        mov      di, word ptr [esi + 8]
+        xor      ax, dx
+        mov      dl, byte ptr [esi + 0xe]
+        mov      word ptr [esp + 0x62], ax
+        mov      al, byte ptr [esp + 0x62]
+        xor      al, bl
+        mov      bl, byte ptr [esi + 0xf]
+        and      eax, 0xf
+        xor      cx, ax
+        mov      al, byte ptr [esi + 0xc]
+        mov      word ptr [esp + 0x42], cx
+        mov      cl, byte ptr [esi + 0xd]
+        mov      byte ptr [esp + 0x35], cl
+        mov      byte ptr [esp + 0x37], cl
+        add      bl, cl
+        mov      byte ptr [esp + 0x55], cl
+        mov      cx, di
+        add      dl, al
+        mov      word ptr [g_data_007af958], di
+        mov      word ptr [g_data_007af95e], bp
+        mov      word ptr [g_data_007af964], 0
+        add      cx, word ptr [esi + 4]
+        mov      byte ptr [esp + 0x36], dl
+        mov      byte ptr [esp + 0x38], dl
+        mov      byte ptr [esp + 0x56], dl
+        mov      dx, di
+        mov      word ptr [g_data_007af95a], cx
+        mov      word ptr [g_data_007af960], bp
+        mov      word ptr [g_data_007af966], 0
+        add      dx, word ptr [esi + 4]
+        mov      byte ptr [esp + 0x34], al
+        mov      byte ptr [esp + 0x54], al
+        mov      byte ptr [esp + 0x58], al
+        mov      ax, bp
+        mov      word ptr [g_data_007af95c], dx
+        add      ax, word ptr [esi + 6]
+        mov      byte ptr [esp + 0x39], bl
+        mov      byte ptr [esp + 0x57], bl
+        mov      byte ptr [esp + 0x59], bl
+        mov      word ptr [g_data_007af962], ax
+        mov      word ptr [g_data_007af968], 0
+        call     func_004b2af0
+        mov      ax, word ptr [g_data_00ab4e20]
+        test     ax, ax
+        jne      L_bf84
+        call     func_004b3d90
+        mov      ecx, dword ptr [g_data_00ab4d9c]
+        movsx    eax, ax
+        cdq
+        sub      eax, edx
+        sar      eax, 1
+        shl      ecx, 5
+        add      ax, cx
+    L_bf84:
+        mov      word ptr [esp + 0x3a], ax
+        mov      word ptr [esp + 0x5a], ax
+        test     byte ptr [g_data_00542084], 0x40
+        jne      L_c15a
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, ebx
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [esp + 0x28], ecx
+        mov      ecx, dword ptr [esp + 0x42]
+        mov      dword ptr [esp + 0x2c], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        mov      dword ptr [esp + 0x30], eax
+        mov      eax, dword ptr [g_data_007af984]
+        and      ecx, 0xfbff
+        shl      edx, 0xa
+        or       ecx, edx
+        test     eax, eax
+        mov      word ptr [esp + 0x42], cx
+        jle      L_c15a
+        mov      eax, dword ptr [g_data_007af988]
+        test     eax, eax
+        jle      L_c15a
+        mov      eax, dword ptr [g_data_007af98c]
+        test     eax, eax
+        jle      L_c15a
+        mov      ax, bp
+        push     0
+        add      ax, word ptr [esi + 6]
+        push     eax
+        push     edi
+        call     func_004b2ff0
+        add      esp, 0xc
+        call     func_004b2e80
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, ebx
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [esp + 0x48], ecx
+        mov      ecx, dword ptr [esp + 0x62]
+        mov      dword ptr [esp + 0x4c], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        mov      dword ptr [esp + 0x50], eax
+        mov      eax, dword ptr [g_data_007af984]
+        and      ecx, 0xfbff
+        shl      edx, 0xa
+        or       ecx, edx
+        test     eax, eax
+        mov      word ptr [esp + 0x62], cx
+        jle      L_c15a
+        mov      eax, dword ptr [g_data_007af988]
+        test     eax, eax
+        jle      L_c15a
+        mov      eax, dword ptr [g_data_007af98c]
+        test     eax, eax
+        jle      L_c15a
+        mov      ax, word ptr [esp + 0x2a]
+        cmp      ax, word ptr [esp + 0x2e]
+        jne      L_c140
+        mov      cx, word ptr [esp + 0x28]
+        cmp      cx, word ptr [esp + 0x50]
+        jne      L_c140
+        mov      dx, word ptr [esp + 0x30]
+        cmp      dx, word ptr [esp + 0x2c]
+        jne      L_c140
+        mov      ax, word ptr [esp + 0x32]
+        cmp      ax, word ptr [esp + 0x52]
+        jne      L_c140
+        or       byte ptr [esp + 0x42], 0x20
+        lea      ecx, [esp + 0x28]
+        push     ecx
+        call     func_004c3360
+        add      esp, 4
+        /* MASM picks 6-byte 66 83 /4 sign-extended form for 0xffdf; orig uses 7-byte 66 81 /4 — force via _emit */
+        _emit 0x66
+        _emit 0x81
+        _emit 0x64
+        _emit 0x24
+        _emit 0x42
+        _emit 0xdf
+        _emit 0xff
+        jmp      L_c15a
+    L_c140:
+        lea      edx, [esp + 0x28]
+        push     edx
+        call     func_004c3360
+        add      esp, 4
+        lea      eax, [esp + 0x48]
+        push     eax
+        call     func_004c3360
+        add      esp, 4
+    L_c15a:
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [ecx*4 + 0x2c]
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542044], ecx
+        je       L_c45f
+        mov      edx, dword ptr [g_data_007af9a4]
+        mov      eax, dword ptr [g_data_007af9a8]
+        mov      dword ptr [esp + 0x1c], edx
+        mov      edx, dword ptr [g_data_007af9ac]
+        mov      dword ptr [esp + 0x20], eax
+        mov      dword ptr [esp + 0x24], edx
+    L_c192:
+        mov      edx, dword ptr [ecx*4 + 4]
+        mov      eax, dword ptr [ecx*4 + 8]
+        mov      ecx, dword ptr [ecx*4 + 0xc]
+        mov      ebx, dword ptr [g_data_00542084]
+        sar      edx, 7
+        sar      eax, 7
+        sar      ecx, 7
+        test     bh, 0x40
+        jne      L_c261
+        mov      ebx, dword ptr [esp + 0x70]
+        mov      dword ptr [esp + 0x6c], edx
+        mov      dword ptr [esp + 0x10], eax
+        movsx    ebp, word ptr [ebx*4 + 2]
+        movsx    ebx, word ptr [ebx*4]
+        imul     ebp, eax
+        imul     ebx, edx
+        mov      edx, dword ptr [esp + 0x70]
+        add      ebp, ebx
+        movsx    ebx, word ptr [edx*4 + 4]
+        imul     ebx, ecx
+        add      ebp, ebx
+        movsx    ebx, word ptr [edx*4 + 6]
+        imul     ebx, dword ptr [esp + 0x6c]
+        sar      ebp, 0xc
+        mov      dword ptr [esp + 0x14], ebp
+        movsx    ebp, word ptr [edx*4 + 0xa]
+        imul     ebp, ecx
+        add      ebx, ebp
+        movsx    ebp, word ptr [edx*4 + 8]
+        imul     ebp, eax
+        add      ebx, ebp
+        mov      ebp, dword ptr [esp + 0x18]
+        sar      ebx, 0xc
+        mov      eax, ebx
+        movsx    ebx, word ptr [edx*4 + 0xe]
+        movsx    edx, word ptr [edx*4 + 0xc]
+        imul     ebx, dword ptr [esp + 0x10]
+        imul     edx, dword ptr [esp + 0x6c]
+        add      ebx, edx
+        mov      edx, dword ptr [esp + 0x70]
+        movsx    edx, word ptr [edx*4 + 0x10]
+        imul     edx, ecx
+        add      ebx, edx
+        mov      edx, dword ptr [esp + 0x14]
+        sar      ebx, 0xc
+        mov      ecx, ebx
+    L_c261:
+        mov      ebx, dword ptr [esp + 0x1c]
+        mov      word ptr [g_data_007af958], di
+        add      edx, ebx
+        mov      word ptr [g_data_007af95e], bp
+        mov      dword ptr [g_data_007af9a4], edx
+        mov      edx, dword ptr [esp + 0x20]
+        add      eax, edx
+        mov      dx, di
+        mov      dword ptr [g_data_007af9a8], eax
+        mov      eax, dword ptr [esp + 0x24]
+        add      ecx, eax
+        xor      eax, eax
+        mov      dword ptr [g_data_007af9ac], ecx
+        mov      cx, di
+        mov      word ptr [g_data_007af964], ax
+        add      cx, word ptr [esi + 4]
+        mov      word ptr [g_data_007af960], bp
+        mov      word ptr [g_data_007af966], ax
+        mov      word ptr [g_data_007af95a], cx
+        add      dx, word ptr [esi + 4]
+        mov      cx, bp
+        mov      word ptr [g_data_007af95c], dx
+        add      cx, word ptr [esi + 6]
+        mov      word ptr [g_data_007af968], ax
+        mov      word ptr [g_data_007af962], cx
+        call     func_004b2af0
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, ebx
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [esp + 0x28], ecx
+        mov      ecx, dword ptr [esp + 0x42]
+        mov      dword ptr [esp + 0x2c], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        mov      dword ptr [esp + 0x30], eax
+        mov      eax, dword ptr [g_data_007af984]
+        and      ecx, 0xfbff
+        shl      edx, 0xa
+        or       ecx, edx
+        test     eax, eax
+        mov      word ptr [esp + 0x42], cx
+        jle      L_c384
+        mov      eax, dword ptr [g_data_007af988]
+        test     eax, eax
+        jle      L_c384
+        mov      eax, dword ptr [g_data_007af98c]
+        test     eax, eax
+        jle      L_c384
+        lea      eax, [esp + 0x28]
+        push     eax
+        call     func_004c3360
+        add      esp, 4
+    L_c384:
+        mov      cx, bp
+        push     0
+        add      cx, word ptr [esi + 6]
+        push     ecx
+        push     edi
+        call     func_004b2ff0
+        add      esp, 0xc
+        call     func_004b2e80
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, ebx
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [esp + 0x48], ecx
+        mov      ecx, dword ptr [esp + 0x62]
+        mov      dword ptr [esp + 0x4c], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        mov      dword ptr [esp + 0x50], eax
+        mov      eax, dword ptr [g_data_007af984]
+        and      ecx, 0xfbff
+        shl      edx, 0xa
+        or       ecx, edx
+        test     eax, eax
+        mov      word ptr [esp + 0x62], cx
+        jle      L_c444
+        mov      eax, dword ptr [g_data_007af988]
+        test     eax, eax
+        jle      L_c444
+        mov      eax, dword ptr [g_data_007af98c]
+        test     eax, eax
+        jle      L_c444
+        lea      eax, [esp + 0x48]
+        push     eax
+        call     func_004c3360
+        add      esp, 4
+    L_c444:
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [ecx*4]
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542044], ecx
+        jne      L_c192
+    L_c45f:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x58
+        ret
+    }
+}
+

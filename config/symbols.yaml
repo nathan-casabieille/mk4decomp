@@ -14666,10 +14666,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bbda0
-    name: func_004bbda0
+    name: BillboardSheetDualEmit_004bbda0
     size: 1735
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc470
     name: VertexQuadBuilder_004bc470
     size: 294
