@@ -15118,10 +15118,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c13f0
-    name: func_004c13f0
+    name: TexturedTriRasterize_004c13f0
     size: 1474
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c19c0
     name: func_004c19c0
     size: 1554
