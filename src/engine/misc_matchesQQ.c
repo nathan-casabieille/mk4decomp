@@ -109914,3 +109914,162 @@ __declspec(naked) void MenuPageEnterDispatch_004b84d0(void)
     }
 }
 
+/* ============================================================
+ * VirtualHeapAlloc_004c70d0 — 354b crt.
+ *
+ * Allocator that carves a 0x100000-aligned virtual reservation
+ * out of a 64-bucket free-list ring rooted at g_data_00520130:
+ *   1. Heap-alloc a 0x2020-byte control block via [g_iat_4d20b4]
+ *      (process heap, flags=0). Skip when g_data_00520140 == -1
+ *      (bootstrap path -- use the root sentinel as the cb).
+ *   2. Reserve 0x400000 bytes of VAS via [g_iat_4d2144]
+ *      (VirtualAlloc, MEM_RESERVE).
+ *   3. Commit the first 0x10000 of that via the same iat slot
+ *      (MEM_COMMIT). On failure, release via [g_iat_4d2168]
+ *      (VirtualFree, MEM_RELEASE) and heap-free via
+ *      [g_iat_4d214c]; return NULL.
+ *   4. Link the cb into the root list, fill cb header fields
+ *      ([+8/+0xc/+0x10/+0x14]), then initialize 1024 16-byte
+ *      bucket descriptors at cb+0x18 with masks driven by edi=0xf1
+ *      and a setge/dec/and/dec sequence. Finally pre-format the
+ *      first committed 64KB into 0x1000-byte cells.
+ *
+ * Frame: push ebp/esi/edi, no esp adjust. Returns: void*
+ * (cb pointer or NULL on failure).
+ *
+ * Linear, no mstack.
+ * ============================================================ */
+
+extern unsigned int g_data_00520130;
+extern unsigned int g_data_00520134;
+extern unsigned int g_data_00520140;
+extern unsigned int g_data_00fa0ee4;
+extern void *g_iat_004d2144;
+
+__declspec(naked) void VirtualHeapAlloc_004c70d0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00520140]
+        push     ebp
+        push     esi
+        cmp      eax, -1
+        push     edi
+        jne      short L_70e4
+        mov      ebp, OFFSET g_data_00520130
+        jmp      short L_7101
+    L_70e4:
+        mov      eax, dword ptr [g_data_00fa0ee4]
+        push     0x2020
+        push     0
+        push     eax
+        call     dword ptr [g_iat_004d20b4]
+        mov      ebp, eax
+        test     ebp, ebp
+        je       L_722c
+    L_7101:
+        mov      edi, dword ptr [g_iat_004d2144]
+        push     4
+        push     0x2000
+        push     0x400000
+        push     0
+        call     edi
+        mov      esi, eax
+        test     esi, esi
+        je       L_7215
+        push     4
+        push     0x1000
+        push     0x10000
+        push     esi
+        call     edi
+        test     eax, eax
+        je       L_7207
+        cmp      ebp, OFFSET g_data_00520130
+        jne      short L_7168
+        mov      eax, dword ptr [g_data_00520130]
+        test     eax, eax
+        jne      short L_7153
+        mov      dword ptr [g_data_00520130], OFFSET g_data_00520130
+    L_7153:
+        mov      eax, dword ptr [g_data_00520134]
+        test     eax, eax
+        jne      short L_7183
+        mov      dword ptr [g_data_00520134], OFFSET g_data_00520130
+        jmp      short L_7183
+    L_7168:
+        mov      dword ptr [ebp], OFFSET g_data_00520130
+        mov      ecx, dword ptr [g_data_00520134]
+        mov      dword ptr [ebp + 4], ecx
+        mov      dword ptr [g_data_00520134], ebp
+        mov      edx, dword ptr [ebp + 4]
+        mov      dword ptr [edx], ebp
+    L_7183:
+        lea      eax, [esi + 0x400000]
+        lea      ecx, [ebp + 0x18]
+        lea      edx, [ebp + 0x98]
+        mov      dword ptr [ebp + 0x14], eax
+        mov      dword ptr [ebp + 0x10], esi
+        mov      dword ptr [ebp + 8], ecx
+        mov      dword ptr [ebp + 0xc], edx
+        xor      eax, eax
+        mov      edi, 0xf1
+    L_71a5:
+        xor      edx, edx
+        cmp      eax, 0x10
+        setge    dl
+        dec      edx
+        add      ecx, 8
+        and      edx, edi
+        dec      edx
+        inc      eax
+        mov      dword ptr [ecx - 8], edx
+        mov      dword ptr [ecx - 4], edi
+        cmp      eax, 0x400
+        jl       short L_71a5
+        mov      ecx, 0x4000
+        xor      eax, eax
+        mov      edi, esi
+        rep stosd
+        mov      eax, dword ptr [ebp + 0x10]
+        add      eax, 0x10000
+        cmp      esi, eax
+        jae      short L_7201
+        mov      ecx, 0xf0
+        mov      al, 0xff
+    L_71e0:
+        lea      edx, [esi + 8]
+        mov      dword ptr [esi + 4], ecx
+        mov      dword ptr [esi], edx
+        mov      byte ptr [esi + 0xf8], al
+        mov      edx, dword ptr [ebp + 0x10]
+        add      esi, 0x1000
+        add      edx, 0x10000
+        cmp      esi, edx
+        jb       short L_71e0
+    L_7201:
+        mov      eax, ebp
+        pop      edi
+        pop      esi
+        pop      ebp
+        ret
+    L_7207:
+        push     0x8000
+        push     0
+        push     esi
+        call     dword ptr [g_iat_004d2168]
+    L_7215:
+        cmp      ebp, OFFSET g_data_00520130
+        je       short L_722c
+        mov      eax, dword ptr [g_data_00fa0ee4]
+        push     ebp
+        push     0
+        push     eax
+        call     dword ptr [g_iat_004d214c]
+    L_722c:
+        pop      edi
+        pop      esi
+        xor      eax, eax
+        pop      ebp
+        ret
+    }
+}
+

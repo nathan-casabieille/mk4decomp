@@ -15718,10 +15718,11 @@ functions:
     status: matched
     file: src/engine/two_path_iat_dispatch.c
   - addr: 0x004c70d0
-    name: func_004c70d0
+    name: VirtualHeapAlloc_004c70d0
     size: 354
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c7240
     name: HeapRegionTeardown_004c7240
     size: 91
