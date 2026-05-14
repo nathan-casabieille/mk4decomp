@@ -992,10 +992,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040c260
-    name: func_0040c260
+    name: Phase1ContextSetupHelper_0040c260
     size: 508
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040c460
     name: func_0040c460
     size: 756
