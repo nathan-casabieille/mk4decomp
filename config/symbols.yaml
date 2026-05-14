@@ -1098,10 +1098,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00410fb0
-    name: func_00410fb0
+    name: Phase1InitModelAdjustChain_00410fb0
     size: 544
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004111d0
     name: TestByteSelectInit_004111d0
     size: 50
