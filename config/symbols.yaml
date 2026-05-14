@@ -9447,10 +9447,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004876f0
-    name: func_004876f0
+    name: GameLoaderHandlerCluster_004876f0
     size: 415
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487890
     name: TripleEntryBitsetMStack_00487890
     size: 115

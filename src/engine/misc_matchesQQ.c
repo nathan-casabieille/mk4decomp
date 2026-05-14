@@ -111730,3 +111730,193 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
     }
 }
 
+/* ============================================================
+ * GameLoaderHandlerCluster_004876f0 — 415b game (packed: 5 helpers).
+ *
+ * Five handlers separated by 16-byte nop alignment, all
+ * cooperating around g_data_00541e6c (success/abort flag) and
+ * g_data_00542060 (active entity index).
+ *
+ *   1. 0x4876f0 (~20b): Thin guard over func_00490370 →
+ *      func_00490390; if g_data_00541e6c becomes nonzero, abort.
+ *
+ *   2. 0x487710 (~37b): Per-entity state-clear; clears [esi+0x84]
+ *      then func_00470480 aborts if the previous value was set.
+ *
+ *   3. 0x487739 (~120b): Heavy "advance to state 1" handler. Runs
+ *      func_00490fc0, links per-entity slots [+0x24]/[+0x28] to
+ *      g_data_0054206c, snapshots g_data_0054205c into the global
+ *      g_data_00542044, calls func_00406b20, then on success
+ *      installs handler OFFSET L_7710 + state=1, sets
+ *      g_data_0054204c := 0x28 and trips g_data_00541e6c := 1.
+ *
+ *   4. 0x4877b0 (~98b): "Advance to state 2" handler. Sequence:
+ *      func_00494580 → func_00490c30 → push &g_data_00542bd4 +
+ *      func_00428760 → on success set g_data_0054207c := 0x201,
+ *      g_data_00542054 := OFFSET L_7820 (helper 5), tail-jmp to
+ *      func_00487920.
+ *
+ *   5. 0x487820 (~110b): Periodic ticker -- decrements
+ *      [ecx*4 + 0x5c], wrapping 0 → 8 with the dec-result mirrored
+ *      to g_data_00541dc4. If the decrement reached 0 the function
+ *      tail-jumps to func_00487890; otherwise drops state to 0xf
+ *      and runs func_0040a470, then state 5 + func_0048a160,
+ *      finally tail-jumping to func_00487890.
+ *
+ * Linear, no mstack. Returns vary per helper but all are void or
+ * tail-jumps; this is a stitched dispatch trampoline cluster.
+ * ============================================================ */
+
+extern void func_00406b20(void);
+extern void func_0040a470(void);
+extern void func_00428760(void);
+extern void func_00487890(void);
+extern void func_00487920(void);
+extern void func_0048a160(void);
+extern void func_00490370(void);
+extern void func_00490390(void);
+extern void func_00490c30(void);
+extern void func_00490fc0(void);
+extern void func_00494580(void);
+extern unsigned int g_data_00541dc4;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542bd4;
+
+__declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
+{
+    __asm {
+        /* Helper 1: simple guard over func_00490370/func_00490390. */
+        call     func_00490370
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_7703
+        jmp      func_00490390
+    L_7703:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 2 (L_7710): per-entity state-clear. */
+    L_7710:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_7739
+        call     func_00470480
+        pop      esi
+        ret
+        /* Helper 3 (L_7739): advance-to-state-1. */
+    L_7739:
+        call     func_00490fc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_77a7
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [edx*4 + 0x24], ecx
+        mov      eax, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [eax*4 + 0x28], ecx
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_00542044], edx
+        call     func_00406b20
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_77a7
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_7710
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], 0x28
+        mov      dword ptr [g_data_00541e6c], eax
+    L_77a7:
+        pop      esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 4 (L_77b0): advance-to-state-2 + tail-jmp func_00487920. */
+        call     func_00494580
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_7812
+        call     func_00490c30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_7812
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 1
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_00542bd4
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        call     func_00428760
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_7812
+        mov      dword ptr [g_data_0054207c], 0x201
+        mov      dword ptr [g_data_00542054], OFFSET L_7820
+        jmp      func_00487920
+    L_7812:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 5 (L_7820): periodic ticker with wrap+dispatch. */
+    L_7820:
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x5c]
+        dec      eax
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00541dc4], eax
+        jne      short L_7844
+        mov      eax, 8
+        mov      dword ptr [g_data_0054206c], eax
+    L_7844:
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        mov      eax, dword ptr [g_data_00541dc4]
+        test     eax, eax
+        je       short L_7859
+        jmp      func_00487890
+    L_7859:
+        mov      dword ptr [g_data_0054206c], 0xf
+        call     func_0040a470
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_788e
+        mov      dword ptr [g_data_0054206c], 5
+        call     func_0048a160
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_788e
+        jmp      func_00487890
+    L_788e:
+        ret
+    }
+}
