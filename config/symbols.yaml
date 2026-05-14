@@ -12615,10 +12615,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004a3120
-    name: func_004a3120
+    name: VoiceBankTickDispatch_004a3120
     size: 320
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a3260
     name: ScaledByteIdxDualCopy_004a3260
     size: 91

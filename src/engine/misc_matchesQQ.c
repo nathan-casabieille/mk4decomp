@@ -109539,3 +109539,163 @@ __declspec(naked) void IoOperationDispatch_004cdd20(void)
     }
 }
 
+/* ============================================================
+ * VoiceBankTickDispatch_004a3120 — 320b audio.
+ *
+ * Same structural pattern as VoicePoolTickDispatch_004a4c10 but
+ * with 6 dispatch slots instead of 4: walks the voice-slot
+ * array 0x4f3264..0x4f33cc (36-byte stride), calls func_00406790
+ * per slot, then dispatches via 24-byte jump table on
+ * (counter-1) ∈ [0..5]:
+ *   - case 0: 004f31cc src, 004f432c label, idx in 004f31d8
+ *   - case 1: 004f31d0 src, 004f4320 label, idx in 004f31d8
+ *   - case 2: 005437fc src, 004f4310 label, idx in 004f3220
+ *   - case 3: 004f3234 src, 004f4304 label, idx in 004f3240
+ *   - case 4: 005437f8 src, 004f42f4 label, idx in 004f31a0
+ *   - case 5: 004f3238 byte-src, 004f42e0 label, idx in 004f2fc0
+ * Common tail at L_31d5 pushes g_data_00543450 and calls
+ * func_004c5580. Per-iter then mirrors VoicePoolTickDispatch_*:
+ * push slot+8/slot, call func_004a1fa0, stash slot+0xc into
+ * voice-slot[+0x5c], slot+0x54 back, increment counter and loop.
+ *
+ * Quirk: 1-byte nop (0x90) before 24-byte jump table at end.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_00406790(void);
+extern void func_004a1fa0(void);
+extern void func_004c5580(void);
+extern unsigned int g_data_004f2fc0;
+extern unsigned int g_data_004f31a0;
+extern unsigned int g_data_004f31cc;
+extern unsigned int g_data_004f31d0;
+extern unsigned int g_data_004f31d8;
+extern unsigned int g_data_004f3220;
+extern unsigned int g_data_004f3234;
+extern unsigned int g_data_004f3238;
+extern unsigned int g_data_004f3240;
+extern unsigned int g_data_004f3264;
+extern unsigned int g_data_004f33cc;
+extern unsigned int g_data_004f42e0;
+extern unsigned int g_data_004f42f4;
+extern unsigned int g_data_004f4304;
+extern unsigned int g_data_004f4310;
+extern unsigned int g_data_004f4320;
+extern unsigned int g_data_004f432c;
+extern unsigned int g_data_005437f8;
+extern unsigned int g_data_005437fc;
+
+__declspec(naked) void VoiceBankTickDispatch_004a3120(void)
+{
+    __asm {
+        push     esi
+        push     edi
+        xor      edi, edi
+        mov      esi, OFFSET g_data_004f3264
+    L_3129:
+        movsx    eax, byte ptr [esi - 4]
+        mov      ecx, dword ptr [g_data_00542060]
+        add      ecx, eax
+        mov      edx, dword ptr [ecx*4]
+        mov      dword ptr [g_data_00542044], edx
+        call     func_00406790
+        lea      eax, [edi - 1]
+        cmp      eax, 5
+        ja       L_31e2
+        jmp      dword ptr [eax*4 + L_120_jmptbl]
+    L_315a:
+        mov      eax, dword ptr [g_data_004f31cc]
+        mov      ecx, dword ptr [eax*4 + g_data_004f31d8]
+        push     ecx
+        push     OFFSET g_data_004f432c
+        jmp      L_31d5
+    L_316e:
+        mov      edx, dword ptr [g_data_004f31d0]
+        mov      eax, dword ptr [edx*4 + g_data_004f31d8]
+        push     eax
+        push     OFFSET g_data_004f4320
+        jmp      L_31d5
+    L_3183:
+        mov      ecx, dword ptr [g_data_005437fc]
+        mov      edx, dword ptr [ecx*4 + g_data_004f3220]
+        push     edx
+        push     OFFSET g_data_004f4310
+        jmp      L_31d5
+    L_3198:
+        mov      eax, dword ptr [g_data_004f3234]
+        mov      ecx, dword ptr [eax*4 + g_data_004f3240]
+        push     ecx
+        push     OFFSET g_data_004f4304
+        jmp      L_31d5
+    L_31ac:
+        mov      edx, dword ptr [g_data_005437f8]
+        mov      eax, dword ptr [edx*4 + g_data_004f31a0]
+        push     eax
+        push     OFFSET g_data_004f42f4
+        jmp      L_31d5
+    L_31c1:
+        movsx    ecx, byte ptr [g_data_004f3238]
+        mov      edx, dword ptr [ecx*4 + g_data_004f2fc0]
+        push     edx
+        push     OFFSET g_data_004f42e0
+    L_31d5:
+        push     OFFSET g_data_00543450
+        call     func_004c5580
+        add      esp, 0xc
+    L_31e2:
+        mov      eax, dword ptr [esi + 8]
+        mov      ecx, dword ptr [esi]
+        push     eax
+        push     ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_004a1fa0
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [esi + 0xc]
+        add      esp, 8
+        add      esi, 0x24
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [eax*4 + 0x54]
+        mov      dword ptr [esi - 0x20], edx
+        mov      edx, dword ptr [g_data_00542060]
+        movsx    ecx, byte ptr [esi - 0x28]
+        mov      dword ptr [g_data_00542070], ecx
+        add      ecx, edx
+        inc      edi
+        cmp      esi, OFFSET g_data_004f33cc
+        mov      dword ptr [ecx*4], eax
+        jb       L_3129
+        pop      edi
+        pop      esi
+        ret
+        nop
+    L_120_jmptbl:
+        _emit 0x5a
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x6e
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x83
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x98
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+        _emit 0xac
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+        _emit 0xc1
+        _emit 0x31
+        _emit 0x4a
+        _emit 0x00
+    }
+}
+
