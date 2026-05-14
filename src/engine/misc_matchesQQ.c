@@ -84232,3 +84232,156 @@ __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_004e2860;
+extern unsigned int g_data_004e2864;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00537f88;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00537e90;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_0053a1bc;
+extern unsigned int g_data_0054204c;
+extern void TripleStageRollback_00404a50(void);
+extern void TaggedSceneDispatch_004be690(void);
+extern void func_0049e7e0(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void SetOnePairJmp_004a0110(void);
+extern void TripleTestInstallJmp_004a0130(void);
+
+__declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00535e48]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_00541fc0]
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [g_data_00542048], ecx
+        add     ecx, eax
+        mov     dword ptr [g_data_00535e48], eax
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_00542054], ecx
+        mov     ecx, dword ptr [ecx*4]
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        jne     short L_amspp_skipPush
+        test    eax, eax
+        jne     short L_amspp_else
+        push    0x22f
+        call    TripleStageRollback_00404a50
+        mov     dx, word ptr [g_data_004e2860]
+        add     esp, 4
+        push    edx
+        jmp     short L_amspp_callBe690
+    L_amspp_else:
+        push    0x230
+        call    TripleStageRollback_00404a50
+        mov     ax, word ptr [g_data_004e2864]
+        add     esp, 4
+        push    eax
+    L_amspp_callBe690:
+        call    TaggedSceneDispatch_004be690
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054206c], 1
+        add     esp, 4
+        mov     dword ptr [ecx*4], 1
+    L_amspp_skipPush:
+        call    func_0049e7e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_amspp_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00535e48], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_amspp_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_amspp_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        jne     short L_amspp_sub2_check
+        mov     ecx, dword ptr [g_data_00537f88]
+        push    0x239
+        mov     dword ptr [g_data_00542054], ecx
+        call    DualPushSetCallDualPop_00404b10
+        mov     cl, byte ptr [g_data_0054208c]
+        mov     eax, 1
+        add     esp, 4
+        test    cl, al
+        je      short L_amspp_sub2_check
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00537e90]
+        cmp     edx, ecx
+        je      short L_amspp_sub2_install
+    L_amspp_sub2_check:
+        mov     eax, dword ptr [g_data_00542004]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_amspp_sub2_check2
+        call    SetOnePairJmp_004a0110
+        pop     esi
+        ret
+    L_amspp_sub2_check2:
+        mov     eax, dword ptr [g_data_0053a1bc]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_amspp_sub2_callPair
+        call    TripleTestInstallJmp_004a0130
+        pop     esi
+        ret
+    L_amspp_sub2_callPair:
+        call    SetOnePairJmp_004a0110
+        pop     esi
+        ret
+    L_amspp_sub2_install:
+        mov     dword ptr [esi + 8], offset L_amspp_sub2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    }
+}

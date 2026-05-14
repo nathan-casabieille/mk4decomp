@@ -12133,10 +12133,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049ff30
-    name: func_0049ff30
+    name: AudioMStackPushHandlerPair_0049ff30
     size: 468
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a0110
     name: SetOnePairJmp_004a0110
     size: 20
