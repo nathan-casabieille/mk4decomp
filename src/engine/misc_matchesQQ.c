@@ -80685,3 +80685,140 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_004d67b8;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00543800;
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void func_004b8fa0(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void MStackCall_004065b0(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+
+__declspec(naked) void BootMStackBracketChain_00413ce0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    MStackPush2RunCountdown_004089e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmbc_pop
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmbc_pop
+        mov     dword ptr [g_data_0054206c], 0xa
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmbc_pop
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bmbc_skipBody
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, offset g_data_004d67b8
+        shr     eax, 2
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmbc_pop
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_bmbc_skipBody
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054204c]
+        shl     ecx, 2
+        lea     eax, [edx*4]
+        mov     edx, 0x9e
+        mov     dword ptr [g_data_0054206c], edx
+        push    0x1000
+        mov     dword ptr [eax + 0x30], edx
+        mov     edx, dword ptr [ecx + 0x3c]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [eax + 0x54], edx
+        mov     edx, dword ptr [ecx + 0x40]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [eax + 0x58], edx
+        mov     ecx, dword ptr [ecx + 0x44]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x5c], ecx
+        mov     eax, dword ptr [eax + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        call    ThreeChanPackClamp_00404cc0
+        mov     ecx, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    ecx
+        call    CopyThreeFields_00404df0
+        mov     edx, dword ptr [g_data_00542044]
+        add     esp, 4
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        shl     eax, 2
+        mov     ecx, dword ptr [eax]
+        mov     dword ptr [eax + 0x48], 0xb333
+        or      ecx, 8
+        mov     dword ptr [eax + 0x14], 0xff
+        mov     dword ptr [eax], ecx
+        mov     ecx, offset L_bmbc_sub2
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x10], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        call    MStackCall_004065b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmbc_pop
+    L_bmbc_skipBody:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bmbc_pop:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_bmbc_sub2:
+        call    ClampMulShiftStore_004ba0e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmbc_sub2_ret
+        mov     eax, dword ptr [g_data_00543800]
+        test    eax, eax
+        jne     short L_bmbc_sub2_ret
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [ecx*4 + 0x14]
+        sub     eax, 0x19
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x14], eax
+    L_bmbc_sub2_ret:
+        ret
+    }
+}
