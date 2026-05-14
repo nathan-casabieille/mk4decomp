@@ -90070,3 +90070,213 @@ __declspec(naked) void PaletteTableBlit_004bf0c0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket7_DispatchAndChain_004b8fa0 — 674b game.menu.
+ *
+ * 7-slot mstack-bracketed routine that dispatches via an indirect
+ * function pointer table (g_data_004f7888) indexed by the low
+ * 3 bits of slot_5c[+0x34]>>0x18, then handles the result.
+ *
+ *   mstack pushes: g_data_00542044, g_data_00542048,
+ *                  g_data_0054204c, g_data_00542050,
+ *                  g_data_00542054, g_data_00542058,
+ *                  g_data_0054207c.
+ *
+ *   Stack frame: sub esp, 0xC (1 stack local at [esp+8]).
+ *
+ *   Body:
+ *     - esi := packed_ptr(&g_data_00ab48d8 >> 2);
+ *     - ecx := g_data_0054205c + 0x18 (compute new index slot);
+ *     - eax := slot_5c[+0x34]; g_data_00542058 := eax;
+ *       g_data_00542048 := ecx;
+ *     - ecx := packed_ptr(&g_data_004f7888 >> 2) + (eax>>0x18 & 7)
+ *       — dispatch table lookup;
+ *     - call [ecx*4]  (indirect function call);
+ *     - pause-gate;
+ *     - if bit 0 of g_data_00542058 set: call func_004be210;
+ *       pause-gate;
+ *     - edi := packed_ptr([esp+8] >> 2)  (stack-local arg);
+ *     - if slot_5c[+0x2c] != 0:
+ *         setup args, call func_004bd9a0;
+ *         if no pause: continue to chain-init;
+ *         else: skip-pops (abort) and ret;
+ *     - else: 3-field copy slot_5c[+0x54..+0x5c] into
+ *       packed_stack_local[0..8];
+ *     - chain-init: g_data_00542044 := slot_5c[+0x18];
+ *       g_data_00542054 := 0xAB48D8 (literal, NOT packed_ptr!);
+ *       g_data_00542048 := esi (packed_ptr);
+ *       g_data_0054204c := edi (packed_stack_local);
+ *       call func_004b9250; pause-gate;
+ *     - mstack-pop 7 slots; clear bit 0 of g_state_0054208c.
+ *
+ *   Pause-gates abort to the final pop edi/esi/add esp 0xC/ret
+ *   (mstack-abort-leak [[feedback_mstack_abort_leak]]).
+ *
+ *   The 4-arg setup at the chain-init uses g_data_00542054 with
+ *   the LITERAL address 0xAB48D8 — different from the packed_ptr
+ *   esi which is &g_data_00ab48d8 >> 2.
+ * ============================================================ */
+
+extern void func_004be210(void);
+extern void func_004bd9a0(void);
+extern void func_004b9250(void);
+extern unsigned int g_data_00ab48d8;
+extern unsigned int g_data_004f7888;
+
+__declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        sub     esp, 0x0C
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, offset g_data_00ab48d8
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542058]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        sar     esi, 2
+        mov     eax, dword ptr [ecx*4 + 0x34]
+        add     ecx, 0x18
+        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, offset g_data_004f7888
+        sar     eax, 0x18
+        sar     ecx, 2
+        and     eax, 7
+        add     ecx, eax
+        mov     eax, esi
+        mov     dword ptr [g_data_00542044], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_data_00542050], eax
+        call    ecx
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb7dc_pop7
+        test    byte ptr [g_data_00542058], 1
+        je      L_msb7dc_skip_be210
+        call    func_004be210
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb7dc_pop7
+    L_msb7dc_skip_be210:
+        mov     eax, dword ptr [g_data_0054205c]
+        lea     edi, [esp + 8]
+        sar     edi, 2
+        mov     edx, edi
+        mov     dword ptr [g_data_00542044], edx
+        mov     ecx, dword ptr [eax*4 + 0x2C]
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      L_msb7dc_no_2c
+        mov     edx, dword ptr [g_data_00542050]
+        add     eax, 0x15
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_data_00542050], eax
+        call    func_004bd9a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        je      L_msb7dc_chain_init
+        pop     edi
+        pop     esi
+        add     esp, 0x0C
+        ret
+    L_msb7dc_no_2c:
+        mov     eax, dword ptr [eax*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x5C]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 8], eax
+    L_msb7dc_chain_init:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_00542054], 0x00AB48D8
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542048], esi
+        mov     dword ptr [g_data_0054204c], edi
+        call    func_004b9250
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb7dc_pop7
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xFE
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_0054208c], eax
+    L_msb7dc_pop7:
+        pop     edi
+        pop     esi
+        add     esp, 0x0C
+        ret
+    }
+}

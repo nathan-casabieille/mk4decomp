@@ -14511,10 +14511,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004b8fa0
-    name: func_004b8fa0
+    name: MStackBracket7_DispatchAndChain_004b8fa0
     size: 674
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b9250
     name: func_004b9250
     size: 698
