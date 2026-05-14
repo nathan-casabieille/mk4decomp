@@ -14221,10 +14221,11 @@ functions:
     status: matched
     file: src/engine/renderer1_init_glide.c
   - addr: 0x004b4c10
-    name: func_004b4c10
+    name: GlideProcResolve_004b4c10
     size: 838
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b4f60
     name: DSoundCreateBuffer170_004b4f60
     size: 170
