@@ -80324,3 +80324,104 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         jmp     func_0044f670
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern void func_00405630(void);
+extern void MStackPushTableWalk_00493a20(void);
+extern void Thunk_00405ac0(void);
+
+__declspec(naked) void MStackBracket3SubChain_00493ad0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, 0xffff999a
+        mov     dword ptr [g_data_0054205c], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 0x4c], ecx
+        call    func_00405630
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3sc_abort
+        mov     cl, byte ptr [g_data_0054208c]
+        mov     eax, 4
+        test    cl, al
+        jne     L_mb3sc_pop
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x1c], 0xfffffff6
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x30]
+        mov     dword ptr [g_data_0054206c], eax
+        call    MStackPushTableWalk_00493a20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3sc_abort
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [ecx*4 + 0x1c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x34], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [ecx*4 + 0x34]
+        mov     edx, dword ptr [eax*4 + 0x34]
+        sub     edx, ecx
+        mov     dword ptr [eax*4 + 0x34], edx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [edx*4 + 0x18], 0
+        call    Thunk_00405ac0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_mb3sc_abort
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [eax*4 + 0x18], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [edx*4 + 0x18], eax
+    L_mb3sc_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mb3sc_abort:
+        ret
+    }
+}

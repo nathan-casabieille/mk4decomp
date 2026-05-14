@@ -11225,10 +11225,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00493ad0
-    name: func_00493ad0
+    name: MStackBracket3SubChain_00493ad0
     size: 431
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493c80
     name: PushChainAddCallPop_00493c80
     size: 125
