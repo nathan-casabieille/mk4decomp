@@ -83177,3 +83177,133 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00506d7c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054204c;
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void BootMultiAssetLoadStateInit_00403b10(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void DispatcherComplex260_00407030(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void MStackCall_00406340(void);
+
+__declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        push    edi
+        xor     edi, edi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        je      short L_bivpi_phase0
+        dec     eax
+        je      short L_bivpi_phase1
+        push    9
+        call    TableWalkBoundedCmp_004bd890
+        add     esp, 4
+        call    StackPopDispatchTagged_0041f780
+        pop     edi
+        pop     esi
+        ret
+    L_bivpi_phase0:
+        call    FiveTableWalkInit_00403c90
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_bivpi_pop
+        mov     dword ptr [g_data_0053a50c], 0xa
+        call    BootMultiAssetLoadStateInit_00403b10
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_bivpi_pop
+        push    edi
+        push    0x4a2180
+        call    StoreTwoCall_0049cb40
+        mov     ecx, offset g_data_00506d7c
+        add     esp, 8
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    DispatcherComplex260_00407030
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_bivpi_pop
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_bivpi_doVec3Init
+    L_bivpi_phase1:
+        mov     dword ptr [g_data_00542070], 3
+        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset BootInitVec3PhaseInstall_00402c10
+        add     ecx, 0x2000000
+        mov     dword ptr [edx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    InstallSelfPackedF80_00426000
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_bivpi_doVec3Init:
+        mov     eax, dword ptr [g_data_00542044]
+        shl     eax, 2
+        mov     dword ptr [eax + 0x54], edi
+        mov     dword ptr [eax + 0x58], edi
+        mov     dword ptr [eax + 0x5c], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 9
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        call    MStackCall_00406340
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_bivpi_pop
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054205c], edx
+        shl     eax, 2
+        mov     ecx, 0xfffde667
+        mov     dword ptr [eax + 0x54], edi
+        mov     dword ptr [eax + 0x58], edi
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x5c], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x3c], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x34]
+        or      ecx, 0x80000
+        mov     dword ptr [eax*4 + 0x34], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, 0xc91
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x7c], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x180
+        mov     dword ptr [g_data_00541e6c], eax
+    L_bivpi_pop:
+        pop     edi
+        pop     esi
+        ret
+    }
+}

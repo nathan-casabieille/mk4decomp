@@ -66,10 +66,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00402c10
-    name: func_00402c10
+    name: BootInitVec3PhaseInstall_00402c10
     size: 461
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00402de0
     name: BootStateInitWithRecurseInstall_00402de0
     size: 230
