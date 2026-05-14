@@ -14992,10 +14992,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004bf0c0
-    name: func_004bf0c0
+    name: PaletteTableBlit_004bf0c0
     size: 454
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bf290
     name: BuildSortKeyLUT
     size: 130
