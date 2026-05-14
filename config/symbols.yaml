@@ -1164,10 +1164,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004125e0
-    name: func_004125e0
+    name: Phase3DispatchScaleInstallSelf_004125e0
     size: 790
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00412900
     name: func_00412900
     size: 941

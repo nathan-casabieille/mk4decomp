@@ -91135,3 +91135,237 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase3DispatchScaleInstallSelf_004125e0 — 790b boot.
+ *
+ * Three-phase dispatch on g_data_00542060+0x84:
+ *
+ *   phase==0 (initial): the +0x4c field NEG'd, then 3-axis
+ *     subtract-and-scale via func_00404af0(g_data_004d5194, *)
+ *     into slot+0x6c/+0x74/+0x70 using
+ *     g_data_0052ab10's slot[+0x54..+0x5c] as ref; final field
+ *     subtracts g_data_004d519c; loads counter
+ *     g_data_00542054=0x1e; installs self, phase:=1; signal.
+ *
+ *   phase==1: call func_00493c80; pause-gate;
+ *     - slot+0x70 += g_data_004d5198 (clamped); if sign-negative,
+ *       leave clamped, else do func_00404af0(0xffff4ccd, +0x70)
+ *       and store back;
+ *     - dec g_data_00542054; if not negative: re-install self
+ *       (phase=2) with counter=0x1d and signal;
+ *     - else (counter went neg): call func_004abfe0; pause-gate;
+ *       slot[+0x58]:=0xFFFFE667; tail-call func_0041f780.
+ *
+ *   phase==2: call func_00493c80; pause-gate;
+ *     - slot+0x70 += g_data_004d5198 (no clamp);
+ *     - dec g_data_00542054; if not negative: install self again
+ *       (phase=1) and signal;
+ *     - else: scale slot+0x70 by func_00404af0(0xffff8000, +0x70);
+ *       2x func_00404af0 self-square on +0x6c and +0x74;
+ *       sum into g_data_00542074; call func_004ab350;
+ *       pause-gate; negate g_data_0054206c; call func_0040a690;
+ *       pause-gate; store result into slot+0x6c and +0x74 := old;
+ *       counter=0x1d; install self phase=2; signal.
+ *
+ * Linear naked block. Uses ebx = slot_60*4 throughout.
+ * ============================================================ */
+
+extern void func_00493c80(void);
+extern void func_004abfe0(void);
+extern void func_004ab350(void);
+extern unsigned int g_data_004d5198;
+extern unsigned int g_data_004d5194;
+extern unsigned int g_data_004d519c;
+
+__declspec(naked) void Phase3DispatchScaleInstallSelf_004125e0(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        push    edi
+        lea     ebx, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [ebx + 0x84], 0
+        sub     eax, 0
+        je      L_p3dsi_phase0
+        dec     eax
+        je      L_p3dsi_phase2
+    L_p3dsi_phase1:
+        call    func_00493c80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p3dsi_exit
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_004d5198]
+        add     eax, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        js      L_p3dsi_p1_skip_scale
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x58]
+        add     eax, 0x1999
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jle     L_p3dsi_p1_skip_scale
+        mov     eax, dword ptr [ecx*4 + 0x70]
+        push    eax
+        push    0xFFFF4CCD
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x70], eax
+    L_p3dsi_p1_skip_scale:
+        mov     eax, dword ptr [g_data_00542054]
+        dec     eax
+        mov     dword ptr [g_data_00542054], eax
+        jns     L_p3dsi_install_self_phase2
+        call    func_004abfe0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p3dsi_exit
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, 0xFFFFE667
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x58], eax
+        call    func_0041f780
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_p3dsi_phase2:
+        call    func_00493c80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p3dsi_exit
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_004d5198]
+        add     eax, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     eax, dword ptr [g_data_00542054]
+        dec     eax
+        mov     dword ptr [g_data_00542054], eax
+        jns     L_p3dsi_install_self_phase1
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x70]
+        push    eax
+        push    0xFFFF8000
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4 + 0x70], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x6C]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 8
+        mov     eax, dword ptr [eax*4 + 0x74]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542074], eax
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_0054206c]
+        add     esp, 8
+        add     eax, ecx
+        mov     dword ptr [g_data_00542074], eax
+        call    func_004ab350
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p3dsi_exit
+        mov     ecx, dword ptr [g_data_0054206c]
+        neg     ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_0040a690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p3dsi_exit
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x6C], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542070]
+        mov     dword ptr [ecx*4 + 0x74], edx
+        mov     dword ptr [g_data_00542054], 0x1D
+    L_p3dsi_install_self_phase2:
+        mov     eax, 1
+        mov     dword ptr [ebx + 8], 0x004125E0
+        mov     dword ptr [ebx + 0x84], 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_p3dsi_phase0:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x4C]
+        neg     eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4C], eax
+        mov     eax, dword ptr [g_data_0052ab10]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542050], eax
+        lea     edi, [eax*4]
+        lea     esi, [ecx*4]
+        mov     eax, dword ptr [edi + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     edx, dword ptr [esi + 0x54]
+        sub     eax, edx
+        mov     edx, dword ptr [g_data_004d5194]
+        push    eax
+        push    edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x6C], eax
+        mov     eax, dword ptr [edi + 0x5C]
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ecx, dword ptr [esi + 0x5C]
+        sub     eax, ecx
+        mov     dword ptr [g_data_0054206c], eax
+        push    eax
+        mov     eax, dword ptr [g_data_004d5194]
+        push    eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x74], eax
+        mov     edi, dword ptr [edi + 0x58]
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], edi
+        mov     ecx, dword ptr [esi + 0x58]
+        sub     edi, ecx
+        mov     ecx, dword ptr [g_data_004d5194]
+        push    edi
+        push    ecx
+        mov     dword ptr [g_data_0054206c], edi
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_004d519c]
+        add     esp, 8
+        sub     eax, ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x70], eax
+        mov     dword ptr [g_data_00542054], 0x1E
+    L_p3dsi_install_self_phase1:
+        mov     eax, 1
+        mov     dword ptr [ebx + 8], 0x004125E0
+        mov     dword ptr [ebx + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p3dsi_exit:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
