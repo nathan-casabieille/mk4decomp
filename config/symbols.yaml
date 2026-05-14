@@ -14518,10 +14518,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8bd0
-    name: func_004b8bd0
+    name: MenuChoiceEnterDispatch_004b8bd0
     size: 408
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8d70
     name: MenuPollStateMachine_004b8d70
     size: 311

@@ -111336,3 +111336,197 @@ __declspec(naked) void MenuKeypadEnterDispatch_004b8a30(void)
     }
 }
 
+/* ============================================================
+ * MenuChoiceEnterDispatch_004b8bd0 — 408b game.menu.
+ *
+ * Per-frame entry transition for the menu page rooted at
+ * g_data_004f4f60 / state at g_data_00ab4384. Sister of
+ * [[menu-keypad-enter-dispatch-004b8a30]] but the keypad
+ * sub-cases here all call func_004b40a0(N) for N=1/2/3/5 (the
+ * fourth case skips N=4, matching the func_004b3db0 ≠ 4 early
+ * guard a few instructions before the dispatch).
+ *
+ * Outer sub-then-je chain on g_data_00ab4384 in {0, 2, 0x45}:
+ *   - state 0 (L_8d31) → state := 2.
+ *   - state 2 (L_8c26) → call func_004b7020(1); bit 15 abort,
+ *     bit 0 → func_004b62c0, bit 1 → func_004b6300, bit 5 →
+ *     state := 0x45. Then if func_004b3db0()==4 and
+ *     g_data_004ffd78==0 force state := 0x45. Then secondary
+ *     4-entry jump table on [edx*8 + g_data_004f4f64] (per-key
+ *     offset minus 0xd) into func_004b40a0 with N ∈ {1,2,3,5}.
+ *   - state 0x45 → terminal.
+ *
+ * Finalizer L_8d3b: func_004b65c0(record, &g_data_004f4f60),
+ * return g_data_00ab4384.
+ *
+ * Frame: push ebx/esi/edi (NB: pushed in that order). Returns:
+ * int.
+ *
+ * Layout quirk: 1-byte 0x90 align nop before the 16-byte jump
+ * table at 0x4b8d58.
+ * ============================================================ */
+
+extern void func_004b3db0(void);
+extern void func_004b40a0(void);
+extern void func_004b62c0(void);
+extern void func_004b6300(void);
+extern void func_004b65c0(void);
+extern void func_004b7020(void);
+extern unsigned int g_data_004f4f60;
+extern unsigned int g_data_004f4f64;
+extern unsigned int g_data_004ffd78;
+extern unsigned int g_data_00ab42d8;
+extern unsigned int g_data_00ab42f8;
+extern unsigned int g_data_00ab4384;
+
+__declspec(naked) void MenuChoiceEnterDispatch_004b8bd0(void)
+{
+    __asm {
+        mov      al, byte ptr [g_data_00ab42d8]
+        push     ebx
+        push     esi
+        push     edi
+        test     al, 1
+        jne      short L_8bfb
+        mov      bl, al
+        push     OFFSET g_data_004f4f60
+        or       bl, 1
+        push     0
+        mov      byte ptr [g_data_00ab42d8], bl
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42f8], eax
+    L_8bfb:
+        mov      eax, dword ptr [g_data_00ab4384]
+        sub      eax, 0
+        je       L_8d31
+        sub      eax, 2
+        je       short L_8c26
+        sub      eax, 0x43
+        jne      L_8d3b
+        mov      dword ptr [g_data_00ab4384], 0
+        jmp      L_8d3b
+    L_8c26:
+        push     1
+        call     func_004b7020
+        mov      ebx, eax
+        add      esp, 4
+        mov      esi, ebx
+        and      esi, 0x8000
+        jne      short L_8c59
+        test     bl, 1
+        je       short L_8c59
+        mov      eax, dword ptr [g_data_00ab42f8]
+        push     OFFSET g_data_004f4f60
+        push     eax
+        call     func_004b62c0
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42f8], eax
+    L_8c59:
+        test     esi, esi
+        jne      short L_8c7b
+        test     bl, 2
+        je       short L_8c7b
+        mov      ecx, dword ptr [g_data_00ab42f8]
+        push     OFFSET g_data_004f4f60
+        push     ecx
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42f8], eax
+    L_8c7b:
+        test     esi, esi
+        mov      edi, 0x45
+        jne      short L_8c8f
+        test     bl, 0x20
+        je       short L_8c8f
+        mov      dword ptr [g_data_00ab4384], edi
+    L_8c8f:
+        call     func_004b3db0
+        cmp      eax, 4
+        jne      short L_8ca2
+        mov      eax, dword ptr [g_data_004ffd78]
+        test     eax, eax
+        je       short L_8ca8
+    L_8ca2:
+        mov      dword ptr [g_data_00ab4384], edi
+    L_8ca8:
+        mov      edx, dword ptr [g_data_00ab42f8]
+        movsx    eax, word ptr [edx*8 + g_data_004f4f64]
+        add      eax, -0xd
+        cmp      eax, 3
+        ja       short L_8d3b
+        jmp      dword ptr [eax*4 + L_bd0_jmptbl]
+    L_8cc5:
+        test     esi, esi
+        jne      short L_8d3b
+        test     bl, 0x10
+        je       short L_8d3b
+        push     1
+        call     func_004b40a0
+        add      esp, 4
+        mov      dword ptr [g_data_00ab4384], edi
+        jmp      short L_8d3b
+    L_8ce0:
+        test     esi, esi
+        jne      short L_8d3b
+        test     bl, 0x10
+        je       short L_8d3b
+        push     2
+        call     func_004b40a0
+        add      esp, 4
+        mov      dword ptr [g_data_00ab4384], edi
+        jmp      short L_8d3b
+    L_8cfb:
+        test     esi, esi
+        jne      short L_8d3b
+        test     bl, 0x10
+        je       short L_8d3b
+        push     3
+        call     func_004b40a0
+        add      esp, 4
+        mov      dword ptr [g_data_00ab4384], edi
+        jmp      short L_8d3b
+    L_8d16:
+        test     esi, esi
+        jne      short L_8d3b
+        test     bl, 0x10
+        je       short L_8d3b
+        push     5
+        call     func_004b40a0
+        add      esp, 4
+        mov      dword ptr [g_data_00ab4384], edi
+        jmp      short L_8d3b
+    L_8d31:
+        mov      dword ptr [g_data_00ab4384], 2
+    L_8d3b:
+        mov      eax, dword ptr [g_data_00ab42f8]
+        push     eax
+        push     OFFSET g_data_004f4f60
+        call     func_004b65c0
+        mov      eax, dword ptr [g_data_00ab4384]
+        add      esp, 8
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+        nop
+    L_bd0_jmptbl:
+        _emit    0xc5
+        _emit    0x8c
+        _emit    0x4b
+        _emit    0x00
+        _emit    0xe0
+        _emit    0x8c
+        _emit    0x4b
+        _emit    0x00
+        _emit    0xfb
+        _emit    0x8c
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x16
+        _emit    0x8d
+        _emit    0x4b
+        _emit    0x00
+    }
+}
+
