@@ -1247,10 +1247,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x004143f0
-    name: func_004143f0
+    name: Phase4StateInitWithHelpers_004143f0
     size: 626
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00414670
     name: LinkSiblingsAndInstallSelf_00414670
     size: 311
