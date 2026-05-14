@@ -11546,10 +11546,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00498720
-    name: func_00498720
+    name: QuadSubVec2GateInstallSelfPair_00498720
     size: 469
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00498900
     name: func_00498900
     size: 826

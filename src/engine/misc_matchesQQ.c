@@ -84741,3 +84741,172 @@ __declspec(naked) void EightPackedSubInstallSelfWalk_0042b6f0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void PushChainAddCallPop_00493c80(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void MStackCall_00406740(void);
+extern void CallSetPause_0041f830(void);
+extern void MStackChainSwapTraversal_00493d00(void);
+extern void func_00498900(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void InitZeroChainLookupJmp_00494210(void);
+extern void func_004125e0(void);
+
+__declspec(naked) void QuadSubVec2GateInstallSelfPair_00498720(void)
+{
+    __asm
+    {
+        push    0x4f21c0
+        call    ArgSar_Set0_Jmp_0049c6f0
+        add     esp, 4
+        ret
+        nop
+        nop
+    L_qsv_sub2:
+        call    PushChainAddCallPop_00493c80
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qsv_sub2_ret
+        call    Vec2SumMul10ChainCompute_0049bc60
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qsv_sub2_ret
+        mov     eax, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542074]
+        cmp     eax, ecx
+        jle     short L_qsv_sub2_ret
+        jmp     ScaledIndirectJmp_0049c850
+    L_qsv_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_qsv_sub3:
+        call    MStackCall_00406740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qsv_sub3_ret
+        jmp     CallSetPause_0041f830
+    L_qsv_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_qsv_main:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_qsv_phase0
+        dec     eax
+        call    MStackChainSwapTraversal_00493d00
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_qsv_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x30]
+        cmp     eax, 0x62
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_qsv_callPause
+        call    func_00498900
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_qsv_ret
+    L_qsv_callPause:
+        call    CallSetPause_0041f830
+        pop     esi
+        pop     ebx
+        ret
+    L_qsv_phase0:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ebx, 1
+        mov     dword ptr [g_data_00542054], eax
+        mov     eax, dword ptr [eax*4 + 0x30]
+        cmp     eax, 0x6c
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_qsv_install1
+        mov     dword ptr [g_data_0054206c], 0x12c
+        call    AudioVolumeRescale_004ab690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_qsv_ret
+        test    byte ptr [g_data_0054208c], bl
+        jne     short L_qsv_install2
+    L_qsv_install1:
+        mov     dword ptr [esi + 8], offset L_qsv_main
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset L_qsv_main
+        mov     dword ptr [edx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x2000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InitZeroChainLookupJmp_00494210
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    L_qsv_install2:
+        mov     dword ptr [esi + 8], offset L_qsv_main
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset L_qsv_main
+        mov     dword ptr [eax*4 + 0x84], ebx
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    func_004125e0
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_qsv_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
