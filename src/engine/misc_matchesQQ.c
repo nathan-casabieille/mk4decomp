@@ -82708,3 +82708,173 @@ __declspec(naked) void Vec3AccMul10ChainBlend_0049c3d0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054204c;
+extern void StreamInitCountdownBody_00494830(void);
+extern void ArgScaledChain_004949b0(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void ThresholdSetMatchDispatch_0046dc10(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledInit_0048d490(void);
+extern void InstallSelfMStackPush_004968a0(void);
+extern void DirtyGuardLitOrJmp_00496940(void);
+extern void ScaledLoadIncJmp_00429840(void);
+
+__declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x212
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4f1728
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    StreamInitCountdownBody_00494830
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpscb_sub1_ret
+        push    0x4f1738
+        call    ArgScaledChain_004949b0
+        add     esp, 4
+    L_fpscb_sub1_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpscb_sub2:
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x111
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4f1748
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpscb_sub3:
+        call    ThresholdSetMatchDispatch_0046dc10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpscb_sub3_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x111
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4f1760
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ScaledLookupGuardJmpIndirect_004949f0
+        add     esp, 4
+    L_fpscb_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpscb_sub4:
+        mov     eax, dword ptr [g_data_00542060]
+        push    0x4f1778
+        mov     dword ptr [eax*4 + 0x74], 0x112
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x30a
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x68], eax
+        call    StreamInitCountdownBody_00494830
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpscb_sub4_ret
+        push    0x4f1788
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_fpscb_sub4_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpscb_main:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_fpscb_main_phase0
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_fpscb_main_chain
+        call    InstallSelfMStackPush_004968a0
+        pop     esi
+        pop     ebx
+        ret
+    L_fpscb_main_phase0:
+        mov     dword ptr [g_data_00542080], 7
+    L_fpscb_main_chain:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_0054206c], 0xa
+        call    ScaledInit_0048d490
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpscb_main_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ebx, 1
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, bl
+        mov     dword ptr [g_data_00542080], edx
+        je      short L_fpscb_main_doCall
+        call    DirtyGuardLitOrJmp_00496940
+        pop     esi
+        pop     ebx
+        ret
+    L_fpscb_main_doCall:
+        call    ScaledLoadIncJmp_00429840
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpscb_main_ret
+        mov     dword ptr [esi + 8], offset L_fpscb_main
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_fpscb_main_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
