@@ -101936,4 +101936,377 @@ __declspec(naked) void PaletteFillLineHybrid_004b5ce0(void)
     }
 }
 
+/* ============================================================
+ * CameraSetupAndCullFan_004b99b0 — 1176b engine.render.
+ *
+ * Per-frame camera viewport + cone-ray rasterizer. Computes
+ * viewport size from g_data_00ab4e68*5*(g_data_00543550 clamped
+ * [0x60,0xa0]). Builds camera-look ray (focus-cam) via 3D
+ * subtract+sqrt, normalizes via fdivr from 0x4d2a28 (1.0f),
+ * scales by 00ab4e68. Sets up 2-quad fan via func_004b3130/
+ * func_004b3030(0x50,0x50,0x50)/func_004b30c0. Then 2nd shot
+ * computes perp ray to anchor at 00ab4e50/54/58, packs world
+ * coords from 00ab4e44/48/4c minus 0x8000 (centered), gated
+ * by 00ab4e40. Auto-snapshots cam-matrix when 0054205c bit
+ * 0x180000 set and 00ab4e3c >= 0.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004b3030(void);
+extern void func_004b30c0(void);
+extern void func_004b3130(void);
+extern void func_004b3590(void);
+extern unsigned int g_const_004d2a20;
+extern unsigned int g_const_004d2a28;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00ab483c;
+extern unsigned int g_data_00ab4840;
+extern unsigned int g_data_00ab47fa;
+extern unsigned int g_data_00ab47fe;
+extern unsigned int g_data_00ab4800;
+extern unsigned int g_data_00ab4802;
+extern unsigned int g_data_00ab4804;
+extern unsigned int g_data_00ab4806;
+extern unsigned int g_data_00ab4808;
+extern unsigned int g_data_00ab44d8;
+extern unsigned int g_data_00ab44da;
+extern unsigned int g_data_00ab44dc;
+extern unsigned int g_data_00ab44de;
+extern unsigned int g_data_00ab44e0;
+extern unsigned int g_data_00ab44e2;
+extern unsigned int g_data_00ab44e4;
+extern unsigned int g_data_00ab44e6;
+extern unsigned int g_data_00ab44e8;
+extern unsigned int g_data_00ab4cd8;
+extern unsigned int g_data_00ab4dc4;
+extern unsigned int g_data_00ab4e40;
+extern unsigned int g_data_00ab4e44;
+extern unsigned int g_data_00ab4e48;
+extern unsigned int g_data_00ab4e4c;
+extern unsigned int g_data_00ab4e50;
+extern unsigned int g_data_00ab4e54;
+extern unsigned int g_data_00ab4e58;
+extern unsigned int g_data_00ab4e5c;
+extern unsigned int g_data_00ab4e68;
+extern unsigned int g_data_00ab4e6c;
+
+__declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
+{
+    __asm {
+        sub      esp, 0x18
+        mov      eax, dword ptr [g_data_0054204c]
+        push     ebx
+        mov      dword ptr [esp + 0x18], eax
+        mov      eax, dword ptr [g_data_00ab4e68]
+        push     ebp
+        push     esi
+        lea      eax, [eax + eax*2]
+        mov      edx, dword ptr [g_data_00542044]
+        shl      eax, 5
+        shr      eax, 8
+        push     edi
+        mov      edi, dword ptr [g_data_00542048]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00ab4e5c], eax
+        mov      eax, dword ptr [g_data_00543550]
+        mov      dword ptr [esp + 0x20], edx
+        mov      dword ptr [g_data_00ab4e60], eax
+        mov      ecx, dword ptr [edi*4 + 0x3c]
+        sar      ecx, 8
+        cmp      ecx, 0x60
+        mov      dword ptr [g_data_0054206c], ecx
+        jge      L_9a0e
+        mov      ecx, 0x60
+        jmp      L_9a1b
+    L_9a0e:
+        cmp      ecx, 0xa0
+        jle      L_9a21
+        mov      ecx, 0xa0
+    L_9a1b:
+        mov      dword ptr [g_data_0054206c], ecx
+    L_9a21:
+        mov      esi, eax
+        imul     esi, ecx
+        shl      esi, 3
+        sar      esi, 8
+        cmp      ecx, 0x100
+        jle      L_9a3f
+        mov      ecx, 0x100
+        mov      dword ptr [g_data_0054206c], ecx
+    L_9a3f:
+        imul     eax, ecx
+        sar      eax, 8
+        mov      word ptr [g_data_00ab44d8], si
+        mov      word ptr [g_data_00ab44de], si
+        mov      word ptr [g_data_00ab44e4], si
+        mov      dword ptr [g_data_00ab4e6c], eax
+        sar      esi, 1
+        mov      eax, esi
+        lea      ecx, [edx + 0x15]
+        neg      eax
+        mov      word ptr [g_data_00ab44da], ax
+        mov      word ptr [g_data_00ab44e0], ax
+        mov      word ptr [g_data_00ab44e6], ax
+        lea      eax, [edi + 0x15]
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00542048], ecx
+        mov      edx, dword ptr [ecx*4]
+        mov      edi, dword ptr [eax*4]
+        sub      edx, edi
+        push     OFFSET g_data_00ab4838
+        sar      edx, 8
+        mov      dword ptr [g_data_00ab4838], edx
+        mov      edx, dword ptr [ecx*4 + 4]
+        mov      ebx, dword ptr [eax*4 + 4]
+        push     OFFSET g_data_00ab4838
+        sub      edx, ebx
+        sar      edx, 8
+        mov      dword ptr [g_data_00ab483c], edx
+        mov      ecx, dword ptr [ecx*4 + 8]
+        mov      edx, dword ptr [eax*4 + 8]
+        mov      eax, dword ptr [g_data_00ab4d5c]
+        sub      ecx, edx
+        mov      edx, dword ptr [g_data_00ab4d58]
+        sar      ecx, 8
+        mov      dword ptr [g_data_00ab4840], ecx
+        mov      ecx, dword ptr [g_data_00ab4d60]
+        mov      dword ptr [g_data_007af990], edx
+        mov      edx, dword ptr [g_data_00ab4d64]
+        mov      dword ptr [g_data_007af994], eax
+        mov      ax, word ptr [g_data_00ab4d68]
+        mov      dword ptr [g_data_007af998], ecx
+        mov      dword ptr [g_data_007af99c], edx
+        mov      word ptr [g_data_007af9a0], ax
+        call     func_004b3590
+        mov      edi, dword ptr [g_data_00ab4838]
+        mov      ecx, dword ptr [g_data_00ab483c]
+        mov      ebx, dword ptr [g_data_00ab4840]
+        mov      word ptr [g_data_00ab4800], cx
+        movsx    eax, di
+        movsx    ecx, cx
+        mov      ebp, eax
+        mov      dword ptr [esp + 0x18], eax
+        movsx    edx, bx
+        imul     ebp, eax
+        mov      eax, ecx
+        mov      dword ptr [esp + 0x1c], ecx
+        imul     eax, ecx
+        mov      ecx, edx
+        add      ebp, eax
+        imul     ecx, edx
+        add      ebp, ecx
+        add      esp, 8
+        mov      dword ptr [esp + 0x1c], ebp
+        mov      word ptr [g_data_00ab47fe], di
+        fild     dword ptr [esp + 0x1c]
+        mov      word ptr [g_data_00ab4802], bx
+        mov      dword ptr [esp + 0x18], edx
+        fsqrt
+        fcom     qword ptr [g_const_004d2a20]
+        fnstsw   ax
+        test     ah, 0x40
+        jne      L_9bca
+        fdivr    qword ptr [g_const_004d2a28]
+        fild     dword ptr [esp + 0x10]
+        fmul     st, st(1)
+        call     func_004c57d0
+        fild     dword ptr [esp + 0x14]
+        mov      di, ax
+        mov      word ptr [g_data_00ab47fe], di
+        fmul     st, st(1)
+        call     func_004c57d0
+        fild     dword ptr [esp + 0x18]
+        mov      word ptr [g_data_00ab4800], ax
+        fmul     st, st(1)
+        call     func_004c57d0
+        mov      bx, ax
+        fstp     st(0)
+        mov      word ptr [g_data_00ab4802], bx
+        jmp      L_9bcc
+    L_9bca:
+        fstp     st(0)
+    L_9bcc:
+        mov      eax, dword ptr [g_data_00ab4800]
+        mov      dx, di
+        neg      dx
+        mov      word ptr [g_data_00ab47f8], dx
+        mov      cx, bx
+        neg      eax
+        movsx    edx, bx
+        neg      cx
+        mov      word ptr [g_data_00ab47fa], ax
+        mov      word ptr [g_data_00ab47fc], cx
+        movsx    eax, word ptr [g_data_00ab4800]
+        neg      edx
+        movsx    ecx, di
+        push     edx
+        push     eax
+        push     ecx
+        push     0
+        call     func_004b3130
+        add      esp, 0x10
+        push     0x50
+        push     0x50
+        push     0x50
+        call     func_004b3030
+        add      esp, 0xc
+        push     esi
+        push     esi
+        push     esi
+        push     0
+        call     func_004b30c0
+        mov      eax, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_data_00ab4e50]
+        mov      esi, dword ptr [g_data_00ab4e54]
+        add      esp, 0x10
+        mov      edi, dword ptr [eax*4]
+        sub      ecx, edi
+        mov      edi, dword ptr [g_data_00ab4e58]
+        sar      ecx, 8
+        mov      dword ptr [g_data_00ab4838], ecx
+        mov      edx, dword ptr [eax*4 + 4]
+        sub      esi, edx
+        sar      esi, 8
+        mov      dword ptr [g_data_00ab483c], esi
+        mov      ebx, dword ptr [eax*4 + 8]
+        sub      edi, ebx
+        mov      edx, esi
+        sar      edi, 8
+        imul     edx, esi
+        mov      ebx, edi
+        mov      eax, ecx
+        imul     ebx, edi
+        imul     eax, ecx
+        sar      ebx, 0xc
+        sar      edx, 0xc
+        add      ebx, edx
+        mov      dword ptr [g_data_00ab4840], edi
+        sar      eax, 0xc
+        add      ebx, eax
+        je       L_9df0
+        mov      eax, 0x180000
+        mov      bp, cx
+        cdq
+        idiv     ebx
+        mov      word ptr [g_data_00ab4808], di
+        mov      word ptr [g_data_00ab4804], bp
+        movsx    edx, di
+        mov      word ptr [g_data_00ab4806], si
+        mov      dword ptr [esp + 0x18], edx
+        mov      ebx, eax
+        movsx    eax, cx
+        movsx    ecx, si
+        mov      edi, eax
+        mov      dword ptr [esp + 0x10], eax
+        imul     edi, eax
+        mov      eax, ecx
+        mov      dword ptr [esp + 0x14], ecx
+        imul     eax, ecx
+        mov      ecx, edx
+        add      edi, eax
+        imul     ecx, edx
+        add      edi, ecx
+        mov      dword ptr [esp + 0x1c], edi
+        fild     dword ptr [esp + 0x1c]
+        sar      ebx, 8
+        fsqrt
+        fcom     qword ptr [g_const_004d2a20]
+        fnstsw   ax
+        test     ah, 0x40
+        jne      L_9d42
+        fdivr    qword ptr [g_const_004d2a28]
+        fild     dword ptr [esp + 0x10]
+        fmul     st, st(1)
+        call     func_004c57d0
+        fild     dword ptr [esp + 0x14]
+        mov      bp, ax
+        mov      word ptr [g_data_00ab4804], bp
+        fmul     st, st(1)
+        call     func_004c57d0
+        fild     dword ptr [esp + 0x18]
+        mov      si, ax
+        mov      word ptr [g_data_00ab4806], si
+        fmul     st, st(1)
+        call     func_004c57d0
+        fstp     st(0)
+        mov      word ptr [g_data_00ab4808], ax
+        jmp      L_9d44
+    L_9d42:
+        fstp     st(0)
+    L_9d44:
+        cmp      ebx, 0x100
+        jle      L_9d51
+        mov      ebx, 0x100
+    L_9d51:
+        imul     ebx, dword ptr [g_data_00ab4e68]
+        mov      edx, dword ptr [g_data_00ab4e44]
+        mov      eax, dword ptr [g_data_00ab4e48]
+        mov      ecx, dword ptr [g_data_00ab4e4c]
+        and      edx, 0xffff
+        and      eax, 0xffff
+        sub      edx, 0x8000
+        and      ecx, 0xffff
+        sub      eax, 0x8000
+        shr      ebx, 8
+        sar      edx, 8
+        sub      ecx, 0x8000
+        imul     edx, ebx
+        sar      eax, 8
+        sar      ecx, 8
+        imul     eax, ebx
+        imul     ecx, ebx
+        mov      word ptr [g_data_00ab44dc], dx
+        mov      word ptr [g_data_00ab44e2], ax
+        movsx    edx, word ptr [g_data_00ab4808]
+        mov      word ptr [g_data_00ab44e8], cx
+        push     edx
+        movsx    eax, si
+        movsx    ecx, bp
+        push     eax
+        push     ecx
+        push     1
+        call     func_004b3130
+        movsx    edx, word ptr [g_data_00ab44e8]
+        movsx    eax, word ptr [g_data_00ab44e2]
+        movsx    ecx, word ptr [g_data_00ab44dc]
+        add      esp, 0x10
+        push     edx
+        push     eax
+        push     ecx
+        push     1
+        call     func_004b30c0
+        add      esp, 0x10
+    L_9df0:
+        mov      eax, dword ptr [g_data_0054205c]
+        test     eax, 0x180000
+        je       L_9e10
+        mov      ecx, dword ptr [g_data_00ab4e40]
+        test     ecx, ecx
+        je       L_9e10
+        add      dword ptr [g_data_00ab4dc4], 0x2b85
+    L_9e10:
+        test     ah, 0x10
+        je       L_9e2d
+        mov      eax, dword ptr [g_data_00ab4e3c]
+        test     eax, eax
+        jl       L_9e2d
+        push     0
+        push     OFFSET g_data_00ab4cd8
+        call     func_004b9840
+        add      esp, 8
+    L_9e2d:
+        mov      edx, dword ptr [esp + 0x20]
+        mov      eax, dword ptr [esp + 0x24]
+        pop      edi
+        pop      esi
+        pop      ebp
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_data_0054204c], eax
+        pop      ebx
+        add      esp, 0x18
+        ret
+    }
+}
+
 
