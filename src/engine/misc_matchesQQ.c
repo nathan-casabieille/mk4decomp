@@ -87984,3 +87984,165 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         ret
     }
 }
+
+/* ============================================================
+ * BootInitChainHeavy_00404f20 — 649b boot.
+ *
+ * Heavy boot-init sequence: 14 sequential pause-gated calls
+ * to func_004bd570, func_004bd8d0, func_004ab380 (3x with
+ * different param packs), func_00409740 (7x), func_0049cd40,
+ * func_004060c0, func_004063e0, then final func_00409280
+ * after clearing 5 status globals.
+ *
+ * Uses esi=0 as a zero register throughout (xor esi, esi at
+ * top). All pause-gates target the trailing pop esi/ret.
+ *
+ * Final setup before func_00409280:
+ *   slot[+0x30] := 0xC, g_data_0052ab10 := slot,
+ *   clear g_data_0053a520, g_data_00537e8c, g_data_00537f78,
+ *         g_data_00541de0, g_data_00535e6c,
+ *   g_data_004d5140 := 0x7F000000,
+ *   g_data_0054206c := 0.
+ * ============================================================ */
+
+extern void func_004bd570(void);
+extern void func_004bd8d0(void);
+extern void func_004ab380(void);
+extern void func_0049cd40(void);
+extern void func_004060c0(void);
+extern void func_004063e0(void);
+extern void func_00409280(void);
+extern unsigned int g_data_0054343c;
+extern unsigned int g_data_00541e7c;
+extern unsigned int g_data_00541e84;
+extern unsigned int g_data_00541e8c;
+extern unsigned int g_data_00541ea4;
+extern unsigned int g_data_00541eac;
+extern unsigned int g_data_00541eb0;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_0053a520;
+extern unsigned int g_data_00537e8c;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00541de0;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_004d5140;
+
+__declspec(naked) void BootInitChainHeavy_00404f20(void)
+{
+    __asm {
+        push    esi
+        xor     esi, esi
+        mov     dword ptr [g_data_0054343c], esi
+        call    func_004bd570
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        call    func_004bd8d0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     eax, dword ptr [g_data_00541e7c]
+        mov     ecx, dword ptr [g_data_00541e80]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542048], esi
+        mov     dword ptr [g_data_0054204c], 0x21
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_data_00542054], 0xC8
+        call    func_004ab380
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     edx, dword ptr [g_data_00541e84]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], edx
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     eax, dword ptr [g_data_00541e88]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], eax
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     ecx, dword ptr [g_data_00541e8c]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], ecx
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     edx, dword ptr [g_data_00541e98]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], edx
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     eax, dword ptr [g_data_00541e90]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], eax
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     ecx, dword ptr [g_data_00541e94]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], ecx
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     edx, dword ptr [g_data_00541e9c]
+        mov     dword ptr [g_data_00542054], esi
+        mov     dword ptr [g_data_00542050], edx
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     eax, dword ptr [g_data_00541ea0]
+        mov     dword ptr [g_data_00542048], 3
+        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_data_00542054], esi
+        call    func_00409740
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     ecx, dword ptr [g_data_00541ea4]
+        mov     edx, dword ptr [g_data_00541ea8]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_00542048], 4
+        mov     dword ptr [g_data_0054204c], 0x13
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_data_00542054], 0x1C2
+        call    func_004ab380
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     eax, dword ptr [g_data_00541eac]
+        mov     ecx, dword ptr [g_data_00541eb0]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542048], esi
+        mov     dword ptr [g_data_0054204c], 0x13
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_data_00542054], 0xC8
+        call    func_004ab380
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        call    func_0049cd40
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        call    func_004060c0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, 0x0C
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x30], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0052ab10], eax
+        call    func_004063e0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_boot_init_exit
+        mov     dword ptr [g_data_0053a520], esi
+        mov     dword ptr [g_data_00537e8c], esi
+        mov     dword ptr [g_data_00537f78], esi
+        mov     dword ptr [g_data_00541de0], esi
+        mov     dword ptr [g_data_00535e6c], esi
+        mov     dword ptr [g_data_004d5140], 0x7F000000
+        mov     dword ptr [g_data_0054206c], esi
+        call    func_00409280
+    L_boot_init_exit:
+        pop     esi
+        ret
+    }
+}

@@ -274,10 +274,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesD.c
   - addr: 0x00404f20
-    name: func_00404f20
+    name: BootInitChainHeavy_00404f20
     size: 649
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004051b0
     name: Init6Globals_004051b0
     size: 47
