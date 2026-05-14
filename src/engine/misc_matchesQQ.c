@@ -83021,3 +83021,159 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         ret
     }
 }
+
+extern unsigned int g_data_0053a498;
+extern unsigned int g_data_00543384;
+extern unsigned int g_data_00543570;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_004ec710;
+extern void StorePauseImulShr16_004ab630(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void Thunk_0049cbc0(void);
+
+__declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0053a498]
+        mov     ecx, dword ptr [g_data_00543384]
+        cmp     ecx, eax
+        jne     short L_gsiic_diff
+        mov     eax, dword ptr [g_data_00543570]
+        inc     eax
+        test    eax, eax
+        mov     dword ptr [g_data_00543570], eax
+        jg      L_gsiic_ret
+        jmp     short L_gsiic_chain
+    L_gsiic_diff:
+        mov     dword ptr [g_data_00543384], eax
+        mov     dword ptr [g_data_00543570], 0
+    L_gsiic_chain:
+        mov     dword ptr [g_data_0054206c], 4
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gsiic_ret
+        add     dword ptr [g_data_0054206c], 5
+        jmp     GatedWordPushCall_00489f90
+    L_gsiic_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_gsiic_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_gsiic_sub2_phase0
+        dec     eax
+        je      short L_gsiic_sub2_phase1
+        mov     eax, dword ptr [g_data_00542054]
+        dec     eax
+        mov     dword ptr [g_data_00542054], eax
+        jns     short L_gsiic_sub2_inner
+        call    Thunk_0049cbc0
+        pop     esi
+        ret
+    L_gsiic_sub2_phase1:
+        mov     dword ptr [g_data_00542054], 0xf
+    L_gsiic_sub2_inner:
+        mov     dword ptr [g_data_0054206c], 3
+        call    StorePauseImulShr16_004ab630
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gsiic_sub2_ret
+        add     dword ptr [g_data_0054206c], 0xb
+        call    GatedWordPushCall_00489f90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gsiic_sub2_ret
+        mov     dword ptr [esi + 8], offset L_gsiic_sub2
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], 6
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_gsiic_sub2_phase0:
+        mov     dword ptr [g_data_0054206c], 0x15
+        call    GatedWordPushCall_00489f90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gsiic_sub2_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_gsiic_sub2
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x11
+        mov     dword ptr [g_data_00541e6c], eax
+    L_gsiic_sub2_ret:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_gsiic_sub3:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_gsiic_sub3_phase0
+        mov     dword ptr [g_data_0054206c], 0xa
+        call    GatedWordPushCall_00489f90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gsiic_sub3_ret
+        mov     ecx, dword ptr [g_data_00542054]
+        jmp     short L_gsiic_sub3_load
+    L_gsiic_sub3_phase0:
+        mov     ecx, offset g_data_004ec710
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542054], ecx
+    L_gsiic_sub3_load:
+        mov     eax, dword ptr [ecx*4]
+        inc     ecx
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542054], ecx
+        jne     short L_gsiic_sub3_install
+        call    Thunk_0049cbc0
+        pop     esi
+        ret
+    L_gsiic_sub3_install:
+        mov     dword ptr [g_data_0054204c], eax
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_gsiic_sub3
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_gsiic_sub3_ret:
+        pop     esi
+        ret
+    }
+}

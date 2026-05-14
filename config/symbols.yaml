@@ -7684,10 +7684,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesI.c
   - addr: 0x004728c0
-    name: func_004728c0
+    name: GuardedSetInitInstallChain_004728c0
     size: 460
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00472a90
     name: func_00472a90
     size: 789
