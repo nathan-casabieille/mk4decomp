@@ -871,10 +871,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00409aa0
-    name: func_00409aa0
+    name: MStackBracket5_LinkedListUnlink_00409aa0
     size: 485
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00409c90
     name: func_00409c90
     size: 2013

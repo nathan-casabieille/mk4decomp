@@ -85794,3 +85794,146 @@ __declspec(naked) void Strncpy_004cdc20(void)
         int     3
     }
 }
+
+/* ============================================================
+ * MStackBracket5_LinkedListUnlink_00409aa0 — 485b boot.
+ *
+ * Doubly-linked-list unlink in the global slot-table at
+ * g_data_00542048 (base) + g_data_00542044 (current idx) * 4.
+ *
+ *   layout per node:
+ *     [0]   = prev_data (head-of-chain field)
+ *     [4]   = prev_idx  (back link)
+ *     [8]   = next_idx  (fwd link)
+ *     [0xC] = chain_count
+ *
+ * mstack-bracketed (5 slots saved at entry, 5 restored at exit):
+ *   pushes: g_data_0053a168, g_data_00542070, g_data_0054204c,
+ *           g_data_00542050, g_data_00542054.
+ *
+ * Body:
+ *   - resolves the current slot (g_data_0054204c = base+idx)
+ *   - reads prev_idx into g_data_00542050, next_idx into
+ *     g_data_00542070; if next_idx == 0 (tail): just unlinks
+ *     via [prev_idx*4] = node[0]; else: resolves the next-slot
+ *     pointer (g_data_00542054 = base+next_idx) and stitches
+ *     prev_idx through node[0].
+ *   - then resolves the new-head's forward link in the same
+ *     manner (g_data_00542050[*4+4] or new_next[*4+8] gets
+ *     node[+8]).
+ *   - decrements prev_node[+0xC] (chain count).
+ *   - clears the current node fields [0], [+4], [+8].
+ *   - mstack-pops the 5 globals in reverse order.
+ *
+ * Caller-saved esi is popped MID-tail (between two of the
+ * field-clear stores) — MSVC's late callee-save schedule.
+ * ============================================================ */
+
+extern unsigned int g_data_0053a168;
+
+__declspec(naked) void MStackBracket5_LinkedListUnlink_00409aa0(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0053a168]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_data_00542044]
+        add     eax, edx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     esi, dword ptr [eax*4 + 4]
+        mov     dword ptr [g_data_00542050], esi
+        mov     ecx, dword ptr [eax*4 + 8]
+        test    ecx, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        jne     L_unlnk5_have_next
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi*4], eax
+        jmp     L_unlnk5_fwd
+    L_unlnk5_have_next:
+        add     ecx, edx
+        mov     dword ptr [g_data_00542054], ecx
+        mov     eax, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+    L_unlnk5_fwd:
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542070], eax
+        jne     L_unlnk5_have_prev
+        mov     ecx, dword ptr [ecx*4 + 8]
+        mov     edx, dword ptr [g_data_00542050]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx*4 + 4], ecx
+        jmp     L_unlnk5_decr
+    L_unlnk5_have_prev:
+        mov     edx, dword ptr [g_data_00542048]
+        add     eax, edx
+        mov     dword ptr [g_data_00542054], eax
+        mov     ecx, dword ptr [ecx*4 + 8]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4 + 8], ecx
+    L_unlnk5_decr:
+        mov     eax, dword ptr [g_data_00542050]
+        mov     esi, dword ptr [eax*4 + 0x0C]
+        dec     esi
+        mov     dword ptr [eax*4 + 0x0C], esi
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_0054206c], 0
+        pop     esi
+        mov     dword ptr [eax*4 + 4], 0
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 8], ecx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0053a168], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    }
+}
