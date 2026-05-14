@@ -14988,10 +14988,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004bea80
-    name: func_004bea80
+    name: SmoothShiftBlit_004bea80
     size: 429
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bec30
     name: func_004bec30
     size: 1077

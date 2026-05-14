@@ -95828,4 +95828,172 @@ __declspec(naked) void MatrixTransform3x3Q12_004b3b80(void)
     }
 }
 
+/* ============================================================
+ * SmoothShiftBlit_004bea80 — 429b engine.scenegraph.
+ *
+ * Builds a 256-entry 16-bit palette LUT (shifting hi-bits of
+ * each source word by 1 to clear the LSB-of-green) into a
+ * 0x200 scratch on the stack, then either via rep-movsd from
+ * the palette pointer in g_data_00ab575c. For each of 240
+ * scanlines, copies indexed pixels from the row buffer at
+ * g_data_00ab5760 to either a 320 (0x140)-pixel row through
+ * the dst pointer, or to a 160 (0xa0)-pixel half-row mode for
+ * alternate format. Increments g_data_00ab5750 frame counter
+ * (clamped to 5 max).
+ *
+ * Linear no mstack. Returns: void. Args: (raw_dst?, dst, src_pal, mode).
+ * ============================================================ */
+
+extern unsigned int g_data_00ab5750;
+extern unsigned int g_data_00ab5754;
+extern unsigned int g_data_00ab575c;
+extern unsigned int g_data_00ab5760;
+
+__declspec(naked) void SmoothShiftBlit_004bea80(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00ab5754]
+        sub      esp, 0x208
+        push     ebx
+        xor      ebx, ebx
+        push     ebp
+        cmp      eax, ebx
+        push     esi
+        je       L_ec23
+        mov      ebp, dword ptr [esp + 0x218]
+        cmp      ebp, ebx
+        je       L_ec23
+        mov      esi, dword ptr [g_data_00ab575c]
+        cmp      esi, ebx
+        je       L_ec23
+        cmp      dword ptr [g_data_00ab5760], ebx
+        je       L_ec23
+        mov      eax, dword ptr [esp + 0x220]
+        push     edi
+        cmp      eax, ebx
+        je       L_eaf9
+        lea      edx, [esp + 0x18]
+        mov      ecx, esi
+        sub      edx, esi
+        mov      esi, 0x100
+    L_eada:
+        mov      ax, word ptr [ecx]
+        add      ecx, 2
+        mov      edi, eax
+        and      eax, 0x1f
+        and      edi, 0xffe0
+        shl      edi, 1
+        or       edi, eax
+        dec      esi
+        mov      word ptr [edx + ecx - 2], di
+        jne      L_eada
+        jmp      L_eb04
+    L_eaf9:
+        mov      ecx, 0x80
+        lea      edi, [esp + 0x18]
+        rep movsd
+    L_eb04:
+        cmp      dword ptr [esp + 0x228], ebx
+        je       L_eba5
+        mov      eax, dword ptr [esp + 0x220]
+        cdq
+        sub      eax, edx
+        sar      eax, 1
+        mov      dword ptr [esp + 0x14], eax
+        shl      eax, 2
+        mov      dword ptr [esp + 0x10], eax
+    L_eb28:
+        mov      ecx, dword ptr [g_data_00ab5760]
+        mov      esi, ebp
+        mov      edi, 0x140
+        lea      edx, [ecx + ebx]
+    L_eb38:
+        xor      eax, eax
+        xor      ecx, ecx
+        mov      al, byte ptr [edx]
+        inc      edx
+        add      esi, 4
+        mov      cx, word ptr [esp + eax*2 + 0x18]
+        mov      eax, ecx
+        shl      eax, 0x10
+        or       eax, ecx
+        dec      edi
+        mov      dword ptr [esi - 4], eax
+        jne      L_eb38
+        mov      edx, dword ptr [esp + 0x10]
+        add      ebx, 0x140
+        add      ebp, edx
+        cmp      ebx, 0x12c00
+        jl       L_eb28
+        mov      eax, dword ptr [g_data_00ab5750]
+        cmp      eax, 4
+        jg       L_ec16
+        mov      ecx, dword ptr [esp + 0x21c]
+        mov      edx, dword ptr [esp + 0x14]
+        inc      eax
+        mov      esi, 0xf0
+        mov      dword ptr [g_data_00ab5750], eax
+        lea      edx, [ecx + edx*2]
+    L_eb8f:
+        mov      ecx, 0x140
+        xor      eax, eax
+        mov      edi, edx
+        rep stosd
+        mov      ecx, dword ptr [esp + 0x10]
+        add      edx, ecx
+        dec      esi
+        jne      L_eb8f
+        jmp      L_ec16
+    L_eba5:
+        mov      eax, dword ptr [esp + 0x220]
+        xor      edi, edi
+        cdq
+        sub      eax, edx
+        mov      edx, ebp
+        sar      eax, 1
+        shl      eax, 1
+        mov      dword ptr [g_data_00ab5750], ebx
+        mov      dword ptr [esp + 0x14], eax
+        mov      dword ptr [esp + 0x10], edx
+    L_ebc5:
+        mov      eax, dword ptr [g_data_00ab5760]
+        mov      esi, 0xa0
+        lea      ecx, [eax + edi]
+    L_ebd2:
+        xor      eax, eax
+        xor      ebx, ebx
+        mov      al, byte ptr [ecx]
+        xor      ebp, ebp
+        add      edx, 4
+        add      ecx, 2
+        mov      bx, word ptr [esp + eax*2 + 0x18]
+        xor      eax, eax
+        mov      al, byte ptr [ecx - 1]
+        mov      bp, word ptr [esp + eax*2 + 0x18]
+        shl      ebp, 0x10
+        or       ebx, ebp
+        dec      esi
+        mov      dword ptr [edx - 4], ebx
+        jne      L_ebd2
+        mov      edx, dword ptr [esp + 0x10]
+        mov      esi, dword ptr [esp + 0x14]
+        add      edi, 0x140
+        add      edx, esi
+        cmp      edi, 0x12c00
+        mov      dword ptr [esp + 0x10], edx
+        jl       L_ebc5
+    L_ec16:
+        xor      eax, eax
+        pop      edi
+        mov      dword ptr [g_data_00ab575c], eax
+        mov      dword ptr [g_data_00ab5760], eax
+    L_ec23:
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x208
+        ret
+    }
+}
+
 
