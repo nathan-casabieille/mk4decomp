@@ -14138,10 +14138,11 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004b40d0
-    name: func_004b40d0
+    name: AnimNodeKindDispatch_004b40d0
     size: 232
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b41c0
     name: JumpTable5Way_004b41c0
     size: 64

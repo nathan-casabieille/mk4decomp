@@ -109236,3 +109236,137 @@ __declspec(naked) void VoicePoolTickDispatch_004a4c10(void)
     }
 }
 
+/* ============================================================
+ * AnimNodeKindDispatch_004b40d0 — 232b engine.geo.
+ *
+ * Outer dispatcher: given a 1-based kind code returned from
+ * func_004b3db0(), runs one of 5 specialized animation/geometry
+ * builders on a 16-byte argument tuple ([esp+0xc..0x18]) and
+ * stamps the boolean flag at [esi] (the result-record pointer):
+ *   - kind 1 → func_004b4530, flag = 1
+ *   - kind 2 → func_004ad4a0, flag = 1
+ *   - kind 3 → func_004af730, flag = 0  (with leading 0 arg)
+ *   - kind 4 → func_004b28a0, flag = 0  (with leading 0 arg)
+ *   - kind 5 → func_004aff60, flag = 1  (with leading 0 arg)
+ * Out-of-range kinds and a NULL record pointer take the fail
+ * tail at L_419e which clears eax and returns 0. Jump table
+ * lives at the function tail after a 2-byte align nop.
+ *
+ * Linear, no mstack. Returns: BOOL.
+ * ============================================================ */
+
+extern void func_004ad4a0(void);
+extern void func_004af730(void);
+extern void func_004aff60(void);
+extern void func_004b28a0(void);
+extern void func_004b3db0(void);
+extern void func_004b4530(void);
+
+__declspec(naked) void AnimNodeKindDispatch_004b40d0(void)
+{
+    __asm {
+        push     esi
+        mov      esi, dword ptr [esp + 0x18]
+        test     esi, esi
+        je       L_419e
+        call     func_004b3db0
+        dec      eax
+        cmp      eax, 4
+        ja       L_419e
+        jmp      dword ptr [eax*4 + L_d0_jmptbl]
+    L_40f3:
+        mov      eax, dword ptr [esp + 0x14]
+        mov      ecx, dword ptr [esp + 0x10]
+        mov      edx, dword ptr [esp + 0xc]
+        push     eax
+        mov      eax, dword ptr [esp + 0xc]
+        push     ecx
+        push     edx
+        push     eax
+        mov      dword ptr [esi], 1
+        call     func_004b4530
+        add      esp, 0x10
+        pop      esi
+        ret
+    L_4117:
+        mov      ecx, dword ptr [esp + 0x14]
+        mov      edx, dword ptr [esp + 0x10]
+        mov      eax, dword ptr [esp + 0xc]
+        push     ecx
+        mov      ecx, dword ptr [esp + 0xc]
+        push     edx
+        push     eax
+        push     ecx
+        mov      dword ptr [esi], 1
+        call     func_004ad4a0
+        add      esp, 0x10
+        pop      esi
+        ret
+    L_413b:
+        mov      edx, dword ptr [esp + 0x14]
+        mov      eax, dword ptr [esp + 0x10]
+        mov      ecx, dword ptr [esp + 0xc]
+        push     edx
+        push     eax
+        push     ecx
+        push     0
+        mov      dword ptr [esi], 0
+        call     func_004af730
+        add      esp, 0x10
+        pop      esi
+        ret
+    L_415c:
+        mov      edx, dword ptr [esp + 0x14]
+        mov      eax, dword ptr [esp + 0x10]
+        mov      ecx, dword ptr [esp + 0xc]
+        push     edx
+        push     eax
+        push     ecx
+        push     0
+        mov      dword ptr [esi], 1
+        call     func_004aff60
+        add      esp, 0x10
+        pop      esi
+        ret
+    L_417d:
+        mov      edx, dword ptr [esp + 0x14]
+        mov      eax, dword ptr [esp + 0x10]
+        mov      ecx, dword ptr [esp + 0xc]
+        push     edx
+        push     eax
+        push     ecx
+        push     0
+        mov      dword ptr [esi], 0
+        call     func_004b28a0
+        add      esp, 0x10
+        pop      esi
+        ret
+    L_419e:
+        xor      eax, eax
+        pop      esi
+        ret
+        mov      edi, edi
+    L_d0_jmptbl:
+        _emit 0xf3
+        _emit 0x40
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x17
+        _emit 0x41
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x3b
+        _emit 0x41
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x7d
+        _emit 0x41
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x5c
+        _emit 0x41
+        _emit 0x4b
+        _emit 0x00
+    }
+}
+
