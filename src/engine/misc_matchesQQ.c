@@ -87801,3 +87801,186 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase1ChainAdvanceCallScale_00418f80 — 558b boot.
+ *
+ * Two packed entries: main (181b) + 11 nops + helper (366b).
+ *
+ *   Main at 0x418f80:
+ *     - g_data_00542048 := packed_ptr(&g_data_00507118 >> 2);
+ *     - call MStackBracket1_TreeWalkRecursive2_00406dd0;
+ *       pause-gate; bit-2 of g_state_0054208c must be clear else
+ *       ret;
+ *     - mstack push 1: g_data_00542044;
+ *     - slot[+0x3c] := 0x5E666, slot[+0x40] := 0xFFFE6DE1,
+ *       slot[+0x44] := 0x4CCC, slot[+0x30] := 0xFFFFEB03;
+ *     - g_data_0054206c := 0xA;
+ *     - call func_00408cb0; pause-gate;
+ *     - g_data_00542048 := g_data_00542044;
+ *     - mstack pop into g_data_00542044;
+ *     - tail-jmp func_00408510.
+ *
+ *   Helper at 0x419040 (referenced externally from 0x00419269 /
+ *   0x00419594 — install-self callback):
+ *     - early-out if g_data_00543800 != 0 (already running);
+ *     - mstack push 1: g_data_0054205c;
+ *     - call func_00405a40; pause-gate;
+ *     - slot[+0x70] += g_data_004d5364; sign-bit short-circuit
+ *       skips the scale block;
+ *     - if slot[+0x58] + 0x1999 > 0:
+ *         g_data_0054206c := 0x28A;
+ *         call func_004ab690; pause-gate;
+ *         if bit 0 of g_state_0054208c set: scale slot[+0x70]
+ *           with func_00404af0(value, 0xFFFF4CCD);
+ *         else: call func_00406740; pause-gate; clear
+ *           g_data_00542044;
+ *     - scale slot[+0x78], +0x7c, +0x80 each via
+ *       func_00404af0(value, 0xFD70);
+ *     - mstack pop g_data_0054205c; pop esi; ret.
+ *
+ * Pause-gates target the final pop-esi/ret (mstack-abort-leak).
+ * ============================================================ */
+
+extern void func_00408510(void);
+extern void func_00406740(void);
+extern unsigned int g_data_00507118;
+extern unsigned int g_data_004d5364;
+
+__declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
+{
+    __asm {
+        mov     eax, offset g_data_00507118
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    MStackBracket1_TreeWalkRecursive2_00406dd0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1c2_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_p1c2_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x40], 0xFFFE6DE1
+        mov     dword ptr [edx*4 + 0x3C], 0x0005E666
+        lea     eax, [edx*4]
+        mov     dword ptr [eax + 0x44], 0x4CCC
+        mov     dword ptr [eax + 0x30], 0xFFFFEB03
+        mov     dword ptr [g_data_0054206c], 0x0A
+        call    func_00408cb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1c2_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     func_00408510
+    L_p1c2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_p1c2_helper:
+        mov     eax, dword ptr [g_data_00543800]
+        push    esi
+        test    eax, eax
+        jne     L_p1c2_helper_pop_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    func_00405a40
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1c2_helper_pop_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_004d5364]
+        add     eax, dword ptr [ecx*4 + 0x70]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x70], eax
+        js      L_p1c2_helper_skip_block
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        add     eax, 0x1999
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jle     L_p1c2_helper_skip_block
+        mov     dword ptr [g_data_0054206c], 0x28A
+        call    func_004ab690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1c2_helper_pop_ret
+        test    byte ptr [g_state_0054208c], 1
+        je      L_p1c2_helper_else
+        mov     eax, dword ptr [g_data_0054205c]
+        lea     esi, [eax*4 + 0x70]
+        mov     eax, dword ptr [eax*4 + 0x70]
+        push    eax
+        push    0xFFFF4CCD
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi], eax
+    L_p1c2_helper_skip_block:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x78]
+        lea     esi, [ecx*4]
+        push    eax
+        push    0xFD70
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x78], eax
+        mov     eax, dword ptr [esi + 0x7C]
+        push    eax
+        push    0xFD70
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x7C], eax
+        mov     eax, dword ptr [esi + 0x80]
+        push    eax
+        push    0xFD70
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00404af0
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [esi + 0x80], eax
+        jmp     L_p1c2_helper_pop1
+    L_p1c2_helper_else:
+        call    func_00406740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1c2_helper_pop_ret
+        mov     dword ptr [g_data_00542044], 0
+    L_p1c2_helper_pop1:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_p1c2_helper_pop_ret:
+        pop     esi
+        ret
+    }
+}

@@ -1373,10 +1373,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00418f80
-    name: func_00418f80
+    name: Phase1ChainAdvanceCallScale_00418f80
     size: 558
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004191b0
     name: func_004191b0
     size: 698
