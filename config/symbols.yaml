@@ -14074,10 +14074,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004b3b80
-    name: func_004b3b80
+    name: MatrixTransform3x3Q12_004b3b80
     size: 481
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3d70
     name: MinOfThree_004b3d70
     size: 30

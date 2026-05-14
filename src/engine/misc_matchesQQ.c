@@ -95665,4 +95665,167 @@ __declspec(naked) void PadPollDispatcher_004b5650(void)
     }
 }
 
+/* ============================================================
+ * MatrixTransform3x3Q12_004b3b80 — 481b engine.geo.
+ *
+ * Multiplies a 3x3 matrix at globals 0x7af990..0x7af9a0 (Q12
+ * fixed-point shorts) by the input vector array at arg1 (3
+ * vectors of 3 shorts each, plus a 4th word lane), accumulates
+ * with 3-multiply summing per output element, sar-shifts by
+ * 12, and stores 9 words back through arg2 pointer.
+ *
+ * Linear no mstack. Returns: void. Args: (short *src, short *dst).
+ * ============================================================ */
+
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af992;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af996;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99a;
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af99e;
+extern unsigned int g_data_007af9a0;
+
+__declspec(naked) void MatrixTransform3x3Q12_004b3b80(void)
+{
+    __asm {
+        sub      esp, 0x14
+        mov      eax, dword ptr [esp + 0x18]
+        push     ebx
+        movsx    ebx, word ptr [g_data_007af992]
+        movsx    ecx, word ptr [eax]
+        push     ebp
+        push     esi
+        movsx    esi, word ptr [eax + 6]
+        push     edi
+        mov      ebp, ebx
+        movsx    edi, word ptr [g_data_007af990]
+        imul     ebp, esi
+        mov      esi, edi
+        imul     esi, ecx
+        movsx    edx, word ptr [eax + 0xc]
+        add      ebp, esi
+        movsx    esi, word ptr [g_data_007af994]
+        imul     esi, edx
+        add      ebp, esi
+        movsx    esi, word ptr [g_data_007af996]
+        sar      ebp, 0xc
+        imul     esi, ecx
+        mov      word ptr [esp + 0x10], bp
+        movsx    ebp, word ptr [g_data_007af99a]
+        imul     ebp, edx
+        movsx    edx, word ptr [g_data_007af998]
+        add      ebp, esi
+        mov      esi, edx
+        movsx    edx, word ptr [eax + 6]
+        imul     esi, edx
+        add      ebp, esi
+        movsx    esi, word ptr [g_data_007af99c]
+        sar      ebp, 0xc
+        imul     esi, ecx
+        movsx    ecx, word ptr [g_data_007af9a0]
+        mov      word ptr [esp + 0x16], bp
+        movsx    ebp, word ptr [g_data_007af99e]
+        imul     ebp, edx
+        mov      edx, ecx
+        add      ebp, esi
+        movsx    ecx, word ptr [eax + 0xc]
+        imul     edx, ecx
+        movsx    esi, word ptr [eax + 2]
+        add      ebp, edx
+        movsx    edx, word ptr [eax + 8]
+        sar      ebp, 0xc
+        mov      word ptr [esp + 0x1c], bp
+        mov      ebp, edx
+        imul     ebp, ebx
+        mov      ebx, esi
+        movsx    ecx, word ptr [eax + 0xe]
+        imul     ebx, edi
+        movsx    edi, word ptr [g_data_007af994]
+        add      ebp, ebx
+        mov      ebx, ecx
+        imul     ebx, edi
+        movsx    edi, word ptr [g_data_007af99a]
+        add      ebp, ebx
+        mov      ebx, ecx
+        sar      ebp, 0xc
+        imul     ebx, edi
+        movsx    edi, word ptr [g_data_007af998]
+        mov      word ptr [esp + 0x12], bp
+        mov      ebp, edx
+        imul     ebp, edi
+        movsx    edi, word ptr [g_data_007af996]
+        add      ebx, ebp
+        mov      ebp, esi
+        imul     ebp, edi
+        add      ebx, ebp
+        sar      ebx, 0xc
+        mov      word ptr [esp + 0x18], bx
+        movsx    ebx, word ptr [g_data_007af9a0]
+        imul     ecx, ebx
+        movsx    ebx, word ptr [g_data_007af99c]
+        imul     esi, ebx
+        add      ecx, esi
+        movsx    esi, word ptr [g_data_007af99e]
+        imul     edx, esi
+        add      ecx, edx
+        sar      ecx, 0xc
+        mov      word ptr [esp + 0x1e], cx
+        movsx    ecx, word ptr [eax + 0xa]
+        movsx    edx, word ptr [eax + 4]
+        movsx    eax, word ptr [eax + 0x10]
+        movsx    esi, word ptr [g_data_007af994]
+        mov      ebx, eax
+        mov      ebp, ecx
+        imul     ebx, esi
+        movsx    esi, word ptr [g_data_007af992]
+        imul     ebp, esi
+        movsx    esi, word ptr [g_data_007af990]
+        add      ebx, ebp
+        mov      ebp, edx
+        imul     ebp, esi
+        movsx    esi, word ptr [g_data_007af998]
+        add      ebx, ebp
+        sar      ebx, 0xc
+        mov      word ptr [esp + 0x14], bx
+        mov      ebx, ecx
+        imul     ebx, esi
+        mov      esi, edx
+        imul     esi, edi
+        add      ebx, esi
+        mov      edi, eax
+        movsx    esi, word ptr [g_data_007af99a]
+        imul     edi, esi
+        movsx    esi, word ptr [g_data_007af99e]
+        imul     ecx, esi
+        movsx    esi, word ptr [g_data_007af99c]
+        imul     edx, esi
+        add      ecx, edx
+        add      ebx, edi
+        movsx    edx, word ptr [g_data_007af9a0]
+        imul     eax, edx
+        mov      edx, dword ptr [esp + 0x10]
+        add      ecx, eax
+        mov      eax, dword ptr [esp + 0x2c]
+        pop      edi
+        sar      ebx, 0xc
+        mov      dword ptr [eax], edx
+        mov      edx, dword ptr [esp + 0x10]
+        mov      word ptr [esp + 0x16], bx
+        pop      esi
+        mov      dword ptr [eax + 4], edx
+        mov      edx, dword ptr [esp + 0x10]
+        sar      ecx, 0xc
+        mov      dword ptr [eax + 8], edx
+        mov      edx, dword ptr [esp + 0x14]
+        pop      ebp
+        pop      ebx
+        mov      dword ptr [eax + 0xc], edx
+        mov      word ptr [eax + 0x10], cx
+        add      esp, 0x14
+        ret
+    }
+}
+
 
