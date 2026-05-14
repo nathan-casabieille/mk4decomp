@@ -1184,10 +1184,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesHH.c
   - addr: 0x004130c0
-    name: func_004130c0
+    name: Phase4StateInit4Helpers_004130c0
     size: 661
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00413360
     name: Push8d_Push413490_00413360
     size: 19
