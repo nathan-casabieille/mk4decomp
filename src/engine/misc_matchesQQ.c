@@ -95996,4 +95996,189 @@ __declspec(naked) void SmoothShiftBlit_004bea80(void)
     }
 }
 
+/* ============================================================
+ * PadEnumDeviceRebind_004ad850 — 434b engine.install.
+ *
+ * DirectInput / pad-device rebind helper. Reads g_data_0058c7e0
+ * (enable flag); if false, bail. Validates arg0 (player idx <16)
+ * and arg1 (pad-config ptr). Releases old per-player IDirectInput
+ * + IDirectInputDevice if their COM ifaces match 0x887601c2 hresult
+ * via vtbl+0x60/+0x6c (Release/Unacquire). Allocates a 0x6c byte
+ * DIDEVCAPS-like struct on stack, fills size field, calls vtbl+0x64
+ * (GetCapabilities) to populate it. Then optionally smooth-shifts
+ * (6-bit green) a 256-entry palette LUT, copies a row buffer of
+ * 0x100 dwords for arg2 lines, calls vtbl+0x80 (CreateInputLayout?)
+ * and the secondary slot's vtbl+0x14 (BindBuffer?). Result 1 only
+ * if all 3 per-player ifaces (720/4258/768) are non-NULL.
+ *
+ * Linear no mstack. Returns: int (1 on success, 0 on fail).
+ * ============================================================ */
+
+extern void func_004af020(void);
+extern unsigned int g_data_004f478c;
+extern unsigned int g_data_00544258[];
+extern unsigned int g_data_0058c720[];
+extern unsigned int g_data_0058c768[];
+extern unsigned int g_data_0058c7c8;
+extern unsigned int g_data_0058c7cc;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_data_0058c7e0;
+
+__declspec(naked) void PadEnumDeviceRebind_004ad850(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_0058c7e0]
+        sub      esp, 0x6c
+        test     eax, eax
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        je       L_d9f8
+        mov      ebx, dword ptr [esp + 0x80]
+        cmp      bl, 0x10
+        jae      L_d9f8
+        mov      ebp, dword ptr [esp + 0x84]
+        test     ebp, ebp
+        je       L_d9f8
+        push     ebx
+        call     func_004af020
+        and      ebx, 0xff
+        add      esp, 4
+        shl      ebx, 2
+        mov      esi, ebx
+        mov      dword ptr [esp + 0x84], esi
+        mov      eax, dword ptr [esi + g_data_0058c720]
+        test     eax, eax
+        je       L_d8c1
+        mov      ecx, dword ptr [eax]
+        push     eax
+        call     dword ptr [ecx + 0x60]
+        cmp      eax, 0x887601c2
+        jne      L_d8c1
+        mov      eax, dword ptr [esi + g_data_0058c720]
+        push     eax
+        mov      edx, dword ptr [eax]
+        call     dword ptr [edx + 0x6c]
+    L_d8c1:
+        mov      edx, dword ptr [g_data_0058c7c8]
+        test     edx, edx
+        je       L_d8e9
+        mov      eax, dword ptr [edx]
+        push     edx
+        call     dword ptr [eax + 0x60]
+        cmp      eax, 0x887601c2
+        jne      L_d8e3
+        mov      eax, dword ptr [g_data_0058c7c8]
+        push     eax
+        mov      ecx, dword ptr [eax]
+        call     dword ptr [ecx + 0x6c]
+    L_d8e3:
+        mov      edx, dword ptr [g_data_0058c7c8]
+    L_d8e9:
+        mov      ecx, 0x1b
+        xor      eax, eax
+        lea      edi, [esp + 0x10]
+        rep stosd
+        test     edx, edx
+        mov      dword ptr [esp + 0x10], 0x6c
+        je       L_d91e
+        mov      eax, dword ptr [edx]
+        push     0
+        lea      ecx, [esp + 0x14]
+        push     0
+        push     ecx
+        push     0
+        push     edx
+        call     dword ptr [eax + 0x64]
+        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_d91e:
+        mov      ebx, dword ptr [esp + 0x34]
+        test     ebx, ebx
+        je       L_d999
+        mov      dword ptr [esp + 0x80], 0x100
+    L_d931:
+        mov      eax, dword ptr [g_data_004f478c]
+        test     eax, eax
+        je       L_d964
+        mov      edx, ebx
+        mov      ecx, ebp
+        sub      edx, ebp
+        mov      esi, 0x100
+    L_d945:
+        mov      ax, word ptr [ecx]
+        add      ecx, 2
+        mov      edi, eax
+        and      eax, 0x3f
+        and      edi, 0xffe0
+        shl      edi, 1
+        or       edi, eax
+        dec      esi
+        mov      word ptr [edx + ecx - 2], di
+        jne      L_d945
+        jmp      L_d96f
+    L_d964:
+        mov      ecx, 0x80
+        mov      esi, ebp
+        mov      edi, ebx
+        rep movsd
+    L_d96f:
+        mov      ecx, dword ptr [esp + 0x20]
+        mov      eax, dword ptr [esp + 0x80]
+        add      ebp, 0x200
+        add      ebx, ecx
+        dec      eax
+        mov      dword ptr [esp + 0x80], eax
+        jne      L_d931
+        mov      edx, dword ptr [g_data_0058c7c8]
+        mov      esi, dword ptr [esp + 0x84]
+    L_d999:
+        test     edx, edx
+        je       L_d9ad
+        mov      eax, dword ptr [edx]
+        push     0
+        push     edx
+        call     dword ptr [eax + 0x80]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_d9ad:
+        mov      ecx, dword ptr [g_data_0058c7cc]
+        test     ecx, ecx
+        je       L_d9cd
+        mov      eax, dword ptr [esi + g_data_00544258]
+        test     eax, eax
+        je       L_d9cd
+        mov      edx, dword ptr [eax]
+        push     ecx
+        push     eax
+        call     dword ptr [edx + 0x14]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_d9cd:
+        mov      eax, dword ptr [esi + g_data_0058c720]
+        test     eax, eax
+        je       L_d9f8
+        mov      eax, dword ptr [esi + g_data_00544258]
+        test     eax, eax
+        je       L_d9f8
+        mov      eax, dword ptr [esi + g_data_0058c768]
+        test     eax, eax
+        je       L_d9f8
+        mov      eax, 1
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x6c
+        ret
+    L_d9f8:
+        pop      edi
+        pop      esi
+        pop      ebp
+        xor      eax, eax
+        pop      ebx
+        add      esp, 0x6c
+        ret
+    }
+}
+
 
