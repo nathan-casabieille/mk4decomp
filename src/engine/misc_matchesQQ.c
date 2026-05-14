@@ -111152,3 +111152,187 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
     }
 }
 
+/* ============================================================
+ * MenuKeypadEnterDispatch_004b8a30 — 408b game.menu.
+ *
+ * Per-frame entry transition for an alt menu page rooted at
+ * g_data_004f4f30 / state at g_data_00ab4380. Mirrors
+ * [[menu-page-enter-dispatch-004b84d0]] but: (a) the outer state
+ * machine is a sparse sub-then-je chain on {0, 2, 0x45} instead
+ * of the dense byte-index dispatch, and (b) the state-2 hot path
+ * runs a secondary 4-case jump table on a per-key offset table
+ * at g_data_004f4f34.
+ *
+ *   Outer:
+ *     0  → call func_004b6300(0, &g_data_004f4f30), state := 2.
+ *     2  → call func_004b7020(1); examine returned flag bits
+ *          (15 abort, 0 → transition via func_004b62c0, 1 →
+ *          finalize via func_004b6300, 4 → secondary jump table
+ *          for keypad subcase, 5 → force state = 0x45 if not
+ *          aborting).
+ *     0x45 → terminal, no-op.
+ *
+ *   Secondary jump table (state=2, after flag inspection):
+ *     keypad index ∈ [0..3] → set state := 0x45 and OR in a
+ *     specific keypad flag (g_data_00ab4374/.78/.7c/.80) per
+ *     case; case 3 only sets the state.
+ *
+ * Finalizer at L_8ba2: func_004b65c0(eax, &g_data_004f4f30) then
+ * return g_data_00ab4380.
+ *
+ * Frame: push ebx/esi. Returns: int.
+ * ============================================================ */
+
+extern unsigned int g_data_004f4f30;
+extern unsigned int g_data_004f4f34;
+extern unsigned int g_data_00543820;
+extern unsigned int g_data_00ab42cc;
+extern unsigned int g_data_00ab42dc;
+extern unsigned int g_data_00ab4374;
+extern unsigned int g_data_00ab4378;
+extern unsigned int g_data_00ab437c;
+extern unsigned int g_data_00ab4380;
+
+__declspec(naked) void MenuKeypadEnterDispatch_004b8a30(void)
+{
+    __asm {
+        mov      al, byte ptr [g_data_00ab42cc]
+        push     ebx
+        test     al, 1
+        push     esi
+        jne      short L_8a5c
+        mov      bl, al
+        push     OFFSET g_data_004f4f30
+        or       bl, 1
+        push     0
+        mov      byte ptr [g_data_00ab42cc], bl
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42dc], eax
+        jmp      short L_8a61
+    L_8a5c:
+        mov      eax, dword ptr [g_data_00ab42dc]
+    L_8a61:
+        mov      ecx, dword ptr [g_data_00ab4380]
+        sub      ecx, 0
+        je       L_8b84
+        sub      ecx, 2
+        je       short L_8a8d
+        sub      ecx, 0x43
+        jne      L_8ba2
+        mov      dword ptr [g_data_00ab4380], 0
+        jmp      L_8ba2
+    L_8a8d:
+        push     1
+        call     func_004b7020
+        mov      ebx, eax
+        add      esp, 4
+        mov      esi, ebx
+        and      esi, 0x8000
+        jne      short L_8ac2
+        test     bl, 1
+        je       short L_8ac2
+        mov      eax, dword ptr [g_data_00ab42dc]
+        push     OFFSET g_data_004f4f30
+        push     eax
+        call     func_004b62c0
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42dc], eax
+        jmp      short L_8ac7
+    L_8ac2:
+        mov      eax, dword ptr [g_data_00ab42dc]
+    L_8ac7:
+        test     esi, esi
+        jne      short L_8ae3
+        test     bl, 2
+        je       short L_8ae3
+        push     OFFSET g_data_004f4f30
+        push     eax
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42dc], eax
+    L_8ae3:
+        test     esi, esi
+        mov      edx, 0x45
+        jne      short L_8af7
+        test     bl, 0x20
+        je       short L_8af7
+        mov      dword ptr [g_data_00ab4380], edx
+    L_8af7:
+        mov      ecx, dword ptr [g_data_00543820]
+        test     ecx, ecx
+        jne      short L_8b07
+        mov      dword ptr [g_data_00ab4380], edx
+    L_8b07:
+        movsx    ecx, word ptr [eax*8 + g_data_004f4f34]
+        add      ecx, -0x14
+        cmp      ecx, 3
+        ja       L_8ba2
+        jmp      dword ptr [ecx*4 + L_a30_jmptbl]
+    L_8b22:
+        test     esi, esi
+        jne      short L_8ba2
+        test     bl, 0x10
+        je       short L_8ba2
+        mov      dword ptr [g_data_00ab4380], edx
+        mov      dword ptr [g_data_00ab4374], 1
+        jmp      short L_8ba2
+    L_8b3d:
+        test     esi, esi
+        jne      short L_8ba2
+        test     bl, 0x10
+        je       short L_8ba2
+        mov      dword ptr [g_data_00ab4380], edx
+        mov      dword ptr [g_data_00ab4378], 1
+        jmp      short L_8ba2
+    L_8b58:
+        test     esi, esi
+        jne      short L_8ba2
+        test     bl, 0x10
+        je       short L_8ba2
+        mov      dword ptr [g_data_00ab4380], edx
+        mov      dword ptr [g_data_00ab437c], 1
+        jmp      short L_8ba2
+    L_8b73:
+        test     esi, esi
+        jne      short L_8ba2
+        test     bl, 0x10
+        je       short L_8ba2
+        mov      dword ptr [g_data_00ab4380], edx
+        jmp      short L_8ba2
+    L_8b84:
+        push     OFFSET g_data_004f4f30
+        push     0
+        mov      dword ptr [g_data_00ab4380], 2
+        call     func_004b6300
+        add      esp, 8
+        mov      dword ptr [g_data_00ab42dc], eax
+    L_8ba2:
+        push     eax
+        push     OFFSET g_data_004f4f30
+        call     func_004b65c0
+        mov      eax, dword ptr [g_data_00ab4380]
+        add      esp, 8
+        pop      esi
+        pop      ebx
+        ret
+    L_a30_jmptbl:
+        _emit    0x73
+        _emit    0x8b
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x22
+        _emit    0x8b
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x3d
+        _emit    0x8b
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x58
+        _emit    0x8b
+        _emit    0x4b
+        _emit    0x00
+    }
+}
+
