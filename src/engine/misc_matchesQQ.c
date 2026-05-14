@@ -112334,3 +112334,164 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
     }
 }
 
+/* ============================================================
+ * AudioPreloadStreamingTrack_004a6e70 — 444b audio.
+ *
+ * Per-entity advance-to-state-1 handler that arms the streaming
+ * audio playback by:
+ *   - Initial entry (state == 0): writes OFFSET self into
+ *     [esi+8] and packs `(self | (1<<24))` into the active-pool
+ *     slot, then calls func_004aa8a0 (kick the dispatcher) and
+ *     flags g_data_00541e6c := 1 (success).
+ *   - Re-entry (state != 0): tears down voices 8 and 7 via
+ *     func_004bd890, runs func_004265d0 + func_00491920 to
+ *     close pending output, asks func_004be800(0x1e, -1,-1,-1)
+ *     to negotiate an output mode, then func_00403c90 to
+ *     finalize. On success: sets g_data_00542044 :=
+ *     (OFFSET g_data_0050b118 >> 2) for the next stage, calls
+ *     func_004bd5b0 + func_004a4880 to prime the streaming
+ *     pipeline, then resolves which (start, end, count) tuple
+ *     to play -- chosen by 2D dispatch on (g_data_005433b8 == 4)
+ *     and (g_data_00537f94 == 1) over four base tables at
+ *     g_data_004f3a58/3a70/3a98/3aa8. Pushes the resolved tuple
+ *     to func_004a5680, advances g_data_00543830 (track index)
+ *     by 1, installs OFFSET func_004a62b0 as the next handler
+ *     in g_data_0054204c, sets the 0x1000 inter-track delay,
+ *     and tail-jumps to func_0041f830 via func_0049cb60.
+ *
+ * Linear, no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004a62b0(void);
+extern void func_004a6e70(void);
+extern void func_00403c90(void);
+extern void func_0041f830(void);
+extern void func_004265d0(void);
+extern void func_00491920(void);
+extern void func_0049cb60(void);
+extern void func_004a4880(void);
+extern void func_004a5680(void);
+extern void func_004aa8a0(void);
+extern void func_004bd5b0(void);
+extern void func_004bd890(void);
+extern void func_004be800(void);
+extern unsigned int g_data_004f3a58;
+extern unsigned int g_data_004f3a70;
+extern unsigned int g_data_004f3a98;
+extern unsigned int g_data_004f3aa8;
+extern unsigned int g_data_0050b118;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_005433b8;
+extern unsigned int g_data_005435a0;
+extern unsigned int g_data_005435b8;
+extern unsigned int g_data_00543830;
+
+__declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], 0
+        test     ecx, ecx
+        je       L_6fc9
+        push     8
+        call     func_004bd890
+        add      esp, 4
+        push     7
+        call     func_004bd890
+        add      esp, 4
+        call     func_004265d0
+        call     func_00491920
+        push     -1
+        push     -1
+        push     -1
+        push     0x1e
+        call     func_004be800
+        add      esp, 0x10
+        call     func_00403c90
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_702b
+        mov      ecx, OFFSET g_data_0050b118
+        shr      ecx, 2
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_004bd5b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_702b
+        call     func_004a4880
+        mov      eax, dword ptr [g_data_005433b8]
+        cmp      eax, 4
+        mov      eax, dword ptr [g_data_00537f94]
+        jne      short L_6f3d
+        mov      edx, dword ptr [g_data_00543830]
+        cmp      eax, 1
+        lea      eax, [edx*4]
+        mov      ecx, dword ptr [eax + g_data_004f3a58]
+        lea      ecx, [ecx + ecx*2]
+        jne      short L_6f2e
+        mov      eax, dword ptr [eax + g_data_004f3a98]
+        lea      ecx, [ecx*8 + g_data_005435a0]
+        jmp      short L_6f7f
+    L_6f2e:
+        mov      eax, dword ptr [eax + g_data_004f3a98]
+        lea      ecx, [ecx*8 + g_data_005435b8]
+        jmp      short L_6f7f
+    L_6f3d:
+        cmp      eax, 1
+        jne      short L_6f5c
+        mov      eax, dword ptr [g_data_00543830]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + g_data_004f3a70]
+        lea      ecx, [ecx + ecx*2]
+        lea      ecx, [ecx*8 + g_data_005435a0]
+        jmp      short L_6f79
+    L_6f5c:
+        mov      edx, dword ptr [g_data_00543830]
+        lea      eax, [edx*4]
+        mov      ecx, dword ptr [eax + g_data_004f3a70]
+        lea      ecx, [ecx + ecx*2]
+        lea      ecx, [ecx*8 + g_data_005435b8]
+    L_6f79:
+        mov      eax, dword ptr [eax + g_data_004f3aa8]
+    L_6f7f:
+        lea      edx, [eax + eax*2]
+        push     0x18
+        push     ecx
+        lea      eax, [edx*8 + g_data_005435a0]
+        push     eax
+        call     func_004a5680
+        mov      ecx, dword ptr [g_data_00543830]
+        add      esp, 0xc
+        inc      ecx
+        mov      dword ptr [g_data_0054204c], OFFSET func_004a62b0
+        mov      dword ptr [g_data_00543830], ecx
+        mov      dword ptr [g_data_00542074], 0x1000
+        call     func_0049cb60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_702b
+        jmp      func_0041f830
+    L_6fc9:
+        mov      dword ptr [eax + 8], OFFSET func_004a6e70
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET func_004a6e70
+        mov      dword ptr [ecx*4 + 0x84], 1
+        mov      ecx, dword ptr [eax + 4]
+        add      edx, 0x1000000
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [ecx*4], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [eax + 4], ecx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], 0
+        call     func_004aa8a0
+        mov      dword ptr [g_data_00541e6c], 1
+    L_702b:
+        ret
+    }
+}
+
