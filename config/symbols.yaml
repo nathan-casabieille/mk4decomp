@@ -14274,10 +14274,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x004b5470
-    name: func_004b5470
+    name: InputBitMaskDispatcher_004b5470
     size: 475
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5650
     name: func_004b5650
     size: 494

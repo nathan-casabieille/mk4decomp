@@ -95120,3 +95120,169 @@ __declspec(naked) void DirectXObjInitChain_004af480(void)
         ret
     }
 }
+
+/* ============================================================
+ * InputBitMaskDispatcher_004b5470 — 475b engine.geo.
+ *
+ * Reads slot_idx (esi := [esp+8]) from caller, indexes
+ * g_table_00543b68[esi] to get a key ID. Calls func_004b5380
+ * (key-state polling) → eax bit-mask. Then for each of 4 fixed
+ * bit-tests (0x40000000, 0x80000000, 0x10000000, 0x20000000) and
+ * 9 indirect bit-tests (using g_table_00543b20+esi*4 .. +0x40
+ * as bit indices into eax), if the bit is set: ORs a payload
+ * from g_table_004f4dc8+esi*8 into the byte address from
+ * g_table_004f4dcc+esi*8.
+ *
+ * Used to dispatch input/key events to the right control-mask
+ * register based on per-slot configuration tables.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+__declspec(naked) void InputBitMaskDispatcher_004b5470(void)
+{
+    __asm {
+        push    esi
+        mov     esi, dword ptr [esp + 8]
+        mov     eax, dword ptr [esi*4 + 0x00543B68]
+        cmp     eax, -1
+        je      L_ibmd_ret
+        push    eax
+        call    func_004b5380
+        add     esp, 4
+        test    eax, 0x40000000
+        je      L_ibmd_skip1
+        mov     ecx, dword ptr [esi*8 + 0x004F4DCC]
+        mov     edx, dword ptr [esi*8 + 0x004F4DC8]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip1:
+        test    eax, 0x80000000
+        je      L_ibmd_skip2
+        mov     ecx, dword ptr [esi*8 + 0x004F4DDC]
+        mov     edx, dword ptr [esi*8 + 0x004F4DD8]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip2:
+        test    eax, 0x10000000
+        je      L_ibmd_skip3
+        mov     ecx, dword ptr [esi*8 + 0x004F4DEC]
+        mov     edx, dword ptr [esi*8 + 0x004F4DE8]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip3:
+        test    eax, 0x20000000
+        je      L_ibmd_skip4
+        mov     ecx, dword ptr [esi*8 + 0x004F4DFC]
+        mov     edx, dword ptr [esi*8 + 0x004F4DF8]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip4:
+        mov     ecx, dword ptr [esi*4 + 0x00543B20]
+        test    ecx, ecx
+        je      L_ibmd_skip_b1
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b1
+        mov     ecx, dword ptr [esi*8 + 0x004F4E0C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E08]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b1:
+        mov     ecx, dword ptr [esi*4 + 0x00543B28]
+        test    ecx, ecx
+        je      L_ibmd_skip_b2
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b2
+        mov     ecx, dword ptr [esi*8 + 0x004F4E1C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E18]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b2:
+        mov     ecx, dword ptr [esi*4 + 0x00543B30]
+        test    ecx, ecx
+        je      L_ibmd_skip_b3
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b3
+        mov     ecx, dword ptr [esi*8 + 0x004F4E2C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E28]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b3:
+        mov     ecx, dword ptr [esi*4 + 0x00543B38]
+        test    ecx, ecx
+        je      L_ibmd_skip_b4
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b4
+        mov     ecx, dword ptr [esi*8 + 0x004F4E3C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E38]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b4:
+        mov     ecx, dword ptr [esi*4 + 0x00543B40]
+        test    ecx, ecx
+        je      L_ibmd_skip_b5
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b5
+        mov     ecx, dword ptr [esi*8 + 0x004F4E4C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E48]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b5:
+        mov     ecx, dword ptr [esi*4 + 0x00543B48]
+        test    ecx, ecx
+        je      L_ibmd_skip_b6
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b6
+        mov     ecx, dword ptr [esi*8 + 0x004F4E5C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E58]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b6:
+        mov     ecx, dword ptr [esi*4 + 0x00543B50]
+        test    ecx, ecx
+        je      L_ibmd_skip_b7
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b7
+        mov     ecx, dword ptr [esi*8 + 0x004F4E6C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E68]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b7:
+        mov     ecx, dword ptr [esi*4 + 0x00543B58]
+        test    ecx, ecx
+        je      L_ibmd_skip_b8
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_skip_b8
+        mov     ecx, dword ptr [esi*8 + 0x004F4E7C]
+        mov     edx, dword ptr [esi*8 + 0x004F4E78]
+        or      dword ptr [ecx], edx
+    L_ibmd_skip_b8:
+        mov     ecx, dword ptr [esi*4 + 0x00543B60]
+        test    ecx, ecx
+        je      L_ibmd_ret
+        dec     ecx
+        mov     edx, 1
+        shl     edx, cl
+        test    edx, eax
+        je      L_ibmd_ret
+        mov     eax, dword ptr [esi*8 + 0x004F4E8C]
+        mov     ecx, dword ptr [esi*8 + 0x004F4E88]
+        or      dword ptr [eax], ecx
+    L_ibmd_ret:
+        pop     esi
+        ret
+    }
+}
