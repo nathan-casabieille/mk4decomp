@@ -8590,10 +8590,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e420
-    name: func_0047e420
+    name: TriPhaseDualPathInstallChain_0047e420
     size: 466
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e600
     name: Set1017CallPausePush_0047e600
     size: 51

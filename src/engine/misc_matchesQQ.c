@@ -83830,3 +83830,145 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00500014c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0050014c;
+extern void func_0047e9f0(void);
+extern void ScaledArrStore_00429450(void);
+extern void TailJmpInstallSelfPair_0047e690(void);
+extern void DualHelperCallStoreCjFields_0048ff40(void);
+extern void NotMaskCallStore70_0047e640(void);
+extern void Set1017CallPausePush_0047e600(void);
+
+__declspec(naked) void TriPhaseDualPathInstallChain_0047e420(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    ebp
+        push    esi
+        lea     esi, [eax*4]
+        push    edi
+        xor     edi, edi
+        mov     ebp, 1
+        mov     eax, dword ptr [esi + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        sub     eax, edi
+        je      L_tpdpic_phase0
+        dec     eax
+        je      L_tpdpic_phase1
+        dec     eax
+        je      short L_tpdpic_phase2
+        call    func_0047e9f0
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_tpdpic_phase2:
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     L_tpdpic_doMid
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset g_data_0050014c
+        mov     dword ptr [g_data_0054206c], edi
+        shr     edx, 2
+        mov     dword ptr [ecx*4 + 0x74], edi
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [esi + 8], offset TriPhaseDualPathInstallChain_0047e420
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset TriPhaseDualPathInstallChain_0047e420
+        mov     dword ptr [eax*4 + 0x84], 3
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x3000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], edi
+        call    ScaledArrStore_00429450
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_tpdpic_phase1:
+        call    TailJmpInstallSelfPair_0047e690
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_tpdpic_ret
+        cmp     dword ptr [g_data_0054206c], 0x21999
+        jl      L_tpdpic_skipSet
+        mov     dword ptr [g_data_00542080], 0x20
+    L_tpdpic_doMid:
+        mov     ebx, 0x1999
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_00542070], ebx
+        call    DualHelperCallStoreCjFields_0048ff40
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_tpdpic_ret
+        call    TailJmpInstallSelfPair_0047e690
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_tpdpic_ret
+        mov     dword ptr [g_data_0054207c], ebx
+        call    NotMaskCallStore70_0047e640
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_tpdpic_ret
+        mov     ebp, 1
+        mov     dword ptr [esi + 8], offset TriPhaseDualPathInstallChain_0047e420
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], ebp
+        mov     dword ptr [g_data_00541e6c], ebp
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_tpdpic_phase0:
+        cmp     dword ptr [g_data_00542088], ebp
+        jne     short L_tpdpic_altPhase0
+        call    Set1017CallPausePush_0047e600
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    L_tpdpic_altPhase0:
+        mov     dword ptr [g_data_0054207c], 0x9999
+        call    NotMaskCallStore70_0047e640
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_tpdpic_ret
+    L_tpdpic_skipSet:
+        mov     ebx, 0x1999
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [g_data_00542070], ebx
+        call    DualHelperCallStoreCjFields_0048ff40
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_tpdpic_ret
+        mov     dword ptr [esi + 8], offset TriPhaseDualPathInstallChain_0047e420
+        mov     dword ptr [esi + 0x84], ebp
+        mov     dword ptr [g_data_0054204c], ebp
+        mov     dword ptr [g_data_00541e6c], ebp
+    L_tpdpic_ret:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        ret
+    }
+}
