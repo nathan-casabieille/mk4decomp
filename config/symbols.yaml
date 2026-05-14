@@ -13263,10 +13263,11 @@ functions:
     status: matched
     file: src/audio/install_path.c
   - addr: 0x004acce0
-    name: func_004acce0
+    name: AudioRestoreGlobals_004acce0
     size: 376
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ace60
     name: AudioSnapshotGlobals_004ace60
     size: 292

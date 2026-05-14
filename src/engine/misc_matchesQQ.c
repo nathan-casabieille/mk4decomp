@@ -86098,3 +86098,117 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         ret
     }
 }
+
+/* ============================================================
+ * AudioRestoreGlobals_004acce0 — 376b audio (reverse of
+ * AudioSnapshotGlobals_004ace60).
+ *
+ * Restores live audio globals from the backup region (0x543axx)
+ * back to the working set (0x4f3xxx, 0x5437xx, 0x53a53c).
+ *
+ * If g_data_00543930 != 0 AND g_data_00543f7c != 0 (both already
+ * armed): skip the big main block and only re-paint the tail
+ * (0x4ace18..). Else: arm both, possibly call the inverse
+ * snapshot (only if g_data_00543930 was 0), then restore the
+ * full block via two rep-movsd + movsb + ~18 field stores.
+ *
+ * The lone `movsb` mid-tail (0x4ace0c) mirrors the same byte-
+ * trailer in AudioSnapshotGlobals — MSVC schedules it amid the
+ * scalar stores rather than right after the rep movsd.
+ * ============================================================ */
+
+extern unsigned char g_byte_00543ab4;
+extern int g_data_00543ab0;
+extern int g_data_00543a9c;
+extern unsigned char g_byte_004f360c;
+extern unsigned char g_byte_004f3610;
+extern int g_data_00543aac;
+extern int g_data_00543aa0;
+extern int g_data_0053a1f0;
+extern int g_data_004f361c;
+
+__declspec(naked) void AudioRestoreGlobals_004acce0(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_00543930]
+        push    esi
+        test    eax, eax
+        push    edi
+        je      L_arg_setboth
+        mov     ecx, dword ptr [g_data_00543f7c]
+        test    ecx, ecx
+        jne     L_arg_tail
+    L_arg_setboth:
+        mov     ecx, 1
+        test    eax, eax
+        mov     dword ptr [g_data_00543930], ecx
+        mov     dword ptr [g_data_00543f7c], ecx
+        jne     L_arg_main
+        call    AudioSnapshotGlobals_004ace60
+    L_arg_main:
+        mov     ecx, 0x3C
+        mov     esi, offset g_table_00543934
+        mov     edi, offset g_table_0053a53c
+        mov     al, byte ptr [g_byte_00543a24]
+        rep     movsd
+        mov     edx, dword ptr [g_data_00543a2c]
+        mov     ecx, 5
+        mov     esi, offset g_table_00543a6c
+        mov     edi, offset g_table_004f3f28
+        rep     movsd
+        mov     ecx, dword ptr [g_data_00543a28]
+        mov     byte ptr [g_byte_004f3238], al
+        mov     eax, dword ptr [g_data_00543a30]
+        mov     dword ptr [g_data_004f31cc], ecx
+        mov     ecx, dword ptr [g_data_00543a34]
+        mov     dword ptr [g_data_004f31d0], edx
+        mov     edx, dword ptr [g_data_00543a38]
+        mov     dword ptr [g_data_005437f8], eax
+        mov     al, byte ptr [g_byte_00543a3c]
+        mov     dword ptr [g_data_005437fc], ecx
+        mov     cl, byte ptr [g_byte_00543a3d]
+        mov     dword ptr [g_data_004f3234], edx
+        mov     dl, byte ptr [g_byte_00543a3e]
+        mov     byte ptr [g_byte_00543724], al
+        mov     eax, dword ptr [g_data_00543a40]
+        mov     byte ptr [g_byte_0054372c], cl
+        mov     ecx, dword ptr [g_data_00543a44]
+        mov     byte ptr [g_byte_00543730], dl
+        mov     edx, dword ptr [g_data_00543a48]
+        mov     dword ptr [g_data_00543734], eax
+        mov     eax, dword ptr [g_data_00543a4c]
+        mov     dword ptr [g_data_00543738], ecx
+        mov     ecx, dword ptr [g_data_00543a50]
+        mov     dword ptr [g_data_0054373c], edx
+        mov     edx, dword ptr [g_data_00543a54]
+        mov     dword ptr [g_data_00543740], eax
+        mov     eax, dword ptr [g_data_00543a58]
+        mov     dword ptr [g_data_004f3814], ecx
+        mov     ecx, dword ptr [g_data_00543a5c]
+        mov     dword ptr [g_data_004f3818], edx
+        mov     edx, dword ptr [g_data_00543a60]
+        mov     dword ptr [g_data_004f381c], eax
+        mov     eax, dword ptr [g_data_00543a64]
+        mov     dword ptr [g_data_004f3820], ecx
+        mov     ecx, dword ptr [g_data_00543a68]
+        mov     dword ptr [g_x_004f3ae4], edx
+        movsb
+        mov     dword ptr [g_x_004f3ae8], eax
+        mov     dword ptr [g_data_0052ab40], ecx
+    L_arg_tail:
+        mov     al, byte ptr [g_byte_00543ab4]
+        mov     edx, dword ptr [g_data_00543ab0]
+        mov     ecx, dword ptr [g_data_00543a9c]
+        mov     byte ptr [g_byte_004f360c], al
+        mov     byte ptr [g_byte_004f3610], al
+        mov     eax, dword ptr [g_data_00543aac]
+        mov     dword ptr [g_data_004f3608], edx
+        mov     edx, dword ptr [g_data_00543aa0]
+        pop     edi
+        mov     dword ptr [g_data_004f3404], eax
+        mov     dword ptr [g_data_0053a1f0], ecx
+        mov     dword ptr [g_data_004f361c], edx
+        pop     esi
+        ret
+    }
+}
