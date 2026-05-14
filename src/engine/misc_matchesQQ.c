@@ -79539,3 +79539,125 @@ __declspec(naked) void PhaseDispatchListAdvance_004709e0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00537f98;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_00542044;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern void InstallSelfStackReset_00421f40(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void ScaledInitOrSelfPtr_00421f00(void);
+
+__declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        push    esi
+        push    edi
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        sub     ecx, edx
+        je      L_dcpgi_phase0
+        dec     ecx
+        je      short L_dcpgi_phase1
+        mov     ecx, dword ptr [g_data_00537f98]
+        cmp     ecx, edx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      short L_dcpgi_call40
+        call    InstallSelfStackReset_00421f40
+        pop     edi
+        pop     esi
+        ret
+    L_dcpgi_call40:
+        mov     ecx, dword ptr [g_data_00542080]
+        dec     ecx
+        mov     dword ptr [g_data_00542080], ecx
+        je      short L_dcpgi_install
+        jmp     short L_dcpgi_setup
+    L_dcpgi_phase1:
+        mov     ecx, dword ptr [g_data_00542080]
+        dec     ecx
+        mov     dword ptr [g_data_00542080], ecx
+        jne     L_dcpgi_install2
+        mov     ecx, dword ptr [g_data_0053a430]
+        cmp     ecx, edx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      short L_dcpgi_resetSetup
+    L_dcpgi_install:
+        call    StackPopDispatchTagged_0041f780
+        pop     edi
+        pop     esi
+        ret
+    L_dcpgi_resetSetup:
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_00537f98], edx
+        mov     dword ptr [g_data_00542080], 0xf0
+    L_dcpgi_setup:
+        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, offset DualCounterPhaseGateInstall_00421d50
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     ecx, dword ptr [eax + 4]
+        add     esi, 0x2000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], esi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledInitOrSelfPtr_00421f00
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        pop     esi
+        ret
+    L_dcpgi_phase0:
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     esi, dword ptr [ecx*4]
+        dec     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_00542048], esi
+        mov     edi, dword ptr [ecx*4 + 4]
+        lea     ecx, [ecx*4 + 4]
+        mov     dword ptr [g_data_00542044], edi
+        mov     dword ptr [edi*4], esi
+        mov     esi, dword ptr [g_data_00542044]
+        inc     esi
+        mov     dword ptr [g_data_00542044], esi
+        mov     dword ptr [ecx], esi
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_00537f98], edx
+        mov     dword ptr [g_data_00542080], 0x3c
+    L_dcpgi_install2:
+        mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     esi, 1
+        mov     edi, offset DualCounterPhaseGateInstall_00421d50
+        mov     dword ptr [ecx*4 + 0x84], esi
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledInitOrSelfPtr_00421f00
+        mov     dword ptr [g_data_00541e6c], esi
+        pop     edi
+        pop     esi
+        ret
+    }
+}

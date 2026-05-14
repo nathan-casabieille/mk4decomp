@@ -1782,10 +1782,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x00421d50
-    name: func_00421d50
+    name: DualCounterPhaseGateInstall_00421d50
     size: 428
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00421f00
     name: ScaledInitOrSelfPtr_00421f00
     size: 64
