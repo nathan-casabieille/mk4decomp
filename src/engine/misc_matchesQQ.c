@@ -109370,3 +109370,172 @@ __declspec(naked) void AnimNodeKindDispatch_004b40d0(void)
     }
 }
 
+/* ============================================================
+ * IoOperationDispatch_004cdd20 — 288b crt.
+ *
+ * I/O syscall dispatcher built around an 8-way switch on the
+ * first dword of an io-request struct (esi). Each case loads
+ * an opcode constant into edi (1=8, 2=4, 3=0x11, 4=0x12, 6=1,
+ * 7=0x10, 5=skip-to-postlude, 0=ja-skip) and falls into the
+ * shared body L_dd4b that calls func_004cf3a0(op, &request+0x18,
+ * peek16). On non-zero result the body skips to the postlude;
+ * otherwise it inspects the secondary opcode at [esp+0x68] to
+ * decide which fields to seed before func_004cf060(op, ...).
+ * Postlude calls func_004cf740(0xffff, peek16), then conditionally
+ * func_004cf700(req) when [esi]!=8 and g_data_00522e50==0, and
+ * conditionally func_004cf6d0([esi]) when the result is still 0.
+ *
+ * Frame: sub esp, 0x58 + push ebx/esi/edi. Returns: int.
+ *
+ * Layout quirk: 4 short-trampoline cases (L_ddf0/fa, L_de04/0e)
+ * use 5-byte `jmp near L_dd4b`, and the final case L_de18 falls
+ * through into the postlude via short `jmp L_ddb0`. The 32-byte
+ * jump table sits at function tail (0x4cde20).
+ * ============================================================ */
+
+extern void func_004cf060(void);
+extern void func_004cf3a0(void);
+extern void func_004cf6d0(void);
+extern void func_004cf700(void);
+extern void func_004cf740(void);
+extern unsigned int g_data_00522e50;
+
+__declspec(naked) void IoOperationDispatch_004cdd20(void)
+{
+    __asm {
+        sub      esp, 0x58
+        mov      ecx, dword ptr [esp + 0x64]
+        push     ebx
+        push     esi
+        mov      esi, dword ptr [esp + 0x68]
+        xor      eax, eax
+        push     edi
+        mov      ax, word ptr [ecx]
+        mov      ecx, dword ptr [esi]
+        dec      ecx
+        mov      dword ptr [esp + 0x70], eax
+        cmp      ecx, 7
+        ja       short L_ddb0
+        jmp      dword ptr [ecx*4 + L_d20_jmptbl]
+    L_dd46:
+        mov      edi, 8
+    L_dd4b:
+        lea      ebx, [esi + 0x18]
+        push     eax
+        push     ebx
+        push     edi
+        call     func_004cf3a0
+        add      esp, 0xc
+        test     eax, eax
+        jne      short L_ddac
+        mov      eax, dword ptr [esp + 0x68]
+        cmp      eax, 0x10
+        je       short L_dd77
+        cmp      eax, 0x16
+        je       short L_dd77
+        cmp      eax, 0x1d
+        je       short L_dd77
+        and      dword ptr [esp + 0x44], 0xfffffffe
+        jmp      short L_dd93
+    L_dd77:
+        mov      edx, dword ptr [esp + 0x44]
+        mov      ecx, dword ptr [esi + 0x10]
+        and      edx, 0xffffffe3
+        mov      dword ptr [esp + 0x34], ecx
+        or       edx, 3
+        mov      dword ptr [esp + 0x44], edx
+        mov      edx, dword ptr [esi + 0x14]
+        mov      dword ptr [esp + 0x38], edx
+    L_dd93:
+        lea      ecx, [esi + 8]
+        push     ebx
+        push     ecx
+        push     eax
+        lea      edx, [esp + 0x7c]
+        push     edi
+        lea      eax, [esp + 0x1c]
+        push     edx
+        push     eax
+        call     func_004cf060
+        add      esp, 0x18
+    L_ddac:
+        mov      eax, dword ptr [esp + 0x70]
+    L_ddb0:
+        push     0xffff
+        push     eax
+        call     func_004cf740
+        mov      ecx, dword ptr [esi]
+        add      esp, 8
+        xor      eax, eax
+        cmp      ecx, 8
+        je       short L_ddda
+        mov      ecx, dword ptr [g_data_00522e50]
+        test     ecx, ecx
+        jne      short L_ddda
+        push     esi
+        call     func_004cf700
+        add      esp, 4
+    L_ddda:
+        test     eax, eax
+        jne      short L_dde9
+        mov      ecx, dword ptr [esi]
+        push     ecx
+        call     func_004cf6d0
+        add      esp, 4
+    L_dde9:
+        pop      edi
+        pop      esi
+        pop      ebx
+        add      esp, 0x58
+        ret
+    L_ddf0:
+        mov      edi, 0x11
+        jmp      L_dd4b
+    L_ddfa:
+        mov      edi, 0x12
+        jmp      L_dd4b
+    L_de04:
+        mov      edi, 4
+        jmp      L_dd4b
+    L_de0e:
+        mov      edi, 0x10
+        jmp      L_dd4b
+    L_de18:
+        mov      dword ptr [esi], 1
+        jmp      short L_ddb0
+    L_d20_jmptbl:
+        _emit 0x46
+        _emit 0xdd
+        _emit 0x4c
+        _emit 0x00
+        _emit 0x04
+        _emit 0xde
+        _emit 0x4c
+        _emit 0x00
+        _emit 0xf0
+        _emit 0xdd
+        _emit 0x4c
+        _emit 0x00
+        _emit 0xfa
+        _emit 0xdd
+        _emit 0x4c
+        _emit 0x00
+        _emit 0x46
+        _emit 0xdd
+        _emit 0x4c
+        _emit 0x00
+        _emit 0xb0
+        _emit 0xdd
+        _emit 0x4c
+        _emit 0x00
+        _emit 0x18
+        _emit 0xde
+        _emit 0x4c
+        _emit 0x00
+        _emit 0x0e
+        _emit 0xde
+        _emit 0x4c
+        _emit 0x00
+    }
+}
+
