@@ -1372,10 +1372,11 @@ functions:
     status: matched
     file: src/engine/scaled_init.c
   - addr: 0x00417e40
-    name: func_00417e40
+    name: Phase4SevenPackedDispatch_00417e40
     size: 812
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00418170
     name: func_00418170
     size: 2426
