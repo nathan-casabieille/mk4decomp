@@ -80425,3 +80425,138 @@ __declspec(naked) void MStackBracket3SubChain_00493ad0(void)
         ret
     }
 }
+
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542070;
+extern void ScaledChain3c74_0048f910(void);
+extern void ScaledInit_0048d430(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void DualScaledInitCmp_0046df50(void);
+extern void func_0046df90(void);
+
+__declspec(naked) void TriCounterReinitChain_0046dd90(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0054207c]
+        test    eax, eax
+        jne     L_tcrc_ret1
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tcrc_ret1
+        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [eax*4 + 0x3c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        cmp     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_tcrc_ret1
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054207c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_0054206c], 0
+        call    ScaledInit_0048d430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tcrc_ret1
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, 1
+        mov     dword ptr [g_data_0054207c], edx
+        je      short L_tcrc_ret1
+        mov     dword ptr [g_data_0054207c], 1
+    L_tcrc_ret1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tcrc_sub2:
+        call    ScaledChain3c74_0048f910
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tcrc_sub2_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        cmp     eax, 0x2001
+        je      short L_tcrc_sub2_ret
+        cmp     eax, 0x106
+        je      short L_tcrc_sub2_ret
+        cmp     eax, 0x107
+        je      short L_tcrc_sub2_ret
+        cmp     eax, 0x10c
+        jne     short L_tcrc_sub2_check102
+        mov     eax, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [eax*4 + 0x38]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        cmp     eax, 0x18
+        mov     dword ptr [g_data_0054206c], eax
+        jg      short L_tcrc_sub2_setOne
+        cmp     eax, 5
+        jge     short L_tcrc_sub2_setOne
+    L_tcrc_sub2_ret:
+        ret
+    L_tcrc_sub2_check102:
+        cmp     eax, 0x102
+        jne     short L_tcrc_sub2_setOne
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x3c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x5c]
+        cmp     eax, 1
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_tcrc_sub2_ret
+    L_tcrc_sub2_setOne:
+        mov     dword ptr [g_data_0054206c], 1
+        jmp     ScaledInit_0048d430
+    L_tcrc_sub3:
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     short L_tcrc_sub3_ret
+        call    GuardedDualAndFlagToggle_0048f020
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tcrc_sub3_ret
+        test    byte ptr [g_data_0054208c], 1
+        jne     short L_tcrc_sub3_doCall
+        jmp     func_0046df90
+    L_tcrc_sub3_doCall:
+        call    DualScaledInitCmp_0046df50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tcrc_sub3_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax*4], 0
+        mov     edx, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     eax, 4
+        or      edx, eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054208c], edx
+        je      short L_tcrc_sub3_ret
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_data_0054208c], ecx
+    L_tcrc_sub3_ret:
+        ret
+    }
+}
