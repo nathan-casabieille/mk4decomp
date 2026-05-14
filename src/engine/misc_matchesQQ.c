@@ -99745,4 +99745,234 @@ __declspec(naked) void GamepadSeqRecord_004bcc70(void)
     }
 }
 
+/* ============================================================
+ * MovesPanelEmit_004bcf60 — 772b engine.render.
+ *
+ * Per-frame moves-panel UI renderer (the on-screen 'controls'
+ * display showing the active gamepad sequence). Selects panel
+ * pose from g_data_00542050 (anchor slot), grabs anchor data
+ * at *[anchor*4 + 0x18]. Bails to SunbeamSpriteEmit if anchor
+ * is too low (<8). On match against one of 4 keymap addresses
+ * (004ed000/020/040/060), emits two quads (top+bottom border
+ * strip) through func_004b2af0 + GamepadSeqRecord_004bcc70 +
+ * func_004c3360. Color seeded from intensity table at 543550.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004b2af0(void);
+extern unsigned int g_data_00ab48c4;
+extern unsigned int g_data_00ab48c5;
+extern unsigned int g_data_00ab48c6;
+extern unsigned int g_data_00ab48c7;
+extern unsigned int g_data_00ab48c8;
+extern unsigned int g_data_00ab48c9;
+extern unsigned int g_data_00ab48ca;
+extern unsigned int g_data_00ab48cc;
+extern unsigned int g_data_00ab48d2;
+extern unsigned int g_data_00ab4e20;
+
+__declspec(naked) void MovesPanelEmit_004bcf60(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542050]
+        push     ebx
+        push     esi
+        push     edi
+        mov      ecx, dword ptr [eax*4 + 0x18]
+        cmp      ecx, 8
+        mov      dword ptr [g_data_00542048], ecx
+        jge      L_cf83
+        call     SunbeamSpriteEmit_004bd270
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    L_cf83:
+        mov      edx, dword ptr [g_data_007af92c]
+        xor      edi, edi
+        cmp      edx, edi
+        jne      L_d260
+        shl      eax, 2
+        cmp      eax, OFFSET g_data_004ed060
+        je       L_cfb6
+        cmp      eax, OFFSET g_data_004ed040
+        je       L_cfb6
+        cmp      eax, OFFSET g_data_004ed020
+        je       L_cfb6
+        cmp      eax, OFFSET g_data_004ed000
+        jne      L_d260
+    L_cfb6:
+        mov      eax, dword ptr [g_data_00543550]
+        cmp      eax, 0x10
+        jl       L_cfcc
+        cdq
+        and      edx, 7
+        add      eax, edx
+        sar      eax, 3
+        dec      eax
+        jmp      L_cfce
+    L_cfcc:
+        xor      eax, eax
+    L_cfce:
+        mov      edx, dword ptr [ecx*4]
+        lea      esi, [ecx*4]
+        xor      ecx, ecx
+        cmp      edx, 0xa000
+        sete     cl
+        neg      cl
+        sbb      ecx, ecx
+        mov      dx, word ptr [g_data_00ab4e20]
+        and      ecx, 0xfffffff4
+        mov      word ptr [g_data_00ab48ca], dx
+        add      ecx, 0x16
+        mov      word ptr [g_data_00ab48d2], 0xf
+        mov      byte ptr [g_data_00ab48c6], cl
+        mov      byte ptr [g_data_00ab48c8], cl
+        mov      byte ptr [g_data_00ab48c4], cl
+        mov      cl, 0x64
+        mov      byte ptr [g_data_00ab48c7], cl
+        mov      byte ptr [g_data_00ab48c9], cl
+        mov      byte ptr [g_data_00ab48c5], cl
+        mov      ecx, eax
+        shl      ecx, 5
+        or       ecx, eax
+        shl      ecx, 5
+        or       ecx, eax
+        mov      word ptr [g_data_00ab48cc], cx
+        mov      eax, dword ptr [esi + 4]
+        mov      ecx, eax
+        mov      word ptr [g_data_007af964], di
+        shl      ecx, 0x10
+        sar      ecx, 0x13
+        sar      eax, 0x13
+        mov      word ptr [g_data_007af958], cx
+        mov      word ptr [g_data_007af95e], ax
+        mov      eax, dword ptr [esi + 0xc]
+        mov      word ptr [g_data_007af966], di
+        mov      ecx, eax
+        shl      ecx, 0x10
+        sar      ecx, 0x13
+        sar      eax, 0x13
+        mov      word ptr [g_data_007af95a], cx
+        mov      word ptr [g_data_007af960], ax
+        mov      eax, dword ptr [esi + 0x14]
+        mov      word ptr [g_data_007af968], di
+        mov      ecx, eax
+        shl      ecx, 0x10
+        sar      ecx, 0x13
+        sar      eax, 0x13
+        mov      word ptr [g_data_007af95c], cx
+        mov      word ptr [g_data_007af962], ax
+        call     func_004b2af0
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        push     edi
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, ebx
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [g_data_00ab48b8], ecx
+        mov      cx, word ptr [g_data_00ab48d2]
+        mov      dword ptr [g_data_00ab48bc], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        and      ecx, 0xfbff
+        mov      dword ptr [g_data_00ab48c0], eax
+        shl      edx, 0xa
+        or       ecx, edx
+        mov      word ptr [g_data_00ab48d2], cx
+        mov      eax, dword ptr [g_data_00542050]
+        lea      ecx, [eax*4]
+        push     ecx
+        call     GamepadSeqRecord_004bcc70
+        mov      eax, dword ptr [g_data_007af984]
+        add      esp, 8
+        cmp      eax, edi
+        jle      L_d172
+        cmp      dword ptr [g_data_007af988], edi
+        jle      L_d172
+        cmp      dword ptr [g_data_007af98c], edi
+        jle      L_d172
+        push     OFFSET g_data_00ab48b8
+        call     func_004c3360
+        add      esp, 4
+    L_d172:
+        mov      esi, dword ptr [esi + 0x1c]
+        mov      word ptr [g_data_007af966], di
+        mov      eax, esi
+        shl      eax, 0x10
+        sar      eax, 0x13
+        sar      esi, 0x13
+        mov      word ptr [g_data_007af95a], ax
+        mov      word ptr [g_data_007af960], si
+        call     func_004b2af0
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    esi, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      esi, eax
+        imul     edx, esi
+        movsx    esi, word ptr [g_data_007af9ba]
+        sub      esi, ecx
+        push     1
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     esi, ecx
+        mov      ecx, dword ptr [g_data_007af9b4]
+        sub      edx, esi
+        test     edx, edx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      dword ptr [g_data_00ab48b8], ecx
+        mov      cx, word ptr [g_data_00ab48d2]
+        mov      dword ptr [g_data_00ab48bc], edx
+        setle    al
+        mov      dword ptr [g_data_007af9b0], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      edx, 1
+        and      ecx, 0xfbff
+        mov      dword ptr [g_data_00ab48c0], eax
+        mov      eax, dword ptr [g_data_00542050]
+        shl      edx, 0xa
+        or       ecx, edx
+        mov      word ptr [g_data_00ab48d2], cx
+        lea      ecx, [eax*4]
+        push     ecx
+        call     GamepadSeqRecord_004bcc70
+        mov      eax, dword ptr [g_data_007af984]
+        add      esp, 8
+        cmp      eax, edi
+        jle      L_d260
+        cmp      dword ptr [g_data_007af988], edi
+        jle      L_d260
+        cmp      dword ptr [g_data_007af98c], edi
+        jle      L_d260
+        push     OFFSET g_data_00ab48b8
+        call     func_004c3360
+        add      esp, 4
+    L_d260:
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    }
+}
+
 

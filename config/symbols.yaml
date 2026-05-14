@@ -14696,10 +14696,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bcf60
-    name: func_004bcf60
+    name: MovesPanelEmit_004bcf60
     size: 772
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bd270
     name: SunbeamSpriteEmit_004bd270
     size: 551
