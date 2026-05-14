@@ -95286,3 +95286,186 @@ __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
         ret
     }
 }
+
+/* ============================================================
+ * InputDispatchEntryPoint_004b5850 — 448b engine.geo.
+ *
+ * Per-frame input pump. If g_data_004ffd7c (input-enabled flag)
+ * is set and g_data_007af918 (pause-gate) is zero:
+ *  - reset 4 accumulators (g_data_004d50a4/a8/ac/b0) to 0
+ *  - call func_004b5650(0/1) twice  (pad poll for player 0/1)
+ *  - call InputBitMaskDispatcher_004b5470(0/1) twice
+ *  - if all 4 accumulators are 0 AND func_004b5450 for keys
+ *    0x1B(ESC) / 0x20(SPACE) / 0x0D(ENTER) all returned 0,
+ *    clear g_data_004f4e98 (menu-confirm flag)
+ *  - reset the 4 accumulators again
+ *  - if g_data_007af920 != 0: clear via NOT-mask two input
+ *    register pairs (4dec/4de8, 4df4/4df0)
+ * Then unconditional 4x test-and-clear cascade on
+ * (4dcc/4dc8) (4dd4/4dd0) (4dec/4de8) (4df4/4df0).
+ * Finally: NOT all 4 accumulators and mirror them to the
+ * 0x543368/57c/36c/370 quartet.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004b5650(int player);
+extern void func_004b5450(int key);
+extern unsigned int g_data_007af918;
+extern unsigned int g_data_007af920;
+extern unsigned int g_data_004d50a4;
+extern unsigned int g_data_004d50a8;
+extern unsigned int g_data_004d50ac;
+extern unsigned int g_data_004d50b0;
+extern unsigned int g_data_004f4e98;
+extern unsigned int g_data_004f4dc8;
+extern unsigned int g_data_004f4dcc;
+extern unsigned int g_data_004f4dd0;
+extern unsigned int g_data_004f4dd4;
+extern unsigned int g_data_004f4dd8;
+extern unsigned int g_data_004f4ddc;
+extern unsigned int g_data_004f4de0;
+extern unsigned int g_data_004f4de4;
+extern unsigned int g_data_004f4de8;
+extern unsigned int g_data_004f4dec;
+extern unsigned int g_data_004f4df0;
+extern unsigned int g_data_004f4df4;
+extern unsigned int g_data_004f4df8;
+extern unsigned int g_data_004f4dfc;
+extern unsigned int g_data_004f4e00;
+extern unsigned int g_data_004f4e04;
+extern unsigned int g_data_00543368;
+extern unsigned int g_data_0054336c;
+extern unsigned int g_data_00543370;
+extern unsigned int g_data_0054357c;
+
+__declspec(naked) void InputDispatchEntryPoint_004b5850(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_004ffd7c]
+        push    esi
+        xor     esi, esi
+        cmp     eax, esi
+        mov     dword ptr [g_data_004d50b0], esi
+        mov     dword ptr [g_data_004d50a4], esi
+        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_data_004d50ac], esi
+        je      L_idep_after_clear_masks
+        cmp     dword ptr [g_data_007af918], esi
+        jne     L_idep_after_clear_masks
+        push    esi
+        call    func_004b5650
+        add     esp, 4
+        push    1
+        call    func_004b5650
+        add     esp, 4
+        push    esi
+        call    InputBitMaskDispatcher_004b5470
+        add     esp, 4
+        push    1
+        call    InputBitMaskDispatcher_004b5470
+        mov     eax, dword ptr [g_data_004f4e98]
+        add     esp, 4
+        cmp     eax, esi
+        je      L_idep_pause_gate2
+        cmp     dword ptr [g_data_004d50b0], esi
+        jne     L_idep_clear_loop
+        cmp     dword ptr [g_data_004d50a4], esi
+        jne     L_idep_clear_loop
+        cmp     dword ptr [g_data_004d50a8], esi
+        jne     L_idep_clear_loop
+        cmp     dword ptr [g_data_004d50ac], esi
+        jne     L_idep_clear_loop
+        push    0x1B
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        jne     L_idep_clear_loop
+        push    0x20
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        jne     L_idep_clear_loop
+        push    0x0D
+        call    func_004b5450
+        add     esp, 4
+        test    eax, eax
+        jne     L_idep_clear_loop
+        mov     dword ptr [g_data_004f4e98], esi
+    L_idep_clear_loop:
+        mov     dword ptr [g_data_004d50b0], esi
+        mov     dword ptr [g_data_004d50a4], esi
+        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_data_004d50ac], esi
+    L_idep_pause_gate2:
+        cmp     dword ptr [g_data_007af920], esi
+        je      L_idep_after_clear_masks
+        mov     eax, dword ptr [g_data_004f4dec]
+        mov     ecx, dword ptr [g_data_004f4de8]
+        not     ecx
+        mov     edx, dword ptr [eax]
+        and     edx, ecx
+        mov     dword ptr [eax], edx
+        mov     eax, dword ptr [g_data_004f4df4]
+        mov     edx, dword ptr [g_data_004f4df0]
+        mov     ecx, dword ptr [eax]
+        not     edx
+        and     ecx, edx
+        mov     dword ptr [eax], ecx
+    L_idep_after_clear_masks:
+        mov     ecx, dword ptr [g_data_004f4dcc]
+        mov     eax, dword ptr [g_data_004f4dc8]
+        test    dword ptr [ecx], eax
+        je      L_idep_skip1
+        mov     eax, dword ptr [g_data_004f4ddc]
+        mov     edx, dword ptr [g_data_004f4dd8]
+        not     edx
+        and     dword ptr [eax], edx
+    L_idep_skip1:
+        mov     ecx, dword ptr [g_data_004f4dd4]
+        mov     eax, dword ptr [g_data_004f4dd0]
+        test    dword ptr [ecx], eax
+        je      L_idep_skip2
+        mov     eax, dword ptr [g_data_004f4de4]
+        mov     edx, dword ptr [g_data_004f4de0]
+        not     edx
+        and     dword ptr [eax], edx
+    L_idep_skip2:
+        mov     ecx, dword ptr [g_data_004f4dec]
+        mov     eax, dword ptr [g_data_004f4de8]
+        test    dword ptr [ecx], eax
+        je      L_idep_skip3
+        mov     eax, dword ptr [g_data_004f4dfc]
+        mov     edx, dword ptr [g_data_004f4df8]
+        not     edx
+        and     dword ptr [eax], edx
+    L_idep_skip3:
+        mov     ecx, dword ptr [g_data_004f4df4]
+        mov     eax, dword ptr [g_data_004f4df0]
+        test    dword ptr [ecx], eax
+        je      L_idep_skip4
+        mov     eax, dword ptr [g_data_004f4e04]
+        mov     edx, dword ptr [g_data_004f4e00]
+        not     edx
+        and     dword ptr [eax], edx
+    L_idep_skip4:
+        mov     esi, dword ptr [g_data_004d50ac]
+        mov     eax, dword ptr [g_data_004d50b0]
+        mov     ecx, dword ptr [g_data_004d50a4]
+        mov     edx, dword ptr [g_data_004d50a8]
+        not     esi
+        not     eax
+        not     ecx
+        not     edx
+        mov     dword ptr [g_data_004d50ac], esi
+        mov     dword ptr [g_data_00543368], esi
+        mov     dword ptr [g_data_004d50b0], eax
+        mov     dword ptr [g_data_004d50a4], ecx
+        mov     dword ptr [g_data_004d50a8], edx
+        mov     dword ptr [g_data_0054357c], eax
+        mov     dword ptr [g_data_0054336c], ecx
+        mov     dword ptr [g_data_00543370], edx
+        pop     esi
+        ret
+    }
+}

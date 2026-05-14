@@ -14291,10 +14291,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004b5850
-    name: func_004b5850
+    name: InputDispatchEntryPoint_004b5850
     size: 448
     group: engine.geo
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5a10
     name: FillCosineTable_004b5a10
     size: 84
