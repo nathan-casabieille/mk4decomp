@@ -99539,4 +99539,210 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
     }
 }
 
+/* ============================================================
+ * GamepadSeqRecord_004bcc70 — 750b engine.render.
+ *
+ * Gamepad sequence-record dispatch. Calls func_004b3db0 twice
+ * to read two pad-state bits; based on (state==2) or (state==1)
+ * branches into 4 distinct accumulator-update paths, each
+ * keyed on arg1 (key-id ptr address — compares to OFFSET of
+ * 4 keysym tables at g_data_004ed000/020/040/060). Per match,
+ * bumps the 6-word sequence accumulator at g_data_00ab48b8..c2
+ * by 1, 2, 3 or special idle-detect amounts. Returns the
+ * updated sequence in the slot when the front and tail
+ * deltas converge within 3 ticks.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004b3db0(void);
+extern unsigned int g_data_004ed000;
+extern unsigned int g_data_004ed020;
+extern unsigned int g_data_004ed040;
+extern unsigned int g_data_004ed060;
+extern unsigned int g_data_00ab48b8;
+extern unsigned int g_data_00ab48ba;
+extern unsigned int g_data_00ab48bc;
+extern unsigned int g_data_00ab48be;
+extern unsigned int g_data_00ab48c0;
+extern unsigned int g_data_00ab48c2;
+
+__declspec(naked) void GamepadSeqRecord_004bcc70(void)
+{
+    __asm {
+        push     esi
+        call     func_004b3db0
+        mov      esi, 2
+        cmp      eax, esi
+        je       L_cd96
+        call     func_004b3db0
+        cmp      eax, 1
+        je       L_cd96
+        mov      eax, dword ptr [esp + 0xc]
+        test     eax, eax
+        mov      eax, dword ptr [esp + 8]
+        jne      L_cd11
+        cmp      eax, OFFSET g_data_004ed040
+        jne      L_ccbe
+        inc      word ptr [g_data_00ab48b8]
+        mov      ecx, 3
+        add      word ptr [g_data_00ab48bc], cx
+        add      word ptr [g_data_00ab48c0], cx
+    L_ccbe:
+        cmp      eax, OFFSET g_data_004ed060
+        jne      L_ccd3
+        add      word ptr [g_data_00ab48bc], si
+        add      word ptr [g_data_00ab48c0], si
+    L_ccd3:
+        cmp      eax, OFFSET g_data_004ed000
+        jne      L_ccf6
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+        inc      word ptr [g_data_00ab48c0]
+        inc      word ptr [g_data_00ab48c2]
+    L_ccf6:
+        cmp      eax, OFFSET g_data_004ed020
+        jne      L_cf5c
+        inc      word ptr [g_data_00ab48b8]
+        add      word ptr [g_data_00ab48bc], si
+        jmp      L_cd7f
+    L_cd11:
+        cmp      eax, OFFSET g_data_004ed040
+        jne      L_cd2e
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+        add      word ptr [g_data_00ab48c0], 3
+    L_cd2e:
+        cmp      eax, OFFSET g_data_004ed060
+        jne      L_cd3c
+        add      word ptr [g_data_00ab48c0], si
+    L_cd3c:
+        cmp      eax, OFFSET g_data_004ed000
+        jne      L_cd66
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+        inc      word ptr [g_data_00ab48be]
+        inc      word ptr [g_data_00ab48c0]
+        inc      word ptr [g_data_00ab48c2]
+    L_cd66:
+        cmp      eax, OFFSET g_data_004ed020
+        jne      L_cf5c
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+    L_cd7f:
+        inc      word ptr [g_data_00ab48be]
+        add      word ptr [g_data_00ab48c0], si
+        inc      word ptr [g_data_00ab48c2]
+        pop      esi
+        ret
+    L_cd96:
+        mov      eax, dword ptr [esp + 0xc]
+        mov      edx, 0xfffffffe
+        test     eax, eax
+        mov      eax, dword ptr [esp + 8]
+        jne      L_ce8c
+        cmp      eax, OFFSET g_data_004ed040
+        jne      L_cde8
+        mov      cx, word ptr [g_data_00ab48c0]
+        inc      word ptr [g_data_00ab48b8]
+        add      word ptr [g_data_00ab48ba], dx
+        add      word ptr [g_data_00ab48bc], si
+        add      word ptr [g_data_00ab48be], dx
+        add      cx, si
+        dec      word ptr [g_data_00ab48c2]
+        mov      word ptr [g_data_00ab48c0], cx
+        jmp      L_cdef
+    L_cde8:
+        mov      cx, word ptr [g_data_00ab48c0]
+    L_cdef:
+        cmp      eax, OFFSET g_data_004ed060
+        jne      L_ce1c
+        add      word ptr [g_data_00ab48ba], dx
+        add      word ptr [g_data_00ab48bc], si
+        add      word ptr [g_data_00ab48be], dx
+        add      cx, si
+        dec      word ptr [g_data_00ab48c2]
+        mov      word ptr [g_data_00ab48c0], cx
+    L_ce1c:
+        cmp      eax, OFFSET g_data_004ed000
+        jne      L_ce3a
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+        inc      cx
+        mov      word ptr [g_data_00ab48c0], cx
+    L_ce3a:
+        cmp      eax, OFFSET g_data_004ed020
+        jne      L_cf5c
+        mov      dx, word ptr [g_data_00ab48b8]
+        add      cx, si
+        dec      dx
+        add      word ptr [g_data_00ab48bc], si
+        mov      word ptr [g_data_00ab48b8], dx
+        mov      word ptr [g_data_00ab48c0], cx
+        movsx    eax, cx
+        movsx    edx, dx
+        sub      eax, edx
+        cdq
+        xor      eax, edx
+        sub      eax, edx
+        cmp      eax, 3
+        jg       L_cf5c
+        mov      word ptr [g_data_00ab48bc], cx
+        mov      word ptr [g_data_00ab48b8], cx
+        pop      esi
+        ret
+    L_ce8c:
+        cmp      eax, OFFSET g_data_004ed040
+        jne      L_cec9
+        mov      cx, word ptr [g_data_00ab48c0]
+        inc      word ptr [g_data_00ab48b8]
+        add      word ptr [g_data_00ab48ba], dx
+        inc      word ptr [g_data_00ab48bc]
+        dec      word ptr [g_data_00ab48be]
+        add      cx, si
+        dec      word ptr [g_data_00ab48c2]
+        mov      word ptr [g_data_00ab48c0], cx
+        jmp      L_ced0
+    L_cec9:
+        mov      cx, word ptr [g_data_00ab48c0]
+    L_ced0:
+        cmp      eax, OFFSET g_data_004ed060
+        jne      L_cef6
+        add      word ptr [g_data_00ab48ba], dx
+        dec      word ptr [g_data_00ab48be]
+        add      cx, si
+        dec      word ptr [g_data_00ab48c2]
+        mov      word ptr [g_data_00ab48c0], cx
+    L_cef6:
+        cmp      eax, OFFSET g_data_004ed000
+        jne      L_cf14
+        inc      word ptr [g_data_00ab48b8]
+        inc      word ptr [g_data_00ab48bc]
+        inc      cx
+        mov      word ptr [g_data_00ab48c0], cx
+    L_cf14:
+        cmp      eax, OFFSET g_data_004ed020
+        jne      L_cf5c
+        mov      dx, word ptr [g_data_00ab48b8]
+        add      cx, si
+        dec      dx
+        dec      word ptr [g_data_00ab48bc]
+        mov      word ptr [g_data_00ab48b8], dx
+        mov      word ptr [g_data_00ab48c0], cx
+        movsx    eax, cx
+        movsx    edx, dx
+        sub      eax, edx
+        cdq
+        xor      eax, edx
+        sub      eax, edx
+        cmp      eax, 3
+        jg       L_cf5c
+        mov      word ptr [g_data_00ab48bc], cx
+        mov      word ptr [g_data_00ab48b8], cx
+    L_cf5c:
+        pop      esi
+        ret
+    }
+}
+
 

@@ -14690,10 +14690,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004bcc70
-    name: func_004bcc70
+    name: GamepadSeqRecord_004bcc70
     size: 750
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bcf60
     name: func_004bcf60
     size: 772
