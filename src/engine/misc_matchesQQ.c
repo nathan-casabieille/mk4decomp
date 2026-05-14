@@ -114085,3 +114085,187 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         ret
     }
 }
+
+/* ============================================================
+ * GameNetSyncState_0049fb70 — 473b game.
+ *
+ * Per-frame net-state hook called from the dispatcher when the
+ * active mode is the network/lobby intermediate state. Verifies
+ * the precondition chain g_data_00541e6c == 0 (no abort) &&
+ * (g_data_0054208c & 1) (frame-sync active) && g_data_0053a408
+ * == 2 (network mode) && g_data_00541d88 == 0 (hot-path), then
+ * inspects the sub-state at g_data_00537f88:
+ *
+ *   - sub-state ≤ 0xf (game running): pushes 0x252 to
+ *     func_00404b10 (heartbeat); when no pause condition is set,
+ *     calls func_00426230 (tick), then either continues into
+ *     the "request next state" branch (if g_data_00542094 & 4
+ *     after copying) or the legacy connect/disconnect helper
+ *     L_fc0c (push fmt-string 0x4a0060, log, then func_0049e7e0,
+ *     finally pump the input via func_00404a50 + heartbeat
+ *     func_004be690).
+ *
+ *   - sub-state 0x10 (lobby-leave): log "leaving" via
+ *     OFFSET g_const_004a0dc0 + func_00404c70, set sentinel.
+ *
+ *   - sub-state 0x11 (forced-disconnect): mirror input frame,
+ *     log "disconnect" via OFFSET g_const_004a10d0.
+ *
+ *   - sub-state 0x12 (full shutdown): call func_0049ff30.
+ *
+ *   - any other sub-state: drop to pop-and-return.
+ *
+ * Frame: push ebx/esi, no esp adjust. Returns: void.
+ * ============================================================ */
+
+extern void func_00404a50(void);
+extern void func_00404b10(void);
+extern void func_00404c70(void);
+extern void func_00426230(void);
+extern void func_0049e7e0(void);
+extern void func_0049fa20(void);
+extern void func_0049ff30(void);
+extern void func_004a07a0(void);
+extern void func_004a09c0(void);
+extern void func_004be690(void);
+extern unsigned int g_data_004e2860;
+extern unsigned int g_data_00537e90;
+extern unsigned int g_data_00537f88;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541d88;
+extern unsigned int g_data_00542094;
+extern unsigned int g_const_004a0060;
+extern unsigned int g_const_004a0b00;
+extern unsigned int g_const_004a0dc0;
+extern unsigned int g_const_004a10d0;
+
+__declspec(naked) void GameNetSyncState_0049fb70(void)
+{
+    __asm {
+        push     ebx
+        push     esi
+        call     func_0049fa20
+        mov      eax, dword ptr [g_data_00541e6c]
+        xor      esi, esi
+        cmp      eax, esi
+        jne      L_fd46
+        mov      al, byte ptr [g_data_0054208c]
+        mov      ebx, 1
+        test     al, bl
+        je       L_fd46
+        mov      eax, dword ptr [g_data_0053a408]
+        cmp      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+        jne      L_fd46
+        mov      eax, dword ptr [g_data_00541d88]
+        cmp      eax, esi
+        mov      dword ptr [g_data_0054206c], eax
+        jne      L_fd46
+        mov      eax, dword ptr [g_data_00537f88]
+        mov      dword ptr [g_data_0054207c], esi
+        cmp      eax, 0xf
+        mov      dword ptr [g_data_00542078], eax
+        ja       L_fcd4
+        push     0x252
+        call     func_00404b10
+        mov      al, byte ptr [g_data_0054208c]
+        add      esp, 4
+        test     al, bl
+        jne      short L_fc0c
+        call     func_00426230
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      L_fd46
+        mov      eax, dword ptr [g_data_00542074]
+        and      eax, 4
+        mov      dword ptr [g_data_00542094], eax
+        jne      short L_fc58
+    L_fc0c:
+        push     0x15
+        push     OFFSET g_const_004a0060
+        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_data_00541d88], ebx
+        call     func_00404c70
+        add      esp, 8
+        call     func_0049e7e0
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_fd46
+        push     0x22f
+        call     func_00404a50
+        mov      cx, word ptr [g_data_004e2860]
+        add      esp, 4
+        push     ecx
+        call     func_004be690
+        add      esp, 4
+        pop      esi
+        pop      ebx
+        ret
+    L_fc58:
+        call     func_004a09c0
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_fd46
+        test     byte ptr [g_data_0054208c], bl
+        je       short L_fd46
+        push     0x239
+        call     func_00404b10
+        mov      al, byte ptr [g_data_0054208c]
+        add      esp, 4
+        test     al, bl
+        je       short L_fc9e
+        mov      edx, dword ptr [g_data_00542078]
+        mov      eax, dword ptr [g_data_00537e90]
+        cmp      edx, eax
+        je       short L_fd46
+    L_fc9e:
+        mov      dword ptr [g_data_0054206c], esi
+        call     func_004a07a0
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_fd46
+        mov      eax, dword ptr [g_data_00542078]
+        push     0x238
+        push     OFFSET g_const_004a0b00
+        mov      dword ptr [g_data_00542080], eax
+        call     func_00404c70
+        add      esp, 8
+        pop      esi
+        pop      ebx
+        ret
+    L_fcd4:
+        cmp      eax, 0x10
+        jne      short L_fd00
+        push     0x23d
+        push     OFFSET g_const_004a0dc0
+        mov      dword ptr [g_data_00542054], esi
+        call     func_00404c70
+        add      esp, 8
+        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_data_00541d88], ebx
+        pop      esi
+        pop      ebx
+        ret
+    L_fd00:
+        cmp      eax, 0x11
+        jne      short L_fd3c
+        mov      cx, word ptr [g_data_004e2860]
+        mov      dword ptr [g_data_00542054], esi
+        push     ecx
+        call     func_004be690
+        add      esp, 4
+        push     0x242
+        push     OFFSET g_const_004a10d0
+        call     func_00404c70
+        add      esp, 8
+        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_data_00541d88], ebx
+        pop      esi
+        pop      ebx
+        ret
+    L_fd3c:
+        cmp      eax, 0x12
+        jne      short L_fd46
+        call     func_0049ff30
+    L_fd46:
+        pop      esi
+        pop      ebx
+        ret
+    }
+}

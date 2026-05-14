@@ -12177,10 +12177,11 @@ functions:
     status: matched
     file: src/engine/cmp2_dirty_set_or_clear.c
   - addr: 0x0049fb70
-    name: func_0049fb70
+    name: GameNetSyncState_0049fb70
     size: 473
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049fd50
     name: AudioCmpCascadeDispatcher_0049fd50
     size: 469
