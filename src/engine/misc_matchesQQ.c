@@ -89144,3 +89144,203 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket5_FieldClear_StateAdvance_00405630 — 578b boot.
+ *
+ * 5-slot mstack-bracketed routine. Saves g_data_0053a1ac,
+ * g_data_00542048, g_data_0054204c, g_data_00542050,
+ * g_data_00542054.
+ *
+ * Body:
+ *   - g_data_00542044 := g_data_00541ea8 (snapshot top-level);
+ *   - call func_004ab510; pause-gate (mstack-abort-leak to ret);
+ *   - if bit 2 of g_state_0054208c is set: skip to L_pop5
+ *     (clean phase-skip — passes through pops);
+ *
+ *   - Zero-fill block 1: clear 12 dwords (48 bytes) at
+ *     [g_data_00542044*4..+0x2F]. Unrolled 4-stores-per-iter
+ *     (ecx tracks remaining 4-batches, sub ecx,4 each iter; 3
+ *     iters via eax=3..0); then rep stosd tail if any.
+ *
+ *   - g_data_00542044 += 0xC (advance source pointer by 12).
+ *
+ *   - Zero-fill block 2: clear up to 7 dwords at the new
+ *     g_data_00542044*4. Unrolled with edx=7,eax=1, then a
+ *     dec-edx;dec-esi self-loop after rep stosd to keep edx in
+ *     sync (orig MSVC quirk — extra decrement loop).
+ *
+ *   - Inline mstack push of g_data_00542044 (post-advance);
+ *     g_data_00542044 := old (sub 0xC); set g_data_00542048=4,
+ *     g_data_0054204c=0x13, g_data_00542050=g_data_00542044,
+ *     g_data_00542054=0; call func_00409740; pause-gate;
+ *     mstack pop into g_data_00542044; fall to L_pop5.
+ *
+ *   L_pop5: pop 5 mstack slots (54, 50, 4c, 48, 53a1ac); OR
+ *   bit 2 into g_state_0054208c; if g_data_00542044 != 0 then
+ *   xor bit 2 back off (toggle).
+ *
+ *   pop edi/esi/ebx; ret.
+ *
+ * The dec edx; dec esi; jne self after the rep stosd at the
+ * end of zero-fill block 2 is an MSVC oddity — both registers
+ * are dec'd together as if pacing some implicit counter (edx
+ * goes from N→0, esi mirrored). Net effect: edx=0 on exit. The
+ * `mov [0x53a1ac], edx` later stores that zero.
+ * ============================================================ */
+
+extern void func_004ab510(void);
+
+__declspec(naked) void MStackBracket5_FieldClear_StateAdvance_00405630(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0053a1ac]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        push    edi
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542050]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00541ea8]
+        mov     dword ptr [g_data_00542044], edx
+        call    func_004ab510
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb5fc_abort
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 4
+        test    al, bl
+        jne     L_mb5fc_skip_body
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, 0x0C
+        lea     edi, [eax*4]
+        mov     eax, 3
+    L_mb5fc_clear_loop1:
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        sub     ecx, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        dec     eax
+        jne     L_mb5fc_clear_loop1
+        test    ecx, ecx
+        jle     L_mb5fc_after_loop1
+        xor     eax, eax
+        rep     stosd
+    L_mb5fc_after_loop1:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, 7
+        add     eax, 0x0C
+        mov     dword ptr [g_data_00542044], eax
+        lea     edi, [eax*4]
+        mov     eax, 1
+    L_mb5fc_clear_loop2:
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        sub     edx, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        mov     dword ptr [edi], 0
+        add     edi, ebx
+        dec     eax
+        jne     L_mb5fc_clear_loop2
+        test    edx, edx
+        jle     L_mb5fc_after_loop2
+        mov     ecx, edx
+        xor     eax, eax
+        mov     esi, edx
+        rep     stosd
+    L_mb5fc_dec_pair:
+        dec     edx
+        dec     esi
+        jne     L_mb5fc_dec_pair
+    L_mb5fc_after_loop2:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_state_004d57ac]
+        sub     eax, 0x0C
+        inc     ecx
+        mov     dword ptr [g_data_0053a1ac], edx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542048], ebx
+        mov     dword ptr [g_data_0054204c], 0x13
+        mov     dword ptr [g_data_00542050], ecx
+        mov     dword ptr [g_data_00542054], 0
+        call    func_00409740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb5fc_abort
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     L_mb5fc_pop5
+    L_mb5fc_skip_body:
+        mov     eax, dword ptr [g_state_004d57ac]
+    L_mb5fc_pop5:
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_00542044]
+        or      ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        je      L_mb5fc_abort
+        mov     eax, ecx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+    L_mb5fc_abort:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
