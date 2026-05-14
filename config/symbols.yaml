@@ -560,10 +560,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00406dd0
-    name: func_00406dd0
+    name: MStackBracket1_TreeWalkRecursive2_00406dd0
     size: 595
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00407030
     name: DispatcherComplex260_00407030
     size: 260
