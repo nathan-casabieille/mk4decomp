@@ -97352,4 +97352,195 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
     }
 }
 
+/* ============================================================
+ * TristripBatchEmit2_004bb930 — 578b engine.render.
+ *
+ * Sister of TristripBatchEmit_004bbb80, but uses func_004b3d90
+ * (reverse-z intensity) for ALL strips (no front/back select)
+ * and folds in g_data_00ab4d9c (depth shift << 5) plus a
+ * separate +0x7d0 z-bias into the per-vert z output. Also
+ * stores the strip index into [esi+0x14] for sortable batching.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_data_00ab4d9c;
+
+__declspec(naked) void TristripBatchEmit2_004bb930(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_007af92c]
+        sub      esp, 0xc
+        test     eax, eax
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        jne      L_bb6a
+        mov      edi, dword ptr [esp + 0x20]
+        mov      eax, dword ptr [edi + 4]
+        test     eax, eax
+        je       L_bb6a
+        mov      ecx, dword ptr [edi + 8]
+        mov      edx, dword ptr [g_data_0054204c]
+        lea      ecx, [ecx + edi + 8]
+        lea      edi, [edi + eax + 4]
+        mov      eax, dword ptr [g_data_00ab4e60]
+        lea      esi, [edx + 4]
+        cmp      eax, 0x10
+        jl       L_b97d
+        cdq
+        and      edx, 7
+        add      eax, edx
+        sar      eax, 3
+        dec      eax
+        jmp      L_b97f
+    L_b97d:
+        xor      eax, eax
+    L_b97f:
+        mov      edx, eax
+        shl      edx, 5
+        or       edx, eax
+        shl      edx, 5
+        or       eax, edx
+        mov      dword ptr [esp + 0x14], eax
+    L_b98f:
+        mov      bp, word ptr [ecx]
+        add      ecx, 2
+        mov      eax, ebp
+        and      ebp, 1
+        shr      eax, 8
+        and      al, 1
+        mov      byte ptr [esp + 0x20], al
+        mov      eax, dword ptr [esp + 0x24]
+        test     eax, eax
+        je       L_b9b5
+        xor      eax, eax
+        test     bp, bp
+        sete     al
+        mov      ebp, eax
+    L_b9b5:
+        movsx    ebx, word ptr [ecx]
+        xor      eax, eax
+        add      ecx, 2
+        cmp      ebx, eax
+        mov      dword ptr [esp + 0x18], ecx
+        jl       L_bb6a
+        mov      word ptr [g_data_007af958], ax
+        mov      word ptr [g_data_007af95e], ax
+        mov      word ptr [g_data_007af964], ax
+        mov      cx, word ptr [edi]
+        mov      word ptr [g_data_007af95a], cx
+        mov      dx, word ptr [edi + 2]
+        mov      word ptr [g_data_007af960], dx
+        mov      ax, word ptr [edi + 4]
+        mov      word ptr [g_data_007af966], ax
+        mov      cx, word ptr [edi + 0xc]
+        mov      word ptr [g_data_007af95c], cx
+        mov      dx, word ptr [edi + 0xe]
+        mov      word ptr [g_data_007af962], dx
+        mov      ax, word ptr [edi + 0x10]
+        mov      word ptr [g_data_007af968], ax
+        call     func_004b2af0
+        add      edi, 0x18
+        inc      ebx
+        mov      dword ptr [esp + 0x10], ebx
+    L_ba27:
+        mov      cx, word ptr [edi + 4]
+        mov      dx, word ptr [edi + 2]
+        mov      ax, word ptr [edi]
+        push     ecx
+        push     edx
+        push     eax
+        call     func_004b2fa0
+        add      esp, 0xc
+        call     func_004b2e80
+        movsx    eax, word ptr [g_data_007af9b4]
+        movsx    ecx, word ptr [g_data_007af9b6]
+        movsx    edx, word ptr [g_data_007af9be]
+        movsx    ebx, word ptr [g_data_007af9b8]
+        sub      edx, ecx
+        sub      ebx, eax
+        imul     edx, ebx
+        movsx    ebx, word ptr [g_data_007af9ba]
+        sub      ebx, ecx
+        movsx    ecx, word ptr [g_data_007af9bc]
+        sub      ecx, eax
+        xor      eax, eax
+        imul     ebx, ecx
+        sub      edx, ebx
+        test     edx, edx
+        setle    al
+        xor      edx, edx
+        mov      dword ptr [g_data_007af9b0], eax
+        test     eax, eax
+        movsx    eax, bp
+        sete     dl
+        cmp      eax, edx
+        je       L_bb42
+        mov      eax, dword ptr [g_data_007af984]
+        test     eax, eax
+        jle      L_bb42
+        mov      eax, dword ptr [g_data_007af988]
+        test     eax, eax
+        jle      L_bb42
+        mov      eax, dword ptr [g_data_007af98c]
+        test     eax, eax
+        jle      L_bb42
+        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      dword ptr [esi], ecx
+        mov      edx, dword ptr [g_data_007af9b8]
+        mov      cx, word ptr [esi + 0x1a]
+        mov      dword ptr [esi + 4], edx
+        mov      eax, dword ptr [g_data_007af9bc]
+        and      ecx, 0xfbff
+        mov      dword ptr [esi + 8], eax
+        mov      dl, byte ptr [g_data_007af9b0]
+        and      edx, 1
+        shl      edx, 0xa
+        or       ecx, edx
+        mov      word ptr [esi + 0x1a], cx
+        call     func_004b3d90
+        add      eax, 0x7d0
+        mov      dx, word ptr [esi + 0x1a]
+        mov      word ptr [esi + 0x12], ax
+        mov      ecx, dword ptr [g_data_00ab4d9c]
+        shl      ecx, 5
+        add      ecx, eax
+        mov      al, byte ptr [esp + 0x20]
+        and      al, 3
+        mov      word ptr [esi + 0x12], cx
+        movsx    cx, al
+        and      edx, 0xfe6f
+        push     esi
+        shl      ecx, 7
+        or       edx, ecx
+        mov      word ptr [esi + 0x1a], dx
+        mov      dx, word ptr [esp + 0x18]
+        mov      word ptr [esi + 0x14], dx
+        call     func_004c3360
+        add      esp, 4
+    L_bb42:
+        add      edi, 0xc
+        xor      eax, eax
+        test     bp, bp
+        sete     al
+        mov      ebp, eax
+        mov      eax, dword ptr [esp + 0x10]
+        add      esi, 0x1c
+        dec      eax
+        mov      dword ptr [esp + 0x10], eax
+        jne      L_ba27
+        mov      ecx, dword ptr [esp + 0x18]
+        jmp      L_b98f
+    L_bb6a:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0xc
+        ret
+    }
+}
+
 
