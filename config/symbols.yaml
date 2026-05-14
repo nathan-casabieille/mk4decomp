@@ -15818,10 +15818,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004c8450
-    name: func_004c8450
+    name: LocaleNumericHelpers_004c8450
     size: 370
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c85d0
     name: PrintfStubSigned_004c85d0
     size: 115

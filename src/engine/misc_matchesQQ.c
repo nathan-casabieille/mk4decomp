@@ -110539,3 +110539,246 @@ __declspec(naked) void BucketBlockAllocSplit_004c7670(void)
     }
 }
 
+/* ============================================================
+ * LocaleNumericHelpers_004c8450 — 370b crt (packed: 6 helpers).
+ *
+ * Six tiny CRT helpers sharing one symbol/byte-block, each ending
+ * in `ret` + per-call 16-byte alignment nops:
+ *
+ *   1. 0x4c8450 (37b): __setusermatherr early-init guard. Loads
+ *      "user32.dll" handle then "_setusermatherr" proc; if both
+ *      resolve, calls it(NULL). Otherwise tail-jumps to
+ *      func_004c8400 (legacy fallback).
+ *
+ *   2. 0x4c8480 (96b): wctomb-style scan-and-swap. Walks a c-str,
+ *      advances past bytes flagged in g_data_00522998 (ctype
+ *      table, mask 4) or filtered by func_004cc650(byte, 4) when
+ *      g_data_00522bb0 > 1, then swaps the first content byte
+ *      with the locale-decimal byte at g_data_00522bb4.
+ *
+ *   3. 0x4c84e0 (109b): strip_locale_decimal_zeros. Skips the
+ *      locale's decimal char, then trims trailing 0s before
+ *      'e'/'E', and shifts the exponent suffix left to remove
+ *      the decimal mark.
+ *
+ *   4. 0x4c8550 (28b): __isnan-ish: fld qword [eax]; fcomp
+ *      [g_const_004d2b88] (0.0); ah & 1 → return 0 vs 1.
+ *
+ *   5. 0x4c8570 (50b): wide-double helper. If first arg nonzero
+ *      calls func_004ccd20(esp_buf, src) and writes 2 dwords;
+ *      otherwise drops to helper 6 via fall-through.
+ *
+ *   6. 0x4c85a3 (31b): same shape but using func_004ccd60 and a
+ *      single dword writeback.
+ *
+ * No mstack on any helper; standard cdecl pop-return.
+ * ============================================================ */
+
+extern void func_004c8400(void);
+extern void func_004cc650(void);
+extern void func_004cc6f0(void);
+extern void func_004ccd20(void);
+extern void func_004ccd60(void);
+extern unsigned int g_data_00522998;
+extern unsigned int g_data_00522bb0;
+extern unsigned int g_data_00522bb4;
+extern unsigned int g_data_004d2b60;
+extern unsigned int g_data_004d2b7c;
+extern double       g_const_004d2b88;
+extern void *g_iat_004d2058;
+extern void *g_iat_004d212c;
+
+__declspec(naked) void LocaleNumericHelpers_004c8450(void)
+{
+    __asm {
+        /* Helper 1: __setusermatherr early-init guard. */
+        push     OFFSET g_data_004d2b7c
+        call     dword ptr [g_iat_004d212c]
+        test     eax, eax
+        je       short L_8474
+        push     OFFSET g_data_004d2b60
+        push     eax
+        call     dword ptr [g_iat_004d2058]
+        test     eax, eax
+        je       short L_8474
+        push     0
+        call     eax
+        ret
+    L_8474:
+        jmp      func_004c8400
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 2: scan-and-swap. */
+        push     esi
+        mov      esi, dword ptr [esp + 8]
+        movsx    eax, byte ptr [esi]
+        push     eax
+        call     func_004cc6f0
+        add      esp, 4
+        cmp      eax, 0x65
+        je       short L_84c3
+    L_8496:
+        mov      eax, dword ptr [g_data_00522bb0]
+        inc      esi
+        cmp      eax, 1
+        jle      short L_84b1
+        movsx    ecx, byte ptr [esi]
+        push     4
+        push     ecx
+        call     func_004cc650
+        add      esp, 8
+        jmp      short L_84bf
+    L_84b1:
+        movsx    edx, byte ptr [esi]
+        mov      eax, dword ptr [g_data_00522998]
+        mov      al, byte ptr [eax + edx*2]
+        and      eax, 4
+    L_84bf:
+        test     eax, eax
+        jne      short L_8496
+    L_84c3:
+        mov      cl, byte ptr [g_data_00522bb4]
+        mov      al, byte ptr [esi]
+        mov      byte ptr [esi], cl
+        inc      esi
+    L_84ce:
+        mov      cl, byte ptr [esi]
+        mov      byte ptr [esi], al
+        mov      dl, byte ptr [esi]
+        inc      esi
+        test     dl, dl
+        mov      al, cl
+        jne      short L_84ce
+        pop      esi
+        ret
+        nop
+        nop
+        nop
+        /* Helper 3: strip_locale_decimal_zeros. */
+        mov      eax, dword ptr [esp + 4]
+        push     ebx
+        mov      bl, byte ptr [g_data_00522bb4]
+        mov      cl, byte ptr [eax]
+        test     cl, cl
+        je       short L_84fd
+    L_84f1:
+        cmp      cl, bl
+        je       short L_84fd
+        mov      cl, byte ptr [eax + 1]
+        inc      eax
+        test     cl, cl
+        jne      short L_84f1
+    L_84fd:
+        mov      cl, byte ptr [eax]
+        inc      eax
+        test     cl, cl
+        je       short L_8549
+        mov      cl, byte ptr [eax]
+        test     cl, cl
+        je       short L_851c
+    L_850a:
+        cmp      cl, 0x65
+        je       short L_851c
+        cmp      cl, 0x45
+        je       short L_851c
+        mov      cl, byte ptr [eax + 1]
+        inc      eax
+        test     cl, cl
+        jne      short L_850a
+    L_851c:
+        mov      cl, byte ptr [eax - 1]
+        mov      edx, eax
+        dec      eax
+        cmp      cl, 0x30
+        jne      short L_8530
+    L_8527:
+        mov      cl, byte ptr [eax - 1]
+        dec      eax
+        cmp      cl, 0x30
+        je       short L_8527
+    L_8530:
+        cmp      byte ptr [eax], bl
+        jne      short L_8535
+        dec      eax
+    L_8535:
+        mov      cl, byte ptr [edx]
+        inc      eax
+        inc      edx
+        test     cl, cl
+        mov      byte ptr [eax], cl
+        je       short L_8549
+    L_853f:
+        mov      cl, byte ptr [edx]
+        inc      eax
+        inc      edx
+        test     cl, cl
+        mov      byte ptr [eax], cl
+        jne      short L_853f
+    L_8549:
+        pop      ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* Helper 4: __isnan-ish double-vs-0 check. */
+        mov      eax, dword ptr [esp + 4]
+        fld      qword ptr [eax]
+        fcomp    qword ptr [g_const_004d2b88]
+        fnstsw   ax
+        test     ah, 1
+        jne      short L_8569
+        mov      eax, 1
+        ret
+    L_8569:
+        xor      eax, eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* Helper 5: 2-dword writeback via func_004ccd20. */
+        mov      eax, dword ptr [esp + 4]
+        sub      esp, 8
+        test     eax, eax
+        je       short L_85a2
+        mov      eax, dword ptr [esp + 0x14]
+        /* MASM emits 3-byte `8d 0c 24` for lea ecx, [esp]; orig uses
+         * the 4-byte disp8=0 form `8d 4c 24 00` here. */
+        _emit    0x8d
+        _emit    0x4c
+        _emit    0x24
+        _emit    0x00
+        push     eax
+        push     ecx
+        call     func_004ccd20
+        mov      eax, dword ptr [esp + 0x18]
+        mov      edx, dword ptr [esp + 8]
+        mov      ecx, dword ptr [esp + 0xc]
+        add      esp, 8
+        mov      dword ptr [eax], edx
+        mov      dword ptr [eax + 4], ecx
+        add      esp, 8
+        ret
+        /* Helper 6: 1-dword writeback via func_004ccd60. */
+    L_85a2:
+        mov      edx, dword ptr [esp + 0x14]
+        lea      eax, [esp + 0x14]
+        push     edx
+        push     eax
+        call     func_004ccd60
+        mov      ecx, dword ptr [esp + 0x18]
+        mov      edx, dword ptr [esp + 0x1c]
+        add      esp, 8
+        mov      dword ptr [ecx], edx
+        add      esp, 8
+        ret
+    }
+}
+
