@@ -99242,4 +99242,301 @@ __declspec(naked) void RegionFlushChain_004b9250(void)
     }
 }
 
+/* ============================================================
+ * EcmStreamTickAdvance_004b0db0 — 721b engine.ecm.
+ *
+ * Per-frame ECM stream advance/decode driver. Gates on
+ * 4 state flags (007ab04c handle non-zero, 007ab050 < total,
+ * arg1 + arg2 non-zero). Calls func_004b09a0(1) to lock the
+ * stream, then on first frame (007ab064==0) snapshots
+ * timeGetTime() (IAT 0x4d2240), computes a frame-relative time
+ * base via float ops (mul by 0x4d2998 / 0x4d29a0, add 0x4d29a8)
+ * and stores into g_data_007aa224. Every 15 frames (mod 15==0)
+ * calls IAT 0x4d2084 (Sleep(timer)). If frame-time slip exceeds
+ * (g_data_004f47b8 - 004f47b4) > 0, calls vtbl+0x48 on
+ * g_data_007ab05c (drop frame), runs a Sleep(10) catch-up loop
+ * up to 0xbb8ms, optionally calls func_004b0cb0 to abort.
+ * Otherwise loads/decodes the next sector via func_004bec30
+ * with a 4-page palette offset table at 0x58f428 keyed by
+ * frame mod 4. Finally bumps 007ab050 (frame) and refreshes
+ * 004f47b8 from time delta * 8 / 9.
+ *
+ * Linear no mstack. Returns: int new_frame_no, or 0 on bail.
+ * ============================================================ */
+
+extern void func_004b09a0(void);
+extern void func_004b0cb0(void);
+extern void func_004bec30(void);
+extern void func_004c57d0(void);
+extern void *g_iat_004d2240;
+extern void (*g_iat_004d2074)();
+extern void *g_iat_004d2084;
+extern unsigned int g_const_004d2998;
+extern unsigned int g_const_004d29a0;
+extern unsigned int g_const_004d29a8;
+extern unsigned int g_const_004d29b0;
+extern unsigned int g_data_004f47b4;
+extern unsigned int g_data_004f47b8;
+extern unsigned int g_data_0058f428;
+extern unsigned int g_data_007aa224;
+extern unsigned int g_data_007aa228;
+extern unsigned int g_data_007aa234;
+extern unsigned int g_data_007ab048;
+extern unsigned int g_data_007ab04c;
+extern unsigned int g_data_007ab050;
+extern unsigned int g_data_007ab05c;
+extern unsigned int g_data_007ab060;
+extern unsigned int g_data_007ab064;
+extern unsigned int g_data_007ab06c;
+extern unsigned int g_data_007ab070;
+extern unsigned int g_data_007ab074;
+
+__declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_007ab04c]
+        sub      esp, 8
+        push     ebx
+        xor      ebx, ebx
+        push     ebp
+        push     esi
+        cmp      eax, ebx
+        push     edi
+        je       L_1077
+        mov      eax, dword ptr [g_data_007ab050]
+        mov      ecx, dword ptr [g_data_007aa234]
+        cmp      eax, ecx
+        jae      L_1077
+        cmp      dword ptr [esp + 0x1c], ebx
+        je       L_1077
+        mov      ebp, dword ptr [esp + 0x20]
+        cmp      ebp, ebx
+        je       L_1077
+        push     1
+        call     func_004b09a0
+        mov      eax, dword ptr [g_data_007ab064]
+        add      esp, 4
+        cmp      eax, ebx
+        je       L_0e4d
+        mov      dword ptr [g_data_007ab064], ebx
+        call     dword ptr [g_iat_004d2240]
+        mov      ecx, dword ptr [g_data_007ab050]
+        mov      dword ptr [esp + 0x14], ebx
+        mov      dword ptr [esp + 0x10], ecx
+        mov      esi, eax
+        fild     qword ptr [esp + 0x10]
+        fmul     qword ptr [g_const_004d2998]
+        fmul     qword ptr [g_const_004d29a0]
+        fadd     qword ptr [g_const_004d29a8]
+        call     func_004c57d0
+        sub      esi, eax
+        mov      dword ptr [g_data_007ab048], ebx
+        mov      dword ptr [g_data_007aa224], esi
+        mov      dword ptr [g_data_007aa228], ebx
+    L_0e4d:
+        mov      eax, dword ptr [g_data_007ab050]
+        xor      edx, edx
+        mov      ecx, 0xf
+        div      ecx
+        test     edx, edx
+        jne      L_0e6f
+        mov      eax, dword ptr [g_data_007ab06c]
+        cmp      eax, ebx
+        je       L_0e6f
+        push     eax
+        call     dword ptr [g_iat_004d2084]
+    L_0e6f:
+        mov      edx, dword ptr [g_data_004f47b8]
+        mov      eax, dword ptr [g_data_004f47b4]
+        mov      edi, dword ptr [g_iat_004d2074]
+        cmp      edx, eax
+        jle      L_0ee6
+        mov      edx, dword ptr [g_data_007ab064]
+        mov      eax, dword ptr [g_data_007ab05c]
+        inc      edx
+        cmp      eax, ebx
+        mov      dword ptr [g_data_007ab064], edx
+        je       L_0ea0
+        mov      ecx, dword ptr [eax]
+        push     eax
+        call     dword ptr [ecx + 0x48]
+    L_0ea0:
+        mov      edx, dword ptr [g_data_004f47b8]
+        mov      eax, dword ptr [g_data_004f47b4]
+        xor      esi, esi
+        cmp      edx, eax
+        jle      L_0ecf
+    L_0eb1:
+        cmp      esi, 0xbb8
+        jge      L_0eee
+        push     0xa
+        call     edi
+        mov      eax, dword ptr [g_data_004f47b8]
+        mov      ecx, dword ptr [g_data_004f47b4]
+        add      esi, 0xa
+        cmp      eax, ecx
+        jg       L_0eb1
+    L_0ecf:
+        cmp      esi, 0xbb8
+        jl       L_0ee6
+        call     func_004b0cb0
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 8
+        ret
+    L_0ee6:
+        cmp      dword ptr [g_data_007ab074], ebx
+        je       L_0efd
+    L_0eee:
+        call     func_004b0cb0
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 8
+        ret
+    L_0efd:
+        mov      ecx, dword ptr [esp + 0x1c]
+        mov      eax, dword ptr [g_data_007ab050]
+        push     ecx
+        xor      edx, edx
+        mov      ecx, 0xf
+        push     ebp
+        div      ecx
+        mov      eax, dword ptr [g_data_004f47b8]
+        push     edx
+        cdq
+        xor      eax, edx
+        sub      eax, edx
+        and      eax, 3
+        xor      eax, edx
+        sub      eax, edx
+        imul     eax, eax, 0x5ab5c
+        add      eax, OFFSET g_data_0058f428
+        push     eax
+        call     func_004bec30
+        add      esp, 0x10
+        test     eax, eax
+        jne      L_1077
+        call     dword ptr [g_iat_004d2240]
+        mov      edx, eax
+        mov      eax, dword ptr [g_data_007ab048]
+        sub      eax, edx
+        dec      eax
+        cmp      eax, ebx
+        jle      L_0f56
+        push     eax
+        call     edi
+    L_0f56:
+        mov      eax, dword ptr [g_data_007ab05c]
+        cmp      eax, ebx
+        je       L_0fbf
+        mov      ecx, dword ptr [eax]
+        lea      edx, [esp + 0x1c]
+        push     edx
+        push     eax
+        call     dword ptr [ecx + 0x24]
+        test     byte ptr [esp + 0x1c], 1
+        jne      L_0fbf
+        mov      eax, dword ptr [g_data_007ab05c]
+        mov      edx, dword ptr [g_data_007ab070]
+        push     edx
+        push     eax
+        mov      ecx, dword ptr [eax]
+        call     dword ptr [ecx + 0x3c]
+        mov      ecx, dword ptr [g_data_007ab050]
+        xor      edx, edx
+        mov      esi, dword ptr [g_data_007ab05c]
+        lea      eax, [ecx + ecx*2]
+        shl      eax, 4
+        add      eax, ecx
+        mov      ecx, 0x2b110
+        mov      edi, dword ptr [esi]
+        lea      eax, [eax + eax*2]
+        lea      eax, [eax + eax*4]
+        shl      eax, 2
+        div      ecx
+        push     edx
+        push     esi
+        call     dword ptr [edi + 0x34]
+        mov      eax, dword ptr [g_data_007ab05c]
+        push     1
+        push     ebx
+        push     ebx
+        mov      edx, dword ptr [eax]
+        push     eax
+        call     dword ptr [edx + 0x30]
+    L_0fbf:
+        cmp      dword ptr [g_data_007ab060], ebx
+        je       L_0fdd
+        call     dword ptr [g_iat_004d2240]
+        mov      edi, eax
+        mov      dword ptr [g_data_007ab060], ebx
+        mov      dword ptr [g_data_007aa224], edi
+        jmp      L_0fe3
+    L_0fdd:
+        mov      edi, dword ptr [g_data_007aa224]
+    L_0fe3:
+        mov      esi, dword ptr [g_data_007ab050]
+        mov      dword ptr [esp + 0x14], ebx
+        mov      dword ptr [esp + 0x10], esi
+        fild     qword ptr [esp + 0x10]
+        fmul     qword ptr [g_const_004d2998]
+        fmul     qword ptr [g_const_004d29a0]
+        fsubr    qword ptr [g_const_004d29b0]
+        call     func_004c57d0
+        sub      edi, eax
+        mov      eax, dword ptr [g_data_007aa228]
+        cmp      eax, ebx
+        mov      dword ptr [g_data_007ab048], edi
+        jne      L_1048
+        call     dword ptr [g_iat_004d2240]
+        mov      ecx, dword ptr [g_data_007ab048]
+        mov      esi, dword ptr [g_data_007ab050]
+        cmp      eax, ecx
+        jb       L_1048
+        cmp      esi, ebx
+        je       L_1048
+        mov      eax, dword ptr [g_data_007aa234]
+        dec      eax
+        cmp      esi, eax
+        je       L_1048
+        mov      ecx, 1
+        jmp      L_104a
+    L_1048:
+        xor      ecx, ecx
+    L_104a:
+        inc      esi
+        mov      eax, 0x88888889
+        mul      esi
+        shr      edx, 3
+        cmp      ecx, ebx
+        mov      dword ptr [g_data_007aa228], ecx
+        mov      dword ptr [g_data_007ab050], esi
+        mov      dword ptr [g_data_004f47b8], edx
+        je       L_106d
+        neg      esi
+    L_106d:
+        mov      eax, esi
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 8
+        ret
+    L_1077:
+        pop      edi
+        pop      esi
+        pop      ebp
+        xor      eax, eax
+        pop      ebx
+        add      esp, 8
+        ret
+    }
+}
+
 
