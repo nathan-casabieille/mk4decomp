@@ -89344,3 +89344,149 @@ __declspec(naked) void MStackBracket5_FieldClear_StateAdvance_00405630(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase1SlotLinkAndInit_00419470 — 583b boot.
+ *
+ * Slot init + bidirectional link with the same 0x419040 callback
+ * install pattern as SlotInitAndChainLink_004191b0.
+ *
+ *   - g_data_00542044 := g_data_0054205c;
+ *   - call func_00406bb0; pause-gate;
+ *   - call func_004066d0; pause-gate;
+ *   - g_data_0054206c = 0xFFFFFFFF; call func_00408ad0;
+ *     pause-gate; bit-2 of g_state_0054208c must remain clear
+ *     (else ret);
+ *   - g_data_00542050 := g_data_00542044;
+ *     call func_00408860; pause-gate; bit-2 check (ret if set);
+ *   - call func_004060c0; pause-gate; bit-2 check (ret if set);
+ *
+ *   - g_data_00542054 := g_data_00542044; slot[+0x30]=0x85;
+ *     slot[+0x3c]=g_data_00535e6c;
+ *   - g_data_0054207c := 0x10000 (or 0xFFFF0000 if bit 0 of
+ *     slot_5c[+0x34] is set); slot[+0x34] ah|=0x40;
+ *   - slot_48[0] |= 8; install 0x419040 at slot_48[+0x10];
+ *     slot_48[+0x48]=0x11999;
+ *   - 3-field copy slot_5c[+0x54..+0x5c] -> slot_54[+0x54..+0x5c];
+ *   - paint slot_54: +0x6c=0x666, +0x70=0xFFFFE3D8, +0x74=0xCCC,
+ *     +0x7c=0x3333, +0x80=0xFFFFFAE2;
+ *   - g_data_00542044 := g_data_00542050 (restore origin);
+ *     call func_00405ca0; pause-gate;
+ *
+ *   - Bidirectional link: slot_54[+0x18] := slot_44,
+ *     slot_44[+0x18] := slot_54;
+ *   - g_data_00542044 := g_data_00542054;
+ *   - tail-jmp MStackCall_00406340.
+ * ============================================================ */
+
+extern void func_00406bb0(void);
+extern void func_004066d0(void);
+extern void MStackCall_00406340(void);
+
+__declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        call    func_00406bb0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        call    func_004066d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        mov     dword ptr [g_data_0054206c], 0xFFFFFFFF
+        call    func_00408ad0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_p1sli_ret
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542050], ecx
+        call    func_00408860
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_p1sli_ret
+        call    func_004060c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        test    byte ptr [g_state_0054208c], 4
+        jne     L_p1sli_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [eax*4 + 0x30], 0x85
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x3C], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054207c], 0x10000
+        mov     eax, dword ptr [eax*4 + 0x34]
+        and     eax, 1
+        je      L_p1sli_after_select
+        mov     dword ptr [g_data_0054207c], 0xFFFF0000
+    L_p1sli_after_select:
+        mov     ecx, dword ptr [g_data_00542054]
+        or      ah, 0x40
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x00419040
+        mov     dword ptr [edx*4 + 0x48], 0x11999
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x10], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x58]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x5C]
+        mov     dword ptr [ecx*4 + 0x5C], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [edx*4 + 0x6C], 0x666
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [eax*4 + 0x70], 0xFFFFE3D8
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, 0xFFFFFAE2
+        mov     dword ptr [ecx*4 + 0x74], 0xCCC
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [edx*4 + 0x7C], 0x3333
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x80], eax
+        mov     edx, dword ptr [g_data_00542050]
+        mov     dword ptr [g_data_00542044], edx
+        call    func_00405ca0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1sli_ret
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x18], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [eax*4 + 0x18], edx
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_00542044], ecx
+        jmp     MStackCall_00406340
+    L_p1sli_ret:
+        ret
+    }
+}
