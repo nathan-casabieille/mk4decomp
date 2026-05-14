@@ -79781,3 +79781,113 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         ret
     }
 }
+
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_0052ab48;
+extern unsigned int g_data_00514d78;
+extern unsigned int g_data_00514de8;
+extern void SaveCallRestore_004049d0(void);
+extern void DispatcherComplex260_00407400(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+extern void DispatcherComplex181_00426310(void);
+extern void func_00427690(void);
+extern void BootMstackInit_0041fb10(void);
+
+__declspec(naked) void DualSeqBranchInit_00477a20(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_0053a408]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_dsbi_secondPath
+        push    0x23
+        call    SaveCallRestore_004049d0
+        add     esp, 4
+        push    0x25
+        call    SaveCallRestore_004049d0
+        mov     eax, offset g_data_00514d78
+        add     esp, 4
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsbi_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_dsbi_ret
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [ecx*4 + 0x54], 0xff600000
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x58], 0xff910000
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0x23
+        mov     dword ptr [eax*4 + 0x30], 0x23
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsbi_ret
+        mov     ecx, dword ptr [g_data_0053a3e0]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    StoreIncrMStackPush6_004275c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsbi_ret
+        mov     dword ptr [g_data_00542070], 3
+        mov     dword ptr [g_data_00542074], 0x25
+        mov     dword ptr [g_data_00542078], 0xff780000
+        mov     dword ptr [g_data_0054207c], 0xff970000
+        mov     dword ptr [g_data_00542084], 2
+        call    DispatcherComplex181_00426310
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsbi_ret
+        call    func_00427690
+        mov     eax, dword ptr [g_data_00541e6c]
+        ret
+    L_dsbi_secondPath:
+        push    0x232
+        call    SaveCallRestore_004049d0
+        mov     edx, offset g_data_00514de8
+        add     esp, 4
+        shr     edx, 2
+        mov     dword ptr [g_data_00542048], edx
+        call    DispatcherComplex260_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dsbi_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     short L_dsbi_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x54], 0xff790000
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [ecx*4 + 0x58], 0xff910000
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], 0x232
+        mov     dword ptr [edx*4 + 0x30], 0x232
+        call    MStackPushComplexCallPop_00406430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dsbi_ret
+        push    0x25b
+        push    0x477ee0
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [g_data_0052ab48], 0
+        call    BootMstackInit_0041fb10
+        add     esp, 8
+    L_dsbi_ret:
+        ret
+    }
+}

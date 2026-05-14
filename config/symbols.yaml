@@ -8228,10 +8228,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00477a20
-    name: func_00477a20
+    name: DualSeqBranchInit_00477a20
     size: 432
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00477bd0
     name: func_00477bd0
     size: 579
