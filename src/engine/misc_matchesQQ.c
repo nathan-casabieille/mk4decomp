@@ -88384,3 +88384,193 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         ret
     }
 }
+
+/* ============================================================
+ * SlotInitAndChainLink_004191b0 — 698b boot.
+ *
+ * Heavy slot-init routine. Calls func_004060c0; pause-gate;
+ * sign-toggle into g_data_0054207c (0x10000 vs 0xFFFF0000) based
+ * on bit 0 of slot[+0x34]; paints fields; copies ~14 fields
+ * from the parent/source slot into the destination slot;
+ * installs the 0x419040 callback into slot[+0x10] (this is the
+ * helper from Phase1ChainAdvanceCallScale_00418f80); scales the
+ * 3-tuple [+0..+8] of the [0x54204c] node via func_00404af0
+ * with the sign-adjusted multiplier; calls func_00425380,
+ * func_004252c0(0x1999), func_00405ca0, MStackCall_00406340;
+ * each pause-gated; final bidirectional link
+ *   slot_54[+0x18] := slot_44, slot_44[+0x18] := slot_54;
+ * then resolves the next-level pointer through [+0x18][+0x28]
+ * and stashes into g_data_00542048.
+ *
+ * Bit-2 of g_state_0054208c at entry skips the entire body
+ * (jumps to L_skip_body and the post-body store).
+ *
+ * No mstack pushes — pause-gates just bail to the final pops.
+ * ============================================================ */
+
+extern void func_004252c0(void);
+extern void func_00405ca0(void);
+extern void func_00425380(void);
+extern unsigned int g_data_00541f88;
+extern unsigned int g_data_00541f98;
+
+__declspec(naked) void SlotInitAndChainLink_004191b0(void)
+{
+    __asm {
+        push    ebx
+        push    esi
+        push    edi
+        call    func_004060c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dl, byte ptr [g_state_0054208c]
+        mov     eax, ecx
+        test    dl, 4
+        mov     dword ptr [g_data_00542054], eax
+        jne     L_sicl_skip_body
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edi, 0x10000
+        mov     dword ptr [g_data_0054207c], edi
+        mov     eax, dword ptr [eax*4 + 0x34]
+        and     eax, 1
+        je      L_sicl_after_select
+        mov     dword ptr [g_data_0054207c], 0xFFFF0000
+    L_sicl_after_select:
+        or      ah, 0x40
+        mov     dword ptr [ecx*4 + 0x34], eax
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_data_00535e6c]
+        mov     dword ptr [ecx*4 + 0x3C], edx
+        mov     eax, dword ptr [g_data_00542074]
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00408d30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     esi, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_data_0054204c]
+        shl     ecx, 2
+        mov     dword ptr [g_data_00542050], esi
+        mov     ebx, dword ptr [ecx]
+        mov     dword ptr [ecx + 0x48], edi
+        or      ebx, 8
+        mov     edi, 0x00419040
+        mov     dword ptr [ecx], ebx
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [ecx + 0x10], edi
+        mov     edi, dword ptr [ecx + 0x3C]
+        shl     edx, 2
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [edx + 0x54], edi
+        mov     edi, dword ptr [ecx + 0x40]
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [edx + 0x58], edi
+        mov     ecx, dword ptr [ecx + 0x44]
+        shl     eax, 2
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx + 0x5C], ecx
+        mov     ecx, dword ptr [eax + 0x0C]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx + 0x78], ecx
+        mov     ecx, dword ptr [eax + 0x10]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx + 0x7C], ecx
+        mov     ecx, dword ptr [eax + 0x14]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [edx + 0x80], ecx
+        mov     ecx, dword ptr [eax + 0x18]
+        shl     esi, 2
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi + 0x3C], ecx
+        mov     ecx, dword ptr [eax + 0x1C]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi + 0x40], ecx
+        mov     ecx, dword ptr [eax + 0x20]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi + 0x44], ecx
+        mov     ecx, dword ptr [eax + 0x24]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi + 0x30], ecx
+        mov     ecx, dword ptr [eax + 0x28]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [esi + 0x34], ecx
+        mov     eax, dword ptr [eax + 0x2C]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [esi + 0x38], eax
+        mov     ecx, dword ptr [g_data_00541f98]
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [edx*4]
+        mov     dword ptr [g_data_0054206c], eax
+        push    eax
+        mov     eax, dword ptr [g_data_0054207c]
+        push    eax
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        add     esp, 8
+        mov     dword ptr [ecx*4], eax
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 4]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 8], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_00541f88]
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00425380
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        add     edx, 0x1B
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_0054206c], 0x1999
+        mov     dword ptr [g_data_00542044], edx
+        call    func_004252c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     eax, dword ptr [g_data_00542050]
+        mov     dword ptr [g_data_00542044], eax
+        call    func_00405ca0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [ecx*4 + 0x18], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_00542054]
+        mov     dword ptr [ecx*4 + 0x18], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     dword ptr [g_data_00542044], edx
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_sicl_ret
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     ecx, dword ptr [ecx*4 + 0x28]
+        mov     dword ptr [g_data_00542048], ecx
+    L_sicl_skip_body:
+        mov     dword ptr [g_data_0054206c], eax
+    L_sicl_ret:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
