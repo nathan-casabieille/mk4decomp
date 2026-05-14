@@ -82223,3 +82223,115 @@ __declspec(naked) void SixSubdispatchSpan_0045ec10(void)
         jmp     DualStreamSqDistThresh_0045ede0
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542070;
+extern void MStackCall_00406340(void);
+extern void AudioMixerStep_004ab700(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void Mul10Tail_00404af0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void TripleVecAccCallStore_00476880(void);
+
+__declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
+{
+    __asm
+    {
+        push    esi
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3sqs_ret
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 0x7e
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x30], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x3c]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x40]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x44]
+        mov     dword ptr [ecx*4 + 0x5c], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x70], 0xffffe148
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x4c], 0x3d7
+        mov     ecx, dword ptr [g_data_004d5324]
+        mov     dword ptr [g_data_0054206c], ecx
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3sqs_ret
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_data_00542074], edx
+        call    MStackPush1MagicMod2_004244d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v3sqs_ret
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    0x1c28
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_0054206c]
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        push    ecx
+        push    0x1c28
+        call    Mul10Tail_00404af0
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        add     esp, 8
+        lea     esi, [edx*4]
+        mov     dword ptr [esi + 0x6c], eax
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi + 0x74], ecx
+        mov     dword ptr [g_data_0054206c], 0x1999
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v3sqs_ret
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi + 0x78], edx
+        mov     dword ptr [g_data_0054206c], 0x1999
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v3sqs_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi + 0x7c], eax
+        mov     dword ptr [g_data_0054206c], 0x1999
+        call    StoreDoubleNegPauseSubStore_004ab750
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v3sqs_ret
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [esi + 0x80], ecx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     esi, 0x1b
+        mov     dword ptr [g_data_00542074], 0x7ae
+        add     ecx, esi
+        mov     dword ptr [g_data_00542044], ecx
+        call    TripleVecAccCallStore_00476880
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v3sqs_ret
+        sub     dword ptr [g_data_00542044], esi
+    L_v3sqs_ret:
+        pop     esi
+        ret
+    }
+}

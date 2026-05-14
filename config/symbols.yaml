@@ -4942,10 +4942,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00442bc0
-    name: func_00442bc0
+    name: Vec3SetupQuadrupleMul10Sub_00442bc0
     size: 454
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00442d90
     name: ScaledInitOrSelfPtr_00442d90
     size: 64
