@@ -83307,3 +83307,138 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_004d5338;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_004f3e24;
+extern unsigned int g_data_00541fd8;
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void MStackPushComplexCallPop_004064b0(void);
+extern void func_00405630(void);
+extern void StrLen_004578e0(void);
+extern void MStackPush3HelperCondToggle_0049cf70(void);
+extern void ScaledSearchSum_00457830(void);
+
+__declspec(naked) void StreamChainStringInstall_00457900(void)
+{
+    __asm
+    {
+        push    ecx
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_0054204c]
+        push    ebx
+        push    ebp
+        mov     ebp, dword ptr [g_data_00542070]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        push    edi
+        mov     edi, dword ptr [g_data_0054206c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ebx, dword ptr [edx*4 + 0x4d5338]
+        call    BootPhaseGateBracketedInit_004060c0
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_scsi_popOnly
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [esp + 0x10], eax
+        mov     dword ptr [eax*4 + 0x30], edi
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542078]
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [edx*4 + 0x58], eax
+        mov     eax, dword ptr [g_data_00542044]
+        or      dword ptr [eax*4 + 0x34], 0x20000
+        call    MStackPushComplexCallPop_004064b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        xor     edi, edi
+        cmp     eax, edi
+        jne     L_scsi_ret
+        call    func_00405630
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [esp + 0x10]
+        push    esi
+        mov     dword ptr [eax*4 + 0x24], edi
+        mov     dword ptr [ecx*4 + 0x18], eax
+        mov     dword ptr [eax*4 + 0x18], ecx
+        call    StrLen_004578e0
+        add     esp, 4
+        mov     dword ptr [g_data_0054206c], eax
+        call    MStackPush3HelperCondToggle_0049cf70
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542070], edi
+    L_scsi_loop:
+        mov     ecx, dword ptr [g_data_00542070]
+        xor     edx, edx
+        shl     eax, 2
+        inc     esi
+        mov     dword ptr [eax + 4], ecx
+        mov     dword ptr [eax + 8], edi
+        mov     dl, byte ptr [esi - 1]
+        mov     eax, dword ptr [ebp*4 + 0x541fd8]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_0054204c], eax
+        call    ScaledSearchSum_00457830
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 0xc], ecx
+        mov     al, byte ptr [g_data_004f3e24]
+        test    al, al
+        je      short L_scsi_else
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4 + 0xc]
+        mov     eax, dword ptr [g_data_00542070]
+        add     ecx, ebx
+        add     eax, ecx
+        mov     dword ptr [g_data_00542070], eax
+        jmp     short L_scsi_loopTail
+    L_scsi_else:
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542044]
+        lea     eax, [edx + ebx + 0x7ae]
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [edx*4 + 0xc]
+        cdq
+        sub     eax, edx
+        mov     edx, dword ptr [ecx*4 + 4]
+        sar     eax, 1
+        neg     eax
+        add     edx, eax
+        mov     dword ptr [ecx*4 + 4], edx
+    L_scsi_loopTail:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4]
+        cmp     eax, edi
+        mov     dword ptr [g_data_00542044], eax
+        jne     L_scsi_loop
+        mov     ecx, dword ptr [esp + 0x10]
+        mov     dword ptr [g_data_00542044], ecx
+    L_scsi_popOnly:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_scsi_ret:
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        pop     ecx
+        ret
+    }
+}

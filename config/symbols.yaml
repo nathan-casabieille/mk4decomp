@@ -5899,10 +5899,11 @@ functions:
     status: matched
     file: src/engine/misc_matches5.c
   - addr: 0x00457900
-    name: func_00457900
+    name: StreamChainStringInstall_00457900
     size: 462
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457ad0
     name: Push70CallScaleArith_00457ad0
     size: 100
