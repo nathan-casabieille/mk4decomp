@@ -90493,3 +90493,189 @@ __declspec(naked) void Phase1ChainExtendedInitLoop_0040c460(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase1ChainExtendedInitLoop2_0040c760 — 772b boot.
+ *
+ * Variant of Phase1ChainExtendedInitLoop_0040c460. Same overall
+ * structure but with:
+ *   - initial func_00404cc0(0x2010) prefix call,
+ *   - packed_ptr &g_data_004d5fa0 >> 2 (not 0x4d5f70),
+ *   - slot[+0x58] := old[+0x58] - 0x3333 (not the 15-scale mul),
+ *   - slot_48[+0x48] := 0xA666,
+ *   - installs callback 0x4BA0E0 at slot_48[+0x10],
+ *   - mul-accum loop uses esi = 0xFFFE8000 (not 0xFFFF0000),
+ *   - tail simpler: MStackCall_00406600; pause-gate; jmp
+ *     func_004ab860.
+ * ============================================================ */
+
+extern unsigned int g_data_004d5fa0;
+
+__declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
+{
+    __asm {
+        push    ebx
+        push    esi
+        push    0x2010
+        call    func_00404cc0
+        mov     eax, dword ptr [g_data_0054205c]
+        add     esp, 4
+        push    eax
+        call    func_00404df0
+        add     esp, 4
+        call    func_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ebx, 4
+        test    al, bl
+        je      L_p1cei2_ret
+        call    func_004ab790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, offset g_data_004d5fa0
+        shr     edx, 2
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        test    byte ptr [g_state_0054208c], bl
+        jne     L_p1cei2_tailjmp
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [eax*4 + 0x30], 0x42
+        mov     dword ptr [g_data_0054206c], 0x60000
+        call    func_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x68], edx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [eax*4 + 0x80], 0x1999
+        mov     dword ptr [g_data_0054206c], 0x41
+        call    func_0040a690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_00542058]
+        shl     edx, 2
+        lea     eax, [ecx*4]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax + 0x6C], ecx
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [eax + 0x74], ecx
+        mov     ecx, dword ptr [g_data_0054206c]
+        lea     ecx, [ecx + ecx*2]
+        lea     ecx, [ecx + ecx*4]
+        shl     ecx, 3
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     esi, dword ptr [edx + 0x54]
+        add     ecx, esi
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x54], ecx
+        mov     ecx, dword ptr [g_data_00542070]
+        lea     ecx, [ecx + ecx*2]
+        lea     ecx, [ecx + ecx*4]
+        shl     ecx, 3
+        mov     dword ptr [g_data_00542070], ecx
+        mov     esi, dword ptr [edx + 0x5C]
+        add     ecx, esi
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [eax + 0x5C], ecx
+        mov     edx, dword ptr [edx + 0x58]
+        sub     edx, 0x3333
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [eax + 0x58], edx
+        call    func_00408d20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [eax*4]
+        or      edx, 8
+        mov     dword ptr [eax*4], edx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [edx*4 + 0x48], 0xA666
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [eax*4 + 0x14], 0xFF
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x004BA0E0
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x10], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x20]
+        or      ch, 0x40
+        mov     dword ptr [eax*4 + 0x20], ecx
+        mov     dword ptr [g_data_0054206c], 1
+        call    func_0049d080
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+        test    byte ptr [g_state_0054208c], bl
+        jne     L_p1cei2_after_loop
+        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_data_00542074], 0
+        mov     esi, 0xFFFE8000
+    L_p1cei2_loop_top:
+        mov     edx, dword ptr [g_data_00542058]
+        mov     dword ptr [g_data_0054206c], esi
+        push    esi
+        mov     eax, dword ptr [edx*4 + 0x6C]
+        push    eax
+        call    func_00404af0
+        mov     edx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_00542058]
+        add     edx, eax
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_data_0054206c], esi
+        mov     edx, dword ptr [ecx*4 + 0x74]
+        push    esi
+        push    edx
+        call    func_00404af0
+        mov     ecx, dword ptr [g_data_00542074]
+        mov     dword ptr [g_data_0054206c], eax
+        add     ecx, eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542074], ecx
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [eax*4 + 4], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_00542074]
+        add     esp, 8
+        mov     dword ptr [edx*4 + 0x0C], eax
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [ecx*4]
+        or      edx, ebx
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_state_0054208c], edx
+        je      L_p1cei2_after_loop
+        mov     ecx, edx
+        xor     ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        jne     L_p1cei2_loop_top
+    L_p1cei2_after_loop:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], edx
+        call    MStackCall_00406600
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p1cei2_ret
+    L_p1cei2_tailjmp:
+        call    func_004ab860
+    L_p1cei2_ret:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
