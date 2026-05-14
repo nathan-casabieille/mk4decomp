@@ -108974,3 +108974,136 @@ __declspec(naked) void GameStateTick_0049f1f0(void)
     }
 }
 
+/* ============================================================
+ * VoiceMixerTickDispatch_004a27c0 — 260b audio.
+ *
+ * Per-frame voice-mixer tick + payload-walker. Phase 1: iterates
+ * the active-voice list at g_data_004f3094..313c (24-byte stride
+ * 0x1c), per voice calls func_004a1f20 with a pre-decremented
+ * pitch range (eax-0x50000), gate=0, target=00515964. Phase 2:
+ * iterates again from 004f308c..31a4 (28-byte stride), calling
+ * func_004a1fa0(slot_ptr, slot_value), then dispatches via
+ * jump-table (4 entries at L_jmptbl) on (counter-6): cases 0,1
+ * adjust [slot+0x54] by +ebp (=0xff100000), cases 2,3 by +ebx
+ * (=g_data_00f00000). Updates voice-slot+0x5c/0x54 entries and
+ * indexes into a secondary slot table at g_data_00542070.
+ *
+ * Quirk: 3-byte `lea ecx,[ecx+0]` alignment nop (8d 49 00)
+ * before the 16-byte jump table at end of function. MASM picks
+ * the 2-byte form by default — forced via _emit.
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_004a1e40(void);
+extern void func_004a1f20(void);
+extern void func_004a1fa0(void);
+extern unsigned int g_data_004f308c;
+extern unsigned int g_data_004f3094;
+extern unsigned int g_data_004f313c;
+extern unsigned int g_data_004f31a4;
+extern unsigned int g_data_004f31ac;
+extern unsigned int g_data_004f62f8;
+extern unsigned int g_data_00515964;
+extern unsigned int g_data_00f00000;
+
+__declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
+{
+    __asm {
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        mov      esi, OFFSET g_data_004f3094
+    L_27c9:
+        cmp      esi, OFFSET g_data_004f313c
+        jae      L_27ed
+        mov      eax, dword ptr [esi]
+        push     0x10000
+        sub      eax, 0x50000
+        push     eax
+        push     0
+        push     OFFSET g_data_00515964
+        call     func_004a1f20
+        add      esp, 0x10
+    L_27ed:
+        add      esi, 0x1c
+        cmp      esi, OFFSET g_data_004f31ac
+        jb       L_27c9
+        push     OFFSET g_data_004f62f8
+        call     func_004a1e40
+        add      esp, 4
+        xor      edi, edi
+        mov      esi, OFFSET g_data_004f308c
+        mov      ebp, 0xff100000
+        mov      ebx, OFFSET g_data_00f00000
+    L_2816:
+        mov      eax, dword ptr [esi + 8]
+        mov      ecx, dword ptr [esi]
+        push     eax
+        push     ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_004a1fa0
+        lea      eax, [edi - 6]
+        add      esp, 8
+        cmp      eax, 3
+        ja       L_2864
+        jmp      dword ptr [eax*4 + L_jmptbl]
+    L_283f:
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4 + 0x54]
+        add      ecx, ebp
+        jmp      L_285d
+    L_284f:
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4 + 0x54]
+        add      ecx, ebx
+    L_285d:
+        mov      dword ptr [eax*4 + 0x54], ecx
+    L_2864:
+        mov      edx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [esi + 0xc]
+        add      esi, 0x1c
+        mov      dword ptr [edx*4 + 0x5c], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [eax*4 + 0x54]
+        mov      dword ptr [esi - 0x18], ecx
+        movsx    ecx, byte ptr [esi - 0x20]
+        mov      dword ptr [g_data_00542070], ecx
+        add      ecx, edx
+        inc      edi
+        cmp      esi, OFFSET g_data_004f31a4
+        mov      dword ptr [ecx*4], eax
+        jb       L_2816
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+        /* 3-byte lea ecx, [ecx+0] alignment nop (MASM picks 2-byte form; force 3-byte via _emit) */
+        _emit 0x8d
+        _emit 0x49
+        _emit 0x00
+    L_jmptbl:
+        /* 4 dwords (2 unique targets, each twice) */
+        _emit 0x3f
+        _emit 0x28
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x3f
+        _emit 0x28
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x4f
+        _emit 0x28
+        _emit 0x4a
+        _emit 0x00
+        _emit 0x4f
+        _emit 0x28
+        _emit 0x4a
+        _emit 0x00
+    }
+}
+

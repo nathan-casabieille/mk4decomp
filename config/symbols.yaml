@@ -12574,10 +12574,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a27c0
-    name: func_004a27c0
+    name: VoiceMixerTickDispatch_004a27c0
     size: 260
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a28d0
     name: VoiceTableInit_004a28d0
     size: 135
