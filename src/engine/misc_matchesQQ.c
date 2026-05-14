@@ -80192,3 +80192,135 @@ __declspec(naked) void Vec2SumMul10ChainCompute_0049bc60(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0053a7a0;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00501094;
+extern void Thunk_0049cbc0(void);
+extern void EsiInstallSetCbChainExtend_0048a970(void);
+extern void func_0043d830(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void DoubleCallChainInit_0043d780(void);
+extern void InstallSelfChainAccumPath_004752b0(void);
+extern void func_0044f670(void);
+
+__declspec(naked) void DualSubInstallChain_0044f4b0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_dsic_install1
+        jmp     Thunk_0049cbc0
+    L_dsic_install1:
+        mov     ecx, dword ptr [g_data_0053a7a0]
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [eax + 8], offset DualSubInstallChain_0044f4b0
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset DualSubInstallChain_0044f4b0
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    EsiInstallSetCbChainExtend_0048a970
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_dsic_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_dsic_sub2_phase0
+        call    func_0043d830
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_dsic_sub2_ret
+        push    0x4e6f40
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        pop     esi
+        ret
+    L_dsic_sub2_phase0:
+        push    0x44fef0
+        call    StoreLoadJmp_00404ef0
+        add     esp, 4
+        push    0x91
+        push    0x450360
+        call    StoreTwoCall_0049cb40
+        mov     ecx, dword ptr [g_data_00542058]
+        add     esp, 8
+        mov     dword ptr [g_data_0054205c], ecx
+        call    DoubleCallChainInit_0043d780
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_dsic_sub2_ret
+        mov     edx, offset g_data_00501094
+        mov     ecx, offset L_dsic_sub2
+        shr     edx, 2
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [esi + 8], offset L_dsic_sub2
+        mov     eax, dword ptr [g_data_00542060]
+        add     ecx, 0x1000000
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfChainAccumPath_004752b0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_dsic_sub2_ret:
+        pop     esi
+        ret
+    L_dsic_sub3:
+        push    0x91
+        push    0x44fe40
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        mov     dword ptr [g_data_00542054], 0xd
+        jmp     func_0044f670
+    }
+}

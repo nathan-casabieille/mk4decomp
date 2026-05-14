@@ -5483,10 +5483,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0044f4b0
-    name: func_0044f4b0
+    name: DualSubInstallChain_0044f4b0
     size: 433
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044f670
     name: func_0044f670
     size: 599
