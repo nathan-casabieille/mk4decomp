@@ -4520,10 +4520,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesV.c
   - addr: 0x0043a670
-    name: func_0043a670
+    name: QuadFieldEarlyJmpThenInstall_0043a670
     size: 436
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a830
     name: InstallSelfScaledAdv3d7Cmp_0043a830
     size: 286

@@ -80560,3 +80560,128 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542078;
+extern void DirtyToggleScaledTest_0043a630(void);
+extern void CallSetPause_0041f830(void);
+extern void AudioMixerStep_004ab700(void);
+extern void InstallSelfScaledAdv3d7Cmp_0043a830(void);
+
+__declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        cmp     ecx, 0x6c
+        mov     dword ptr [g_data_00542070], ecx
+        je      short L_qfeji_cont1
+        jmp     DirtyToggleScaledTest_0043a630
+    L_qfeji_cont1:
+        mov     ecx, dword ptr [eax*4 + 0x6c]
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      short L_qfeji_cont2
+        jmp     DirtyToggleScaledTest_0043a630
+    L_qfeji_cont2:
+        mov     ecx, dword ptr [eax*4 + 0x70]
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      short L_qfeji_cont3
+        jmp     DirtyToggleScaledTest_0043a630
+    L_qfeji_cont3:
+        mov     ecx, dword ptr [eax*4 + 0x74]
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        je      short L_qfeji_install
+        jmp     DirtyToggleScaledTest_0043a630
+    L_qfeji_install:
+        mov     ecx, dword ptr [g_state_004d57ac]
+        inc     ecx
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542074], 0x32
+        mov     dword ptr [g_data_0054204c], offset L_qfeji_sub2
+        call    AllocNode
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qfeji_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jmp     DirtyToggleScaledTest_0043a630
+    L_qfeji_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_qfeji_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_qfeji_sub2_phase0
+        dec     eax
+        je      short L_qfeji_sub2_phase1
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_qfeji_sub2_phase1:
+        mov     dword ptr [g_data_00542078], 0xffffeb86
+        mov     dword ptr [esi + 8], offset L_qfeji_sub2
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_qfeji_sub2
+        add     edx, 0x2000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        jmp     short L_qfeji_sub2_chain
+    L_qfeji_sub2_phase0:
+        mov     dword ptr [g_data_0054206c], 0xccc
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qfeji_sub2_ret
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     eax, 0xffffd99a
+        sub     eax, edx
+        mov     edx, offset L_qfeji_sub2
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00542078], eax
+        mov     dword ptr [esi + 8], offset L_qfeji_sub2
+        mov     ecx, dword ptr [g_data_00542060]
+        add     edx, 0x1000000
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+    L_qfeji_sub2_chain:
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    InstallSelfScaledAdv3d7Cmp_0043a830
+        mov     dword ptr [g_data_00541e6c], 1
+    L_qfeji_sub2_ret:
+        pop     esi
+        ret
+    }
+}
