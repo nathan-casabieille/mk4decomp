@@ -112728,3 +112728,154 @@ __declspec(naked) void GameSectionSwitcher_0042cac0(void)
     }
 }
 
+/* ============================================================
+ * GameStateLinearAdvance4Way_00484480 — 452b game.
+ *
+ * 4-state linear FSM (sister of [[game-state-dispatch-4way-00436e50]]
+ * but with all 4 case bodies near-identical and only differing in
+ * the next-state constant). Reads current state from
+ * [entity*4 + 0x84]; cases (state-1)∈[0..3] each call
+ * func_004846b0 and install OFFSET self into [entity_record+8],
+ * stamp the new state code into [entity*4 + 0x84], pack
+ * (OFFSET self) | (new_state<<24) into the active-slot record,
+ * advance the work counter g_data_00542044, and flag
+ * g_data_00541e6c := 1.
+ *
+ * State transition table (current → next, body at):
+ *   0 → 1  (body at L_45cb, jumps via case 0)
+ *   1 → 2  (body at L_44a8, case 1)
+ *   2 → 3  (body at L_4509, case 2)
+ *   3 → 4  (body at L_456a, case 3)
+ *   ≥4 (L_4629) → call func_00484650 then return.
+ *
+ * Frame: push esi/edi, no esp adjust. Returns: void.
+ * Layout quirk: 3-byte `lea ecx, [ecx]` (8d 49 00) align nop
+ * before the 16-byte jump table at 0x484634.
+ * ============================================================ */
+
+extern void func_00484480(void);
+extern void func_00484650(void);
+extern void func_004846b0(void);
+
+__declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        xor      ecx, ecx
+        shl      eax, 2
+        push     esi
+        push     edi
+        mov      edx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], ecx
+        cmp      edx, 3
+        ja       L_4629
+        jmp      dword ptr [edx*4 + L_480_jmptbl]
+    L_44a8:
+        mov      dword ptr [eax + 8], OFFSET func_00484480
+        mov      edx, dword ptr [g_data_00542060]
+        mov      esi, OFFSET func_00484480
+        mov      dword ptr [edx*4 + 0x84], 2
+        mov      edx, dword ptr [eax + 4]
+        add      esi, 0x2000000
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [edx*4], esi
+        mov      edx, dword ptr [g_data_00542044]
+        inc      edx
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [eax + 4], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], ecx
+        call     func_004846b0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_4509:
+        mov      dword ptr [eax + 8], OFFSET func_00484480
+        mov      edx, dword ptr [g_data_00542060]
+        mov      esi, OFFSET func_00484480
+        mov      dword ptr [edx*4 + 0x84], 3
+        mov      edx, dword ptr [eax + 4]
+        add      esi, 0x3000000
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [edx*4], esi
+        mov      edx, dword ptr [g_data_00542044]
+        inc      edx
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [eax + 4], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], ecx
+        call     func_004846b0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_456a:
+        mov      dword ptr [eax + 8], OFFSET func_00484480
+        mov      edx, dword ptr [g_data_00542060]
+        mov      esi, OFFSET func_00484480
+        mov      dword ptr [edx*4 + 0x84], 4
+        mov      edx, dword ptr [eax + 4]
+        add      esi, 0x4000000
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [edx*4], esi
+        mov      edx, dword ptr [g_data_00542044]
+        inc      edx
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [eax + 4], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], ecx
+        call     func_004846b0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_45cb:
+        mov      dword ptr [eax + 8], OFFSET func_00484480
+        mov      edx, dword ptr [g_data_00542060]
+        mov      esi, 1
+        mov      edi, OFFSET func_00484480
+        mov      dword ptr [edx*4 + 0x84], esi
+        mov      edx, dword ptr [eax + 4]
+        add      edi, 0x1000000
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [edx*4], edi
+        mov      edx, dword ptr [g_data_00542044]
+        inc      edx
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [eax + 4], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], ecx
+        call     func_004846b0
+        mov      dword ptr [g_data_00541e6c], esi
+        pop      edi
+        pop      esi
+        ret
+    L_4629:
+        call     func_00484650
+        pop      edi
+        pop      esi
+        ret
+        /* 3-byte align nop `lea ecx, [ecx]` (8d 49 00). */
+        _emit    0x8d
+        _emit    0x49
+        _emit    0x00
+    L_480_jmptbl:
+        _emit    0xcb
+        _emit    0x45
+        _emit    0x48
+        _emit    0x00
+        _emit    0xa8
+        _emit    0x44
+        _emit    0x48
+        _emit    0x00
+        _emit    0x09
+        _emit    0x45
+        _emit    0x48
+        _emit    0x00
+        _emit    0x6a
+        _emit    0x45
+        _emit    0x48
+        _emit    0x00
+    }
+}
