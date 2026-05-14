@@ -84118,3 +84118,117 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542074;
+extern void Ten404c40_404bd0_00426780(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void Eleven404b90_404c00_004266d0(void);
+extern void Push16Call_00489f50(void);
+extern void InstallSelfCountedAccum_0042e1d0(void);
+
+__declspec(naked) void BootMStackPopPush3Install_004046d0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_bmpp3i_phase0
+        call    Ten404c40_404bd0_00426780
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bmpp3i_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [eax*4]
+        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [ecx*4 + 4], eax
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_bmpp3i_phase0:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 4]
+        lea     eax, [eax*4 + 4]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edx
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax], ecx
+        call    Eleven404b90_404c00_004266d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmpp3i_ret
+        mov     dword ptr [g_data_00542074], 0x12c
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmpp3i_ret
+        mov     dword ptr [esi + 8], offset BootMStackPopPush3Install_004046d0
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ecx, offset BootMStackPopPush3Install_004046d0
+        mov     dword ptr [eax*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfCountedAccum_0042e1d0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_bmpp3i_ret:
+        pop     esi
+        ret
+    }
+}
