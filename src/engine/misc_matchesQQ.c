@@ -112879,3 +112879,314 @@ __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
         _emit    0x00
     }
 }
+
+/* ============================================================
+ * FopenMode_004c9270 — 462b crt.
+ *
+ * Parses the second argument of fopen()/freopen() (a mode
+ * string like "rb+", "wt", "a") and returns the open-flag pair
+ * (al = O_* mode bits, edi = orientation/text/wide flags) for
+ * the kernel-call wrapper func_004cd350.
+ *
+ * Initial char selects base mode:
+ *   - 'a' (0x61) → eax := 0x109 (O_APPEND|O_CREAT|O_WRONLY)
+ *                  edi |= 2;
+ *   - 'r' (0x72) → eax := 0 (O_RDONLY)
+ *                  edi |= 1;
+ *   - 'w' (0x77) → eax := 0x301 (O_TRUNC|O_CREAT|O_WRONLY)
+ *                  edi |= 2;
+ *   - anything else → return 0.
+ *
+ * Then walks remaining characters, applying each via a 10-case
+ * jump table indexed by a 74-byte char-class array at
+ * g_data_004c93f4 (valid char range [0x2b..0x73] → index ∈ [0..9]):
+ *   case 0 ('+'): toggle update flag (al |= 2, etc.).
+ *   case 1 ('R'): al |= 0x40 (sparse / random hint).
+ *   case 2 ('c'): al |= 0x10 (commit-on-fflush, edi tracked once).
+ *   case 3 ('b'): al |= 0x20 (binary, edi tracked once).
+ *   case 4 ('S'): ah |= 0x10 (sequential hint).
+ *   case 5 ('t' or 'T'): ah |= 0x80 (text mode, exclusive with bin).
+ *   case 6 ('D'): edi |= 0x4000 (temporary-delete hint).
+ *   case 7 ('T'): edi &= ~0x4000 (clear temp-delete).
+ *   case 8 (other letter): ah |= 0x40 (binary explicit).
+ *   case 9: invalidate scan (xor esi, esi → next iter aborts).
+ *
+ * After the scan, calls func_004cd350(filename, mode, perm,
+ * 0x1a4 (0664)); on failure returns 0. On success, increments
+ * g_data_00f9fae0 (open-handle count), zeroes the FILE struct
+ * inline at [arg4], stamps the fd in [eax+0x10], and returns
+ * the fd in eax.
+ *
+ * Frame: push ebx/ebp/esi/edi. Returns: int (fd or 0).
+ * ============================================================ */
+
+extern void func_004cd350(void);
+extern unsigned int g_data_00f9fae0;
+extern unsigned int g_data_00f9fc00;
+
+__declspec(naked) void FopenMode_004c9270(void)
+{
+    __asm {
+        mov      ecx, dword ptr [esp + 8]
+        push     ebx
+        push     ebp
+        push     esi
+        mov      al, byte ptr [ecx]
+        xor      edx, edx
+        xor      ebp, ebp
+        push     edi
+        mov      edi, dword ptr [g_data_00f9fc00]
+        cmp      al, 0x61
+        je       short L_92a5
+        cmp      al, 0x72
+        je       short L_929e
+        cmp      al, 0x77
+        je       short L_9297
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_9297:
+        mov      eax, 0x301
+        jmp      short L_92aa
+    L_929e:
+        xor      eax, eax
+        or       edi, 1
+        jmp      short L_92ad
+    L_92a5:
+        mov      eax, 0x109
+    L_92aa:
+        or       edi, 2
+    L_92ad:
+        inc      ecx
+        mov      esi, 1
+        mov      dword ptr [esp + 0x18], ecx
+        mov      cl, byte ptr [ecx]
+        test     cl, cl
+        je       L_9371
+    L_92c1:
+        test     esi, esi
+        je       L_9371
+        movsx    ecx, cl
+        add      ecx, -0x2b
+        cmp      ecx, 0x49
+        ja       short L_935c
+        xor      ebx, ebx
+        mov      bl, byte ptr [ecx + L_270_byidx]
+        jmp      dword ptr [ebx*4 + L_270_jmptbl]
+    L_92e7:
+        test     al, 2
+        jne      short L_935c
+        and      al, 0xfe
+        and      edi, 0xfffffffc
+        or       al, 2
+        or       edi, 0x80
+        jmp      short L_935e
+    L_92fa:
+        test     ah, 0xc0
+        jne      short L_935c
+        or       ah, 0x80
+        jmp      short L_935e
+    L_9304:
+        test     ah, 0xc0
+        jne      short L_935c
+        or       ah, 0x40
+        jmp      short L_935e
+    L_930e:
+        test     edx, edx
+        jne      short L_935c
+        mov      edx, 1
+        or       edi, 0x4000
+        jmp      short L_935e
+    L_931f:
+        test     edx, edx
+        jne      short L_935c
+        mov      edx, 1
+        and      edi, 0xffffbfff
+        jmp      short L_935e
+    L_9330:
+        test     ebp, ebp
+        jne      short L_935c
+        mov      ebp, 1
+        or       al, 0x20
+        jmp      short L_935e
+    L_933d:
+        test     ebp, ebp
+        jne      short L_935c
+        mov      ebp, 1
+        or       al, 0x10
+        jmp      short L_935e
+    L_934a:
+        test     ah, 0x10
+        jne      short L_935c
+        or       ah, 0x10
+        jmp      short L_935e
+    L_9354:
+        test     al, 0x40
+        jne      short L_935c
+        or       al, 0x40
+        jmp      short L_935e
+    L_935c:
+        xor      esi, esi
+    L_935e:
+        mov      ecx, dword ptr [esp + 0x18]
+        inc      ecx
+        mov      dword ptr [esp + 0x18], ecx
+        mov      cl, byte ptr [ecx]
+        test     cl, cl
+        jne      L_92c1
+    L_9371:
+        mov      ecx, dword ptr [esp + 0x1c]
+        mov      edx, dword ptr [esp + 0x14]
+        push     0x1a4
+        push     ecx
+        push     eax
+        push     edx
+        call     func_004cd350
+        mov      ecx, eax
+        add      esp, 0x10
+        test     ecx, ecx
+        jge      short L_9396
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_9396:
+        mov      eax, dword ptr [g_data_00f9fae0]
+        inc      eax
+        mov      dword ptr [g_data_00f9fae0], eax
+        mov      eax, dword ptr [esp + 0x20]
+        mov      dword ptr [eax + 0xc], edi
+        pop      edi
+        pop      esi
+        pop      ebp
+        mov      dword ptr [eax + 4], 0
+        mov      dword ptr [eax], 0
+        mov      dword ptr [eax + 8], 0
+        mov      dword ptr [eax + 0x1c], 0
+        mov      dword ptr [eax + 0x10], ecx
+        pop      ebx
+        ret
+        nop
+    L_270_jmptbl:
+        _emit    0xe7
+        _emit    0x92
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x54
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x3d
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x30
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x4a
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0xfa
+        _emit    0x92
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x0e
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x1f
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x04
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+        _emit    0x5c
+        _emit    0x93
+        _emit    0x4c
+        _emit    0x00
+    L_270_byidx:
+        _emit    0x00
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x01
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x02
+        _emit    0x03
+        _emit    0x04
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x05
+        _emit    0x06
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x07
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x09
+        _emit    0x08
+    }
+}
