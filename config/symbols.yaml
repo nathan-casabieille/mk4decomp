@@ -9841,10 +9841,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048aa20
-    name: func_0048aa20
+    name: QuadPackedInstallSelfChain_0048aa20
     size: 444
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048abe0
     name: LazyAllocOrPush_0048abe0
     size: 142

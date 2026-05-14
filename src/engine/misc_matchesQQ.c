@@ -81364,3 +81364,160 @@ __declspec(naked) void FivePackedSubdispatchInstallSelf_0049c040(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00537ecc;
+extern unsigned int g_data_00542050;
+extern void StackPopDispatchTagged_0041f780(void);
+extern void ZeroSixStores6c80_0048a7c0(void);
+extern void Phase3InstallTableCheck_0048acd0(void);
+extern void LazyAllocOrPush_0048abe0(void);
+
+__declspec(naked) void QuadPackedInstallSelfChain_0048aa20(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_qpisc_init
+        call    StackPopDispatchTagged_0041f780
+        pop     esi
+        ret
+    L_qpisc_init:
+        mov     ecx, dword ptr [g_data_0052ab10]
+        mov     dword ptr [g_data_0054205c], ecx
+        call    ZeroSixStores6c80_0048a7c0
+        mov     dword ptr [g_data_00542080], offset L_qpisc_sub4
+        mov     dword ptr [esi + 8], offset QuadPackedInstallSelfChain_0048aa20
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset QuadPackedInstallSelfChain_0048aa20
+        add     ecx, 0x1000000
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    Phase3InstallTableCheck_0048acd0
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_qpisc_sub2:
+        mov     eax, dword ptr [g_data_0054206c]
+        test    eax, eax
+        je      short L_qpisc_sub2_setData
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     eax, 0x14ccc
+        cmp     ecx, eax
+        jle     short L_qpisc_sub2_skip
+        mov     dword ptr [g_data_00542084], eax
+    L_qpisc_sub2_skip:
+        call    LazyAllocOrPush_0048abe0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qpisc_sub2_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542084], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    L_qpisc_sub2_setData:
+        mov     eax, offset g_data_00537ecc
+        shr     eax, 2
+        mov     dword ptr [g_data_00542050], eax
+    L_qpisc_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_qpisc_sub3:
+        mov     eax, dword ptr [g_data_0054206c]
+        test    eax, eax
+        je      short L_qpisc_sub3_setData
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542084]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542084]
+        add     edx, 0xffff0000
+        sar     edx, 2
+        add     edx, 0x10000
+        mov     dword ptr [g_data_00542084], edx
+        call    LazyAllocOrPush_0048abe0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_qpisc_sub3_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        ret
+    L_qpisc_sub3_setData:
+        mov     edx, offset g_data_00537ecc
+        shr     edx, 2
+        mov     dword ptr [g_data_00542050], edx
+    L_qpisc_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_qpisc_sub4:
+        mov     eax, dword ptr [g_data_0054206c]
+        test    eax, eax
+        je      short L_qpisc_sub4_alt
+        jmp     LazyAllocOrPush_0048abe0
+    L_qpisc_sub4_alt:
+        mov     eax, offset g_data_00537ecc
+        shr     eax, 2
+        mov     dword ptr [g_data_00542050], eax
+        ret
+    }
+}
