@@ -14681,10 +14681,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc7e0
-    name: func_004bc7e0
+    name: RouteRibbonEmit_004bc7e0
     size: 1123
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bcc50
     name: Init16BitFields_004bcc50
     size: 24
