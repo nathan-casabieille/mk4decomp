@@ -13397,10 +13397,11 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004adca0
-    name: func_004adca0
+    name: GlideTriBatchEmit_004adca0
     size: 2240
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ae560
     name: func_004ae560
     size: 1000
