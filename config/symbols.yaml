@@ -13786,10 +13786,11 @@ functions:
     status: matched
     file: src/engine/ecm.c
   - addr: 0x004b1270
-    name: ECM_DecodeFrame_Huffman
+    name: ECM_DecodeFrame_Huffman_004b1270
     size: 2423
     group: engine.ecm
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b1bf0
     name: ECM_DecodeFrameDispatch
     size: 54
