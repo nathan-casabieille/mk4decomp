@@ -81915,3 +81915,140 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054204c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void InstallSelfOrChainCmpJmp_0047a8f0(void);
+extern void InstallSelfFullPath_0047a840(void);
+extern void IterStepDualStore_00490b40(void);
+
+__declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_tsisp_install1
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_tsisp_install1:
+        mov     dword ptr [eax + 8], offset TripleSubInstallSelfPair_0047a670
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset TripleSubInstallSelfPair_0047a670
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    ScaledLoadJmp_00428d20
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+    L_tsisp_sub2:
+        mov     dword ptr [g_data_0054206c], 0xb
+        call    ScaledIndexConditionalAdd_0048e400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_tsisp_sub2_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x216
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4ed110
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_tsisp_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+    L_tsisp_sub3:
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_tsisp_sub3_phase0
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542080]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    DualCallPauseDirtyJmp_00490c30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tsisp_sub3_abort
+        mov     dword ptr [g_data_0054206c], 0x17
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_tsisp_sub3_abort
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ebx, 1
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, bl
+        mov     dword ptr [g_data_00542080], edx
+        je      short L_tsisp_sub3_skipInstall
+        call    InstallSelfOrChainCmpJmp_0047a8f0
+        pop     esi
+        pop     ebx
+        ret
+    L_tsisp_sub3_skipInstall:
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_tsisp_sub3_install
+        call    InstallSelfFullPath_0047a840
+        pop     esi
+        pop     ebx
+        ret
+    L_tsisp_sub3_phase0:
+        mov     eax, dword ptr [g_data_00542060]
+        mov     ebx, 1
+        mov     dword ptr [g_data_0054206c], ebx
+        push    0x4ed130
+        mov     dword ptr [eax*4 + 0x5c], ebx
+        call    IterStepDualStore_00490b40
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_tsisp_sub3_abort
+        mov     dword ptr [g_data_00542080], 0x10
+    L_tsisp_sub3_install:
+        mov     dword ptr [esi + 8], offset L_tsisp_sub3
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_tsisp_sub3_abort:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

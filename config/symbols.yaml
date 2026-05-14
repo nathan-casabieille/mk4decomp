@@ -8341,10 +8341,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesKK.c
   - addr: 0x0047a670
-    name: func_0047a670
+    name: TripleSubInstallSelfPair_0047a670
     size: 451
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a840
     name: InstallSelfFullPath_0047a840
     size: 174
