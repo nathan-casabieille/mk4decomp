@@ -15135,10 +15135,11 @@ functions:
     status: matched
     file: src/engine/submit_draw.c
   - addr: 0x004c3490
-    name: func_004c3490
+    name: VoiceStreamingCacheStart_004c3490
     size: 635
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3710
     name: ObjectSlotRelease_004c3710
     size: 206
