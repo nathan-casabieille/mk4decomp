@@ -85326,3 +85326,170 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         jmp     TripleEntryDispatch_00458810
     }
 }
+
+extern unsigned int g_data_00538094;
+extern void DirtyToggleByGate_0048f350(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void UnlinkChainInstall_00460dd0(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void GuardedDoubleCallSetJmp_00460260(void);
+extern void NotShrCmp1Store_00460d80(void);
+extern void GuardedDispatch_00460ca0(void);
+extern void GuardedDispatch_00460cd0(void);
+extern void CallPauseCallTestStackPushJmp_00460c60(void);
+extern void PerSlotPhaseRouter_004605d0(void);
+extern void PerSlotPhaseRouter_00460770(void);
+extern void CallPauseTriCmpJmp_00460910(void);
+extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+
+__declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        push    edi
+        lea     esi, [eax*4]
+        xor     edi, edi
+        mov     eax, dword ptr [esi + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        cmp     eax, edi
+        je      L_spdbs_phase0
+        mov     ebx, 4
+    L_spdbs_loop:
+        call    DirtyToggleByGate_0048f350
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_spdbs_ret
+        test    byte ptr [g_data_0054208c], bl
+        jne     L_spdbs_b4
+        call    CjMaskedFlagProbe_0048ecf0
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_spdbs_ret
+        test    byte ptr [g_data_0054208c], 1
+        jne     L_spdbs_b1
+        call    NotShrCmp1Store_00460d80
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     L_spdbs_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, eax
+        and     ecx, 9
+        cmp     ecx, 9
+        mov     dword ptr [g_data_00542070], ecx
+        je      L_spdbs_b9
+        mov     ecx, eax
+        and     ecx, 5
+        cmp     ecx, 5
+        mov     dword ptr [g_data_00542070], ecx
+        je      L_spdbs_b5
+        mov     ecx, eax
+        and     ecx, 1
+        cmp     ecx, 1
+        mov     dword ptr [g_data_00542070], ecx
+        je      L_spdbs_b1a
+        mov     ecx, eax
+        and     ecx, 8
+        cmp     ecx, 8
+        mov     dword ptr [g_data_00542070], ecx
+        je      L_spdbs_b8
+        mov     ecx, eax
+        and     ecx, ebx
+        cmp     ecx, ebx
+        mov     dword ptr [g_data_00542070], ecx
+        je      L_spdbs_b4a
+        and     eax, 2
+        mov     dword ptr [g_data_00542094], eax
+        jne     L_spdbs_b2
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], edi
+        mov     dword ptr [ecx*4 + 0x6c], edi
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax*4 + 0x70], edx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x74], ecx
+        call    CallPauseTriCmpJmp_00460910
+        cmp     dword ptr [g_data_00541e6c], edi
+        jne     short L_spdbs_ret
+        mov     eax, dword ptr [g_data_00542060]
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], edi
+        cmp     eax, edi
+        jne     L_spdbs_loop
+    L_spdbs_phase0:
+        call    DualGatedStateYield_0048fc80
+        test    eax, eax
+        jne     short L_spdbs_ret
+        mov     eax, dword ptr [g_data_00538094]
+        cmp     eax, edi
+        mov     dword ptr [g_data_00542070], eax
+        je      short L_spdbs_install
+        call    UnlinkChainInstall_00460dd0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset SlotPhaseDispatcherBigSwitch_0045fac0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_spdbs_ret:
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b4:
+        call    CjInstallSelfRouter_00470480
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b1:
+        call    GuardedDoubleCallSetJmp_00460260
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b9:
+        call    GuardedDispatch_00460ca0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b5:
+        call    GuardedDispatch_00460cd0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b1a:
+        call    CallPauseCallTestStackPushJmp_00460c60
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b8:
+        call    PerSlotPhaseRouter_004605d0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b4a:
+        call    PerSlotPhaseRouter_00460770
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    L_spdbs_b2:
+        call    CallPauseMStackPushSet0Jmp_0045fcf0
+        pop     edi
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

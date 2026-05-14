@@ -6420,10 +6420,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesP.c
   - addr: 0x0045fac0
-    name: func_0045fac0
+    name: SlotPhaseDispatcherBigSwitch_0045fac0
     size: 473
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045fca0
     name: CallPauseScaledStorePushCall_0045fca0
     size: 65
