@@ -96965,4 +96965,211 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
     }
 }
 
+/* ============================================================
+ * DSoundDualEntryRelease_004af210 + DXEnumDeviceCreate_004af250
+ * — 555b engine.install. Two helpers packed (8-nop align gap).
+ *
+ * Entry 1 (004af210, 49b): Releases two COM ifaces stored at
+ * g_data_0058c7cc and g_data_0058c7c8 by calling vtbl+8 (probably
+ * Release), then zeros both global slots. Returns void.
+ *
+ * Entry 2 (004af250, 498b): DirectInput / D3D device enum &
+ * create. Allocs a 0xf4-byte DIDEVICEINSTANCE-like scratch + a
+ * 0x6c-byte caps scratch. Calls vtbl+0x18 (CreateDevice) at
+ * g_data_0058c7ac for two devices, vtbl+0x30 / +0x14 / +0x2c
+ * to set data format and cooperative level. Then GetPixelFormat
+ * (vtbl+0x54). Detects RGB565 (0xf800/0x7e0/0x1f) → sets
+ * g_data_004f4788 = 1, or RGB555 (0x7c00/0x3e0/0x1f) → 0.
+ * Returns 1 if both devices created and pixel format detected,
+ * else 0.
+ *
+ * Linear no mstack. Returns: int.
+ * ============================================================ */
+
+extern unsigned int g_data_004f4788;
+extern unsigned int g_data_0058c7ac;
+
+__declspec(naked) void DSoundDualEntryRelease_004af210(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_0058c7cc]
+        test     eax, eax
+        je       L_f21f
+        mov      ecx, dword ptr [eax]
+        push     eax
+        call     dword ptr [ecx + 8]
+    L_f21f:
+        mov      eax, dword ptr [g_data_0058c7c8]
+        mov      dword ptr [g_data_0058c7cc], 0
+        test     eax, eax
+        je       L_f23d
+        mov      edx, dword ptr [eax]
+        push     eax
+        call     dword ptr [edx + 8]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f23d:
+        mov      dword ptr [g_data_0058c7c8], 0
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        sub      esp, 0xf4
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        mov      ecx, 0x1b
+        xor      eax, eax
+        lea      edi, [esp + 0x98]
+        rep stosd
+        mov      eax, dword ptr [g_data_0058c7ac]
+        mov      dword ptr [esp + 0x98], 0x6c
+        test     eax, eax
+        mov      dword ptr [esp + 0x9c], 0x21
+        mov      dword ptr [esp + 0x100], 0x6218
+        mov      dword ptr [esp + 0xac], 1
+        je       L_f2b9
+        mov      ecx, dword ptr [eax]
+        push     0
+        lea      edx, [esp + 0x9c]
+        push     OFFSET g_data_0058c7b0
+        push     edx
+        push     eax
+        call     dword ptr [ecx + 0x18]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f2b9:
+        mov      edx, dword ptr [g_data_0058c7b0]
+        mov      dword ptr [esp + 0x10], 4
+        test     edx, edx
+        je       L_f2e6
+        mov      eax, dword ptr [edx]
+        lea      ecx, [esp + 0x10]
+        push     OFFSET g_data_0058c7b4
+        push     ecx
+        push     edx
+        call     dword ptr [eax + 0x30]
+        mov      edx, dword ptr [g_data_0058c7b0]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f2e6:
+        mov      esi, dword ptr [g_data_0058c7b4]
+        mov      ebp, 2
+        mov      ebx, 0x64
+    L_f2f6:
+        mov      ecx, 0x19
+        xor      eax, eax
+        lea      edi, [esp + 0x34]
+        rep stosd
+        test     edx, edx
+        mov      dword ptr [esp + 0x34], ebx
+        je       L_f332
+        mov      eax, dword ptr [edx]
+        lea      ecx, [esp + 0x34]
+        push     ecx
+        push     0x1000400
+        push     0
+        push     0
+        push     0
+        push     edx
+        call     dword ptr [eax + 0x14]
+        mov      edx, dword ptr [g_data_0058c7b0]
+        mov      esi, dword ptr [g_data_0058c7b4]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f332:
+        mov      ecx, 0x19
+        xor      eax, eax
+        lea      edi, [esp + 0x34]
+        rep stosd
+        test     esi, esi
+        mov      dword ptr [esp + 0x34], ebx
+        je       L_f390
+        mov      edx, dword ptr [esi]
+        lea      eax, [esp + 0x34]
+        push     eax
+        push     0x1000400
+        push     0
+        push     0
+        push     0
+        push     esi
+        call     dword ptr [edx + 0x14]
+        mov      esi, dword ptr [g_data_0058c7b4]
+        mov      edx, dword ptr [g_data_0058c7b0]
+        test     esi, esi
+        mov      dword ptr [g_data_0058c7dc], eax
+        je       L_f390
+        test     edx, edx
+        je       L_f390
+        mov      ecx, dword ptr [edx]
+        push     1
+        push     esi
+        push     edx
+        call     dword ptr [ecx + 0x2c]
+        mov      edx, dword ptr [g_data_0058c7b0]
+        mov      esi, dword ptr [g_data_0058c7b4]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f390:
+        dec      ebp
+        jne      L_f2f6
+        mov      ecx, 8
+        xor      eax, eax
+        lea      edi, [esp + 0x14]
+        rep stosd
+        test     edx, edx
+        mov      dword ptr [esp + 0x14], 0x20
+        je       L_f3cc
+        mov      eax, dword ptr [edx]
+        lea      ecx, [esp + 0x14]
+        push     ecx
+        push     edx
+        call     dword ptr [eax + 0x54]
+        mov      edx, dword ptr [g_data_0058c7b0]
+        mov      esi, dword ptr [g_data_0058c7b4]
+        mov      dword ptr [g_data_0058c7dc], eax
+    L_f3cc:
+        mov      eax, dword ptr [esp + 0x24]
+        mov      ecx, dword ptr [esp + 0x2c]
+        mov      edi, dword ptr [esp + 0x28]
+        cmp      eax, 0xf800
+        jne      L_f3f8
+        cmp      edi, 0x7e0
+        jne      L_f3f8
+        cmp      ecx, 0x1f
+        jne      L_f3f8
+        mov      dword ptr [g_data_004f4788], 1
+        jmp      L_f416
+    L_f3f8:
+        cmp      eax, 0x7c00
+        jne      L_f42e
+        cmp      edi, 0x3e0
+        jne      L_f42e
+        cmp      ecx, 0x1f
+        jne      L_f42e
+        mov      dword ptr [g_data_004f4788], 0
+    L_f416:
+        test     edx, edx
+        je       L_f42e
+        test     esi, esi
+        je       L_f42e
+        mov      eax, 1
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0xf4
+        ret
+    L_f42e:
+        pop      edi
+        pop      esi
+        pop      ebp
+        xor      eax, eax
+        pop      ebx
+        add      esp, 0xf4
+        ret
+    }
+}
+
 

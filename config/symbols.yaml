@@ -13509,10 +13509,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004af210
-    name: func_004af210
+    name: DSoundDualEntryRelease_004af210
     size: 555
     group: engine.install
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004af440
     name: ComReleasePair_004af440
     size: 56
