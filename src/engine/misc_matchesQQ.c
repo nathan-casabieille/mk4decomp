@@ -110782,3 +110782,223 @@ __declspec(naked) void LocaleNumericHelpers_004c8450(void)
     }
 }
 
+/* ============================================================
+ * FloatTransientHelpers_004ca2b0 — 400b crt (packed FP helpers).
+ *
+ * Tight cluster of fpu/SEH math fragments that the CRT's
+ * pow/floor/log/scalb implementations call. Each fragment ends
+ * in ret; no shared frame.
+ *
+ *   1. 0x4ca2b0 (15b): __2_to_x — fld; frndint; fsubr; fxch;
+ *      fchs; f2xm1; fld1; faddp; fscale; fstp st(1); ret.
+ *   2. 0x4ca2c4 (24b): __set_fpcw_precision — preserves precision
+ *      bits, sets rounding to nearest, writes via word at
+ *      [esp+6] then fldcw.
+ *   3. 0x4ca2dc (12b): denormal-input classifier — bit 0x80000
+ *      → ret 7, else fadd qword [g_const_004d2ba0] then ret 1.
+ *   4. 0x4ca2f4 (~38b): __extract_unbiased_exp_xword.
+ *   5. 0x4ca337 (~22b): nan-passthrough probe.
+ *   6. 0x4ca34d (~15b): conditional restore fpcw if not 0x27f.
+ *   7. 0x4ca35c (~43b): same but with under/overflow exception
+ *      check via fnstsw; trips func_004ca267(8) when status
+ *      has bit 0x20 set.
+ *   8. 0x4ca387 (~16b): inf/nan check path A (and 0x7ff00000).
+ *   9. 0x4ca397 (~83b): inf/nan check path B + recovery legs
+ *      that scale by qword [g_const_004d2bcc] / [g_const_004d2bdc]
+ *      for underflow and qword [g_const_004d2bc4] /
+ *      [g_const_004d2bd4] for overflow, dispatching to either
+ *      func_004ca250 or func_004ca267 based on edx==0x1d.
+ *
+ * Tail filled with int3-padding (0xcc cc cc cc) to size 400.
+ * ============================================================ */
+
+extern void func_004ca250(void);
+extern void func_004ca267(void);
+extern double g_const_004d2ba0;
+extern double g_const_004d2bb4;
+extern double g_const_004d2bbc;
+extern double g_const_004d2bc4;
+extern double g_const_004d2bcc;
+extern double g_const_004d2bd4;
+extern double g_const_004d2bdc;
+
+__declspec(naked) void FloatTransientHelpers_004ca2b0(void)
+{
+    __asm {
+        /* H1: __2_to_x */
+        fld      st(0)
+        frndint
+        fsubr    st(1), st(0)
+        fxch     st(1)
+        fchs
+        f2xm1
+        fld1
+        faddp    st(1), st
+        fscale
+        fstp     st(1)
+        ret
+        /* H2: __set_fpcw_precision */
+        mov      edx, dword ptr [esp + 4]
+        and      edx, 0x300
+        or       edx, 0x7f
+        mov      word ptr [esp + 6], dx
+        fldcw    word ptr [esp + 6]
+        ret
+        /* H3: denormal-input classifier */
+        test     eax, 0x80000
+        je       short L_a2e9
+        mov      eax, 7
+        ret
+    L_a2e9:
+        fadd     qword ptr [g_const_004d2ba0]
+        mov      eax, 1
+        ret
+        /* H4: __extract_unbiased_exp_xword */
+        mov      eax, dword ptr [edx + 4]
+        and      eax, 0x7ff00000
+        cmp      eax, 0x7ff00000
+        je       short L_a307
+        fld      qword ptr [edx]
+        ret
+    L_a307:
+        mov      eax, dword ptr [edx + 4]
+        sub      esp, 0xa
+        or       eax, 0x7fff0000
+        mov      dword ptr [esp + 6], eax
+        mov      eax, dword ptr [edx + 4]
+        mov      ecx, dword ptr [edx]
+        shld     eax, ecx, 0xb
+        shl      ecx, 0xb
+        mov      dword ptr [esp + 4], eax
+        mov      dword ptr [esp], ecx
+        fld      tbyte ptr [esp]
+        add      esp, 0xa
+        test     eax, 0
+        mov      eax, dword ptr [edx + 4]
+        ret
+        /* H5: nan-passthrough probe */
+        mov      eax, dword ptr [esp + 8]
+        and      eax, 0x7ff00000
+        cmp      eax, 0x7ff00000
+        je       short L_a349
+        ret
+    L_a349:
+        mov      eax, dword ptr [esp + 8]
+        ret
+        /* H6: conditional fldcw restore */
+        cmp      word ptr [esp], 0x27f
+        je       short L_a359
+        fldcw    word ptr [esp]
+    L_a359:
+        pop      edx
+        ret
+        /* H7: fldcw + status check */
+        mov      ax, word ptr [esp]
+        cmp      ax, 0x27f
+        je       short L_a383
+        _emit    0x66
+        _emit    0x83
+        _emit    0xe0
+        _emit    0x20
+        je       short L_a380
+        wait
+        fnstsw   ax
+        _emit    0x66
+        _emit    0x83
+        _emit    0xe0
+        _emit    0x20
+        je       short L_a380
+        mov      eax, 8
+        call     func_004ca267
+        pop      edx
+        ret
+    L_a380:
+        fldcw    word ptr [esp]
+    L_a383:
+        pop      edx
+        ret
+        /* H8: inf/nan check path A */
+        sub      esp, 8
+        fst      qword ptr [esp]
+        mov      eax, dword ptr [esp + 4]
+        add      esp, 8
+        and      eax, 0x7ff00000
+        jmp      short L_a3ad
+        /* H9: inf/nan check path B + recovery */
+        sub      esp, 8
+        fst      qword ptr [esp]
+        mov      eax, dword ptr [esp + 4]
+        add      esp, 8
+        and      eax, 0x7ff00000
+        je       short L_a3ea
+    L_a3ad:
+        cmp      eax, 0x7ff00000
+        je       short L_a413
+        mov      ax, word ptr [esp]
+        cmp      ax, 0x27f
+        je       short L_a3e8
+        _emit    0x66
+        _emit    0x83
+        _emit    0xe0
+        _emit    0x20
+        jne      short L_a3e5
+        wait
+        fnstsw   ax
+        _emit    0x66
+        _emit    0x83
+        _emit    0xe0
+        _emit    0x20
+        je       short L_a3e5
+        mov      eax, 8
+    L_a3d2:
+        cmp      edx, 0x1d
+        je       short L_a3de
+        call     func_004ca267
+        pop      edx
+        ret
+    L_a3de:
+        call     func_004ca250
+        pop      edx
+        ret
+    L_a3e5:
+        fldcw    word ptr [esp]
+    L_a3e8:
+        pop      edx
+        ret
+    L_a3ea:
+        fld      qword ptr [g_const_004d2bcc]
+        fxch     st(1)
+        fscale
+        fstp     st(1)
+        fld      st(0)
+        fabs
+        fcomp    qword ptr [g_const_004d2bbc]
+        wait
+        fnstsw   ax
+        sahf
+        mov      eax, 4
+        jae      short L_a3d2
+        fmul     qword ptr [g_const_004d2bdc]
+        jmp      short L_a3d2
+    L_a413:
+        fld      qword ptr [g_const_004d2bc4]
+        fxch     st(1)
+        fscale
+        fstp     st(1)
+        fld      st(0)
+        fabs
+        fcomp    qword ptr [g_const_004d2bb4]
+        wait
+        fnstsw   ax
+        sahf
+        mov      eax, 3
+        jbe      short L_a3d2
+        fmul     qword ptr [g_const_004d2bd4]
+        jmp      short L_a3d2
+        int      3
+        int      3
+        int      3
+        int      3
+    }
+}
+

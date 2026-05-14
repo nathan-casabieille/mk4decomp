@@ -16020,10 +16020,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca2b0
-    name: func_004ca2b0
+    name: FloatTransientHelpers_004ca2b0
     size: 400
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca440
     name: func_004ca440
     size: 545
