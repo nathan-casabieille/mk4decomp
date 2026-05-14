@@ -3083,10 +3083,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e550
-    name: func_0042e550
+    name: MStackBracket3Init4bd5e0Tail_0042e550
     size: 455
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e720
     name: MStackPushTableMatch_0042e720
     size: 212

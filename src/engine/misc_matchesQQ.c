@@ -82335,3 +82335,120 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0050d220;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541fbc;
+extern void DispatcherComplex260_00407030(void);
+extern void GDispatch4_004089c0(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void MStackCall_00406390(void);
+
+__declspec(naked) void MStackBracket3Init4bd5e0Tail_0042e550(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542054]
+        inc     eax
+        mov     edx, offset g_data_0050d220
+        mov     dword ptr [g_state_004d57ac], eax
+        shr     edx, 2
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_00542048], edx
+        call    DispatcherComplex260_00407030
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3i_abort
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mb3i_pop
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054205c], eax
+        call    GDispatch4_004089c0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3i_abort
+        mov     dword ptr [g_data_0054206c], 1
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3i_abort
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     dword ptr [ecx*4 + 0x10], 0x4bd5e0
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [edx*4 + 0x54], 0
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x58], 0
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_data_00542074]
+        mov     dword ptr [ecx*4 + 0x5c], edx
+        mov     eax, dword ptr [g_data_00535e6c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [ecx*4 + 0x3c], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, 0xffffaaab
+        mov     dword ptr [edx*4 + 0x30], 0x239
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    MStackCall_00406390
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3i_abort
+        mov     eax, dword ptr [g_data_00541fbc]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542048], eax
+        je      short L_mb3i_storePrev
+    L_mb3i_loop:
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542048], eax
+        jne     short L_mb3i_loop
+    L_mb3i_storePrev:
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 - 4], edx
+    L_mb3i_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_mb3i_abort:
+        ret
+    }
+}
