@@ -80822,3 +80822,130 @@ __declspec(naked) void BootMStackBracketChain_00413ce0(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern void VoicePicker_00401000(void);
+extern void BootChainStreamWalkExtract_00407ae0(void);
+extern void GuardedChainDispatch2c_004082d0(void);
+extern void SetJmp_004078e0(void);
+
+__declspec(naked) void BootMStackBracket3SubdispatchPair_00407920(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x24]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_bmb3sd_pop
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [ecx*4 + 0x28]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     edx, dword ptr [eax*4 + 8]
+        shr     edx, 0x10
+        push    0
+        sub     edx, 3
+        push    ecx
+        push    eax
+        mov     dword ptr [g_data_0054204c], edx
+        call    VoicePicker_00401000
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542048], eax
+        add     esp, 0xc
+        mov     dword ptr [ecx*4 + 0x2c], eax
+        mov     edx, dword ptr [g_data_00542048]
+        add     edx, 3
+        mov     dword ptr [g_data_00542048], edx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [edx*4 + 0x1c]
+        test    eax, eax
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_bmb3sd_skip
+        call    BootChainStreamWalkExtract_00407ae0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmb3sd_abort
+    L_bmb3sd_skip:
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4 + 8]
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 1
+        mov     dword ptr [g_data_00542094], eax
+        je      short L_bmb3sd_pop
+        call    GuardedChainDispatch2c_004082d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmb3sd_abort
+    L_bmb3sd_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_bmb3sd_abort:
+        ret
+        nop
+        nop
+        nop
+        nop
+    L_bmb3sd_sub2:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054205c], edx
+        call    BootMStackBracket3SubdispatchPair_00407920
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmb3sd_sub2_ret
+        call    SetJmp_004078e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bmb3sd_sub2_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_data_0054208c], eax
+    L_bmb3sd_sub2_ret:
+        ret
+    }
+}
