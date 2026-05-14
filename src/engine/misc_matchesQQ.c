@@ -86712,3 +86712,193 @@ __declspec(naked) void MStackBracket2_TreeWalkRecursive_00405e70(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket4_ListInsertZeroFill_00408600 — 595b boot.
+ *
+ * 4-slot mstack-bracketed routine: list-link insertion +
+ * trailing-zone zero-fill.
+ *
+ *   mstack pushes: g_data_0053a1ac, g_data_00542044,
+ *                  g_data_00542048, g_data_0054204c.
+ *
+ *   Body:
+ *     - g_data_00542048 := g_data_00542044 (save current node);
+ *     - if node[+0x1c] != 0: recursively chain via func_00425db0
+ *       (g_data_00542044 := node[+0x1c]; call);
+ *     - g_data_00542070 := 0; g_data_00542044 := saved[+0x18];
+ *       call func_004084b0; pause-gate;
+ *     - if g_data_00542070 == 0: skip body, fall to pops;
+ *     - inner mstack-push (++[top] = g_data_00542070 + 1);
+ *       call func_00425be0; pause-gate;
+ *     - saved[+0x1c] := g_data_00542044 (re-link);
+ *     - inner mstack-pop into g_data_0053a1ac;
+ *     - if bit 2 of g_state_0054208c is set: skip the zero-fill
+ *       and tail call, jump to pops (clean phase-skip);
+ *     - else: zero-fill ecx dwords starting at &saved[+0x1c]:
+ *       unrolled 4-stores-per-iter loop + byte-tail loop;
+ *     - update [g_data_00542044*4] := g_data_00542070;
+ *     - g_data_00542044 := saved[+0x18];
+ *     - g_data_00542048 := saved[+0x1c];
+ *     - call func_00408580; pause-gate.
+ *
+ *   Pops: pop into g_data_0054204c, g_data_00542048,
+ *   g_data_00542044, g_data_0053a1ac, then toggle bit 2 in
+ *   g_state_0054208c (xor-back if the popped ptr's +0x1c was 0).
+ *
+ *   Pause-gates abort directly to the final pop edi/ret
+ *   (skipping the 4 mstack pops) [[feedback_mstack_abort_leak]].
+ * ============================================================ */
+
+extern void func_004084b0(void);
+extern void func_00425be0(void);
+extern void func_00408580(void);
+
+__declspec(naked) void MStackBracket4_ListInsertZeroFill_00408600(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0053a1ac]
+        inc     eax
+        push    edi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [eax*4 + 0x1C]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_mb4lf_after_chain
+        mov     dword ptr [g_data_00542044], eax
+        call    func_00425db0
+    L_mb4lf_after_chain:
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_00542070], 0
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        call    func_004084b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb4lf_abort
+        mov     eax, dword ptr [g_data_00542070]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      L_mb4lf_reload_top
+        mov     ecx, dword ptr [g_state_004d57ac]
+        inc     eax
+        inc     ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [ecx*4], eax
+        call    func_00425be0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb4lf_abort
+        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [eax*4 + 0x1C], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dl, byte ptr [g_state_0054208c]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        test    dl, 4
+        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        jne     L_mb4lf_pop4
+        mov     edx, dword ptr [g_data_00542044]
+        cmp     ecx, 4
+        mov     dword ptr [g_data_0054206c], 0
+        lea     eax, [edx*4]
+        jl      L_mb4lf_tail
+        mov     edx, ecx
+        shr     edx, 2
+    L_mb4lf_unroll:
+        mov     edi, dword ptr [g_data_0054206c]
+        sub     ecx, 4
+        mov     dword ptr [eax], edi
+        mov     edi, dword ptr [g_data_0054206c]
+        add     eax, 4
+        mov     dword ptr [eax], edi
+        mov     edi, dword ptr [g_data_0054206c]
+        add     eax, 4
+        mov     dword ptr [eax], edi
+        mov     edi, dword ptr [g_data_0054206c]
+        add     eax, 4
+        mov     dword ptr [eax], edi
+        add     eax, 4
+        dec     edx
+        jne     L_mb4lf_unroll
+    L_mb4lf_tail:
+        test    ecx, ecx
+        jle     L_mb4lf_after_fill
+        mov     edx, ecx
+    L_mb4lf_tail_loop:
+        mov     edi, dword ptr [g_data_0054206c]
+        mov     dword ptr [eax], edi
+        add     eax, 4
+        dec     ecx
+        dec     edx
+        jne     L_mb4lf_tail_loop
+    L_mb4lf_after_fill:
+        mov     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [ecx*4], eax
+        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542044], edx
+        mov     eax, dword ptr [eax*4 + 0x1C]
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00408580
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb4lf_abort
+    L_mb4lf_reload_top:
+        mov     eax, dword ptr [g_state_004d57ac]
+    L_mb4lf_pop4:
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0053a1ac], edx
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [ecx*4 + 0x1C]
+        or      edx, 4
+        mov     dword ptr [g_data_0054206c], ecx
+        test    ecx, ecx
+        mov     dword ptr [g_state_0054208c], edx
+        je      L_mb4lf_abort
+        mov     eax, edx
+        xor     eax, 4
+        mov     dword ptr [g_state_0054208c], eax
+    L_mb4lf_abort:
+        pop     edi
+        ret
+    }
+}
