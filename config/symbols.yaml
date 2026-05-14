@@ -841,10 +841,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004094d0
-    name: func_004094d0
+    name: MStackBracket2_StateAdvance6_004094d0
     size: 477
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004096b0
     name: MStackPush2DispatchChain_004096b0
     size: 143

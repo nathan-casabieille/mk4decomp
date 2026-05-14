@@ -85493,3 +85493,146 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket2_StateAdvance6_004094d0 — 477b boot.
+ *
+ * mstack-bracketed (push2 via MStackPush2RunCountdown, pop2 at tail):
+ *   - sets bit 0x10 on [g_data_0054204c]'s state; runs countdown;
+ *   - calls func_004b8fa0; clears bit 0x10;
+ *   - copies state-fields +0x3c/+0x40/+0x44 from current slot to
+ *     [g_data_00542044]+0x54/+0x58/+0x5c;
+ *   - reads [g_data_00542044]'s +0x18 ptr into g_data_00542048;
+ *   - paints top byte=0xC into [g_data_00542048]+0x20, sets
+ *     g_data_00542070=0x0C000000, +0x3c=0x10000;
+ *   - inline mstack push of g_data_00542044, then advances
+ *     g_data_0054204c+=6 and g_data_00542048's +0x28 entry+=6;
+ *   - copies 20-byte block from old loc to new loc;
+ *   - clears g_data_0053a1ac, mstack-pops g_data_00542044;
+ *   - calls MStackCall_00406340; toggles bit 4 of g_state_0054208c
+ *     based on whether g_data_00542044 was set after the call;
+ *   - mstack-pop2 (restores g_data_0054204c then g_data_00542048).
+ *
+ * Error paths (3x test [g_data_00541e6c]; jne) jump PAST the pop2
+ * tail directly to the final ret (mstack-abort-leak pattern, top-
+ * level unwind handles the slot drop).
+ * ============================================================ */
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_state_0054208c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_state_004d57ac;
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void func_004b8fa0(void);
+extern void MStackCall_00406340(void);
+
+__declspec(naked) void MStackBracket2_StateAdvance6_004094d0(void)
+{
+    __asm {
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [ecx*4]
+        or      al, 0x10
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        call    MStackPush2RunCountdown_004089e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb2sa6_abort
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb2sa6_abort
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [eax*4]
+        and     ecx, 0xFFFFFFEF
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4 + 0x3C]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x40]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x44]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x5C], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_00542048], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        mov     dword ptr [g_data_00542070], 0x0C000000
+        and     eax, 0xFCFFFFFF
+        or      eax, 0x0C000000
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x10000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x3C], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542048]
+        add     eax, 6
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [ecx*4 + 0x28]
+        add     ecx, 6
+        shl     eax, 2
+        mov     dword ptr [g_data_00542048], ecx
+        mov     edx, dword ptr [eax]
+        shl     ecx, 2
+        mov     dword ptr [ecx], edx
+        mov     edx, dword ptr [eax + 4]
+        mov     dword ptr [ecx + 4], edx
+        mov     edx, dword ptr [eax + 8]
+        mov     dword ptr [ecx + 8], edx
+        mov     edx, dword ptr [eax + 0x0C]
+        mov     dword ptr [ecx + 0x0C], edx
+        mov     eax, dword ptr [eax + 0x10]
+        mov     dword ptr [ecx + 0x10], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     dword ptr [g_data_0053a1ac], 0
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        call    MStackCall_00406340
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_msb2sa6_abort
+        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, 4
+        or      edx, eax
+        test    ecx, ecx
+        mov     dword ptr [g_state_0054208c], edx
+        je      L_msb2sa6_pop
+        mov     ecx, edx
+        xor     ecx, eax
+        mov     dword ptr [g_state_0054208c], ecx
+    L_msb2sa6_pop:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_msb2sa6_abort:
+        ret
+    }
+}
