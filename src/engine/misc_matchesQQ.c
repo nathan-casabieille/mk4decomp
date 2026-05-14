@@ -79413,3 +79413,129 @@ __declspec(naked) void TriEntryGateMain_00435440(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054204c;
+extern void CopyJmp_0048ef90(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void CopyJmp_00406ba0(void);
+extern void SetJmp_00429950(void);
+
+__declspec(naked) void PhaseDispatchListAdvance_004709e0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_pdla_phase0
+        dec     eax
+        je      short L_pdla_phase1
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pdla_abort
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        je      short L_pdla_pCallIndirect
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     eax, dword ptr [eax*4 + 0x24]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 4]
+        dec     eax
+        cmp     ecx, eax
+        mov     dword ptr [g_data_00542070], eax
+        jge     short L_pdla_indCall2
+        mov     eax, dword ptr [g_data_00542080]
+        dec     eax
+        mov     dword ptr [g_data_00542080], eax
+        jne     short L_pdla_install
+    L_pdla_indCall2:
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_data_00542054]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        call    dword ptr [ecx*4]
+        pop     esi
+        pop     ebx
+        ret
+    L_pdla_phase1:
+        call    CopyJmp_0048ef90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pdla_abort
+        mov     al, byte ptr [g_data_0054208c]
+        mov     ebx, 1
+        test    al, bl
+        jne     short L_pdla_install
+    L_pdla_pCallIndirect:
+        mov     eax, dword ptr [g_data_0054208c]
+        mov     edx, dword ptr [g_data_00542054]
+        or      eax, ebx
+        mov     dword ptr [g_data_0054208c], eax
+        call    dword ptr [edx*4]
+        pop     esi
+        pop     ebx
+        ret
+    L_pdla_install:
+        call    ScaledLoadIncJmp_00429840
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pdla_abort
+        mov     dword ptr [esi + 8], offset PhaseDispatchListAdvance_004709e0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+        pop     esi
+        pop     ebx
+        ret
+    L_pdla_phase0:
+        call    CopyJmp_00406ba0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pdla_abort
+        mov     eax, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542054], eax
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax*4 + 0x24], ecx
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [ecx*4 + 0x28], 0
+        mov     eax, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_data_00542054], eax
+        call    SetJmp_00429950
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_pdla_abort
+        mov     ebx, 1
+        mov     dword ptr [esi + 8], offset PhaseDispatchListAdvance_004709e0
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_pdla_abort:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}

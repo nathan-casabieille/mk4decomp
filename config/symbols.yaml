@@ -7507,10 +7507,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesH.c
   - addr: 0x004709e0
-    name: func_004709e0
+    name: PhaseDispatchListAdvance_004709e0
     size: 425
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470b90
     name: InstallSelfMStackBranchIndirect_00470b90
     size: 291
