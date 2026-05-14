@@ -82052,3 +82052,174 @@ __declspec(naked) void TripleSubInstallSelfPair_0047a670(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern void CmpP1ScaledLoad7c_0045f610(void);
+extern void CallCmpDirtyTrueOrFalse_0045f570(void);
+extern void CallCmpDirtyTrueOrFalse_0045f5a0(void);
+extern void SetJmp_0045ebf0(void);
+extern void CmpCondIdxArrLookup_0048e450(void);
+extern void ArgScaledLoadCmpP1_0048e550(void);
+extern void SetJmp_0049cb90(void);
+extern void DualStreamSqDistThresh_0045ede0(void);
+
+__declspec(naked) void SixSubdispatchSpan_0045ec10(void)
+{
+    __asm
+    {
+        call    CmpP1ScaledLoad7c_0045f610
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sss_sub1_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     ecx, dword ptr [g_data_00542070]
+        cmp     eax, ecx
+        mov     eax, dword ptr [g_data_0054208c]
+        jle     short L_sss_sub1_or1
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+    L_sss_sub1_or1:
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_sss_sub1_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sss_sub2:
+        mov     dword ptr [g_data_00542070], 0x1001
+        call    CallCmpDirtyTrueOrFalse_0045f570
+        test    eax, eax
+        jne     short L_sss_sub2_ret
+        mov     eax, dword ptr [g_data_0054208c]
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_sss_sub2_ret:
+        ret
+    L_sss_sub3:
+        mov     dword ptr [g_data_00542070], 0x100d
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub3_ret
+        mov     dword ptr [g_data_00542070], 0x1001
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub3_ret
+        mov     dword ptr [g_data_00542070], 0x1002
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub3_ret
+        mov     dword ptr [g_data_00542070], 2
+        jmp     SixSubdispatchSpan_0045ec10
+    L_sss_sub3_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sss_sub4:
+        call    SetJmp_0045ebf0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sss_sub4_ret
+        test    byte ptr [g_data_0054208c], 1
+        je      short L_sss_sub4_ret
+        mov     dword ptr [g_data_00542070], 0x1001
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub4_ret
+        mov     dword ptr [g_data_00542070], 0x100d
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub4_ret
+        mov     dword ptr [g_data_0054206c], 8
+        call    CmpCondIdxArrLookup_0048e450
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sss_sub4_ret
+        mov     eax, dword ptr [g_data_0054206c]
+        cmp     eax, 0x5a
+        mov     eax, dword ptr [g_data_0054208c]
+        jge     short L_sss_sub4_or1
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+    L_sss_sub4_or1:
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_sss_sub4_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_sss_sub5:
+        mov     dword ptr [g_data_0054206c], 6
+        call    CmpCondIdxArrLookup_0048e450
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sss_sub5_ret
+        cmp     dword ptr [g_data_0054206c], 0xb4
+        jge     short L_sss_sub5_cont
+        mov     eax, dword ptr [g_data_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+    L_sss_sub5_cont:
+        mov     dword ptr [g_data_00542070], 0x1003
+        call    CallCmpDirtyTrueOrFalse_0045f5a0
+        test    eax, eax
+        jne     short L_sss_sub5_ret
+        push    0x4e91c0
+        call    ArgScaledLoadCmpP1_0048e550
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_sss_sub5_ret
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], eax
+        call    SetJmp_0049cb90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_sss_sub5_ret
+        test    byte ptr [g_data_0054208c], 4
+        mov     eax, dword ptr [g_data_0054208c]
+        jne     short L_sss_sub5_or
+        and     al, 0xfe
+        mov     dword ptr [g_data_0054208c], eax
+        ret
+    L_sss_sub5_or:
+        or      al, 1
+        mov     dword ptr [g_data_0054208c], eax
+    L_sss_sub5_ret:
+        ret
+        jmp     DualStreamSqDistThresh_0045ede0
+    }
+}
