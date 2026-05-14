@@ -82878,3 +82878,146 @@ __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
         ret
     }
 }
+
+extern unsigned int g_data_004f360c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_005420d8;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern void AudioMixerStep_004ab700(void);
+extern void ZeroAndDirty4_00405430(void);
+extern void MStackPush8_004ab790(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void MStackPushCallPop_0040a830(void);
+extern void ZeroThreeFields_0040a8b0(void);
+extern void MStackPop8_004ab860(void);
+extern void GuardedSeq_00471670(void);
+extern void ChainGetterStateInstaller_00412140(void);
+extern void ChainListVecAdd_0049d200(void);
+
+__declspec(naked) void BootGatedInitInstallPair_00412280(void)
+{
+    __asm
+    {
+        mov     al, byte ptr [g_data_004f360c]
+        test    al, al
+        je      L_bgip_ret1
+        mov     dword ptr [g_data_0054206c], 0x2666
+        call    AudioMixerStep_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_bgip_ret1
+        add     dword ptr [g_data_0054206c], 0xd999
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bgip_ret1
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_bgip_ret1
+        call    MStackPush8_004ab790
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bgip_ret1
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, offset g_data_005420d8
+        shr     ecx, 2
+        push    0xc0
+        push    0x49db40
+        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_data_00542058], ecx
+        mov     dword ptr [g_data_0054207c], 0xc1
+        call    StoreTwoCall_0049cb40
+        mov     al, byte ptr [g_data_0054208c]
+        add     esp, 8
+        test    al, 1
+        jne     short L_bgip_tailPop
+        call    MStackPushCallPop_0040a830
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bgip_ret1
+        call    ZeroThreeFields_0040a8b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bgip_ret1
+    L_bgip_tailPop:
+        jmp     MStackPop8_004ab860
+    L_bgip_ret1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_bgip_main:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      short L_bgip_phase0
+        mov     eax, dword ptr [g_data_0054207c]
+        dec     eax
+        test    eax, eax
+        mov     dword ptr [g_data_0054207c], eax
+        jg      short L_bgip_skipToChain
+        call    GuardedSeq_00471670
+        pop     esi
+        ret
+    L_bgip_phase0:
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [ecx*4 + 0x20]
+        or      al, 0x40
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x20], eax
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, 0x4000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x48], eax
+        mov     dword ptr [g_data_0054207c], 0xb
+    L_bgip_skipToChain:
+        call    ChainGetterStateInstaller_00412140
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_00542048]
+        sub     eax, 0x51e
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [ecx*4]
+        or      al, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4], eax
+        call    ChainListVecAdd_0049d200
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_bgip_main_ret
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset L_bgip_main
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_bgip_main_ret:
+        pop     esi
+        ret
+    }
+}
