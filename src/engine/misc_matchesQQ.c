@@ -85937,3 +85937,164 @@ __declspec(naked) void MStackBracket5_LinkedListUnlink_00409aa0(void)
         ret
     }
 }
+
+/* ============================================================
+ * PhaseInstallSelf3Step_00402350 — 493b boot.
+ *
+ * Three-phase install-self routine at slot
+ * g_data_00542060*4 + 0x84:
+ *
+ *   phase != 0 && phase != 1: tail-call dispatch via
+ *       func_0041f780.
+ *
+ *   phase == 0: heavy setup —
+ *       call func_004265d0; pause-gate;
+ *       func_0049cb40(&g_data_004a2180, 0);
+ *       [0x53a50c]=3
+ *       func_004bd5b0 (using packed_ptr 0x506c2c >> 2) twice;
+ *       func_00407400 (packed_ptr 0x508308 >> 2);
+ *       slot[+0x54]=0xFFB00000, slot[+0x30]=0x1F;
+ *       func_00406530; func_00403c20;
+ *       func_00407400 (packed_ptr 0x508324 >> 2);
+ *       slot[+0x54]=0x00770000, slot[+0x30]=0x1F;
+ *       func_00406530; func_00403c20;
+ *       installs self at [esi+8], phase=1;
+ *       [0x54204c]=0x1E0; signals [0x541e6c]=1.
+ *
+ *   phase == 1: short setup —
+ *       [0x542070]=4; installs self at [esi+8] w/ phase=2;
+ *       pushes packed-ptr (this + 0x02000000) onto mstack
+ *       (++g_data_00542044; [eax*4] = this+2-tag);
+ *       clears slot[+0x84]; calls func_00426000; signals.
+ *
+ * Uses packed_ptr (addr >> 2) — the reloc-bearing immediate
+ * defeats MSVC's constant-fold so the shr survives at runtime
+ * [[feedback_reloc_prevents_constfold]].
+ * ============================================================ */
+
+extern void func_0041f780(void);
+extern void func_0049cb40(int, int);
+extern void func_004bd5b0(void);
+extern void func_00407400(void);
+extern void func_00403c20(void);
+extern void func_00426000(void);
+extern unsigned int g_data_00506c2c;
+extern unsigned int g_data_00508308;
+extern unsigned int g_data_00508324;
+extern unsigned int g_data_004a2180;
+void PhaseInstallSelf3Step_00402350(void);
+
+__declspec(naked) void PhaseInstallSelf3Step_00402350(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_pis3_phase0
+        dec     eax
+        je      L_pis3_phase1
+        call    func_0041f780
+        pop     esi
+        pop     ebx
+        ret
+    L_pis3_phase1:
+        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset PhaseInstallSelf3Step_00402350
+        add     edx, 0x02000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    func_00426000
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        pop     ebx
+        ret
+    L_pis3_phase0:
+        call    func_004265d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        push    0
+        push    offset g_data_004a2180
+        mov     dword ptr [g_data_0053a50c], 3
+        call    func_0049cb40
+        mov     ecx, offset g_data_00506c2c
+        add     esp, 8
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542044], ecx
+        call    func_004bd5b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     edx, offset g_data_00506c2c
+        shr     edx, 2
+        mov     dword ptr [g_data_00542044], edx
+        call    func_004bd5b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     eax, offset g_data_00508308
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     ebx, 0x1F
+        mov     dword ptr [ecx*4 + 0x54], 0xFFB00000
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [edx*4 + 0x30], ebx
+        call    func_00406530
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        call    func_00403c20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     eax, offset g_data_00508324
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], eax
+        call    func_00407400
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     ecx, dword ptr [g_data_00542044]
+        mov     dword ptr [ecx*4 + 0x54], 0x00770000
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], ebx
+        mov     dword ptr [edx*4 + 0x30], ebx
+        call    func_00406530
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        call    func_00403c20
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_pis3_exit
+        mov     eax, 1
+        mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], 0x1E0
+        mov     dword ptr [g_data_00541e6c], eax
+    L_pis3_exit:
+        pop     esi
+        pop     ebx
+        ret
+    }
+}
