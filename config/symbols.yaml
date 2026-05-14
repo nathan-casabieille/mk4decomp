@@ -3728,10 +3728,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x00435440
-    name: func_00435440
+    name: TriEntryGateMain_00435440
     size: 423
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004355f0
     name: func_004355f0
     size: 1013

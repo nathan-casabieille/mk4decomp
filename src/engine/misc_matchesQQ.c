@@ -79283,3 +79283,133 @@ __declspec(naked) void MStackBracket6_DualGate_004788e0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00541e6c;
+extern void GuardedSeq_00433bb0(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void JumpTableDispatch_0043a550(void);
+extern void MStackPushPtr1Jmp_00438e70(void);
+extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void QuadBlockArgInstallChain_0043a950(void);
+extern void Cmp2CallDirtyCall_004398b0(void);
+extern void func_00437140(void);
+extern void EntryThenDispatcherPair_00438cd0(void);
+extern void func_004355f0(void);
+extern void InstallSelfBitGate_00438aa0(void);
+
+__declspec(naked) void TriEntryGateMain_00435440(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_data_0054206c], eax
+        jle     short L_tegm_jmp2
+        jmp     GuardedSeq_00433bb0
+    L_tegm_jmp2:
+        jmp     PrefixThunkInstallSelf3State_00438f80
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_tegm_sub2:
+        mov     edx, dword ptr [g_data_0054206c]
+        push    0x4e4600
+        and     edx, 0xff
+        mov     dword ptr [g_data_0054206c], edx
+        call    JumpTableDispatch_0043a550
+        add     esp, 4
+        ret
+    L_tegm_main:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      short L_tegm_phase0
+        dec     eax
+        je      short L_tegm_phase1
+        call    MStackPushPtr1Jmp_00438e70
+        pop     esi
+        ret
+    L_tegm_phase1:
+        mov     dword ptr [g_data_00542084], 0x70000
+        mov     dword ptr [esi + 8], offset L_tegm_main
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     edx, offset L_tegm_main
+        add     edx, 0x2000000
+        mov     dword ptr [ecx*4 + 0x84], 2
+        mov     eax, dword ptr [esi + 4]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], 0
+        call    EsiInstallTwoCallCmpInstall_00438b10
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_tegm_phase0:
+        push    0x4e4a08
+        call    QuadBlockArgInstallChain_0043a950
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_tegm_ret
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        jne     L_tegm_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, dword ptr [ecx*4 + 0x74]
+        cmp     eax, 0x200e
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_tegm_cmp2
+        call    func_00437140
+        pop     esi
+        ret
+    L_tegm_cmp2:
+        mov     eax, dword ptr [g_data_00535ddc]
+        cmp     eax, 0x20000
+        mov     dword ptr [g_data_0054206c], eax
+        jge     short L_tegm_cmp3
+        call    EntryThenDispatcherPair_00438cd0
+        pop     esi
+        ret
+    L_tegm_cmp3:
+        cmp     eax, 0x40000
+        jge     short L_tegm_install0
+        call    func_004355f0
+        pop     esi
+        ret
+    L_tegm_install0:
+        mov     dword ptr [esi + 8], offset L_tegm_main
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, offset L_tegm_main
+        mov     dword ptr [edx*4 + 0x84], 1
+        mov     eax, dword ptr [esi + 4]
+        add     ecx, 0x1000000
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [esi + 4], eax
+        mov     edx, dword ptr [g_data_00542060]
+        mov     dword ptr [edx*4 + 0x84], 0
+        call    InstallSelfBitGate_00438aa0
+        mov     dword ptr [g_data_00541e6c], 1
+    L_tegm_ret:
+        pop     esi
+        ret
+    }
+}
