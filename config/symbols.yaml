@@ -2286,10 +2286,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00426b60
-    name: func_00426b60
+    name: StoreTwoCallSubMain_00426b60
     size: 463
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426d30
     name: PushSetEventQueueCallStore_00426d30
     size: 81

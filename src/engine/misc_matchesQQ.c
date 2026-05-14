@@ -83442,3 +83442,127 @@ __declspec(naked) void StreamChainStringInstall_00457900(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_004e26d0;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542088;
+extern void StoreTwoCall_0049cb40(void);
+extern void SetJmp_00405420(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void Chain2CallMul10Accum_00426a30(void);
+extern void PushSetDualDeref_00406650(void);
+extern void MStackCall_004065b0(void);
+extern void CallSetPause_0041f830(void);
+
+__declspec(naked) void StoreTwoCallSubMain_00426b60(void)
+{
+    __asm
+    {
+        push    0x232
+        push    offset L_stcsm_sub2
+        call    StoreTwoCall_0049cb40
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_data_00542078]
+        add     esp, 8
+        mov     dword ptr [eax*4 + 0x30], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_data_0054207c]
+        mov     dword ptr [edx*4 + 0x34], eax
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_stcsm_sub2:
+        call    SetJmp_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_stcsm_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      L_stcsm_tail
+        mov     eax, offset g_data_004e26d0
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_stcsm_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_stcsm_tail
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [ecx*4 + 0x30], 0x262
+        mov     dword ptr [g_data_0054206c], 1
+        call    ChainDirtyBitWalker_00408c10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_stcsm_ret
+        mov     eax, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [eax*4]
+        or      ecx, 8
+        mov     dword ptr [eax*4], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x8000
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_00542074], 0
+        mov     ecx, dword ptr [eax*4 + 0x30]
+        mov     dword ptr [g_data_00542078], ecx
+        mov     edx, dword ptr [eax*4 + 0x34]
+        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_data_00542080], 0xc000
+        call    Chain2CallMul10Accum_00426a30
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_stcsm_ret
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [ecx*4 + 0x54], eax
+        mov     edx, dword ptr [g_data_0054206c]
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542084], edx
+        mov     dword ptr [g_data_0054206c], 0
+        mov     dword ptr [eax*4 + 0x58], 0
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542070]
+        mov     dword ptr [edx*4 + 0x5c], ecx
+        mov     eax, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542088], eax
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [eax*4 + 0x3c], 0xc000
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], 0xff
+        call    PushSetDualDeref_00406650
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_stcsm_ret
+        call    MStackCall_004065b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_stcsm_ret
+    L_stcsm_tail:
+        jmp     CallSetPause_0041f830
+    L_stcsm_ret:
+        ret
+    }
+}
