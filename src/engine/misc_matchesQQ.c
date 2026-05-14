@@ -88146,3 +88146,241 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         ret
     }
 }
+
+/* ============================================================
+ * FileLoaderTwoStage_00401120 — 496b boot.
+ *
+ * Two-stage config-file loader with linked-list buildup.
+ *
+ *   - Reserve 0x100 stack for path buffer at [esp].
+ *   - func_004c5580(buf, 0x4d5060 "%s%s", arg_path, 0x4d506c
+ *     ".ext") — sprintf-like into stack buffer.
+ *   - func_004b1e00(buf, 0x4d505c "rb") returns FILE* in ebx.
+ *   - if (!ebx) ret 0.
+ *   - func_004b2070(ebx, 0, 2);  // seek end
+ *     func_004b2100(ebx) -> ebp;  // ftell
+ *     func_004b2070(ebx, 0, 0);  // seek start
+ *   - g_data_00524358 = func_004c54b0(ebp); // alloc
+ *   - if alloc failed: func_004c48c0(0x4d504c err string); recheck.
+ *
+ *   - Build path 2 in upper buffer: func_004c5580(buf+0x88,
+ *     0x4d5040, arg_path, 0x4d506c);
+ *   - func_004b1e00(buf+0x80, 0x4d505c) -> esi (FILE*).
+ *   - if (!esi) ret 0.
+ *   - func_004b2070(esi, 0, 2); func_004b2100(esi) -> edi;
+ *     if (edi <= ebp) ret 0;
+ *     func_004b2070(esi, 0, 0);
+ *     func_004b1fb0(g_data_00524358, 1, edi, esi) — fread.
+ *     func_004b1f90(esi) — fclose.
+ *     func_004a5680(0x524158, g_data_00524358, 0x200) — memcpy.
+ *     call func_00401310;
+ *
+ *   - Loop over the embedded 16-bit-coded record headers,
+ *     building two index tables at 0x4ffdec / 0x4ffdf4 keyed
+ *     by the record id (3-byte triples). Each record advances
+ *     by `[esi + ...]` based on bytes read; loop continues until
+ *     a 0xFFFF terminator is found.
+ *
+ *   - Re-fread the main file at offset ebx using
+ *     func_004b1fb0(g_data_00524358, 1, ebp, ebx);
+ *     func_004b1f90(ebx); return g_data_00524358.
+ * ============================================================ */
+
+extern void func_004c5580(void);
+extern void func_004b1e00(void);
+extern void func_004b2070(void);
+extern void func_004b2100(void);
+extern void func_004c54b0(void);
+extern void func_004c48c0(void);
+extern void func_004b1fb0(void);
+extern void func_004b1f90(void);
+extern void func_004a5680(void);
+extern void func_00401310(void);
+extern unsigned int g_data_00524358;
+extern unsigned int g_data_004d5040;
+extern unsigned int g_data_004d504c;
+extern unsigned int g_data_004d505c;
+extern unsigned int g_data_004d5060;
+extern unsigned int g_data_004d506c;
+extern unsigned int g_data_00524158;
+extern unsigned int g_data_004ffdec;
+extern unsigned int g_data_004ffdf4;
+
+__declspec(naked) void FileLoaderTwoStage_00401120(void)
+{
+    __asm {
+        sub     esp, 0x100
+        _emit   0x8D
+        _emit   0x44
+        _emit   0x24
+        _emit   0x00
+        push    ebx
+        push    ebp
+        push    esi
+        mov     esi, dword ptr [esp + 0x110]
+        push    edi
+        push    esi
+        push    offset g_data_004d506c
+        push    offset g_data_004d5060
+        push    eax
+        call    func_004c5580
+        add     esp, 0x10
+        lea     ecx, [esp + 0x10]
+        push    offset g_data_004d505c
+        push    ecx
+        call    func_004b1e00
+        mov     ebx, eax
+        add     esp, 8
+        test    ebx, ebx
+        jne     L_fl_have_f1
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x100
+        ret
+    L_fl_have_f1:
+        push    2
+        push    0
+        push    ebx
+        call    func_004b2070
+        add     esp, 0xC
+        push    ebx
+        call    func_004b2100
+        add     esp, 4
+        mov     ebp, eax
+        push    0
+        push    0
+        push    ebx
+        call    func_004b2070
+        add     esp, 0xC
+        push    ebp
+        call    func_004c54b0
+        add     esp, 4
+        mov     dword ptr [g_data_00524358], eax
+        test    eax, eax
+        jne     L_fl_have_buf
+        push    offset g_data_004d504c
+        call    func_004c48c0
+        mov     eax, dword ptr [g_data_00524358]
+        add     esp, 4
+        test    eax, eax
+        jne     L_fl_have_buf
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x100
+        ret
+    L_fl_have_buf:
+        push    esi
+        push    offset g_data_004d506c
+        lea     edx, [esp + 0x98]
+        push    offset g_data_004d5040
+        push    edx
+        call    func_004c5580
+        add     esp, 0x10
+        lea     eax, [esp + 0x90]
+        push    offset g_data_004d505c
+        push    eax
+        call    func_004b1e00
+        mov     esi, eax
+        add     esp, 8
+        test    esi, esi
+        jne     L_fl_have_f2
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x100
+        ret
+    L_fl_have_f2:
+        push    2
+        push    0
+        push    esi
+        call    func_004b2070
+        add     esp, 0xC
+        push    esi
+        call    func_004b2100
+        mov     edi, eax
+        add     esp, 4
+        cmp     edi, ebp
+        jle     L_fl_size_ok
+        xor     eax, eax
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x100
+        ret
+    L_fl_size_ok:
+        push    0
+        push    0
+        push    esi
+        call    func_004b2070
+        mov     ecx, dword ptr [g_data_00524358]
+        add     esp, 0xC
+        push    esi
+        push    edi
+        push    1
+        push    ecx
+        call    func_004b1fb0
+        add     esp, 0x10
+        push    esi
+        call    func_004b1f90
+        mov     edx, dword ptr [g_data_00524358]
+        add     esp, 4
+        push    0x200
+        push    edx
+        push    offset g_data_00524158
+        call    func_004a5680
+        add     esp, 0xC
+        call    func_00401310
+        mov     esi, dword ptr [g_data_00524358]
+        xor     eax, eax
+        mov     ax, word ptr [esi + 0x200]
+        lea     ecx, [esi + 0x200]
+        mov     edx, eax
+        add     ecx, 2
+        and     edx, 0x8000
+        cmp     eax, 0xFFFF
+        je      L_fl_terminator
+    L_fl_loop:
+        and     eax, 0x7FFF
+        add     ecx, 2
+        add     ecx, 2
+        lea     eax, [eax + eax*2]
+        mov     dword ptr [eax*4 + 0x004FFDEC], esi
+        mov     edi, dword ptr [eax*4 + 0x004FFDF4]
+        and     edi, 0xFFFF7FFF
+        add     edi, edx
+        mov     dword ptr [eax*4 + 0x004FFDF4], edi
+        xor     eax, eax
+        mov     ax, word ptr [ecx - 4]
+        add     esi, eax
+        xor     eax, eax
+        mov     ax, word ptr [ecx - 2]
+        mov     edx, eax
+        and     edx, 0x8000
+        cmp     eax, 0xFFFF
+        jne     L_fl_loop
+        mov     esi, dword ptr [g_data_00524358]
+    L_fl_terminator:
+        push    ebx
+        push    ebp
+        push    1
+        push    esi
+        call    func_004b1fb0
+        add     esp, 0x10
+        push    ebx
+        call    func_004b1f90
+        mov     eax, dword ptr [g_data_00524358]
+        add     esp, 4
+        pop     edi
+        pop     esi
+        pop     ebp
+        pop     ebx
+        add     esp, 0x100
+        ret
+    }
+}

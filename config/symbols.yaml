@@ -17,10 +17,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00401120
-    name: func_00401120
+    name: FileLoaderTwoStage_00401120
     size: 496
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00401310
     name: ListInitLoop_00401310
     size: 33
