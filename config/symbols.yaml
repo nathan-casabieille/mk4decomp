@@ -15977,10 +15977,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesR.c
   - addr: 0x004c9840
-    name: func_004c9840
+    name: BuildCharacterCaseTables_004c9840
     size: 474
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9a20
     name: PushNeg3CallRet_004c9a20
     size: 11

@@ -114269,3 +114269,203 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         ret
     }
 }
+
+/* ============================================================
+ * BuildCharacterCaseTables_004c9840 — 474b crt.
+ *
+ * Initializes the locale-dependent uppercase/lowercase
+ * conversion tables at g_data_00f9f8c1 (per-char flag byte) and
+ * g_data_00f9f9c8 (per-char paired-case byte). Two execution
+ * paths:
+ *
+ *   - Codepage path (g_data_00f9fac8 is a valid locale and
+ *     `IsValidCodePage([0x4d2114], lcid, &info)` returns 1): walk
+ *     the locale's char info via func_004cdae0/func_004cd6f0 to
+ *     build a custom case-fold table on the stack, then iterate
+ *     0..0xff classifying each character (Letter/Lower/Upper/
+ *     Title/Special) and stamping the flag bit (bit 4 = upper,
+ *     bit 5 = lower) + the paired-case byte.
+ *
+ *   - ASCII fallback (default): linear scan that sets the
+ *     ASCII flag bits for A-Z (or 0x10) and a-z (or 0x20),
+ *     and computes the paired-case byte via ±0x20 ASCII shift.
+ *     Bytes outside [A-Za-z] get a zero paired-case byte.
+ *
+ * Frame: sub esp, 0x514 + push ebx (+esi/edi only in CP path).
+ * Returns: void.
+ *
+ * Uses the IAT slot for IsValidCodePage at g_iat_004d2114.
+ * ============================================================ */
+
+extern void func_004cd6f0(void);
+extern unsigned int g_data_00f9f8c1;
+extern unsigned int g_data_00f9f9c8;
+extern unsigned int g_data_00f9fac8;
+extern unsigned int g_data_00f9facc;
+extern void *g_iat_004d2114;
+
+__declspec(naked) void BuildCharacterCaseTables_004c9840(void)
+{
+    __asm {
+        mov      ecx, dword ptr [g_data_00f9fac8]
+        sub      esp, 0x514
+        /* MASM emits 3-byte `8d 04 24` for lea eax,[esp]; orig uses
+         * 4-byte disp8=0 form `8d 44 24 00`. */
+        _emit    0x8d
+        _emit    0x44
+        _emit    0x24
+        _emit    0x00
+        push     ebx
+        push     eax
+        push     ecx
+        call     dword ptr [g_iat_004d2114]
+        cmp      eax, 1
+        jne      L_99b4
+        push     edi
+        push     esi
+        xor      eax, eax
+    L_9866:
+        mov      byte ptr [esp + eax + 0x20], al
+        inc      eax
+        cmp      eax, 0x100
+        jb       short L_9866
+        mov      al, byte ptr [esp + 0x12]
+        mov      byte ptr [esp + 0x20], 0x20
+        test     al, al
+        je       short L_98b4
+        lea      edx, [esp + 0x13]
+    L_9883:
+        xor      ecx, ecx
+        and      eax, 0xff
+        mov      cl, byte ptr [edx]
+        cmp      eax, ecx
+        ja       short L_98aa
+        sub      ecx, eax
+        lea      edi, [esp + eax + 0x20]
+        inc      ecx
+        mov      eax, 0x20202020
+        mov      esi, ecx
+        shr      ecx, 2
+        rep stosd
+        mov      ecx, esi
+        and      ecx, 3
+        rep stosb
+    L_98aa:
+        mov      al, byte ptr [edx + 1]
+        add      edx, 2
+        test     al, al
+        jne      short L_9883
+    L_98b4:
+        mov      edx, dword ptr [g_data_00f9facc]
+        mov      eax, dword ptr [g_data_00f9fac8]
+        push     0
+        push     edx
+        lea      ecx, [esp + 0x328]
+        push     eax
+        push     ecx
+        lea      edx, [esp + 0x30]
+        push     0x100
+        push     edx
+        push     1
+        call     func_004cdae0
+        mov      eax, dword ptr [g_data_00f9fac8]
+        add      esp, 0x1c
+        lea      ecx, [esp + 0x120]
+        lea      edx, [esp + 0x20]
+        push     0
+        push     eax
+        mov      eax, dword ptr [g_data_00f9facc]
+        push     0x100
+        push     ecx
+        push     0x100
+        push     edx
+        push     0x100
+        push     eax
+        call     func_004cd6f0
+        mov      ecx, dword ptr [g_data_00f9fac8]
+        add      esp, 0x20
+        lea      edx, [esp + 0x220]
+        lea      eax, [esp + 0x20]
+        push     0
+        push     ecx
+        mov      ecx, dword ptr [g_data_00f9facc]
+        push     0x100
+        push     edx
+        push     0x100
+        push     eax
+        push     0x200
+        push     ecx
+        call     func_004cd6f0
+        add      esp, 0x20
+        xor      eax, eax
+        lea      edx, [esp + 0x320]
+        mov      bl, 0x10
+    L_9950:
+        mov      cx, word ptr [edx]
+        test     cl, 1
+        je       short L_9975
+        mov      cl, byte ptr [eax + g_data_00f9f8c1]
+        or       cl, bl
+        mov      byte ptr [eax + g_data_00f9f8c1], cl
+        mov      cl, byte ptr [esp + eax + 0x120]
+        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        jmp      short L_999f
+    L_9975:
+        test     cl, 2
+        je       short L_9998
+        mov      cl, byte ptr [eax + g_data_00f9f8c1]
+        or       cl, 0x20
+        mov      byte ptr [eax + g_data_00f9f8c1], cl
+        mov      cl, byte ptr [esp + eax + 0x220]
+        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        jmp      short L_999f
+    L_9998:
+        mov      byte ptr [eax + g_data_00f9f9c8], 0
+    L_999f:
+        inc      eax
+        add      edx, 2
+        cmp      eax, 0x100
+        jb       short L_9950
+        pop      esi
+        pop      edi
+        pop      ebx
+        add      esp, 0x514
+        ret
+    L_99b4:
+        xor      eax, eax
+        mov      bl, 0x10
+    L_99b8:
+        cmp      eax, 0x41
+        jb       short L_99dd
+        cmp      eax, 0x5a
+        ja       short L_99dd
+        mov      dl, byte ptr [eax + g_data_00f9f8c1]
+        or       dl, bl
+        mov      byte ptr [eax + g_data_00f9f8c1], dl
+        mov      dl, al
+        add      dl, 0x20
+        mov      byte ptr [eax + g_data_00f9f9c8], dl
+        jmp      short L_9a0a
+    L_99dd:
+        cmp      eax, 0x61
+        jb       short L_9a03
+        cmp      eax, 0x7a
+        ja       short L_9a03
+        mov      cl, byte ptr [eax + g_data_00f9f8c1]
+        or       cl, 0x20
+        mov      byte ptr [eax + g_data_00f9f8c1], cl
+        mov      cl, al
+        sub      cl, 0x20
+        mov      byte ptr [eax + g_data_00f9f9c8], cl
+        jmp      short L_9a0a
+    L_9a03:
+        mov      byte ptr [eax + g_data_00f9f9c8], 0
+    L_9a0a:
+        inc      eax
+        cmp      eax, 0x100
+        jb       short L_99b8
+        pop      ebx
+        add      esp, 0x514
+        ret
+    }
+}
