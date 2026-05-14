@@ -110073,3 +110073,261 @@ __declspec(naked) void VirtualHeapAlloc_004c70d0(void)
     }
 }
 
+/* ============================================================
+ * MenuPageTailDispatch_004b8080 — 360b game.menu.
+ *
+ * Continuation tail of [[func_004b7df0]] (sister of
+ * [[menu-page-enter-dispatch-004b84d0]] but for the alternate
+ * menu page rooted at g_data_004f5328). func_004b7df0 sets up
+ * push-ebx/push-esi/sub-esp-0x18, runs a 64-bucket switch via
+ * tables sitting at our 0x4b8170/0x4b8190, then jumps into this
+ * body which:
+ *   1. Pre-fills the [esp+8..esp+0x1c] argument slots with the
+ *      6 alt-page resource pointers (004f61e0..004f61b0).
+ *   2. Walks the alt-page record list (head at g_data_004f5328),
+ *      dispatching on word[esi+4] - 0x3c ∈ [0..5] via the
+ *      6-entry jump table at 0x4b81d0 — each case picks a payload
+ *      (cases 0/4 push a state ptr, case 1/2 pick the 42d8/42dc
+ *      pair, case 3 picks the 61a0/6190 pair, case 5 fetches an
+ *      indexed arg from the spill slots).
+ *   3. Per record: func_004b7160(arg, record).
+ *   4. After loop: func_004b65c0(&g_data_004f5328, ext_arg),
+ *      returns g_data_00ab4358.
+ *
+ * Epilogue is unbalanced -- pop esi/ebx and add esp, 0x18 are
+ * the matching pops for func_004b7df0's prologue.
+ *
+ * Layout quirks: 8-entry jump table (0x4b8170, func_004b7df0's
+ * outer switch), 64-byte index array (0x4b8190), and our 6-entry
+ * table (0x4b81d0) all live inside this function's range.
+ * ============================================================ */
+
+extern void func_004b7160(void);
+extern unsigned int g_data_004f42d8;
+extern unsigned int g_data_004f42dc;
+extern unsigned int g_data_004f5328;
+extern unsigned int g_data_00ab41c8;
+extern unsigned int g_data_004f6164;
+extern unsigned int g_data_004f6190;
+extern unsigned int g_data_004f61a0;
+extern unsigned int g_data_004f61b0;
+extern unsigned int g_data_004f61bc;
+extern unsigned int g_data_004f61c8;
+extern unsigned int g_data_004f61d0;
+extern unsigned int g_data_004f61d8;
+extern unsigned int g_data_004f61e0;
+extern unsigned int g_data_00543a98;
+extern unsigned int g_data_00543a9c;
+extern unsigned int g_data_00543aa0;
+extern unsigned int g_data_00543aac;
+extern unsigned int g_data_00543ab0;
+extern unsigned int g_data_00543ab4;
+extern unsigned int g_data_00ab4328;
+extern unsigned int g_data_00ab4358;
+
+__declspec(naked) void MenuPageTailDispatch_004b8080(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004f5328]
+        mov      dword ptr [esp + 8], OFFSET g_data_004f61e0
+        test     eax, eax
+        mov      dword ptr [esp + 0xc], OFFSET g_data_004f61d8
+        mov      dword ptr [esp + 0x10], OFFSET g_data_004f61d0
+        mov      dword ptr [esp + 0x14], OFFSET g_data_004f61c8
+        mov      dword ptr [esp + 0x18], OFFSET g_data_004f61bc
+        mov      dword ptr [esp + 0x1c], OFFSET g_data_004f61b0
+        je       L_8152
+        mov      esi, OFFSET g_data_004f5328
+    L_80c2:
+        movsx    eax, word ptr [esi + 4]
+        add      eax, -0x3c
+        cmp      eax, 5
+        ja       short L_8144
+        jmp      dword ptr [eax*4 + L_080_jmptbl]
+    L_80d5:
+        mov      edx, dword ptr [g_data_00543ab0]
+        push     edx
+        jmp      short L_8117
+    L_80de:
+        mov      eax, dword ptr [g_data_00543aac]
+        jmp      short L_80ea
+    L_80e5:
+        mov      eax, dword ptr [g_data_00543ab4]
+    L_80ea:
+        test     eax, eax
+        mov      eax, OFFSET g_data_004f42d8
+        jne      short L_810e
+        mov      eax, OFFSET g_data_004f42dc
+        push     eax
+        jmp      short L_813b
+    L_80fb:
+        mov      eax, dword ptr [g_data_00543a98]
+        test     eax, eax
+        mov      eax, OFFSET g_data_004f61a0
+        jne      short L_810e
+        mov      eax, OFFSET g_data_004f6190
+    L_810e:
+        push     eax
+        jmp      short L_813b
+    L_8111:
+        mov      eax, dword ptr [g_data_00543aa0]
+        push     eax
+    L_8117:
+        push     OFFSET g_data_004f6164
+        push     OFFSET g_data_00ab41c8
+        call     func_004c5580
+        add      esp, 0xc
+        push     OFFSET g_data_00ab41c8
+        jmp      short L_813b
+    L_8130:
+        mov      ecx, dword ptr [g_data_00543a9c]
+        mov      edx, dword ptr [esp + ecx*4 + 8]
+        push     edx
+    L_813b:
+        push     esi
+        call     func_004b7160
+        add      esp, 8
+    L_8144:
+        mov      eax, dword ptr [esi + 8]
+        add      esi, 8
+        test     eax, eax
+        jne      L_80c2
+    L_8152:
+        mov      eax, dword ptr [g_data_00ab4328]
+        push     eax
+        push     OFFSET g_data_004f5328
+        call     func_004b65c0
+        mov      eax, dword ptr [g_data_00ab4358]
+        add      esp, 8
+        pop      esi
+        pop      ebx
+        add      esp, 0x18
+        ret
+    L_080_tail:
+        /* 8-entry jump table at 0x4b8170 (belongs to func_004b7df0's outer switch). */
+        _emit 0x65
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xd8
+        _emit 0x7e
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x3b
+        _emit 0x7f
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xa1
+        _emit 0x7f
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x0e
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x2b
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x48
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x80
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        /* 64-byte index array at 0x4b8190 (also func_004b7df0). */
+        _emit 0x00
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x07
+        _emit 0x01
+        _emit 0x02
+        _emit 0x03
+        _emit 0x04
+        _emit 0x05
+        _emit 0x06
+        _emit 0x90
+    L_080_jmptbl:
+        /* Our 6-entry jump table (case0..case5). */
+        _emit 0x11
+        _emit 0x81
+        _emit 0x4b
+        _emit 0x00
+        _emit 0x30
+        _emit 0x81
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xd5
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xde
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xe5
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+        _emit 0xfb
+        _emit 0x80
+        _emit 0x4b
+        _emit 0x00
+    }
+}
+
