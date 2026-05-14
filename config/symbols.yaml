@@ -2184,10 +2184,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00425be0
-    name: func_00425be0
+    name: MStackBracket2InitChainSplitInsert_00425be0
     size: 457
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425db0
     name: func_00425db0
     size: 584
