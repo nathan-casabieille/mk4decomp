@@ -92647,3 +92647,285 @@ __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
         ret
     }
 }
+
+/* ============================================================
+ * Phase4DualHelperTrampoline_00412900 — 941b boot.
+ *
+ * Three packed entries:
+ *
+ *   T at 0x412900 (19b + 13 nops): trampoline —
+ *     func_0049cb40(0x412920, 0x8A).
+ *
+ *   A at 0x412920 (417b + 15 nops): phase-state install-self.
+ *     phase==0: call MStackPush2RunCountdown_004089e0, then
+ *       func_004b8fa0, then func_00408c10 with
+ *       g_data_0054206c=0xA; pause-gates; if bit-2 of
+ *       g_state_0054208c not set: paint slot+0x38 from
+ *       g_data_00542088, slot+0x40 from g_data_00542084,
+ *       slot+0x3c=0xFFFFE667; call func_0040a8b0; pause-gate;
+ *       g_data_00542048 := packed_ptr(&g_data_004d6948>>2);
+ *       g_data_0054207c=0x99; call func_0049d940; pause-gate;
+ *       trampoline func_0049cb40(0x412ad0, 0x8A); install self
+ *       phase=1, g_data_0054204c=0xC, signal.
+ *     phase==1: call func_00405420; pause-gate; if bit-2 set:
+ *       trampoline func_0049cb40(0x412ad0, 0x8A); tail-call
+ *       func_0041f830; else: install self phase=2,
+ *       g_data_0054204c=0xC, signal.
+ *
+ *   B at 0x412ad0 (477b): phase-state install-self.
+ *     phase==0: g_data_00542048 := packed_ptr(&g_data_0050bbb4>>2),
+ *       call func_00407330; pause-gate; bit-2 short-circuit;
+ *       paint slot_5c[+0x30]=0x97, +0x54=g_data_00542088,
+ *       +0x5c=g_data_00542084, +0x58=0xFFFFF334; call
+ *       func_00404e50; slot_48[+0x48]=0x28F; g_data_00542054
+ *       := g_data_00542048; call func_004062f0; pause-gate;
+ *       g_data_00542058=0xF.
+ *     phase==1: counter-loop dispatch on g_data_00542054 and
+ *       g_data_00542058. Adds 0xCCC to slot+0x48 each iter;
+ *       optionally adds 0x7AE to slot_5c[+0x58]. When counter
+ *       hits 0: call func_00406740; pause-gate; jump to install.
+ *     install self at slot[+8]=0x412AD0, phase=2,
+ *       g_data_0054204c=1, signal.
+ *
+ *  Callback addresses 0x00412920 / 0x00412AD0 are raw imm32
+ *  [[feedback_packed_helpers_one_naked]].
+ * ============================================================ */
+
+extern void func_0049d940(void);
+extern unsigned int g_data_004d6948;
+extern unsigned int g_data_0050bbb4;
+
+__declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
+{
+    __asm {
+        push    0x8A
+        push    0x00412920
+        call    func_0049cb40
+        add     esp, 8
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_p4dht_A:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_p4dht_A_phase0
+        dec     eax
+        je      L_p4dht_A_phase1
+        call    func_00405420
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        test    byte ptr [g_state_0054208c], 4
+        je      L_p4dht_A_install_p2
+        push    0x8A
+        push    0x00412AD0
+        call    func_0049cb40
+        add     esp, 8
+        call    func_0041f830
+        pop     esi
+        ret
+    L_p4dht_A_phase1:
+        push    0x8A
+        push    0x00412AD0
+        call    func_0049cb40
+        mov     dword ptr [esi + 8], 0x00412920
+        mov     dword ptr [esi + 0x84], 2
+        add     esp, 8
+        mov     dword ptr [g_data_0054204c], 0x0C
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     esi
+        ret
+    L_p4dht_A_phase0:
+        call    MStackPush2RunCountdown_004089e0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        call    func_004b8fa0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        mov     dword ptr [g_data_0054206c], 0x0A
+        call    func_00408c10
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        test    byte ptr [g_state_0054208c], 4
+        je      L_p4dht_A_continue
+    L_p4dht_A_install_p2:
+        call    func_0041f830
+        pop     esi
+        ret
+    L_p4dht_A_continue:
+        mov     edx, dword ptr [g_data_00542060]
+        mov     ecx, dword ptr [g_data_00542048]
+        lea     eax, [edx*4]
+        mov     edx, dword ptr [ecx*4 + 0x3C]
+        mov     dword ptr [g_data_00542088], edx
+        mov     ecx, dword ptr [ecx*4 + 0x44]
+        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [eax + 0x38], edx
+        mov     edx, dword ptr [g_data_00542084]
+        mov     ecx, 0xFFFFE667
+        mov     dword ptr [eax + 0x40], edx
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x3C], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [g_data_00542044], eax
+        call    func_0040a8b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        mov     ecx, offset g_data_004d6948
+        mov     dword ptr [g_data_0054207c], 0x99
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    func_0049d940
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_A_exit
+        push    0x8A
+        push    0x00412AD0
+        call    func_0049cb40
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00412920
+        mov     dword ptr [esi + 0x84], eax
+        add     esp, 8
+        mov     dword ptr [g_data_0054204c], 0x0C
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p4dht_A_exit:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_p4dht_B:
+        mov     eax, dword ptr [g_data_00542060]
+        push    esi
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        sub     eax, 0
+        je      L_p4dht_B_phase0
+        dec     eax
+        mov     eax, dword ptr [g_data_00542054]
+        je      L_p4dht_B_alt
+        mov     edx, dword ptr [eax*4 + 0x48]
+        add     edx, 0xCCC
+        mov     dword ptr [eax*4 + 0x48], edx
+        mov     ecx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [ecx*4 + 0x48]
+        mov     dword ptr [g_data_0054206c], edx
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        add     ecx, 0x7AE
+        mov     dword ptr [eax*4 + 0x58], ecx
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [eax*4 + 0x58]
+        mov     eax, dword ptr [g_data_00542058]
+        dec     eax
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542058], eax
+        jns     L_p4dht_B_install
+        call    func_00406740
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        je      L_p4dht_B_call_0041f830
+        pop     esi
+        ret
+    L_p4dht_B_alt:
+        mov     ecx, dword ptr [eax*4 + 0x48]
+        add     ecx, 0xCCC
+        mov     dword ptr [eax*4 + 0x48], ecx
+        mov     edx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [edx*4 + 0x48]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542058]
+        dec     eax
+        mov     dword ptr [g_data_00542058], eax
+        jns     L_p4dht_B_after_06740
+        mov     dword ptr [g_data_00542058], 7
+    L_p4dht_B_install:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00412AD0
+        mov     dword ptr [esi + 0x84], 2
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+        pop     esi
+        ret
+    L_p4dht_B_phase0:
+        mov     ecx, offset g_data_0050bbb4
+        shr     ecx, 2
+        mov     dword ptr [g_data_00542048], ecx
+        call    func_00407330
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_B_exit
+        test    byte ptr [g_state_0054208c], 4
+        je      L_p4dht_B_continue
+    L_p4dht_B_call_0041f830:
+        call    func_0041f830
+        pop     esi
+        ret
+    L_p4dht_B_continue:
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     dword ptr [edx*4 + 0x30], 0x97
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_data_00542088]
+        mov     dword ptr [eax*4 + 0x54], ecx
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [edx*4 + 0x5C], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0xFFFFF334
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x58], eax
+        call    func_00404e50
+        mov     edx, dword ptr [g_data_00542048]
+        mov     eax, 0x28F
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [edx*4 + 0x48], eax
+        mov     eax, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_00542054], eax
+        call    func_004062f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_p4dht_B_exit
+        mov     dword ptr [g_data_00542058], 0x0F
+    L_p4dht_B_after_06740:
+        mov     eax, 1
+        mov     dword ptr [esi + 8], 0x00412AD0
+        mov     dword ptr [esi + 0x84], eax
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_data_00541e6c], eax
+    L_p4dht_B_exit:
+        pop     esi
+        ret
+    }
+}
