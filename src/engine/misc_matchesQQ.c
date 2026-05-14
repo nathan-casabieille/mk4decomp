@@ -90679,3 +90679,213 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
         ret
     }
 }
+
+/* ============================================================
+ * MStackBracket3_FieldSequentialCopy_00411d80 — 760b boot.
+ *
+ * 3-slot mstack-bracketed routine. Pushes g_data_00542048,
+ * g_data_0054204c, g_data_0054205c. Conditional on byte
+ * [g_byte_004f360c]:
+ *   - if zero: skip body, go to pops;
+ *   - else:
+ *     - g_data_0054206c=0x3333; call func_004ab700; pause-gate
+ *       (aborts to ret with skip-pops);
+ *     - g_data_0054206c += 0xCCCC;
+ *     - call ZeroAndDirty4_00405430; pause-gate;
+ *     - bit-2 of g_state_0054208c must be CLEAR else jump to
+ *       pops;
+ *     - g_data_0054206c := packed_ptr(&g_data_004d5ad8 >> 2);
+ *       call func_00407140; pause-gate; bit-2 check (jump to
+ *       pops if set);
+ *     - paint slot_5c[+0x30]=0xC2;
+ *     - slot[+0x3c] := g_data_0052ab10;
+ *     - slot[+0x34] ch |= 0x40;
+ *     - 7 sequential reads from g_data_00542048 (auto-inc 3x)
+ *       and g_data_0054204c (auto-inc 4x) into slot[+0x54],
+ *       +0x58, +0x5c, +0x6c, +0x70, +0x74 — pulling tuples
+ *       from the chain blocks;
+ *     - copy slot[+0x6c]→g_data_00542074, slot[+0x74]→0x542078;
+ *       call func_004245b0; pause-gate;
+ *     - g_data_0054206c -= g_data_004d531c;
+ *       call func_00407510; pause-gate;
+ *     - slot[+0x64] := g_data_0054206c;
+ *       slot[+0x18]'s [+0x20] ch &= 0xF9 (clear bits 1,2);
+ *     - install 0x411890 at sub_slot[+0x10];
+ *       call func_00411890; pause-gate;
+ *       call func_004062f0; pause-gate;
+ *     - g_data_00542044 := g_data_0054205c.
+ *   - Then mstack-pop 3 slots; toggle bit 2 of g_state_0054208c
+ *     (set, then xor back if g_data_00542044 != 0).
+ *
+ *   Pause-gates skip the 3 mstack pops [[feedback_mstack_abort_leak]].
+ * ============================================================ */
+
+extern void func_00411890(void);
+extern void func_004062f0(void);
+extern unsigned int g_data_004d5ad8;
+extern unsigned int g_data_004d531c;
+
+__declspec(naked) void MStackBracket3_FieldSequentialCopy_00411d80(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     eax
+        push    ebx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ebx, 4
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     al, byte ptr [g_byte_004f360c]
+        mov     edx, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_00542044], 0
+        test    al, al
+        mov     dword ptr [g_data_0054204c], edx
+        je      L_mb3fsc_pop3
+        mov     dword ptr [g_data_0054206c], 0x3333
+        call    func_004ab700
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        add     dword ptr [g_data_0054206c], 0xCCCC
+        call    ZeroAndDirty4_00405430
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        test    byte ptr [g_state_0054208c], bl
+        je      L_mb3fsc_pop3
+        mov     eax, offset g_data_004d5ad8
+        shr     eax, 2
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        test    byte ptr [g_state_0054208c], bl
+        jne     L_mb3fsc_pop3
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     dword ptr [ecx*4 + 0x30], 0xC2
+        lea     eax, [ecx*4]
+        mov     ecx, dword ptr [g_data_0052ab10]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x3C], ecx
+        mov     ecx, dword ptr [eax + 0x34]
+        or      ch, 0x40
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x34], ecx
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [edx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x54], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     ecx
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x58], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     ecx
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x5C], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        inc     ecx
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x6C], ecx
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x70], ecx
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     ecx, dword ptr [ecx*4]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x74], ecx
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     edx, dword ptr [eax + 0x6C]
+        mov     dword ptr [g_data_00542074], edx
+        mov     eax, dword ptr [eax + 0x74]
+        mov     dword ptr [g_data_00542078], eax
+        call    func_004245b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        mov     ecx, dword ptr [g_data_004d531c]
+        mov     edx, dword ptr [g_data_0054206c]
+        sub     edx, ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_00407510
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        mov     edx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_data_0054206c]
+        mov     dword ptr [edx*4 + 0x64], eax
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0x20]
+        and     ch, 0xF9
+        mov     dword ptr [eax*4 + 0x20], ecx
+        mov     edx, dword ptr [g_data_00542044]
+        mov     ecx, 0x00411890
+        mov     eax, dword ptr [edx*4 + 0x28]
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [eax*4 + 0x10], ecx
+        call    func_00411890
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        call    func_004062f0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_mb3fsc_abort
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+    L_mb3fsc_pop3:
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     ecx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     eax, dword ptr [g_data_00542044]
+        or      ecx, ebx
+        test    eax, eax
+        mov     dword ptr [g_state_0054208c], ecx
+        je      L_mb3fsc_abort
+        mov     eax, ecx
+        xor     eax, ebx
+        mov     dword ptr [g_state_0054208c], eax
+    L_mb3fsc_abort:
+        pop     ebx
+        ret
+    }
+}
