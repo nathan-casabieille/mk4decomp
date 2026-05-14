@@ -285,10 +285,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesN.c
   - addr: 0x004051e0
-    name: func_004051e0
+    name: Chain13PauseGateTailJmp_004051e0
     size: 544
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00405400
     name: FrameFinalize
     size: 21

@@ -86360,3 +86360,163 @@ __declspec(naked) void MStackBracket3_ChainSwapAdvance_0041d560(void)
         ret
     }
 }
+
+/* ============================================================
+ * Chain13PauseGateTailJmp_004051e0 — 544b boot.
+ *
+ * 13 sequential calls to func_004bae90 (plus one tail-jmp = 14th
+ * total), each setting g_data_00542044 from one of 8 input
+ * globals (0x541e84..0x541ea0) and g_data_0054206c from one of
+ * three "kind" pointers (0x4d511c, 0x4d5124, 0x4d5138). Every
+ * call is followed by a pause-gate that bails to the trailing
+ * `ret` (mstack-abort-leak style — but no mstack pushes here).
+ * The final 14th call is a tail-jmp rather than call/ret.
+ *
+ * The pattern (input_global, kind_ptr):
+ *   1.  (0x541e98, 0x4d511c)
+ *   2.  (0x541e9c, 0x4d511c)
+ *   3.  (0x541e88, 0x4d511c)
+ *   4.  (0x541e84, 0x4d511c)
+ *   5.  (0x541e8c, 0x4d511c)
+ *   6.  (0x541e90, 0x4d511c)
+ *   7.  (0x541e94, 0x4d511c)
+ *   8.  (0x541ea0, 0x4d5124)
+ *   9.  (0x541e98, 0x4d5138)
+ *   10. (0x541e84, 0x4d5138)
+ *   11. (0x541e88, 0x4d5138)
+ *   12. (0x541e8c, 0x4d5138)
+ *   13. (0x541e90, 0x4d5138)
+ *   14. (0x541e94, 0x4d5138) — tail-jmp
+ *
+ * The register holding the input_global rotates eax/edx/ecx
+ * across calls — MSVC's standard allocator pattern.
+ * ============================================================ */
+
+extern unsigned int g_data_00541e84;
+extern unsigned int g_data_00541e88;
+extern unsigned int g_data_00541e8c;
+extern unsigned int g_data_00541e90;
+extern unsigned int g_data_00541e94;
+extern unsigned int g_data_00541e98;
+extern unsigned int g_data_00541e9c;
+extern unsigned int g_data_00541ea0;
+extern unsigned int g_data_004d511c;
+extern unsigned int g_data_004d5124;
+extern unsigned int g_data_004d5138;
+
+__declspec(naked) void Chain13PauseGateTailJmp_004051e0(void)
+{
+    __asm {
+        mov     eax, dword ptr [g_data_00541e98]
+        mov     ecx, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     edx, dword ptr [g_data_00541e9c]
+        mov     eax, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     ecx, dword ptr [g_data_00541e88]
+        mov     edx, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     eax, dword ptr [g_data_00541e84]
+        mov     ecx, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     edx, dword ptr [g_data_00541e8c]
+        mov     eax, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     ecx, dword ptr [g_data_00541e90]
+        mov     edx, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     eax, dword ptr [g_data_00541e94]
+        mov     ecx, dword ptr [g_data_004d511c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     edx, dword ptr [g_data_00541ea0]
+        mov     eax, dword ptr [g_data_004d5124]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     ecx, dword ptr [g_data_00541e98]
+        mov     edx, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     eax, dword ptr [g_data_00541e84]
+        mov     ecx, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     edx, dword ptr [g_data_00541e88]
+        mov     eax, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], eax
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     ecx, dword ptr [g_data_00541e8c]
+        mov     edx, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     eax, dword ptr [g_data_00541e90]
+        mov     ecx, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_004bae90
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_c13_exit
+        mov     edx, dword ptr [g_data_00541e94]
+        mov     eax, dword ptr [g_data_004d5138]
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054206c], eax
+        jmp     func_004bae90
+    L_c13_exit:
+        ret
+    }
+}
