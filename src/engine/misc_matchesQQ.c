@@ -80033,3 +80033,162 @@ __declspec(naked) void TriPhaseGateInstallSelfBig_00437140(void)
         ret
     }
 }
+
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_0053a180;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_004f2880;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern void Mul10Tail_00404af0(void);
+extern void CondPickDualStore_0049c670(void);
+extern void func_0040d1d0(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void CallSetPause_0041f830(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void Alarm5EntryScopedChain_0049be10(void);
+
+__declspec(naked) void Vec2SumMul10ChainCompute_0049bc60(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [ecx*4 + 0x54]
+        mov     dword ptr [g_data_0054206c], eax
+        mov     ecx, dword ptr [ecx*4 + 0x5c]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542070], ecx
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     eax, dword ptr [g_data_00542070]
+        push    eax
+        push    eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_0054206c]
+        mov     edx, dword ptr [g_data_0053a180]
+        add     eax, ecx
+        add     edx, 0xc0000
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_data_00542074], edx
+        ret
+        nop
+        nop
+        nop
+    L_v2sm10_sub2:
+        call    CondPickDualStore_0049c670
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v2sm10_sub2_ret
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x304
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    func_0040d1d0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v2sm10_sub2_ret
+        push    0x4f2570
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+    L_v2sm10_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_v2sm10_sub3:
+        push    esi
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_v2sm10_sub3_ret
+        push    0x4f25b8
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     L_v2sm10_sub3_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_v2sm10_sub3_main
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_v2sm10_sub3_main:
+        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_00542048], eax
+        mov     ecx, dword ptr [eax*4 + 0x28]
+        mov     eax, offset g_data_004f2880
+        shr     eax, 2
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 4], eax
+        mov     edx, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_data_00542044]
+        push    edx
+        push    0x3333
+        lea     esi, [ecx*4]
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542084], eax
+        mov     eax, dword ptr [g_data_00542088]
+        push    eax
+        push    0x3333
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542084]
+        mov     dword ptr [g_data_00542088], eax
+        mov     dword ptr [esi + 0x6c], ecx
+        mov     edx, dword ptr [g_data_00542088]
+        add     esp, 8
+        mov     dword ptr [esi + 0x74], edx
+        mov     eax, dword ptr [g_data_00542044]
+        push    0x4f25c8
+        mov     dword ptr [g_data_0054205c], eax
+        call    ArgSar_Set0_Jmp_0049c6f0
+        add     esp, 4
+    L_v2sm10_sub3_ret:
+        pop     esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_v2sm10_sub4:
+        mov     dword ptr [g_data_0054206c], 0xe
+        call    TableLookupCall_00489ff0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_v2sm10_sub4_ret
+        jmp     Alarm5EntryScopedChain_0049be10
+    L_v2sm10_sub4_ret:
+        ret
+    }
+}

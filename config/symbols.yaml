@@ -11667,10 +11667,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049bc60
-    name: func_0049bc60
+    name: Vec2SumMul10ChainCompute_0049bc60
     size: 430
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049be10
     name: Alarm5EntryScopedChain_0049be10
     size: 370
