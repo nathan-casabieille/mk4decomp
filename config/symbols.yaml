@@ -11526,10 +11526,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00498c40
-    name: func_00498c40
+    name: MstackPushPackChainInit_00498c40
     size: 429
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00498df0
     name: TripleEntry3Block_00498df0
     size: 180

@@ -79661,3 +79661,123 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         ret
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_004d6718;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_004f27f0;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00542048;
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void CallSetPause_0041f830(void);
+extern void func_0049c3d0(void);
+extern void TripleEntry3Block_00498df0(void);
+extern void CmpDivJmp_0049d080(void);
+extern void Mul10Tail_00404af0(void);
+extern void ScaledTripleCopy4_0049d2d0(void);
+
+__declspec(naked) void MstackPushPackChainInit_00498c40(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054205c]
+        inc     eax
+        mov     edx, offset g_data_004d6718
+        mov     dword ptr [g_state_004d57ac], eax
+        push    esi
+        shr     edx, 2
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_0054206c], edx
+        call    PushSetXfmMaskCallPop_00407140
+        mov     eax, dword ptr [g_data_00541e6c]
+        xor     esi, esi
+        cmp     eax, esi
+        jne     L_mppci_ret
+        mov     eax, dword ptr [g_data_0054205c]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     al, byte ptr [g_data_0054208c]
+        test    al, 4
+        mov     dword ptr [g_data_0054205c], ecx
+        je      short L_mppci_branchA
+        call    CallSetPause_0041f830
+        pop     esi
+        ret
+    L_mppci_branchA:
+        mov     edx, offset g_data_004f27f0
+        shr     edx, 2
+        mov     dword ptr [g_data_00542050], edx
+        call    func_0049c3d0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_mppci_ret
+        call    TripleEntry3Block_00498df0
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [eax*4 + 0x64], esi
+        mov     eax, dword ptr [g_data_00542044]
+        mov     dword ptr [g_data_0054204c], eax
+        mov     ecx, dword ptr [eax*4 + 0x18]
+        mov     dword ptr [g_data_0054206c], 1
+        mov     dword ptr [g_data_00542044], ecx
+        call    CmpDivJmp_0049d080
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     L_mppci_ret
+        test    byte ptr [g_data_0054208c], 4
+        jne     L_mppci_join
+        mov     edx, dword ptr [g_data_00541f98]
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_00542048], edx
+        mov     eax, dword ptr [eax*4 + 0x6c]
+        push    eax
+        push    0xffff3334
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542048]
+        add     esp, 8
+        mov     dword ptr [ecx*4], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     dword ptr [g_data_0054206c], esi
+        mov     dword ptr [edx*4 + 4], esi
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [eax*4 + 0x74]
+        push    eax
+        push    0xffff3334
+        mov     dword ptr [g_data_0054206c], eax
+        call    Mul10Tail_00404af0
+        mov     ecx, dword ptr [g_data_00542048]
+        add     esp, 8
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 8], eax
+        call    ScaledTripleCopy4_0049d2d0
+        cmp     dword ptr [g_data_00541e6c], esi
+        jne     short L_mppci_ret
+    L_mppci_join:
+        mov     edx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [edx*4 + 0x18]
+        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [eax*4 + 0x28]
+        mov     dword ptr [g_data_00542044], eax
+        shl     eax, 2
+        mov     ecx, dword ptr [eax]
+        or      ecx, 8
+        mov     dword ptr [eax], ecx
+        mov     ecx, 0xc000
+        mov     dword ptr [g_data_0054206c], ecx
+        mov     dword ptr [eax + 0x48], ecx
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     dword ptr [g_data_00542044], eax
+    L_mppci_ret:
+        pop     esi
+        ret
+    }
+}
