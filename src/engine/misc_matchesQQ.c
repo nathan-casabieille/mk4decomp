@@ -81074,3 +81074,122 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         jmp     func_00473640
     }
 }
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0053a52c;
+extern unsigned int g_data_0053a530;
+extern unsigned int g_data_00542ab8;
+extern unsigned int g_data_00542b00;
+extern unsigned int g_data_0053a654;
+extern unsigned int g_data_00541e6c;
+extern void ScaledDerefStore_004774b0(void);
+
+__declspec(naked) void FiveTableInitChainBracketed_004774f0(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542074]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_data_00542044]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_0054204c]
+        inc     eax
+        mov     edx, offset g_data_0053a52c
+        mov     dword ptr [g_state_004d57ac], eax
+        sar     edx, 2
+        mov     dword ptr [eax*4], ecx
+        mov     dword ptr [g_data_00542074], 0x64
+        mov     dword ptr [g_data_0054204c], edx
+        call    ScaledDerefStore_004774b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ftic_abort
+        mov     eax, offset g_data_0053a530
+        mov     dword ptr [g_data_00542074], 0x23
+        sar     eax, 2
+        mov     dword ptr [g_data_0054204c], eax
+        call    ScaledDerefStore_004774b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ftic_abort
+        mov     eax, offset g_data_00542ab8
+        mov     dword ptr [g_data_00542074], 0
+        sar     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_ftic_block3
+    L_ftic_loop2:
+        call    ScaledDerefStore_004774b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ftic_abort
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        jne     short L_ftic_loop2
+    L_ftic_block3:
+        mov     eax, offset g_data_00542b00
+        mov     dword ptr [g_data_00542074], 1
+        sar     eax, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        je      short L_ftic_block4
+    L_ftic_loop3:
+        call    ScaledDerefStore_004774b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_ftic_abort
+        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [eax*4]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00542044], eax
+        jne     short L_ftic_loop3
+    L_ftic_block4:
+        mov     ecx, offset g_data_0053a654
+        mov     dword ptr [g_data_00542074], 4
+        sar     ecx, 2
+        mov     dword ptr [g_data_0054204c], ecx
+        call    ScaledDerefStore_004774b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_ftic_abort
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     ecx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4]
+        dec     eax
+        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+    L_ftic_abort:
+        ret
+    }
+}

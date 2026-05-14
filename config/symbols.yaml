@@ -8207,10 +8207,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x004774f0
-    name: func_004774f0
+    name: FiveTableInitChainBracketed_004774f0
     size: 440
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004776b0
     name: DoublePushWalkInitJmp_004776b0
     size: 81
