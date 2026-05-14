@@ -113190,3 +113190,218 @@ __declspec(naked) void FopenMode_004c9270(void)
         _emit    0x08
     }
 }
+
+/* ============================================================
+ * FpExtendedToFloat_004ccb10 — 463b crt.
+ *
+ * Converts an 80-bit x87 extended-precision struct (pointed at by
+ * arg1) to either an IEEE-754 float (32-bit, edi+0x10 == 0x20) or
+ * a double (64-bit, edi+0x10 == 0x40), with full rounding and
+ * special-case handling. edi is a per-format descriptor with:
+ *   [edi+0x00] : exponent saturation threshold
+ *   [edi+0x04] : exponent overflow threshold
+ *   [edi+0x08] : guard-bit position (for rounding via func_004cc960)
+ *   [edi+0x0c] : mantissa shift count
+ *   [edi+0x10] : output size in bits (0x20 or 0x40)
+ *   [edi+0x14] : exponent bias
+ *
+ * Splits the 80-bit value into a 16-bit sign+exponent (esp+0x18),
+ * a 32-bit mantissa hi (esp+0x14), and a 32-bit mantissa lo
+ * (esp+0x10). Cases handled:
+ *   - Denormal exp (-0x3fff): zero-normalize via func_004cca20;
+ *     return code 2.
+ *   - Underflow vs format minimum: zero result + code 2.
+ *   - In-range: shift+round (func_004cca00, func_004cca50, with
+ *     rounding bump via func_004cc960) and return code 2 (or 0).
+ *   - Overflow > [edi]: zero mantissa, set sign-pinned ±inf,
+ *     return code 1.
+ *   - Subnormal underflow: bias the mantissa down by [edi+0x14] +
+ *     ebx, code 0.
+ *
+ * Finally packs (sign | exponent | mantissa) into esp+0x10:
+ * 64-bit result → write both halves; 32-bit → write low only.
+ *
+ * Frame: sub esp, 0x18 + push ebx/ebp/esi/edi. Returns: int code.
+ * ============================================================ */
+
+extern void func_004cc960(void);
+extern void func_004cca00(void);
+extern void func_004cca20(void);
+extern void func_004cca30(void);
+extern void func_004cca50(void);
+
+__declspec(naked) void FpExtendedToFloat_004ccb10(void)
+{
+    __asm {
+        sub      esp, 0x18
+        mov      ecx, dword ptr [esp + 0x1c]
+        xor      eax, eax
+        push     ebx
+        push     ebp
+        mov      ax, word ptr [ecx + 0xa]
+        mov      edx, dword ptr [ecx + 2]
+        mov      ebx, eax
+        and      eax, 0x8000
+        mov      ebp, eax
+        mov      eax, dword ptr [ecx + 6]
+        mov      dword ptr [esp + 8], eax
+        xor      eax, eax
+        mov      ax, word ptr [ecx]
+        and      ebx, 0x7fff
+        sub      ebx, 0x3fff
+        push     esi
+        shl      eax, 0x10
+        push     edi
+        mov      edi, dword ptr [esp + 0x34]
+        cmp      ebx, 0xffffc001
+        mov      dword ptr [esp + 0x14], edx
+        mov      dword ptr [esp + 0x18], eax
+        jne      short L_cb8a
+        lea      ecx, [esp + 0x10]
+        xor      esi, esi
+        push     ecx
+        call     func_004cca30
+        add      esp, 4
+        test     eax, eax
+        jne      L_cc8f
+        lea      edx, [esp + 0x10]
+        push     edx
+        call     func_004cca20
+        add      esp, 4
+        mov      eax, 2
+        jmp      L_cc91
+    L_cb8a:
+        lea      eax, [esp + 0x10]
+        lea      ecx, [esp + 0x1c]
+        push     eax
+        push     ecx
+        call     func_004cca00
+        mov      edx, dword ptr [edi + 8]
+        add      esp, 8
+        lea      eax, [esp + 0x10]
+        push     edx
+        push     eax
+        call     func_004cc960
+        add      esp, 8
+        test     eax, eax
+        je       short L_cbb2
+        inc      ebx
+    L_cbb2:
+        mov      eax, dword ptr [edi + 4]
+        mov      esi, dword ptr [edi + 8]
+        mov      ecx, eax
+        sub      ecx, esi
+        cmp      ebx, ecx
+        jge      short L_cbd9
+        lea      edx, [esp + 0x10]
+        push     edx
+        call     func_004cca20
+        add      esp, 4
+        xor      esi, esi
+        mov      eax, 2
+        jmp      L_cc91
+    L_cbd9:
+        cmp      ebx, eax
+        jg       short L_cc2d
+        sub      eax, ebx
+        lea      ecx, [esp + 0x10]
+        mov      esi, eax
+        lea      eax, [esp + 0x1c]
+        push     eax
+        push     ecx
+        call     func_004cca00
+        add      esp, 8
+        lea      edx, [esp + 0x10]
+        push     esi
+        push     edx
+        call     func_004cca50
+        mov      eax, dword ptr [edi + 8]
+        add      esp, 8
+        lea      ecx, [esp + 0x10]
+        push     eax
+        push     ecx
+        call     func_004cc960
+        mov      edx, dword ptr [edi + 0xc]
+        add      esp, 8
+        inc      edx
+        lea      eax, [esp + 0x10]
+        push     edx
+        push     eax
+        call     func_004cca50
+        add      esp, 8
+        xor      esi, esi
+        mov      eax, 2
+        jmp      short L_cc91
+    L_cc2d:
+        cmp      ebx, dword ptr [edi]
+        jl       short L_cc6b
+        lea      ecx, [esp + 0x10]
+        push     ecx
+        call     func_004cca20
+        mov      ebx, dword ptr [esp + 0x14]
+        mov      edx, dword ptr [edi + 0xc]
+        add      esp, 4
+        lea      eax, [esp + 0x10]
+        or       ebx, 0x80000000
+        push     edx
+        push     eax
+        mov      dword ptr [esp + 0x18], ebx
+        call     func_004cca50
+        mov      esi, dword ptr [edi + 0x14]
+        mov      eax, dword ptr [edi]
+        add      esp, 8
+        add      esi, eax
+        mov      eax, 1
+        jmp      short L_cc91
+    L_cc6b:
+        mov      esi, dword ptr [edi + 0x14]
+        mov      ecx, dword ptr [edi + 0xc]
+        add      esi, ebx
+        mov      ebx, dword ptr [esp + 0x10]
+        lea      edx, [esp + 0x10]
+        and      ebx, 0x7fffffff
+        push     ecx
+        push     edx
+        mov      dword ptr [esp + 0x18], ebx
+        call     func_004cca50
+        add      esp, 8
+    L_cc8f:
+        xor      eax, eax
+    L_cc91:
+        mov      edx, dword ptr [edi + 0xc]
+        mov      ecx, 0x1f
+        sub      ecx, edx
+        mov      edx, dword ptr [esp + 0x10]
+        shl      esi, cl
+        mov      edi, dword ptr [edi + 0x10]
+        neg      ebp
+        sbb      ebp, ebp
+        and      ebp, 0x80000000
+        or       esi, ebp
+        or       esi, edx
+        cmp      edi, 0x40
+        jne      short L_cccc
+        mov      ecx, dword ptr [esp + 0x30]
+        mov      edx, dword ptr [esp + 0x14]
+        mov      dword ptr [ecx + 4], esi
+        mov      dword ptr [ecx], edx
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x18
+        ret
+    L_cccc:
+        cmp      edi, 0x20
+        jne      short L_ccd7
+        mov      ecx, dword ptr [esp + 0x30]
+        mov      dword ptr [ecx], esi
+    L_ccd7:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x18
+        ret
+    }
+}

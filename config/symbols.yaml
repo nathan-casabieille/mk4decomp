@@ -16235,10 +16235,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ccb10
-    name: func_004ccb10
+    name: FpExtendedToFloat_004ccb10
     size: 463
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ccce0
     name: ForwardWithLiteral_004ccce0
     size: 24
