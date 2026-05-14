@@ -81193,3 +81193,174 @@ __declspec(naked) void FiveTableInitChainBracketed_004774f0(void)
         ret
     }
 }
+
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledFromArgDualSibStore_00490890(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void CallSetPause_0041f830(void);
+extern void GuardedPushCall_0049c200(void);
+extern void DualMul10AndDispatchChain_0049c220(void);
+extern void ArgSar_Set1_Jmp_0049c6d0(void);
+
+__declspec(naked) void FivePackedSubdispatchInstallSelf_0049c040(void)
+{
+    __asm
+    {
+        mov     ecx, dword ptr [g_data_00542060]
+        mov     eax, 0x30e
+        mov     dword ptr [g_data_0054206c], eax
+        push    0x4f26e0
+        mov     dword ptr [ecx*4 + 0x74], eax
+        call    ArgSarStoreJmp_004594f0
+        add     esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpsi_sub2:
+        push    0x4f2710
+        call    ScaledFromArgDualSibStore_00490890
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpsi_sub2_ret
+        mov     eax, dword ptr [g_state_004d57ac]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], offset L_fpsi_entry3
+        jmp     InstallSelfIndirectJmp_0048f3f0
+    L_fpsi_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpsi_entry3:
+        mov     eax, dword ptr [g_data_00542060]
+        xor     edx, edx
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], edx
+        cmp     ecx, edx
+        je      short L_fpsi_install3
+        jmp     FiveCallGuardSetTail_0046f6b0
+    L_fpsi_install3:
+        mov     dword ptr [eax + 8], offset L_fpsi_entry3
+        mov     ecx, dword ptr [g_data_00542060]
+        push    edi
+        mov     edi, offset L_fpsi_entry3
+        mov     dword ptr [ecx*4 + 0x84], 1
+        mov     ecx, dword ptr [eax + 4]
+        add     edi, 0x1000000
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [ecx*4], edi
+        mov     ecx, dword ptr [g_data_00542044]
+        inc     ecx
+        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [eax + 4], ecx
+        mov     eax, dword ptr [g_data_00542060]
+        mov     dword ptr [eax*4 + 0x84], edx
+        call    SlotEvent3EntryChain_0046fdf0
+        mov     dword ptr [g_data_00541e6c], 1
+        pop     edi
+        ret
+    L_fpsi_sub4:
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsi_sub4_ret
+        push    0x4f2718
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpsi_sub4_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_fpsi_sub4_jmpAlt
+        jmp     CallSetPause_0041f830
+    L_fpsi_sub4_jmpAlt:
+        jmp     GuardedPushCall_0049c200
+    L_fpsi_sub4_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_fpsi_sub5:
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsi_sub5_ret
+        push    0x4f2728
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpsi_sub5_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_fpsi_sub5_callBranch
+        jmp     CallSetPause_0041f830
+    L_fpsi_sub5_callBranch:
+        call    DualMul10AndDispatchChain_0049c220
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsi_sub5_ret
+        push    0x4f2738
+        call    ArgSar_Set1_Jmp_0049c6d0
+        add     esp, 4
+    L_fpsi_sub5_ret:
+        ret
+        nop
+        nop
+    L_fpsi_sub6:
+        call    DualCmpSwapStore_0049c5a0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_fpsi_sub6_ret
+        push    0x4f2748
+        call    ScaledStackCallPause_0049c360
+        mov     eax, dword ptr [g_data_00541e6c]
+        add     esp, 4
+        test    eax, eax
+        jne     short L_fpsi_sub6_ret
+        test    byte ptr [g_data_0054208c], 4
+        je      short L_fpsi_sub6_alt
+        jmp     CallSetPause_0041f830
+    L_fpsi_sub6_alt:
+        jmp     GuardedPushCall_0049c200
+    L_fpsi_sub6_ret:
+        ret
+    }
+}
