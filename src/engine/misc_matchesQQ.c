@@ -85176,3 +85176,153 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         ret
     }
 }
+
+extern unsigned int g_data_00541d6c;
+extern unsigned int g_data_0053a278;
+extern unsigned int g_data_005380a4;
+extern unsigned int g_data_00537e98;
+extern void func_00458440(void);
+extern void MStackPush2ClampLookup_00459160(void);
+extern void TripleEntryDispatch_00458810(void);
+
+__declspec(naked) void GuardedStateChangePair_00458630(void)
+{
+    __asm
+    {
+        mov     eax, dword ptr [g_data_00541d6c]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_gscp_check27
+        jmp     CallSetPause_0041f830
+    L_gscp_check27:
+        mov     edx, dword ptr [g_data_0053a278]
+        cmp     edx, 0x27
+        mov     dword ptr [g_data_0054206c], edx
+        je      L_gscp_dec
+        mov     ecx, dword ptr [g_data_005380a4]
+        mov     eax, offset g_data_005380b0
+        shr     eax, 2
+        cmp     ecx, 2
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542070], ecx
+        jg      short L_gscp_inst
+        add     eax, ecx
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], edx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_data_00542070]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4], ecx
+        call    MStackPush2ClampLookup_00459160
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_gscp_ret
+        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [ecx*4]
+        dec     ecx
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], ecx
+        cmp     eax, 2
+        mov     dword ptr [g_data_00542070], eax
+        jle     short L_gscp_setSlot
+    L_gscp_inst:
+        mov     eax, 1
+        push    0
+        push    offset L_gscp_sub2
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [g_data_00541d6c], eax
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        jmp     CallSetPause_0041f830
+    L_gscp_setSlot:
+        mov     dword ptr [g_data_005380a4], eax
+        call    func_00458440
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gscp_ret
+        push    0
+        push    offset L_gscp_sub2
+        call    StoreTwoCall_0049cb40
+        add     esp, 8
+        jmp     CallSetPause_0041f830
+    L_gscp_dec:
+        mov     edx, dword ptr [g_data_005380a4]
+        lea     ecx, [edx - 1]
+        test    ecx, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        jge     short L_gscp_decOk
+        jmp     CallSetPause_0041f830
+    L_gscp_decOk:
+        mov     eax, offset g_data_005380b0
+        mov     dword ptr [g_data_005380a4], ecx
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_data_0054206c], 0x27
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [eax*4], 0x27
+        call    func_00458440
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gscp_ret
+        jmp     CallSetPause_0041f830
+    L_gscp_ret:
+        ret
+        nop
+        nop
+        nop
+    L_gscp_sub2:
+        mov     eax, dword ptr [g_data_00542060]
+        shl     eax, 2
+        mov     ecx, dword ptr [eax + 0x84]
+        mov     dword ptr [eax + 0x84], 0
+        test    ecx, ecx
+        je      short L_gscp_sub2_inst
+        mov     dword ptr [g_data_00542074], 0x264
+        call    Push16Call_00489f50
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_gscp_sub2_ret
+        jmp     CallSetPause_0041f830
+    L_gscp_sub2_inst:
+        mov     ecx, 1
+        mov     dword ptr [eax + 8], offset L_gscp_sub2
+        mov     dword ptr [eax + 0x84], ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_data_00541e6c], ecx
+    L_gscp_sub2_ret:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_gscp_sub3:
+        mov     eax, dword ptr [g_data_00537e98]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        je      short L_gscp_sub3_jmp
+        jmp     CallSetPause_0041f830
+    L_gscp_sub3_jmp:
+        jmp     TripleEntryDispatch_00458810
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_gscp_sub4:
+        mov     eax, dword ptr [g_data_00537e98]
+        test    eax, eax
+        mov     dword ptr [g_data_0054206c], eax
+        jne     short L_gscp_sub4_jmp
+        jmp     CallSetPause_0041f830
+    L_gscp_sub4_jmp:
+        jmp     TripleEntryDispatch_00458810
+    }
+}

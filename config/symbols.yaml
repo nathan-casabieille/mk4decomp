@@ -5968,10 +5968,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00458630
-    name: func_00458630
+    name: GuardedStateChangePair_00458630
     size: 472
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458810
     name: TripleEntryDispatch_00458810
     size: 104
