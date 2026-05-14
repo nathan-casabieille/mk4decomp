@@ -113405,3 +113405,263 @@ __declspec(naked) void FpExtendedToFloat_004ccb10(void)
         ret
     }
 }
+
+/* ============================================================
+ * SehUnwindCluster_004c6ae0 — 464b boot (packed: 7 SEH helpers).
+ *
+ * MSVC 5.0 SEH (Structured Exception Handling) primitives,
+ * unified under a single symbol because of their mutual calls
+ * and the SEH-handler register prologues. Functions:
+ *
+ *   1. 0x4c6ae0 (~24b): Top-level __try frame setup. Pushes the
+ *      __try chain, registers L_6af8 (continuation) and the
+ *      caller's frame, then `call func_004d12de` (the unwind
+ *      kernel). On return, pops the saved registers and ret.
+ *
+ *   2. 0x4c6afc (~38b): SEH filter check. If [ctx+4] & 6 set,
+ *      writes the dispatcher param into the OUT slot and
+ *      returns 3 (continue search); else returns 1 (continue
+ *      execution).
+ *
+ *   3. 0x4c6b22 (~93b): __finally walker. Walks the per-frame
+ *      scope-table at [reg+0xc], invoking unwind handlers up to
+ *      the target level. Records the most-recently-active handler
+ *      via call L_6bb6 (helper 5).
+ *
+ *   4. 0x4c6b7f (~45b): SEH handler magic-marker probe. Checks
+ *      whether fs:[0] points to a frame with handler =
+ *      OFFSET L_6b00 (the filter) and matching frame-token, used
+ *      to detect a re-entered exception during dispatch.
+ *
+ *   5. 0x4c6bac/L_6bb6 (~25b): Dual-entry __exhandler register.
+ *      Stores (eax=handler, [ebp+8] or ecx=token, ebp=frame) into
+ *      g_data_00520050, then returns via `ret 4`.
+ *
+ *   6. 0x4c6bd4 (~133b): __CallSEHHandler — the SEH state-machine
+ *      entry. Walks the dispatch table, invoking filters, on
+ *      handler-match calls into L_6ae0 (unwind to handler frame),
+ *      then L_6b22 (run inner __finally), then re-records via
+ *      L_6bb6 and invokes the handler body. Returns 0/1.
+ *
+ *   7. 0x4c6c91 (~13b): __exhandler register thin wrapper that
+ *      forwards (ctx->handler, ctx->frame) into helper 3 (L_6b22).
+ *
+ * Several helpers reference each other via `call L_<addr>`; the
+ * cluster also uses fs:[0] SEH-chain pointers directly. Two
+ * `push OFFSET L_6af8` and `push OFFSET L_6b00` sites embed
+ * function-local DIR32 relocs to internal labels.
+ *
+ * Linear (per helper), no mstack. Tail padding: 0xcc int3 bytes.
+ * ============================================================ */
+
+extern void func_004d12de(void);
+extern unsigned int g_data_00520050;
+
+__declspec(naked) void SehUnwindCluster_004c6ae0(void)
+{
+    __asm {
+    /* Helper 1: __try frame setup */
+    L_6ae0:
+        push     ebp
+        mov      ebp, esp
+        push     ebx
+        push     esi
+        push     edi
+        push     ebp
+        push     0
+        push     0
+        push     OFFSET L_6af8
+        push     dword ptr [ebp + 8]
+        call     func_004d12de
+    L_6af8:
+        pop      ebp
+        pop      edi
+        pop      esi
+        pop      ebx
+        mov      esp, ebp
+        pop      ebp
+        ret
+    /* Helper 2: SEH filter check */
+    L_6b00:
+        mov      ecx, dword ptr [esp + 4]
+        test     dword ptr [ecx + 4], 6
+        mov      eax, 1
+        je       short L_6b21
+        mov      eax, dword ptr [esp + 8]
+        mov      edx, dword ptr [esp + 0x10]
+        mov      dword ptr [edx], eax
+        mov      eax, 3
+    L_6b21:
+        ret
+    /* Helper 3: __finally walker */
+    L_6b22:
+        push     ebx
+        push     esi
+        push     edi
+        mov      eax, dword ptr [esp + 0x10]
+        push     eax
+        push     -2
+        push     OFFSET L_6b00
+        push     dword ptr fs:[0]
+        mov      dword ptr fs:[0], esp
+    L_6b3f:
+        mov      eax, dword ptr [esp + 0x20]
+        mov      ebx, dword ptr [eax + 8]
+        mov      esi, dword ptr [eax + 0xc]
+        cmp      esi, -1
+        je       short L_6b7c
+        cmp      esi, dword ptr [esp + 0x24]
+        je       short L_6b7c
+        lea      esi, [esi + esi*2]
+        mov      ecx, dword ptr [ebx + esi*4]
+        mov      dword ptr [esp + 8], ecx
+        mov      dword ptr [eax + 0xc], ecx
+        cmp      dword ptr [ebx + esi*4 + 4], 0
+        jne      short L_6b7a
+        push     0x101
+        mov      eax, dword ptr [ebx + esi*4 + 8]
+        call     L_6bb6
+        call     dword ptr [ebx + esi*4 + 8]
+    L_6b7a:
+        jmp      short L_6b3f
+    L_6b7c:
+        pop      dword ptr fs:[0]
+        add      esp, 0xc
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    /* Helper 4: SEH magic-marker probe */
+        xor      eax, eax
+        mov      ecx, dword ptr fs:[0]
+        cmp      dword ptr [ecx + 4], OFFSET L_6b00
+        jne      short L_6bac
+        mov      edx, dword ptr [ecx + 0xc]
+        mov      edx, dword ptr [edx + 0xc]
+        cmp      dword ptr [ecx + 8], edx
+        jne      short L_6bac
+        mov      eax, 1
+    L_6bac:
+        ret
+    /* Helper 5: dual-entry __exhandler register */
+        push     ebx
+        push     ecx
+        mov      ebx, OFFSET g_data_00520050
+        jmp      short L_6bc0
+    L_6bb6:
+        push     ebx
+        push     ecx
+        mov      ebx, OFFSET g_data_00520050
+        mov      ecx, dword ptr [ebp + 8]
+    L_6bc0:
+        mov      dword ptr [ebx + 8], ecx
+        mov      dword ptr [ebx + 4], eax
+        mov      dword ptr [ebx + 0xc], ebp
+        pop      ecx
+        pop      ebx
+        ret      4
+        int      3
+        int      3
+        /* Magic SEH marker bytes "VC20XC00" between helpers 5 and 6. */
+        _emit    0x56
+        _emit    0x43
+        _emit    0x32
+        _emit    0x30
+        _emit    0x58
+        _emit    0x43
+        _emit    0x30
+        _emit    0x30
+    /* Helper 6: __CallSEHHandler */
+        push     ebp
+        mov      ebp, esp
+        sub      esp, 8
+        push     ebx
+        push     esi
+        push     edi
+        push     ebp
+        cld
+        mov      ebx, dword ptr [ebp + 0xc]
+        mov      eax, dword ptr [ebp + 8]
+        test     dword ptr [eax + 4], 6
+        jne      short L_6c78
+        mov      dword ptr [ebp - 8], eax
+        mov      eax, dword ptr [ebp + 0x10]
+        mov      dword ptr [ebp - 4], eax
+        lea      eax, [ebp - 8]
+        mov      dword ptr [ebx - 4], eax
+        mov      esi, dword ptr [ebx + 0xc]
+        mov      edi, dword ptr [ebx + 8]
+    L_6c0b:
+        cmp      esi, -1
+        je       short L_6c71
+        lea      ecx, [esi + esi*2]
+        cmp      dword ptr [edi + ecx*4 + 4], 0
+        je       short L_6c5f
+        push     esi
+        push     ebp
+        lea      ebp, [ebx + 0x10]
+        call     dword ptr [edi + ecx*4 + 4]
+        pop      ebp
+        pop      esi
+        mov      ebx, dword ptr [ebp + 0xc]
+        or       eax, eax
+        je       short L_6c5f
+        js       short L_6c6a
+        mov      edi, dword ptr [ebx + 8]
+        push     ebx
+        call     L_6ae0
+        add      esp, 4
+        lea      ebp, [ebx + 0x10]
+        push     esi
+        push     ebx
+        call     L_6b22
+        add      esp, 8
+        lea      ecx, [esi + esi*2]
+        push     1
+        mov      eax, dword ptr [edi + ecx*4 + 8]
+        call     L_6bb6
+        mov      eax, dword ptr [edi + ecx*4]
+        mov      dword ptr [ebx + 0xc], eax
+        call     dword ptr [edi + ecx*4 + 8]
+    L_6c5f:
+        mov      edi, dword ptr [ebx + 8]
+        lea      ecx, [esi + esi*2]
+        mov      esi, dword ptr [edi + ecx*4]
+        jmp      short L_6c0b
+    L_6c6a:
+        mov      eax, 0
+        jmp      short L_6c8d
+    L_6c71:
+        mov      eax, 1
+        jmp      short L_6c8d
+    L_6c78:
+        push     ebp
+        lea      ebp, [ebx + 0x10]
+        push     -1
+        push     ebx
+        call     L_6b22
+        add      esp, 8
+        pop      ebp
+        mov      eax, 1
+    L_6c8d:
+        pop      ebp
+        pop      edi
+        pop      esi
+        pop      ebx
+        mov      esp, ebp
+        pop      ebp
+        ret
+    /* Helper 7: __exhandler thin wrapper */
+        push     ebp
+        mov      ecx, dword ptr [esp + 8]
+        mov      ebp, dword ptr [ecx]
+        mov      eax, dword ptr [ecx + 0x1c]
+        push     eax
+        mov      eax, dword ptr [ecx + 0x18]
+        push     eax
+        call     L_6b22
+        add      esp, 8
+        pop      ebp
+        ret      4
+    }
+}

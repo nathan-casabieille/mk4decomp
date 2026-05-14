@@ -15652,10 +15652,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6ae0
-    name: func_004c6ae0
+    name: SehUnwindCluster_004c6ae0
     size: 464
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6cb0
     name: entry
     size: 424
