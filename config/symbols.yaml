@@ -12093,10 +12093,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049f1f0
-    name: func_0049f1f0
+    name: GameStateTick_0049f1f0
     size: 112
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f260
     name: StateCascadeDualThunkContin_0049f260
     size: 306

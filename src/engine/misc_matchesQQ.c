@@ -108922,3 +108922,55 @@ __declspec(naked) void GlidePolyClip_004ae560(void)
     }
 }
 
+/* ============================================================
+ * GameStateTick_0049f1f0 — 112b game.
+ *
+ * Per-frame game-state tick entry point. Reads the active
+ * state index from g_data_00541fc0 + g_data_00535e48, then
+ * indirectly dispatches the state's tick handler via a
+ * function-pointer slot at [state*4 + 4]. After the handler:
+ *   - if abort flag g_data_00541e6c set → tail-jump to
+ *     func_0049f33b (cleanup/restore path)
+ *   - else if g_data_0054208c bit 0 clear → tail-jump to
+ *     func_0049f336 (state-transition fallthrough)
+ *   - else falls through to the state-transition body
+ *     (continued in adjacent function 0049f260)
+ *
+ * Linear no mstack. Returns: void (via tail-jumps).
+ * ============================================================ */
+
+extern void func_0049f336(void);
+extern void func_0049f33b(void);
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00541fc0;
+
+__declspec(naked) void GameStateTick_0049f1f0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00541fc0]
+        mov      ecx, dword ptr [g_data_00535e48]
+        mov      dword ptr [g_data_00542048], eax
+        add      eax, ecx
+        push     ebx
+        push     esi
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_00542048], eax
+        mov      eax, dword ptr [eax*4 + 4]
+        mov      dword ptr [g_data_00542044], eax
+        call     eax
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      func_0049f33b
+        mov      al, byte ptr [g_data_0054208c]
+        mov      ebx, 1
+        test     al, bl
+        je       func_0049f336
+        mov      edx, dword ptr [g_data_00542048]
+        mov      esi, 0x10
+        mov      eax, dword ptr [edx*4]
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_0054206c], eax
+    }
+}
+
