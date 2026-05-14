@@ -96794,4 +96794,175 @@ __declspec(naked) void TristripBatchEmit_004bbb80(void)
     }
 }
 
+/* ============================================================
+ * BillboardChainRender_004bb030 — 543b engine.render.
+ *
+ * Per-frame billboard-chain renderer. Bailable on pause flag
+ * g_data_007af92c. Walks a linked list at g_data_00542044
+ * (next ptr at slot 0), each node carrying a payload index
+ * into g_data_00542048 + per-billboard mesh slot. Computes
+ * view-rel position from g_data_00ab4398/9c/a0 (>>16 / >>7),
+ * fills g_data_007af958/95a/95c (quad corner 0..2 x/y/z) plus
+ * 95e/960/962 (corner 3 x/y/z) plus 964/966/968 (final corner
+ * z + dy), calls func_004b2af0 (project all 4). Then if camera
+ * positional gates (984/988/98c) are all positive, packs the
+ * 4 byte colors + intensity from g_data_007af9b0/4/8/bc into
+ * a 0x10-byte scratch and calls func_004c3360 (DrawTriStrip).
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_data_004f6238;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00ab4e60;
+
+__declspec(naked) void BillboardChainRender_004bb030(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_007af92c]
+        sub      esp, 0x20
+        push     ebx
+        xor      ebx, ebx
+        cmp      eax, ebx
+        jne      L_b24a
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00ab4398]
+        mov      edx, dword ptr [g_data_00ab439c]
+        push     edi
+        mov      edi, dword ptr [eax*4 + 0x2c]
+        mov      eax, dword ptr [g_data_00ab43a0]
+        sar      eax, 7
+        mov      dword ptr [g_data_007af9ac], eax
+        mov      eax, dword ptr [g_data_00ab4e60]
+        sar      ecx, 0x10
+        sar      edx, 0x10
+        cmp      eax, 0x10
+        push     esi
+        mov      dword ptr [g_data_00542044], edi
+        mov      dword ptr [g_data_007af9a4], ecx
+        mov      dword ptr [g_data_007af9a8], edx
+        jl       L_b098
+        cdq
+        and      edx, 7
+        add      eax, edx
+        sar      eax, 3
+        dec      eax
+        jmp      L_b09a
+    L_b098:
+        xor      eax, eax
+    L_b09a:
+        mov      ecx, eax
+        mov      word ptr [esp + 0x26], 0x60
+        shl      ecx, 5
+        or       ecx, eax
+        mov      word ptr [esp + 0x1e], 0x40
+        shl      ecx, 5
+        or       ecx, eax
+        mov      word ptr [esp + 0x20], cx
+    L_b0b9:
+        mov      eax, dword ptr [edi*4 + 0xc]
+        cmp      eax, ebx
+        mov      dword ptr [g_data_0054206c], eax
+        je       L_b233
+        mov      edx, dword ptr [eax*4 + 4]
+        mov      dword ptr [g_data_00542048], edx
+        mov      ecx, dword ptr [eax*4 + 0x18]
+        mov      eax, dword ptr [edx + 4]
+        cmp      eax, ebx
+        je       L_b233
+        shl      ecx, 4
+        xor      edx, edx
+        mov      dl, byte ptr [ecx + eax + 0xe]
+        lea      esi, [ecx + eax + 0xc]
+        mov      ecx, dword ptr [eax + 4]
+        lea      edx, [ecx + edx*4]
+        mov      cl, byte ptr [esp + 0x26]
+        mov      al, byte ptr [edx + eax + 0xa]
+        xor      al, cl
+        and      eax, 0xf
+        xor      word ptr [esp + 0x26], ax
+        mov      cl, byte ptr [esi + 1]
+        and      ecx, 3
+        mov      dl, byte ptr [ecx + g_data_004f6238]
+        mov      ecx, dword ptr [esp + 0x26]
+        and      dl, 3
+        and      ecx, 0xfe7f
+        movsx    ax, dl
+        shl      eax, 7
+        or       eax, ecx
+        mov      word ptr [esp + 0x26], ax
+        mov      eax, dword ptr [edi*4 + 4]
+        mov      cx, word ptr [esi + 8]
+        mov      edx, dword ptr [edi*4 + 8]
+        mov      di, word ptr [esi + 6]
+        sar      eax, 7
+        add      cx, ax
+        mov      ax, word ptr [esi + 0xa]
+        sar      edx, 7
+        add      ax, dx
+        mov      dx, word ptr [esi + 4]
+        add      dx, cx
+        add      di, ax
+        mov      word ptr [g_data_007af958], cx
+        mov      word ptr [g_data_007af95e], ax
+        mov      word ptr [g_data_007af964], bx
+        mov      word ptr [g_data_007af95a], dx
+        mov      word ptr [g_data_007af960], ax
+        mov      word ptr [g_data_007af966], bx
+        mov      word ptr [g_data_007af95c], dx
+        mov      word ptr [g_data_007af962], di
+        mov      word ptr [g_data_007af968], bx
+        call     func_004b2af0
+        mov      dl, byte ptr [esi + 0xc]
+        mov      byte ptr [esp + 0x18], dl
+        mov      al, byte ptr [esi + 0xd]
+        mov      byte ptr [esp + 0x19], al
+        mov      cl, byte ptr [esi + 0xe]
+        add      cl, byte ptr [esi + 0xc]
+        mov      byte ptr [esp + 0x1c], cl
+        mov      dl, byte ptr [esi + 0xf]
+        mov      al, byte ptr [esi + 0xd]
+        mov      ecx, dword ptr [g_data_007af9b8]
+        add      dl, al
+        mov      eax, dword ptr [g_data_007af9b4]
+        mov      dword ptr [esp + 0x10], ecx
+        mov      cl, byte ptr [g_data_007af9b0]
+        mov      dword ptr [esp + 0xc], eax
+        mov      eax, dword ptr [esp + 0x26]
+        and      ecx, 1
+        and      eax, 0xfbff
+        shl      ecx, 0xa
+        or       eax, ecx
+        mov      byte ptr [esp + 0x1d], dl
+        mov      edx, dword ptr [g_data_007af9bc]
+        mov      word ptr [esp + 0x26], ax
+        mov      eax, dword ptr [g_data_007af984]
+        mov      dword ptr [esp + 0x14], edx
+        cmp      eax, ebx
+        jle      L_b22d
+        cmp      dword ptr [g_data_007af988], ebx
+        jle      L_b22d
+        cmp      dword ptr [g_data_007af98c], ebx
+        jle      L_b22d
+        lea      edx, [esp + 0xc]
+        push     edx
+        call     func_004c3360
+        add      esp, 4
+    L_b22d:
+        mov      edi, dword ptr [g_data_00542044]
+    L_b233:
+        mov      edi, dword ptr [edi*4]
+        cmp      edi, ebx
+        mov      dword ptr [g_data_00542044], edi
+        jne      L_b0b9
+        pop      esi
+        pop      edi
+    L_b24a:
+        pop      ebx
+        add      esp, 0x20
+        ret
+    }
+}
+
 

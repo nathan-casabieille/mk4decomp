@@ -14629,10 +14629,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bb030
-    name: func_004bb030
+    name: BillboardChainRender_004bb030
     size: 543
     group: engine.render
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bb250
     name: DrawMeshBlock
     size: 1070
