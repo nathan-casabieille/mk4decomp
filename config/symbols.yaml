@@ -772,10 +772,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00408e70
-    name: func_00408e70
+    name: ChainNodeAdvanceCallback_00408e70
     size: 609
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004090e0
     name: MStackPush4LLWalkPop4_004090e0
     size: 384

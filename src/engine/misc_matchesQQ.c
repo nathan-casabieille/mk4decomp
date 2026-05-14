@@ -89490,3 +89490,208 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         ret
     }
 }
+
+/* ============================================================
+ * ChainNodeAdvanceCallback_00408e70 — 609b boot.
+ *
+ * Walks the chain-of-records starting at g_data_00542048,
+ * advancing through up to 3 entries based on the low-2 bits of
+ * the head record's [0] field. Final step computes a callback
+ * address from the lower 24 bits of a 4-byte chunk (sar by 2 for
+ * packed_ptr) and calls it indirectly. Each advance is pause-gated.
+ *
+ *   - Read header[0]; low 2 bits != 0 → set "long-path" flag;
+ *   - Save snapshots of g_data_00542048, g_data_00542044 into
+ *     g_data_00542054 / 0x542050;
+ *   - If long-path: jump straight to L_main_chain;
+ *   - Else: advance g_data_00542048 += 6, g_data_00542044 += 0xC;
+ *     if bit 0 of original header was 0: call func_00425130;
+ *     pause-gate;
+ *
+ *   - Re-read header (post-advance); bit 1 check → call
+ *     func_00425170 with g_data_00542050+0xF as new ptr;
+ *     pause-gate;
+ *
+ *   - L_main_chain: walk chain ptr at slot[+0x04] (called
+ *     g_data_00542078 cache) using slot[+0x0c] as countdown;
+ *     advance, fetch [+8] for the next node; for each: do a
+ *     packed_ptr (>>2) call to func_00406ce0 with the 24-bit
+ *     payload; pause-gate.
+ *
+ *   - Update bit 0 of g_state_0054208c based on sign bit of the
+ *     payload value; mask top byte to extract low 7 bits, dec,
+ *     store back to slot[+0x0c].
+ *
+ *   - Finally: read [g_data_0054204c]*4 → packed payload; extract
+ *     top byte (sar 0x18) into g_data_0054206c; low 24 bits as
+ *     dispatch address eax; call eax (indirect).
+ *
+ *   pop edi/esi/ebp; ret.
+ * ============================================================ */
+
+extern void func_00425130(void);
+extern void func_00425170(void);
+extern void func_00406ce0(void);
+
+__declspec(naked) void ChainNodeAdvanceCallback_00408e70(void)
+{
+    __asm {
+        mov     ecx, dword ptr [g_data_00542048]
+        push    ebp
+        push    esi
+        push    edi
+        mov     eax, dword ptr [ecx*4]
+        mov     edi, ecx
+        mov     edx, eax
+        mov     dword ptr [g_data_0054206c], eax
+        and     dl, 3
+        mov     dword ptr [g_data_00542054], edi
+        neg     dl
+        sbb     edx, edx
+        and     eax, 1
+        inc     edx
+        mov     ebp, eax
+        mov     esi, edx
+        mov     edx, dword ptr [g_data_00542044]
+        test    esi, esi
+        mov     dword ptr [g_data_00542098], esi
+        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_data_00542094], ebp
+        jne     L_cnac_main_chain
+        xor     eax, eax
+        test    ebp, ebp
+        sete    al
+        add     ecx, 6
+        add     edx, 0x0C
+        test    eax, eax
+        mov     dword ptr [g_data_00542098], eax
+        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_data_0054204c], edx
+        jne     L_cnac_after_25130
+        call    func_00425130
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_cnac_ret
+        mov     edi, dword ptr [g_data_00542054]
+    L_cnac_after_25130:
+        mov     eax, dword ptr [edi*4]
+        lea     ecx, [edi + 9]
+        mov     dword ptr [g_data_0054206c], eax
+        and     eax, 2
+        mov     dword ptr [g_data_00542094], eax
+        mov     eax, 0
+        sete    al
+        test    eax, eax
+        mov     dword ptr [g_data_00542098], eax
+        mov     dword ptr [g_data_00542048], ecx
+        jne     L_cnac_after_25170
+        mov     edx, dword ptr [g_data_00542050]
+        lea     eax, [edx + 0x0F]
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_0054204c], eax
+        call    func_00425170
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_cnac_ret
+        mov     edi, dword ptr [g_data_00542054]
+    L_cnac_after_25170:
+        mov     eax, dword ptr [g_data_00542050]
+        mov     ecx, edi
+        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_data_00542048], ecx
+    L_cnac_main_chain:
+        mov     eax, dword ptr [ecx*4 + 4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542078], eax
+        je      L_cnac_ret
+        mov     eax, dword ptr [ecx*4 + 0x0C]
+        xor     edx, edx
+        test    eax, eax
+        setg    dl
+        dec     eax
+        mov     dword ptr [g_data_00542098], edx
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [ecx*4 + 0x0C], eax
+        mov     edx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_data_00542098]
+        test    ecx, ecx
+        mov     eax, dword ptr [edx*4 + 8]
+        mov     dword ptr [g_data_0054206c], eax
+        jne     L_cnac_ret
+        mov     esi, dword ptr [g_data_00542078]
+        test    eax, eax
+        jne     L_cnac_have_8
+        mov     eax, esi
+        mov     dword ptr [g_data_0054206c], eax
+    L_cnac_have_8:
+        mov     ecx, eax
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     eax, dword ptr [eax*4]
+        test    eax, eax
+        mov     dword ptr [g_data_00542074], eax
+        jne     L_cnac_have_payload
+        mov     ecx, esi
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     eax, dword ptr [esi*4]
+        mov     dword ptr [g_data_00542074], eax
+    L_cnac_have_payload:
+        inc     ecx
+        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [edx*4 + 8], ecx
+        mov     ecx, dword ptr [g_data_00542074]
+        mov     eax, ecx
+        and     ecx, 0x00FFFFFF
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_data_00542074], ecx
+        je      L_cnac_after_call_06ce0
+        sar     ecx, 2
+        mov     dword ptr [g_data_0054206c], ecx
+        call    func_00406ce0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_cnac_ret
+        mov     eax, dword ptr [g_data_00542070]
+    L_cnac_after_call_06ce0:
+        mov     ecx, dword ptr [g_state_0054208c]
+        test    eax, 0x80000000
+        je      L_cnac_clear_bit0
+        or      ecx, 1
+        jmp     L_cnac_after_bit0
+    L_cnac_clear_bit0:
+        and     ecx, 0xFFFFFFFE
+    L_cnac_after_bit0:
+        mov     dword ptr [g_state_0054208c], ecx
+        not     ecx
+        shr     eax, 0x18
+        and     ecx, 1
+        and     eax, 0x7F
+        mov     dword ptr [g_data_00542098], ecx
+        mov     ecx, dword ptr [g_data_00542048]
+        dec     eax
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [ecx*4 + 0x0C], eax
+        mov     eax, dword ptr [g_data_00542098]
+        test    eax, eax
+        jne     L_cnac_ret
+        mov     eax, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [eax*4]
+        inc     eax
+        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [ecx*4 + 8], eax
+        mov     eax, dword ptr [g_data_00542070]
+        mov     edx, eax
+        and     eax, 0x00FFFFFF
+        sar     edx, 0x18
+        mov     dword ptr [g_data_0054206c], edx
+        mov     dword ptr [g_data_00542070], eax
+        call    eax
+    L_cnac_ret:
+        pop     edi
+        pop     esi
+        pop     ebp
+        ret
+    }
+}
