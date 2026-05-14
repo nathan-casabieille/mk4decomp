@@ -15010,10 +15010,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bec30
-    name: func_004bec30
+    name: EcmFrameDecode_004bec30
     size: 1077
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004bf070
     name: MovAndStoreRetJmp_004bf070
     size: 21
