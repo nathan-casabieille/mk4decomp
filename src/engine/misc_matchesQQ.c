@@ -98384,4 +98384,205 @@ __declspec(naked) void VoiceStreamingCacheStart_004c3490(void)
     }
 }
 
+/* ============================================================
+ * ScanlineTexBlitAlpha_004c0b70 — 662b engine.render.
+ *
+ * Alpha-blend variant of ScanlineTexBlit_004c0920. Same clip
+ * and Q16 step setup, but per-pixel: blends src and dst using
+ * (src>>1) + (dst&0x7bde)>>1 in 5-6-5 mode (when 004ffd4c set)
+ * or (src>>1)&0x3def + (dst&0x7bde)>>1 in 5-5-5 mode (else).
+ *
+ * Linear no mstack. Returns: void.
+ * ============================================================ */
+
+extern unsigned int g_data_004ffd4c;
+
+__declspec(naked) void ScanlineTexBlitAlpha_004c0b70(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00f85b50]
+        push     ebx
+        push     esi
+        push     edi
+        test     eax, eax
+        je       L_0e02
+        mov      edi, dword ptr [g_data_00f70fa8]
+        mov      eax, dword ptr [g_data_004ffd44]
+        cmp      edi, eax
+        jge      L_0e02
+        mov      eax, dword ptr [g_data_00f70fb8]
+        mov      ecx, dword ptr [g_data_004ffd48]
+        cmp      eax, ecx
+        jge      L_0e02
+        mov      ecx, dword ptr [g_data_00f70fb0]
+        test     ecx, ecx
+        jl       L_0e02
+        mov      esi, dword ptr [g_data_00f70fc0]
+        test     esi, esi
+        jl       L_0e02
+        sub      ecx, edi
+        sub      esi, eax
+        cmp      ecx, 1
+        mov      dword ptr [g_data_00b2d00c], ecx
+        mov      dword ptr [g_data_00b2d008], esi
+        jl       L_0e02
+        cmp      esi, 1
+        jl       L_0e02
+        mov      eax, dword ptr [g_data_00f70f98]
+        mov      edx, dword ptr [g_data_00f70f88]
+        shl      eax, 0x10
+        mov      dword ptr [g_data_00f70f98], eax
+        mov      eax, dword ptr [g_data_00f70f90]
+        shl      eax, 0x10
+        shl      edx, 0x10
+        mov      dword ptr [g_data_00f70f90], eax
+        sub      eax, edx
+        mov      dword ptr [g_data_00f70f88], edx
+        mov      ebx, dword ptr [g_data_00f70fa0]
+        cdq
+        idiv     ecx
+        mov      edx, dword ptr [g_data_00f70f98]
+        shl      ebx, 0x10
+        mov      dword ptr [g_data_00f70fa0], ebx
+        mov      ebx, eax
+        mov      eax, dword ptr [g_data_00f70fa0]
+        sub      eax, edx
+        mov      dword ptr [g_data_00f70f4c], ebx
+        cdq
+        idiv     esi
+        test     edi, edi
+        mov      dword ptr [g_data_00f70f50], eax
+        jge      L_0c63
+        imul     ebx, edi
+        mov      edx, dword ptr [g_data_00f70f88]
+        add      ecx, edi
+        sub      edx, ebx
+        xor      edi, edi
+        mov      dword ptr [g_data_00f70f88], edx
+        mov      dword ptr [g_data_00b2d00c], ecx
+        mov      dword ptr [g_data_00f70fa8], edi
+    L_0c63:
+        mov      ecx, dword ptr [g_data_00f70fb8]
+        test     ecx, ecx
+        jge      L_0c96
+        imul     eax, ecx
+        mov      edx, dword ptr [g_data_00f70f98]
+        mov      dword ptr [g_data_00f70fb8], 0
+        sub      edx, eax
+        add      esi, ecx
+        mov      ecx, dword ptr [g_data_00f70fb8]
+        mov      dword ptr [g_data_00f70f98], edx
+        mov      dword ptr [g_data_00b2d008], esi
+    L_0c96:
+        mov      eax, dword ptr [g_data_004ffd44]
+        mov      edx, dword ptr [g_data_00f70fb0]
+        cmp      edx, eax
+        jl       L_0cac
+        sub      eax, edi
+        mov      dword ptr [g_data_00b2d00c], eax
+    L_0cac:
+        mov      eax, dword ptr [g_data_004ffd48]
+        mov      edx, dword ptr [g_data_00f70fc0]
+        cmp      edx, eax
+        jl       L_0cc5
+        sub      eax, ecx
+        mov      esi, eax
+        mov      dword ptr [g_data_00b2d008], esi
+    L_0cc5:
+        mov      edx, dword ptr [g_data_00f85b54]
+        mov      eax, dword ptr [g_data_00f85b50]
+        imul     edx, ecx
+        add      eax, edx
+        lea      eax, [eax + edi*2]
+        mov      dword ptr [g_data_00f4d044], eax
+        mov      eax, dword ptr [g_data_00f85b4c]
+        and      eax, 0xf
+        shl      eax, 0x10
+        test     esi, esi
+        mov      dword ptr [g_data_00f85b4c], eax
+        jle      L_0e02
+        jmp      L_0cfc
+    L_0cf7:
+        mov      eax, dword ptr [g_data_00f85b4c]
+    L_0cfc:
+        mov      ecx, dword ptr [g_data_00f70f88]
+        xor      edx, edx
+        mov      dh, byte ptr [g_data_00f70f9a]
+        mov      dword ptr [g_data_00f70fd8], ecx
+        add      edx, eax
+        mov      eax, dword ptr [g_data_00f85b34]
+        lea      ecx, [eax + edx*2]
+        mov      dword ptr [g_data_00f85b58], ecx
+        mov      eax, dword ptr [g_data_00f70fd8]
+        shl      eax, 0x10
+        mov      edx, dword ptr [g_data_00f85b58]
+        shr      edx, 1
+        mov      ecx, dword ptr [g_data_00f70fd8]
+        shr      ecx, 0x10
+        mov      dl, cl
+        mov      edi, dword ptr [g_data_00f4d044]
+        add      edi, dword ptr [g_data_00b2d00c]
+        add      edi, dword ptr [g_data_00b2d00c]
+        mov      esi, dword ptr [g_data_00b2d00c]
+        neg      esi
+        mov      ecx, dword ptr [g_data_00f70f4c]
+        rol      ecx, 0x10
+        mov      ch, 0
+        cmp      dword ptr [g_data_004ffd4c], 0
+        jne      L_0d99
+    L_0d69:
+        mov      ax, word ptr [edx*2]
+        mov      bx, word ptr [edi + esi*2]
+        test     ax, ax
+        je       L_0d90
+        shr      ax, 1
+        and      bx, 0x7bde
+        shr      bx, 1
+        and      ax, 0x3def
+        add      ax, bx
+        mov      word ptr [edi + esi*2], ax
+    L_0d90:
+        add      eax, ecx
+        adc      dl, cl
+        inc      esi
+        jl       L_0d69
+        jmp      L_0dc7
+    L_0d99:
+        mov      ax, word ptr [edx*2]
+        mov      bx, word ptr [edi + esi*2]
+        test     ax, ax
+        je       L_0dc0
+        shr      ax, 1
+        and      bx, 0xf7de
+        shr      bx, 1
+        and      ax, 0x7bef
+        add      ax, bx
+        mov      word ptr [edi + esi*2], ax
+    L_0dc0:
+        add      eax, ecx
+        adc      dl, cl
+        inc      esi
+        jl       L_0d99
+    L_0dc7:
+        mov      edx, dword ptr [g_data_00f70f50]
+        mov      esi, dword ptr [g_data_00f70f98]
+        mov      eax, dword ptr [g_data_00b2d008]
+        mov      ecx, dword ptr [g_data_00f85b54]
+        add      esi, edx
+        mov      edx, dword ptr [g_data_00f4d044]
+        dec      eax
+        add      edx, ecx
+        test     eax, eax
+        mov      dword ptr [g_data_00b2d008], eax
+        mov      dword ptr [g_data_00f70f98], esi
+        mov      dword ptr [g_data_00f4d044], edx
+        jg       L_0cf7
+    L_0e02:
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    }
+}
+
 
