@@ -111002,3 +111002,153 @@ __declspec(naked) void FloatTransientHelpers_004ca2b0(void)
     }
 }
 
+/* ============================================================
+ * GameStateDispatch4Way_00436e50 — 408b game.
+ *
+ * One step of the per-entity FSM for whatever entity sits at
+ * g_data_00542060: clears its [+0x84] slot to 0, then dispatches
+ * on the previous state value (0..3) via a 16-byte jump table.
+ *
+ *   - state 0 (case 0, body at 0x436f62): runs func_00439350 (no
+ *     wait), advances to state 1 (1<<24 packed pointer).
+ *   - state 1 (case 1, fall-through):    runs func_004393b0, → state 2.
+ *   - state 2 (case 2):                   sets a 0x1f4 timer at
+ *     g_data_0054206c, runs func_004ab690, then optionally
+ *     func_00439350 unless bit 0 of g_data_0054208c is set (in
+ *     which case the case takes the func_00470480 abort path).
+ *     If all clears, advances to state 3.
+ *   - state 3 (case 3):                   runs func_004393b0, → state 4.
+ *   - default (state >3):                 calls func_00470480 (abort).
+ *
+ * Each non-abort case: write OFFSET self into [esi+8], the next
+ * state number into [g_data*4 + 0x84], snapshot the per-entity
+ * counter at [esi+4] into g_data_00542044, and stamp
+ * (OFFSET self) | (next_state<<24) into [eax*4]. Common tail
+ * (L_6f9a) then increments g_data_00542044, kicks func_00436ff0,
+ * sets g_data_00541e6c = 1, and returns. Any of the early
+ * cmp_g_data_00541e6c, edi guards bypasses the rest and pops to ret.
+ *
+ * Frame: push esi/edi, no esp adjust. Returns: void.
+ * Layout quirk: 3-byte `lea ecx, [ecx]` (8d 49 00) alignment nop
+ * between the L_6fd2 tail and the 16-byte jump table at 0x436fd8.
+ * ============================================================ */
+
+extern void func_00436ff0(void);
+extern void func_00436e50(void);
+extern void func_00439350(void);
+extern void func_004393b0(void);
+extern void func_00470480(void);
+extern void func_004ab690(void);
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+
+__declspec(naked) void GameStateDispatch4Way_00436e50(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        xor      edi, edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        cmp      eax, 3
+        ja       L_6fcd
+        jmp      dword ptr [eax*4 + L_e50_jmptbl]
+    L_6e7d:
+        call     func_004393b0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_6fd2
+        mov      dword ptr [esi + 8], OFFSET func_00436e50
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET func_00436e50
+        mov      dword ptr [ecx*4 + 0x84], 2
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        add      edx, 0x2000000
+        jmp      L_6f9a
+    L_6ebe:
+        mov      dword ptr [g_data_0054206c], 0x1f4
+        call     func_004ab690
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_6fd2
+        test     byte ptr [g_data_0054208c], 1
+        jne      L_6fcd
+        call     func_00439350
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_6fd2
+        mov      dword ptr [esi + 8], OFFSET func_00436e50
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET func_00436e50
+        mov      dword ptr [ecx*4 + 0x84], 3
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        add      edx, 0x3000000
+        jmp      short L_6f9a
+    L_6f24:
+        call     func_004393b0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_6fd2
+        mov      dword ptr [esi + 8], OFFSET func_00436e50
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET func_00436e50
+        mov      dword ptr [ecx*4 + 0x84], 4
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        add      edx, 0x4000000
+        jmp      short L_6f9a
+    L_6f62:
+        call     func_00439350
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_6fd2
+        mov      dword ptr [esi + 8], OFFSET func_00436e50
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET func_00436e50
+        mov      dword ptr [ecx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        add      edx, 0x1000000
+    L_6f9a:
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], edi
+        call     func_00436ff0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_6fcd:
+        call     func_00470480
+    L_6fd2:
+        pop      edi
+        pop      esi
+        ret
+        /* 3-byte align nop `lea ecx, [ecx]` = 8d 49 00 */
+        _emit    0x8d
+        _emit    0x49
+        _emit    0x00
+    L_e50_jmptbl:
+        _emit    0x62
+        _emit    0x6f
+        _emit    0x43
+        _emit    0x00
+        _emit    0x7d
+        _emit    0x6e
+        _emit    0x43
+        _emit    0x00
+        _emit    0xbe
+        _emit    0x6e
+        _emit    0x43
+        _emit    0x00
+        _emit    0x24
+        _emit    0x6f
+        _emit    0x43
+        _emit    0x00
+    }
+}
+

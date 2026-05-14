@@ -3953,10 +3953,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00436e50
-    name: func_00436e50
+    name: GameStateDispatch4Way_00436e50
     size: 408
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436ff0
     name: Set14CallAddJmp_00436ff0
     size: 48
