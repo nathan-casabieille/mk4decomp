@@ -11390,10 +11390,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00492aa0
-    name: func_00492aa0
+    name: UpperBodyComboFsmCluster_00492aa0
     size: 945
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00492e60
     name: DualTableMappedDispatch_00492e60
     size: 413
