@@ -13098,10 +13098,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa610
-    name: func_004aa610
+    name: SpawnListGlyphRender_004aa610
     size: 642
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa8a0
     name: AudioInstallSelfStatePush_004aa8a0
     size: 146
