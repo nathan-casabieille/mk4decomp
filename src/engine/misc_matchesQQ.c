@@ -116174,3 +116174,162 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         jmp      func_00489a30
     }
 }
+
+/* ============================================================
+ * StageEventState4Way_004982f0 — 493b game.
+ *
+ * Per-entity 4-state FSM stepping the stage's "event start"
+ * pipeline.
+ *
+ *   state 0 (L_8436): COLD INIT.
+ *     - func_0049c670 (pre-validate)
+ *     - set state 0x30f, push OFFSET g_data_005432f0 +
+ *       func_00428760 (preload)
+ *     - g_data_00542080 := 0xa (tick budget)
+ *     - install OFFSET self + state 1 + (OFFSET self | 1<<24)
+ *       into active-pool, call func_00428d40, mark sync.
+ *
+ *   state 1 (L_83ce):
+ *     - g_data_00542080 := 0x14
+ *     - install OFFSET self + state 2 + (OFFSET self | 2<<24),
+ *       call func_00428d80.
+ *
+ *   state 2 (L_8327): MAIN BODY.
+ *     - test bit 10 (0x400) of g_data_0052ab40; if set, fast-path
+ *       to install state 3.
+ *     - otherwise call func_004984e0 + a "0x4d at 0x4985b0" diag
+ *       via func_0049cb40, snapshot g_data_0054205c into the
+ *       active slot's [+0x28].
+ *     - install OFFSET self + state 3 + (OFFSET self | 3<<24),
+ *       call func_00428d00.
+ *
+ *   state ≥3 (default): tail func_0046f6b0.
+ *
+ * Frame: push esi/edi. Returns: void.
+ * ============================================================ */
+
+extern void func_004982f0(void);
+extern void func_00428d40(void);
+extern void func_00428d80(void);
+extern void func_004984e0(void);
+extern void func_0049c670(void);
+extern void func_0049cb40(void);
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00542094;
+extern unsigned int g_const_004985b0;
+extern unsigned int g_data_005432f0;
+
+__declspec(naked) void StageEventState4Way_004982f0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        xor      edi, edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        sub      eax, edi
+        je       L_8436
+        dec      eax
+        je       L_83ce
+        dec      eax
+        je       short L_8327
+        call     func_0046f6b0
+        pop      edi
+        pop      esi
+        ret
+    L_8327:
+        mov      eax, dword ptr [g_data_0052ab40]
+        mov      dword ptr [g_data_0054206c], eax
+        and      eax, 0x400
+        mov      dword ptr [g_data_00542094], eax
+        jne      short L_8370
+        call     func_004984e0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_84da
+        push     0x4d
+        push     OFFSET g_const_004985b0
+        call     func_0049cb40
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_0054205c]
+        add      esp, 8
+        mov      dword ptr [ecx*4 + 0x28], edx
+    L_8370:
+        mov      dword ptr [esi + 8], OFFSET func_004982f0
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_004982f0
+        mov      dword ptr [eax*4 + 0x84], 3
+        mov      eax, dword ptr [esi + 4]
+        add      ecx, 0x3000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_00428d00
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_83ce:
+        mov      dword ptr [g_data_00542080], 0x14
+        mov      dword ptr [esi + 8], OFFSET func_004982f0
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_004982f0
+        add      ecx, 0x2000000
+        mov      dword ptr [eax*4 + 0x84], 2
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_00428d80
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_8436:
+        call     func_0049c670
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_84da
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x30f
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_005432f0
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     func_00428760
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        cmp      eax, edi
+        jne      short L_84da
+        mov      dword ptr [g_data_00542080], 0xa
+        mov      dword ptr [esi + 8], OFFSET func_004982f0
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_004982f0
+        add      ecx, 0x1000000
+        mov      dword ptr [edx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_00428d40
+        mov      dword ptr [g_data_00541e6c], 1
+    L_84da:
+        pop      edi
+        pop      esi
+        ret
+    }
+}
