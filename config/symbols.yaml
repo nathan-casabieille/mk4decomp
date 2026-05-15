@@ -4669,10 +4669,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043b1d0
-    name: func_0043b1d0
+    name: CrouchCounterCluster_0043b1d0
     size: 1194
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043b680
     name: VersusScreenEventPoseCluster_0043b680
     size: 754
