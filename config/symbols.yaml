@@ -3481,10 +3481,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00432ed0
-    name: func_00432ed0
+    name: PendingMatch_00432ed0
     size: 1526
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004334d0
     name: FourCallBitGateChain_004334d0
     size: 252
@@ -7159,10 +7160,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004668b0
-    name: func_004668b0
+    name: PendingMatch_004668b0
     size: 1460
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00466e70
     name: ChainFieldCopyTailJmp_00466e70
     size: 325
