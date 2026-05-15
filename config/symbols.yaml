@@ -5999,10 +5999,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004568b0
-    name: func_004568b0
+    name: PendingMatch_004568b0
     size: 2440
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457240
     name: EsiInstallClearTripleFields_00457240
     size: 144
