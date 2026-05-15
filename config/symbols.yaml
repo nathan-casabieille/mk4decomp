@@ -931,10 +931,11 @@ functions:
     status: matched
     file: src/engine/misc_matches3.c
   - addr: 0x0040a8d0
-    name: func_0040a8d0
+    name: PendingMatch_0040a8d0
     size: 1864
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040b020
     name: func_0040b020
     size: 2149
