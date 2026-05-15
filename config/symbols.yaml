@@ -8591,10 +8591,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c290
-    name: func_0047c290
+    name: AerialHitDispatcher_0047c290
     size: 845
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c5e0
     name: Set200dCallPauseJmp_0047c5e0
     size: 57
