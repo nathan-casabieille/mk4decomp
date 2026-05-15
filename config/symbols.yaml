@@ -5567,10 +5567,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044f670
-    name: func_0044f670
+    name: VersusScreenFsmCluster_0044f670
     size: 599
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044f8d0
     name: func_0044f8d0
     size: 1460
