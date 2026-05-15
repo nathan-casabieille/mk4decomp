@@ -5613,10 +5613,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044f8d0
-    name: func_0044f8d0
+    name: PendingMatch_0044f8d0
     size: 1460
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044fe90
     name: func_0044fe90
     size: 2020
