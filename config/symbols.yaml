@@ -2343,10 +2343,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00426d90
-    name: func_00426d90
+    name: GameMusicState4Way_00426d90
     size: 516
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426fa0
     name: func_00426fa0
     size: 1005

@@ -118274,3 +118274,178 @@ __declspec(naked) void SpawnLeftRightProps_00478140(void)
         ret
     }
 }
+
+/* ============================================================
+ * GameMusicState4Way_00426d90 — 516b game (packed: trampoline +
+ * 4-state FSM).
+ *
+ *   1. 0x426d90 (~8b): Sets g_data_0054206c := 0x23c (music
+ *      change event), tail-jmp func_0049cc30.
+ *
+ *   2. 0x426da0 (L_6da0, ~497b): 4-state per-entity FSM. Reads
+ *      [entity*4+0x84] state, clears, dispatches via tail jump
+ *      table at 0x426f84:
+ *        state 0 → L_6f22 (init): pack OFFSET self|1<<24 into
+ *          active-pool, call func_0048d070, mark sync.
+ *        state 1 → L_6dce (load): func_004089e0 (preflight) +
+ *          func_004b8fa0 (scenegraph init). Then walk an array
+ *          at g_data_00542054 forward to find a non-zero entry
+ *          (wrap-around through OFFSET g_data_004e2670 >> 2),
+ *          stash it as the active record. Then func_00408c10
+ *          (apply), increment g_data_00542048 by 0xf and stash
+ *          into g_data_00542058, call func_00426fa0. Install
+ *          OFFSET L_6da0 + state 2 + 0x54204c := 0x10.
+ *        state 2 → L_6e91: state code 0xd999 + func_00405420;
+ *          if 0x54208c bit 2 stays set, take L_6f22 init path;
+ *          else install OFFSET L_6da0 + state 3 + 0x54204c := 4.
+ *        state 3 → L_6ede: func_00405420 with state remaining;
+ *          if bit 2 still set re-init, else install state 4 +
+ *          0x54204c := 6.
+ *        state >=4 → L_6f22 (also init).
+ *
+ * Frame (helper 2): push esi. Returns: void.
+ * ============================================================ */
+
+extern void func_004089e0(void);
+extern void func_00408c10(void);
+extern void func_00426fa0(void);
+extern void func_0048d070(void);
+extern void func_0049cc30(void);
+extern void func_004b8fa0(void);
+extern unsigned int g_data_004e2670;
+extern unsigned int g_data_00542058;
+
+__declspec(naked) void GameMusicState4Way_00426d90(void)
+{
+    __asm {
+        /* H1: trampoline */
+        mov      dword ptr [g_data_0054206c], 0x23c
+        jmp      func_0049cc30
+        nop
+        /* H2 (L_6da0): 4-state FSM */
+    L_6da0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        cmp      eax, 3
+        ja       L_6f22
+        jmp      dword ptr [eax*4 + L_d90_jmptbl]
+    L_6dce:
+        call     func_004089e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_6f81
+        call     func_004b8fa0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_6f81
+        mov      eax, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        test     ecx, ecx
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542054], eax
+        jne      short L_6e34
+        mov      edx, OFFSET g_data_004e2670
+        shr      edx, 2
+    L_6e16:
+        mov      eax, edx
+        mov      dword ptr [g_data_00542054], eax
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        test     ecx, ecx
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542054], eax
+        je       short L_6e16
+    L_6e34:
+        call     func_00408c10
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_6f81
+        mov      eax, dword ptr [g_data_00542048]
+        add      eax, 0xf
+        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_data_00542058], eax
+        call     func_00426fa0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_6f81
+        mov      dword ptr [esi + 8], OFFSET L_6da0
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], 0x10
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      esi
+        ret
+    L_6e91:
+        mov      dword ptr [g_data_0054206c], 0xd999
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_6f81
+        mov      cl, byte ptr [g_data_0054208c]
+        mov      eax, 4
+        test     cl, al
+        jne      short L_6f22
+        mov      dword ptr [esi + 8], OFFSET L_6da0
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      esi
+        ret
+    L_6ede:
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_6f81
+        mov      cl, byte ptr [g_data_0054208c]
+        mov      eax, 4
+        test     cl, al
+        jne      short L_6f22
+        mov      dword ptr [esi + 8], OFFSET L_6da0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], 6
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      esi
+        ret
+    L_6f22:
+        mov      dword ptr [esi + 8], OFFSET L_6da0
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET L_6da0
+        mov      dword ptr [ecx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        add      edx, 0x1000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], 0
+        call     func_0048d070
+        mov      dword ptr [g_data_00541e6c], 1
+    L_6f81:
+        pop      esi
+        ret
+        nop
+    L_d90_jmptbl:
+        _emit    0x22
+        _emit    0x6f
+        _emit    0x42
+        _emit    0x00
+        _emit    0xce
+        _emit    0x6d
+        _emit    0x42
+        _emit    0x00
+        _emit    0x91
+        _emit    0x6e
+        _emit    0x42
+        _emit    0x00
+        _emit    0xde
+        _emit    0x6e
+        _emit    0x42
+        _emit    0x00
+    }
+}
