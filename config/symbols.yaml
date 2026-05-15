@@ -8420,10 +8420,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004785a0
-    name: func_004785a0
+    name: EnduranceStateInitWalk_004785a0
     size: 830
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004788e0
     name: MStackBracket6_DualGate_004788e0
     size: 422
