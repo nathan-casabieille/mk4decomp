@@ -2395,15 +2395,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00427690
-    name: func_00427690
-    size: 800
+    name: RoundCleanupCluster_00427690
+    size: 1087
     group: game
-    status: stub
-  - addr: 0x004279b0
-    name: func_004279b0
-    size: 287
-    group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427ad0
     name: Push48PreSetTwoStores_00427ad0
     size: 138
