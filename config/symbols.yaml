@@ -1507,10 +1507,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00419c90
-    name: func_00419c90
+    name: PendingMatch_00419c90
     size: 2424
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041a610
     name: Phase4ThreePackedInstallSelf_0041a610
     size: 1068
