@@ -2241,10 +2241,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00425db0
-    name: func_00425db0
+    name: PvsMergeDriver_00425db0
     size: 584
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00426000
     name: InstallSelfPackedF80_00426000
     size: 199
