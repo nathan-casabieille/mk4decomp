@@ -30,10 +30,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesG.c
   - addr: 0x004013a0
-    name: func_004013a0
+    name: PendingMatch_004013a0
     size: 1989
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00401b70
     name: func_00401b70
     size: 2016
