@@ -9612,10 +9612,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00487e80
-    name: func_00487e80
+    name: BossSpinCluster_00487e80
     size: 905
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00488210
     name: BossRoarCluster_00488210
     size: 654
