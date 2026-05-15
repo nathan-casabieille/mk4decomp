@@ -5662,10 +5662,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00451060
-    name: func_00451060
+    name: RosterSetupFsmCluster_00451060
     size: 1264
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00451550
     name: QuadCallPauseSetCallSeq_00451550
     size: 68
