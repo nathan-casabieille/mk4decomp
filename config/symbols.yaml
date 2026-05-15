@@ -3336,10 +3336,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00430e60
-    name: func_00430e60
+    name: CameraAimSplineDriver_00430e60
     size: 599
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004310c0
     name: TimerWindowWrap_004310c0
     size: 96
