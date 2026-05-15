@@ -11843,10 +11843,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b8b0
-    name: func_0049b8b0
+    name: RoundFinalizeCluster_0049b8b0
     size: 732
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049bb90
     name: QuadBlockSoundInit_0049bb90
     size: 195
