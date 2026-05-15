@@ -9294,10 +9294,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00485a80
-    name: func_00485a80
+    name: SfxBlockCluster_00485a80
     size: 540
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00485ca0
     name: GuardedSeq_00485ca0
     size: 20

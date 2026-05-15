@@ -122173,3 +122173,285 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         ret
     }
 }
+
+/* ============================================================
+ * SfxBlockCluster_00485a80 — 540b game (packed: 10 helpers).
+ *
+ * Tiny SFX/event helpers, each calling func_00485cc0 (validate)
+ * +- func_00485d60 (apply with g_data_00542084 := 0x10000) +-
+ * func_004903b0 (signal) + tail-jmp/push&call audio/spawn. 16-
+ * byte aligned. Each helper pushes a different sound id
+ * (g_data_004eead0..004eebb0) to func_004594f0 or func_004287b0.
+ * The 10th helper also checks [scene_state*4+0x34] == 0xf and
+ * runs func_0043a620 if so.
+ *
+ * Frame: no prologue. Returns: void.
+ * ============================================================ */
+
+extern void func_004287b0(void);
+extern void func_0043a620(void);
+extern void func_00485ca0(void);
+extern void func_00485cc0(void);
+extern void func_00485d60(void);
+extern void func_00488c00(void);
+extern void func_00488c30(void);
+extern void func_00488c60(void);
+extern void func_004903b0(void);
+extern unsigned int g_data_004eead0;
+extern unsigned int g_data_004eeb00;
+extern unsigned int g_data_004eeb28;
+extern unsigned int g_data_004eeb50;
+extern unsigned int g_data_004eeb70;
+extern unsigned int g_data_004eeba0;
+extern unsigned int g_data_004eeba8;
+extern unsigned int g_data_004eebb0;
+
+__declspec(naked) void SfxBlockCluster_00485a80(void)
+{
+    __asm {
+        /* H1 */
+        push     OFFSET g_data_004eead0
+        call     func_004594f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        /* H2 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5ac3
+        mov      dword ptr [g_data_00542084], 0x10000
+        call     func_00485d60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5ac3
+        push     OFFSET g_data_004eeb00
+        call     func_004594f0
+        add      esp, 4
+    L_5ac3:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3 */
+        call     func_004903b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5ae3
+        jmp      func_00488c00
+    L_5ae3:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5b23
+        mov      dword ptr [g_data_00542084], 0x10000
+        call     func_00485d60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5b23
+        push     OFFSET g_data_004eeb28
+        call     func_004594f0
+        add      esp, 4
+    L_5b23:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H5 */
+        call     func_004903b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5b43
+        jmp      func_00488c00
+    L_5b43:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H6 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5b6b
+        push     OFFSET g_data_004eeb50
+        call     func_004594f0
+        add      esp, 4
+    L_5b6b:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H7 */
+        call     func_004903b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5b83
+        jmp      func_00488c60
+    L_5b83:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H8 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5bab
+        push     OFFSET g_data_004eeb70
+        call     func_004594f0
+        add      esp, 4
+    L_5bab:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H9 */
+        call     func_004903b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5bc3
+        jmp      func_00488c30
+    L_5bc3:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H10 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5bf9
+        push     OFFSET g_data_004eeba0
+        call     func_004287b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_5bf9
+        jmp      func_00485ca0
+    L_5bf9:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H11 */
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5c41
+        mov      dword ptr [g_data_00542084], 0x10000
+        call     func_00485d60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5c41
+        push     OFFSET g_data_004eeba8
+        call     func_004287b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_5c41
+        jmp      func_00485ca0
+    L_5c41:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H12 */
+        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [eax*4 + 0x3c]
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4 + 0x34]
+        cmp      eax, 0xf
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_5c80
+        call     func_0043a620
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5c9b
+    L_5c80:
+        call     func_00485cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_5c9b
+        push     OFFSET g_data_004eebb0
+        call     func_004287b0
+        add      esp, 4
+    L_5c9b:
+        ret
+    }
+}
