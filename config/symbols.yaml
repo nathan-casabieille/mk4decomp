@@ -12191,10 +12191,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049dea0
-    name: func_0049dea0
+    name: SceneEvalFsm_0049dea0
     size: 800
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049e1c0
     name: PhaseClampInstallSlot_0049e1c0
     size: 411
