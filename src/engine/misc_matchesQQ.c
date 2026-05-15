@@ -121815,3 +121815,146 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         _emit    0x00
     }
 }
+
+/* ============================================================
+ * SpawnImpactExplosion_00471be0 — 540b game.
+ *
+ * Spawns an impact explosion with up to 3 sub-effects. Snapshot
+ * 3 dispatcher slots onto the dispatch stack (0x4d57ac), then:
+ *
+ *   1. Stash g_data_0054205c (scene) into g_data_00542054.
+ *   2. Three-stage effect cascade. For each stage j:
+ *        - eax = (OFFSET tablej) >> 2 (j=0:004ec220, 1:004ec270,
+ *          2:004ec2c0); g_data_00542058 := eax (look-up base).
+ *        - Set state code (0xc000, 0xd999, ?) and run
+ *          func_00405430.
+ *        - If pause-bit 2 of g_data_0054208c got set during the
+ *          look-up, abort with stack-pop tail.
+ *   3. Push 0xc0 + OFFSET g_data_0049db40 to func_0049cb40
+ *      (event log).
+ *   4. If pause-bit 0 of g_data_0054208c is set, skip RNG;
+ *      else generate 3 random offsets via func_004ab750(0xc28f,
+ *      0xdc28, 0x5c28), each clamped+biased, and stamp them
+ *      into [entity*4 + 0x38 / 0x3c / 0x40]. Clear
+ *      [entity*4 + 0x44 / 0x48 / 0x4c].
+ *   5. Restore 3 dispatch-stack slots.
+ *
+ * Frame: push esi. Returns: void.
+ * ============================================================ */
+
+extern void func_00405430(void);
+extern unsigned int g_data_004ec220;
+extern unsigned int g_data_004ec270;
+extern unsigned int g_data_004ec2c0;
+extern unsigned int g_const_0049db40;
+
+__declspec(naked) void SpawnImpactExplosion_00471be0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_0054207c]
+        inc      eax
+        push     esi
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542058]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      eax, OFFSET g_data_004ec220
+        mov      dword ptr [g_data_00542054], edx
+        shr      eax, 2
+        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_data_0054206c], 0xc000
+        call     func_00405430
+        mov      eax, dword ptr [g_data_00541e6c]
+        xor      esi, esi
+        cmp      eax, esi
+        jne      L_1dfa
+        test     byte ptr [g_data_0054208c], 4
+        jne      short L_1ca9
+        mov      ecx, OFFSET g_data_004ec270
+        mov      dword ptr [g_data_0054206c], 0xd999
+        shr      ecx, 2
+        mov      dword ptr [g_data_00542058], ecx
+        call     func_00405430
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      L_1dfa
+        test     byte ptr [g_data_0054208c], 4
+        jne      short L_1ca9
+        mov      edx, OFFSET g_data_004ec2c0
+        shr      edx, 2
+        mov      dword ptr [g_data_00542058], edx
+    L_1ca9:
+        push     0xc0
+        push     OFFSET g_const_0049db40
+        mov      dword ptr [g_data_0054207c], 0xc1
+        call     func_0049cb40
+        mov      al, byte ptr [g_data_0054208c]
+        add      esp, 8
+        test     al, 1
+        jne      L_1dbc
+        mov      dword ptr [g_data_00542070], esi
+        mov      dword ptr [g_data_0054206c], 0xc28f
+        call     func_004ab750
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_1dfa
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_data_00542044]
+        add      ecx, eax
+        mov      dword ptr [edx*4 + 0x38], ecx
+        mov      dword ptr [g_data_00542070], 0xfffe0000
+        mov      dword ptr [g_data_0054206c], 0xdc28
+        call     func_004ab750
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_1dfa
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_data_00542044]
+        add      ecx, eax
+        mov      dword ptr [edx*4 + 0x3c], ecx
+        mov      dword ptr [g_data_00542070], 0xc4000
+        mov      dword ptr [g_data_0054206c], 0x5c28
+        call     func_004ab750
+        cmp      dword ptr [g_data_00541e6c], esi
+        jne      short L_1dfa
+        mov      eax, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_data_0054206c]
+        add      eax, ecx
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [ecx*4 + 0x40], eax
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x44], esi
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x48], esi
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [ecx*4 + 0x4c], esi
+    L_1dbc:
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_0054207c], edx
+        mov      dword ptr [g_data_004d57ac], eax
+    L_1dfa:
+        pop      esi
+        ret
+    }
+}
