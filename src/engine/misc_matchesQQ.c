@@ -119567,3 +119567,244 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         ret
     }
 }
+
+/* ============================================================
+ * FileWriteWithLfToCrlf_004c9b60 — 521b crt.
+ *
+ * MSVC 5's `_write` implementation. Writes `count` bytes from
+ * `buffer` to file descriptor `fd`, performing LF→CRLF
+ * translation when the file is in text mode.
+ *
+ * Args: (fd, buffer, count) on stack.
+ *
+ * 1. If count == 0 → return 0.
+ * 2. Locate fd flags at g_data_00fa0de0[fd>>5][fd&31]:
+ *    - bit 0x20 (CRLF_PENDING) → call func_004c8e50(fd, 0, 2)
+ *      to flush pending carriage state.
+ *    - bit 0x80 (TEXT_MODE) → take the translation path:
+ *        chunk-walk the user buffer into the on-stack 0x400-byte
+ *        staging area `staging[0x28]`, expanding each LF to
+ *        CRLF. Call `WriteFile([0x4d2108], handle, staging,
+ *        chunk_len, &written)`. On success increment total;
+ *        on failure save `GetLastError` from [0x4d209c] into a
+ *        local. Repeat until source exhausted.
+ *    - bit 0x80 clear (BINARY_MODE) → single direct WriteFile.
+ *
+ * 3. Error mapping in tail:
+ *    - error 5 (ACCESS_DENIED) → __errno := 9, __doserrno := 5.
+ *    - other errors → func_004c8b20(err) → __errno + __doserrno.
+ *    - 0 bytes written + flags bit 0x40 set (PIPE) and *buf=0x1a
+ *      → return 0 (EOF on pipe).
+ *    - otherwise __errno := 0x1c (ENOSPC) and __doserrno := 0,
+ *      return -1.
+ *
+ * Returns count of bytes written (excluding the synthetic CRs
+ * inserted), or -1 on failure.
+ *
+ * Frame: sub esp, 0x41c + push ebx/ebp/esi/edi.
+ *
+ * Uses g_iat_004d2108 (WriteFile), g_iat_004d209c
+ * (GetLastError).
+ * ============================================================ */
+
+extern void func_004c8b20(void);
+extern void func_004c8bb0(void);
+extern void func_004c8e50(void);
+extern void *g_iat_004d209c;
+
+__declspec(naked) void FileWriteWithLfToCrlf_004c9b60(void)
+{
+    __asm {
+        sub      esp, 0x41c
+        push     ebx
+        mov      ebx, dword ptr [esp + 0x42c]
+        push     ebp
+        xor      ebp, ebp
+        push     esi
+        cmp      ebx, ebp
+        push     edi
+        mov      dword ptr [esp + 0x10], ebp
+        mov      dword ptr [esp + 0x20], ebp
+        jne      short L_9b8c
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9b8c:
+        mov      ecx, dword ptr [esp + 0x430]
+        mov      eax, ecx
+        sar      eax, 5
+        lea      edi, [eax*4 + g_data_00fa0de0]
+        mov      eax, ecx
+        and      eax, 0x1f
+        mov      dword ptr [esp + 0x24], edi
+        mov      edx, dword ptr [edi]
+        lea      esi, [eax + eax*8]
+        shl      esi, 2
+        mov      dword ptr [esp + 0x14], esi
+        test     byte ptr [esi + edx + 4], 0x20
+        je       short L_9bc7
+        push     2
+        push     ebp
+        push     ecx
+        call     func_004c8e50
+        add      esp, 0xc
+    L_9bc7:
+        mov      eax, dword ptr [edi]
+        add      eax, esi
+        test     byte ptr [eax + 4], 0x80
+        je       L_9d29
+        mov      ebp, dword ptr [esp + 0x434]
+        mov      dword ptr [esp + 0x18], 0
+        test     ebx, ebx
+        mov      edi, ebp
+        jbe      L_9c71
+    L_9bee:
+        lea      eax, [esp + 0x28]
+    L_9bf2:
+        mov      ecx, edi
+        sub      ecx, ebp
+        cmp      ecx, ebx
+        jae      short L_9c22
+        mov      cl, byte ptr [edi]
+        inc      edi
+        cmp      cl, 0xa
+        jne      short L_9c0f
+        mov      esi, dword ptr [esp + 0x20]
+        mov      byte ptr [eax], 0xd
+        inc      esi
+        inc      eax
+        mov      dword ptr [esp + 0x20], esi
+    L_9c0f:
+        mov      byte ptr [eax], cl
+        inc      eax
+        mov      edx, eax
+        lea      ecx, [esp + 0x28]
+        sub      edx, ecx
+        cmp      edx, 0x400
+        jl       short L_9bf2
+    L_9c22:
+        mov      esi, eax
+        lea      edx, [esp + 0x28]
+        lea      eax, [esp + 0x1c]
+        sub      esi, edx
+        mov      edx, dword ptr [esp + 0x24]
+        push     0
+        push     eax
+        lea      ecx, [esp + 0x30]
+        mov      eax, dword ptr [edx]
+        push     esi
+        push     ecx
+        mov      ecx, dword ptr [esp + 0x24]
+        mov      edx, dword ptr [ecx + eax]
+        push     edx
+        call     dword ptr [g_iat_004d2108]
+        test     eax, eax
+        je       L_9d1a
+        mov      eax, dword ptr [esp + 0x1c]
+        mov      edx, dword ptr [esp + 0x10]
+        add      edx, eax
+        cmp      eax, esi
+        mov      dword ptr [esp + 0x10], edx
+        jl       short L_9c6d
+        mov      eax, edi
+        sub      eax, ebp
+        cmp      eax, ebx
+        jb       L_9bee
+    L_9c6d:
+        mov      esi, dword ptr [esp + 0x14]
+    L_9c71:
+        mov      eax, dword ptr [esp + 0x10]
+        test     eax, eax
+        jne      short L_9d09
+        mov      eax, dword ptr [esp + 0x18]
+        test     eax, eax
+        je       short L_9cc5
+        cmp      eax, 5
+        jne      short L_9cae
+        call     func_004c8ba0
+        mov      dword ptr [eax], 9
+        call     func_004c8bb0
+        mov      dword ptr [eax], 5
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9cae:
+        push     eax
+        call     func_004c8b20
+        add      esp, 4
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9cc5:
+        mov      ecx, dword ptr [esp + 0x24]
+        mov      edx, dword ptr [ecx]
+        test     byte ptr [esi + edx + 4], 0x40
+        je       short L_9ce5
+        cmp      byte ptr [ebp], 0x1a
+        jne      short L_9ce5
+        xor      eax, eax
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9ce5:
+        call     func_004c8ba0
+        mov      dword ptr [eax], 0x1c
+        call     func_004c8bb0
+        mov      dword ptr [eax], 0
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9d09:
+        mov      ecx, dword ptr [esp + 0x20]
+        pop      edi
+        pop      esi
+        pop      ebp
+        sub      eax, ecx
+        pop      ebx
+        add      esp, 0x41c
+        ret
+    L_9d1a:
+        call     dword ptr [g_iat_004d209c]
+        mov      dword ptr [esp + 0x18], eax
+        jmp      short L_9c6d
+    L_9d29:
+        mov      edx, dword ptr [eax]
+        lea      ecx, [esp + 0x1c]
+        push     ebp
+        mov      ebp, dword ptr [esp + 0x438]
+        push     ecx
+        push     ebx
+        push     ebp
+        push     edx
+        call     dword ptr [g_iat_004d2108]
+        test     eax, eax
+        je       short L_9d5a
+        mov      eax, dword ptr [esp + 0x1c]
+        mov      dword ptr [esp + 0x18], 0
+        mov      dword ptr [esp + 0x10], eax
+        jmp      L_9c71
+    L_9d5a:
+        call     dword ptr [g_iat_004d209c]
+        mov      dword ptr [esp + 0x18], eax
+        jmp      L_9c71
+    }
+}

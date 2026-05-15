@@ -16030,10 +16030,11 @@ functions:
     status: matched
     file: src/crt/io_wrappers.c
   - addr: 0x004c9b60
-    name: func_004c9b60
+    name: FileWriteWithLfToCrlf_004c9b60
     size: 521
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9d70
     name: TlsSlotInit_004c9d70
     size: 92
