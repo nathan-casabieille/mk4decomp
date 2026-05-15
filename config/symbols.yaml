@@ -8644,10 +8644,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047dc20
-    name: func_0047dc20
+    name: ThrowTakedownCluster_0047dc20
     size: 571
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047de60
     name: InstallSelfChainExtendCall_0047de60
     size: 128
