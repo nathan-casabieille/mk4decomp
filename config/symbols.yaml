@@ -5095,10 +5095,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00444390
-    name: func_00444390
+    name: EndingScreenFsmCluster_00444390
     size: 1226
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00444860
     name: func_00444860
     size: 1345
