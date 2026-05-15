@@ -8517,10 +8517,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c680
-    name: func_0047c680
+    name: StageEventComplexFsm_0047c680
     size: 504
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c880
     name: TripleEntryTblPushJmp_0047c880
     size: 111

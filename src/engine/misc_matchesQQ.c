@@ -117453,3 +117453,192 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         ret
     }
 }
+
+/* ============================================================
+ * StageEventComplexFsm_0047c680 — 504b game.
+ *
+ * Heavy per-entity state-pump for the active stage event.
+ * On entry stores 0 into the entity's state-bit [esi+0x84],
+ * then in a loop while state was non-zero:
+ *   - Bail-out fast if g_data_00537f94 is set (animating).
+ *   - func_00460d80 (refresh event-status word in
+ *     g_data_0054206c).
+ *   - Branch:
+ *       (val & 9) == 9 → tail-call func_00460ca0 and return.
+ *       (val & 5) == 5 → tail-call func_00460cd0 and return.
+ *       otherwise set state code 0xb333 and run
+ *         func_004906b0 → write g_data_00542088 := 0x18000 →
+ *         func_00496d80 → func_0048ea90 → set state to
+ *         0x10000 or 0x8000 based on bit 0 of
+ *         g_data_0054208c → second func_004906b0 call.
+ *   - Then select the per-state cursor (g_data_0052d74c or
+ *     g_data_00538068, depending on g_data_0054205c vs
+ *     g_data_00538158), follow it to detect terminal
+ *     condition (jumps to func_0047c620), else stash
+ *     g_data_004ffe28>>2 into [g_data_0054205c*4 + 0x24]
+ *     and decrement [entity*4 + 0x68].
+ *   - When the counter underflows, run func_0047c880 once.
+ *   - Loops while [entity_state*4 + 0x84] remains non-zero.
+ *
+ * After the loop: func_0048f350; if bit 2 of g_data_0054208c
+ * is set tail-call func_0047cd50. Otherwise install OFFSET
+ * self into [esi+8], mark state 1 and g_data_0054204c := 1
+ * (sync request).
+ *
+ * Frame: push ebx/ebp/esi/edi. Returns: void.
+ * ============================================================ */
+
+extern void func_0047c680(void);
+extern void func_00460ca0(void);
+extern void func_00460cd0(void);
+extern void func_00460d80(void);
+extern void func_0047c620(void);
+extern void func_0047c880(void);
+extern void func_0047cd50(void);
+extern void func_0048ea90(void);
+extern void func_0048f350(void);
+extern void func_004906b0(void);
+extern void func_00496d80(void);
+extern unsigned int g_data_004ffe28;
+
+__declspec(naked) void StageEventComplexFsm_0047c680(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     ebx
+        push     ebp
+        push     esi
+        lea      esi, [eax*4]
+        push     edi
+        xor      edi, edi
+        mov      eax, dword ptr [esi + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        cmp      eax, edi
+        je       L_c819
+        mov      ebx, 0x18000
+        mov      ebp, 0x10000
+    L_c6b0:
+        mov      eax, dword ptr [g_data_00537f94]
+        cmp      eax, edi
+        mov      dword ptr [g_data_0054206c], eax
+        jne      L_c82f
+        call     func_00460d80
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_c855
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      ecx, eax
+        and      ecx, 9
+        cmp      ecx, 9
+        mov      dword ptr [g_data_00542070], ecx
+        je       L_c85a
+        and      eax, 5
+        cmp      eax, 5
+        mov      dword ptr [g_data_00542070], eax
+        je       L_c864
+        mov      dword ptr [g_data_0054206c], 0xb333
+        call     func_004906b0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        mov      dword ptr [g_data_00542088], ebx
+        call     func_00496d80
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        call     func_0048ea90
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        mov      al, byte ptr [g_data_0054208c]
+        mov      dword ptr [g_data_0054206c], ebp
+        test     al, 1
+        jne      short L_c759
+        mov      dword ptr [g_data_0054206c], 0x8000
+    L_c759:
+        call     func_004906b0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      esi, dword ptr [g_data_00538158]
+        mov      eax, OFFSET g_data_0052d74c
+        mov      ecx, OFFSET g_data_00538068
+        shr      eax, 2
+        shr      ecx, 2
+        cmp      edx, esi
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_00542048], ecx
+        je       short L_c79c
+        mov      eax, ecx
+        mov      dword ptr [g_data_00542044], eax
+    L_c79c:
+        mov      eax, dword ptr [eax*4]
+        cmp      eax, edi
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_c86e
+        mov      eax, OFFSET g_data_004ffe28
+        shr      eax, 2
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [edx*4 + 0x24], eax
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x68]
+        dec      eax
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_c7eb
+        call     func_0047c880
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        mov      eax, dword ptr [g_data_0054206c]
+    L_c7eb:
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x68], eax
+        mov      eax, dword ptr [g_data_00542060]
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        cmp      eax, edi
+        jne      L_c6b0
+    L_c819:
+        call     func_0048f350
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_c855
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_c839
+    L_c82f:
+        call     func_0047cd50
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_c839:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET func_0047c680
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+    L_c855:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_c85a:
+        call     func_00460ca0
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_c864:
+        call     func_00460cd0
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    L_c86e:
+        call     func_0047c620
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    }
+}
