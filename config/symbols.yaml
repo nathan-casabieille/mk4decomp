@@ -8433,10 +8433,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00479b50
-    name: func_00479b50
+    name: ScoreAiStatusFsmCluster_00479b50
     size: 752
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00479e40
     name: ThrowTakedownStepCluster_00479e40
     size: 592
