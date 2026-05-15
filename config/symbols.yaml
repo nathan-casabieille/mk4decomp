@@ -6084,10 +6084,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00458cc0
-    name: func_00458cc0
+    name: HealthBarTickDriver_00458cc0
     size: 638
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458f40
     name: NestedLoopDispatch_00458f40
     size: 238
