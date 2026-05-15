@@ -3498,10 +3498,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004335f0
-    name: func_004335f0
+    name: HitReactionStateCluster_004335f0
     size: 682
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004338a0
     name: GuardedPushCall_004338a0
     size: 28
