@@ -13207,10 +13207,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8ca0
-    name: func_004a8ca0
+    name: PendingMatch_004a8ca0
     size: 1410
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a9230
     name: CallSetMultiGlobalsJmp_004a9230
     size: 64
