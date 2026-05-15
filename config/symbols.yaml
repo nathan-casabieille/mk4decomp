@@ -13186,10 +13186,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a85c0
-    name: func_004a85c0
+    name: PendingMatch_004a85c0
     size: 943
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8970
     name: AudioByteTable5Loop_004a8970
     size: 292
