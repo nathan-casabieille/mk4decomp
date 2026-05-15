@@ -11899,10 +11899,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0049a670
-    name: func_0049a670
+    name: PendingMatch_0049a670
     size: 2176
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049aef0
     name: InstallSelfCountdownBit_0049aef0
     size: 225
