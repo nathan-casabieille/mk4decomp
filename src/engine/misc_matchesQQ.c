@@ -116333,3 +116333,173 @@ __declspec(naked) void StageEventState4Way_004982f0(void)
         ret
     }
 }
+
+/* ============================================================
+ * RoundStartCluster_0047b900 — 494b game (packed: 3 helpers).
+ *
+ * Three packed helpers for the round-start sequence:
+ *
+ *   1. 0x47b900 (~333b): 3-state FSM (sister of
+ *      [[stage-event-state-4way-004982f0]] but for round-init).
+ *      states:
+ *        0 (L_b9cd): func_004901a0 (audio bring-up); set state
+ *          code 0x100e, install OFFSET self + state 1, call
+ *          func_00428d00.
+ *        1 (L_b930): func_00490740 + func_00490fc0; set
+ *          g_data_00542054 := state-code, g_data_00542084 :=
+ *          0xccc; install OFFSET self + state 2, call
+ *          func_0048fe40.
+ *        ≥2 (default): tail func_00470480.
+ *
+ *   2. 0x47ba55 (~28b): Tiny chime trigger. Set state code 0x211,
+ *      push &g_data_004ed1d8 + func_004594f0.
+ *
+ *   3. 0x47ba7c (~119b): Dual-attempt scenario picker. Calls
+ *      func_00429840 + func_0048d4b0 twice, each with a check
+ *      of bit 0 of g_data_0054208c — first attempt tail-jmps
+ *      func_0047baf0 if set, else takes a second attempt and
+ *      decides between func_0047bc30 (success) and
+ *      func_0047baf0 (fallback).
+ *
+ * Linear, no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_0047b900(void);
+extern void func_00429840(void);
+extern void func_0047baf0(void);
+extern void func_0047bc30(void);
+extern void func_0048d4b0(void);
+extern void func_0048fe40(void);
+extern void func_004901a0(void);
+extern void func_00490740(void);
+extern unsigned int g_data_004ed1d8;
+
+__declspec(naked) void RoundStartCluster_0047b900(void)
+{
+    __asm {
+        /* H1: 3-state FSM */
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        xor      edi, edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        sub      eax, edi
+        je       short L_b9cd
+        dec      eax
+        je       short L_b930
+        call     func_00470480
+        pop      edi
+        pop      esi
+        ret
+    L_b930:
+        call     func_00490740
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_ba4d
+        call     func_00490fc0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_ba4d
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_0054207c], edi
+        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_data_00542084], 0xccc
+        mov      dword ptr [esi + 8], OFFSET func_0047b900
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_0047b900
+        mov      dword ptr [edx*4 + 0x84], 2
+        mov      eax, dword ptr [esi + 4]
+        add      ecx, 0x2000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_0048fe40
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_b9cd:
+        call     func_004901a0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_ba4d
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x100e
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x74], eax
+        mov      dword ptr [esi + 8], OFFSET func_0047b900
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_0047b900
+        add      ecx, 0x1000000
+        mov      dword ptr [edx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_00428d00
+        mov      dword ptr [g_data_00541e6c], 1
+    L_ba4d:
+        pop      edi
+        pop      esi
+        ret
+        /* H2: chime trigger */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x211
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_004ed1d8
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     func_004594f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3: scenario picker */
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_baed
+        mov      dword ptr [g_data_0054206c], 0x11
+        call     func_0048d4b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_baed
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_bab4
+        jmp      func_0047baf0
+    L_bab4:
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_baed
+        mov      dword ptr [g_data_0054206c], 0x11
+        call     func_0048d4b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_baed
+        test     byte ptr [g_data_0054208c], 1
+        jne      short L_bae8
+        jmp      func_0047bc30
+    L_bae8:
+        jmp      func_0047baf0
+    L_baed:
+        ret
+    }
+}
