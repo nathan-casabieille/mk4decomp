@@ -9080,10 +9080,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesKK.c
   - addr: 0x00482c30
-    name: func_00482c30
+    name: CrouchFsmCluster_00482c30
     size: 558
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482e60
     name: TripleCallPauseTestPush_00482e60
     size: 70
