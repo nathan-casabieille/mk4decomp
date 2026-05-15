@@ -5385,10 +5385,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a590
-    name: func_0044a590
+    name: PreFight4StageSequencer_0044a590
     size: 608
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a7f0
     name: func_0044a7f0
     size: 4633
