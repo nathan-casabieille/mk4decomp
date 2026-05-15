@@ -1035,10 +1035,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0040dbb0
-    name: func_0040dbb0
+    name: PendingMatch_0040dbb0
     size: 1493
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0040e190
     name: MStackInitTriAlarm_0040e190
     size: 369
