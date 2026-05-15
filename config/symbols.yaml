@@ -16666,10 +16666,11 @@ functions:
     group: other
     status: stub
   - addr: 0x004d0800
-    name: func_004d0800
+    name: Crt80BitFloatMul_004d0800
     size: 696
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0ac0
     name: IntToBufBase8_004d0ac0
     size: 138
