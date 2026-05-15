@@ -3975,10 +3975,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00436b30
-    name: func_00436b30
+    name: ThrowGrabInitCluster_00436b30
     size: 792
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00436e50
     name: GameStateDispatch4Way_00436e50
     size: 408
