@@ -8989,10 +8989,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00481070
-    name: func_00481070
+    name: MainTickChain_00481070
     size: 750
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00481360
     name: CallPauseConstStoreJmp_00481360
     size: 30
