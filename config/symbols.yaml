@@ -8647,10 +8647,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0047d6e0
-    name: func_0047d6e0
+    name: RunCluster_0047d6e0
     size: 671
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047d980
     name: GuardedSeq_0047d980
     size: 20
