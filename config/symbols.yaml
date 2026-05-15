@@ -14789,10 +14789,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b81f0
-    name: func_004b81f0
+    name: PendingMatch_004b81f0
     size: 722
     group: game.menu
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004b84d0
     name: MenuPageEnterDispatch_004b84d0
     size: 346
