@@ -5604,10 +5604,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x0044ef50
-    name: func_0044ef50
+    name: PoseChainAdvanceCluster_0044ef50
     size: 1372
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044f4b0
     name: DualSubInstallChain_0044f4b0
     size: 433
