@@ -5083,10 +5083,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00443320
-    name: func_00443320
+    name: PendingMatch_00443320
     size: 2549
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00443d20
     name: func_00443d20
     size: 1633
