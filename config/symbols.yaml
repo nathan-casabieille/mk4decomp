@@ -5405,10 +5405,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004492f0
-    name: func_004492f0
+    name: PendingMatch_004492f0
     size: 3340
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a000
     name: GuardedTripleSetTailJmp7_0044a000
     size: 133
