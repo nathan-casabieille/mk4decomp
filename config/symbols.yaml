@@ -9220,10 +9220,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004831c0
-    name: func_004831c0
+    name: RoundCutsceneCluster_004831c0
     size: 1045
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004835e0
     name: Quad4EntryPushArg_004835e0
     size: 110
