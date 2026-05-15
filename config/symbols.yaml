@@ -5955,10 +5955,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004565a0
-    name: func_004565a0
+    name: CharSelectSetupCluster_004565a0
     size: 770
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004568b0
     name: func_004568b0
     size: 2440
