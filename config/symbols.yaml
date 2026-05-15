@@ -5633,10 +5633,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesU.c
   - addr: 0x004506c0
-    name: func_004506c0
+    name: PendingMatch_004506c0
     size: 1810
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00450de0
     name: InstallSelfIndexWalk_00450de0
     size: 229
