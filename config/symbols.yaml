@@ -5624,10 +5624,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004515c0
-    name: func_004515c0
+    name: AnimSequence4Way_004515c0
     size: 540
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004517e0
     name: func_004517e0
     size: 640

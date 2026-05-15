@@ -121618,3 +121618,200 @@ __declspec(naked) void RoundEndAudioCluster_0042e8d0(void)
         ret
     }
 }
+
+/* ============================================================
+ * AnimSequence4Way_004515c0 — 540b game.
+ *
+ * 4-state per-entity FSM cycling through 4 sister "animation
+ * step" pipelines. Reads [entity*4+0x84] state, clears, then
+ * dispatches via 16-byte jump table at 0x4517cc:
+ *
+ *   state 0 (L_747): cold init. func_004089e0 + func_004b8fa0
+ *     + func_00451aa0 + func_00405420; if bit 2 of
+ *     g_data_0054208c set, call func_00451ae0 + func_00451ab0
+ *     (effects). Install OFFSET self + state 1.
+ *   state 1 (L_5ee): step 1. func_00451af0 + func_00405420;
+ *     if bit 2 set, call func_00451ac0 + func_00451b00.
+ *     Install OFFSET self + state 2.
+ *   state 2 (L_661): step 2. func_00451b20 + func_00405420;
+ *     if bit 2 set, call func_00451b60 + func_00451b30.
+ *     Install OFFSET self + state 3.
+ *   state 3 (L_6d4): step 3. func_00451b70 + func_00405420;
+ *     if bit 2 set, call func_00451b40 + func_00451b80.
+ *     Install OFFSET self + state 4.
+ *   state ≥4 (default): tail func_0041f780 (exit).
+ *
+ * Frame: push esi. Returns: void.
+ * Layout: 3-byte `lea ecx, [ecx]` align nop before the 16-byte
+ * jump table at 0x4517cc.
+ * ============================================================ */
+
+extern void func_004515c0(void);
+extern void func_00451aa0(void);
+extern void func_00451ab0(void);
+extern void func_00451ac0(void);
+extern void func_00451ae0(void);
+extern void func_00451af0(void);
+extern void func_00451b00(void);
+extern void func_00451b20(void);
+extern void func_00451b30(void);
+extern void func_00451b40(void);
+extern void func_00451b60(void);
+extern void func_00451b70(void);
+extern void func_00451b80(void);
+
+__declspec(naked) void AnimSequence4Way_004515c0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        cmp      eax, 3
+        ja       L_17c2
+        jmp      dword ptr [eax*4 + L_5c0_jmptbl]
+    L_15ee:
+        call     func_00451af0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_163f
+        call     func_00451ac0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        call     func_00451b00
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+    L_163f:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET func_004515c0
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret
+    L_1661:
+        call     func_00451b20
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_16b2
+        call     func_00451b60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        call     func_00451b30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+    L_16b2:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET func_004515c0
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret
+    L_16d4:
+        call     func_00451b70
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_17c7
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_1725
+        call     func_00451b40
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        call     func_00451b80
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+    L_1725:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET func_004515c0
+        mov      dword ptr [esi + 0x84], 4
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret
+    L_1747:
+        call     func_004089e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        call     func_004b8fa0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        call     func_00451aa0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        call     func_00405420
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_17a4
+        call     func_00451ae0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+        call     func_00451ab0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_17c7
+    L_17a4:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET func_004515c0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret
+    L_17c2:
+        call     func_0041f780
+    L_17c7:
+        pop      esi
+        ret
+        /* 3-byte align nop `lea ecx, [ecx]` (8d 49 00) */
+        _emit    0x8d
+        _emit    0x49
+        _emit    0x00
+    L_5c0_jmptbl:
+        _emit    0x47
+        _emit    0x17
+        _emit    0x45
+        _emit    0x00
+        _emit    0xee
+        _emit    0x15
+        _emit    0x45
+        _emit    0x00
+        _emit    0x61
+        _emit    0x16
+        _emit    0x45
+        _emit    0x00
+        _emit    0xd4
+        _emit    0x16
+        _emit    0x45
+        _emit    0x00
+    }
+}
