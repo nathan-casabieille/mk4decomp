@@ -7946,10 +7946,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesZ.c
   - addr: 0x00474b50
-    name: func_00474b50
+    name: NetEntityScanAndPunish_00474b50
     size: 485
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474d40
     name: DualPushCmp12Dispatch_00474d40
     size: 157
