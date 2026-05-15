@@ -12371,10 +12371,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a0d60
-    name: func_004a0d60
+    name: AudioVoiceSequencerCluster_004a0d60
     size: 670
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a1000
     name: AudioInitChainTag_004a1000
     size: 120
