@@ -7968,10 +7968,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00474390
-    name: func_00474390
+    name: PreFightInstallCluster_00474390
     size: 660
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00474630
     name: func_00474630
     size: 874
