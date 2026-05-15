@@ -4639,10 +4639,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0043ac10
-    name: func_0043ac10
+    name: EnduranceRoundMsgCluster_0043ac10
     size: 700
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043aed0
     name: DualBlockThunkPlus3State_0043aed0
     size: 282
