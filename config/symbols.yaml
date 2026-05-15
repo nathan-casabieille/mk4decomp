@@ -8385,10 +8385,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00478a90
-    name: func_00478a90
+    name: VersusSwapCluster_00478a90
     size: 617
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00478d00
     name: PushClampZeroOneCallPop_00478d00
     size: 145
