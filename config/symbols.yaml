@@ -10399,10 +10399,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048d7b0
-    name: func_0048d7b0
+    name: PendingMatch_0048d7b0
     size: 1611
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048de00
     name: DirtyFlagsManip_0048de00
     size: 25
