@@ -2158,10 +2158,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesHH.c
   - addr: 0x00424bf0
-    name: func_00424bf0
+    name: Mul10HeavyTransform_00424bf0
     size: 1277
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004250f0
     name: TripleSubVec3_004250f0
     size: 61
