@@ -4972,10 +4972,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00440dc0
-    name: func_00440dc0
+    name: BackdashSetupCluster_00440dc0
     size: 1025
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004411d0
     name: func_004411d0
     size: 3093
