@@ -11694,10 +11694,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004970f0
-    name: func_004970f0
+    name: SweepKickDispatcher_004970f0
     size: 862
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00497450
     name: GuardedSeq_00497450
     size: 20
