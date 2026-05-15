@@ -16006,10 +16006,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9520
-    name: func_004c9520
+    name: CrtSetlocaleInstaller_004c9520
     size: 555
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c9750
     name: CRTSignalDispatch_004c9750
     size: 77
