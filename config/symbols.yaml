@@ -4060,10 +4060,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00437c10
-    name: func_00437c10
+    name: PoseFsm4StateInstall_00437c10
     size: 738
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00437f00
     name: InstallSelfChainSetB333v2_00437f00
     size: 172
