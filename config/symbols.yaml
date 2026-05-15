@@ -5579,10 +5579,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044eaf0
-    name: func_0044eaf0
+    name: ThrowFsmCluster_0044eaf0
     size: 1047
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044ef10
     name: ScaledInitOrSelfPtr_0044ef10
     size: 64
