@@ -16382,10 +16382,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cd6f0
-    name: func_004cd6f0
+    name: CrtCodepageDispatcher_004cd6f0
     size: 549
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cd920
     name: StrNLen_004cd920
     size: 47
