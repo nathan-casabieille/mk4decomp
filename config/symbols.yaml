@@ -1249,10 +1249,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00413f40
-    name: func_00413f40
+    name: PendingMatch_00413f40
     size: 1146
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004143c0
     name: PushCallScaledStore_004143c0
     size: 37
