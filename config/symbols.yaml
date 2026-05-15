@@ -46,10 +46,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00402540
-    name: func_00402540
+    name: PendingMatch_00402540
     size: 1528
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00402b40
     name: InstallSelfSearchAccum_00402b40
     size: 193
