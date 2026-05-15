@@ -4885,10 +4885,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043f3a0
-    name: func_0043f3a0
+    name: ComboMenuFsmCluster_0043f3a0
     size: 1355
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043f8f0
     name: TwoCallScaledOr1600_0043f8f0
     size: 199
