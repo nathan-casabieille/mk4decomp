@@ -16102,10 +16102,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cb880
-    name: func_004cb880
+    name: SehFpuExceptionDispatch_004cb880
     size: 525
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cba90
     name: ArraySearch_004cba90
     size: 60

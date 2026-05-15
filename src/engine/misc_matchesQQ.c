@@ -120598,3 +120598,274 @@ __declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
         ret
     }
 }
+
+/* ============================================================
+ * SehFpuExceptionDispatch_004cb880 — 525b crt.
+ *
+ * SEH filter routine for floating-point hardware exceptions.
+ * On entry func_004c9df0() returns the per-thread CRT context
+ * struct (esi); func_004cba90(arg2, [esi+0x50]) returns the
+ * matched handler descriptor in eax. Steps:
+ *
+ *   1. If descriptor is NULL or [desc+8] (handler ptr) is 0:
+ *      jmp to default-handler ([g_iat_004d20f8]).
+ *   2. If [desc+8] == 5 (SIG_DFL): zero handler, return 1.
+ *   3. If [desc+8] == 1 (SIG_IGN): return -1.
+ *   4. Otherwise install the new sigh into the CRT context
+ *      ([esi+0x50]), then check the exception code [eax+0]:
+ *        - 0xc000008e (DIV_BY_ZERO)  → fpu_status |= 0x83
+ *        - 0xc0000090 (INVALID_OP)   → fpu_status |= 0x81
+ *        - 0xc0000091 (OVERFLOW)     → fpu_status |= 0x84
+ *        - 0xc0000093 (UNDERFLOW)    → fpu_status |= 0x85
+ *        - 0xc000008d (DENORMAL)     → fpu_status |= 0x82
+ *        - 0xc000008f (INEXACT)      → fpu_status |= 0x86
+ *        - 0xc0000092 (STACK_CHECK)  → fpu_status |= 0x8a
+ *      Each branch calls the user handler with (8,
+ *      fpu_status), then restores the context and returns -1.
+ *   5. If [desc+4] != 8 (FPE): clear handler, call user
+ *      handler with current arg, return -1.
+ *
+ *   FPE-specific path also clears any pending FPE bits across
+ *   the 0x12 fd table at g_data_005228f8/00522908 via a small
+ *   loop (zeros [base+entry*12+8]).
+ *
+ * Frame: push ecx/ebx/ebp/esi/edi. Returns: int.
+ * ============================================================ */
+
+extern void func_004c9df0(void);
+extern void func_004cba90(void);
+extern unsigned int g_data_005228f8;
+extern unsigned int g_data_005228fc;
+extern void *g_iat_004d20f8;
+
+__declspec(naked) void SehFpuExceptionDispatch_004cb880(void)
+{
+    __asm {
+        push     ecx
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        call     func_004c9df0
+        mov      ecx, dword ptr [esp + 0x18]
+        mov      esi, eax
+        mov      eax, dword ptr [esi + 0x50]
+        push     eax
+        push     ecx
+        call     func_004cba90
+        xor      edi, edi
+        add      esp, 8
+        cmp      eax, edi
+        je       L_ba7c
+        mov      edx, dword ptr [eax + 8]
+        cmp      edx, edi
+        mov      dword ptr [esp + 0x18], edx
+        je       L_ba7c
+        cmp      edx, 5
+        jne      short L_b8c9
+        mov      dword ptr [eax + 8], edi
+        mov      eax, 1
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b8c9:
+        cmp      edx, 1
+        jne      short L_b8d7
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b8d7:
+        mov      ecx, dword ptr [esi + 0x54]
+        mov      dword ptr [esp + 0x10], ecx
+        mov      ecx, dword ptr [esp + 0x1c]
+        mov      dword ptr [esi + 0x54], ecx
+        mov      ecx, dword ptr [eax + 4]
+        cmp      ecx, 8
+        jne      L_ba63
+        mov      ecx, dword ptr [g_data_005228f8]
+        mov      ebx, dword ptr [g_data_005228fc]
+        add      ebx, ecx
+        cmp      ecx, ebx
+        jge      short L_b92a
+        lea      edx, [ecx + ecx*2]
+        shl      edx, 2
+    L_b909:
+        mov      ebx, dword ptr [esi + 0x50]
+        inc      ecx
+        mov      dword ptr [ebx + edx + 8], edi
+        mov      ebx, dword ptr [g_data_005228f8]
+        mov      ebp, dword ptr [g_data_005228fc]
+        add      edx, 0xc
+        add      ebp, ebx
+        cmp      ecx, ebp
+        jl       short L_b909
+        mov      edx, dword ptr [esp + 0x18]
+    L_b92a:
+        mov      eax, dword ptr [eax]
+        mov      edi, dword ptr [esi + 0x58]
+        cmp      eax, 0xc000008e
+        jne      short L_b95b
+        mov      dword ptr [esi + 0x58], 0x83
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b95b:
+        cmp      eax, 0xc0000090
+        jne      short L_b987
+        mov      dword ptr [esi + 0x58], 0x81
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b987:
+        cmp      eax, 0xc0000091
+        jne      short L_b9b3
+        mov      dword ptr [esi + 0x58], 0x84
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b9b3:
+        cmp      eax, 0xc0000093
+        jne      short L_b9df
+        mov      dword ptr [esi + 0x58], 0x85
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_b9df:
+        cmp      eax, 0xc000008d
+        jne      short L_ba0b
+        mov      dword ptr [esi + 0x58], 0x82
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_ba0b:
+        cmp      eax, 0xc000008f
+        jne      short L_ba37
+        mov      dword ptr [esi + 0x58], 0x86
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_ba37:
+        cmp      eax, 0xc0000092
+        jne      short L_ba45
+        mov      dword ptr [esi + 0x58], 0x8a
+    L_ba45:
+        mov      eax, dword ptr [esi + 0x58]
+        push     eax
+        push     8
+        call     edx
+        mov      ecx, dword ptr [esp + 0x18]
+        add      esp, 8
+        mov      dword ptr [esi + 0x58], edi
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_ba63:
+        push     ecx
+        mov      dword ptr [eax + 8], edi
+        call     edx
+        mov      ecx, dword ptr [esp + 0x14]
+        add      esp, 4
+        mov      dword ptr [esi + 0x54], ecx
+        or       eax, 0xffffffff
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    L_ba7c:
+        mov      edx, dword ptr [esp + 0x1c]
+        push     edx
+        call     dword ptr [g_iat_004d20f8]
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        pop      ecx
+        ret
+    }
+}
