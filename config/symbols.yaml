@@ -8294,10 +8294,11 @@ functions:
     status: matched
     file: src/engine/cond_install_dispatch.c
   - addr: 0x00477040
-    name: func_00477040
+    name: MStackDualDiffSequencer_00477040
     size: 689
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00477300
     name: MStackPush3DualCallHalve_00477300
     size: 241
