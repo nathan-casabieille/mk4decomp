@@ -1100,10 +1100,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004108a0
-    name: func_004108a0
+    name: PendingMatch_004108a0
     size: 1796
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00410fb0
     name: Phase1InitModelAdjustChain_00410fb0
     size: 544
