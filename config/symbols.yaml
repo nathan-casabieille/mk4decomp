@@ -11389,10 +11389,11 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x00493ef0
-    name: func_00493ef0
+    name: AnimEventUpdateCluster_00493ef0
     size: 578
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494140
     name: ArgScaledTestStore_00494140
     size: 61
