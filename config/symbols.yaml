@@ -3476,10 +3476,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004326a0
-    name: func_004326a0
+    name: PendingMatch_004326a0
     size: 2085
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00432ed0
     name: PendingMatch_00432ed0
     size: 1526
