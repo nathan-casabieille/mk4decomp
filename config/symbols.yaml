@@ -4985,10 +4985,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00442530
-    name: func_00442530
+    name: SpawnFreezeProjectileChain_00442530
     size: 521
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00442740
     name: ChainInitMul10BulkStore_00442740
     size: 311
