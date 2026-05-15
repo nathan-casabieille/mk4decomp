@@ -9564,10 +9564,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00488210
-    name: func_00488210
+    name: BossRoarCluster_00488210
     size: 654
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004884a0
     name: func_004884a0
     size: 670
