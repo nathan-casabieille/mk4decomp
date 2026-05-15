@@ -9998,10 +9998,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x0048a3d0
-    name: func_0048a3d0
+    name: ThrowPairPoseCluster_0048a3d0
     size: 820
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048a710
     name: InstallSelfChainCallStateInits_0048a710
     size: 168
