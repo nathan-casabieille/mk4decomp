@@ -1358,10 +1358,11 @@ functions:
     group: boot
     status: stub
   - addr: 0x00417840
-    name: func_00417840
+    name: PendingMatch_00417840
     size: 1496
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00417e20
     name: ScaledInit_00417e20
     size: 18
