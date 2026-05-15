@@ -2942,10 +2942,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesFF.c
   - addr: 0x0042b000
-    name: func_0042b000
+    name: WorldCellSetupCluster_0042b000
     size: 749
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b2f0
     name: func_0042b2f0
     size: 922
