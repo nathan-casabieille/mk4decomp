@@ -114634,3 +114634,200 @@ __declspec(naked) void GameStateProgressCluster_0043aff0(void)
         ret
     }
 }
+
+/* ============================================================
+ * RoundCleanupCluster_00487510 — 477b game (packed: 4 helpers).
+ *
+ * Round-cleanup advance pipeline, used after a fight ends:
+ *
+ *   1. 0x487510 (L_7510, ~30b): tiny installer. Stamps OFFSET
+ *      self into [entity+8], sets [entity+0x84] := 1 (state),
+ *      g_data_0054204c := 0x28 (return-to-mode), and trips
+ *      g_data_00541e6c := 1.
+ *
+ *   2. 0x487540 (~28b): sets state code 0x27, runs func_00489f60
+ *      (animate); on success bumps g_data_00542074 := 1,
+ *      g_data_0054207c := 2, state := 0x23d7 (debug tag), then
+ *      tail-jumps func_00486d90 (next stage).
+ *
+ *   3. 0x48758c (~37b): pushes &g_data_004eef18 to func_00490b40
+ *      (load), runs func_00490230 (compute); on success pushes
+ *      &g_data_004eef20 to func_004594f0 (audio).
+ *
+ *   4. 0x4875d0 (L_75d0, ~282b): per-entity state-machine. Reads
+ *      [entity*4+0x84] state, clears, dispatches on (state-0):
+ *        state 0  → set state=1 + install OFFSET L_75d0, mark
+ *                  g_data_0054204c := 8, trip g_data_00541e6c.
+ *        state 1  → fall into func_00486d90's old-state check:
+ *                  if [entity*4+0x60] in {0x10a,0x10b} call
+ *                  func_004876f0 first; then install OFFSET
+ *                  L_75d0 + state 2 + g_data_0054204c := 5.
+ *        state 2  → func_0048e820 → optional func_0048eec0 if
+ *                  bit 0 of g_data_0054208c is unset/set per
+ *                  cycle; on success install OFFSET L_75d0 +
+ *                  state 3 + g_data_0054204c := 1.
+ *        state ≥3 → call func_0046f6b0 (exit).
+ *
+ * Linear, no mstack. Returns void.
+ * Layout: heavy 16-byte nop alignment between helpers.
+ * ============================================================ */
+
+extern void func_00487510(void);
+extern void func_00486d90(void);
+extern void func_004876f0(void);
+extern void func_00489f60(void);
+extern void func_0048e820(void);
+extern void func_0048eec0(void);
+extern void func_00490230(void);
+extern void func_00490b40(void);
+extern unsigned int g_data_004eef18;
+extern unsigned int g_data_004eef20;
+
+__declspec(naked) void RoundCleanupCluster_00487510(void)
+{
+    __asm {
+        /* H1: installer */
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, 1
+        shl      eax, 2
+        mov      dword ptr [eax + 0x84], 0
+        mov      dword ptr [eax + 8], OFFSET func_00487510
+        mov      dword ptr [eax + 0x84], ecx
+        mov      dword ptr [g_data_0054204c], 0x28
+        mov      dword ptr [g_data_00541e6c], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2: animate + tail-jump */
+        mov      dword ptr [g_data_0054206c], 0x27
+        call     func_00489f60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_758b
+        mov      dword ptr [g_data_00542074], 1
+        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_data_0054206c], 0x23d7
+        jmp      func_00486d90
+    L_758b:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H3: load + sound */
+        push     OFFSET g_data_004eef18
+        call     func_00490b40
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_75c1
+        call     func_00490230
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_75c1
+        push     OFFSET g_data_004eef20
+        call     func_004594f0
+        add      esp, 4
+    L_75c1:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4 (L_75d0): big state dispatcher */
+    L_75d0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     ebx
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        sub      eax, 0
+        je       L_76c8
+        dec      eax
+        je       short L_765f
+        dec      eax
+        mov      ebx, 1
+        je       short L_763f
+        call     func_0048e820
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_76ea
+        test     byte ptr [g_data_0054208c], bl
+        je       short L_7637
+        call     func_0048eec0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_76ea
+        test     byte ptr [g_data_0054208c], bl
+        jne      short L_763f
+    L_7637:
+        call     func_0046f6b0
+        pop      esi
+        pop      ebx
+        ret
+    L_763f:
+        mov      dword ptr [esi + 8], OFFSET L_75d0
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], ebx
+        mov      dword ptr [g_data_00541e6c], ebx
+        pop      esi
+        pop      ebx
+        ret
+    L_765f:
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x60]
+        cmp      eax, 0x10a
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_768b
+        call     func_004876f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_76ea
+        mov      eax, dword ptr [g_data_0054206c]
+    L_768b:
+        cmp      eax, 0x10b
+        jne      short L_76a0
+        call     func_004876f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_76ea
+    L_76a0:
+        mov      dword ptr [esi + 8], OFFSET L_75d0
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], 5
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      esi
+        pop      ebx
+        ret
+    L_76c8:
+        mov      ebx, 1
+        mov      dword ptr [esi + 8], OFFSET L_75d0
+        mov      dword ptr [esi + 0x84], ebx
+        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_data_00541e6c], ebx
+    L_76ea:
+        pop      esi
+        pop      ebx
+        ret
+    }
+}

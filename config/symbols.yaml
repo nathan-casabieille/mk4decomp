@@ -9446,10 +9446,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00487510
-    name: func_00487510
+    name: RoundCleanupCluster_00487510
     size: 477
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004876f0
     name: GameLoaderHandlerCluster_004876f0
     size: 415
