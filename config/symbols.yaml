@@ -12795,10 +12795,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004a5ea0
-    name: func_004a5ea0
+    name: VoiceTrioBindAndKick_004a5ea0
     size: 479
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a6080
     name: AudioMode2BankSetup_004a6080
     size: 245

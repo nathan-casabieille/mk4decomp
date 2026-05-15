@@ -114831,3 +114831,176 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         ret
     }
 }
+
+/* ============================================================
+ * VoiceTrioBindAndKick_004a5ea0 — 479b audio.
+ *
+ * Binds and kicks off three audio voices for a single sound
+ * event (esi points at a 5-byte voice-descriptor: char[5] of
+ * indices). Steps:
+ *   1. Resolve the voice handle base from either g_data_0050a0f0
+ *      (default) or, if [esi+2]==1, follow a 2-level chained
+ *      lookup into [esi[0]*4 + g_data_0050a0f0/4]*4.
+ *   2. Run func_00407400 (open voices) + func_00406430 (config).
+ *   3. If g_data_0054208c has bit 2 clear, prep three position
+ *      slots at [voice_slot*4 + 0x54/0x58/0x5c] from the 3-arg
+ *      (xyz) tuple passed to the function; if [esi+2]!=0 set
+ *      slot 0x64 := 0x3243f (priority).
+ *   4. Stamp the voice handle into [esi+8].
+ *   5. If [esi+2]==1 (chained), fire three sub-voices via
+ *      func_004a2000 for offsets [esi+1], [esi+3], [esi+4]
+ *      against tables g_data_004f3a38 / g_data_004f3a30 /
+ *      g_data_004f3220 (one per ear/channel), each with a
+ *      ±0xa0000 spatial offset around the origin. The 0x55555556
+ *      imul/shr pattern divides the xyz coords by 3.
+ *   6. If [esi+3] non-zero call func_00409320 (start envelope).
+ *
+ * Frame: push ebx/ebp/esi/edi. Returns: void.
+ *
+ * Linear, no mstack. References two .data offset constants
+ * (g_data_0050a0f0, g_data_0050c618) via `OFFSET` immediates.
+ * ============================================================ */
+
+extern void func_00406430(void);
+extern void func_00407400(void);
+extern void func_00409320(void);
+extern void func_004a2000(void);
+extern unsigned int g_data_0050a0f0;
+extern unsigned int g_data_0050c618;
+extern unsigned int g_data_004f3a30;
+extern unsigned int g_data_004f3a38;
+
+__declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
+{
+    __asm {
+        push     ebx
+        push     ebp
+        mov      eax, OFFSET g_data_0050a0f0
+        push     esi
+        mov      esi, dword ptr [esp + 0x10]
+        mov      bl, 1
+        shr      eax, 2
+        mov      dword ptr [g_data_00542048], eax
+        mov      cl, byte ptr [esi + 2]
+        cmp      cl, bl
+        push     edi
+        jne      short L_5ee7
+        movsx    ecx, byte ptr [esi]
+        add      ecx, eax
+        mov      eax, dword ptr [ecx*4]
+        and      eax, 0xffffff
+        mov      dword ptr [g_data_00542048], eax
+        mov      edx, dword ptr [eax]
+        sar      edx, 2
+        and      edx, 0x3fffff
+        mov      dword ptr [g_data_00542048], edx
+        jmp      short L_5ef4
+    L_5ee7:
+        mov      eax, OFFSET g_data_0050c618
+        shr      eax, 2
+        mov      dword ptr [g_data_00542048], eax
+    L_5ef4:
+        call     func_00407400
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_607a
+        call     func_00406430
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_607a
+        mov      al, byte ptr [g_data_0054208c]
+        mov      ecx, dword ptr [esp + 0x20]
+        mov      edx, dword ptr [esp + 0x1c]
+        mov      ebp, dword ptr [esp + 0x18]
+        test     al, 4
+        jne      short L_5f80
+        mov      al, byte ptr [esi + 2]
+        test     al, al
+        jne      short L_5f44
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x64], 0x3243f
+    L_5f44:
+        mov      edi, dword ptr [g_data_00542044]
+        lea      eax, [ebp*4]
+        mov      dword ptr [edi*4 + 0x54], eax
+        mov      edi, dword ptr [g_data_00542044]
+        lea      eax, [edx*4]
+        mov      dword ptr [edi*4 + 0x58], eax
+        mov      edi, dword ptr [g_data_00542044]
+        lea      eax, [ecx*4 + 0xc0000]
+        mov      dword ptr [edi*4 + 0x5c], eax
+    L_5f80:
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [esi + 8], eax
+        mov      al, byte ptr [esi + 2]
+        cmp      al, bl
+        jne      L_607a
+        mov      eax, 0x55555556
+        imul     edx
+        mov      eax, edx
+        shr      eax, 0x1f
+        add      edx, eax
+        mov      eax, 0x55555556
+        mov      edi, edx
+        imul     ebp
+        mov      eax, edx
+        shr      eax, 0x1f
+        lea      ebx, [edx + eax + 0x300000]
+        mov      eax, 0x55555556
+        imul     ecx
+        mov      ecx, edx
+        shr      ecx, 0x1f
+        add      edx, ecx
+        lea      ecx, [edi - 0xa0000]
+        mov      ebp, edx
+        push     ecx
+        movsx    edx, byte ptr [esi + 1]
+        push     ebx
+        mov      eax, dword ptr [edx*4 + g_data_004f3a38]
+        push     eax
+        mov      dword ptr [g_data_00542044], eax
+        call     func_004a2000
+        mov      edx, dword ptr [g_data_00542044]
+        add      ebp, 0x10000
+        add      esp, 0xc
+        mov      dword ptr [edx*4 + 0x5c], ebp
+        mov      eax, dword ptr [g_data_00542044]
+        movsx    ecx, byte ptr [esi + 3]
+        lea      edx, [edi + 0xa0000]
+        mov      dword ptr [esi + 0xc], eax
+        mov      eax, dword ptr [ecx*4 + g_data_004f3a30]
+        push     edx
+        push     ebx
+        push     eax
+        mov      dword ptr [g_data_00542044], eax
+        call     func_004a2000
+        mov      eax, dword ptr [g_data_00542044]
+        add      esp, 0xc
+        add      edi, 0x1e0000
+        mov      dword ptr [eax*4 + 0x5c], ebp
+        mov      ecx, dword ptr [g_data_00542044]
+        movsx    edx, byte ptr [esi + 4]
+        mov      dword ptr [esi + 0x10], ecx
+        push     edi
+        mov      eax, dword ptr [edx*4 + g_data_004f3220]
+        push     ebx
+        push     eax
+        mov      dword ptr [g_data_00542044], eax
+        call     func_004a2000
+        mov      eax, dword ptr [g_data_00542044]
+        add      esp, 0xc
+        mov      dword ptr [eax*4 + 0x5c], ebp
+        mov      al, byte ptr [esi + 3]
+        mov      ecx, dword ptr [g_data_00542044]
+        test     al, al
+        mov      dword ptr [esi + 0x14], ecx
+        je       short L_607a
+        call     func_00409320
+    L_607a:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    }
+}
