@@ -8776,10 +8776,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047fcc0
-    name: func_0047fcc0
+    name: StageRoundFlowCluster_0047fcc0
     size: 500
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047fec0
     name: FourConstCallLitCallJmp_0047fec0
     size: 88
