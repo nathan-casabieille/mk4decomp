@@ -3269,10 +3269,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x0042fc80
-    name: func_0042fc80
+    name: PoseBlendDriver_0042fc80
     size: 544
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042fea0
     name: LoadSetCallPauseStoreJmp_0042fea0
     size: 64
