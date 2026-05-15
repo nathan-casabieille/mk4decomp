@@ -3899,10 +3899,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x004364a0
-    name: func_004364a0
+    name: MoveFsmCluster_004364a0
     size: 545
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004366d0
     name: DualEntry5WayThreshold_004366d0
     size: 137
