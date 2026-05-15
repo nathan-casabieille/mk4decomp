@@ -4011,10 +4011,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00437300
-    name: func_00437300
+    name: HitFsmCluster_00437300
     size: 996
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004376f0
     name: InstallSelfChain4Call_004376f0
     size: 207
