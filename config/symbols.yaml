@@ -8357,10 +8357,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00478350
-    name: func_00478350
+    name: BulletVolleySpawner_00478350
     size: 577
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004785a0
     name: func_004785a0
     size: 830
