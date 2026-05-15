@@ -6093,10 +6093,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004592f0
-    name: func_004592f0
+    name: BitmapBlitRunLength_004592f0
     size: 506
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004594f0
     name: ArgSarStoreJmp_004594f0
     size: 30

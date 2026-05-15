@@ -117793,3 +117793,158 @@ __declspec(naked) void IntroSequencePipeline_0044cd50(void)
         ret
     }
 }
+
+/* ============================================================
+ * BitmapBlitRunLength_004592f0 — 506b game.
+ *
+ * Hot bitmap blit kernel for a 0x10-row × per-row run-length
+ * decoded sprite. Walks the 0xf-row outer loop and 3-byte-per-
+ * row inner loop, expanding each compressed byte by ANDing with
+ * a sliding mask in g_data_0054207c (init 0xff) and shifting
+ * down by 8 bits per byte, then dispatching the resulting
+ * 4-bit nibble to func_004774b0 (per-pixel emit).
+ *
+ * Steps:
+ *   1. Saves 6 dispatcher slots onto the dispatch stack
+ *      (g_data_004d57ac): old state code, glyph mask, row count,
+ *      x cursor, palette index, output cursor.
+ *   2. Initializes loop counters: g_data_00542070=0xf rows,
+ *      esi=3 bytes/row, g_data_0054207c=0xff mask, base
+ *      pointers from g_data_004d51a0>>2 (source) and
+ *      g_data_0053a53c>>2 (sink).
+ *   3. Per pixel: shift mask down 8 bits, AND, call
+ *      func_004774b0; bail-out fast if abort flag is set.
+ *   4. Between rows, reloads next palette byte via increment of
+ *      g_data_00542044, calls func_004774b0 once more, then
+ *      decrement row counter.
+ *   5. Restore the 6 saved slots from the dispatch stack and
+ *      return.
+ *
+ * Frame: push esi. Returns: void.
+ * ============================================================ */
+
+extern void func_004774b0(void);
+extern unsigned int g_data_004d51a0;
+extern unsigned int g_data_0053a53c;
+extern unsigned int g_data_00542078;
+
+__declspec(naked) void BitmapBlitRunLength_004592f0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542070]
+        inc      eax
+        push     esi
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      esi, 3
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542074]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542078]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_0054207c]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_0054204c]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, OFFSET g_data_004d51a0
+        mov      dword ptr [eax*4], edx
+        mov      eax, OFFSET g_data_0053a53c
+        sar      ecx, 2
+        sar      eax, 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      eax, 0xff
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_0054207c], eax
+        mov      dword ptr [g_data_00542070], 0xf
+        jmp      short L_93c2
+    L_93b7:
+        mov      eax, dword ptr [g_data_0054207c]
+        mov      ecx, dword ptr [g_data_00542044]
+    L_93c2:
+        mov      edx, dword ptr [ecx*4]
+        inc      ecx
+        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_00542078], esi
+        jmp      short L_93e3
+    L_93de:
+        mov      eax, dword ptr [g_data_0054207c]
+    L_93e3:
+        and      eax, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542074], eax
+        call     func_004774b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_94e8
+        mov      edx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_data_00542078]
+        sar      edx, 8
+        inc      ecx
+        dec      eax
+        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_data_00542078], eax
+        jne      short L_93de
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        mov      dword ptr [g_data_00542074], ecx
+        mov      dword ptr [g_data_00542044], eax
+        call     func_004774b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_94e8
+        mov      ecx, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_data_00542070]
+        inc      ecx
+        dec      eax
+        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_data_00542070], eax
+        jne      L_93b7
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_0054207c], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542078], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542074], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+    L_94e8:
+        pop      esi
+        ret
+    }
+}
