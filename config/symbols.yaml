@@ -12626,10 +12626,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a23c0
-    name: func_004a23c0
+    name: MatchStartCluster_004a23c0
     size: 592
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a2610
     name: AudioModeInit_004a2610
     size: 120
