@@ -6991,10 +6991,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00463870
-    name: func_00463870
+    name: CombatChainWalkExpand_00463870
     size: 1026
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463c80
     name: MStackChainPackedDispatch_00463c80
     size: 412
