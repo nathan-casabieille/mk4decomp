@@ -8407,10 +8407,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00479e40
-    name: func_00479e40
+    name: ThrowTakedownStepCluster_00479e40
     size: 592
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a090
     name: InstallSelf3StateFieldSet_0047a090
     size: 300
