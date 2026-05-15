@@ -5975,10 +5975,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00455bd0
-    name: func_00455bd0
+    name: PendingMatch_00455bd0
     size: 1448
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00456180
     name: TwoCallPauseSetJmp2_00456180
     size: 54
