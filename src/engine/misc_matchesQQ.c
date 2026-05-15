@@ -118685,3 +118685,185 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         ret
     }
 }
+
+/* ============================================================
+ * RoundEndHandlerCluster_00457de0 — 517b game (packed: 2 helpers).
+ *
+ *   1. 0x457de0 (L_7de0, ~432b): 3-state per-entity FSM.
+ *      state 0 (L_7ed2): Boot/intro phase. Disable voice 7,
+ *        cancel func_004be800(0x1c,-1,-1,-1), set
+ *        g_data_00537e98 := g_data_00542074, state code 0xc,
+ *        run func_00458ae0 + func_00457ff0, log via
+ *        func_0049cb40(0x457f90, 0x25e), set
+ *        g_data_00542074 := 9, func_00489f50, then another
+ *        log func_0049cb40(0x427780, 0x262) with
+ *        g_data_0054205c := (OFFSET g_data_004e8698)>>2.
+ *        Install OFFSET self + state 1.
+ *      state 1: Optional g_data_00541d6c gate -- if zero,
+ *        same install path; else log 0x25e, check bit 0 of
+ *        g_data_0054208c. If clear, run func_004265d0 +
+ *        func_004bd890(3) + func_004be800(arena tuple) and
+ *        tail-jmp func_0041f780. Else run func_00458cc0 +
+ *        func_00458440, log 0x25e completion, install OFFSET
+ *        self + state 2 + 0x54204c := 0x3c.
+ *      state ≥2: pop and return.
+ *
+ *   2. 0x457f90 (L_7f90, ~28b): Per-entity state-clear. If
+ *      state was non-zero: g_data_0054206c := 1,
+ *      g_data_00541d6c := 1, tail-jmp func_0041f830. Else
+ *      install OFFSET L_7f90 + state 1 + 0x54204c := 0x708.
+ *
+ * Frame: H1 = push ebx/esi, H2 = no prologue. Returns: void.
+ * ============================================================ */
+
+extern void func_00457ff0(void);
+extern void func_00458ae0(void);
+extern void func_00458cc0(void);
+extern unsigned int g_data_004e8698;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537e98;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_00541d6c;
+extern unsigned int g_const_00427780;
+extern void func_00427780(void);
+
+__declspec(naked) void RoundEndHandlerCluster_00457de0(void)
+{
+    __asm {
+        /* H1 (L_7de0): 3-state FSM */
+    L_7de0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     ebx
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        sub      eax, 0
+        je       L_7ed2
+        dec      eax
+        jne      short L_7e38
+        mov      eax, dword ptr [g_data_00541d6c]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       L_7f6d
+        push     0x25e
+        call     func_00404b10
+        mov      al, byte ptr [g_data_0054208c]
+        mov      ebx, 1
+        add      esp, 4
+        test     al, bl
+        jne      short L_7e7d
+    L_7e38:
+        call     func_004265d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_7f8b
+        push     3
+        call     func_004bd890
+        mov      ecx, dword ptr [g_data_0053a51c]
+        mov      edx, dword ptr [g_data_005380e0]
+        mov      eax, dword ptr [g_data_00537f48]
+        add      esp, 4
+        add      ecx, 0x12
+        push     0x1d
+        push     ecx
+        push     edx
+        push     eax
+        call     func_004be800
+        add      esp, 0x10
+        call     func_0041f780
+        pop      esi
+        pop      ebx
+        ret
+    L_7e7d:
+        call     func_00458cc0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_7f8b
+        call     func_00458440
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_7f8b
+        push     0x25e
+        call     func_00404a50
+        mov      dword ptr [esi + 8], OFFSET L_7de0
+        mov      dword ptr [esi + 0x84], 2
+        add      esp, 4
+        mov      dword ptr [g_data_0054204c], 0x3c
+        mov      dword ptr [g_data_00541e6c], ebx
+        pop      esi
+        pop      ebx
+        ret
+    L_7ed2:
+        push     7
+        call     func_004bd890
+        add      esp, 4
+        push     -1
+        push     -1
+        push     -1
+        push     0x1c
+        call     func_004be800
+        mov      ecx, dword ptr [g_data_00542074]
+        mov      eax, 0xc
+        add      esp, 0x10
+        mov      dword ptr [g_data_00537e98], ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_0052aac4], eax
+        call     func_00458ae0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_7f8b
+        call     func_00457ff0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_7f8b
+        push     0x25e
+        push     OFFSET L_7f90
+        call     func_0049cb40
+        add      esp, 8
+        mov      dword ptr [g_data_00542074], 9
+        call     func_00489f50
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_7f8b
+        mov      edx, OFFSET g_data_004e8698
+        push     0x262
+        shr      edx, 2
+        push     OFFSET func_00427780
+        mov      dword ptr [g_data_0054205c], edx
+        call     func_0049cb40
+        add      esp, 8
+    L_7f6d:
+        mov      ebx, 1
+        mov      dword ptr [esi + 8], OFFSET L_7de0
+        mov      dword ptr [esi + 0x84], ebx
+        mov      dword ptr [g_data_0054204c], ebx
+        mov      dword ptr [g_data_00541e6c], ebx
+    L_7f8b:
+        pop      esi
+        pop      ebx
+        ret
+        nop
+        nop
+        /* H2 (L_7f90): per-entity state-clear */
+    L_7f90:
+        mov      eax, dword ptr [g_data_00542060]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], 0
+        test     ecx, ecx
+        je       short L_7fc2
+        mov      ecx, 1
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00541d6c], ecx
+        jmp      func_0041f830
+    L_7fc2:
+        mov      ecx, 1
+        mov      dword ptr [eax + 8], OFFSET L_7f90
+        mov      dword ptr [eax + 0x84], ecx
+        mov      dword ptr [g_data_0054204c], 0x708
+        mov      dword ptr [g_data_00541e6c], ecx
+        ret
+    }
+}

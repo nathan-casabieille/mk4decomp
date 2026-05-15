@@ -5984,10 +5984,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00457de0
-    name: func_00457de0
+    name: RoundEndHandlerCluster_00457de0
     size: 517
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00457ff0
     name: QuadCallPauseJmp_00457ff0
     size: 62
