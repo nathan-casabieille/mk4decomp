@@ -11591,10 +11591,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00496d80
-    name: func_00496d80
+    name: PunchAnimCluster_00496d80
     size: 574
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00496fc0
     name: MultiThunkDispatcher_00496fc0
     size: 303
