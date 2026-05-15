@@ -8898,10 +8898,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00480240
-    name: func_00480240
+    name: HitContactDispatcherCluster_00480240
     size: 810
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00480570
     name: Install3StateLongSeq_00480570
     size: 333
