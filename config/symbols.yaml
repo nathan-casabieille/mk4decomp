@@ -11533,10 +11533,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00494a60
-    name: func_00494a60
+    name: MoveDispatch4StateFsm_00494a60
     size: 766
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00494d60
     name: InstallSelfChain494d60_00494d60
     size: 178
