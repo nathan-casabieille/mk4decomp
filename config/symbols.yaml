@@ -1,14 +1,3 @@
-# MK4 matching-decomp symbol map.
-# Maintained semi-automatically: tools/decomp/discover_functions.py
-# adds newly-discovered VAs (CALL targets transitive from known
-# functions); the matching workflow updates `status` / `file` /
-# `name` fields manually.
-#
-# Status: stub | drafted | matched
-#  - stub:    asm-only, not yet decompiled
-#  - drafted: C source written, not yet byte-matching
-#  - matched: C source compiles to byte-identical asm
-
 functions:
   - addr: 0x00401000
     name: VoicePicker_00401000
@@ -4732,10 +4721,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043bdd0
-    name: func_0043bdd0
+    name: PendingMatch_0043bdd0
     size: 1399
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043c350
     name: CallPauseScaledByteSet_0043c350
     size: 62
