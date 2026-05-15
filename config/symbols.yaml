@@ -5905,10 +5905,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00455920
-    name: func_00455920
+    name: RoundCleanupCluster_00455920
     size: 687
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00455bd0
     name: func_00455bd0
     size: 1448
