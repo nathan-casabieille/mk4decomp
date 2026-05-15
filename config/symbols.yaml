@@ -8181,10 +8181,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00475cd0
-    name: func_00475cd0
+    name: HandWalkCluster_00475cd0
     size: 900
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00476060
     name: DispatcherComplex138_00476060
     size: 138
