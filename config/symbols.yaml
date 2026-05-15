@@ -15855,10 +15855,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c73d0
-    name: func_004c73d0
+    name: CrtHeapCommitFreeCluster_004c73d0
     size: 659
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c7670
     name: BucketBlockAllocSplit_004c7670
     size: 370
