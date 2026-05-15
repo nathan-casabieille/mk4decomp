@@ -16654,10 +16654,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cfe40
-    name: func_004cfe40
+    name: CrtTimeFmtPrefsCluster_004cfe40
     size: 758
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0140
     name: StringStripSlotReplace_004d0140
     size: 303
