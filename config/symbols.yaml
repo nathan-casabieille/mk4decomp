@@ -11352,10 +11352,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00493100
-    name: func_00493100
+    name: StrikeAnim4Picker_00493100
     size: 674
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004933b0
     name: TestStoreConstJmp_004933b0
     size: 30
