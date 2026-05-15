@@ -5646,10 +5646,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004517e0
-    name: func_004517e0
+    name: State6CycleFsm_004517e0
     size: 640
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00451a60
     name: CallPauseTestByte4ZeroCB_00451a60
     size: 62
