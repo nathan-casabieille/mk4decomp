@@ -121434,3 +121434,187 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         ret
     }
 }
+
+/* ============================================================
+ * RoundEndAudioCluster_0042e8d0 — 538b game (packed: 3 helpers).
+ *
+ *   1. 0x42e8d0 (~217b): "Round-end audio sequence". Pushes
+ *      g_data_00542044 + g_data_00542054 onto dispatch stack,
+ *      calls func_00404a00(0x23c) for one sample, then for each
+ *      of 2 sample blocks (OFFSET g_data_0050d23c>>2 and
+ *      0050d258>>2) does:
+ *        - calls func_00407030 to look up
+ *        - if pause-bit 2 of g_data_0054208c clear, plays it via
+ *          func_0042e800(0x23a or 0x268).
+ *      Restores stack at end.
+ *
+ *   2. 0x42e9b0 (L_e9b0, ~138b): Per-entity health-fade. Clears
+ *      state, on first call seeds g_data_00542084 := 0xe666;
+ *      reads it then writes it into [scene*4+0x3c] for 3
+ *      scenes (g_data_00537f78, g_data_00541de0,
+ *      g_data_00535e6c). Subtract 0x83 from accumulator and
+ *      clamp to >= 0x1999. Install OFFSET L_e9b0 + state 1.
+ *
+ *   3. 0x42ea70 (L_ea70, ~94b): Per-entity gray-fade. State 0
+ *      uses ecx = 0xa0; state !=0 uses g_data_00542054. Builds
+ *      24-bit (ecx,ecx,ecx) replicated value into eax and writes
+ *      into g_data_0052ab4c. Decrements ecx, clamps to ≥0x19.
+ *      Install OFFSET L_ea70 + state 1 + 0x54204c := 7.
+ *
+ * Frame: no prologue. Returns: void.
+ * ============================================================ */
+
+extern void func_00404a00(void);
+extern void func_0042e800(void);
+extern unsigned int g_data_0050d23c;
+extern unsigned int g_data_0050d258;
+extern unsigned int g_data_0052ab4c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00541de0;
+
+__declspec(naked) void RoundEndAudioCluster_0042e8d0(void)
+{
+    __asm {
+        /* H1 */
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      eax
+        push     0x23c
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542054]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        call     func_00404a00
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, OFFSET g_data_0050d23c
+        shr      ecx, 2
+        add      esp, 4
+        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_data_00542048], ecx
+        call     func_00407030
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_e9a6
+        test     byte ptr [g_data_0054208c], 4
+        jne      short L_e949
+        push     0x23a
+        call     func_0042e800
+        add      esp, 4
+    L_e949:
+        mov      edx, OFFSET g_data_0050d258
+        shr      edx, 2
+        mov      dword ptr [g_data_00542048], edx
+        call     func_00407030
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_e9a6
+        test     byte ptr [g_data_0054208c], 4
+        jne      short L_e97b
+        push     0x268
+        call     func_0042e800
+        add      esp, 4
+    L_e97b:
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_data_004d57ac], eax
+    L_e9a6:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2 (L_e9b0): health fade */
+    L_e9b0:
+        mov      eax, dword ptr [g_data_00542060]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], 0
+        test     ecx, ecx
+        jne      short L_e9d6
+        mov      dword ptr [g_data_00542084], 0xe666
+    L_e9d6:
+        mov      ecx, dword ptr [g_data_00537f78]
+        mov      edx, dword ptr [g_data_00542084]
+        mov      dword ptr [ecx*4 + 0x3c], edx
+        mov      edx, dword ptr [g_data_00541de0]
+        mov      ecx, dword ptr [g_data_00542084]
+        mov      dword ptr [edx*4 + 0x3c], ecx
+        mov      ecx, dword ptr [g_data_00535e6c]
+        mov      edx, dword ptr [g_data_00542084]
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [ecx*4 + 0x3c], edx
+        mov      ecx, dword ptr [g_data_00542084]
+        sub      ecx, 0x83
+        mov      dword ptr [g_data_0054206c], 0x83
+        cmp      ecx, 0x1999
+        mov      dword ptr [g_data_00542084], ecx
+        jge      short L_ea43
+        mov      dword ptr [g_data_00542084], 0x1999
+    L_ea43:
+        mov      ecx, 1
+        mov      dword ptr [eax + 8], OFFSET L_e9b0
+        mov      dword ptr [eax + 0x84], ecx
+        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_data_00541e6c], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3 (L_ea70): gray fade */
+    L_ea70:
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, 0xa0
+        lea      edx, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [edx + 0x84], 0
+        test     eax, eax
+        je       short L_ea9c
+        mov      ecx, dword ptr [g_data_00542054]
+    L_ea9c:
+        mov      eax, ecx
+        shl      eax, 8
+        or       eax, ecx
+        shl      eax, 8
+        or       eax, ecx
+        dec      ecx
+        cmp      ecx, 0x19
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_0052ab4c], eax
+        mov      dword ptr [g_data_00542054], ecx
+        jge      short L_eac8
+        mov      dword ptr [g_data_00542054], 0x19
+    L_eac8:
+        mov      eax, 1
+        mov      dword ptr [edx + 8], OFFSET L_ea70
+        mov      dword ptr [edx + 0x84], eax
+        mov      dword ptr [g_data_0054204c], 7
+        mov      dword ptr [g_data_00541e6c], eax
+        ret
+    }
+}
