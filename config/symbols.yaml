@@ -11641,10 +11641,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004958c0
-    name: func_004958c0
+    name: ProneAnimFsmCluster_004958c0
     size: 1072
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00495cf0
     name: Const0303InitJmp_00495cf0
     size: 38
