@@ -15423,10 +15423,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004c4600
-    name: func_004c4600
+    name: BmpScreenshotWriter_004c4600
     size: 617
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c4870
     name: ExitGame
     size: 64
