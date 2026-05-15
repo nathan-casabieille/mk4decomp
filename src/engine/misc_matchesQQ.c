@@ -121053,3 +121053,211 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         ret
     }
 }
+
+/* ============================================================
+ * MatchOverCluster_0046ef70 — 532b game (packed: 5 helpers).
+ *
+ *   1. 0x46ef70 (~28b): func_0046ea70 then push &g_data_004eb758
+ *      + func_004594f0.
+ *
+ *   2. 0x46ef90 (L_ef90, ~91b): per-entity state-clear; non-zero
+ *      → state 0x1c + func_00489ff0 + tail-jmp func_0041f830;
+ *      zero → install OFFSET L_ef90 + state 1 + 0x54204c := 0xe.
+ *
+ *   3. 0x46efec (~36b): "match over" log. push 0x26 + OFFSET
+ *      L_ef90 to func_0049cb40, then push &g_data_004eb780 +
+ *      func_004594f0.
+ *
+ *   4. 0x46f030 (L_f030, ~163b): "voice-of-defeat" handler. If
+ *      previous state was non-zero call func_00429840 +
+ *      func_0048d450(0x24) + func_0046f190. Else same pre-pass
+ *      then check bit 0 of g_data_0054208c: set → func_0046f190;
+ *      clear → install OFFSET L_f030 + state 1 + 0x54204c := 1.
+ *
+ *   5. 0x46f0e0 (L_f0e0, ~163b): clone of helper 4 with state
+ *      code 0x23 instead of 0x24, installing OFFSET L_f0e0.
+ *
+ * Frame: H1, H2, H3 = no prologue; H4, H5 = push esi.
+ * ============================================================ */
+
+extern void func_00429840(void);
+extern void func_0046ea70(void);
+extern void func_0046f190(void);
+extern void func_0048d450(void);
+extern unsigned int g_data_004eb758;
+extern unsigned int g_data_004eb780;
+
+__declspec(naked) void MatchOverCluster_0046ef70(void)
+{
+    __asm {
+        /* H1 */
+        call     func_0046ea70
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_ef8b
+        push     OFFSET g_data_004eb758
+        call     func_004594f0
+        add      esp, 4
+    L_ef8b:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H2 (L_ef90) */
+    L_ef90:
+        mov      eax, dword ptr [g_data_00542060]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], 0
+        test     ecx, ecx
+        je       short L_efc9
+        mov      dword ptr [g_data_0054206c], 0x1c
+        call     func_00489ff0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_efeb
+        jmp      func_0041f830
+    L_efc9:
+        mov      ecx, 1
+        mov      dword ptr [eax + 8], OFFSET L_ef90
+        mov      dword ptr [eax + 0x84], ecx
+        mov      dword ptr [g_data_0054204c], 0xe
+        mov      dword ptr [g_data_00541e6c], ecx
+    L_efeb:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H3 */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x10c
+        push     0x26
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET L_ef90
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     func_0049cb40
+        add      esp, 8
+        push     OFFSET g_data_004eb780
+        call     func_004594f0
+        add      esp, 4
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4 (L_f030) */
+    L_f030:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_f07f
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f0d2
+        mov      dword ptr [g_data_0054206c], 0x24
+        call     func_0048d450
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f0d2
+        call     func_0046f190
+        pop      esi
+        ret
+    L_f07f:
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f0d2
+        mov      dword ptr [g_data_0054206c], 0x24
+        call     func_0048d450
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f0d2
+        mov      cl, byte ptr [g_data_0054208c]
+        mov      eax, 1
+        test     cl, al
+        je       short L_f0bb
+        call     func_0046f190
+        pop      esi
+        ret
+    L_f0bb:
+        mov      dword ptr [esi + 8], OFFSET L_f030
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+    L_f0d2:
+        pop      esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H5 (L_f0e0) */
+    L_f0e0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_f12f
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f182
+        mov      dword ptr [g_data_0054206c], 0x23
+        call     func_0048d450
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f182
+        call     func_0046f190
+        pop      esi
+        ret
+    L_f12f:
+        call     func_00429840
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f182
+        mov      dword ptr [g_data_0054206c], 0x23
+        call     func_0048d450
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f182
+        mov      cl, byte ptr [g_data_0054208c]
+        mov      eax, 1
+        test     cl, al
+        je       short L_f16b
+        call     func_0046f190
+        pop      esi
+        ret
+    L_f16b:
+        mov      dword ptr [esi + 8], OFFSET L_f0e0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+    L_f182:
+        pop      esi
+        ret
+    }
+}

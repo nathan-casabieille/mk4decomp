@@ -7431,10 +7431,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046ef70
-    name: func_0046ef70
+    name: MatchOverCluster_0046ef70
     size: 532
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046f190
     name: InstallSelfPackedF190_0046f190
     size: 186
