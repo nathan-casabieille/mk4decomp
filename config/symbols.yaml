@@ -5491,10 +5491,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044c530
-    name: func_0044c530
+    name: PendingMatch_0044c530
     size: 1428
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cad0
     name: Chain2AxisDiffStoreTailJmp_0044cad0
     size: 169
