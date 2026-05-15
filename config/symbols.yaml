@@ -9821,10 +9821,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x00489240
-    name: func_00489240
+    name: PendingMatch_00489240
     size: 1535
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489840
     name: GeoTransformDispatchAndApply_00489840
     size: 491
