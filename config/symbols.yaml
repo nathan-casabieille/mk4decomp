@@ -8862,10 +8862,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047f730
-    name: func_0047f730
+    name: AerialBlockFsmCluster_0047f730
     size: 946
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047faf0
     name: MStackPushDirtyTail_0047faf0
     size: 119
