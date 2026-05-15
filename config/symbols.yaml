@@ -12125,10 +12125,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049e7e0
-    name: func_0049e7e0
+    name: RoundWinTransition_0049e7e0
     size: 592
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049ea30
     name: DualGuardStateMachine_0049ea30
     size: 216
