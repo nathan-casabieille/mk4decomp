@@ -7002,10 +7002,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00462a90
-    name: func_00462a90
+    name: PendingMatch_00462a90
     size: 1496
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463070
     name: Push0_Push463220_Jmp_00463070
     size: 20
