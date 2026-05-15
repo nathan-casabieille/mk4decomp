@@ -7544,10 +7544,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046f7a0
-    name: func_0046f7a0
+    name: CrouchAttackFsmCluster_0046f7a0
     size: 1088
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046fbe0
     name: CallPauseDirtyTwoSetsJmp_0046fbe0
     size: 49
