@@ -6931,10 +6931,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x00463090
-    name: func_00463090
+    name: PoseFnInstallDualCluster_00463090
     size: 763
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00463390
     name: DirtyBitToggleDispatch_00463390
     size: 150
