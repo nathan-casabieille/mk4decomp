@@ -2968,10 +2968,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b930
-    name: func_0042b930
+    name: PendingMatch_0042b930
     size: 2656
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c390
     name: ScaledStore501Set8Jmp_0042c390
     size: 31
