@@ -6871,10 +6871,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00462560
-    name: func_00462560
+    name: MkTowerScreenFsmCluster_00462560
     size: 600
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004627c0
     name: TripleEntryWordPushChain_004627c0
     size: 168
