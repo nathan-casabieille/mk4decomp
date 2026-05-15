@@ -3199,10 +3199,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042efc0
-    name: func_0042efc0
+    name: MultiPlayerWinStringFormat_0042efc0
     size: 1296
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042f4d0
     name: ScaledStoreCallEpilogue_0042f4d0
     size: 28
