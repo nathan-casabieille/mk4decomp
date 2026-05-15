@@ -12083,10 +12083,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d680
-    name: func_0049d680
+    name: PoseTreeBlendWalker_0049d680
     size: 596
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049d8e0
     name: SixCrossStores_0049d8e0
     size: 89
