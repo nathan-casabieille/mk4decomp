@@ -7824,10 +7824,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00471e00
-    name: func_00471e00
+    name: PendingMatch_00471e00
     size: 1878
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00472560
     name: FsmPoseDualEntry_00472560
     size: 694
