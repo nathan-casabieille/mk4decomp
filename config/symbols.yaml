@@ -4876,10 +4876,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00440430
-    name: func_00440430
+    name: CameraBounceUpdate_00440430
     size: 553
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00440660
     name: EsiTripleMul10Vec_00440660
     size: 120
