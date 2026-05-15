@@ -6926,10 +6926,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00461ca0
-    name: func_00461ca0
+    name: PendingMatch_00461ca0
     size: 1996
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00462470
     name: InstallSelfFullChainInit_00462470
     size: 230
