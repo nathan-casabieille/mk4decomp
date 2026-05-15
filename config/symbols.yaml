@@ -9086,10 +9086,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004821b0
-    name: func_004821b0
+    name: RoundFinishEventGroup_004821b0
     size: 846
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482500
     name: EightEntryAlarmDispatch_00482500
     size: 382
