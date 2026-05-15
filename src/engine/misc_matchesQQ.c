@@ -115347,3 +115347,160 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         ret
     }
 }
+
+/* ============================================================
+ * EnvSpawnRehydratePass_004719f0 — 484b game.
+ *
+ * Per-frame "rehydrate environment spawn-chain" handler. Walks
+ * the active entity's spawn-list head [g_data_0054205c*4+0x18],
+ * and for each non-null chained spawn node:
+ *   - Reads [node*4+0x14], adds 0x28f (state-tag literal), and
+ *     writes it back as the node's tagged-state.
+ *   - Snapshots [node*4+8] and adds the active scenegraph
+ *     offset [g_data_0054205c*4+0x58] to produce a runtime
+ *     world-position used by downstream geometry.
+ *   - Follows the chain via [node*4] until null.
+ *
+ * Then inspects the entity's primary [spawn_chain*4+0x28] state:
+ *   - If bit 10 (0x400) is set, decrement the entity's per-frame
+ *     cooldown [entity*4+0x38] by 0x33 (saturating at 0).
+ *
+ * Final disposition:
+ *   - If [g_data_0054205c*4+0x18] is non-null (still active),
+ *     call func_0049d200 (kick), and on success install
+ *     OFFSET self into [edi+8] + state 1 + g_data_0054204c := 1.
+ *   - Otherwise call func_00471670 (fallback).
+ *
+ * Initial pre-state load also toggles bit 2 of g_data_0054208c
+ * (the dirty/dispatch flag).
+ *
+ * Frame: push ebx/esi/edi. Returns: void.
+ * ============================================================ */
+
+extern void func_004719f0(void);
+extern void func_00471670(void);
+extern void func_0049d200(void);
+
+__declspec(naked) void EnvSpawnRehydratePass_004719f0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     ebx
+        push     esi
+        push     edi
+        lea      edi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [edi + 0x84], 0
+        mov      edx, dword ptr [g_data_0054205c]
+        test     eax, eax
+        je       L_1b99
+        mov      esi, dword ptr [g_data_0054208c]
+        mov      eax, dword ptr [edx*4 + 0x18]
+        mov      ecx, 4
+        mov      dword ptr [g_data_00542044], eax
+        or       esi, ecx
+        test     eax, eax
+        mov      dword ptr [g_data_0054208c], esi
+        je       short L_1b90
+        xor      esi, ecx
+        test     eax, eax
+        mov      dword ptr [g_data_0054208c], esi
+        jne      short L_1a5a
+        call     func_00471670
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    L_1a5a:
+        mov      eax, dword ptr [eax*4 + 0x2c]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_1b25
+        mov      dword ptr [g_data_00542048], eax
+        mov      ecx, dword ptr [eax*4 + 0x14]
+        lea      eax, [eax*4 + 0x14]
+        mov      esi, 0x28f
+        add      ecx, esi
+        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [eax], ecx
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [ecx*4 + 8]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      ebx, dword ptr [edx*4 + 0x58]
+        add      eax, ebx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      eax, dword ptr [ecx*4]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_1b25
+    L_1acc:
+        mov      dword ptr [g_data_00542048], eax
+        mov      ecx, dword ptr [eax*4 + 0x14]
+        lea      eax, [eax*4 + 0x14]
+        add      ecx, esi
+        mov      dword ptr [g_data_0054206c], esi
+        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [eax], ecx
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [ecx*4 + 8]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      ebx, dword ptr [edx*4 + 0x58]
+        add      eax, ebx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      eax, dword ptr [ecx*4]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_1acc
+    L_1b25:
+        mov      eax, dword ptr [edx*4 + 0x18]
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [eax*4 + 0x28]
+        mov      dword ptr [g_data_00542048], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_0054206c], eax
+        and      eax, 0x400
+        mov      dword ptr [g_data_00542094], eax
+        je       short L_1b80
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x38]
+        sub      eax, 0x33
+        mov      dword ptr [g_data_0054206c], eax
+        jns      short L_1b73
+        xor      eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+    L_1b73:
+        mov      dword ptr [ecx*4 + 0x38], eax
+        mov      edx, dword ptr [g_data_0054205c]
+    L_1b80:
+        mov      eax, dword ptr [edx*4 + 0x18]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_1b99
+    L_1b90:
+        call     func_00471670
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    L_1b99:
+        mov      ecx, dword ptr [edx*4 + 0x18]
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_0049d200
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_1bd0
+        mov      eax, 1
+        mov      dword ptr [edi + 8], OFFSET func_004719f0
+        mov      dword ptr [edi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+    L_1bd0:
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    }
+}
