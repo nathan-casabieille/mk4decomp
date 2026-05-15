@@ -2946,10 +2946,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b2f0
-    name: func_0042b2f0
+    name: RoundEndFsm_0042b2f0
     size: 922
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042b690
     name: TwoCallTail_0042b690
     size: 34
