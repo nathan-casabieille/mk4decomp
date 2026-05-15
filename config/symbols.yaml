@@ -11849,10 +11849,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00498eb0
-    name: func_00498eb0
+    name: PendingMatch_00498eb0
     size: 3524
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00499c80
     name: RunBlockFsmCluster_00499c80
     size: 971
