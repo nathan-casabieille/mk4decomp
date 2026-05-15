@@ -7308,10 +7308,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004685d0
-    name: func_004685d0
+    name: PendingMatch_004685d0
     size: 2268
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00468eb0
     name: MatchStartFsmCluster_00468eb0
     size: 1157
