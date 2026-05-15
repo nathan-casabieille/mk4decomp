@@ -6268,10 +6268,11 @@ functions:
     status: matched
     file: src/engine/scaled_iter_step.c
   - addr: 0x0045c080
-    name: func_0045c080
+    name: HitReactionCluster_0045c080
     size: 1336
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045c5c0
     name: FightFrameStep
     size: 243
