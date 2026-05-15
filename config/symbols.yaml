@@ -7176,10 +7176,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00466fc0
-    name: func_00466fc0
+    name: PendingMatch_00466fc0
     size: 2008
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004677a0
     name: ScaledOrStore_004677a0
     size: 28
