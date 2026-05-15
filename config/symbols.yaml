@@ -5578,10 +5578,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044dd80
-    name: func_0044dd80
+    name: PendingMatch_0044dd80
     size: 2508
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044e750
     name: ThrowChargeCluster_0044e750
     size: 922
