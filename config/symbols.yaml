@@ -9157,10 +9157,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00483650
-    name: func_00483650
+    name: BattleEndCluster_00483650
     size: 632
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004838d0
     name: Set1f4CallDirtyJmp_004838d0
     size: 44
