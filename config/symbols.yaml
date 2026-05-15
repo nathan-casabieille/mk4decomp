@@ -7815,10 +7815,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00472a90
-    name: func_00472a90
+    name: KnockbackPositionReset_00472a90
     size: 789
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00472db0
     name: ScaledIdxLoadCallTailThunk_00472db0
     size: 81
