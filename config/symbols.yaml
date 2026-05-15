@@ -8438,10 +8438,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a2e0
-    name: func_0047a2e0
+    name: HopBackFsmCluster_0047a2e0
     size: 640
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047a560
     name: InstallSelf4Cascade_0047a560
     size: 181
