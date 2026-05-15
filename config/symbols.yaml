@@ -5029,10 +5029,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00442880
-    name: func_00442880
+    name: FourSegmentPoseWalk_00442880
     size: 828
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00442bc0
     name: Vec3SetupQuadrupleMul10Sub_00442bc0
     size: 454
