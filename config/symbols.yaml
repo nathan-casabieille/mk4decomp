@@ -3005,10 +3005,11 @@ functions:
     status: matched
     file: src/engine/guarded_dispatch.c
   - addr: 0x0042c5a0
-    name: func_0042c5a0
+    name: StageEventDamageCluster_0042c5a0
     size: 495
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c790
     name: LoopGuardedDecJmp_0042c790
     size: 79
