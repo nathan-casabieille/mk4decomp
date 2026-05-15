@@ -3329,10 +3329,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00430560
-    name: func_00430560
+    name: TowerStageInitCluster_00430560
     size: 820
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004308a0
     name: func_004308a0
     size: 1159
