@@ -13233,10 +13233,11 @@ functions:
     group: audio
     status: stub
   - addr: 0x004abd50
-    name: func_004abd50
+    name: MStackRestore27_004abd50
     size: 614
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004abfc0
     name: SplitHi8Lo24_004abfc0
     size: 27
