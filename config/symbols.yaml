@@ -11624,10 +11624,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00496ad0
-    name: func_00496ad0
+    name: Event112Cluster_00496ad0
     size: 686
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00496d80
     name: PunchAnimCluster_00496d80
     size: 574
