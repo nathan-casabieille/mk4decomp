@@ -117068,3 +117068,224 @@ __declspec(naked) void StageRoundFlowCluster_0047fcc0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MoveListCursorCluster_0045b420 — 501b game (packed: 8 helpers).
+ *
+ * Move-list cursor helpers for combat scripting. The list head
+ * for entity is at [entity*4+0x48]; entries are dwords where the
+ * top byte is an opcode (0x3a sentinel = "step back / leader").
+ *
+ *   1. 0x45b420 (L_b420, ~37b): func_0045c020 (pre-decode), then
+ *      stash decoded code into [entity*4+0x48] and tail-jmp
+ *      func_00459510.
+ *
+ *   2. 0x45b455 (~37b): Stamps decoded byte at [entity*4+0x78]
+ *      via tail-jmp.
+ *
+ *   3. 0x45b480 (~33b): Decrement loop counter at [entity*4+0x78].
+ *      If nonzero tail-jmp func_00459510; else walk the move list
+ *      back to the previous 0x3a sentinel (skipping non-sentinel
+ *      entries), advance cursor past it, then tail-jmp.
+ *
+ *   4. 0x45b500 (~80b): Input-encoded jump. Reads [entity*4+0x34]
+ *      input code (remaps 0x10→2 and 0x11→7), then loads
+ *      [list[input]] as new cursor.
+ *
+ *   5. 0x45b560 (~33b): Outer re-entry. If g_data_00542088==1,
+ *      tail-jmp L_b420 (helper 1); else call func_0045c020,
+ *      tail-jmp func_00459510.
+ *
+ *   6. 0x45b590 (L_b590, ~36b): "Install state 1" handler:
+ *      [entity*4+0x84]:=1, [entity*4+8]:=OFFSET self,
+ *      g_data_0054204c:=0x3c, mark sync.
+ *
+ *   7. 0x45b5c0 (~13b): nop-padded align.
+ *
+ *   8. 0x45b5cb (~73b): COMBINED CALL. func_0045c020, dispatch
+ *      by g_data_0054206c (call dword ptr [code]). On success
+ *      check bit 2 of g_data_0054208c: if set jmp L_b420, else
+ *      func_0045c020 + tail-jmp func_00459510.
+ *
+ * Linear, no mstack. Returns: void.
+ * ============================================================ */
+
+extern void func_00459510(void);
+extern void func_0045c020(void);
+
+__declspec(naked) void MoveListCursorCluster_0045b420(void)
+{
+    __asm {
+    L_b420:
+        /* H1 */
+        call     func_0045c020
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b445
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [eax*4 + 0x48], ecx
+        jmp      func_00459510
+    L_b445:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2 */
+        mov      ecx, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_data_00541e6c]
+        and      ecx, 0xff
+        test     eax, eax
+        mov      dword ptr [g_data_00542070], ecx
+        jne      short L_b47c
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x78], ecx
+        jmp      func_00459510
+    L_b47c:
+        ret
+        nop
+        nop
+        nop
+        /* H3 */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x78]
+        dec      eax
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [ecx*4 + 0x78], eax
+        jne      short L_b4a1
+        jmp      func_00459510
+    L_b4a1:
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [edx*4 + 0x48]
+        dec      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      eax, dword ptr [ecx*4]
+        shr      eax, 0x18
+        cmp      eax, 0x3a
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_b4e4
+    L_b4c9:
+        dec      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      eax, dword ptr [ecx*4]
+        shr      eax, 0x18
+        cmp      eax, 0x3a
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_b4c9
+    L_b4e4:
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [edx*4 + 0x48], ecx
+        jmp      func_00459510
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4 */
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [edx*4 + 0x48]
+        mov      dword ptr [g_data_00542050], ecx
+        mov      eax, dword ptr [edx*4 + 0x34]
+        cmp      eax, 0x10
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_b52e
+        mov      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+    L_b52e:
+        cmp      eax, 0x11
+        jne      short L_b53d
+        mov      eax, 7
+        mov      dword ptr [g_data_0054206c], eax
+    L_b53d:
+        add      ecx, eax
+        mov      dword ptr [g_data_00542050], ecx
+        mov      ecx, dword ptr [ecx*4]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [edx*4 + 0x48], ecx
+        jmp      func_00459510
+        nop
+        nop
+        /* H5 */
+        cmp      dword ptr [g_data_00542088], 1
+        jne      short L_b56e
+        jmp      L_b420
+    L_b56e:
+        call     func_0045c020
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b581
+        jmp      func_00459510
+    L_b581:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H6 (L_b590): install state 1 */
+    L_b590:
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, 1
+        shl      eax, 2
+        mov      dword ptr [eax + 0x84], 0
+        mov      dword ptr [eax + 8], OFFSET L_b590
+        mov      dword ptr [eax + 0x84], ecx
+        mov      dword ptr [g_data_0054204c], 0x3c
+        mov      dword ptr [g_data_00541e6c], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H7: combined call + dispatch */
+        call     func_0045c020
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b614
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542044], eax
+        call     eax
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b614
+        test     byte ptr [g_data_0054208c], 4
+        je       short L_b601
+        jmp      L_b420
+    L_b601:
+        call     func_0045c020
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_b614
+        jmp      func_00459510
+    L_b614:
+        ret
+    }
+}

@@ -6136,10 +6136,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0045b420
-    name: func_0045b420
+    name: MoveListCursorCluster_0045b420
     size: 501
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045b620
     name: func_0045b620
     size: 1877
