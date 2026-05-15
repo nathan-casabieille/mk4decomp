@@ -1388,10 +1388,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00418170
-    name: func_00418170
+    name: PendingMatch_00418170
     size: 2426
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00418af0
     name: Phase4MultiHelperInit_00418af0
     size: 779
