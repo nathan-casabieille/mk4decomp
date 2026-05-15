@@ -115196,3 +115196,154 @@ __declspec(naked) void GameDispatchValidateState_004339c0(void)
         ret
     }
 }
+
+/* ============================================================
+ * SpawnPhaseAdvanceVoices_0042e290 — 483b game.
+ *
+ * Per-frame helper that advances the per-voice timeline of the
+ * active spawn-phase chain (e.g., projectile shower, particle
+ * burst). Steps:
+ *   1. Snapshot 5 dispatcher slot values
+ *      (g_data_0054206c/.42070/.42044/.42048/.4204c) onto the
+ *      global dispatch stack (g_data_004d57ac).
+ *   2. Take g_data_00541fbc as the head pointer to a NULL-
+ *      terminated voice list; for each voice slot ecx in the
+ *      list:
+ *        - Compute its "due time" as [ecx*4 + 0x5c] + 0xa0000.
+ *        - If that exceeds the current frame timer
+ *          ([g_data_0054204c*4 + 0x5c]), skip this voice.
+ *        - If g_data_00535de0 == 0 the voice has no fade-out,
+ *          so just stamp the new due time into [ecx*4 + 0x5c]
+ *          and continue.
+ *        - Otherwise push the loop position onto the dispatch
+ *          stack, call func_0042e720 (run the on-voice handler)
+ *          and func_00406790 (advance), then pop back.
+ *   3. Restore the 5 snapshot slots from the stack in reverse
+ *      order and return.
+ *
+ * Frame: push ebx/esi/edi. Returns: void.
+ *
+ * Linear, no mstack. Uses OFFSET g_data_005a0000 as the base
+ * of the in-RAM fade-table.
+ * ============================================================ */
+
+extern void func_0042e720(void);
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535de0;
+extern unsigned int g_data_00541fbc;
+extern unsigned int g_data_005a0000;
+
+__declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_0054206c]
+        inc      eax
+        push     ebx
+        mov      dword ptr [g_data_004d57ac], eax
+        push     esi
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542070]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        push     edi
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542048]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_0054204c]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      edx, dword ptr [g_data_0052ab10]
+        mov      eax, dword ptr [g_data_00541fbc]
+        mov      esi, dword ptr [g_data_004d57ac]
+        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_data_00542044], eax
+        mov      ecx, dword ptr [eax*4]
+        lea      edx, [eax + 1]
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_data_00542044], edx
+        je       short L_e40c
+    L_e345:
+        mov      eax, dword ptr [ecx*4 + 0x5c]
+        mov      edi, dword ptr [g_data_0054204c]
+        add      eax, 0xa0000
+        mov      dword ptr [g_data_00542070], eax
+        mov      ebx, dword ptr [edi*4 + 0x5c]
+        cmp      eax, ebx
+        jg       short L_e3f0
+        mov      edi, dword ptr [g_data_00535de0]
+        test     edi, edi
+        mov      dword ptr [g_data_0054206c], edi
+        jne      short L_e39a
+        add      eax, OFFSET g_data_005a0000
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        mov      esi, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542044]
+        jmp      short L_e3f0
+    L_e39a:
+        inc      esi
+        mov      dword ptr [g_data_004d57ac], esi
+        mov      dword ptr [esi*4], edx
+        mov      eax, dword ptr [g_data_00542048]
+        mov      dword ptr [g_data_00542044], eax
+        call     func_0042e720
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_e46f
+        call     func_00406790
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_e46f
+        mov      esi, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_data_004d57ac], esi
+    L_e3f0:
+        mov      ecx, dword ptr [edx*4]
+        inc      edx
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_data_00542044], edx
+        jne      short L_e345
+    L_e40c:
+        mov      ecx, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_data_004d57ac], esi
+        mov      edx, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_data_004d57ac], esi
+        mov      eax, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_004d57ac], esi
+        mov      ecx, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_data_004d57ac], esi
+        mov      edx, dword ptr [esi*4]
+        dec      esi
+        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [g_data_004d57ac], esi
+    L_e46f:
+        pop      edi
+        pop      esi
+        pop      ebx
+        ret
+    }
+}

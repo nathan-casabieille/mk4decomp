@@ -3123,10 +3123,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e290
-    name: func_0042e290
+    name: SpawnPhaseAdvanceVoices_0042e290
     size: 483
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e480
     name: CountedLoopMStack_0042e480
     size: 200
