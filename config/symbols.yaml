@@ -8623,10 +8623,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0047d9a0
-    name: func_0047d9a0
+    name: MoveSelectorCluster_0047d9a0
     size: 544
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047dbc0
     name: DualSetCallPair_0047dbc0
     size: 88
