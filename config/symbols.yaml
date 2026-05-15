@@ -8790,10 +8790,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047e9f0
-    name: func_0047e9f0
+    name: PainStateCluster_0047e9f0
     size: 906
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047ed80
     name: Wrapper_0047ed80
     size: 14
