@@ -117948,3 +117948,172 @@ __declspec(naked) void BitmapBlitRunLength_004592f0(void)
         ret
     }
 }
+
+/* ============================================================
+ * SpawnListBatchLoader_00477710 — 513b game.
+ *
+ * Iterates a null-terminated dispatch list rooted at
+ * g_data_00542044. Each list-entry is a 5-dword tuple:
+ *   [+0] = kind/op code (terminator if 0)
+ *   [+1] = kind sub-arg (0 = no extra init)
+ *   [+2] = entity-state slot (written to entity[+0x30])
+ *   [+3] = x pos (written to entity[+0x54], plus 0x40000
+ *          carries through to [+0x58])
+ *   [+4] = z pos (written to entity[+0x5c])
+ *
+ * Per entry:
+ *   1. Stash the cursor onto the dispatch stack at
+ *      g_data_004d57ac, save kind into g_data_00542048, call
+ *      func_00407330 (preflight).
+ *   2. If pause bit 2 of g_data_0054208c is set, abort with
+ *      stack-pop into g_data_00542044 (L_78ca path).
+ *   3. Otherwise call func_00406430 (commit), then write the
+ *      4 transform fields to the entity record at
+ *      [g_data_0054205c*4 + 0x30/0x54/0x58/0x5c].
+ *   4. If sub-arg non-zero, call func_004903d0 (extra init).
+ *   5. Loop until terminator entry (op = 0).
+ *
+ * After loop ends (L_7882), runs 5 post-pass helpers
+ * sequentially: func_00477920 → func_004779d0 → func_004785a0 →
+ * func_00478140 → func_00478350. Either succeeds (L_78e4 path
+ * pops 2 stack slots) or fails (early returns).
+ *
+ * Frame: push ebx. Returns: void.
+ * ============================================================ */
+
+extern void func_00407330(void);
+extern void func_00477920(void);
+extern void func_004779d0(void);
+extern void func_00478140(void);
+extern void func_00478350(void);
+extern void func_004785a0(void);
+extern void func_004903d0(void);
+
+__declspec(naked) void SpawnListBatchLoader_00477710(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542044]
+        push     ebx
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_data_00542044], eax
+        je       L_7882
+        mov      bl, 4
+    L_7733:
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        mov      dword ptr [g_data_0054207c], ecx
+        mov      ecx, dword ptr [g_data_004d57ac]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_004d57ac], ecx
+        mov      dword ptr [ecx*4], eax
+        mov      edx, dword ptr [g_data_00542080]
+        mov      dword ptr [g_data_00542048], edx
+        call     func_00407330
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_790f
+        test     byte ptr [g_data_0054208c], bl
+        jne      L_78ca
+        call     func_00406430
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_790f
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      eax, dword ptr [g_data_0054207c]
+        test     eax, eax
+        mov      dword ptr [g_data_00542044], ecx
+        je       short L_77c9
+        call     func_004903d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_790f
+    L_77c9:
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [ecx*4]
+        inc      ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [edx*4 + 0x30], eax
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [eax*4 + 0x54], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        mov      dword ptr [g_data_0054206c], ecx
+        add      ecx, 0x40000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [edx*4 + 0x58], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [eax*4 + 0x5c], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [eax*4]
+        inc      eax
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_data_00542044], eax
+        jne      L_7733
+    L_7882:
+        call     func_00477920
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_790f
+        call     func_004779d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_790f
+        call     func_004785a0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_790f
+        call     func_00478140
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_790f
+        call     func_00478350
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        je       short L_78e4
+        pop      ebx
+        ret
+    L_78ca:
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        jmp      short L_78e9
+    L_78e4:
+        mov      eax, dword ptr [g_data_004d57ac]
+    L_78e9:
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_0054205c], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+    L_790f:
+        pop      ebx
+        ret
+    }
+}
