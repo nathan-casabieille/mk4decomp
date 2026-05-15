@@ -11764,10 +11764,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00497e80
-    name: func_00497e80
+    name: StageEventCluster_00497e80
     size: 1134
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004982f0
     name: StageEventState4Way_004982f0
     size: 493
