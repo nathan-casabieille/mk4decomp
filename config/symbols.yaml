@@ -15867,10 +15867,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c61c0
-    name: func_004c61c0
+    name: PendingMatch_004c61c0
     size: 832
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6500
     name: CallStoreField14_004c6500
     size: 13
