@@ -6337,10 +6337,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0045de60
-    name: func_0045de60
+    name: EventPacketDecoder_0045de60
     size: 582
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045e0b0
     name: ConditionalAcc4or3_0045e0b0
     size: 30
