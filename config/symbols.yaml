@@ -6041,10 +6041,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00458160
-    name: func_00458160
+    name: CameraProjectionInitSweep_00458160
     size: 723
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458440
     name: SpawnTrioInitCluster_00458440
     size: 488
