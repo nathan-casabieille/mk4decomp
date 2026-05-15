@@ -8692,10 +8692,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cf60
-    name: func_0047cf60
+    name: PendingMatch_0047cf60
     size: 1447
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047d510
     name: PushPopNotMaskSetWalk0xc_0047d510
     size: 73
