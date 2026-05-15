@@ -4983,10 +4983,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004411d0
-    name: func_004411d0
+    name: PendingMatch_004411d0
     size: 3093
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00441df0
     name: ScaledOrStore_00441df0
     size: 28
