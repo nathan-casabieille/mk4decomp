@@ -12930,10 +12930,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a38d0
-    name: func_004a38d0
+    name: PendingMatch_004a38d0
     size: 892
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a3c50
     name: TwoCallsTwoBranchTail_004a3c50
     size: 138
