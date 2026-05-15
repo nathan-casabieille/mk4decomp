@@ -4855,10 +4855,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043ede0
-    name: func_0043ede0
+    name: TagTeamHandlerCluster_0043ede0
     size: 824
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043f120
     name: RandPushTrigPair_0043f120
     size: 409
