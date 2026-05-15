@@ -13320,10 +13320,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesL.c
   - addr: 0x004aa9f0
-    name: func_004aa9f0
+    name: PendingMatch_004aa9f0
     size: 2164
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ab270
     name: MarkSlot_004ab270
     size: 34
