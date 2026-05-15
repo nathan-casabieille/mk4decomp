@@ -3414,10 +3414,11 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_131.c
   - addr: 0x00431650
-    name: func_00431650
+    name: PoseFsmTriHelpers_00431650
     size: 720
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431920
     name: func_00431920
     size: 853
