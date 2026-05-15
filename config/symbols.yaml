@@ -11616,10 +11616,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00495dc0
-    name: func_00495dc0
+    name: ComboFinisherEventCluster_00495dc0
     size: 788
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004960e0
     name: func_004960e0
     size: 1359
