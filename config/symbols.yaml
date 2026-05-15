@@ -2052,10 +2052,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00423c20
-    name: func_00423c20
+    name: ContinueScreenFsm_00423c20
     size: 626
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00423ea0
     name: OpcodeStreamDispatch_00423ea0
     size: 377
