@@ -11745,10 +11745,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00498900
-    name: func_00498900
+    name: SlideAttackEventCluster_00498900
     size: 826
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00498c40
     name: MstackPushPackChainInit_00498c40
     size: 429
