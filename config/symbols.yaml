@@ -11357,10 +11357,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004937b0
-    name: func_004937b0
+    name: SpecialAnimBuilder_004937b0
     size: 618
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00493a20
     name: MStackPushTableWalk_00493a20
     size: 173
