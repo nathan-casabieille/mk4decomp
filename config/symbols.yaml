@@ -6171,10 +6171,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0045a2c0
-    name: func_0045a2c0
+    name: ComboMoveSelectFsmCluster_0045a2c0
     size: 759
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045a5c0
     name: func_0045a5c0
     size: 3668
