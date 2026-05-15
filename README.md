@@ -138,9 +138,13 @@ your own legally-obtained copy of MK4.
 byte-identical to the original `MK4.EXE`. It is a *proof of matching*,
 not a substitute for owning the game.
 
-## Credits
+## Contributors
 
-Reverse engineering and decomp infrastructure: see `git log`.
+This project exists thanks to all the people who contribute. [[Contribute]](#contributing).
+
+<a href="https://github.com/nathan-casabieille/mk4decomp/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=nathan-casabieille/mk4decomp&max=24" />
+</a>
 
 ---
 
