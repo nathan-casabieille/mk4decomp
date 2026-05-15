@@ -8380,10 +8380,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00477e20
-    name: func_00477e20
+    name: AiWalkCounterDualCluster_00477e20
     size: 765
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00478120
     name: TwoCallJmp_00478120
     size: 25
