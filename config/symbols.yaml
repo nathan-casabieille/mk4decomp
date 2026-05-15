@@ -4895,10 +4895,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00440070
-    name: func_00440070
+    name: ComboLoopCluster_00440070
     size: 954
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00440430
     name: CameraBounceUpdate_00440430
     size: 553
