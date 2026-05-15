@@ -9016,10 +9016,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesZ.c
   - addr: 0x00482780
-    name: func_00482780
+    name: StageGameProgressCluster_00482780
     size: 516
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00482990
     name: GuardedPushCall_00482990
     size: 28
