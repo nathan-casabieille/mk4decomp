@@ -5378,10 +5378,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00448750
-    name: func_00448750
+    name: PendingMatch_00448750
     size: 2119
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00448fa0
     name: ConstStoreCallJmp_00448fa0
     size: 30
