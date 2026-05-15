@@ -2042,10 +2042,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x004238e0
-    name: func_004238e0
+    name: EnduranceFsmCluster_004238e0
     size: 667
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00423b80
     name: ChainInit3CallTailJmp_00423b80
     size: 152
