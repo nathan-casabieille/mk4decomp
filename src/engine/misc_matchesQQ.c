@@ -122455,3 +122455,174 @@ __declspec(naked) void SfxBlockCluster_00485a80(void)
         ret
     }
 }
+
+/* ------------------------------------------------------------------ */
+/* Event 0x23b music/intro cluster (3 packed helpers, 543b game)       */
+/* ------------------------------------------------------------------ */
+extern void func_004049d0(void);
+extern void func_00404c70(void);
+extern void func_004261d0(void);
+extern void func_00426310(void);
+extern void func_004275c0(void);
+extern void func_0042ee10(void);
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a318;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00543564;
+extern unsigned int g_data_00543594;
+extern unsigned int g_data_00550000;
+extern unsigned int g_data_008c0000;
+
+__declspec(naked) void Event23bMusicCluster_0042f540(void)
+{
+    __asm {
+        /* === Main: event 0x23b dispatch === */
+        push     ebx
+        push     0x23b
+        call     func_004049d0
+        mov      eax, dword ptr [g_data_0053a408]
+        mov      edx, dword ptr [g_data_0053a318]
+        mov      ecx, dword ptr [g_data_00537e88]
+        add      esp, 4
+        cmp      eax, 1
+        jne      short L_f57b
+        test     ecx, ecx
+        jne      short L_f57b
+        cmp      edx, 2
+        jne      short L_f57b
+        mov      ebx, dword ptr [g_data_00543594]
+        test     ebx, ebx
+        jl       L_f691
+    L_f57b:
+        test     eax, eax
+        jne      short L_f599
+        cmp      ecx, 1
+        jne      short L_f599
+        cmp      edx, ecx
+        jne      short L_f612
+        mov      eax, dword ptr [g_data_00543564]
+        test     eax, eax
+        jl       L_f691
+    L_f599:
+        cmp      edx, 1
+        jne      short L_f612
+        mov      eax, dword ptr [g_data_0052aabc]
+        mov      dword ptr [g_data_0054206c], eax
+        call     func_004275c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_f691
+        mov      dword ptr [g_data_00542070], 4
+        mov      dword ptr [g_data_00542074], 0x23b
+        mov      dword ptr [g_data_00542078], OFFSET g_data_00550000
+        mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
+        mov      dword ptr [g_data_00542084], 1
+        call     func_00426310
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f691
+        call     func_00427690
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f691
+        jmp      short L_f67a
+    L_f612:
+        mov      edx, dword ptr [g_data_0052aabc]
+        mov      dword ptr [g_data_0054206c], edx
+        call     func_004275c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f691
+        mov      dword ptr [g_data_00542070], 4
+        mov      dword ptr [g_data_00542074], 0x23b
+        mov      dword ptr [g_data_00542078], 0xff920000
+        mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
+        mov      dword ptr [g_data_00542084], 1
+        call     func_00426310
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f691
+        call     func_00427690
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f691
+    L_f67a:
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, 0x14000
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x5c], eax
+    L_f691:
+        pop      ebx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* === Helper 2 (0x42f6a0): event 0x225 tail === */
+        call     func_0042ee10
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f6ce
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_f6c9
+        push     0x225
+        push     OFFSET L_f6d0
+        call     func_00404c70
+        add      esp, 8
+    L_f6c9:
+        jmp      func_0041f830
+    L_f6ce:
+        ret
+        nop
+        /* === Helper 3 (0x42f6d0): callback handler === */
+    L_f6d0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     ebx
+        push     esi
+        mov      ebx, 1
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_f733
+        mov      eax, dword ptr [g_data_0052aac4]
+        cmp      eax, 7
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_f72b
+        mov      eax, dword ptr [g_data_0052aabc]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_f72b
+        call     func_004261d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_f75c
+        test     byte ptr [g_data_0054208c], bl
+        jne      short L_f733
+    L_f72b:
+        call     func_0041f830
+        pop      esi
+        pop      ebx
+        ret
+    L_f733:
+        mov      dword ptr [g_data_0054206c], ebx
+        mov      dword ptr [g_data_00541dd8], ebx
+        mov      dword ptr [esi + 8], OFFSET L_f6d0
+        mov      dword ptr [esi + 0x84], ebx
+        mov      dword ptr [g_data_0054204c], 0xa
+        mov      dword ptr [g_data_00541e6c], ebx
+    L_f75c:
+        pop      esi
+        pop      ebx
+        ret
+    }
+}

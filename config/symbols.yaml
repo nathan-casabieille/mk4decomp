@@ -3203,10 +3203,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0042f540
-    name: func_0042f540
+    name: Event23bMusicCluster_0042f540
     size: 543
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042f760
     name: GatedChainInit_0042f760
     size: 221
