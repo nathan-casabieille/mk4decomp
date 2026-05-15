@@ -5894,10 +5894,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00455340
-    name: func_00455340
+    name: StageTransitionCluster_00455340
     size: 683
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004555f0
     name: func_004555f0
     size: 815
