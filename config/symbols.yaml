@@ -3624,10 +3624,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00433f50
-    name: func_00433f50
+    name: StanceEntryCluster_00433f50
     size: 1015
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00434350
     name: InstallSelfCascadeSequence_00434350
     size: 325
