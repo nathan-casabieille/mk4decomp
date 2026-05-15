@@ -4806,10 +4806,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d830
-    name: func_0043d830
+    name: PendingMatch_0043d830
     size: 1635
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043dea0
     name: SetupBoneAnimFsm_0043dea0
     size: 967
