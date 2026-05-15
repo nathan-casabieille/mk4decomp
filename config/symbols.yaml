@@ -6049,10 +6049,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesN.c
   - addr: 0x004588b0
-    name: func_004588b0
+    name: CinematicStageCluster_004588b0
     size: 560
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00458ae0
     name: SequencedInit3CallB_00458ae0
     size: 181
