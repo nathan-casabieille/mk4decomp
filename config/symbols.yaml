@@ -6003,10 +6003,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004572d0
-    name: func_004572d0
+    name: RoundEndDifferenceFsmCluster_004572d0
     size: 1224
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004577a0
     name: PushSearchToggleBit0_004577a0
     size: 140
