@@ -117289,3 +117289,167 @@ __declspec(naked) void MoveListCursorCluster_0045b420(void)
         ret
     }
 }
+
+/* ============================================================
+ * AudioMixerKnobUpdate_004a8aa0 — 503b audio.
+ *
+ * Per-frame handler for two parallel audio-mixer knob banks
+ * (rooted at g_data_0054359c and g_data_005433c8). For each
+ * bank, depending on bits 2 and 3 of g_data_004d50b4 (control
+ * flag byte), increments/decrements the selected knob index and
+ * triggers a click via func_004a1ad0.
+ *
+ * In edit mode (g_data_00543440 == 1 / g_data_005433c4 == 1):
+ *   - Each step also rotates a per-knob 4-bit value at
+ *     g_data_005435a0[(idx)*24 + 0..1] in [0..0xe], wrapping
+ *     around. The 24-byte stride suggests this is a struct
+ *     array where +0 is the wrap counter.
+ *   - Loads the related entity slot at [entity*4 + 0x34] (bank A)
+ *     or [+0x48] (bank B), and dispatches to func_004a7d40 to
+ *     apply the new value.
+ *
+ * Bank B's tail uses `jmp func_004a7d40` (tail-call) while bank
+ * A uses `call`. The 24-byte stride (lea ecx,[ecx+ecx*2] then
+ * *8) is the array's per-element size.
+ *
+ * Frame: no prologue. Returns: void.
+ * ============================================================ */
+
+extern void func_004a1ad0(void);
+extern void func_004a7d40(void);
+extern unsigned int g_data_004d50b4;
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_005433c4;
+extern unsigned int g_data_005433c8;
+extern unsigned int g_data_00543440;
+extern unsigned int g_data_0054359c;
+
+__declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00543440]
+        test     eax, eax
+        jne      short L_8aea
+        test     byte ptr [g_data_004d50b4], 4
+        je       short L_8ac6
+        mov      eax, dword ptr [g_data_0054359c]
+        test     eax, eax
+        jle      short L_8ac6
+        call     func_004a1ad0
+        dec      dword ptr [g_data_0054359c]
+    L_8ac6:
+        test     byte ptr [g_data_004d50b4], 8
+        je       short L_8aea
+        mov      eax, dword ptr [g_data_004f3ae4]
+        mov      ecx, dword ptr [g_data_0054359c]
+        dec      eax
+        cmp      ecx, eax
+        jge      short L_8aea
+        call     func_004a1ad0
+        inc      dword ptr [g_data_0054359c]
+    L_8aea:
+        cmp      dword ptr [g_data_00543440], 1
+        jne      L_8b98
+        mov      al, byte ptr [g_data_004d50b4]
+        mov      ecx, dword ptr [g_data_0054359c]
+        test     al, 4
+        mov      dword ptr [g_data_00542070], ecx
+        je       short L_8b34
+        call     func_004a1ad0
+        mov      ecx, dword ptr [g_data_00542070]
+        lea      eax, [ecx + ecx*2]
+        mov      dl, byte ptr [eax*8 + g_data_005435a0]
+        dec      dl
+        mov      byte ptr [eax*8 + g_data_005435a0], dl
+        jns      short L_8b34
+        mov      byte ptr [eax*8 + g_data_005435a0], 0xe
+    L_8b34:
+        test     byte ptr [g_data_004d50b4], 8
+        je       short L_8b68
+        call     func_004a1ad0
+        mov      ecx, dword ptr [g_data_00542070]
+        lea      eax, [ecx + ecx*2]
+        mov      dl, byte ptr [eax*8 + g_data_005435a0]
+        inc      dl
+        cmp      dl, 0xf
+        mov      byte ptr [eax*8 + g_data_005435a0], dl
+        jne      short L_8b68
+        mov      byte ptr [eax*8 + g_data_005435a0], 0
+    L_8b68:
+        mov      eax, dword ptr [g_data_00542060]
+        lea      ecx, [ecx + ecx*2]
+        movsx    edx, byte ptr [ecx*8 + g_data_005435a0]
+        mov      ecx, dword ptr [g_data_0054359c]
+        mov      dword ptr [g_data_0054206c], edx
+        add      ecx, eax
+        mov      edx, dword ptr [ecx*4 + 0x34]
+        mov      dword ptr [g_data_00542044], edx
+        call     func_004a7d40
+    L_8b98:
+        mov      eax, dword ptr [g_data_005433c4]
+        test     eax, eax
+        jne      short L_8be4
+        mov      eax, dword ptr [g_data_004d50b4]
+        test     ah, 4
+        je       short L_8bbf
+        mov      eax, dword ptr [g_data_005433c8]
+        test     eax, eax
+        jle      short L_8bbf
+        call     func_004a1ad0
+        dec      dword ptr [g_data_005433c8]
+    L_8bbf:
+        mov      eax, dword ptr [g_data_004d50b4]
+        test     ah, 8
+        je       short L_8be4
+        mov      eax, dword ptr [g_data_004f3ae8]
+        mov      ecx, dword ptr [g_data_005433c8]
+        dec      eax
+        cmp      ecx, eax
+        jge      short L_8be4
+        call     func_004a1ad0
+        inc      dword ptr [g_data_005433c8]
+    L_8be4:
+        cmp      dword ptr [g_data_005433c4], 1
+        jne      L_8c96
+        mov      ecx, dword ptr [g_data_005433c8]
+        mov      eax, dword ptr [g_data_004d50b4]
+        add      ecx, 5
+        test     ah, 4
+        mov      dword ptr [g_data_00542070], ecx
+        je       short L_8c32
+        call     func_004a1ad0
+        mov      ecx, dword ptr [g_data_00542070]
+        lea      eax, [ecx + ecx*2]
+        mov      dl, byte ptr [eax*8 + g_data_005435a0]
+        dec      dl
+        mov      byte ptr [eax*8 + g_data_005435a0], dl
+        jns      short L_8c32
+        mov      byte ptr [eax*8 + g_data_005435a0], 0xe
+    L_8c32:
+        mov      eax, dword ptr [g_data_004d50b4]
+        test     ah, 8
+        je       short L_8c67
+        call     func_004a1ad0
+        mov      ecx, dword ptr [g_data_00542070]
+        lea      eax, [ecx + ecx*2]
+        mov      dl, byte ptr [eax*8 + g_data_005435a0]
+        inc      dl
+        cmp      dl, 0xf
+        mov      byte ptr [eax*8 + g_data_005435a0], dl
+        jne      short L_8c67
+        mov      byte ptr [eax*8 + g_data_005435a0], 0
+    L_8c67:
+        lea      edx, [ecx + ecx*2]
+        mov      ecx, dword ptr [g_data_00542060]
+        movsx    eax, byte ptr [edx*8 + g_data_005435a0]
+        mov      edx, dword ptr [g_data_005433c8]
+        mov      dword ptr [g_data_0054206c], eax
+        add      edx, ecx
+        mov      eax, dword ptr [edx*4 + 0x48]
+        mov      dword ptr [g_data_00542044], eax
+        jmp      func_004a7d40
+    L_8c96:
+        ret
+    }
+}

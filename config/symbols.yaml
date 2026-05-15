@@ -12953,10 +12953,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8aa0
-    name: func_004a8aa0
+    name: AudioMixerKnobUpdate_004a8aa0
     size: 503
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a8ca0
     name: func_004a8ca0
     size: 1410
