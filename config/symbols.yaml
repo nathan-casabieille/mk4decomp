@@ -10307,10 +10307,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesP.c
   - addr: 0x0048d0f0
-    name: func_0048d0f0
+    name: MoveCommitPackedDispatcher_0048d0f0
     size: 818
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048d430
     name: ScaledInit_0048d430
     size: 18
