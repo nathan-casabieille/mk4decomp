@@ -3316,10 +3316,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004301e0
-    name: func_004301e0
+    name: WalkTowardTargetFsm_004301e0
     size: 760
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004304e0
     name: StackPeekDispatchIndirect_004304e0
     size: 119
