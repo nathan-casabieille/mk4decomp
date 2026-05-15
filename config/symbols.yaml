@@ -7761,10 +7761,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00472560
-    name: func_00472560
+    name: FsmPoseDualEntry_00472560
     size: 694
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00472820
     name: GuardedSeq_00472820
     size: 20
