@@ -120164,3 +120164,194 @@ __declspec(naked) void RoundReset_004223e0(void)
         ret
     }
 }
+
+/* ============================================================
+ * BlockedCounterCluster_004816d0 — 523b game (packed: 4 helpers).
+ *
+ *   1. 0x4816d0 (L_16d0, ~56b): "Blocked-frame" counter. AND
+ *      ~1 into [scene*4+0x34] (clear "hit" bit), then call
+ *      func_004911c0 (compute damage delta). On success, write
+ *      (g_data_0054206c - 0x191eb) into [scene*4+0x64]
+ *      (counter slot).
+ *
+ *   2. 0x481710 (~57b): Triggered ground-impact sound. Calls
+ *      L_16d0, then logs 0x26 at OFFSET 0x481a10 and OFFSET
+ *      0x481a80 via func_0049cb40, then push
+ *      &g_data_004ef2c0 + func_004594f0.
+ *
+ *   3. 0x481750 (L_1750, ~127b): Per-entity FSM init. State 0:
+ *      snapshot [scene*4 + 0x6c/0x74] into g_data_00542084/88,
+ *      install OFFSET L_1750 + (OFFSET L_1750 | 1<<24) into
+ *      active-pool, call func_00481950. State !=0: call
+ *      func_004818e0 + push &g_data_004ef290 + func_004594f0.
+ *
+ *   4. 0x481820 (L_1820, ~134b): Per-entity tick. State 0: set
+ *      g_data_00542074 := 0x3d, g_data_00538124 := 1, run
+ *      func_00489f50; subtract 0x147a from [scene*4+0x58].
+ *      Install OFFSET L_1820 + state 1 + 0x54204c := 0x3c.
+ *      State !=0: call func_004be7a0(0x1392), then load
+ *      g_data_0052ab10 as record id, write 0xfffffd71 into
+ *      [record*4+0x70], tail-jmp func_004314f0.
+ *
+ * Frame: H1/H2/H3 no prologue, H4 push esi/edi. Returns: void.
+ * ============================================================ */
+
+extern void func_004818e0(void);
+extern void func_00481950(void);
+extern void func_004911c0(void);
+extern void func_004be7a0(void);
+extern unsigned int g_data_004ef290;
+extern unsigned int g_data_004ef2c0;
+extern unsigned int g_data_00538124;
+extern unsigned int g_const_00481a10;
+extern unsigned int g_const_00481a80;
+
+__declspec(naked) void BlockedCounterCluster_004816d0(void)
+{
+    __asm {
+    L_16d0:
+        /* H1: counter update */
+        mov      eax, dword ptr [g_data_0054205c]
+        and      dword ptr [eax*4 + 0x34], 0xfffffffe
+        call     func_004911c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_1707
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [g_data_0054205c]
+        sub      eax, 0x191eb
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x64], eax
+    L_1707:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2: trigger ground impact */
+        call     L_16d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_1749
+        push     0x26
+        push     OFFSET g_const_00481a10
+        call     func_0049cb40
+        add      esp, 8
+        push     0x26
+        push     OFFSET g_const_00481a80
+        call     func_0049cb40
+        add      esp, 8
+        push     OFFSET g_data_004ef2c0
+        call     func_004594f0
+        add      esp, 4
+    L_1749:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3 (L_1750): per-entity FSM init */
+    L_1750:
+        mov      eax, dword ptr [g_data_00542060]
+        shl      eax, 2
+        mov      ecx, dword ptr [eax + 0x84]
+        mov      dword ptr [eax + 0x84], 0
+        test     ecx, ecx
+        je       short L_1791
+        call     func_004818e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_1813
+        push     OFFSET g_data_004ef290
+        call     func_004594f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        ret
+    L_1791:
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [ecx*4 + 0x6c]
+        mov      dword ptr [g_data_00542084], edx
+        mov      ecx, dword ptr [ecx*4 + 0x74]
+        mov      dword ptr [g_data_00542088], ecx
+        mov      dword ptr [eax + 8], OFFSET L_1750
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], 1
+        mov      ecx, dword ptr [eax + 4]
+        mov      edx, OFFSET L_1750
+        mov      dword ptr [g_data_00542044], ecx
+        add      edx, 0x1000000
+        mov      dword ptr [ecx*4], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [eax + 4], ecx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], 0
+        call     func_00481950
+        mov      dword ptr [g_data_00541e6c], 1
+    L_1813:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H4 (L_1820): per-entity tick */
+    L_1820:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        test     eax, eax
+        je       short L_1874
+        push     0x1392
+        call     func_004be7a0
+        mov      eax, dword ptr [g_data_0052ab10]
+        mov      ecx, 0xfffffd71
+        add      esp, 4
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [eax*4 + 0x70], ecx
+        call     func_004314f0
+        pop      edi
+        pop      esi
+        ret
+    L_1874:
+        mov      edi, 1
+        mov      dword ptr [g_data_00542074], 0x3d
+        mov      dword ptr [g_data_0054206c], edi
+        mov      dword ptr [g_data_00538124], edi
+        call     func_00489f50
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_18d8
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [ecx*4 + 0x58]
+        sub      eax, 0x147a
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x58], eax
+        mov      dword ptr [esi + 8], OFFSET L_1820
+        mov      dword ptr [esi + 0x84], edi
+        mov      dword ptr [g_data_0054204c], 0x3c
+        mov      dword ptr [g_data_00541e6c], edi
+    L_18d8:
+        pop      edi
+        pop      esi
+        ret
+    }
+}

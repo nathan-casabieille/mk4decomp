@@ -8947,10 +8947,11 @@ functions:
     group: game
     status: stub
   - addr: 0x004816d0
-    name: func_004816d0
+    name: BlockedCounterCluster_004816d0
     size: 523
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004818e0
     name: CjDispatchCommit_004818e0
     size: 104
