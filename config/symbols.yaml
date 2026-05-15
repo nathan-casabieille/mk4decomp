@@ -12239,10 +12239,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049e3c0
-    name: func_0049e3c0
+    name: AmbientMonitorCluster_0049e3c0
     size: 1047
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049e7e0
     name: RoundWinTransition_0049e7e0
     size: 592
