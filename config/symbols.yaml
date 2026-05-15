@@ -12151,10 +12151,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0049efa0
-    name: func_0049efa0
+    name: ThrowAnimTriggerCluster_0049efa0
     size: 578
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049f1f0
     name: GameStateTick_0049f1f0
     size: 112
