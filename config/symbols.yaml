@@ -6473,10 +6473,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesU.c
   - addr: 0x0045f650
-    name: func_0045f650
+    name: HitReactionDispatcher_0045f650
     size: 625
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045f8d0
     name: FiveCallScaledChainTailJmp_0045f8d0
     size: 113
