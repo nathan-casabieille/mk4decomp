@@ -3425,10 +3425,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431920
-    name: func_00431920
+    name: AiAngleDistComputation_00431920
     size: 853
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00431c80
     name: DualChainSubCallSubLoad_00431c80
     size: 112
