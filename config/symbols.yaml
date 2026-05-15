@@ -7285,10 +7285,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00469b40
-    name: func_00469b40
+    name: PendingMatch_00469b40
     size: 1684
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046a1e0
     name: Set0xaCmpEqSet0x26Jmp_0046a1e0
     size: 65
