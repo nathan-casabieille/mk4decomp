@@ -7602,10 +7602,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00470530
-    name: func_00470530
+    name: ComboScriptDispatchCluster_00470530
     size: 772
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00470840
     name: DualPickDecJmp_00470840
     size: 96
