@@ -11792,10 +11792,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00499c80
-    name: func_00499c80
+    name: RunBlockFsmCluster_00499c80
     size: 971
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049a050
     name: EsiInstallQuadCallBitDispatch_0049a050
     size: 145
