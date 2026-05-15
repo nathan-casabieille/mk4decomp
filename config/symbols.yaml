@@ -8330,10 +8330,11 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x00478140
-    name: func_00478140
+    name: SpawnLeftRightProps_00478140
     size: 515
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00478350
     name: func_00478350
     size: 577

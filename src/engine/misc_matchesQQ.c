@@ -118117,3 +118117,160 @@ __declspec(naked) void SpawnListBatchLoader_00477710(void)
         ret
     }
 }
+
+/* ============================================================
+ * SpawnLeftRightProps_00478140 — 515b game.
+ *
+ * Spawns the per-round "left side" and "right side" decorative
+ * props (e.g., crowd, banners). Each side is indexed by an
+ * arena id stored in:
+ *   - g_data_00537f48 (left) and g_data_005380e0 (right).
+ *
+ * Steps (per side, identical except for position deltas and
+ * arena id source):
+ *   1. Compute table offset = (g_data_00542b20 >> 2) +
+ *      arena_id; load [.*4] to get the prop record pointer.
+ *      If -1, skip this side.
+ *   2. Call func_00407400 (prop look-up).
+ *   3. If pause bit (4) of g_data_0054208c is set, skip to
+ *      stack-pop tail.
+ *   4. Stamp positions and state into entity slot at
+ *      [g_data_00542044*4 + 0x30/0x54/0x58]:
+ *        - left side: x = 0xff440000, z = 0xffa20000, state=0x2b
+ *        - right side: x = g_data_00bc0000 - delta, z =
+ *          0xffa20000, state=0x2c
+ *      With special override if g_data_00535e48 == 8 (override
+ *      z to 0xffa40000 — closer to arena center).
+ *   5. Call func_004064b0 to commit.
+ *
+ *   For right side, an extra func_00404af0(g_data_004d514c,
+ *   prop[+0xc]) is performed to compute the per-prop scaled
+ *   x-offset before stamping.
+ *
+ * Frame: push esi. Saves/restores 3 dispatcher slots
+ * (g_data_00542070, g_data_00542048, g_data_00535e48) onto
+ * g_data_004d57ac dispatch stack.
+ * ============================================================ */
+
+extern void func_004064b0(void);
+extern unsigned int g_data_004d514c;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00542b20;
+extern unsigned int g_data_00bc0000;
+
+__declspec(naked) void SpawnLeftRightProps_00478140(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542070]
+        inc      eax
+        push     esi
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      esi, OFFSET g_data_00542b20
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542048]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00535e48]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00537f48]
+        shr      esi, 2
+        mov      ecx, esi
+        cmp      eax, 0x11
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_00535e48], eax
+        ja       L_8303
+        add      eax, ecx
+        mov      eax, dword ptr [eax*4]
+        cmp      eax, -1
+        mov      dword ptr [g_data_00542048], eax
+        je       short L_823b
+        call     func_00407400
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_8341
+        test     byte ptr [g_data_0054208c], 4
+        jne      L_8303
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x54], 0xff440000
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x58], 0xffa20000
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, 0x2b
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x30], eax
+        cmp      dword ptr [g_data_00535e48], 8
+        jne      short L_8236
+        mov      edx, dword ptr [g_data_00542044]
+        mov      eax, 0xffa40000
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [edx*4 + 0x58], eax
+    L_8236:
+        call     func_004064b0
+    L_823b:
+        mov      eax, dword ptr [g_data_005380e0]
+        mov      dword ptr [g_data_00542044], esi
+        mov      dword ptr [g_data_00535e48], eax
+        add      eax, esi
+        mov      eax, dword ptr [eax*4]
+        cmp      eax, -1
+        mov      dword ptr [g_data_00542048], eax
+        je       short L_8303
+        mov      eax, dword ptr [eax*4 + 0xc]
+        mov      dword ptr [g_data_00542070], eax
+        push     eax
+        mov      eax, dword ptr [g_data_004d514c]
+        push     eax
+        call     func_00404af0
+        add      esp, 8
+        mov      dword ptr [g_data_00542070], eax
+        call     func_00407400
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_8341
+        test     byte ptr [g_data_0054208c], 4
+        jne      short L_8303
+        mov      edx, dword ptr [g_data_00542070]
+        mov      ecx, OFFSET g_data_00bc0000
+        sub      ecx, edx
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x54], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x58], 0xffa20000
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, 0x2c
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x30], eax
+        cmp      dword ptr [g_data_00535e48], 8
+        jne      short L_82fe
+        mov      edx, dword ptr [g_data_00542044]
+        mov      eax, 0xffa40000
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [edx*4 + 0x58], eax
+    L_82fe:
+        call     func_004064b0
+    L_8303:
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00535e48], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_data_004d57ac], eax
+    L_8341:
+        pop      esi
+        ret
+    }
+}
