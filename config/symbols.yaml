@@ -5622,10 +5622,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044fe90
-    name: func_0044fe90
+    name: PendingMatch_0044fe90
     size: 2020
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00450680
     name: StoreThreeStatesPushCall_00450680
     size: 53
