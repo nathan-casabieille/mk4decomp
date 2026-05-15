@@ -7966,10 +7966,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00473640
-    name: func_00473640
+    name: PendingMatch_00473640
     size: 1608
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00473c90
     name: TriStageDispatchTailJmp_00473c90
     size: 192
