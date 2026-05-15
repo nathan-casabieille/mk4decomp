@@ -5530,10 +5530,11 @@ functions:
     status: matched
     file: src/engine/mstack_calls.c
   - addr: 0x0044d280
-    name: func_0044d280
+    name: IntroInitCluster_0044d280
     size: 767
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044d580
     name: IntroFsmCluster_0044d580
     size: 532
