@@ -16085,10 +16085,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004c8040
-    name: func_004c8040
+    name: PendingMatch_004c8040
     size: 614
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c82b0
     name: WriteCharBuffered_004c82b0
     size: 66
