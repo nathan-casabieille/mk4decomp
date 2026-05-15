@@ -115004,3 +115004,195 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         ret
     }
 }
+
+/* ============================================================
+ * GameDispatchValidateState_004339c0 — 482b game.
+ *
+ * Frame-step validator + dispatcher for the active game-entity.
+ * Verifies a chain of consistency invariants between the
+ * currently-active state code and the per-entity-mode tables,
+ * pushes diagnostic frames onto the global dispatch stack at
+ * g_data_004d57ac, and finally branches into one of four
+ * outcome handlers based on the state-classification bits:
+ *
+ *   1. Snapshot state code from either g_data_0053a6dc
+ *      (default) or g_data_00537f2c (when g_data_0054205c
+ *      matches g_data_00538158). If zero, tail-pop the dispatch
+ *      stack (call handler) and return.
+ *   2. Otherwise stash the popped handler into [entity*4 + 0x6c],
+ *      then read the entity's expected-state from
+ *      [entity*4 + 0x3c +0x74]. If zero call func_00433bd0
+ *      (mismatch handler).
+ *   3. Resolve the right state-array (g_data_0053a1a0 vs
+ *      g_data_0053a518) per the same g_data_0054205c selector,
+ *      compare its [0] entry to the expected. If mismatch call
+ *      func_00433bf0.
+ *   4. Push 6 frame fields (g_data_0054207c .. 0x542058) onto
+ *      the dispatch stack (g_data_00541d98 vs g_data_00535d18
+ *      base), then call func_00433d30. On success classify the
+ *      state code:
+ *        - (& 0xf000) == 0x2000 → func_00433d80.
+ *        - (& 0xf000) == 0x1000 → func_00433e90.
+ *        - else (& 0xf00) != 0 → func_00433e50.
+ *        - else (no class bits) → func_00433bb0.
+ *
+ * Frame: push esi/edi. Returns void.
+ * ============================================================ */
+
+extern void func_00433bb0(void);
+extern void func_00433bd0(void);
+extern void func_00433bf0(void);
+extern void func_00433d30(void);
+extern void func_00433d80(void);
+extern void func_00433e50(void);
+extern void func_00433e90(void);
+extern unsigned int g_data_00535d18;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_0053a1a0;
+extern unsigned int g_data_0053a518;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_00541d98;
+extern unsigned int g_data_00542088;
+
+__declspec(naked) void GameDispatchValidateState_004339c0(void)
+{
+    __asm {
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_data_0053a6dc]
+        push     esi
+        cmp      ecx, edx
+        push     edi
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_39e6
+        mov      eax, dword ptr [g_data_00537f2c]
+        mov      dword ptr [g_data_0054206c], eax
+    L_39e6:
+        test     eax, eax
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        mov      dword ptr [g_data_00542044], ecx
+        jne      short L_3a07
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        call     ecx
+        pop      edi
+        pop      esi
+        ret
+    L_3a07:
+        mov      edx, dword ptr [g_data_00542060]
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [edx*4 + 0x6c], ecx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [eax*4 + 0x3c]
+        mov      dword ptr [g_data_00542044], eax
+        mov      edx, dword ptr [eax*4 + 0x74]
+        test     edx, edx
+        mov      dword ptr [g_data_0054206c], edx
+        jne      short L_3a44
+        call     func_00433bd0
+        pop      edi
+        pop      esi
+        ret
+    L_3a44:
+        mov      esi, dword ptr [g_data_0054205c]
+        mov      edi, dword ptr [g_data_00538158]
+        mov      eax, OFFSET g_data_0053a1a0
+        mov      ecx, OFFSET g_data_0053a518
+        shr      eax, 2
+        shr      ecx, 2
+        cmp      esi, edi
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_00542048], ecx
+        je       short L_3a76
+        mov      eax, ecx
+        mov      dword ptr [g_data_00542044], eax
+    L_3a76:
+        mov      eax, dword ptr [eax*4]
+        cmp      eax, edx
+        mov      dword ptr [g_data_00542070], eax
+        jne      short L_3a8e
+        call     func_00433bf0
+        pop      edi
+        pop      esi
+        ret
+    L_3a8e:
+        mov      eax, OFFSET g_data_00541d98
+        mov      ecx, OFFSET g_data_00535d18
+        shr      eax, 2
+        shr      ecx, 2
+        cmp      esi, edi
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_00542048], ecx
+        je       short L_3ab4
+        mov      eax, ecx
+        mov      dword ptr [g_data_00542044], eax
+    L_3ab4:
+        mov      ecx, dword ptr [g_data_0054207c]
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542080]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542084]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542088]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542054]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542058]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_00433d30
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_3b9f
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      eax, ecx
+        and      eax, 0xf000
+        cmp      eax, 0x2000
+        mov      dword ptr [g_data_00542070], eax
+        jne      short L_3b75
+        call     func_00433d80
+        pop      edi
+        pop      esi
+        ret
+    L_3b75:
+        cmp      eax, 0x1000
+        jne      short L_3b84
+        call     func_00433e90
+        pop      edi
+        pop      esi
+        ret
+    L_3b84:
+        and      ecx, 0xf00
+        mov      dword ptr [g_data_00542070], ecx
+        je       short L_3b9a
+        call     func_00433e50
+        pop      edi
+        pop      esi
+        ret
+    L_3b9a:
+        call     func_00433bb0
+    L_3b9f:
+        pop      edi
+        pop      esi
+        ret
+    }
+}

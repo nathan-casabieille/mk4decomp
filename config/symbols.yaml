@@ -3533,10 +3533,11 @@ functions:
     status: matched
     file: src/engine/scaled_load_install_or_call.c
   - addr: 0x004339c0
-    name: func_004339c0
+    name: GameDispatchValidateState_004339c0
     size: 482
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00433bb0
     name: GuardedSeq_00433bb0
     size: 20
