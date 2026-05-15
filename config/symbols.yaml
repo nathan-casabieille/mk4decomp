@@ -9435,10 +9435,11 @@ functions:
     status: matched
     file: src/engine/wrappers.c
   - addr: 0x00484da0
-    name: func_00484da0
+    name: PendingMatch_00484da0
     size: 3172
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00485a10
     name: ChainedEvent3_00485a10
     size: 104
