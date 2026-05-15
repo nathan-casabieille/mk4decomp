@@ -5408,10 +5408,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a090
-    name: func_0044a090
+    name: ScaledRunCountdownCluster_0044a090
     size: 1132
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a500
     name: GuardedTripleSetTailJmp8_0044a500
     size: 133
