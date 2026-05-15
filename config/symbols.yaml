@@ -8335,10 +8335,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00477bd0
-    name: func_00477bd0
+    name: YRiseSpawnerCluster_00477bd0
     size: 579
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00477e20
     name: func_00477e20
     size: 765
