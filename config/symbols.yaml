@@ -9277,10 +9277,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004846b0
-    name: func_004846b0
+    name: RunFsmCluster_004846b0
     size: 661
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484950
     name: Install3StateSiblingTail_00484950
     size: 316
