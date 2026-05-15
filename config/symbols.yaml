@@ -6749,10 +6749,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004613b0
-    name: func_004613b0
+    name: BitFlagEffectDispatch_004613b0
     size: 647
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00461640
     name: TableWalk3StrideCall_00461640
     size: 154
