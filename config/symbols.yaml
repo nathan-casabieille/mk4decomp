@@ -12862,10 +12862,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a5290
-    name: func_004a5290
+    name: KonquestPortalCluster_004a5290
     size: 676
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a5540
     name: Audio11SlotInitLoop_004a5540
     size: 278
