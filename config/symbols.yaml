@@ -11907,10 +11907,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b1d0
-    name: func_0049b1d0
+    name: RoundOverFsmCluster_0049b1d0
     size: 1280
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049b6d0
     name: ChainWalkCallCmp_0049b6d0
     size: 95
