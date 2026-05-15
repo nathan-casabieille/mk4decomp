@@ -11695,10 +11695,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004960e0
-    name: func_004960e0
+    name: TournamentMenuFsmCluster_004960e0
     size: 1359
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00496630
     name: InstallSelfMStackPush_00496630
     size: 152
