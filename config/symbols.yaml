@@ -8521,10 +8521,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047aff0
-    name: func_0047aff0
+    name: RoundFsmCluster_0047aff0
     size: 708
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047b2c0
     name: func_0047b2c0
     size: 1047
