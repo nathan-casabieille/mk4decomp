@@ -120355,3 +120355,246 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         ret
     }
 }
+
+/* ============================================================
+ * CrtIoInitFdTable_004c8bc0 — 524b crt.
+ *
+ * Initializes the CRT's file-descriptor table at
+ * g_data_00fa0de0[][] and inherits stdin/stdout/stderr handles
+ * from the OS startup info.
+ *
+ * Steps:
+ *   1. Allocate the first 0x480-byte (32-entry) page via
+ *      func_004c54b0; on NULL call func_004c6e60(0x1b) (fatal
+ *      `_amsg_exit`). Store at g_data_00fa0de0[0].
+ *   2. Initialize all 32 fd entries: 0xff in fd, type bytes
+ *      cleared, line_end=0xa, count=0.
+ *   3. Call GetStartupInfoA via [g_iat_004d2138]. If
+ *      `cb_reserved2` (word) and `lp_reserved2` (dword) are
+ *      non-zero, the launcher inherited descriptors:
+ *        - Min(count, 0x800) descriptors to copy.
+ *        - Allocate additional 0x480-byte pages as needed (up to
+ *          0x20 entries each) via func_004c54b0; track in
+ *          g_data_00fa0ee0.
+ *        - For each inherited slot, verify via
+ *          GetFileType([0x4d2120]) and copy {handle, flags} into
+ *          the fd-table entry.
+ *   4. Fallback path: for fd 0/1/2 (stdin/out/err), call
+ *      GetStdHandle([0x4d2148]) with -10/-11/-12; verify via
+ *      GetFileType, set type bits 0x80 (open), 0x40 (char),
+ *      0x08 (pipe), 0x81 (closed) as appropriate.
+ *   5. Final: call SetHandleCount([0x4d2128]) with the table
+ *      size.
+ *
+ * Frame: sub esp, 0x48 + push ebx/ebp/esi/edi. Returns: void.
+ * Uses g_iat_004d2120, g_iat_004d2128, g_iat_004d2138,
+ * g_iat_004d2148.
+ * ============================================================ */
+
+extern void func_004c54b0(void);
+extern void func_004c6e60(void);
+extern unsigned int g_data_00fa0de4;
+extern unsigned int g_data_00fa0ee0;
+extern void *g_iat_004d2120;
+extern void *g_iat_004d2128;
+extern void *g_iat_004d2138;
+
+__declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
+{
+    __asm {
+        sub      esp, 0x48
+        push     ebx
+        push     ebp
+        push     esi
+        push     edi
+        push     0x480
+        call     func_004c54b0
+        mov      esi, eax
+        xor      edi, edi
+        add      esp, 4
+        cmp      esi, edi
+        jne      short L_8be6
+        push     0x1b
+        call     func_004c6e60
+        add      esp, 4
+    L_8be6:
+        lea      eax, [esi + 0x480]
+        mov      dword ptr [g_data_00fa0de0], esi
+        cmp      esi, eax
+        mov      dword ptr [g_data_00fa0ee0], 0x20
+        mov      bl, 0xa
+        jae      short L_8c25
+    L_8c02:
+        mov      byte ptr [esi + 4], 0
+        mov      dword ptr [esi], 0xffffffff
+        mov      byte ptr [esi + 5], bl
+        mov      dword ptr [esi + 8], edi
+        mov      ecx, dword ptr [g_data_00fa0de0]
+        add      esi, 0x24
+        add      ecx, 0x480
+        cmp      esi, ecx
+        jb       short L_8c02
+    L_8c25:
+        lea      edx, [esp + 0x14]
+        push     edx
+        call     dword ptr [g_iat_004d2138]
+        cmp      word ptr [esp + 0x46], di
+        je       L_8d38
+        mov      eax, dword ptr [esp + 0x48]
+        cmp      eax, edi
+        je       L_8d38
+        mov      ecx, dword ptr [eax]
+        lea      edi, [eax + 4]
+        cmp      ecx, 0x800
+        mov      dword ptr [esp + 0x10], ecx
+        lea      ebp, [edi + ecx]
+        jl       short L_8c63
+        mov      dword ptr [esp + 0x10], 0x800
+    L_8c63:
+        mov      eax, dword ptr [esp + 0x10]
+        mov      ecx, dword ptr [g_data_00fa0ee0]
+        cmp      ecx, eax
+        jge      short L_8ce1
+        mov      esi, OFFSET g_data_00fa0de4
+    L_8c76:
+        push     0x480
+        call     func_004c54b0
+        xor      ecx, ecx
+        add      esp, 4
+        cmp      eax, ecx
+        je       short L_8cd5
+        mov      edx, dword ptr [g_data_00fa0ee0]
+        mov      dword ptr [esi], eax
+        add      edx, 0x20
+        mov      dword ptr [g_data_00fa0ee0], edx
+        lea      edx, [eax + 0x480]
+        cmp      eax, edx
+        jae      short L_8cc3
+    L_8ca4:
+        mov      byte ptr [eax + 4], 0
+        mov      dword ptr [eax], 0xffffffff
+        mov      byte ptr [eax + 5], bl
+        mov      dword ptr [eax + 8], ecx
+        mov      edx, dword ptr [esi]
+        add      eax, 0x24
+        add      edx, 0x480
+        cmp      eax, edx
+        jb       short L_8ca4
+    L_8cc3:
+        mov      eax, dword ptr [g_data_00fa0ee0]
+        mov      edx, dword ptr [esp + 0x10]
+        add      esi, 4
+        cmp      eax, edx
+        jl       short L_8c76
+        jmp      short L_8ce3
+    L_8cd5:
+        mov      edx, dword ptr [g_data_00fa0ee0]
+        mov      dword ptr [esp + 0x10], edx
+        jmp      short L_8ce3
+    L_8ce1:
+        xor      ecx, ecx
+    L_8ce3:
+        mov      eax, dword ptr [esp + 0x10]
+        xor      esi, esi
+        cmp      eax, ecx
+        jle      short L_8d38
+    L_8ced:
+        mov      ecx, dword ptr [ebp]
+        cmp      ecx, -1
+        je       short L_8d2b
+        mov      al, byte ptr [edi]
+        test     al, 1
+        je       short L_8d2b
+        test     al, 8
+        jne      short L_8d0a
+        push     ecx
+        call     dword ptr [g_iat_004d2120]
+        test     eax, eax
+        je       short L_8d2b
+    L_8d0a:
+        mov      ecx, esi
+        mov      eax, esi
+        sar      ecx, 5
+        and      eax, 0x1f
+        lea      edx, [eax + eax*8]
+        mov      eax, dword ptr [ecx*4 + g_data_00fa0de0]
+        mov      ecx, dword ptr [ebp]
+        lea      eax, [eax + edx*4]
+        mov      dword ptr [eax], ecx
+        mov      dl, byte ptr [edi]
+        mov      byte ptr [eax + 4], dl
+    L_8d2b:
+        mov      eax, dword ptr [esp + 0x10]
+        inc      esi
+        inc      edi
+        add      ebp, 4
+        cmp      esi, eax
+        jl       short L_8ced
+    L_8d38:
+        mov      ebx, dword ptr [g_iat_004d2148]
+        xor      ebp, ebp
+    L_8d40:
+        mov      ecx, dword ptr [g_data_00fa0de0]
+        lea      eax, [ebp + ebp*8]
+        lea      esi, [ecx + eax*4]
+        mov      eax, dword ptr [ecx + eax*4]
+        cmp      eax, -1
+        jne      short L_8da9
+        test     ebp, ebp
+        mov      byte ptr [esi + 4], 0x81
+        jne      short L_8d64
+        mov      eax, 0xfffffff6
+        jmp      short L_8d6e
+    L_8d64:
+        mov      eax, ebp
+        dec      eax
+        neg      eax
+        sbb      eax, eax
+        add      eax, -0xb
+    L_8d6e:
+        push     eax
+        call     ebx
+        mov      edi, eax
+        cmp      edi, -1
+        je       short L_8da2
+        push     edi
+        call     dword ptr [g_iat_004d2120]
+        test     eax, eax
+        je       short L_8da2
+        and      eax, 0xff
+        mov      dword ptr [esi], edi
+        cmp      eax, 2
+        jne      short L_8d96
+        mov      al, byte ptr [esi + 4]
+        or       al, 0x40
+        jmp      short L_8dae
+    L_8d96:
+        cmp      eax, 3
+        jne      short L_8db1
+        mov      al, byte ptr [esi + 4]
+        or       al, 8
+        jmp      short L_8dae
+    L_8da2:
+        mov      al, byte ptr [esi + 4]
+        or       al, 0x40
+        jmp      short L_8dae
+    L_8da9:
+        mov      al, byte ptr [esi + 4]
+        or       al, 0x80
+    L_8dae:
+        mov      byte ptr [esi + 4], al
+    L_8db1:
+        inc      ebp
+        cmp      ebp, 3
+        jl       L_8d40
+        mov      edx, dword ptr [g_data_00fa0ee0]
+        push     edx
+        call     dword ptr [g_iat_004d2128]
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        add      esp, 0x48
+        ret
+    }
+}
