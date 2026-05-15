@@ -5369,10 +5369,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x00449010
-    name: func_00449010
+    name: MatchEndFadeFsmCluster_00449010
     size: 732
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004492f0
     name: func_004492f0
     size: 3340
