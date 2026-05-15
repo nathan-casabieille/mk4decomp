@@ -116681,3 +116681,177 @@ __declspec(naked) void StageEventDamageCluster_0042c5a0(void)
         jmp      func_0042c790
     }
 }
+
+/* ============================================================
+ * SfxAttenuateAndApply_0048dee0 — 497b game.
+ *
+ * Computes the attenuated SFX/animation factor for the active
+ * entity and applies it to a global accumulator.
+ *
+ *   1. If g_data_00537f94 is already non-zero (in-progress
+ *      animation), early-out to the pop/ret tail.
+ *   2. Otherwise compute base scale from entity->state at
+ *      [[entity*4+0x3c]*4+0x34]: if 0xf use 0x8000, else 0x10000.
+ *   3. Multiply via func_00404af0(base_scale, g_data_0054206c).
+ *   4. Compute attack-modifier from entity->animation slot at
+ *      [entity*4+0x38]: compares to g_data_0053815c, picks
+ *      g_data_0053a3e4 or g_data_0053a474, clamps to
+ *      [0..0x10000].
+ *   5. Multiply again via func_00404af0 and accumulate to
+ *      [entity_state*4+0x80].
+ *   6. Compute decrement: pushes g_data_00542044 on dispatch
+ *      stack, selects g_data_0053a6dc>>2 or g_data_00537f2c>>2
+ *      based on whether entity->animation matches
+ *      g_data_00538158 (bit-4 toggle in g_data_0054208c). If
+ *      bit 4 set, mark animation as type 2.
+ *   7. Read the current animation-frame at [eax*4]; subtract
+ *      computed amount (when g_data_00543438 == 0); clamp to
+ *      ≥ 0; write back.
+ *   8. Pop dispatch stack; if result still non-zero exit,
+ *      else set g_data_00537f94 to type marker.
+ *
+ *   Tail: 3 nops + extra ret (alignment padding).
+ *
+ * Frame: push edi. Returns: void.
+ * ============================================================ */
+
+extern void func_00404af0(void);
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00537f98;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_0053a3e4;
+extern unsigned int g_data_0053a474;
+extern unsigned int g_data_00541dc4;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00543438;
+
+__declspec(naked) void SfxAttenuateAndApply_0048dee0(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00537f94]
+        push     edi
+        test     eax, eax
+        mov      dword ptr [g_data_00537f98], 1
+        mov      dword ptr [g_data_00542088], eax
+        jne      L_e0cb
+        mov      eax, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [eax*4 + 0x3c]
+        mov      dword ptr [g_data_0054204c], eax
+        mov      eax, dword ptr [eax*4 + 0x34]
+        mov      ecx, eax
+        cmp      eax, 0xf
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_data_00541dc4], ecx
+        je       short L_df31
+        mov      eax, 0x10000
+        mov      dword ptr [g_data_00542070], eax
+    L_df31:
+        cmp      ecx, 0xf
+        jne      short L_df40
+        mov      eax, 0x8000
+        mov      dword ptr [g_data_00542070], eax
+    L_df40:
+        mov      ecx, dword ptr [g_data_0054206c]
+        push     ecx
+        push     eax
+        call     func_00404af0
+        mov      edx, dword ptr [g_data_00542060]
+        mov      edi, dword ptr [g_data_0053815c]
+        mov      ecx, dword ptr [g_data_0053a3e4]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      edx, dword ptr [edx*4 + 0x38]
+        add      esp, 8
+        cmp      edx, edi
+        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_data_00542070], ecx
+        jne      short L_df8a
+        mov      ecx, dword ptr [g_data_0053a474]
+        mov      dword ptr [g_data_00542070], ecx
+    L_df8a:
+        test     ecx, ecx
+        jge      short L_df99
+        mov      ecx, 0x10000
+        mov      dword ptr [g_data_00542070], ecx
+    L_df99:
+        cmp      ecx, 0x10000
+        jle      short L_dfac
+        mov      ecx, 0x10000
+        mov      dword ptr [g_data_00542070], ecx
+    L_dfac:
+        push     eax
+        push     ecx
+        call     func_00404af0
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      dword ptr [g_data_0054206c], eax
+        add      esp, 8
+        mov      ecx, dword ptr [ecx*4 + 0x3c]
+        mov      dword ptr [g_data_00542048], ecx
+        mov      edx, dword ptr [ecx*4 + 0x80]
+        add      edx, eax
+        mov      dword ptr [ecx*4 + 0x80], edx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      edx, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_data_0054208c]
+        mov      ecx, dword ptr [g_data_00538158]
+        mov      dword ptr [g_data_00542070], 1
+        mov      eax, dword ptr [eax*4 + 0x38]
+        or       edx, 4
+        cmp      eax, ecx
+        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_data_0054208c], edx
+        je       short L_e033
+        xor      edx, 4
+        mov      dword ptr [g_data_0054208c], edx
+    L_e033:
+        mov      eax, OFFSET g_data_0053a6dc
+        mov      ecx, OFFSET g_data_00537f2c
+        shr      eax, 2
+        shr      ecx, 2
+        and      edx, 4
+        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_data_0054204c], ecx
+        jne      short L_e05a
+        mov      eax, ecx
+        mov      dword ptr [g_data_00542050], eax
+    L_e05a:
+        test     edx, edx
+        je       short L_e068
+        mov      dword ptr [g_data_00542070], 2
+    L_e068:
+        mov      edx, dword ptr [g_data_00543438]
+        mov      ecx, dword ptr [eax*4]
+        test     edx, edx
+        mov      dword ptr [g_data_00542088], ecx
+        jne      short L_e08b
+        sub      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542088], ecx
+    L_e08b:
+        test     ecx, ecx
+        jge      short L_e097
+        xor      ecx, ecx
+        mov      dword ptr [g_data_00542088], ecx
+    L_e097:
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      eax, dword ptr [g_data_00542088]
+        test     eax, eax
+        mov      dword ptr [g_data_00542044], ecx
+        jne      short L_e0cb
+        mov      edx, dword ptr [g_data_00542070]
+        mov      dword ptr [g_data_00537f94], edx
+    L_e0cb:
+        pop      edi
+        ret
+        nop
+        nop
+        nop
+        ret
+    }
+}

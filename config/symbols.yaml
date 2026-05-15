@@ -10243,10 +10243,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048dee0
-    name: func_0048dee0
+    name: SfxAttenuateAndApply_0048dee0
     size: 497
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048e0e0
     name: SlotPhaseResetInstallChain_0048e0e0
     size: 348
