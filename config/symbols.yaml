@@ -9614,10 +9614,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004879e0
-    name: func_004879e0
+    name: BossDashCluster_004879e0
     size: 1005
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487dd0
     name: SnapshotDispatchAccum_00487dd0
     size: 166
