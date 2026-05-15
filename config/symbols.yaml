@@ -5781,10 +5781,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004531d0
-    name: func_004531d0
+    name: IdleFsm4CaseDispatch_004531d0
     size: 580
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00453420
     name: GuardedSetCallOrJmp_00453420
     size: 89
