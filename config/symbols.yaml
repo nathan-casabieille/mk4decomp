@@ -2193,10 +2193,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesE.c
   - addr: 0x00425380
-    name: func_00425380
+    name: QuadInterpolator_00425380
     size: 552
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004255b0
     name: func_004255b0
     size: 633
