@@ -8568,10 +8568,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cd50
-    name: func_0047cd50
+    name: StageEventExitCluster_0047cd50
     size: 522
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047cf60
     name: func_0047cf60
     size: 1447
