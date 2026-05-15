@@ -6417,10 +6417,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x0045e1e0
-    name: func_0045e1e0
+    name: InputCheckCluster_0045e1e0
     size: 942
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045e590
     name: RangeCheckJmp_0045e590
     size: 55
