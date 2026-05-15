@@ -4750,10 +4750,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043cd60
-    name: func_0043cd60
+    name: PoseStateInitNode_0043cd60
     size: 732
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d040
     name: UnlinkChainInstall_0043d040
     size: 91
