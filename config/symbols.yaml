@@ -16822,10 +16822,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf880
-    name: func_004cf880
+    name: PendingMatch_004cf880
     size: 881
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cfc00
     name: CrtLocaleInfoFreeAll_004cfc00
     size: 563
