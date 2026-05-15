@@ -119068,3 +119068,181 @@ __declspec(naked) void StageEntityInitCluster_004216a0(void)
         ret
     }
 }
+
+/* ============================================================
+ * MoveStackPipeline_004660d0 — 518b game (packed: 3 helpers).
+ *
+ *   1. 0x4660d0 (~104b): Move-stack push/pop. Pushes the current
+ *      g_data_0054206c onto the per-entity move stack at
+ *      [entity*4+4]; decrements g_data_0054206c. If still
+ *      non-negative, fetches the next move at
+ *      (OFFSET g_data_004eab30 >> 2) + index, runs
+ *      func_004315c0. Otherwise pops one entry back.
+ *
+ *   2. 0x4665b8 (~89b): Code remap + sound + 2 calls.
+ *      Reads [entity*4+0x34] input code, remaps 0x10→2, 0x11→7,
+ *      saves into g_data_00537f9c. Snapshots [entity*4+0x38] into
+ *      g_data_00542058 and g_data_0054205c into _42054. Runs
+ *      func_004756f0 + func_00475750; on success pushes
+ *      &g_data_004ea9b0 + func_004594f0.
+ *
+ *   3. 0x466130 (~243b): Heavy "finalize move" path. Set
+ *      g_data_00542074 := 0x26c, g_data_0054204c :=
+ *      OFFSET 0x4664a0 (post-handler), run func_0049cb60. Bit 0
+ *      of g_data_0054208c set → tail-jmp func_00466490. Else
+ *      stash entity index into [g_data_00542044*4+0x24], call
+ *      func_00476de0(0xb) + func_00476de0(0xc) +
+ *      func_00476e60(4). Then stamp entity record [+0x30] := 2,
+ *      [+0x34] := saved code, [+0x38] := saved anim, [+0x3c] :=
+ *      saved scene, and tail-jmp func_004662e0.
+ *
+ * Frame: no prologue. Returns: void.
+ * ============================================================ */
+
+extern void func_004315c0(void);
+extern void func_004662e0(void);
+extern void func_00466490(void);
+extern void func_004756f0(void);
+extern void func_00475750(void);
+extern void func_00476de0(void);
+extern void func_00476e60(void);
+extern void func_0049cb60(void);
+extern unsigned int g_data_004ea9b0;
+extern unsigned int g_data_004eab30;
+extern unsigned int g_data_00537f9c;
+extern unsigned int g_const_004664a0;
+
+__declspec(naked) void MoveStackPipeline_004660d0(void)
+{
+    __asm {
+        /* H1: move-stack push/pop */
+        mov      eax, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_data_0054206c]
+        mov      ecx, dword ptr [eax*4 + 4]
+        lea      eax, [eax*4 + 4]
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [ecx*4], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        inc      ecx
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [eax], ecx
+        mov      eax, dword ptr [g_data_0054206c]
+        dec      eax
+        mov      dword ptr [g_data_0054206c], eax
+        js       short L_6141
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      eax, OFFSET g_data_004eab30
+        sar      eax, 2
+        add      eax, ecx
+        mov      dword ptr [g_data_00542050], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_0054206c], eax
+        call     func_004315c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_6168
+    L_6141:
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 4]
+        dec      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      edx, dword ptr [eax*4]
+        mov      dword ptr [g_data_0054206c], edx
+        mov      dword ptr [ecx*4 + 4], eax
+    L_6168:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2: code remap + 2-call */
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [ecx*4 + 0x34]
+        cmp      eax, 0x10
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_6191
+        mov      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+    L_6191:
+        cmp      eax, 0x11
+        jne      short L_61a0
+        mov      eax, 7
+        mov      dword ptr [g_data_0054206c], eax
+    L_61a0:
+        mov      dword ptr [g_data_00537f9c], eax
+        mov      eax, dword ptr [ecx*4 + 0x38]
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_data_00542054], ecx
+        call     func_004756f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_61e6
+        call     func_00475750
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_61e6
+        push     OFFSET g_data_004ea9b0
+        call     func_004594f0
+        add      esp, 4
+    L_61e6:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H3: finalize move */
+        mov      dword ptr [g_data_00542074], 0x26c
+        mov      dword ptr [g_data_0054204c], OFFSET g_const_004664a0
+        call     func_0049cb60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_62d5
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_6224
+        jmp      func_00466490
+    L_6224:
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x24], ecx
+        mov      dword ptr [g_data_0054206c], 0xb
+        call     func_00476de0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_62d5
+        mov      dword ptr [g_data_0054206c], 0xc
+        call     func_00476de0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_62d5
+        mov      dword ptr [g_data_0054206c], 4
+        call     func_00476e60
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_62d5
+        mov      edx, dword ptr [g_data_00542060]
+        mov      eax, 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [edx*4 + 0x30], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542054]
+        mov      dword ptr [eax*4 + 0x34], ecx
+        mov      edx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [g_data_00542058]
+        mov      dword ptr [edx*4 + 0x38], eax
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      dword ptr [ecx*4 + 0x3c], edx
+        jmp      func_004662e0
+    L_62d5:
+        ret
+    }
+}

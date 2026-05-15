@@ -7024,10 +7024,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesY.c
   - addr: 0x004660d0
-    name: func_004660d0
+    name: MoveStackPipeline_004660d0
     size: 518
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004662e0
     name: FourEntryAlarmInstall_004662e0
     size: 384
