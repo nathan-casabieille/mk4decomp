@@ -7243,10 +7243,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00467ed0
-    name: func_00467ed0
+    name: StoryCharIntroFsmCluster_00467ed0
     size: 1283
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004683e0
     name: DualSlotPropagateCall_004683e0
     size: 94
