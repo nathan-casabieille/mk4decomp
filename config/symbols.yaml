@@ -7422,10 +7422,11 @@ functions:
     status: matched
     file: src/engine/dual_scaled_init_cmp.c
   - addr: 0x0046df90
-    name: func_0046df90
+    name: ComboSpecialEventCluster_0046df90
     size: 782
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046e2a0
     name: CallPauseDirtyMStackPushFn_0046e2a0
     size: 56
