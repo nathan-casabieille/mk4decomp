@@ -5454,10 +5454,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x0044baa0
-    name: func_0044baa0
+    name: PendingMatch_0044baa0
     size: 2434
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044c430
     name: CjFieldCopyCascade_0044c430
     size: 241
