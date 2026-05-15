@@ -119970,3 +119970,197 @@ __declspec(naked) void StageEventExitCluster_0047cd50(void)
         ret
     }
 }
+
+/* ============================================================
+ * RoundReset_004223e0 — 523b game.
+ *
+ * Massive zero-out of round-state globals (~58 dwords + 1 byte)
+ * between rounds. Steps:
+ *   1. Call func_00423870 (pre-reset). Bail on abort.
+ *   2. If bit 0 of g_data_0054208c set, call func_004225f0.
+ *   3. If g_data_0052aac4 == 2 call func_004238b0.
+ *   4. Initialize:
+ *      - g_data_0053a3e4 = g_data_0053a474 = 0x10000 (normal x-axis
+ *        and z-axis scale defaults)
+ *      - If g_data_00537f30 == 1, clear g_data_0053a6e0 + 0x537ea4.
+ *   5. Zero out 58 round-state dwords in pairs (load ebx=0 once,
+ *      compiler emits two stores per pair: low addr then high addr)
+ *      across g_data_00541df0..00541f80 plus various scattered
+ *      slots like g_data_0053e34c, g_data_0053a730, etc.
+ *   6. Call func_00422720 (finalize). Bail on abort.
+ *   7. Stamp g_data_0053a498 into g_data_005380d8 (active arena id).
+ *
+ * Frame: push ebx. Returns: void.
+ * ============================================================ */
+
+extern void func_004225f0(void);
+extern void func_00422720(void);
+extern void func_00423870(void);
+extern void func_004238b0(void);
+extern unsigned int g_data_0052aafc;
+extern unsigned int g_data_0052d724;
+extern unsigned int g_data_00537ef4;
+extern unsigned int g_data_00537f04;
+extern unsigned int g_data_00537f30;
+extern unsigned int g_data_005380d8;
+extern unsigned int g_data_0053a42c;
+extern unsigned int g_data_0053a498;
+extern unsigned int g_data_0053a510;
+extern unsigned int g_data_0053a6f8;
+extern unsigned int g_data_0053a730;
+extern unsigned int g_data_0053a788;
+extern unsigned int g_data_0053e34c;
+extern unsigned int g_data_00541d84;
+extern unsigned int g_data_00541dc8;
+extern unsigned int g_data_00541df0;
+extern unsigned int g_data_00541df4;
+extern unsigned int g_data_00541e34;
+extern unsigned int g_data_00541e38;
+extern unsigned int g_data_00541ee8;
+extern unsigned int g_data_00541eec;
+extern unsigned int g_data_00541ef0;
+extern unsigned int g_data_00541ef4;
+extern unsigned int g_data_00541ef8;
+extern unsigned int g_data_00541efc;
+extern unsigned int g_data_00541f00;
+extern unsigned int g_data_00541f04;
+extern unsigned int g_data_00541f08;
+extern unsigned int g_data_00541f0c;
+extern unsigned int g_data_00541f10;
+extern unsigned int g_data_00541f14;
+extern unsigned int g_data_00541f18;
+extern unsigned int g_data_00541f1c;
+extern unsigned int g_data_00541f20;
+extern unsigned int g_data_00541f24;
+extern unsigned int g_data_00541f28;
+extern unsigned int g_data_00541f2c;
+extern unsigned int g_data_00541f30;
+extern unsigned int g_data_00541f34;
+extern unsigned int g_data_00541f38;
+extern unsigned int g_data_00541f3c;
+extern unsigned int g_data_00541f40;
+extern unsigned int g_data_00541f44;
+extern unsigned int g_data_00541f48;
+extern unsigned int g_data_00541f4c;
+extern unsigned int g_data_00541f50;
+extern unsigned int g_data_00541f54;
+extern unsigned int g_data_00541f58;
+extern unsigned int g_data_00541f5c;
+extern unsigned int g_data_00541f60;
+extern unsigned int g_data_00541f64;
+extern unsigned int g_data_00541f68;
+extern unsigned int g_data_00541f6c;
+extern unsigned int g_data_00541f70;
+extern unsigned int g_data_00541f74;
+extern unsigned int g_data_00541f78;
+extern unsigned int g_data_00541f7c;
+extern unsigned int g_data_00541f80;
+extern unsigned int g_data_00541f84;
+extern unsigned int g_data_0054380c;
+
+__declspec(naked) void RoundReset_004223e0(void)
+{
+    __asm {
+        push     ebx
+        call     func_00423870
+        mov      eax, dword ptr [g_data_00541e6c]
+        xor      ebx, ebx
+        cmp      eax, ebx
+        jne      L_25e9
+        test     byte ptr [g_data_0054208c], 1
+        je       short L_240f
+        call     func_004225f0
+        cmp      dword ptr [g_data_00541e6c], ebx
+        jne      L_25e9
+    L_240f:
+        mov      eax, dword ptr [g_data_0052aac4]
+        cmp      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_242f
+        call     func_004238b0
+        cmp      dword ptr [g_data_00541e6c], ebx
+        jne      L_25e9
+    L_242f:
+        mov      eax, 0x10000
+        mov      dword ptr [g_data_0053a3e4], eax
+        mov      dword ptr [g_data_0053a474], eax
+        mov      eax, dword ptr [g_data_00537f30]
+        cmp      eax, 1
+        mov      dword ptr [g_data_0054206c], eax
+        jne      short L_2459
+        mov      dword ptr [g_data_0053a6e0], ebx
+        mov      dword ptr [g_data_00537ea4], ebx
+    L_2459:
+        mov      dword ptr [g_data_00541df0], ebx
+        mov      dword ptr [g_data_00541df4], ebx
+        mov      byte ptr [g_data_0054380c], bl
+        mov      dword ptr [g_data_0053a6f8], ebx
+        mov      dword ptr [g_data_0053a788], ebx
+        mov      dword ptr [g_data_0053e34c], ebx
+        mov      dword ptr [g_data_00541dc8], ebx
+        mov      dword ptr [g_data_00537e94], ebx
+        mov      dword ptr [g_data_0053a42c], ebx
+        mov      dword ptr [g_data_00537ef4], ebx
+        mov      dword ptr [g_data_00537f94], ebx
+        mov      dword ptr [g_data_0052d724], ebx
+        mov      dword ptr [g_data_00537f98], ebx
+        mov      dword ptr [g_data_0053a730], ebx
+        mov      dword ptr [g_data_00541d84], ebx
+        mov      dword ptr [g_data_0053a430], ebx
+        mov      dword ptr [g_data_00537f04], ebx
+        mov      dword ptr [g_data_0053a510], ebx
+        mov      dword ptr [g_data_0052aafc], ebx
+        mov      dword ptr [g_data_00541e34], ebx
+        mov      dword ptr [g_data_00541e38], ebx
+        mov      dword ptr [g_data_005380d8], ebx
+        mov      dword ptr [g_data_00541eec], ebx
+        mov      dword ptr [g_data_00541ee8], ebx
+        mov      dword ptr [g_data_00541ef4], ebx
+        mov      dword ptr [g_data_00541ef0], ebx
+        mov      dword ptr [g_data_00541efc], ebx
+        mov      dword ptr [g_data_00541ef8], ebx
+        mov      dword ptr [g_data_00541f04], ebx
+        mov      dword ptr [g_data_00541f00], ebx
+        mov      dword ptr [g_data_00541f0c], ebx
+        mov      dword ptr [g_data_00541f08], ebx
+        mov      dword ptr [g_data_00541f14], ebx
+        mov      dword ptr [g_data_00541f10], ebx
+        mov      dword ptr [g_data_00541f1c], ebx
+        mov      dword ptr [g_data_00541f18], ebx
+        mov      dword ptr [g_data_00541f24], ebx
+        mov      dword ptr [g_data_00541f20], ebx
+        mov      dword ptr [g_data_00541f2c], ebx
+        mov      dword ptr [g_data_00541f28], ebx
+        mov      dword ptr [g_data_00541f34], ebx
+        mov      dword ptr [g_data_00541f30], ebx
+        mov      dword ptr [g_data_00541f3c], ebx
+        mov      dword ptr [g_data_00541f38], ebx
+        mov      dword ptr [g_data_00541f44], ebx
+        mov      dword ptr [g_data_00541f40], ebx
+        mov      dword ptr [g_data_00541f4c], ebx
+        mov      dword ptr [g_data_00541f48], ebx
+        mov      dword ptr [g_data_00541f54], ebx
+        mov      dword ptr [g_data_00541f50], ebx
+        mov      dword ptr [g_data_00541f5c], ebx
+        mov      dword ptr [g_data_00541f58], ebx
+        mov      dword ptr [g_data_00541f64], ebx
+        mov      dword ptr [g_data_00541f60], ebx
+        mov      dword ptr [g_data_00541f6c], ebx
+        mov      dword ptr [g_data_00541f68], ebx
+        mov      dword ptr [g_data_00541f74], ebx
+        mov      dword ptr [g_data_00541f70], ebx
+        mov      dword ptr [g_data_00541f7c], ebx
+        mov      dword ptr [g_data_00541f78], ebx
+        mov      dword ptr [g_data_00541f84], ebx
+        mov      dword ptr [g_data_00541f80], ebx
+        call     func_00422720
+        cmp      dword ptr [g_data_00541e6c], ebx
+        jne      short L_25e9
+        mov      eax, dword ptr [g_data_0053a498]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_005380d8], eax
+    L_25e9:
+        pop      ebx
+        ret
+    }
+}

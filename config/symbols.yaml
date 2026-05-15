@@ -1892,10 +1892,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004223e0
-    name: func_004223e0
+    name: RoundReset_004223e0
     size: 523
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004225f0
     name: TwoStateCopyDup_004225f0
     size: 161
