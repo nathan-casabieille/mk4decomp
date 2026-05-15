@@ -119246,3 +119246,165 @@ __declspec(naked) void MoveStackPipeline_004660d0(void)
         ret
     }
 }
+
+/* ============================================================
+ * SpawnLeftRightAudioCrew_004a8080 — 519b audio.
+ *
+ * Spawns the per-arena left-side and right-side "audio crew"
+ * voices (announcer/crowd). Two parallel passes:
+ *
+ *   Pass 1 (left, edi loop over g_data_004f3ae4 count): for each
+ *     crew member, calls func_004a77c0 (allocate slot), stamps
+ *     [voice*4 + 0x34] := slot pointer, [voice*4 + 0x54] :=
+ *     (member_x - g_data_00541d8c) * 4, [+0x58] := 0xfde40000
+ *     (z-back), [+0x64] := 0 (volume), [+0x5c] := 0xc0000
+ *     (priority). Then dispatches func_004a7d40 with code from
+ *     g_data_005435a2 - 2. If next byte is non-zero, a follow-up
+ *     "shadow" voice via func_004a7840 with z = 0xff890000 and
+ *     priority 0x30000.
+ *     Stride = 0x18 bytes per crew member.
+ *
+ *   Pass 2 (right): mirror of pass 1 with:
+ *     - count = g_data_004f3ae8
+ *     - z = 0x12c0000 (forward)
+ *     - struct base = g_data_0054361a
+ *     - shadow z = OFFSET g_data_007b0000.
+ *     - slot field [voice*4 + 0x48] (instead of +0x34).
+ *
+ * Frame: push ebx/ebp/esi/edi. Returns: void.
+ *
+ * Uses OFFSET g_data_00600000 as the x-zero arena coordinate
+ * and OFFSET g_data_00c00000 as the per-member x stride.
+ * ============================================================ */
+
+extern void func_004a77c0(void);
+extern void func_004a7840(void);
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_00541d8c;
+extern unsigned int g_data_005435a2;
+extern unsigned int g_data_0054361a;
+extern unsigned int g_data_00600000;
+extern unsigned int g_data_007b0000;
+extern unsigned int g_data_00c00000;
+
+__declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_004f3ae4]
+        push     ebx
+        push     ebp
+        push     esi
+        lea      ecx, [eax + eax*2]
+        push     edi
+        shl      ecx, 0x15
+        sub      ecx, OFFSET g_data_00600000
+        xor      edi, edi
+        test     eax, eax
+        mov      dword ptr [g_data_00541d8c], ecx
+        jle      L_8183
+        xor      ebp, ebp
+        mov      esi, OFFSET g_data_005435a2
+        mov      ebx, 0xfde40000
+    L_80b1:
+        mov      dword ptr [g_data_0054206c], 0x10
+        call     func_004a77c0
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542044]
+        lea      eax, [edi + edx]
+        mov      edx, ebp
+        mov      dword ptr [eax*4 + 0x34], ecx
+        mov      eax, dword ptr [g_data_00541d8c]
+        sub      edx, eax
+        mov      eax, dword ptr [g_data_00542044]
+        shl      edx, 2
+        mov      dword ptr [eax*4 + 0x54], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [ecx*4 + 0x58], ebx
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x64], 0
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x5c], 0xc0000
+        movsx    ecx, byte ptr [esi - 2]
+        mov      dword ptr [g_data_0054206c], ecx
+        call     func_004a7d40
+        cmp      byte ptr [esi], 0
+        je       short L_816c
+        call     func_004a7840
+        mov      eax, dword ptr [g_data_00541d8c]
+        mov      edx, ebp
+        sub      edx, eax
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x54], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [ecx*4 + 0x58], 0xff890000
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x5c], 0x30000
+    L_816c:
+        mov      eax, dword ptr [g_data_004f3ae4]
+        inc      edi
+        add      esi, 0x18
+        add      ebp, OFFSET g_data_00c00000
+        cmp      edi, eax
+        jl       L_80b1
+    L_8183:
+        mov      eax, dword ptr [g_data_004f3ae8]
+        xor      edi, edi
+        lea      ecx, [eax + eax*2]
+        shl      ecx, 0x15
+        sub      ecx, OFFSET g_data_00600000
+        test     eax, eax
+        mov      dword ptr [g_data_00541d8c], ecx
+        jle      short L_8282
+        xor      ebp, ebp
+        mov      esi, OFFSET g_data_0054361a
+        mov      ebx, 0x12c0000
+    L_81b0:
+        mov      dword ptr [g_data_0054206c], 0x10
+        call     func_004a77c0
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542044]
+        lea      eax, [edi + edx]
+        mov      edx, ebp
+        mov      dword ptr [eax*4 + 0x48], ecx
+        mov      eax, dword ptr [g_data_00541d8c]
+        sub      edx, eax
+        mov      eax, dword ptr [g_data_00542044]
+        shl      edx, 2
+        mov      dword ptr [eax*4 + 0x54], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [ecx*4 + 0x58], ebx
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x64], 0
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x5c], 0xc0000
+        movsx    ecx, byte ptr [esi - 2]
+        mov      dword ptr [g_data_0054206c], ecx
+        call     func_004a7d40
+        cmp      byte ptr [esi], 0
+        je       short L_826b
+        call     func_004a7840
+        mov      eax, dword ptr [g_data_00541d8c]
+        mov      edx, ebp
+        sub      edx, eax
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [eax*4 + 0x54], edx
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [ecx*4 + 0x58], OFFSET g_data_007b0000
+        mov      edx, dword ptr [g_data_00542044]
+        mov      dword ptr [edx*4 + 0x5c], 0x30000
+    L_826b:
+        mov      eax, dword ptr [g_data_004f3ae8]
+        inc      edi
+        add      esi, 0x18
+        add      ebp, OFFSET g_data_00c00000
+        cmp      edi, eax
+        jl       L_81b0
+    L_8282:
+        pop      edi
+        pop      esi
+        pop      ebp
+        pop      ebx
+        ret
+    }
+}
