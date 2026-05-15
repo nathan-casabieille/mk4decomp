@@ -9574,10 +9574,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004884a0
-    name: func_004884a0
+    name: CinematicCFsmCluster_004884a0
     size: 670
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00488740
     name: DualEntryInstallSelf_00488740
     size: 138
