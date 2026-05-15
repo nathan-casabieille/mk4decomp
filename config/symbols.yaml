@@ -1345,10 +1345,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004163c0
-    name: func_004163c0
+    name: PendingMatch_004163c0
     size: 2278
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00416cb0
     name: BootChainMaskAndDispatch_00416cb0
     size: 250
