@@ -12732,10 +12732,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a3ce0
-    name: func_004a3ce0
+    name: BossFight6StateSequencer_004a3ce0
     size: 616
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a3f50
     name: AudioStreamFsm5Way_004a3f50
     size: 484
