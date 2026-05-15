@@ -11691,10 +11691,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x00497470
-    name: func_00497470
+    name: AiComboDispatcherCluster_00497470
     size: 794
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00497790
     name: func_00497790
     size: 882
