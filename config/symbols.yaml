@@ -7376,10 +7376,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046c7c0
-    name: func_0046c7c0
+    name: HitStateCluster_0046c7c0
     size: 940
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046cb70
     name: InstallSelfChainedDispatch_0046cb70
     size: 259
