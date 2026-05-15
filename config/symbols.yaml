@@ -2201,10 +2201,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004255b0
-    name: func_004255b0
+    name: QuadInterpolatorV2_004255b0
     size: 633
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00425830
     name: Mul10SumSqrt_00425830
     size: 200
