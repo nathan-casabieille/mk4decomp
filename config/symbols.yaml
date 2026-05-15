@@ -10307,10 +10307,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048c570
-    name: func_0048c570
+    name: PendingMatch_0048c570
     size: 1702
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0048cc20
     name: DualConstJmpNeg1_0048cc20
     size: 25
