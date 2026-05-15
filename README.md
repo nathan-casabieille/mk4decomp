@@ -9,8 +9,7 @@ the codebase can drastically change at any time. Also note that some parts of th
 'shiftable' yet, so modifying them could be difficult at this point.
 ```
 
-A **matching decompilation** of **Mortal Kombat 4** (PC, Midway /
-Eurocom, 1998).
+A **matching decompilation** of **Mortal Kombat 4** (PC, 1998).
 
 Goal: reproduce `MK4.EXE` **byte-for-byte** from reconstructed C source,
 compiled with the original toolchain (Microsoft Visual C++ 5.0). Once
@@ -21,11 +20,11 @@ matching, the C source is the canonical representation of the game.
 ```
 $ make progress
 Functions identified    :  2824 (full call-graph reach from known set)
-matched (byte-perfect)  :  2609
+matched (byte-perfect)  :  2610
 drafted (functional)    :     0
-stub (asm-only)         :   215
+stub (asm-only)         :   214
 
-Bytes of .text covered  : 494468 / 975765 (50.7% of identified)
+Bytes of .text covered  : 495261 / 975765 (50.8% of identified)
 ```
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
@@ -97,10 +96,13 @@ cd /tmp && bchunk -w \
 
 Reverse engineering, decomp infrastructure: see git log.
 
-The engine is © 1998 Eurocom Entertainment Software / Midway. This
-project distributes ZERO original game assets - the `original/` and
-`game/` paths are git-ignored. To run the result, you provide your
-own copy of MK4.
+Mortal Kombat and all related characters, names, marks, and assets are
+trademarks of and © Warner Bros. Entertainment Inc. / Warner Bros.
+Discovery. MK4 was originally developed in 1998 by the Midway Games
+team that later became NetherRealm Studios (now part of Warner Bros.
+Games). This project distributes ZERO original game assets - the
+`original/` and `game/` paths are git-ignored. To run the result, you
+provide your own copy of MK4.
 
 ---
 

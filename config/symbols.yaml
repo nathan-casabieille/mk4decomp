@@ -9289,10 +9289,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00484150
-    name: func_00484150
+    name: ThrowAnimSetupCluster_00484150
     size: 793
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00484470
     name: Wrapper_00484470
     size: 14
