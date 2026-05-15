@@ -2360,10 +2360,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00426fa0
-    name: func_00426fa0
+    name: SetupHelperCluster_00426fa0
     size: 1005
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427390
     name: GatedScaledChainSetup_00427390
     size: 204
