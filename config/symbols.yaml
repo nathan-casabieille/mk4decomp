@@ -9480,10 +9480,11 @@ functions:
     status: matched
     file: src/engine/misc_matches2.c
   - addr: 0x004871f0
-    name: func_004871f0
+    name: StanceFsmCluster_004871f0
     size: 573
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00487430
     name: DualEntryInstallSelfChain_00487430
     size: 209
