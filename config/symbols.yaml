@@ -11612,10 +11612,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00494e20
-    name: func_00494e20
+    name: DispatchDoubleScaledCluster_00494e20
     size: 1212
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004952e0
     name: TwoEntryPhasePair_004952e0
     size: 410
