@@ -8484,10 +8484,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0047b6e0
-    name: func_0047b6e0
+    name: RoundEndCelebrationCluster_0047b6e0
     size: 534
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047b900
     name: RoundStartCluster_0047b900
     size: 494
