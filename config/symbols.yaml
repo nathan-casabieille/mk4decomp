@@ -8813,10 +8813,11 @@ functions:
     status: matched
     file: src/engine/four_const_call_lit_call_jmp.c
   - addr: 0x0047ff80
-    name: func_0047ff80
+    name: StageEventStartCluster_0047ff80
     size: 540
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004801a0
     name: PushPlayerSwapCallClamp_004801a0
     size: 146
