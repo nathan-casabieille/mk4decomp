@@ -9528,10 +9528,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00486860
-    name: func_00486860
+    name: RoundResultSlotInitTable_00486860
     size: 1317
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00486d90
     name: MStackPush3CallCascade_00486d90
     size: 234
