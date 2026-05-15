@@ -16332,10 +16332,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c9df0
-    name: func_004c9df0
+    name: PendingMatch_004c9df0
     size: 656
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca080
     name: FpExceptionFilter_004ca080
     size: 464
