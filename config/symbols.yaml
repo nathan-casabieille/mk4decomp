@@ -6313,10 +6313,11 @@ functions:
     status: matched
     file: src/game/event_queue.c
   - addr: 0x0045c8e0
-    name: func_0045c8e0
+    name: PendingMatch_0045c8e0
     size: 3478
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045d680
     name: RoundEndFsmCluster_0045d680
     size: 596
