@@ -2901,10 +2901,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00429b70
-    name: func_00429b70
+    name: ScenePostInitSequencer_00429b70
     size: 691
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00429e30
     name: TablePushAccumTailJmp_00429e30
     size: 188
