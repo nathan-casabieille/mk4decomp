@@ -12119,10 +12119,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesMM.c
   - addr: 0x0049d940
-    name: func_0049d940
+    name: SkelAnimUpdaterCluster_0049d940
     size: 673
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0049dbf0
     name: func_0049dbf0
     size: 673
