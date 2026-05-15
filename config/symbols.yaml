@@ -2411,10 +2411,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00427b60
-    name: func_00427b60
+    name: PoseChainInstallCluster_00427b60
     size: 830
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00427ea0
     name: DualTestDirtyToggle_00427ea0
     size: 54
