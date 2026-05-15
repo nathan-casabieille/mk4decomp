@@ -8788,10 +8788,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047f4e0
-    name: func_0047f4e0
+    name: ThrowGrabPoseCopyCluster_0047f4e0
     size: 592
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0047f730
     name: func_0047f730
     size: 946
