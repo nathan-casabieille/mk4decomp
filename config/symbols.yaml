@@ -5784,10 +5784,11 @@ functions:
     status: matched
     file: src/engine/scaled_load_two_call_lit.c
   - addr: 0x00451fc0
-    name: func_00451fc0
+    name: StunDownCluster_00451fc0
     size: 836
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00452310
     name: func_00452310
     size: 1066
