@@ -16565,10 +16565,11 @@ functions:
     group: crt
     status: stub
   - addr: 0x004cfc00
-    name: func_004cfc00
+    name: CrtLocaleInfoFreeAll_004cfc00
     size: 563
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cfe40
     name: func_004cfe40
     size: 758
