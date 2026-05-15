@@ -3335,10 +3335,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004308a0
-    name: func_004308a0
+    name: RoundFsmCluster_004308a0
     size: 1159
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00430d30
     name: MStackPush4DualCallAbsPop4_00430d30
     size: 289
