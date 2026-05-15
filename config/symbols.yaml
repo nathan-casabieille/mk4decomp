@@ -11714,10 +11714,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00497790
-    name: func_00497790
+    name: PostStepDispatcher_00497790
     size: 882
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00497b10
     name: CallPauseJmpThenSetChild_00497b10
     size: 63
