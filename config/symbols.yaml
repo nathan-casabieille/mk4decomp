@@ -16088,10 +16088,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca440
-    name: func_004ca440
+    name: CrtPowSpecialCases_004ca440
     size: 545
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca670
     name: FPIntegerTest_004ca670
     size: 129
