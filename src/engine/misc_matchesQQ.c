@@ -115504,3 +115504,176 @@ __declspec(naked) void EnvSpawnRehydratePass_004719f0(void)
         ret
     }
 }
+
+/* ============================================================
+ * AudioStreamFsm5Way_004a3f50 — 484b audio.
+ *
+ * 5-way state-machine for streaming/voice playback. Reads
+ * [entity*4+0x84] state, clears it, dispatches via jump table at
+ * function tail:
+ *
+ *   case 0 (L_409d): COLD INIT. push 0xffec0000, push the
+ *     `0x4d2320` per-voice tuple, call func_004a1fa0 to allocate
+ *     a voice slot, stash the result in [entity*4+0x30], then
+ *     stamp [+0x5c]:=0xa0000 and [+0x74]:=0xffffc000 on the new
+ *     slot. Install OFFSET self + state 1 + g_data_0054204c :=
+ *     0x24.
+ *
+ *   case 1 (L_3f7d): NORMAL TICK. Clear [edx*4+0x74] on the
+ *     active slot, then split on g_data_0053a430: if zero, call
+ *     func_004a3c50 (track-load) and on success transition to
+ *     state 2; otherwise jump direct to L_3fd3 and transition
+ *     to state 3.
+ *
+ *   case 2 (L_3fd3): Install OFFSET self + state 3 +
+ *     g_data_0054204c := 0x3c.
+ *
+ *   case 3 (L_3ffb): Install OFFSET self + state 4 +
+ *     g_data_0054204c := 0xf0.
+ *
+ *   case 4 (L_4023): TICK + EVENT. clear g_data_0054206c,
+ *     run func_004ac1f0 + func_004265d0; if g_data_0054356c
+ *     stays 0 fall through to func_004a2140. Otherwise install
+ *     OFFSET self + state 5 + pack `OFFSET self | (5<<24)` into
+ *     the active-pool slot, advance counter, call func_004a4f00.
+ *
+ *   default (state >= 5, L_4115): call func_004a2140 (tail).
+ *
+ * Frame: push esi/edi. Returns: void.
+ * Layout: 3-byte `lea ecx, [ecx]` align nop before the 20-byte
+ * jump table at 0x4a4120.
+ * ============================================================ */
+
+extern void func_004a3f50(void);
+extern void func_004a3c50(void);
+extern void func_004a4f00(void);
+extern void func_004ac1f0(void);
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_0054356c;
+
+__declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
+{
+    __asm {
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        xor      edi, edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        cmp      eax, 4
+        ja       L_4115
+        jmp      dword ptr [eax*4 + L_f50_jmptbl]
+    L_3f7d:
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [ecx*4 + 0x30]
+        mov      dword ptr [edx*4 + 0x74], edi
+        mov      eax, dword ptr [g_data_0053a430]
+        cmp      eax, edi
+        jne      short L_3fd3
+        call     func_004a3c50
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_411a
+        mov      dword ptr [esi + 8], OFFSET func_004a3f50
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], 0x3c
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_3fd3:
+        mov      dword ptr [esi + 8], OFFSET func_004a3f50
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], 0x3c
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_3ffb:
+        mov      dword ptr [esi + 8], OFFSET func_004a3f50
+        mov      dword ptr [esi + 0x84], 4
+        mov      dword ptr [g_data_0054204c], 0xf0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_4023:
+        mov      dword ptr [g_data_0054206c], edi
+        call     func_004ac1f0
+        call     func_004265d0
+        cmp      dword ptr [g_data_0054356c], edi
+        je       short L_4115
+        mov      dword ptr [esi + 8], OFFSET func_004a3f50
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET func_004a3f50
+        mov      dword ptr [eax*4 + 0x84], 5
+        mov      eax, dword ptr [esi + 4]
+        add      ecx, 0x5000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     func_004a4f00
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_409d:
+        push     0xffec0000
+        push     0x4d2320
+        call     func_004a1fa0
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542044]
+        add      esp, 8
+        mov      dword ptr [eax*4 + 0x30], ecx
+        mov      edx, dword ptr [g_data_00542060]
+        mov      eax, dword ptr [edx*4 + 0x30]
+        mov      dword ptr [eax*4 + 0x5c], 0xa0000
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 1
+        mov      edx, dword ptr [ecx*4 + 0x30]
+        mov      dword ptr [edx*4 + 0x74], 0xffffc000
+        mov      dword ptr [esi + 8], OFFSET func_004a3f50
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], 0x24
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      edi
+        pop      esi
+        ret
+    L_4115:
+        call     func_004a2140
+    L_411a:
+        pop      edi
+        pop      esi
+        ret
+        /* 3-byte align nop `lea ecx, [ecx]` (8d 49 00). */
+        _emit    0x8d
+        _emit    0x49
+        _emit    0x00
+    L_f50_jmptbl:
+        _emit    0x9d
+        _emit    0x40
+        _emit    0x4a
+        _emit    0x00
+        _emit    0x7d
+        _emit    0x3f
+        _emit    0x4a
+        _emit    0x00
+        _emit    0xd3
+        _emit    0x3f
+        _emit    0x4a
+        _emit    0x00
+        _emit    0xfb
+        _emit    0x3f
+        _emit    0x4a
+        _emit    0x00
+        _emit    0x23
+        _emit    0x40
+        _emit    0x4a
+        _emit    0x00
+    }
+}
