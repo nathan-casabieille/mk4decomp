@@ -118867,3 +118867,204 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         ret
     }
 }
+
+/* ============================================================
+ * StageEntityInitCluster_004216a0 — 518b game (packed: 5 helpers).
+ *
+ * Stage entity boot/finalize helpers:
+ *
+ *   1. 0x4216a0 (~117b): Entity init. Pushes
+ *      OFFSET g_data_00806000 to func_00404cc0 (transform), then
+ *      g_data_0054205c to func_00404df0 (place), stamps the
+ *      per-entity record fields (anim ptr [+0x38], frame ptr
+ *      [+0x3c]) from g_data_00542044/48, clears [+0x80] and
+ *      [+0x7c], sets state code [+0x30] := 0. Then calls
+ *      func_00481070 (post-place); on success sets
+ *      g_data_0054207c := 0x1002e and tail-jmps func_0045f650.
+ *
+ *   2. 0x421740 (~46b): Globals reset. Clears g_data_0054206c,
+ *      g_data_0053a408, g_data_00537e88. Calls func_0048fa20 +
+ *      func_00490260 + func_0048f720; on success tail-jmps
+ *      func_004314f0.
+ *
+ *   3. 0x421790 (~120b): Heavy "spawn projectile" path. Stamps
+ *      OFFSET g_data_00421870 (helper 4 entry) into
+ *      g_data_00542048 and the current frame ptr into _42044,
+ *      calls func_0049cbd0; on success sets state 0x43 + arg
+ *      -1, func_0049cc00; state 0x71, func_00406910; then
+ *      func_00490740 + func_00491500; finally pushes
+ *      &g_data_004ded68 + func_0048fd30 and tail-jmps
+ *      func_00418170.
+ *
+ *   4. 0x421830 (L_1830, ~46b): Quick transition #1. state 0x14,
+ *      arg -1, func_0049cc00 + func_00481070, tail-jmp
+ *      func_00481f30.
+ *
+ *   5. 0x421870 (L_1870, ~46b): Quick transition #2. Same as
+ *      helper 4 but tail-jmps func_00481eb0 instead.
+ *
+ * Frame: no prologue. Returns: void.
+ *
+ * Layout: 4-, 2-, 4-, 10-byte nop padding between helpers.
+ * ============================================================ */
+
+extern void func_00404cc0(void);
+extern void func_00404df0(void);
+extern void func_00406910(void);
+extern void func_00418170(void);
+extern void func_004314f0(void);
+extern void func_00481070(void);
+extern void func_00481eb0(void);
+extern void func_00481f30(void);
+extern void func_0048f720(void);
+extern void func_0048fa20(void);
+extern void func_0048fd30(void);
+extern void func_00490260(void);
+extern void func_00491500(void);
+extern void func_0049cbd0(void);
+extern void func_0049cc00(void);
+extern unsigned int g_data_004ded68;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00806000;
+
+__declspec(naked) void StageEntityInitCluster_004216a0(void)
+{
+    __asm {
+        /* H1 */
+        push     OFFSET g_data_00806000
+        call     func_00404cc0
+        mov      eax, dword ptr [g_data_0054205c]
+        add      esp, 4
+        push     eax
+        call     func_00404df0
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_data_00542044]
+        add      esp, 4
+        mov      dword ptr [ecx*4 + 0x38], edx
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      dword ptr [eax*4 + 0x3c], ecx
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x80], 0
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [eax*4 + 0x7c], 0
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, dword ptr [g_data_0054206c]
+        mov      dword ptr [ecx*4 + 0x30], edx
+        call     func_00481070
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_173b
+        mov      dword ptr [g_data_0054207c], 0x1002e
+        jmp      func_0045f650
+    L_173b:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H2 */
+        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [g_data_0053a408], 0
+        mov      dword ptr [g_data_00537e88], 0
+        call     func_0048fa20
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_178d
+        call     func_00490260
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_178d
+        call     func_0048f720
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_178d
+        jmp      func_004314f0
+    L_178d:
+        ret
+        nop
+        nop
+        /* H3 */
+        mov      eax, dword ptr [g_data_00542060]
+        mov      ecx, dword ptr [eax*4 + 0x3c]
+        mov      dword ptr [g_data_00542048], OFFSET L_1870
+        mov      dword ptr [g_data_00542044], ecx
+        call     func_0049cbd0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_182b
+        mov      dword ptr [g_data_0054206c], 0x43
+        mov      dword ptr [g_data_00542070], 0xffffffff
+        call     func_0049cc00
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_182b
+        mov      dword ptr [g_data_0054206c], 0x71
+        call     func_00406910
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_182b
+        call     func_00490740
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_182b
+        call     func_00491500
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_182b
+        push     OFFSET g_data_004ded68
+        call     func_0048fd30
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_182b
+        jmp      func_00418170
+    L_182b:
+        ret
+        nop
+        nop
+        nop
+        nop
+        /* H4 (L_1830) */
+    L_1830:
+        mov      dword ptr [g_data_0054206c], 0x14
+        mov      dword ptr [g_data_00542070], 0xffffffff
+        call     func_0049cc00
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_1865
+        call     func_00481070
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_1865
+        jmp      func_00481f30
+    L_1865:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H5 (L_1870) */
+    L_1870:
+        mov      dword ptr [g_data_0054206c], 0x14
+        mov      dword ptr [g_data_00542070], 0xffffffff
+        call     func_0049cc00
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_18a5
+        call     func_00481070
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_18a5
+        jmp      func_00481eb0
+    L_18a5:
+        ret
+    }
+}

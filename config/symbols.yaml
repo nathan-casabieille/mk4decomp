@@ -1779,10 +1779,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004216a0
-    name: func_004216a0
+    name: StageEntityInitCluster_004216a0
     size: 518
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004218b0
     name: func_004218b0
     size: 584
