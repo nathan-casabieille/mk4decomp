@@ -4892,10 +4892,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043fcf0
-    name: func_0043fcf0
+    name: EntitySetupCountdownFsm_0043fcf0
     size: 882
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00440070
     name: func_00440070
     size: 954
