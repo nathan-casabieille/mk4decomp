@@ -9661,10 +9661,11 @@ functions:
     group: game
     status: stub
   - addr: 0x00489840
-    name: func_00489840
+    name: GeoTransformDispatchAndApply_00489840
     size: 491
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00489a30
     name: func_00489a30
     size: 572

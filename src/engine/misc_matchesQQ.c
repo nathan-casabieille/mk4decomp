@@ -116005,3 +116005,172 @@ __declspec(naked) void SpawnTrioInitCluster_00458440(void)
         jmp      func_00458630
     }
 }
+
+/* ============================================================
+ * GeoTransformDispatchAndApply_00489840 — 491b game (packed: 2 helpers).
+ *
+ * Two packed helpers for an XYZ-component "carry/wrap" cluster
+ * used during geometric transforms:
+ *
+ *   1. 0x489840 (~373b): Dispatches based on a 4-way state
+ *      (g_data_0052d74c > 0 contributes +2, g_data_00538068 >= 0
+ *      contributes +1) plus g_data_0054200c offset, jumping
+ *      through a table at [computed_offset*4]. The displayed
+ *      case-body applies func_00404af0(0xccc, value, scale) for
+ *      4 component pairs ([entity_a*4+0x54], [entity_a*4+0x5c],
+ *      [entity_b*4+0x54], [entity_b*4+0x5c]) using scales loaded
+ *      from g_data_00535e70/74/78/7c. The accumulated result of
+ *      each call is added back into the original slot.
+ *
+ *   2. 0x4899e0 (~33b): Swap helper. Swaps the (a, b) pair across
+ *      g_data_00542048<->g_data_0054204c, and the snapshot
+ *      values (g_data_00542080/84) <-> the canonical
+ *      g_data_00542080/84 readback, then tail-jmps func_00489a30.
+ *
+ * Frame: no prologue. Returns: void.
+ *
+ * Layout: 12-byte nop pad before the case body, 9-byte nop pad
+ * between helpers.
+ * ============================================================ */
+
+extern void func_00404af0(void);
+extern void func_00489a30(void);
+extern unsigned int g_data_0052d74c;
+extern unsigned int g_data_00535e70;
+extern unsigned int g_data_00535e74;
+extern unsigned int g_data_00535e78;
+extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00538068;
+extern unsigned int g_data_0054200c;
+
+__declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
+{
+    __asm {
+        /* H1 */
+        mov      ecx, dword ptr [g_data_00535d04]
+        mov      eax, dword ptr [g_data_0053a774]
+        mov      dword ptr [g_data_00542084], ecx
+        mov      ecx, dword ptr [g_data_0052d74c]
+        mov      dword ptr [g_data_00542080], eax
+        xor      eax, eax
+        test     ecx, ecx
+        mov      dword ptr [g_data_0054206c], eax
+        jle      short L_9871
+        mov      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+    L_9871:
+        mov      ecx, dword ptr [g_data_00538068]
+        test     ecx, ecx
+        mov      dword ptr [g_data_00542070], ecx
+        je       short L_9889
+        jl       short L_9889
+        inc      eax
+        mov      dword ptr [g_data_0054206c], eax
+    L_9889:
+        mov      edx, dword ptr [g_data_0054200c]
+        add      eax, edx
+        mov      dword ptr [g_data_0054204c], eax
+        mov      eax, dword ptr [eax*4]
+        mov      dword ptr [g_data_0054204c], eax
+        jmp      eax
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H1 case body */
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_00542074], 0xccc
+        mov      ecx, dword ptr [eax*4 + 0x54]
+        mov      eax, dword ptr [g_data_00535e70]
+        push     eax
+        push     0xccc
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542070], eax
+        call     func_00404af0
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_data_00542044]
+        add      ecx, eax
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [edx*4 + 0x54], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_data_00542074]
+        add      esp, 8
+        mov      ecx, dword ptr [eax*4 + 0x5c]
+        mov      eax, dword ptr [g_data_00535e74]
+        push     eax
+        push     edx
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542070], eax
+        call     func_00404af0
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542070], eax
+        add      ecx, eax
+        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_0054206c], ecx
+        add      esp, 8
+        mov      dword ptr [eax*4 + 0x5c], ecx
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_data_00535e78]
+        mov      edx, dword ptr [ecx*4 + 0x54]
+        mov      dword ptr [g_data_00542070], eax
+        push     eax
+        mov      eax, dword ptr [g_data_00542074]
+        push     eax
+        mov      dword ptr [g_data_0054206c], edx
+        call     func_00404af0
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      edx, dword ptr [g_data_00542048]
+        add      ecx, eax
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [edx*4 + 0x54], ecx
+        mov      eax, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_data_00542074]
+        add      esp, 8
+        mov      ecx, dword ptr [eax*4 + 0x5c]
+        mov      eax, dword ptr [g_data_00535e7c]
+        push     eax
+        push     edx
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542070], eax
+        call     func_00404af0
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_data_00542070], eax
+        add      ecx, eax
+        mov      eax, dword ptr [g_data_00542048]
+        mov      dword ptr [g_data_0054206c], ecx
+        add      esp, 8
+        mov      dword ptr [eax*4 + 0x5c], ecx
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* H2: swap + tail-jmp */
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_data_00542084]
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00542048], eax
+        mov      eax, dword ptr [g_data_00542080]
+        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542080], edx
+        mov      dword ptr [g_data_00542084], eax
+        jmp      func_00489a30
+    }
+}
