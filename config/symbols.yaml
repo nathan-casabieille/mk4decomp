@@ -3171,10 +3171,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042eaf0
-    name: func_0042eaf0
+    name: DeathAnimCluster_0042eaf0
     size: 668
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042ed90
     name: Cmp7CondStateUpdate_0042ed90
     size: 125
