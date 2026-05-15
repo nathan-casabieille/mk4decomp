@@ -1577,10 +1577,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041d770
-    name: func_0041d770
+    name: PendingMatch_0041d770
     size: 1153
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041dc00
     name: func_0041dc00
     size: 5547
