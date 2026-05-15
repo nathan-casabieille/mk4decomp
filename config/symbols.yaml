@@ -6225,10 +6225,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0045a5c0
-    name: func_0045a5c0
+    name: PendingMatch_0045a5c0
     size: 3668
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045b420
     name: MoveListCursorCluster_0045b420
     size: 501
