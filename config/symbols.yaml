@@ -5851,10 +5851,11 @@ functions:
     status: matched
     file: src/engine/guarded_sequels.c
   - addr: 0x004537a0
-    name: func_004537a0
+    name: PoseCopyIdleCluster_004537a0
     size: 560
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004539d0
     name: func_004539d0
     size: 1184
