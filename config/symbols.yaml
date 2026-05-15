@@ -7180,10 +7180,11 @@ functions:
     status: matched
     file: src/engine/scaled_addr_init.c
   - addr: 0x00467800
-    name: func_00467800
+    name: IntroComboFsmCluster_00467800
     size: 1033
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00467c10
     name: GuardedSeq_00467c10
     size: 20
