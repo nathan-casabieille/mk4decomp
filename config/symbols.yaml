@@ -4808,10 +4808,11 @@ functions:
     group: game
     status: stub
   - addr: 0x0043dea0
-    name: func_0043dea0
+    name: SetupBoneAnimFsm_0043dea0
     size: 967
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043e270
     name: DualPackedStoreCallSubBack_0043e270
     size: 86
