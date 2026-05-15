@@ -117642,3 +117642,154 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         ret
     }
 }
+
+/* ============================================================
+ * IntroSequencePipeline_0044cd50 — 506b game.
+ *
+ * Long sequential pipeline that walks through a fight intro
+ * "establish shot" sequence. Each step calls a helper, checks
+ * g_data_00541e6c (abort) and bit 2 of g_data_0054208c (pause)
+ * after each, bailing on either:
+ *   1. func_0044d060: pre-setup.
+ *   2. Tag the active intro slot [..*4+0x1c] := 1, run
+ *      func_0044cf50.
+ *   3. State 0x10 → func_0044d0c0; tag slot += {3}, run
+ *      func_0044cf80.
+ *   4. func_0044d230 then state 0xe → func_0044d0c0.
+ *   5. func_0044d1e0 + another func_0044d230.
+ *   6. Snapshot intro-slot into g_data_00542048, call
+ *      func_00405630.
+ *   7. Tag slot := 2, func_0044cfb0 then func_0044d230.
+ *   8. State 0xc → func_0044d0c0 + func_0044d1e0 +
+ *      func_0044d230.
+ *   9. Finalize: g_data_00542044 := slot, g_data_0054205c :=
+ *      slot, call func_004089c0.
+ *
+ * Frame: push ebx. Returns: void.
+ *
+ * Constant register usage: bl=4 (pause-flag mask), pre-loaded
+ * once and reused across all bit-test branches.
+ * ============================================================ */
+
+extern void func_00405630(void);
+extern void func_004089c0(void);
+extern void func_0044cf50(void);
+extern void func_0044cf80(void);
+extern void func_0044cfb0(void);
+extern void func_0044d060(void);
+extern void func_0044d0c0(void);
+extern void func_0044d1e0(void);
+extern void func_0044d230(void);
+
+__declspec(naked) void IntroSequencePipeline_0044cd50(void)
+{
+    __asm {
+        push     ebx
+        call     func_0044d060
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_cf48
+        mov      al, byte ptr [g_data_0054208c]
+        mov      bl, 4
+        test     al, bl
+        jne      L_cf48
+        mov      eax, dword ptr [g_data_00542050]
+        mov      ecx, 1
+        mov      eax, dword ptr [eax*4 + 0x18]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4 + 0x1c], ecx
+        call     func_0044cf50
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_cf48
+        mov      dword ptr [g_data_0054206c], 0x10
+        call     func_0044d0c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_cf48
+        test     byte ptr [g_data_0054208c], bl
+        jne      L_cf48
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, 3
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x1c], eax
+        call     func_0044cf80
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_cf48
+        mov      edx, dword ptr [g_data_00542050]
+        mov      eax, dword ptr [edx*4 + 0x18]
+        mov      dword ptr [g_data_00542048], eax
+        call     func_0044d230
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        mov      ecx, dword ptr [g_data_00542050]
+        mov      eax, dword ptr [g_data_0054204c]
+        mov      edx, dword ptr [ecx*4 + 0x18]
+        mov      dword ptr [g_data_0054206c], 0xe
+        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_data_00542054], eax
+        call     func_0044d0c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        test     byte ptr [g_data_0054208c], bl
+        jne      short L_cf48
+        call     func_0044d1e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        call     func_0044d230
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        mov      ecx, dword ptr [g_data_00542044]
+        mov      dword ptr [g_data_00542048], ecx
+        call     func_00405630
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        test     byte ptr [g_data_0054208c], bl
+        jne      short L_cf48
+        mov      edx, dword ptr [g_data_00542044]
+        mov      eax, 2
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [edx*4 + 0x1c], eax
+        call     func_0044cfb0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        call     func_0044d230
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_data_0054204c]
+        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_data_0054206c], 0xc
+        mov      dword ptr [g_data_00542054], ecx
+        call     func_0044d0c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        test     byte ptr [g_data_0054208c], bl
+        jne      short L_cf48
+        call     func_0044d1e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        call     func_0044d230
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_cf48
+        mov      eax, dword ptr [g_data_00542050]
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_data_0054205c], eax
+        call     func_004089c0
+    L_cf48:
+        pop      ebx
+        ret
+    }
+}

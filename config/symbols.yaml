@@ -5444,10 +5444,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cd50
-    name: func_0044cd50
+    name: IntroSequencePipeline_0044cd50
     size: 506
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044cf50
     name: MStackPushTyped_0044cf50
     size: 39
