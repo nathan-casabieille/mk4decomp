@@ -6453,10 +6453,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0045e640
-    name: func_0045e640
+    name: PendingMatch_0045e640
     size: 1454
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0045ebf0
     name: SetJmp_0045ebf0
     size: 15
