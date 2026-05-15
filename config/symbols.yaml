@@ -4580,10 +4580,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a080
-    name: func_0043a080
+    name: RoundReadyFsmCluster_0043a080
     size: 1204
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0043a540
     name: Thunk_0043a540
     size: 5
