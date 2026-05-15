@@ -5036,10 +5036,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00442f90
-    name: func_00442f90
+    name: CameraBounceOverflow_00442f90
     size: 590
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004431e0
     name: MStackPush3CallChainBit2_004431e0
     size: 316
