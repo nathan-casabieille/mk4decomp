@@ -5336,10 +5336,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesNN.c
   - addr: 0x00446c50
-    name: func_00446c50
+    name: BossPunchCluster_00446c50
     size: 940
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00447000
     name: func_00447000
     size: 2184
