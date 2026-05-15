@@ -5112,10 +5112,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00443d20
-    name: func_00443d20
+    name: PendingMatch_00443d20
     size: 1633
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00444390
     name: EndingScreenFsmCluster_00444390
     size: 1226
