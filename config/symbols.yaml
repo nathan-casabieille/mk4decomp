@@ -8009,10 +8009,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00474630
-    name: func_00474630
+    name: NodeWalkPoseUpdate_00474630
     size: 874
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004749a0
     name: MStackVecSetupScopedRun_004749a0
     size: 360
