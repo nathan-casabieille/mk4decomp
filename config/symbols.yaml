@@ -12898,10 +12898,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a3400
-    name: func_004a3400
+    name: PendingMatch_004a3400
     size: 1228
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a38d0
     name: func_004a38d0
     size: 892
