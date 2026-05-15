@@ -5582,10 +5582,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044d7a0
-    name: func_0044d7a0
+    name: PendingMatch_0044d7a0
     size: 1376
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044dd00
     name: GuardedDualScaledChainCopy_0044dd00
     size: 119
