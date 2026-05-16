@@ -3140,10 +3140,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042d240
-    name: func_0042d240
+    name: PendingMatch_0042d240
     size: 3856
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042e150
     name: SequenceLoopFalloutCalls_0042e150
     size: 122
