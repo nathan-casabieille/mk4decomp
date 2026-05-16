@@ -1641,24 +1641,14 @@ __declspec(naked) void InputPollFlagBitsHalf_004a1b50(void) {
  */
 extern unsigned int g_data_0054343c;
 extern void MStackPush2ChainLLInsert_00406790(void);
-__declspec(naked) void PushPopScaledInit343c_004aa940(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_data_0054343c]
-        mov     dword ptr [g_scaledInit_00542044], edx
-        call    MStackPush2ChainLLInsert_00406790
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_0054343c], 0
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopScaledInit343c_004aa940(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_scaledInit_00542044 = g_data_0054343c;
+    MStackPush2ChainLLInsert_00406790();
+    g_data_0054343c = 0;
+    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x0041f780 (77b)
