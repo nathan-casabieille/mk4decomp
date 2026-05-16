@@ -31,26 +31,20 @@ extern void func_0048ec10(void);
 extern void func_00439183(void);
 extern void func_004390e9(void);
 extern void func_004390cf(void);
-__declspec(naked) void CmpccccCallPauseDirtyJmp_004390b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535ddc]
-        cmp     eax, 0xcccc
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_00439183
-        call    func_0048ec10
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     func_004390cf
-        jmp     func_004390e9
-        ret
+void CmpccccCallPauseDirtyJmp_004390b0(void) {
+    unsigned int v = g_state_00535ddc;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 0xcccc) {
+        func_00439183();
+        return;
     }
+    func_0048ec10();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) != 0) {
+        func_004390cf();
+        return;
+    }
+    func_004390e9();
 }
 
 /* @addr 0x004396c0 (51b)
