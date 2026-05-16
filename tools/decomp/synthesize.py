@@ -171,6 +171,7 @@ def main():
         scaffold = bytearray(f.read())
     ib, pe_sections = parse_pe_sections(scaffold)
     text_sec = next(s for s in pe_sections if s['name'] == '.text')
+    rdata_sec = next((s for s in pe_sections if s['name'] == '.rdata'), None)
 
     print('Loading symbols.yaml + headers + sites...')
     with open(SYMS) as f: ydat = yaml.safe_load(f)
@@ -183,6 +184,7 @@ def main():
     # Track which bytes in .text are produced by us (vs left as scaffold).
     # Initialize to all-False; flip to True as functions/data blobs get placed.
     text_synth = bytearray(text_sec['vsize'])
+    rdata_synth = bytearray(rdata_sec['vsize']) if rdata_sec else None
 
     print('Walking OBJs...')
     obj_paths = []
@@ -394,6 +396,57 @@ def main():
             pad_scaffold += 1
     text_uncov = sum(1 for v in text_synth if v == 0)
     print(f'.text synthesis: {sum(text_synth)}/{text_sec["vsize"]} covered ({pad_synth} via 0x90-fill, {pad_scaffold} bytes still scaffold)')
+
+    # .rdata synthesis pass: walk every OBJ .rdata/.data section and place any named
+    # symbol whose clean name resolves to a VA inside the orig .rdata range. Sizes are
+    # estimated as (next-sym-in-section).value - this.value, falling back to
+    # (section_len - value) for the last sym in a section.
+    if rdata_sec is not None:
+        rd_start = rdata_sec['vaddr']
+        rd_end = rd_start + rdata_sec['vsize']
+        rd_placed = 0
+        rd_mismatch = 0
+        for obj_path in obj_paths:
+            with open(obj_path,'rb') as f: obj_data = f.read()
+            syms, sections = parse_obj_full(obj_data)
+            for sym in syms:
+                if sym is None or sym['sec'] <= 0 or sym['sec'] > len(sections): continue
+                sec = sections[sym['sec']-1]
+                if sec['name'] not in ('.rdata', '.data'): continue
+                n = sym['name']
+                clean = n[1:] if n.startswith('_') else n
+                if clean not in name_to_addr: continue
+                va = name_to_addr[clean]
+                if not (rd_start <= va < rd_end): continue
+                # Estimate size: next sym in same section, or end of section content
+                next_off = len(sec['content'])
+                for s2 in syms:
+                    if s2 is None or s2['sec'] != sym['sec']: continue
+                    if s2['value'] > sym['value'] and s2['value'] < next_off:
+                        next_off = s2['value']
+                size = next_off - sym['value']
+                if size <= 0: continue
+                # Clamp to .rdata bounds
+                if va + size > rd_end:
+                    size = rd_end - va
+                # Place bytes (no relocs in .rdata for data.obj-style scalars; we trust the literal content)
+                bytes_src = sec['content'][sym['value']:sym['value']+size]
+                file_off = (va - rdata_sec['vaddr']) + rdata_sec['raddr']
+                # Compare to orig and write
+                ok = True
+                for i, b in enumerate(bytes_src):
+                    if scaffold[file_off + i] != b:
+                        ok = False
+                # Mark synth coverage (don't overwrite scaffold if mismatch, just track)
+                if ok:
+                    rd_off = va - rd_start
+                    for i in range(size):
+                        rdata_synth[rd_off + i] = 1
+                    rd_placed += 1
+                else:
+                    rd_mismatch += 1
+        print(f'.rdata synthesis: {sum(rdata_synth)}/{rdata_sec["vsize"]} covered '
+              f'({rd_placed} syms placed, {rd_mismatch} content-mismatched and left as scaffold)')
 
     # Save output
     with open(OUT_EXE, 'wb') as f:
