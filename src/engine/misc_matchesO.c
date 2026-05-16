@@ -244,26 +244,15 @@ __declspec(naked) void TripleStubPushCall_00438ea0(void) {
  */
 extern void func_0048fc10(void);
 extern void func_00460941(void);
-__declspec(naked) void CallPauseTriCmpJmp_00460910(void) {
-    __asm {
-        call    func_0048fc10
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1fh
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        cmp     eax, 0x1010
-        _emit   74h
-        _emit   13h
-        cmp     eax, 0x1011
-        _emit   74h
-        _emit   0ch
-        cmp     eax, 0x0400
-        _emit   74h
-        _emit   05h
-        jmp     func_00460941
-        ret
-    }
+void CallPauseTriCmpJmp_00460910(void) {
+    unsigned int v;
+    func_0048fc10();
+    if (g_framePauseFlag != 0) return;
+    v = g_eventQueueCurrent;
+    if (v == 0x1010) return;
+    if (v == 0x1011) return;
+    if (v == 0x0400) return;
+    func_00460941();
 }
 
 /* @addr 0x00461220 (50b)
