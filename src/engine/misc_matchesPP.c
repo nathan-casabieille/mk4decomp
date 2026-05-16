@@ -2083,6 +2083,11 @@ void CmpEqWalkSetCallToggleDirty_00439c60(void) {
  *   each entry (total 79 = 5*15 + 4 nops).
  */
 extern void OrDualStore_0048e4b0(void);
+/* This is a packed-helpers block under one symbol: 5 mini-entries
+ * at +0x00, +0x10, +0x20, +0x30, +0x40, each `set walk = N; jmp T`
+ * separated by a `nop`. Only the +0x00 entry is reached via the
+ * function symbol; the others must be called from elsewhere via
+ * direct addresses. Kept as naked to preserve the mid-fn entries. */
 __declspec(naked) void FiveSetWalkJmp_00461360(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 4
@@ -2260,28 +2265,23 @@ __declspec(naked) void GuardedSelfRefSet_0048d070(void) {
  */
 extern unsigned int g_data_00537f48;
 extern void ThrowPoseCallbackSetup_00491f10(void);
-__declspec(naked) void RemapWalkAndJmp_00491e70(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_00537f48]
-        cmp     eax, 0x0f
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, 6
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x10
-        _emit   75h
-        _emit   0ah
-        mov     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x11
-        _emit   75h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 7
-        mov     dword ptr [g_eventQueueCurrent], 1
-        mov     dword ptr [g_eventQueueWorkType], 0xffff0000
-        jmp     ThrowPoseCallbackSetup_00491f10
+void RemapWalkAndJmp_00491e70(void) {
+    unsigned int v = g_data_00537f48;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0x0f) {
+        v = 6;
+        g_walkCallback = (void (*)(void))v;
     }
+    if (v == 0x10) {
+        v = 2;
+        g_walkCallback = (void (*)(void))v;
+    }
+    if (v == 0x11) {
+        g_walkCallback = (void (*)(void))7;
+    }
+    g_eventQueueCurrent = 1;
+    g_eventQueueWorkType = 0xffff0000;
+    ThrowPoseCallbackSetup_00491f10();
 }
 
 /* @addr 0x00491ec0 (80b)
@@ -2289,28 +2289,23 @@ __declspec(naked) void RemapWalkAndJmp_00491e70(void) {
  *   eventQueueCurrent = 0 and eventQueueWorkType = 0x10000.
  */
 extern unsigned int g_data_005380e0;
-__declspec(naked) void RemapWalkAndJmp_00491ec0(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_005380e0]
-        cmp     eax, 0x0f
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, 6
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x10
-        _emit   75h
-        _emit   0ah
-        mov     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x11
-        _emit   75h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 7
-        mov     dword ptr [g_eventQueueCurrent], 0
-        mov     dword ptr [g_eventQueueWorkType], 0x10000
-        jmp     ThrowPoseCallbackSetup_00491f10
+void RemapWalkAndJmp_00491ec0(void) {
+    unsigned int v = g_data_005380e0;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0x0f) {
+        v = 6;
+        g_walkCallback = (void (*)(void))v;
     }
+    if (v == 0x10) {
+        v = 2;
+        g_walkCallback = (void (*)(void))v;
+    }
+    if (v == 0x11) {
+        g_walkCallback = (void (*)(void))7;
+    }
+    g_eventQueueCurrent = 0;
+    g_eventQueueWorkType = 0x10000;
+    ThrowPoseCallbackSetup_00491f10();
 }
 
 /* @addr 0x004a7d40 (80b)
