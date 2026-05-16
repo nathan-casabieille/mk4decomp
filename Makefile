@@ -34,10 +34,16 @@ LINK := tools/decomp/link.sh
 CFLAGS_MATCHING := /nologo /MT /O2 /W3 /Iinclude
 
 # Linker flags. Subsystem 4.0 = Win95/NT 4.0 (matches MK4).
-# /ENTRY:_entry uses our hand-coded CRT entry at 0x004c6cb0 (matches orig).
+# /ENTRY:entry uses our hand-coded CRT entry at 0x004c6cb0 (matches orig).
 # /NODEFAULTLIB:LIBC.LIB disables LIBC (we use LIBCMT only).
+# /BASE:0x00400000 places .text at orig VA.
+# /ALIGN:0x1000 page-align sections (orig uses 0x1000).
+# /ORDER:@order.txt lists every function in the order it appears in orig .text.
 LDFLAGS_MATCHING := /nologo /SUBSYSTEM:WINDOWS,4.0 /MACHINE:IX86 \
                     /ENTRY:entry /NODEFAULTLIB:LIBC.LIB \
+                    /BASE:0x00400000 /ALIGN:0x1000 \
+                    /OPT:NOREF \
+                    /ORDER:@order.txt \
                     /OUT:$(MATCH_EXE)
 
 # Libraries linked by MK4.EXE (see PE imports).
