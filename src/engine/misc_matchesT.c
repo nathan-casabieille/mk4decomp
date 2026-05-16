@@ -273,24 +273,16 @@ __declspec(naked) void DualCallPauseJmpDual_00439190(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void ScaledChainSignDirtyToggle_00439680(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0x70]
-        mov     dword ptr [g_walkCallback], eax
-        test    eax, eax
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   7dh
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void ScaledChainSignDirtyToggle_00439680(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4 + 0x70);
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v < 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00445e80 (54b)
