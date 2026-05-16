@@ -126,21 +126,15 @@ __declspec(naked) void Cmp30000And18000_004362b0(void) {
  */
 extern void CallPauseInc_004ab670(void);
 extern void func_004370f4(void);
-__declspec(naked) void Set14CallAddJmp_00436ff0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x14
-        call    CallPauseInc_004ab670
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_walkCallback]
-        add     eax, 8
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_eventQueueChild], eax
-        jmp     func_004370f4
-        ret
-    }
+void Set14CallAddJmp_00436ff0(void) {
+    unsigned int v;
+    g_walkCallback = (void (*)(void))0x14;
+    CallPauseInc_004ab670();
+    if (g_framePauseFlag != 0) return;
+    v = (unsigned int)g_walkCallback + 8;
+    g_walkCallback = (void (*)(void))v;
+    g_eventQueueChild = v;
+    func_004370f4();
 }
 
 /* @addr 0x004389b0 (48b)
