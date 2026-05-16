@@ -311,23 +311,14 @@ extern unsigned int g_acc_00542078;
 extern void func_00408ce0(void);
 extern void func_00478f90(void);
 extern void func_00408a20(void);
-__declspec(naked) void TwoCallPauseSetJmp_00445e80(void) {
-    __asm {
-        call    func_00408ce0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        call    func_00478f90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   19h
-        mov     dword ptr [g_walkCallback], 3
-        mov     dword ptr [g_acc_00542078], 2
-        jmp     func_00408a20
-        ret
-    }
+void TwoCallPauseSetJmp_00445e80(void) {
+    func_00408ce0();
+    if (g_framePauseFlag != 0) return;
+    func_00478f90();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))3;
+    g_acc_00542078 = 2;
+    func_00408a20();
 }
 
 /* @addr 0x00446280 (56b)

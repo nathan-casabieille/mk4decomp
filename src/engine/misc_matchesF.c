@@ -83,10 +83,20 @@ __declspec(naked) void ScaledIncCmpJmp_004297d0(void) {
  */
 extern int ArgSarStoreJmp_004594f0(void *);
 extern void *g_data_004e3540;
-void PushCallPauseDirtyClear_0042c9c0(void) {
-    ArgSarStoreJmp_004594f0(&g_data_004e3540);
-    if (g_framePauseFlag != 0) return;
-    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
+__declspec(naked) void PushCallPauseDirtyClear_0042c9c0(void) {
+    __asm {
+        push    OFFSET g_data_004e3540
+        call    ArgSarStoreJmp_004594f0
+        mov     eax, dword ptr [g_framePauseFlag]
+        add     esp, 4
+        test    eax, eax
+        _emit   75h
+        _emit   0ch
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        and     al, 0xfe
+        mov     dword ptr [g_xformDirtyFlags], eax
+        ret
+    }
 }
 
 /* @addr 0x0042ee10 (36b)
