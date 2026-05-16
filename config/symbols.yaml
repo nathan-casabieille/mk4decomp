@@ -3474,7 +3474,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431d50
-    name: TimeBudgetSubCallChain_00431d50
+    name: WalkCbSubMul10_00431d50
     size: 74
     group: game
     status: matched
@@ -16746,7 +16746,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cdd20
-    name: IoOperationDispatch_004cdd20
+    name: Crt_fpieee_flt_004cdd20
     size: 288
     group: crt
     status: matched

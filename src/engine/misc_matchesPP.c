@@ -1267,7 +1267,7 @@ __declspec(naked) void CRTHandleLookup_004cd260(void) {
  */
 extern void MStackMagicModMul10_00424410(void);
 extern void ModMagicMul10Index_00424350(void);
-__declspec(naked) void TimeBudgetSubCallChain_00431d50(void) {
+__declspec(naked) void WalkCbSubMul10_00431d50(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x0001921f
