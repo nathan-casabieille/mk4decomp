@@ -326,21 +326,17 @@ __declspec(naked) void DualScaledLitInitJmp_00464800(void) {
  *   ret
  */
 extern void func_00470342(void);
-__declspec(naked) void ScaledChainNegStore_00470310(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0x34]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0ch
-        neg     eax
-        mov     dword ptr [g_walkCallback], eax
-        jmp     func_00470342
-        ret
-    }
+void ScaledChainNegStore_00470310(void) {
+    unsigned int s;
+    unsigned int v;
+    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    g_scaledInit_00542044 = s;
+    v = *(unsigned int *)(s * 4 + 0x34);
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) return;
+    v = (unsigned int)-(int)v;
+    g_walkCallback = (void (*)(void))v;
+    func_00470342();
 }
 
 /* @addr 0x00470500 (48b)
