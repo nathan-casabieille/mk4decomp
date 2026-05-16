@@ -1780,10 +1780,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesU.c
   - addr: 0x00420300
-    name: func_00420300
+    name: PendingMatch_00420300
     size: 4216
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00421380
     name: Phase3InstallSelfChain_00421380
     size: 378
