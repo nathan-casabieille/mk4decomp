@@ -13044,7 +13044,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a48e0
-    name: PendingMatch_004a48e0
+    name: InstallSelfStateMachine6_004a48e0
     size: 803
     group: audio
     status: matched
@@ -15930,7 +15930,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c61c0
-    name: PendingMatch_004c61c0
+    name: CrtMemMove_004c61c0
     size: 832
     group: boot
     status: matched
@@ -16152,7 +16152,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8040
-    name: PendingMatch_004c8040
+    name: CrtWoutputFormatInteger_004c8040
     size: 614
     group: crt
     status: matched
@@ -16488,7 +16488,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cbcc0
-    name: PendingMatch_004cbcc0
+    name: CrtParseCommandLine_004cbcc0
     size: 870
     group: crt
     status: matched
@@ -16890,7 +16890,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf880
-    name: PendingMatch_004cf880
+    name: CrtInitLocaleInfo_004cf880
     size: 881
     group: crt
     status: matched

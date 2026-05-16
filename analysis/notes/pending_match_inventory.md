@@ -7,41 +7,8 @@ static breakdown: top callees, globals touched, structural traits
 as a working list for contributors who want to give these functions
 real semantic names.
 
-Total: 114 functions, sorted by size.
+Total: 109 functions, sorted by size.
 
-
-## PendingMatch_004c8040 @ 0x4c8040 (614b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: SEH (fs:[0]), x87 FPU, cond jmps: 4
-- top callees: `PaddedLoopFunc_004c8300`×3, `PaddedLoopByteFunc_004c8340`×3, `CritSecWrap350_004cc2e0`, `extern_-0x75b33191`
-- top globals: `0x4c7b20`
-
-## PendingMatch_004a48e0 @ 0x4a48e0 (803b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: switch-via-jumptable, cond jmps: 6
-- top callees: `PushPopScaledInit343c_004aa940`×3, `SceneFrameStepWithInputs_004be250`×3, `AudioInstallSelfStatePush_004aa8a0`×2, `MStackPush2ChainLLInsert_00406790`, `FiveTableWalkInit_00403c90`, `BootInitGuardedCallChain_004265d0`, `LoadGeoAsset_Default`, `DispatcherComplex260_00407400`
-- top globals: `g_currentNodeIdx`×7, `0x542060`×4, `0x54206c`, `0x543734`, `0x543738`, `0x54373c`, `0x543740`
-
-## PendingMatch_004c61c0 @ 0x4c61c0 (832b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 2
-- top callees: `extern_-0x172458ab`
-
-## PendingMatch_004cbcc0 @ 0x4cbcc0 (870b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, rep movsb, IAT calls: 6, cond jmps: 9
-- top callees: `LoadArgPushCall_004c54b0`×2, `extern_0xb6bfbe`, `FreeImpl_004c55f0`, `extern_-0x7aae7b91`
-- top globals: `0xf9fbf8`×2
-
-## PendingMatch_004cf880 @ 0x4cf880 (881b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: SEH (fs:[0]), x87 FPU
-- top callees: `PendingMatch_004d0bc0`×42, `CrtTimeFmtPrefsCluster_004cfe40`
 
 ## PendingMatch_004a38d0 @ 0x4a38d0 (892b)
 
