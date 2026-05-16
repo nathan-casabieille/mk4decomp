@@ -23,19 +23,15 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_0053a51c;
 extern void func_00439ba1(void);
 extern void func_00439ba6(void);
-__declspec(naked) void TwoConditionalJmp_00439b80(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a51c]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00439ba1
-        cmp     eax, 1
-        _emit   75h
-        _emit   05h
-        jmp     func_00439ba6
-        ret
+void TwoConditionalJmp_00439b80(void) {
+    unsigned int v = g_state_0053a51c;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) {
+        func_00439ba1();
+        return;
+    }
+    if (v == 1) {
+        func_00439ba6();
     }
 }
 
@@ -50,15 +46,13 @@ __declspec(naked) void TwoConditionalJmp_00439b80(void) {
 extern unsigned int g_state_00535ddc;
 extern void func_00408f80(void);
 extern void func_0043bd5b(void);
-__declspec(naked) void Cmp200Jmp_0043bd30(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535ddc]
-        cmp     eax, 0x20000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7dh
-        _emit   05h
-        jmp     func_00408f80
-        jmp     func_0043bd5b
+void Cmp200Jmp_0043bd30(void) {
+    unsigned int v = g_state_00535ddc;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v < 0x20000) {
+        func_00408f80();
+    } else {
+        func_0043bd5b();
     }
 }
 
@@ -111,17 +105,12 @@ void TestStoreConstJmp_004933b0(void) {
  */
 extern unsigned int g_state_00541dc4;
 extern void func_00493edd(void);
-__declspec(naked) void LoadCmpAddrJmp_00493ed0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, 0x004f1e20
-        sar     eax, 2
-        cmp     ecx, eax
-        mov     dword ptr [g_state_00541dc4], eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00493edd
-        ret
+extern unsigned int g_table_004f1e20;
+void LoadCmpAddrJmp_00493ed0(void) {
+    unsigned int packed = (unsigned int)((int)&g_table_004f1e20 >> 2);
+    g_state_00541dc4 = packed;
+    if ((unsigned int)g_walkCallback == packed) {
+        func_00493edd();
     }
 }
 

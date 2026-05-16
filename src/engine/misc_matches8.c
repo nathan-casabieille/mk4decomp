@@ -38,28 +38,18 @@ void Push71_Push48caa0_00421c40(void) {
 extern int func_0049cb40_b(int, void *);
 extern void *g_data_00463220;
 extern void func_0046308c(void);
-__declspec(naked) void Push0_Push463220_Jmp_00463070(void) {
-    __asm {
-        push    0
-        push    OFFSET g_data_00463220
-        call    func_0049cb40_b
-        add     esp, 8
-        jmp     func_0046308c
-    }
+void Push0_Push463220_Jmp_00463070(void) {
+    func_0049cb40_b((int)&g_data_00463220, 0);
+    func_0046308c();
 }
 
 /* @addr 0x00489220 (23b): push 0x267; push DATA; call F; add esp,8; jmp -0xc7 */
 extern int func_0049cb40_c(int, void *);
 extern void *g_data_0044eb60;
 extern void func_0048915f(void);
-__declspec(naked) void Push267_Push44eb60_Jmp_00489220(void) {
-    __asm {
-        push    0x0267
-        push    OFFSET g_data_0044eb60
-        call    func_0049cb40_c
-        add     esp, 8
-        jmp     func_0048915f
-    }
+void Push267_Push44eb60_Jmp_00489220(void) {
+    func_0049cb40_c((int)&g_data_0044eb60, 0x267);
+    func_0048915f();
 }
 
 /* @addr 0x00478120 (25b): two arg+call pairs then jmp
@@ -73,16 +63,10 @@ __declspec(naked) void Push267_Push44eb60_Jmp_00489220(void) {
  */
 extern int SaveCallRestore_004049d0(int);
 extern void func_00478131(void);
-__declspec(naked) void TwoCallJmp_00478120(void) {
-    __asm {
-        push    0x2b
-        call    SaveCallRestore_004049d0
-        add     esp, 4
-        push    0x2c
-        call    SaveCallRestore_004049d0
-        add     esp, 4
-        jmp     func_00478131
-    }
+void TwoCallJmp_00478120(void) {
+    SaveCallRestore_004049d0(0x2b);
+    SaveCallRestore_004049d0(0x2c);
+    func_00478131();
 }
 
 /* @addr 0x0043d580 (21b)
@@ -117,15 +101,10 @@ __declspec(naked) void PushCallRetNopJmp_0043d580(void) {
  *   ret
  */
 extern void StorePauseImulShr16_004ab630(void);
-__declspec(naked) void CallPauseInc_004ab670(void) {
-    __asm {
-        call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   06h
-        inc     dword ptr [g_walkCallback]
-        ret
+void CallPauseInc_004ab670(void) {
+    StorePauseImulShr16_004ab630();
+    if (g_framePauseFlag == 0) {
+        g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback + 1);
     }
 }
 
