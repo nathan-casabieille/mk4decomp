@@ -151,24 +151,13 @@ __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
  */
 extern packed_ptr g_xformEntityIdx;
 extern void FramePauseScaledStore_00406c10(void);
-__declspec(naked) void Const4ec8f8DirtyScaledStore_00446580(void) {
-    __asm {
-        mov     eax, 0x004ec8f8
-        shr     eax, 2
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    FramePauseScaledStore_00406c10
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   13h
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [ecx*4 + 0x60], edx
-        ret
-    }
+extern int g_data_004ec8f8;
+void Const4ec8f8DirtyScaledStore_00446580(void) {
+    g_xformEntityIdx = ((unsigned int)&g_data_004ec8f8) >> 2;
+    FramePauseScaledStore_00406c10();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x60) = g_scaledInit_00542044;
 }
 
 /* @addr 0x004465c0 (56b)
