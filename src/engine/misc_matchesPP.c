@@ -708,23 +708,23 @@ __declspec(naked) void GuardedCallStoreSlotsCmp_00440990(void) {
  *   each step inc eax + restore to g_eventQueueEnd; jmp T.
  */
 extern void InstallSelfBranchIndirect_00470d10(void);
-__declspec(naked) void PackedLoadAdvanceJmp_00470cc0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     dword ptr [g_currentNodeFlags], 0
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueEnd], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     dword ptr [g_eventQueueEnd], eax
-        mov     edx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_eventQueueEnd], eax
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     InstallSelfBranchIndirect_00470d10
-    }
+extern u32 g_eventQueueNotMask;
+extern u32 g_currentNodeFlags;
+void PackedLoadAdvanceJmp_00470cc0(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int v1, v2;
+    g_currentNodeFlags = 0;
+    g_eventQueueEnd = packed;
+    v1 = *(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueNotMask = v1;
+    g_eventQueueEnd = packed;
+    v2 = *(unsigned int *)(packed * 4);
+    packed++;
+    g_xformEntityIdx = v2;
+    g_eventQueueEnd = packed;
+    g_walkCallback = (void (*)(void))v1;
+    InstallSelfBranchIndirect_00470d10();
 }
 
 /* @addr 0x00438bf0 (72b)
@@ -735,31 +735,26 @@ __declspec(naked) void PackedLoadAdvanceJmp_00470cc0(void) {
  */
 extern void Wrapper_00438c40(void);
 extern void Wrapper_00438ee0(void);
-__declspec(naked) void DispatchSwitchWalkCmp_00438bf0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x34]
-        cmp     eax, 0x10
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x11
-        _emit   75h
-        _emit   0ah
-        mov     eax, 7
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 5
-        _emit   75h
-        _emit   05h
-        jmp     Wrapper_00438c40
-        cmp     eax, 6
-        _emit   75h
-        _emit   05h
-        jmp     Wrapper_00438c40
-        jmp     Wrapper_00438ee0
+void DispatchSwitchWalkCmp_00438bf0(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0x10) {
+        v = 2;
+        g_walkCallback = (void (*)(void))v;
     }
+    if (v == 0x11) {
+        v = 7;
+        g_walkCallback = (void (*)(void))v;
+    }
+    if (v == 5) {
+        Wrapper_00438c40();
+        return;
+    }
+    if (v == 6) {
+        Wrapper_00438c40();
+        return;
+    }
+    Wrapper_00438ee0();
 }
 
 /* @addr 0x00438c50 (72b)
@@ -815,24 +810,13 @@ void LoadStoreDoubleCallSet_00448fc0(void) {
  *   PushPopWalk save/restore around setting walk = 0x1006 and
  *   storing it into g_baseSel[+0x74]. Symmetric stack frame.
  */
-__declspec(naked) void PushPopWalkSet1006_00470ee0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_walkCallback]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x1006
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [edx*4 + 0x74], eax
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopWalkSet1006_00470ee0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)g_walkCallback;
+    g_walkCallback = (void (*)(void))0x1006;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1006;
+    g_walkCallback = *(void (**)(void))(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x004826f0 (72b)
