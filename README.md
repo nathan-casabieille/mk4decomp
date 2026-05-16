@@ -36,7 +36,7 @@ Two distinct things, in plain words:
   ```
 
   <p align="center">
-    <img src=".github/result.gif" alt="MK4 running from the recompiled executable">
+    <img src=".github/gameplay.gif" alt="MK4 running from the recompiled executable">
     <br>
     <em>Gameplay from <code>build/MK4.matching.exe</code> - the byte-identical rebuild.</em>
   </p>
