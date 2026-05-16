@@ -85,18 +85,8 @@ void Helper_TitleAudioReset(void) {
  *   mov     [eax-0xc], ecx
  *   ret
  */
-__declspec(naked) void SetHi6_004b5ae0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [esp + 8]
-        and     ecx, 0x3f
-        mov     edx, dword ptr [eax - 0x0c]
-        shl     ecx, 0x18
-        and     edx, 0xc0ffffff
-        or      ecx, edx
-        mov     dword ptr [eax - 0x0c], ecx
-        ret
-    }
+void SetHi6_004b5ae0(unsigned int *p, unsigned int v) {
+    p[-3] = (p[-3] & 0xc0ffffffu) | ((v & 0x3fu) << 24);
 }
 
 /* @addr 0x004b5b00 (12b)
@@ -215,23 +205,14 @@ void PushNeg3CallRet_004c9a20(void) {
  *   xor     eax, eax
  *   ret
  */
-__declspec(naked) void LinearSearchArray_004cca30(void) {
-    __asm {
-        mov     ecx, dword ptr [esp + 4]
-        xor     eax, eax
-        cmp     dword ptr [ecx], 0
-        _emit   75h
-        _emit   0fh
-        inc     eax
-        add     ecx, 4
-        cmp     eax, 3
-        _emit   7ch
-        _emit   0f2h
-        mov     eax, 1
-        ret
-        xor     eax, eax
-        ret
+int LinearSearchArray_004cca30(const int *arr) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        if (arr[i] != 0) {
+            return 0;
+        }
     }
+    return 1;
 }
 
 /* @addr 0x004cdff0 (21b)
