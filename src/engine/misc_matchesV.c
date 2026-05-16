@@ -95,26 +95,19 @@ extern unsigned int g_state_0052aac4_v;
 extern void func_004399a3(void);
 extern void func_00439902(void);
 extern void func_00439986(void);
-__declspec(naked) void Cmp2CallDirtyCall_004398b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4_v]
-        cmp     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0bh
-        call    func_004399a3
-        mov     eax, 1
-        ret
-        call    func_00439902
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   0bh
-        call    func_00439986
-        mov     eax, 1
-        ret
-        xor     eax, eax
-        ret
+int Cmp2CallDirtyCall_004398b0(void) {
+    unsigned int v = g_state_0052aac4_v;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 2) {
+        func_004399a3();
+        return 1;
     }
+    func_00439902();
+    if ((g_xformDirtyFlags & 1) == 0) {
+        func_00439986();
+        return 1;
+    }
+    return 0;
 }
 
 /* @addr 0x0043a630 (58b)
