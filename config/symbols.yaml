@@ -1584,10 +1584,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0041bca0
-    name: func_0041bca0
+    name: PendingMatch_0041bca0
     size: 6308
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0041d550
     name: Push0_Push41d7d0_0041d550
     size: 16
