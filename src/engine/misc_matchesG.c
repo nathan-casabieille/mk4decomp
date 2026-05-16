@@ -224,20 +224,12 @@ void TriBranchJmp_00434530(void) {
  */
 extern u32 g_eventQueueWorkType;
 extern void func_00439998(void);
-__declspec(naked) void ScaledCmp200eCallBool_004398f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x74]
-        cmp     eax, 0x200e
-        mov     dword ptr [g_eventQueueWorkType], eax
-        _emit   74h
-        _emit   03h
-        xor     eax, eax
-        ret
-        call    func_00439998
-        mov     eax, 1
-        ret
-    }
+int ScaledCmp200eCallBool_004398f0(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
+    g_eventQueueWorkType = v;
+    if (v != 0x200e) return 0;
+    func_00439998();
+    return 1;
 }
 
 /* @addr 0x00439b50 (39b)
