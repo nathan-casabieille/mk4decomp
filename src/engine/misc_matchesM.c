@@ -199,17 +199,10 @@ __declspec(naked) void IncBoundedDirty_004a7db0(void) {
  */
 extern packed_ptr g_player1NodeIdx;
 extern packed_ptr g_player2NodeIdx;
-__declspec(naked) void CmpP1ScaledInitB_004ac100(void) {
-    __asm {
-        mov     eax, dword ptr [g_player1NodeIdx]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        ret
+void CmpP1ScaledInitB_004ac100(void) {
+    g_scaledInit_00542044 = g_player1NodeIdx;
+    if (g_fightGroupHead == g_player1NodeIdx) {
+        g_scaledInit_00542044 = g_player2NodeIdx;
     }
 }
 
