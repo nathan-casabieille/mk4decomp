@@ -87,22 +87,15 @@ void SetWorkType02CountFFB_004a1790(void) {
 extern void func_00404a00_bb(int);
 extern void func_0041f780_bb(void);
 extern void InstallSelfPauseGate_004a1a50(void);
-__declspec(naked) void PushCallTestByte4Jmp_004a1a10(void) {
-    __asm {
-        push    0x25a
-        call    func_00404a00_bb
-        mov     al, byte ptr [g_xformDirtyFlags]
-        add     esp, 4
-        test    al, 4
-        _emit   74h
-        _emit   05h
-        jmp     func_0041f780_bb
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, 0xfffb0000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     InstallSelfPauseGate_004a1a50
+void PushCallTestByte4Jmp_004a1a10(void) {
+    func_00404a00_bb(0x25a);
+    if ((g_xformDirtyFlags & 4) != 0) {
+        func_0041f780_bb();
+        return;
     }
+    g_walkCallback = (void (*)(void))0xfffb0000;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0xfffb0000;
+    InstallSelfPauseGate_004a1a50();
 }
 
 /* @addr 0x004a1d50 (48b)
@@ -174,22 +167,13 @@ loop_start2:
  */
 extern unsigned int g_state_00538150;
 extern void DualAddSar_004ab600(void);
-__declspec(naked) void StorePauseImulShr16_004ab630(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00538150], eax
-        call    DualAddSar_004ab600
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        mov     ecx, dword ptr [g_walkCallback]
-        and     ecx, 0xffff
-        imul    ecx, dword ptr [g_state_00538150]
-        shr     ecx, 0x10
-        mov     dword ptr [g_walkCallback], ecx
-        ret
+void StorePauseImulShr16_004ab630(void) {
+    g_state_00538150 = (unsigned int)g_walkCallback;
+    DualAddSar_004ab600();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    g_walkCallback = (void (*)(void))((((unsigned int)g_walkCallback & 0xffff) * g_state_00538150) >> 16);
 }
 
 /* @addr 0x004ab750 (62b)
