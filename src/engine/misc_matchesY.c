@@ -257,21 +257,13 @@ __declspec(naked) void CallPauseScaledStorePushCall_0045fca0(void) {
  *   onto stack[idx*4]; mov g_scaledInit_00542044 = 0x7c; jmp T.
  */
 extern void HalveChainTriplePop2_004740d0(void);
-__declspec(naked) void DoubleStackPushAndJmp_00474010(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_fightGroupHead]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], edx
-        mov     dword ptr [g_scaledInit_00542044], 0x7c
-        jmp     HalveChainTriplePop2_004740d0
-    }
+void DoubleStackPushAndJmp_00474010(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
+    g_scaledInit_00542044 = 0x7c;
+    HalveChainTriplePop2_004740d0();
 }
 
 /* @addr 0x00460d80 (65b)
