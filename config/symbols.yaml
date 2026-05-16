@@ -13282,10 +13282,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x004a9940
-    name: func_004a9940
+    name: PendingMatch_004a9940
     size: 2736
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004aa3f0
     name: ShiftDownThreeAndAppend_004aa3f0
     size: 32
