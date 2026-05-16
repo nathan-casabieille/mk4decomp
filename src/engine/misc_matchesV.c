@@ -175,21 +175,16 @@ extern void SelfInstallPhaseDispatch_0045fd30(void);
  *   jmp     T2
  *   ret
  */
-__declspec(naked) void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
-    __asm {
-        call    WalkCallbackSetClearDirty_0048e7d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 0
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET SelfInstallPhaseDispatch_0045fd30
-        jmp     func_004611f4
-        ret
-    }
+void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
+    unsigned int top;
+    WalkCallbackSetClearDirty_0048e7d0();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))0;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_0045fd30;
+    func_004611f4();
 }
 extern void WalkCallbackSetClearDirty_0048e7d0(void);
 extern void SelfInstallPhaseDispatch_0045fd30(void);
