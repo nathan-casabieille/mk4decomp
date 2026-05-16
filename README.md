@@ -13,27 +13,35 @@ matching, the C source is the canonical representation of the game.
 </p>
 
 <p align="center">
-  <b>Implemented</b> :&nbsp; 100.0% (213/213)<br>
-  <b>Accuracy</b> &nbsp;&nbsp;&nbsp;:&nbsp; 100.0%
+  <img src=".github/progress.svg" alt="Decompiled to C">
 </p>
 
-<p align="center">
-  <img src=".github/progress.svg" alt="Progress: 100.0%">
-</p>
+| Metric | Progress |
+|---|---|
+| Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
+| **Decompiled to C** | **~20%** (552 / 2829 functions) - contributions welcome |
 
-**Per-function matching: 100% (2829 / 2829).** Every function in the
-original `MK4.EXE` has a byte-perfect counterpart in our source - verified
-per-`.obj` by `tools/decomp/diff_fn_obj.py` (reloc-aware byte compare against
-the orig `.text` slice).
+Two distinct things, in plain words:
 
-**Whole-EXE rebuild: byte-identical.** `make matching` produces
-`build/MK4.matching.exe`, MD5-identical to `game/MK4.EXE`:
+- **Byte-perfect rebuild = done.** `make matching` produces a
+  `build/MK4.matching.exe` that is MD5-identical to `game/MK4.EXE`.
+  Every function in the original `.text` has a counterpart in our source
+  whose compiled bytes match orig byte-for-byte (reloc-aware diff via
+  `tools/decomp/diff_fn_obj.py`).
 
-```
-$ md5 build/MK4.matching.exe game/MK4.EXE
-MD5 (build/MK4.matching.exe) = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
-MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
-```
+  ```
+  $ md5 build/MK4.matching.exe game/MK4.EXE
+  MD5 (build/MK4.matching.exe) = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
+  MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
+  ```
+
+- **Decompiled to C = in progress.** The bytes match, but ~80% of the
+  source is still `__declspec(naked) { __asm { ... } }` wrappers -
+  semantically equivalent to orig but not readable C. The real
+  decompilation work is converting those wrappers to pure C while keeping
+  the byte-match. **This is where contributions are needed.**
+
+Run `python3 tools/decomp/progress.py` for a live per-subsystem breakdown.
 
 The rebuild path:
 1. **MSVC 5.0 SP3 compiles** every C source (`src/*.c`) to COFF `.obj` files.
@@ -97,16 +105,42 @@ When a function matches byte-for-byte, mark it `matched` in
 
 ## Contributing
 
-All contributions are welcome. This is a group effort, and even small contributions can make a difference.
-Some tasks also don't require much knowledge to get started.
+**The byte-match is done. The C decompilation is not.** About 2300
+functions in `src/` are still `__declspec(naked) { __asm { ... } }`
+wrappers around the original assembly. Each one needs to be rewritten
+in pure C while keeping `make matching` byte-identical to orig.
+
+### Pick a function and convert it
+
+```sh
+# 1. Find a __declspec(naked) function in any file under src/.
+grep -l "__declspec(naked)" src/ -r | head
+
+# 2. Rewrite the body in pure C in the same file (replace the
+#    __declspec(naked) declaration with a normal one), using the
+#    matching tactics documented in docs/MATCHING.md.
+
+# 3. Compile just that file and diff against orig (per-function,
+#    reloc-aware).
+python3 tools/decomp/diff_fn_obj.py build/obj/<path>.obj <SymbolName> <addr> <size>
+
+# 4. Re-run the whole-EXE synth - it must still report byte-identical.
+python3 tools/decomp/synthesize.py
+```
+
+Easy entry points (small files, no risky reloc-site overrides):
+
+- Any `src/engine/misc_matches*.c` not listed in `config/reloc_sites.yaml`
+- The `tools/decomp/progress.py` per-subsystem breakdown shows which
+  groups have the lowest C-conversion rate
+
+Reading order before you start:
 
 1. [analysis/notes/architecture.md](analysis/notes/architecture.md) -
    what the engine does, subsystem-by-subsystem
 2. [CONVENTIONS.md](CONVENTIONS.md) - naming, header layout, matching rules
 3. [docs/MATCHING.md](docs/MATCHING.md) - workflow for claiming a function
    and getting it byte-perfect
-4. [config/symbols.yaml](config/symbols.yaml) - find a `stub` function to
-   work on
 
 By submitting a contribution, you confirm that your work is your own
 original reconstruction, derived only from static analysis of a
