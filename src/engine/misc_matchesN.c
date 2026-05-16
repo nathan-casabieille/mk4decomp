@@ -103,21 +103,11 @@ __declspec(naked) void ScaledMaskOrStore_00405880(void) {
  */
 extern unsigned int g_state_00541dc4;
 extern void BootChainPushAddSignFlag_004077b0(void);
-__declspec(naked) void CallPauseScaledStoreAdd_004078f0(void) {
-    __asm {
-        call    BootChainPushAddSignFlag_004077b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x28], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        add     edx, 0x0a
-        mov     dword ptr [g_state_00541dc4], edx
-        ret
-    }
+void CallPauseScaledStoreAdd_004078f0(void) {
+    BootChainPushAddSignFlag_004077b0();
+    if (g_framePauseFlag != 0) return;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = (unsigned int)g_walkCallback;
+    g_state_00541dc4 = g_fightGroupHead + 0x0a;
 }
 
 /* @addr 0x004111d0 (50b)
