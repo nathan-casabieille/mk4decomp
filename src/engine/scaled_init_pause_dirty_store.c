@@ -28,24 +28,17 @@ extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void FramePauseScaledStore_00406c10(void);
 
 /* @addr 0x00445f00 */
-__declspec(naked) void ScaledInitPauseDirtyStore_00445f00(void) {
-    __asm {
-        mov     eax, 0x00511444
-        shr     eax, 2
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   13h
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [ecx*4 + 0x5c], edx
-        ret
+extern unsigned int g_table_00511444;
+void ScaledInitPauseDirtyStore_00445f00(void) {
+    g_xformEntityIdx = (unsigned int)&g_table_00511444 >> 2;
+    MStackBracket1_TreeWalkRecursive2_00406dd0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if ((g_xformDirtyFlags & 4) != 0) {
+        return;
+    }
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = g_scaledInit_00542044;
 }
 
 /* @addr 0x00446240 */
