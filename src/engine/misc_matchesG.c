@@ -329,16 +329,14 @@ __declspec(naked) void TripleSetCallPauseDirtyJmp_00446150(void) {
  *   mov     [ecx*4 + 0x28], eax
  *   ret
  */
-__declspec(naked) void ScaledChainStore_004462c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        ret
-    }
+void ScaledChainStore_004462c0(void) {
+    unsigned int base = g_baseSel_00542060;
+    unsigned int v = *(unsigned int *)(base * 4 + 0x5c);
+    unsigned int v2;
+    g_scaledInit_00542044 = v;
+    v2 = *(unsigned int *)(base * 4 + 0x38);
+    g_walkCallback = (void (*)(void))v2;
+    *(unsigned int *)(v * 4 + 0x28) = v2;
 }
 
 /* @addr 0x00446320 (36b)
