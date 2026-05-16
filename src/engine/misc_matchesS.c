@@ -162,21 +162,12 @@ __declspec(naked) void Copy3FieldsNeg_0041aa40(void) {
  *   ret
  */
 extern void func_0040a888(void);
-__declspec(naked) void MStackPushCallPop_0040a830(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    func_0040a888
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueEnd], edx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPushCallPop_0040a830(void) {
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;
+    func_0040a888();
+    g_eventQueueEnd = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }
 
 /* @addr 0x00427ea0 (54b)
