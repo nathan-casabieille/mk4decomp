@@ -1098,7 +1098,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004105c0
-    name: PendingMatch_004105c0
+    name: BossRoomBootstrap_004105c0
     size: 524
     group: boot
     status: matched
@@ -14802,7 +14802,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7ce0
-    name: PendingMatch_004b7ce0
+    name: FormatMenuItemsAndDraw_004b7ce0
     size: 272
     group: game.menu
     status: matched
@@ -16398,7 +16398,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c9df0
-    name: PendingMatch_004c9df0
+    name: CrtInitPerThreadData_004c9df0
     size: 656
     group: crt
     status: matched
@@ -16842,13 +16842,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf060
-    name: PendingMatch_004cf060
+    name: CrtFpieeeFlt_004cf060
     size: 820
     group: crt
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cf3a0
-    name: PendingMatch_004cf3a0
+    name: CrtFpuExceptionFilter_004cf3a0
     size: 816
     group: crt
     status: matched
