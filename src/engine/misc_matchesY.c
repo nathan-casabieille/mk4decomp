@@ -13,23 +13,18 @@ extern packed_ptr g_fightGroupHead;
 /* @addr 0x0044ef10 (64b): same shape as ScaledInitOrSelfPtr_00421f00,
  *                         store=own, jmp=0x44ef50 */
 extern void PoseChainAdvanceCluster_0044ef50(void);
-__declspec(naked) void ScaledInitOrSelfPtr_0044ef10(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     PoseChainAdvanceCluster_0044ef50
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x0044ef10
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_0044ef10(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        PoseChainAdvanceCluster_0044ef50();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_0044ef10;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00446640 (61b)
@@ -117,30 +112,18 @@ extern void SetJmp_00438f60(void);
 extern void FiveCallScaledChainTailJmp_0045f8d0(void);
 extern void ScaledZeroFour_00490740(void);
 extern void GuardedDispatch_0042c570(void);
-__declspec(naked) void CallPauseTestByteJmpCalls_004390f0(void) {
-    __asm {
-        call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2fh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     SetJmp_00438f60
-        call    FiveCallScaledChainTailJmp_0045f8d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     GuardedDispatch_0042c570
-        ret
+void CallPauseTestByteJmpCalls_004390f0(void) {
+    MStackPush3CmpCall_0048eec0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        SetJmp_00438f60();
+        return;
     }
+    FiveCallScaledChainTailJmp_0045f8d0();
+    if (g_framePauseFlag) return;
+    ScaledZeroFour_00490740();
+    if (g_framePauseFlag) return;
+    GuardedDispatch_0042c570();
 }
 
 /* @addr 0x00451a60 (62b)
@@ -154,29 +137,15 @@ __declspec(naked) void CallPauseTestByteJmpCalls_004390f0(void) {
 extern void SetJmp_00405420(void);
 extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-__declspec(naked) void CallPauseTestByte4ZeroCB_00451a60(void) {
-    __asm {
-        call    SetJmp_00405420
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2fh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   26h
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 0
-        ret
-    }
+void CallPauseTestByte4ZeroCB_00451a60(void) {
+    SetJmp_00405420();
+    if (g_framePauseFlag) return;
+    if (!(g_xformDirtyFlags & 4)) return;
+    MStackPush2RunCountdown_004089e0();
+    if (g_framePauseFlag) return;
+    MStackBracket7_DispatchAndChain_004b8fa0();
+    if (g_framePauseFlag) return;
+    g_walkCallback = 0;
 }
 
 /* @addr 0x004353f0 (65b)

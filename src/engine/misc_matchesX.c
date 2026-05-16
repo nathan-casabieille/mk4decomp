@@ -79,86 +79,66 @@ __declspec(naked) void RandSarMod0xFFF_0041f230(void) {
  *   ret
  */
 extern void InstallSelfStackReset_00421f40(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00421f00(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     InstallSelfStackReset_00421f40
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00421f00
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00421f00(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        InstallSelfStackReset_00421f40();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00421f00;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00428950 (64b): same shape, store=own, jmp=0x428850 */
 extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00428950(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     CallPauseDirty1JmpDirty4StackPush_00428850
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00428950
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00428950(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        CallPauseDirty1JmpDirty4StackPush_00428850();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00428950;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00429680 (64b): same shape, store=own, jmp=0x41f780 */
 extern void StackPopDispatchTagged_0041f780(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00429680(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     StackPopDispatchTagged_0041f780
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00429680
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00429680(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        StackPopDispatchTagged_0041f780();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00429680;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00442d90 (64b): same shape, store=own, jmp=0x442dd0 */
 extern void DualSeqLoopDispatch_00442dd0(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00442d90(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     DualSeqLoopDispatch_00442dd0
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00442d90
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00442d90(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        DualSeqLoopDispatch_00442dd0();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00442d90;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x004250f0 (61b)

@@ -12,44 +12,34 @@ extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00474b10 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x474b50 */
 extern void NetEntityScanAndPunish_00474b50(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00474b10(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     NetEntityScanAndPunish_00474b50
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00474b10
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00474b10(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        NetEntityScanAndPunish_00474b50();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00474b10;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00489130 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x41f780 */
 extern void func_0041f780_z(void);
-__declspec(naked) void ScaledInitOrSelfPtr_00489130(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     func_0041f780_z
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00489130
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+void ScaledInitOrSelfPtr_00489130(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int ptr = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (ptr) {
+        func_0041f780_z();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_00489130;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00474050 (63b): DoubleStackPushAndJmp variant, value=0x7d */
@@ -93,20 +83,14 @@ __declspec(naked) void DoubleStackPushAndJmp7b_00474090(void) {
 /* @addr 0x00475750 (62b)
  *   load g_eventQueueIdx, g_eventQueueEnd; cross-copy [+0x54] then [+0x5c].
  */
-__declspec(naked) void DoubleScaledCrossStore_00475750(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     eax, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x54], eax
-        mov     edx, dword ptr [g_eventQueueIdx]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     eax, dword ptr [edx*4 + 0x5c]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x5c], eax
-        ret
-    }
+void DoubleScaledCrossStore_00475750(void) {
+    unsigned int v;
+    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x54);
+    g_walkCallback = (void(*)(void))v;
+    *(unsigned int *)(g_eventQueueEnd * 4 + 0x54) = v;
+    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x5c);
+    g_walkCallback = (void(*)(void))v;
+    *(unsigned int *)(g_eventQueueEnd * 4 + 0x5c) = v;
 }
 
 /* @addr 0x00482740 (62b)
@@ -165,25 +149,17 @@ __declspec(naked) void PushCallPauseScaledJmpInd_0048e2f0(void) {
  *   scaled chain 0x3c → 0x74; and 0xf000; cmp 0x4000;
  *   if eq: or al,1 → store dirty;  else and al,0xfe → store dirty.
  */
-__declspec(naked) void ScaledChainAndF000DirtyToggle_0048e740(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0x74]
-        and     eax, 0xf000
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 0x4000
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   75h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void ScaledChainAndF000DirtyToggle_0048e740(void) {
+    unsigned int v;
+    v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4 + 0x74) & 0xf000;
+    g_walkCallback = (void(*)(void))v;
+    if (v == 0x4000) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00490290 (55b)

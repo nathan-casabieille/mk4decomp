@@ -24,38 +24,20 @@ extern void func_00481fc0(void);
 extern void func_00422280(void);
 extern void func_0040517a(void);
 extern void func_004012f0(void);
-__declspec(naked) void Set2FiveCallPauseJmp_0041fd10(void) {
-    __asm {
-        call    Wrapper_0041fd00
-        mov     dword ptr [g_state_0053a1f0], 2
-        call    func_0041f260
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3dh
-        call    func_004135b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2fh
-        call    func_00481fc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    func_00422280
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    func_0040517a
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004012f0
-        ret
-    }
+void Set2FiveCallPauseJmp_0041fd10(void) {
+    Wrapper_0041fd00();
+    g_state_0053a1f0 = 2;
+    func_0041f260();
+    if (g_framePauseFlag) return;
+    func_004135b0();
+    if (g_framePauseFlag) return;
+    func_00481fc0();
+    if (g_framePauseFlag) return;
+    func_00422280();
+    if (g_framePauseFlag) return;
+    func_0040517a();
+    if (g_framePauseFlag) return;
+    func_004012f0();
 }
 
 /* @addr 0x00438b90 (91b)
@@ -101,34 +83,13 @@ __declspec(naked) void PushPop84TripleCall_00438b90(void) {
  *   6× push 0, push imm; call F; add esp 8; ret. Pattern of 6 unique 2-arg calls.
  */
 extern void func_00513ac8(int, int);
-__declspec(naked) void SixDoublePushCall_004be630(void) {
-    __asm {
-        push    0
-        push    0x138
-        call    func_00513ac8
-        add     esp, 8
-        push    0
-        push    0x333
-        call    func_00513ac8
-        add     esp, 8
-        push    0
-        push    0x3ec
-        call    func_00513ac8
-        add     esp, 8
-        push    0
-        push    0x3f0
-        call    func_00513ac8
-        add     esp, 8
-        push    0
-        push    0x3f7
-        call    func_00513ac8
-        add     esp, 8
-        push    0
-        push    0x420
-        call    func_00513ac8
-        add     esp, 8
-        ret
-    }
+void SixDoublePushCall_004be630(void) {
+    func_00513ac8(0x138, 0);
+    func_00513ac8(0x333, 0);
+    func_00513ac8(0x3ec, 0);
+    func_00513ac8(0x3f0, 0);
+    func_00513ac8(0x3f7, 0);
+    func_00513ac8(0x420, 0);
 }
 
 /* @addr 0x004923f0 (91b)
@@ -251,30 +212,14 @@ __declspec(naked) void RangeMulMod_004ab2a0(void) {
  *   load g_baseSel and g_fightGroupHead, scaled by 4;
  *   six cross-stores: [edx + N] from [eax + M] for (M,N) pairs at +0x38..+0x4c → +0x54..+0x74.
  */
-__declspec(naked) void SixCrossStores_0049d8e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        shl     eax, 2
-        shl     ecx, 2
-        mov     edx, dword ptr [eax + 0x38]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x54], edx
-        mov     edx, dword ptr [eax + 0x3c]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x58], edx
-        mov     edx, dword ptr [eax + 0x40]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x5c], edx
-        mov     edx, dword ptr [eax + 0x44]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x6c], edx
-        mov     edx, dword ptr [eax + 0x48]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x70], edx
-        mov     eax, dword ptr [eax + 0x4c]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx + 0x74], eax
-        ret
-    }
+void SixCrossStores_0049d8e0(void) {
+    unsigned char *src = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
+    unsigned int v;
+    v = *(unsigned int *)(src + 0x38); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x54) = v;
+    v = *(unsigned int *)(src + 0x3c); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x58) = v;
+    v = *(unsigned int *)(src + 0x40); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x5c) = v;
+    v = *(unsigned int *)(src + 0x44); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x6c) = v;
+    v = *(unsigned int *)(src + 0x48); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x70) = v;
+    v = *(unsigned int *)(src + 0x4c); g_walkCallback = (void(*)(void))v; *(unsigned int *)(dst + 0x74) = v;
 }

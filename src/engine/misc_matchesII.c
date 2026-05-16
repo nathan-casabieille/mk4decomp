@@ -145,26 +145,15 @@ extern void ThreeChanPackClamp_00404cc0(void *);
 extern void CopyThreeFields_00404df0(int);
 extern void func_00405420_ii(void);
 extern void BootMStackBracketedScaledStores_0040bf70(void);
-__declspec(naked) void PushCallScaledClearJmp_0040bf20(void) {
-    __asm {
-        push    OFFSET g_data_00408040
-        call    ThreeChanPackClamp_00404cc0
-        mov     eax, dword ptr [g_fightGroupHead]
-        add     esp, 4
-        push    eax
-        call    CopyThreeFields_00404df0
-        add     esp, 4
-        mov     dword ptr [g_scaledInit_00542044], 0
-        call    func_00405420_ii
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0eh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   05h
-        jmp     BootMStackBracketedScaledStores_0040bf70
-        ret
+void PushCallScaledClearJmp_0040bf20(void) {
+    ThreeChanPackClamp_00404cc0(&g_data_00408040);
+    CopyThreeFields_00404df0(g_fightGroupHead);
+    g_scaledInit_00542044 = 0;
+    func_00405420_ii();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) {
+        BootMStackBracketedScaledStores_0040bf70();
+        return;
     }
 }
 
@@ -242,28 +231,15 @@ __declspec(naked) void SetDirty4XorScaledLoad_004147b0(void) {
  */
 extern void SlotInitAndChainLink_004191b0(void);
 extern void BootGatedInitInstallPair_00412280(void);
-__declspec(naked) void CallPauseDirty4ScaledSet_004196c0(void) {
-    __asm {
-        call    SlotInitAndChainLink_004191b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   3bh
-        mov     eax, dword ptr [g_eventQueueEnd]
-        mov     dword ptr [eax*4 + 0x30], 0x81
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, 0x14ccc
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        mov     edx, dword ptr [g_eventQueueEnd]
-        add     edx, 0x15
-        mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     BootGatedInitInstallPair_00412280
-        ret
-    }
+void CallPauseDirty4ScaledSet_004196c0(void) {
+    SlotInitAndChainLink_004191b0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) return;
+    *(unsigned int *)(g_eventQueueEnd * 4 + 0x30) = 0x81;
+    g_walkCallback = (void(*)(void))0x14ccc;
+    *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
+    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    BootGatedInitInstallPair_00412280();
 }
 
 /* @addr 0x00407c00 (88b)
