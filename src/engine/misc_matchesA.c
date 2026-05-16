@@ -55,21 +55,15 @@ int MaxOfThree_004b3d90(void) {
  */
 extern unsigned int g_state_007affe4;
 extern unsigned int g_state_007afff0;
-extern void *g_iat_007b0010;
-__declspec(naked) void Renderer1_PresentFrame(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_007affe4]
-        test    eax, eax
-        _emit   74h
-        _emit   11h
-        mov     eax, dword ptr [g_state_007afff0]
-        test    eax, eax
-        _emit   75h
-        _emit   08h
-        push    1
-        call    dword ptr [g_iat_007b0010]
-        ret
+extern void (__stdcall *g_iat_007b0010)(int);
+void Renderer1_PresentFrame(void) {
+    if (g_state_007affe4 == 0) {
+        return;
     }
+    if (g_state_007afff0 != 0) {
+        return;
+    }
+    g_iat_007b0010(1);
 }
 
 /* @addr 0x004bcc50 (24b)

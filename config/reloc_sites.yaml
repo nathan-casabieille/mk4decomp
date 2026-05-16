@@ -38,8 +38,8 @@ engine/gfx_init.obj#2#0x5e: 5196604
 engine/iter_load.obj#2#0x20: 4836304
 engine/joystick_init.obj#2#0xb4: 8061256
 engine/misc_matches8.obj#21#0x1: 5513324
-engine/misc_matchesA.obj#43#0x1: 11227648
-engine/misc_matchesA.obj#43#0x15: 11227648
+engine/misc_matchesA.obj#44#0x1: 11227648
+engine/misc_matchesA.obj#44#0x15: 11227648
 engine/misc_matchesC.obj#2#0x2: 5513304
 engine/misc_matchesCC.obj#11#0x1c: 5513364
 engine/misc_matchesE.obj#2#0x11: 4358032
