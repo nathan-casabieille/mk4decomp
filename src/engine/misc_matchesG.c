@@ -268,20 +268,12 @@ __declspec(naked) void ScaledCmp200eCallBool_004398f0(void) {
  */
 extern void AudioVolumeRescale_004ab690(void);
 extern void func_00439bff(void);
-__declspec(naked) void Set258Call_PauseDirtyJmp_00439b50(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x258
-        call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0eh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     func_00439bff
-        ret
-    }
+void Set258Call_PauseDirtyJmp_00439b50(void) {
+    g_walkCallback = (void (*)(void))0x258;
+    AudioVolumeRescale_004ab690();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) == 0) return;
+    func_00439bff();
 }
 
 /* @addr 0x00439320 (38b)
