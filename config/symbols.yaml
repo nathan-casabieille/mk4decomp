@@ -16272,13 +16272,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8ba0
-    name: CallAdd8_004c8ba0
+    name: Crt_errno_004c8ba0
     size: 9
     group: crt
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004c8bb0
-    name: CallAddC_004c8bb0
+    name: Crt_doserrno_004c8bb0
     size: 9
     group: crt
     status: matched
@@ -16662,7 +16662,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004cce40
-    name: TmFillStringCopy_004cce40
+    name: CrtDoubleToStringImpl_004cce40
     size: 139
     group: crt
     status: matched

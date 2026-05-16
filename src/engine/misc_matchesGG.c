@@ -66,7 +66,7 @@ __declspec(naked) void Shr96By1_004ce2c0(void) {
 /* @addr 0x004cf6d0 (40b)
  *   switch (arg) { case 1: errno=0x21; default: ret; case 2..3: errno=0x22; }
  */
-extern int *CallAdd8_004c8ba0(void);
+extern int *Crt_errno_004c8ba0(void);
 __declspec(naked) void SwitchErrorCode_004cf6d0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -78,10 +78,10 @@ __declspec(naked) void SwitchErrorCode_004cf6d0(void) {
         cmp     eax, 3
         _emit   7fh
         _emit   17h
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 0x22
         ret
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 0x21
         ret
     }

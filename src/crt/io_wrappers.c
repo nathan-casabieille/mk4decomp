@@ -60,8 +60,8 @@ extern unsigned int g_validityTable_004fdae0; /* 0x004fdae0 (-> indexed by ecx*4
 
 extern void CritSecLazyEnter_004cd2b0(int);   /* _lock_fhandle */
 extern void DivMod32IAT_004cd320(int);   /* _unlock_fhandle */
-extern void *CallAdd8_004c8ba0(void); /* &__doserrno */
-extern void *CallAddC_004c8bb0(void); /* &errno */
+extern void *Crt_errno_004c8ba0(void); /* per-thread block + 8 = &_terrno */
+extern void *Crt_doserrno_004c8bb0(void); /* per-thread block + 0xc = &_tdoserrno */
 
 extern int  LseekImpl_004c8e50(int handle, int a, int b);   /* per-helper op */
 extern int  CrtReadCrlfDecode_004c9040(int handle, int a, int b);
@@ -104,9 +104,9 @@ __declspec(naked) void IOWrapper_004c8dd0(void) {
         pop     edi
         pop     esi
         ret
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 9
-        call    CallAddC_004c8bb0
+        call    Crt_doserrno_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff
@@ -152,9 +152,9 @@ __declspec(naked) void IOWrapper_004c8fc0(void) {
         pop     edi
         pop     esi
         ret
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 9
-        call    CallAddC_004c8bb0
+        call    Crt_doserrno_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff
@@ -200,9 +200,9 @@ __declspec(naked) void IOWrapper_004c9ae0(void) {
         pop     edi
         pop     esi
         ret
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 9
-        call    CallAddC_004c8bb0
+        call    Crt_doserrno_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff

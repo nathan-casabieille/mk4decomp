@@ -179,7 +179,7 @@ void Crt_srand(int x) {
  *   ret
  */
 extern int *func_004c9df0_b(void);
-void *CallAdd8_004c8ba0(void) {
+void *Crt_errno_004c8ba0(void) {
     return (char *)func_004c9df0_b() + 8;
 }
 
@@ -188,7 +188,7 @@ void *CallAdd8_004c8ba0(void) {
  *   add     eax, 0xc
  *   ret
  */
-void *CallAddC_004c8bb0(void) {
+void *Crt_doserrno_004c8bb0(void) {
     return (char *)func_004c9df0_b() + 0xc;
 }
 

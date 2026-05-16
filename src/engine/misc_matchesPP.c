@@ -1230,8 +1230,8 @@ loop_top:
  */
 extern unsigned int g_data_00fa0ee0;
 extern void *g_data_00fa0de0;
-extern int *CallAdd8_004c8ba0(void);
-extern int *CallAddC_004c8bb0(void);
+extern int *Crt_errno_004c8ba0(void);
+extern int *Crt_doserrno_004c8bb0(void);
 __declspec(naked) void CRTHandleLookup_004cd260(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -1251,9 +1251,9 @@ __declspec(naked) void CRTHandleLookup_004cd260(void) {
         _emit   03h
         mov     eax, dword ptr [eax]
         ret
-        call    CallAdd8_004c8ba0
+        call    Crt_errno_004c8ba0
         mov     dword ptr [eax], 9
-        call    CallAddC_004c8bb0
+        call    Crt_doserrno_004c8bb0
         mov     dword ptr [eax], 0
         or      eax, 0xffffffff
         ret
