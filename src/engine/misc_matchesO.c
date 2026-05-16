@@ -62,21 +62,12 @@ __declspec(naked) void SubCmpCallPauseJmp_0042fc40(void) {
  */
 extern void func_0042440c(void);
 extern void func_00432522(void);
-__declspec(naked) void AddStoreCallPauseJmp_00431da0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueChild]
-        add     eax, 0x0001921f
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    func_0042440c
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   11h
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        jmp     func_00432522
-        ret
-    }
+void AddStoreCallPauseJmp_00431da0(void) {
+    g_eventQueueWorkType = g_eventQueueChild + 0x0001921f;
+    func_0042440c();
+    if (g_framePauseFlag != 0) return;
+    g_eventQueueCurrent = (unsigned int)g_walkCallback;
+    func_00432522();
 }
 
 /* @addr 0x004362b0 (49b)
