@@ -348,14 +348,9 @@ void ScaledChainStore_004462c0(void) {
  *   mov     [eax*4 + 0x1c], ecx
  *   ret
  */
-__declspec(naked) void ScaledStoreConst2_00446320(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, 2
-        mov     eax, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [eax*4 + 0x1c], ecx
-        ret
-    }
+void ScaledStoreConst2_00446320(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
+    g_walkCallback = (void (*)(void))2;
+    g_scaledInit_00542044 = v;
+    *(unsigned int *)(v * 4 + 0x1c) = 2;
 }
