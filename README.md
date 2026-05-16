@@ -1,11 +1,5 @@
 # <img src=".github/mortal_kombat.png" width="32" alt=""> MK4 - Matching Decompilation
 
-```diff
-- WARNING! -
-
-This repository is a work in progress.
-```
-
 A **matching decompilation** of **Mortal Kombat 4** (PC, 1998).
 
 Goal: reproduce `MK4.EXE` **byte-for-byte** from reconstructed C source,
@@ -14,15 +8,18 @@ matching, the C source is the canonical representation of the game.
 
 ## Status
 
-```
-$ make progress
-Functions identified    :  2824 (full call-graph reach from known set)
-matched (byte-perfect)  :  2823
-drafted (functional)    :     0
-stub (asm-only)         :   0
+<p align="center">
+  <img src=".github/banner.png" width="200" alt="Mortal Kombat 4">
+</p>
 
-Bytes of .text covered  : 975765 / 975765 (100.0% of identified)
-```
+<p align="center">
+  <b>Implemented</b> :&nbsp; 100.0% (213/213)<br>
+  <b>Accuracy</b> &nbsp;&nbsp;&nbsp;:&nbsp; 100.0%
+</p>
+
+<p align="center">
+  <img src=".github/progress.svg" alt="Progress: 100.0%">
+</p>
 
 **Per-function matching: 100% (2823 / 2823).** Every function in the
 original `MK4.EXE` has a byte-perfect counterpart in our source - verified
@@ -157,10 +154,6 @@ or referenced at any point. The result is the project authors' own
 expression that happens, when compiled under the original toolchain,
 to produce a byte-identical binary.
 
-**No affiliation.** This project is not affiliated with, endorsed by,
-or sponsored by Warner Bros. Entertainment Inc., NetherRealm Studios,
-Midway Games, or any other rights holder.
-
 **Trademarks and copyright of the game.** *Mortal Kombat* and all
 related characters, names, marks, and assets are trademarks of and ©
 Warner Bros. Entertainment Inc. / Warner Bros. Discovery. *Mortal
@@ -173,10 +166,6 @@ owners.
 original game assets, code, or data. The `original/`, `game/`, and
 `audio/` paths are git-ignored. To run the result you must provide
 your own legally-obtained copy of MK4.
-
-**No redistribution value.** The compiled output of this project is
-byte-identical to the original `MK4.EXE`. It is a *proof of matching*,
-not a substitute for owning the game.
 
 ## Contributors
 

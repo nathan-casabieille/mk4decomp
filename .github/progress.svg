@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="44" viewBox="0 0 600 44" role="img" aria-label="Progress 100%">
+  <title>Progress: 100%</title>
+  <defs>
+    <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffd24a"/>
+      <stop offset="45%"  stop-color="#f59e0b"/>
+      <stop offset="80%"  stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <filter id="innerShadow" x="-5%" y="-50%" width="110%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+    </filter>
+  </defs>
+
+  <!-- Outer track -->
+  <rect x="1" y="1" width="598" height="42" rx="6" ry="6"
+        fill="#0a0a0a" stroke="url(#borderGrad)" stroke-width="2"/>
+
+  <!-- Filled portion (100%) -->
+  <rect x="4" y="4" width="592" height="36" rx="4" ry="4"
+        fill="url(#fillGrad)"/>
+
+  <!-- Top highlight -->
+  <rect x="4" y="4" width="592" height="8" rx="4" ry="4"
+        fill="#ffffff" opacity="0.18"/>
+
+  <!-- Percent text -->
+  <text x="300" y="29"
+        font-family="Impact, 'Arial Black', sans-serif"
+        font-size="20" font-weight="900"
+        text-anchor="middle"
+        fill="#fff8e1"
+        stroke="#1a0a0a" stroke-width="1.2"
+        paint-order="stroke fill"
+        letter-spacing="2">
+    100.0%
+  </text>
+</svg>
