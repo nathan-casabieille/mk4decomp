@@ -33,21 +33,14 @@ void CmpP1ScaledLoad74_0045f5d0(void) {
 }
 
 /* @addr 0x0045f610 (50b): same shape with offset 0x7c */
-__declspec(naked) void CmpP1ScaledLoad7c_0045f610(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_player1NodeIdx]
-        mov     eax, dword ptr [g_gtPlayerProbe2]
-        cmp     ecx, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   74h
-        _emit   0ah
-        mov     eax, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, dword ptr [eax*4 + 0x7c]
-        mov     dword ptr [g_walkCallback], edx
-        ret
+void CmpP1ScaledLoad7c_0045f610(void) {
+    unsigned int v = g_gtPlayerProbe2;
+    g_scaledInit_00542044 = v;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        v = g_gtPlayerProbe1;
+        g_scaledInit_00542044 = v;
     }
+    g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x7c);
 }
 
 /* @addr 0x004202c0 (57b)
