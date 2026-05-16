@@ -8,7 +8,7 @@
  * (CallTwoSumShl_004c45a0). Has no callers in orig - likely a leftover
  * patch slot or alias entry.
  */
-__declspec(naked) void func_004c4588(void) {
+__declspec(naked) void DeadThunk_004c4588(void) {
     __asm {
         _emit    0x90
         _emit    0x90
@@ -44,7 +44,7 @@ __declspec(naked) void func_004c4588(void) {
  * code (format-print on exception) are dumped raw here so synth places
  * them at the fixed VA.
  */
-__declspec(naked) void func_004c5457(void) {
+__declspec(naked) void WinMainExceptHandler_004c5457(void) {
     __asm {
         _emit    0x8b
         _emit    0x45

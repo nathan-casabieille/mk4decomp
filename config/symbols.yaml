@@ -1758,7 +1758,7 @@ functions:
     status: matched
     file: src/game/game_tick.c
   - addr: 0x00420090
-    name: func_00420090
+    name: ResetSceneCallbacks_00420090
     size: 18
     group: engine
     status: matched
@@ -14964,11 +14964,11 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004ba1c0
-    name: func_004ba1c0
+    name: RenderSceneGraphIterate_004ba1c0
     size: 1026
-    group: engine
+    group: engine.render
     status: matched
-    file: src/engine/func_004ba1c0.c
+    file: src/engine/render_scene_graph_iterate.c
   - addr: 0x004ba5d0
     name: ZBucketClampStore_004ba5d0
     size: 92
@@ -15216,7 +15216,7 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004bdc70
-    name: func_004bdc70
+    name: DispatchProbeOrTransformB_004bdc70
     size: 48
     group: engine.scenegraph
     status: matched
@@ -15234,7 +15234,7 @@ functions:
     status: matched
     file: src/engine/scenegraph.c
   - addr: 0x004bddc0
-    name: func_004bddc0
+    name: DispatchProbeOrTransformC_004bddc0
     size: 48
     group: engine.scenegraph
     status: matched
@@ -15684,7 +15684,7 @@ functions:
     status: matched
     file: src/platform/timer.c
   - addr: 0x004c4588
-    name: func_004c4588
+    name: DeadThunk_004c4588
     size: 24
     group: boot
     status: matched
@@ -15768,7 +15768,7 @@ functions:
     status: matched
     file: src/boot/winmain.c
   - addr: 0x004c5457
-    name: func_004c5457
+    name: WinMainExceptHandler_004c5457
     size: 89
     group: boot
     status: matched

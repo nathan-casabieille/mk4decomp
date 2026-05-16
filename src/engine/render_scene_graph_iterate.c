@@ -1,16 +1,22 @@
-/* @addr 0x004ba1c0 (1026b game) - raw-bytes dump of an unmatched function.
+/* @addr 0x004ba1c0 (1026b game) - scene-graph iteration + render loop.
  *
- * Referenced only via DIR32 from inside TickAllEntities (0x4b9ea1) and from
- * a fnptr in .data within the BigDataBlob region. The function never had
- * a structured decompilation attempt - we just dump the orig bytes as
- * _emit so that synth places them at the fixed VA 0x004ba1c0.
+ * Walks the entity table from g_currentNodeIdx, follows the node chain
+ * via field +0x18 (and +0x34 sibling slot), and for each node performs:
+ * camera-relative transform (ChainStreamMatMulVecAdd, ScaledNegThreeWords,
+ * Mat3x3VecMul6Bit), frustum culling (CameraSetupAndCullFan_004b99b0),
+ * and RenderSceneNode (0x4ba720). Body is a backward-jmp loop that
+ * iterates until the chain pointer at field +0x18 reaches zero, with
+ * the scenegraph cleanup hook ChainWalkCleanup_004bd4a0 firing on exit.
  *
- * Absolute addresses inside the body (DIR32 references to globals) are
- * baked into the literal bytes and are valid only when this function lives
- * at exactly 0x004ba1c0. If symbols.yaml is ever rebased, the literal bytes
- * must be re-dumped from orig.
+ * Referenced via DIR32 fnptr from TickAllEntities (0x4b9ea1) and from a
+ * function-pointer slot in .data within the BigDataBlob region (likely
+ * a per-renderer dispatch table). Kept as raw _emit bytes because the
+ * structural decompilation hasn't been attempted; absolute addresses
+ * inside the body (DIR32 references to globals + calls) are baked into
+ * the literal bytes and only valid when synth places this function at
+ * exactly 0x004ba1c0.
  */
-__declspec(naked) void func_004ba1c0(void) {
+__declspec(naked) void RenderSceneGraphIterate_004ba1c0(void) {
     __asm {
         _emit    0xa1
         _emit    0x44

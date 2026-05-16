@@ -324,7 +324,7 @@ extern void InitOrAllZeroLoopback_004bdb00(void);
  * to InitOrAllZeroLoopback_004bdb00. Bytes match orig including the disp32=0 SIB form
  * (no base symbol, raw pointer arithmetic - same pattern as the _Direct variants).
  */
-__declspec(naked) void func_004bdc70(void) {
+__declspec(naked) void DispatchProbeOrTransformB_004bdc70(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         cmp     dword ptr [eax*4 + 0], 0
@@ -346,10 +346,10 @@ __declspec(naked) void func_004bdc70(void) {
     }
 }
 
-/* @addr 0x004bddc0 (48b game) - sibling of func_004bdc70: same dispatch pattern,
+/* @addr 0x004bddc0 (48b game) - sibling of DispatchProbeOrTransformB_004bdc70: same dispatch pattern,
  * but second tail-jmp targets NodeApplyTransform_C instead of _B (rel32=0xa1).
  */
-__declspec(naked) void func_004bddc0(void) {
+__declspec(naked) void DispatchProbeOrTransformC_004bddc0(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         cmp     dword ptr [eax*4 + 0], 0
