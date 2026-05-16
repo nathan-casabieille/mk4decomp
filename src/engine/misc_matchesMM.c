@@ -48,35 +48,23 @@ extern u32 g_currentNodeFlags;
 extern void func_0049072e(void);
 extern void func_00490c0a(void);
 extern void func_0046121e(void);
-__declspec(naked) void PushPop84TripleCall_00438b90(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_currentNodeFlags]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    func_0049072e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   34h
-        call    func_00490c0a
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   26h
-        call    func_0046121e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_currentNodeFlags], edx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
+void PushPop84TripleCall_00438b90(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_currentNodeFlags;
+    func_0049072e();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    func_00490c0a();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    func_0046121e();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    g_currentNodeFlags = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x004be630 (91b)
