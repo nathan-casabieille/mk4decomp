@@ -274,25 +274,17 @@ void DoubleStackPushAndJmp_00474010(void) {
  */
 extern unsigned int g_state_00538094;
 extern u32 g_fightTableC0;
-__declspec(naked) void NotShrCmp1Store_00460d80(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00538094]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     dword ptr [g_walkCallback], 0
-        ret
-        mov     eax, dword ptr [g_fightTableC0]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        not     eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     ecx, dword ptr [ecx*4 + 0x30]
-        cmp     ecx, 1
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        _emit   74h
-        _emit   08h
-        shr     eax, 8
-        mov     dword ptr [g_walkCallback], eax
-        ret
+void NotShrCmp1Store_00460d80(void) {
+    unsigned int e;
+    unsigned int chain;
+    if (g_state_00538094 != 0) {
+        g_walkCallback = 0;
+        return;
     }
+    e = ~g_fightTableC0;
+    g_walkCallback = (void(*)(void))e;
+    chain = *(unsigned int *)(g_fightGroupHead * 4 + 0x30);
+    g_eventQueueCurrent = chain;
+    if (chain == 1) return;
+    g_walkCallback = (void(*)(void))(e >> 8);
 }
