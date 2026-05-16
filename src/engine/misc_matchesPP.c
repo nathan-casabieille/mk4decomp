@@ -1193,32 +1193,27 @@ extern void InstallSelfChainSet84_80Call_00434f90(void);
 extern void InstallSelfStdChain_00435030(void);
 extern void InstallSelfChainExtendCall_00434f10(void);
 extern void CallPauseTestByteJmpCalls_004390f0(void);
-__declspec(naked) void RangeDispatch4_00434ec0(void) {
-    __asm {
-        push    OFFSET g_data_004e4a04
-        call    QuadBlockArgInstallChain_0043a950
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   33h
-        mov     eax, dword ptr [g_data_00535ddc]
-        cmp     eax, 0x20000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     InstallSelfChainSet84_80Call_00434f90
-        cmp     eax, 0x18000
-        _emit   7eh
-        _emit   05h
-        jmp     InstallSelfStdChain_00435030
-        cmp     eax, 0x10000
-        _emit   7eh
-        _emit   05h
-        jmp     InstallSelfChainExtendCall_00434f10
-        jmp     CallPauseTestByteJmpCalls_004390f0
-        ret
+void RangeDispatch4_00434ec0(void) {
+    int v;
+    QuadBlockArgInstallChain_0043a950((void *)&g_data_004e4a04);
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    v = (int)g_data_00535ddc;
+    g_walkCallback = (void (*)(void))v;
+    if (v > 0x20000) {
+        InstallSelfChainSet84_80Call_00434f90();
+        return;
+    }
+    if (v > 0x18000) {
+        InstallSelfStdChain_00435030();
+        return;
+    }
+    if (v > 0x10000) {
+        InstallSelfChainExtendCall_00434f10();
+        return;
+    }
+    CallPauseTestByteJmpCalls_004390f0();
 }
 
 /* @addr 0x00489030 (74b)
