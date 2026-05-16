@@ -7,42 +7,8 @@ static breakdown: top callees, globals touched, structural traits
 as a working list for contributors who want to give these functions
 real semantic names.
 
-Total: 109 functions, sorted by size.
+Total: 104 functions, sorted by size.
 
-
-## PendingMatch_004a38d0 @ 0x4a38d0 (892b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: switch-via-jumptable, cond jmps: 11
-- top callees: `MStackPush2ChainLLInsert_00406790`×4, `LoadGeoAsset_Default`×3, `TableWalkBoundedCmp_004bd890`×2, `SetJmp_004a1ad0`×2, `DispatcherComplex260_00407400`×2, `MStackPushComplexCallPop_004064b0`×2, `extern_-0x5bf08bda`, `TripleCallByteCheck_004a1bf0`
-- top globals: `g_tickW1`×6, `g_dlNalt2`×2, `g_eventQueueEnd`×2, `g_eventQueueCurrent`×2, `0x542060`, `0x4d50b4`, `g_gtPlayerProbe2`, `g_gtPlayerProbe1`
-
-## PendingMatch_004ceb80 @ 0x4ceb80 (898b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, cond jmps: 1
-- top callees: `Shl96By1_004ce290`×4, `extern_0x336e0f`, `extern_0x351d2f6`, `extern_-0x71cb0e39`, `IntToBufBase8_004d0ac0`, `Crt80BitFloatMul_004d0800`, `Shr96By1_004ce2c0`, `TimeValAdd3_004ce220`
-- top globals: `0x4d2fcc`, `0x4d2fc4`, `0x4d2fbc`
-
-## PendingMatch_004d0bc0 @ 0x4d0bc0 (912b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, IAT calls: 1, cond jmps: 7
-- top callees: `Tolower_004cc780`×4, `BigDataBlob_004d1080`×3, `LoadArgPushCall_004c54b0`×2, `FreeImpl_004c55f0`×2, `Lock_004c6f50`×2, `TableLookupIatCall_004c6fd0`×2, `Strncpy_004cdc20`, `MbToWcsDispatcher_004d0f50`
-- top globals: `0x522bb0`, `0x522998`
-
-## PendingMatch_004cd350 @ 0x4cd350 (921b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, IAT calls: 4, cond jmps: 8
-- top callees: `CallAddC_004c8bb0`×3, `DivMod32IAT_004cd320`×3, `CallAdd8_004c8ba0`×2, `LseekImpl_004c8e50`×2, `FileTableExtendOrFind_004ccfa0`, `DosMapErr_004c8b20`, `SetFdMode_004cd110`, `extern_-0x7ca6659b`
-
-## PendingMatch_004032d0 @ 0x4032d0 (924b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: switch-via-jumptable, x87 FPU, cond jmps: 8
-- top callees: `BootDualStateInstallSelf_00403070`×4, `Push16Call_00489f50`×3, `TwoPushCallSetDirty_00422050`, `DispatcherComplex260_00407400`, `MStackPushComplexCallPop_00406430`, `Phase3InstallSelf_00403170`, `StackPopDispatchTagged_0041f780`
-- top globals: `g_currentNodeIdx`×7, `g_eventQueueChild`×6, `0x54206c`×4, `0x542060`×3, `0x537f2c`, `0x53a6dc`, `0x537f94`, `0x53a430`
 
 ## PendingMatch_004a09c0 @ 0x4a09c0 (925b)
 
@@ -62,7 +28,7 @@ Total: 109 functions, sorted by size.
 
 - file: `src/engine/misc_matchesQQ.c`
 - traits: x87 FPU, IAT calls: 1, cond jmps: 10
-- top callees: `FreeImpl_004c55f0`×17, `LoadArgPushCall_004c54b0`×4, `PendingMatch_004d0bc0`, `WcToMbDispatcher_004cdae0`, `MBToWCharCachedDispatch_004cd950`
+- top callees: `FreeImpl_004c55f0`×17, `LoadArgPushCall_004c54b0`×4, `CrtGetLocaleInfo_004d0bc0`, `WcToMbDispatcher_004cdae0`, `MBToWCharCachedDispatch_004cd950`
 - top globals: `0x522bb0`×2, `0xf9fc78`×2, `0xf9fc7c`×2, `0xf9fc10`, `0xf9fc8c`, `0x522998`, `0x52299c`
 
 ## PendingMatch_004a7930 @ 0x4a7930 (1031b)
@@ -468,7 +434,7 @@ Total: 109 functions, sorted by size.
 
 - file: `src/engine/misc_matchesQQ.c`
 - traits: switch-via-jumptable, SEH (fs:[0]), x87 FPU, cond jmps: 4
-- top callees: `QuadCallPhase2_004be800`×8, `TableWalkBoundedCmp_004bd890`×3, `Push16Call_00489f50`×3, `LeaPlus22StoreSelf_0048e4d0`×2, `SceneFrameStepWithInputs_004be250`×2, `PendingMatch_004032d0`×2, `BootStateMachine4Way_00402f60`×2, `PendingMatch_00403d60`×2
+- top callees: `QuadCallPhase2_004be800`×8, `TableWalkBoundedCmp_004bd890`×3, `Push16Call_00489f50`×3, `LeaPlus22StoreSelf_0048e4d0`×2, `SceneFrameStepWithInputs_004be250`×2, `TitleDemoStateMachine_004032d0`×2, `BootStateMachine4Way_00402f60`×2, `PendingMatch_00403d60`×2
 - top globals: `g_currentNodeIdx`×47, `0x542060`×12, `0x53a3e8`×2, `0x53a19c`, `0x54206c`, `g_tickFlagF`
 
 ## PendingMatch_0044fe90 @ 0x44fe90 (2020b)

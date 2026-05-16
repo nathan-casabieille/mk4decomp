@@ -96,7 +96,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004032d0
-    name: PendingMatch_004032d0
+    name: TitleDemoStateMachine_004032d0
     size: 924
     group: boot
     status: matched
@@ -12954,7 +12954,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a38d0
-    name: PendingMatch_004a38d0
+    name: LoadGeoAssetsStateMachine_004a38d0
     size: 892
     group: audio
     status: matched
@@ -16710,7 +16710,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesFF.c
   - addr: 0x004cd350
-    name: PendingMatch_004cd350
+    name: CrtFloatFormatHelper_004cd350
     size: 921
     group: crt
     status: matched
@@ -16830,7 +16830,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ceb80
-    name: PendingMatch_004ceb80
+    name: CrtFloatConvert_004ceb80
     size: 898
     group: crt
     status: matched
@@ -16950,7 +16950,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0bc0
-    name: PendingMatch_004d0bc0
+    name: CrtGetLocaleInfo_004d0bc0
     size: 912
     group: other
     status: matched
