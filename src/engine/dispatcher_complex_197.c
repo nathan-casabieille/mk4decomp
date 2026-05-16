@@ -60,58 +60,31 @@ extern unsigned int g_scaledInit_00542044;
 extern void GuardedSeq_004297b0(void);
 extern void CallPauseScaledDecJmp_00429750(void);
 
-#define DC197_BODY(CALL_FN)                                                    \
-    __asm {                                                                    \
-        __asm call    CALL_FN                                                  \
-        __asm mov     eax, dword ptr [g_framePauseFlag]                        \
-        __asm test    eax, eax                                                 \
-        __asm _emit   0fh                                                      \
-        __asm _emit   85h                                                      \
-        __asm _emit   0b2h                                                     \
-        __asm _emit   00h                                                      \
-        __asm _emit   00h                                                      \
-        __asm _emit   00h                                                      \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     ecx, dword ptr [g_eventQueueIdx]                         \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     edx, dword ptr [g_fightGroupHead]                        \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], edx                               \
-        __asm mov     eax, dword ptr [g_baseSel_00542060]                      \
-        __asm mov     ecx, dword ptr [eax*4 + 0x38]                            \
-        __asm mov     dword ptr [g_fightGroupHead], ecx                        \
-        __asm call    CALL_FN                                                  \
-        __asm mov     eax, dword ptr [g_framePauseFlag]                        \
-        __asm test    eax, eax                                                 \
-        __asm _emit   75h                                                      \
-        __asm _emit   62h                                                      \
-        __asm mov     eax, dword ptr [g_fightGroupHead]                        \
-        __asm mov     edx, dword ptr [eax*4 + 0x28]                            \
-        __asm mov     dword ptr [g_eventQueueCurrent], edx                     \
-        __asm mov     eax, dword ptr [eax*4 + 0x24]                            \
-        __asm mov     dword ptr [g_xformEntityIdx], eax                        \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     ecx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_fightGroupHead], ecx                        \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     edx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_eventQueueIdx], edx                         \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     eax, dword ptr [ecx*4 + 0x28]                            \
-        __asm mov     dword ptr [g_walkCallback], eax                          \
-        __asm mov     ecx, dword ptr [ecx*4 + 0x24]                            \
-        __asm mov     dword ptr [g_scaledInit_00542044], ecx                   \
-        __asm ret                                                              \
-    }
+#define DC197_BODY(CALL_FN)                                                   \
+    do {                                                                      \
+        unsigned int saved_fg;                                                \
+        CALL_FN();                                                            \
+        if (g_framePauseFlag != 0) return;                                    \
+        g_matrixStackTop++;                                                   \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueIdx;            \
+        g_matrixStackTop++;                                                   \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;           \
+        g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);  \
+        CALL_FN();                                                            \
+        if (g_framePauseFlag != 0) return;                                    \
+        g_eventQueueCurrent = *(unsigned int *)(g_fightGroupHead * 4 + 0x28); \
+        g_xformEntityIdx = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);    \
+        saved_fg = *(unsigned int *)(g_matrixStackTop * 4);                   \
+        g_fightGroupHead = saved_fg;                                          \
+        g_matrixStackTop--;                                                   \
+        g_eventQueueIdx = *(unsigned int *)(g_matrixStackTop * 4);            \
+        g_matrixStackTop--;                                                   \
+        g_walkCallback = (void (*)(void))(*(unsigned int *)(saved_fg * 4 + 0x28)); \
+        g_scaledInit_00542044 = *(unsigned int *)(saved_fg * 4 + 0x24);       \
+    } while (0)
 
 /* @addr 0x0045be40 */
-__declspec(naked) void DispatcherComplex197_0045be40(void) { DC197_BODY(GuardedSeq_004297b0) }
+void DispatcherComplex197_0045be40(void) { DC197_BODY(GuardedSeq_004297b0); }
 
 /* @addr 0x0045bf10 */
-__declspec(naked) void DispatcherComplex197_0045bf10(void) { DC197_BODY(CallPauseScaledDecJmp_00429750) }
+void DispatcherComplex197_0045bf10(void) { DC197_BODY(CallPauseScaledDecJmp_00429750); }
