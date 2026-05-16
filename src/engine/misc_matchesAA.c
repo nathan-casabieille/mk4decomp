@@ -39,22 +39,16 @@ void ScaledTripleCopy10_0049d340(void) {
  *   arg sar 2 → g_eventQueueTotal; scaled load [baseSel*4 + 0x30] → g_walkCallback
  *   scaled load [arg*4 + 0] → g_xformEntityIdx; if walk!=0 also load +4.
  */
-__declspec(naked) void ArgScaledTestStore_00494140(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [ecx*4 + 0x30]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     edx, dword ptr [eax*4 + 0]
-        test    ecx, ecx
-        mov     dword ptr [g_xformEntityIdx], edx
-        _emit   74h
-        _emit   0ch
-        mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_xformEntityIdx], eax
-        ret
+void ArgScaledTestStore_00494140(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int *src = (unsigned int *)(packed * 4);
+    unsigned int cb;
+    g_eventQueueTotal = packed;
+    cb = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    g_walkCallback = (void (*)(void))cb;
+    g_xformEntityIdx = src[0];
+    if (cb != 0) {
+        g_xformEntityIdx = src[1];
     }
 }
 
@@ -115,24 +109,19 @@ extern void DualTestDirtyToggle_004282c0(void);
 extern void func_0041f780_aa(void);
 extern void IncCapped3e7_00491920(void);
 extern void RoundStartCluster_004919c0(void);
-__declspec(naked) void Set5CallPauseTestByteJmpCall_00491950(void) {
-    __asm {
-        mov     eax, 5
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0052aac4_aa], eax
-        call    DualTestDirtyToggle_004282c0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   05h
-        jmp     func_0041f780_aa
-        call    IncCapped3e7_00491920
-        jmp     RoundStartCluster_004919c0
-        ret
+void Set5CallPauseTestByteJmpCall_00491950(void) {
+    g_walkCallback = (void (*)(void))5;
+    g_state_0052aac4_aa = 5;
+    DualTestDirtyToggle_004282c0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if ((g_xformDirtyFlags & 1) == 0) {
+        func_0041f780_aa();
+        return;
+    }
+    IncCapped3e7_00491920();
+    RoundStartCluster_004919c0();
 }
 
 /* @addr 0x004923b0 (63b)
