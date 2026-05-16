@@ -11,11 +11,9 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned char g_byte_00538148;
 extern void func_0041a608(void);
-__declspec(naked) void StoreByteJmp_0042f840(void) {
-    __asm {
-        mov     byte ptr [g_byte_00538148], 0
-        jmp     func_0041a608
-    }
+void StoreByteJmp_0042f840(void) {
+    g_byte_00538148 = 0;
+    func_0041a608();
 }
 
 /* @addr 0x0045e1d0 (11b)
@@ -23,11 +21,9 @@ __declspec(naked) void StoreByteJmp_0042f840(void) {
  *   jmp     +5
  */
 extern void InputCheckCluster_0045e1e0(void);
-__declspec(naked) void IncJmp_0045e1d0(void) {
-    __asm {
-        inc     dword ptr [g_scaledInit_00542044]
-        jmp     InputCheckCluster_0045e1e0
-    }
+void IncJmp_0045e1d0(void) {
+    g_scaledInit_00542044++;
+    InputCheckCluster_0045e1e0();
 }
 
 /* @addr 0x0048a1b0 (11b)

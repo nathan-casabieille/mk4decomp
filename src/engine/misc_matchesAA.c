@@ -16,43 +16,23 @@ extern u32 g_eventQueueEnd;
  *   triple copy from a[0..8] into b[4..0xc] with each pass
  *   echoing through g_walkCallback.
  */
-__declspec(naked) void ScaledTripleCopy4_0049d2d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        shl     eax, 2
-        shl     ecx, 2
-        mov     edx, dword ptr [eax]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 4], edx
-        mov     edx, dword ptr [eax + 4]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 8], edx
-        mov     eax, dword ptr [eax + 8]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx + 0x0c], eax
-        ret
-    }
+void ScaledTripleCopy4_0049d2d0(void) {
+    unsigned int *src = (unsigned int *)(g_xformEntityIdx * 4);
+    unsigned int *dst = (unsigned int *)(g_scaledInit_00542044 * 4);
+    unsigned int v;
+    v = src[0]; g_walkCallback = (void(*)(void))v; dst[1] = v;
+    v = src[1]; g_walkCallback = (void(*)(void))v; dst[2] = v;
+    v = src[2]; g_walkCallback = (void(*)(void))v; dst[3] = v;
 }
 
 /* @addr 0x0049d340 (52b): same shape, offsets shift to 0x10/0x14/0x18 */
-__declspec(naked) void ScaledTripleCopy10_0049d340(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        shl     eax, 2
-        shl     ecx, 2
-        mov     edx, dword ptr [eax]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x10], edx
-        mov     edx, dword ptr [eax + 4]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx + 0x14], edx
-        mov     eax, dword ptr [eax + 8]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx + 0x18], eax
-        ret
-    }
+void ScaledTripleCopy10_0049d340(void) {
+    unsigned int *src = (unsigned int *)(g_xformEntityIdx * 4);
+    unsigned int *dst = (unsigned int *)(g_scaledInit_00542044 * 4);
+    unsigned int v;
+    v = src[0]; g_walkCallback = (void(*)(void))v; dst[4] = v;
+    v = src[1]; g_walkCallback = (void(*)(void))v; dst[5] = v;
+    v = src[2]; g_walkCallback = (void(*)(void))v; dst[6] = v;
 }
 
 /* @addr 0x00494140 (61b)
@@ -83,19 +63,15 @@ __declspec(naked) void ArgScaledTestStore_00494140(void) {
  *   load [eax*4 + 0]; store at [baseSel*4 + 0x6c]; clear g_eventQueueTotal; jmp T.
  */
 extern void MoveDispatch4StateFsm_00494a60(void);
-__declspec(naked) void ArgScaledChain_004949b0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueEnd], eax
-        add     eax, 3
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [ecx*4 + 0x6c], eax
-        mov     dword ptr [g_eventQueueTotal], 0
-        jmp     MoveDispatch4StateFsm_00494a60
-    }
+void ArgScaledChain_004949b0(int arg) {
+    unsigned int base = (unsigned int)(arg >> 2);
+    unsigned int basePlus3;
+    g_eventQueueEnd = base;
+    basePlus3 = base + 3;
+    g_eventQueueTotal = basePlus3;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x6c) = *(unsigned int *)(basePlus3 * 4);
+    g_eventQueueTotal = 0;
+    MoveDispatch4StateFsm_00494a60();
 }
 
 /* @addr 0x00490740 (51b)
@@ -104,40 +80,29 @@ __declspec(naked) void ArgScaledChain_004949b0(void) {
  *   then jmp.
  */
 extern void ZeroThreeSlots_00490780(void);
-__declspec(naked) void ScaledZeroFour_00490740(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        shl     eax, 2
-        xor     ecx, ecx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x6c], ecx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x70], ecx
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x74], edx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x4c], ecx
-        jmp     ZeroThreeSlots_00490780
-    }
+void ScaledZeroFour_00490740(void) {
+    unsigned int *base = (unsigned int *)(g_fightGroupHead * 4);
+    g_walkCallback = 0;
+    base[0x6c/4] = 0;
+    base[0x70/4] = (unsigned int)g_walkCallback;
+    base[0x74/4] = (unsigned int)g_walkCallback;
+    base[0x4c/4] = (unsigned int)g_walkCallback;
+    ZeroThreeSlots_00490780();
 }
 
 /* @addr 0x004911f0 (57b)
  *   scaled chain: baseSel*4 + 0x40 → g_scaledInit; deref *4 → g_eventQueueNotMask
  *   reload baseSel*4 + 0x44 → g_scaledInit; deref *4 → g_eventQueueChild
  */
-__declspec(naked) void ScaledChainDouble_004911f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     ecx, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     eax, dword ptr [eax*4 + 0x44]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_eventQueueChild], edx
-        ret
-    }
+void ScaledChainDouble_004911f0(void) {
+    unsigned int base = g_baseSel_00542060;
+    unsigned int s1 = *(unsigned int *)(base * 4 + 0x40);
+    unsigned int s2;
+    g_scaledInit_00542044 = s1;
+    g_eventQueueNotMask = *(unsigned int *)(s1 * 4);
+    s2 = *(unsigned int *)(base * 4 + 0x44);
+    g_scaledInit_00542044 = s2;
+    g_eventQueueChild = *(unsigned int *)(s2 * 4);
 }
 
 /* @addr 0x00491950 (54b)
@@ -242,22 +207,13 @@ __declspec(naked) void ScaledLoadCmpStoreXfm_0048f2a0(void) {
  */
 extern void SpecialAnimBuilder_004937b0(void);
 extern void func_00489ff0_aa(void);
-__declspec(naked) void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x0a
-        call    SpecialAnimBuilder_004937b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   28h
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_state_00538158]
-        cmp     eax, ecx
-        mov     dword ptr [g_walkCallback], 0x26
-        _emit   74h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 0x27
-        jmp     func_00489ff0_aa
-        ret
+void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
+    g_walkCallback = (void(*)(void))0x0a;
+    SpecialAnimBuilder_004937b0();
+    if (g_framePauseFlag) return;
+    g_walkCallback = (void(*)(void))0x26;
+    if (g_fightGroupHead != g_state_00538158) {
+        g_walkCallback = (void(*)(void))0x27;
     }
+    func_00489ff0_aa();
 }

@@ -126,21 +126,15 @@ __declspec(naked) void DualCallPauseDirtyJmp_00435f20(void) {
 extern void PushPop84TripleCall_00438b90(void);
 extern void func_00438a04(void);
 extern void func_00438a09(void);
-__declspec(naked) void CmpJmpConstStoreJmp_004389e0(void) {
-    __asm {
-        call    PushPop84TripleCall_00438b90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        cmp     dword ptr [g_eventQueueChild], 0x64
-        _emit   7dh
-        _emit   05h
-        jmp     func_00438a04
-        mov     dword ptr [g_eventQueueChild], 0x1e
-        jmp     func_00438a09
-        ret
+void CmpJmpConstStoreJmp_004389e0(void) {
+    PushPop84TripleCall_00438b90();
+    if (g_framePauseFlag) return;
+    if ((int)g_eventQueueChild < 0x64) {
+        func_00438a04();
+        return;
     }
+    g_eventQueueChild = 0x1e;
+    func_00438a09();
 }
 
 /* @addr 0x00438ca0 (44b)
@@ -158,21 +152,15 @@ __declspec(naked) void CmpJmpConstStoreJmp_004389e0(void) {
 extern void func_00482ec0(void);
 extern void func_0049f4ad(void);
 extern void func_0046f170(void);
-__declspec(naked) void CallPauseDirtyConstJmp_00438ca0(void) {
-    __asm {
-        call    func_00482ec0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     func_0049f4ad
-        mov     dword ptr [g_walkCallback], 0x0c
-        jmp     func_0046f170
-        ret
+void CallPauseDirtyConstJmp_00438ca0(void) {
+    func_00482ec0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        func_0049f4ad();
+        return;
     }
+    g_walkCallback = (void(*)(void))0x0c;
+    func_0046f170();
 }
 
 /* @addr 0x0043aa80 (37b)
@@ -185,15 +173,13 @@ __declspec(naked) void CallPauseDirtyConstJmp_00438ca0(void) {
  */
 extern void StateMachine4ArmCascade_0043aab0(void);
 extern void func_00440230(void);
-__declspec(naked) void MStackPush5Func_0043aa80(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 5
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET StateMachine4ArmCascade_0043aab0
-        jmp     func_00440230
-    }
+void MStackPush5Func_0043aa80(void) {
+    unsigned int top = g_matrixStackTop;
+    g_walkCallback = (void(*)(void))5;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)StateMachine4ArmCascade_0043aab0;
+    func_00440230();
 }
 
 /* @addr 0x004462f0 (41b)
@@ -228,16 +214,11 @@ __declspec(naked) void ScaledChainOrAh1_004462f0(void) {
  *   mov     [eax*4 + 0x28], ecx
  *   ret
  */
-__declspec(naked) void ScaledLoadZeroStore_004464f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        xor     ecx, ecx
-        mov     eax, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [eax*4 + 0x28], ecx
-        ret
-    }
+void ScaledLoadZeroStore_004464f0(void) {
+    unsigned int scaled = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    g_walkCallback = 0;
+    g_scaledInit_00542044 = scaled;
+    *(unsigned int *)(scaled * 4 + 0x28) = 0;
 }
 
 /* @addr 0x00452740 (37b)
@@ -267,39 +248,23 @@ void DualScaledStore_00452740(void) {
  */
 extern void func_00453746(void);
 extern void func_00455761(void);
-__declspec(naked) void Const5Call_PauseDirty4_Jmp_004534e0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 5
-        call    func_00453746
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0eh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     func_00455761
-        ret
-    }
+void Const5Call_PauseDirty4_Jmp_004534e0(void) {
+    g_walkCallback = (void(*)(void))5;
+    func_00453746();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) return;
+    func_00455761();
 }
 
 /* @addr 0x00453510 (39b): same shape, value=6 */
 extern void func_00453746_b(void);
 extern void func_00455761_b(void);
-__declspec(naked) void Const6Call_PauseDirty4_Jmp_00453510(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 6
-        call    func_00453746_b
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0eh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     func_00455761_b
-        ret
-    }
+void Const6Call_PauseDirty4_Jmp_00453510(void) {
+    g_walkCallback = (void(*)(void))6;
+    func_00453746_b();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) return;
+    func_00455761_b();
 }
 
 /* @addr 0x00461340 (31b)
@@ -323,21 +288,14 @@ __declspec(naked) void Set1JmpSet2Jmp_00461340(void) {
 
 /* @addr 0x00464320 (36b): same shape as 0x0042ee10 (Cmp7DirtyToggle) but cmp=9 */
 extern unsigned int g_state_0052aac4_h;
-__declspec(naked) void Cmp9DirtyToggle_00464320(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4_h]
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 9
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   74h
-        _emit   08h
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void Cmp9DirtyToggle_00464320(void) {
+    unsigned int state = g_state_0052aac4_h;
+    g_walkCallback = (void(*)(void))state;
+    if (state != 9) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }
 
 /* @addr 0x004709c0 (31b)
@@ -351,17 +309,10 @@ __declspec(naked) void Cmp9DirtyToggle_00464320(void) {
  * .skip:
  *   ret
  */
-__declspec(naked) void CmpP1ScaledInit_004709c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_player2NodeIdx]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_player1NodeIdx]
-        cmp     ecx, eax
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_scaledInit_00542044], eax
-        ret
+void CmpP1ScaledInit_004709c0(void) {
+    g_scaledInit_00542044 = g_player2NodeIdx;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_scaledInit_00542044 = g_player1NodeIdx;
     }
 }
 
@@ -380,18 +331,12 @@ __declspec(naked) void CmpP1ScaledInit_004709c0(void) {
 extern void DirtyToggleByGate_0048f350(void);
 extern void func_00470f78(void);
 extern void func_00470f4d(void);
-__declspec(naked) void CallDirty4DualJmp_00470f30(void) {
-    __asm {
-        call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   05h
-        jmp     func_00470f78
-        jmp     func_00470f4d
-        ret
+void CallDirty4DualJmp_00470f30(void) {
+    DirtyToggleByGate_0048f350();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) {
+        func_00470f78();
+        return;
     }
+    func_00470f4d();
 }

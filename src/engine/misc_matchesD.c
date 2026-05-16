@@ -16,15 +16,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern void func_0049cb44(void);
-__declspec(naked) void StoreLoadJmp_00404ef0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_pendingNodeType], eax
-        mov     edx, dword ptr [ecx*4 + 0x0c]
-        mov     dword ptr [g_eventQueueWorkType], edx
-        jmp     func_0049cb44
-    }
+void StoreLoadJmp_00404ef0(unsigned int arg) {
+    g_pendingNodeType = arg;
+    g_eventQueueWorkType = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x0c);
+    func_0049cb44();
 }
 
 /* @addr 0x00406b20 (34b)
@@ -38,18 +33,13 @@ __declspec(naked) void StoreLoadJmp_00404ef0(void) {
  *   ret
  */
 extern void func_00406b3a(void);
-__declspec(naked) void ScaledLoadOrSetJmp_00406b20(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x10]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0bh
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     func_00406b3a
-        ret
-    }
+void ScaledLoadOrSetJmp_00406b20(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x10);
+    g_walkCallback = (void (*)(void))v;
+    if (v) return;
+    g_scaledInit_00542044 = idx;
+    func_00406b3a();
 }
 
 /* @addr 0x00409260 (32b)
@@ -118,16 +108,14 @@ void ScaledAnd4InvDirtyClear_00409350(void) {
  *   jmp     T
  */
 extern void func_0041309e(void);
-__declspec(naked) void MStackPushSet9Jmp_00413040(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     dword ptr [g_walkCallback], 9
-        jmp     func_0041309e
-    }
+void MStackPushSet9Jmp_00413040(void) {
+    unsigned int top = g_matrixStackTop;
+    unsigned int v = g_fightGroupHead;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = v;
+    g_walkCallback = (void (*)(void))9;
+    func_0041309e();
 }
 
 /* @addr 0x004296f0 (31b)
@@ -160,14 +148,10 @@ void ScaledStoreCurDirtyOr1_00429730(void) {
  *   jmp     +0xf
  */
 extern void func_00428328(void);
-__declspec(naked) void ScaledStoreIdxZeroJmp_00428300(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [eax*4 + 0x24], ecx
-        mov     dword ptr [g_walkCallback], 0
-        jmp     func_00428328
-    }
+void ScaledStoreIdxZeroJmp_00428300(void) {
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_eventQueueIdx;
+    g_walkCallback = 0;
+    func_00428328();
 }
 
 /* @addr 0x00428e40 (33b)
@@ -178,14 +162,12 @@ __declspec(naked) void ScaledStoreIdxZeroJmp_00428300(void) {
  *   jmp     +0xf
  */
 extern void func_00428e68(void);
-__declspec(naked) void ScaledStoreEntZeroJmp_00428e40(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [g_eventQueueCurrent], 0
-        mov     dword ptr [eax*4 + 0x24], ecx
-        jmp     func_00428e68
-    }
+void ScaledStoreEntZeroJmp_00428e40(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int ent = g_xformEntityIdx;
+    g_eventQueueCurrent = 0;
+    *(unsigned int *)(idx * 4 + 0x24) = ent;
+    func_00428e68();
 }
 
 /* @addr 0x00422050 (43b)
@@ -202,24 +184,13 @@ __declspec(naked) void ScaledStoreEntZeroJmp_00428e40(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern int func_0049cb40_t(int, void *);
+extern int func_0049cb40_t(void *, int);
 extern void *g_data_004573e0;
 extern void *g_data_00422200;
-__declspec(naked) void TwoPushCallSetDirty_00422050(void) {
-    __asm {
-        push    0x29
-        push    OFFSET g_data_004573e0
-        call    func_0049cb40_t
-        add     esp, 8
-        push    0x2c
-        push    OFFSET g_data_00422200
-        call    func_0049cb40_t
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        add     esp, 8
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+void TwoPushCallSetDirty_00422050(void) {
+    func_0049cb40_t(&g_data_004573e0, 0x29);
+    func_0049cb40_t(&g_data_00422200, 0x2c);
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }
 
 /* @addr 0x00428650 (41b)
@@ -235,20 +206,15 @@ __declspec(naked) void TwoPushCallSetDirty_00422050(void) {
  *   ret
  */
 extern void func_0040592c(void);
-__declspec(naked) void CallPauseDecScaled_00428650(void) {
-    __asm {
-        call    func_0040592c
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ah
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x28]
-        dec     eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        ret
-    }
+void CallPauseDecScaled_00428650(void) {
+    unsigned int idx;
+    unsigned int v;
+    func_0040592c();
+    if (g_framePauseFlag) return;
+    idx = g_fightGroupHead;
+    v = *(unsigned int *)(idx * 4 + 0x28) - 1;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x28) = v;
 }
 
 /* @addr 0x0042c390 (31b)
@@ -258,11 +224,8 @@ __declspec(naked) void CallPauseDecScaled_00428650(void) {
  *   jmp     T
  */
 extern void func_00471006(void);
-__declspec(naked) void ScaledStore501Set8Jmp_0042c390(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [eax*4 + 0x74], 0x501
-        mov     dword ptr [g_walkCallback], 8
-        jmp     func_00471006
-    }
+void ScaledStore501Set8Jmp_0042c390(void) {
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x501;
+    g_walkCallback = (void (*)(void))8;
+    func_00471006();
 }

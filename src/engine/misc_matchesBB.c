@@ -71,17 +71,12 @@ __declspec(naked) void PushCallPauseStorePushDispatch_004a12e0(void) {
  */
 extern u32 g_eventQueueWorkType;
 extern void AudioInstall3StateSubXform_004a17d0(void);
-__declspec(naked) void SetWorkType02CountFFB_004a1790(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_eventQueueWorkType], 0x01020000
-        mov     dword ptr [eax*4 + 0x30], 0x25b
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, 0xfffb0000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     AudioInstall3StateSubXform_004a17d0
-    }
+void SetWorkType02CountFFB_004a1790(void) {
+    g_eventQueueWorkType = 0x01020000;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x30) = 0x25b;
+    g_walkCallback = (void(*)(void))0xfffb0000;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = 0xfffb0000;
+    AudioInstall3StateSubXform_004a17d0();
 }
 
 /* @addr 0x004a1a10 (55b)
@@ -239,33 +234,17 @@ extern unsigned int g_state_0058c7b4;
 extern unsigned int g_state_0058c7b0;
 extern unsigned int g_state_0058c7dc;
 extern void Renderer2_EndScene_D3D(void);
-__declspec(naked) void Renderer2_PresentFrame(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0058c7e0]
-        test    eax, eax
-        _emit   74h
-        _emit   2fh
-        mov     eax, dword ptr [g_state_0058c7ec]
-        test    eax, eax
-        _emit   75h
-        _emit   26h
-        call    Renderer2_EndScene_D3D
-        mov     ecx, dword ptr [g_state_0058c7b4]
-        test    ecx, ecx
-        _emit   74h
-        _emit   17h
-        mov     eax, dword ptr [g_state_0058c7b0]
-        test    eax, eax
-        _emit   74h
-        _emit   0eh
-        mov     edx, dword ptr [eax]
-        push    1
-        push    ecx
-        push    eax
-        call    dword ptr [edx + 0x2c]
-        mov     dword ptr [g_state_0058c7dc], eax
-        ret
-    }
+void Renderer2_PresentFrame(void) {
+    unsigned int cb;
+    void *p;
+    if (!g_state_0058c7e0) return;
+    if (g_state_0058c7ec) return;
+    Renderer2_EndScene_D3D();
+    cb = g_state_0058c7b4;
+    if (!cb) return;
+    p = (void *)g_state_0058c7b0;
+    if (!p) return;
+    g_state_0058c7dc = ((unsigned int (__stdcall **)(void*, unsigned int, int))(*(void**)p))[11](p, cb, 1);
 }
 
 /* @addr 0x004af650 (56b)
@@ -277,25 +256,16 @@ __declspec(naked) void Renderer2_PresentFrame(void) {
  */
 extern unsigned int g_state_0058c7d4;
 extern unsigned int g_state_0058c7c4;
-__declspec(naked) void DualVtable8Call_004af650(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0058c7d4]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 8]
-        mov     dword ptr [g_state_0058c7dc], eax
-        mov     eax, dword ptr [g_state_0058c7c4]
-        mov     dword ptr [g_state_0058c7d4], 0
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     edx, dword ptr [eax]
-        push    eax
-        call    dword ptr [edx + 8]
-        mov     dword ptr [g_state_0058c7c4], 0
-        ret
+void DualVtable8Call_004af650(void) {
+    void *p1 = g_state_0058c7d4;
+    void *p2;
+    if (p1) {
+        g_state_0058c7dc = ((unsigned int (__stdcall **)(void*))(*(void**)p1))[2](p1);
     }
+    p2 = g_state_0058c7c4;
+    g_state_0058c7d4 = 0;
+    if (p2) {
+        ((unsigned int (__stdcall **)(void*))(*(void**)p2))[2](p2);
+    }
+    g_state_0058c7c4 = 0;
 }

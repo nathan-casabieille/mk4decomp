@@ -50,25 +50,18 @@ loop_top:
 extern unsigned int g_state_0053a718;
 extern void func_00489ff0_ff(void);
 extern void PollThenInit_00477920(void);
-__declspec(naked) void DecBoundCheckCallJmp_00421be0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a718]
-        mov     dword ptr [g_eventQueueChild], 0x28
-        dec     eax
-        cmp     eax, 0x14
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0053a718], eax
-        _emit   7dh
-        _emit   18h
-        mov     dword ptr [g_walkCallback], 0x32
-        call    func_00489ff0_ff
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     PollThenInit_00477920
-        ret
+void DecBoundCheckCallJmp_00421be0(void) {
+    int s = (int)g_state_0053a718;
+    g_eventQueueChild = 0x28;
+    s--;
+    g_walkCallback = (void(*)(void))s;
+    g_state_0053a718 = s;
+    if (s < 0x14) {
+        g_walkCallback = (void(*)(void))0x32;
+        func_00489ff0_ff();
+        if (g_framePauseFlag) return;
     }
+    PollThenInit_00477920();
 }
 
 /* @addr 0x0042afc0 (64b)

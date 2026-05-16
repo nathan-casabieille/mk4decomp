@@ -208,17 +208,14 @@ extern void func_004c84e0(void);
 extern void func_004c8570(void);
 extern void func_004c8480(void);
 extern void func_004c8550(void);
-__declspec(naked) void SetVtable5Slots_004c5790(void) {
-    __asm {
-        mov     eax, OFFSET func_004c8940
-        mov     dword ptr [g_iat_00522164], OFFSET func_004c84e0
-        mov     dword ptr [g_iat_00522160], eax
-        mov     dword ptr [g_iat_00522168], OFFSET func_004c8570
-        mov     dword ptr [g_iat_0052216c], OFFSET func_004c8480
-        mov     dword ptr [g_iat_00522170], OFFSET func_004c8550
-        mov     dword ptr [g_iat_00522174], eax
-        ret
-    }
+void SetVtable5Slots_004c5790(void) {
+    void *fn = (void *)func_004c8940;
+    g_iat_00522164 = (void *)func_004c84e0;
+    g_iat_00522160 = fn;
+    g_iat_00522168 = (void *)func_004c8570;
+    g_iat_0052216c = (void *)func_004c8480;
+    g_iat_00522170 = (void *)func_004c8550;
+    g_iat_00522174 = fn;
 }
 
 /* @addr 0x004c5a90 (50b): wrapper that calls 3 functions on arg */
@@ -286,21 +283,12 @@ extern unsigned int g_state_0053815c;
 extern unsigned int g_state_00538158_dd;
 extern u32 g_eventQueueWorkType;
 extern void MStackSignedMod_0042fee0(void);
-__declspec(naked) void LoadSetCallPauseStoreJmp_0042fea0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053815c]
-        mov     dword ptr [g_eventQueueWorkType], 0x4ccc
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    MStackSignedMod_0042fee0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_state_00538158_dd]
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     MStackSignedMod_0042fee0
-        ret
-    }
+void LoadSetCallPauseStoreJmp_0042fea0(void) {
+    g_eventQueueWorkType = 0x4ccc;
+    g_scaledInit_00542044 = g_state_0053815c;
+    MStackSignedMod_0042fee0();
+    if (g_framePauseFlag) return;
+    g_eventQueueCurrent = (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = g_state_00538158_dd;
+    MStackSignedMod_0042fee0();
 }
