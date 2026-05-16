@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# The full byte-match build is not possible in GitHub-hosted runners
+# because (a) game/MK4.EXE is copyrighted and not in the repo, and (b)
+# the MSVC 5.0 SP3 toolchain must be installed locally (see
+# tools/decomp/setup-msvc50.sh). Maintainers run `make matching`
+# locally before merging.
+#
+# What this CI catches in a PR:
+#  - symbols.yaml regressions (missing/duplicate entries, file:
+#    pointing to non-existent source, function name not present in
+#    its claimed file)
+#  - tools/decomp/*.py import/parse errors (progress.py walks every
+#    source file)
+#  - accidental commits of game/, build/, or PE binaries
+#
+# Real byte-match verification = `python3 tools/decomp/synthesize.py`
+# locally, which is the gate before merging.
+
+jobs:
+  lint:
+    name: Lint and consistency checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python deps
+        run: pip install pyyaml
+
+      - name: Validate symbols.yaml + source cross-references
+        run: python3 tools/decomp/ci_validate.py
+
+      - name: Validate progress.py runs cleanly (parses every src/*.c)
+        run: python3 tools/decomp/progress.py --no-svg
+
+      - name: Ensure no copyrighted or build artifacts committed
+        run: |
+          set -e
+          BAD=$(git ls-files | grep -E '^(game/|original/|audio/|build/|tools/msvc50/)' || true)
+          if [ -n "$BAD" ]; then
+            echo "FAIL: copyrighted or build artifacts in tree:"
+            echo "$BAD"
+            exit 1
+          fi
+
+      - name: Ensure no PE binaries committed
+        run: |
+          set -e
+          BAD=$(git ls-files | grep -iE '\.(exe|dll|obj|lib)$' || true)
+          if [ -n "$BAD" ]; then
+            echo "FAIL: PE/COFF binary files in tree:"
+            echo "$BAD"
+            exit 1
+          fi
+
+      - name: Ensure Python tooling has no syntax errors
+        run: |
+          set -e
+          for f in tools/decomp/*.py; do
+            python3 -m py_compile "$f"
+          done
