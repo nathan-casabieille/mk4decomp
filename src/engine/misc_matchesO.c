@@ -396,20 +396,10 @@ void TripleCallPauseJmp_00470500(void) {
  *   ret
  */
 extern void func_004b85e0(void);
-__declspec(naked) void CallPauseDirtyScaledSet7_00480ef0(void) {
-    __asm {
-        call    func_004b85e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   20h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   17h
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, 7
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        ret
-    }
+void CallPauseDirtyScaledSet7_00480ef0(void) {
+    func_004b85e0();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) == 0) return;
+    g_walkCallback = (void (*)(void))7;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 7;
 }
