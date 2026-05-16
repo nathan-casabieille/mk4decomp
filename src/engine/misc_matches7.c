@@ -180,18 +180,15 @@ void ScaledZeroIfNonzero_0049d430(void) {
  *   ret
  */
 extern unsigned int g_state_005380e4;
-__declspec(naked) void StateAdd5Capped_0049fa00(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_005380e4]
-        cmp     eax, 8
-        mov     dword ptr [g_walkCallback], eax
-        _emit   77h
-        _emit   0dh
-        add     eax, 5
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_005380e4], eax
-        ret
+void StateAdd5Capped_0049fa00(void) {
+    unsigned int v = g_state_005380e4;
+    g_walkCallback = (void (*)(void))v;
+    if (v > 8) {
+        return;
     }
+    v += 5;
+    g_walkCallback = (void (*)(void))v;
+    g_state_005380e4 = v;
 }
 
 /* @addr 0x004a4180 (19b)
