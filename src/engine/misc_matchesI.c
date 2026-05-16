@@ -311,21 +311,15 @@ void ScaledChainTwoStores_00480d20(void) {
 extern void AudioVolumeRescale_004ab690(void);
 extern void func_004874f0(void);
 extern void func_00483906(void);
-__declspec(naked) void Set1f4CallDirtyJmp_004838d0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x01f4
-        call    AudioVolumeRescale_004ab690
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     func_004874f0
-        jmp     func_00483906
-        ret
+void Set1f4CallDirtyJmp_004838d0(void) {
+    g_walkCallback = (void (*)(void))0x01f4;
+    AudioVolumeRescale_004ab690();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) != 0) {
+        func_004874f0();
+        return;
     }
+    func_00483906();
 }
 
 /* @addr 0x00483b50 (36b)
