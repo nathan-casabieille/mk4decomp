@@ -115,7 +115,7 @@ __declspec(naked) void PushCallTestByte4Jmp_004a1a10(void) {
  *   writing AND-NOT result into [src1] and replacing [src2] with NOT(src1).
  */
 extern unsigned int g_table_004f2fd4[];
-__declspec(naked) void AndNotLoop_004a1d50(void) {
+__declspec(naked) void Helper_TickFrame_Misc(void) {
     __asm {
         push    ebx
         push    esi
@@ -239,7 +239,7 @@ extern unsigned int g_state_0058c7b4;
 extern unsigned int g_state_0058c7b0;
 extern unsigned int g_state_0058c7dc;
 extern void Renderer2_EndScene_D3D(void);
-__declspec(naked) void QuadTestVtableCall_004ae950(void) {
+__declspec(naked) void Renderer2_PresentFrame(void) {
     __asm {
         mov     eax, dword ptr [g_state_0058c7e0]
         test    eax, eax

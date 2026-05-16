@@ -199,7 +199,7 @@ __declspec(naked) void CallPauseCallTestStackPushJmp_00460c60(void) {
 extern unsigned int *g_state_00f9efcc;
 extern unsigned char g_byte_00f9efec;
 extern short g_table_00f85b60[];
-__declspec(naked) void VtableArgClamp_004c3eb0(void) {
+__declspec(naked) void Helper_TitleSetMaxVolume(void) {
     __asm {
         mov     edx, dword ptr [g_state_00f9efcc]
         test    edx, edx

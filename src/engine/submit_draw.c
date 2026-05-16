@@ -17,7 +17,7 @@
  * different field offsets per loop, then a rep movsd copy
  * + word patch through g_zSortKeyLUT.
  */
-__declspec(naked) void SubmitDrawEntry(s16 *entry)
+__declspec(naked) void Helper_DrawCursor(s16 *entry)
 {
     __asm {
         push    esi

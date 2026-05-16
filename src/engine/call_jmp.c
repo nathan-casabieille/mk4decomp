@@ -21,7 +21,7 @@ void CallJmp_00467d30(void) {
 }
 
 /* @addr 0x004bd990 */
-void CallJmp_004bd990(void) {
+void XformChainAdvance(void) {
     TestCallPush4Zero_004bd590();
     Helper_GeoLoadPost();
 }

@@ -171,7 +171,7 @@ void SplitHi8Lo24_004abfc0(void) {
  *   ret
  */
 extern unsigned int (__stdcall *g_iat_004d21c0)(int);
-int CallShrAnd_004b5450(int arg) {
+int Helper_JoyButtonInit(int arg) {
     return (g_iat_004d21c0(arg) >> 15) & 1;
 }
 
@@ -198,7 +198,7 @@ void LeaScaledCall_004bd510(void) {
  *   ret
  */
 extern int __cdecl func_00444c98(int);
-void TwoArgCallSeq_004bd570(void) {
+void Helper_GeoLoadPre(void) {
     func_00444c98(4);
     func_00444c98(2);
 }

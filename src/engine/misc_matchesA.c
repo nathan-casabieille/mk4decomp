@@ -72,7 +72,7 @@ __declspec(naked) void MaxOfThree_004b3d90(void) {
 extern unsigned int g_state_007affe4;
 extern unsigned int g_state_007afff0;
 extern void *g_iat_007b0010;
-__declspec(naked) void DualTestCallIat_004b46d0(void) {
+__declspec(naked) void Renderer1_PresentFrame(void) {
     __asm {
         mov     eax, dword ptr [g_state_007affe4]
         test    eax, eax
@@ -215,7 +215,7 @@ int LoadArgPushCall_004c54b0(int x) {
  *   ret
  */
 extern int __cdecl func_004c5d68(int, int, int);
-int Push3ArgsCall_004c5db0(int a, int b) {
+int Helper_FOpen(int a, int b) {
     return func_004c5d68(a, b, 0x40);
 }
 
@@ -226,13 +226,13 @@ int PushZ2ArgCall_004c6820(int x) {
 }
 
 /* @addr 0x004c6840 (18b): same shape, push 0+1+arg+call */
-int PushZ1ArgCall_004c6840(int x) {
+int _exit_post(int x) {
     return func_004c6857(x, 1, 0);
 }
 
 /* @addr 0x004cbad0 (18b): same shape, push 4+0+arg+call */
 extern int __cdecl func_004cbae7(int, int, int);
-int Push40ArgCall_004cbad0(int x) {
+int _isspace_crt(int x) {
     return func_004cbae7(x, 0, 4);
 }
 
@@ -388,7 +388,7 @@ __declspec(naked) void ZeroThreeFromArg_004cca20(void) {
  *   pop     edi
  *   ret
  */
-__declspec(naked) void ZeroBuffer2A_004b2ac0(void) {
+__declspec(naked) void AppInit_Misc3(void) {
     __asm {
         push    edi
         mov     ecx, 0x2a
@@ -450,7 +450,7 @@ __declspec(naked) void TailJmpRetNops_004bd5d0(void) {
  *   ret
  */
 extern unsigned int g_state_007af4e0;
-extern void TestBitClearOrCallTriple_004c5800(void *p);
+extern void Helper_FClose(void *p);
 __declspec(naked) void TestCallZero_004b1de0(void) {
     __asm {
         mov     eax, dword ptr [g_state_007af4e0]
@@ -458,7 +458,7 @@ __declspec(naked) void TestCallZero_004b1de0(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    TestBitClearOrCallTriple_004c5800
+        call    Helper_FClose
         add     esp, 4
         mov     dword ptr [g_state_007af4e0], 0
         ret

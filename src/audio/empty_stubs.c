@@ -36,10 +36,10 @@ void Helper_AudioStub_4160(void) {}
 void R2_Init10(void) {}
 
 /* @addr 0x004afb00 - install / config-area placeholder. */
-void Helper_InstallStub_AFB00(void) {}
+void DDraw3_GetSurface(void) {}
 
 /* @addr 0x004b0330 - ECM placeholder. */
-void Helper_EcmStub_0330(void) {}
+void DDraw5_GetSurface(void) {}
 
 /* @addr 0x004b21c0 - app-init placeholder. */
 void Helper_AppStub_21C0(void) {}

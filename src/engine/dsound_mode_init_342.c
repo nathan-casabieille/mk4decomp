@@ -233,13 +233,13 @@
     }
 
 /* @addr 0x004afb70 */
-__declspec(naked) void DSoundModeInit342_004afb70(void) {
+__declspec(naked) void DDraw3_SetCooperativeLevel(void) {
     DSMI_BODY(g_dsmi_b70_main, g_dsmi_b70_sec, g_dsmi_b70_ret,
               g_dsmi_b70_extra, g_dsmi_b70_flag, g_dsmi_b70_sec3)
 }
 
 /* @addr 0x004b03a0 */
-__declspec(naked) void DSoundModeInit342_004b03a0(void) {
+__declspec(naked) void DDraw5_SetCooperativeLevel(void) {
     DSMI_BODY(g_dsmi_3a0_main, g_dsmi_3a0_sec, g_dsmi_3a0_ret,
               g_dsmi_3a0_extra, g_dsmi_3a0_flag, g_dsmi_3a0_sec3)
 }

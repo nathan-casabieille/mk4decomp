@@ -33,7 +33,7 @@ extern int  Fread_004c5bb0(int a, int b, int c, int d);
 extern int  FWriteNoLock_004c5fc0(int a, int b, int c, int d);
 
 /* @addr 0x004c5b70 */
-__declspec(naked) void WrapThreeDispatch_004c5b70(void) {
+__declspec(naked) void Helper_FRead(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 0x14]

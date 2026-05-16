@@ -122,25 +122,25 @@ extern void *g_iat_004d217c;   /* method6 */
     }
 
 /* @addr 0x004ae990 */
-__declspec(naked) void DSoundCreateBuffer170_004ae990(void) {
+__declspec(naked) void R2_Init3(void) {
     DSBI_BODY(g_990_state, g_990_iface, g_990_bufdesc, g_990_qual,
               g_990_pan, g_990_sec, g_990_d1, g_990_d2)
 }
 
 /* @addr 0x004af960 */
-__declspec(naked) void DSoundCreateBuffer170_004af960(void) {
+__declspec(naked) void DDraw3_PostCreate(void) {
     DSBI_BODY(g_960_state, g_960_iface, g_960_bufdesc, g_960_qual,
               g_960_pan, g_960_sec, g_960_d1, g_960_d2)
 }
 
 /* @addr 0x004b0190 */
-__declspec(naked) void DSoundCreateBuffer170_004b0190(void) {
+__declspec(naked) void DDraw5_PostCreate(void) {
     DSBI_BODY(g_190_state, g_190_iface, g_190_bufdesc, g_190_qual,
               g_190_pan, g_190_sec, g_190_d1, g_190_d2)
 }
 
 /* @addr 0x004b4f60 */
-__declspec(naked) void DSoundCreateBuffer170_004b4f60(void) {
+__declspec(naked) void Helper_GlideMode(void) {
     DSBI_BODY(g_f60_state, g_f60_iface, g_f60_bufdesc, g_f60_qual,
               g_f60_pan, g_f60_sec, g_f60_d1, g_f60_d2)
 }

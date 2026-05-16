@@ -34,8 +34,8 @@ extern void InstallSelfChainSet2011_00439ec0(void);     /* 0x00439ec0 */
 extern void GuardedDoubleCallSetJmp_00460260(void);     /* 0x00460260 */
 extern void Thunk_0049cbc0(void);     /* 0x0049cbc0 */
 extern void Thunk_0049cbd0(void);     /* 0x0049cbd0 */
-extern void RepStosInitState_004b5a80(void);     /* 0x004b5a80 */
-extern void TwoArgCallSeq_004bd570(void);     /* 0x004bd570 */
+extern void AppInit_Misc2(void);     /* 0x004b5a80 */
+extern void Helper_GeoLoadPre(void);     /* 0x004bd570 */
 extern void LoadGeoAsset_Default(void);     /* 0x004bd5b0 */
 extern void FlushDrawQueue(void);     /* 0x004bf460 */
 extern void ExitGame(void);     /* 0x004c4870 */
@@ -117,7 +117,7 @@ void Thunk_0049cbc0(void) { ScaledNeg1SetPause_0041f840(); }
 void Thunk_0049cbd0(void) { ChainNodeInit_0041fa50(); }
 
 /* @addr 0x0049cbe0 */
-void Thunk_0049cbe0(void) { BootScheduledNodeTimerWalk_0041f570(); }
+void Helper_TickFrame_PostFight(void) { BootScheduledNodeTimerWalk_0041f570(); }
 
 /* @addr 0x0049cbf0 */
 void Thunk_0049cbf0(void) { ZeroLargeBlock_0041f270(); }
@@ -126,13 +126,13 @@ void Thunk_0049cbf0(void) { ZeroLargeBlock_0041f270(); }
 void Thunk_0049cc00(void) { StructArrayWalkCondCall_0041fc50(); }
 
 /* @addr 0x004b5ac0 */
-void Thunk_004b5ac0(void) { RepStosInitState_004b5a80(); }
+void Thunk_004b5ac0(void) { AppInit_Misc2(); }
 
 /* @addr 0x004bd5c0 */
 void Thunk_004bd5c0(void) { LoadGeoAsset_Default(); }
 
 /* @addr 0x004bd8d0 */
-void Thunk_004bd8d0(void) { TwoArgCallSeq_004bd570(); }
+void Thunk_004bd8d0(void) { Helper_GeoLoadPre(); }
 
 /* @addr 0x004bf320 */
 void Thunk_004bf320(void) { FlushDrawQueue(); }

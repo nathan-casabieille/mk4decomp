@@ -371,7 +371,7 @@ extern unsigned int g_data_007afff4;
 extern unsigned int g_data_007afff0;
 extern unsigned char g_byte_004f4b4c;
 extern void *g_iat_007b000c;
-__declspec(naked) void SoundDisableIfActive_004b4650(void) {
+__declspec(naked) void Renderer1_BeginFrame_Glide(void) {
     __asm {
         mov     eax, dword ptr [g_data_007affe4]
         test    eax, eax
@@ -630,11 +630,11 @@ __declspec(naked) void ScaledIndexCondCopy_0048e590(void) {
  */
 extern unsigned int g_data_00ab4334;
 extern unsigned int g_data_004f2fc8;
-extern int CallShrAnd_004b5450(int);
+extern int Helper_JoyButtonInit(int);
 __declspec(naked) void TestQueueGateState_004a1ba0(void) {
     __asm {
         push    0x0d
-        call    CallShrAnd_004b5450
+        call    Helper_JoyButtonInit
         add     esp, 4
         test    eax, eax
         _emit   74h
@@ -1480,7 +1480,7 @@ extern unsigned int g_data_007af938;
 extern void *g_iat_004d2034;
 extern void *g_iat_004d2040;
 extern void Renderer4_EndScene_SW_Win(void);
-__declspec(naked) void DDrawBltJmp_004b2840(void) {
+__declspec(naked) void Renderer4_PresentFrame(void) {
     __asm {
         mov     eax, dword ptr [g_data_007af940]
         test    eax, eax
@@ -1516,7 +1516,7 @@ __declspec(naked) void DDrawBltJmp_004b2840(void) {
 extern unsigned int g_data_004d56c8;
 extern unsigned int g_data_004d56d0;
 extern unsigned int g_data_0053a1c0;
-extern void PrintfStub_004c5580(void *buf, void *fmt, unsigned int arg);
+extern void Helper_Sprintf(void *buf, void *fmt, unsigned int arg);
 __declspec(naked) void Sprintf2WaySelect_00426550(void) {
     __asm {
         mov     eax, 0x0053a1c0
@@ -1530,14 +1530,14 @@ __declspec(naked) void Sprintf2WaySelect_00426550(void) {
         push    ecx
         push    OFFSET g_data_004d56c8
         push    OFFSET g_data_0053a1c0
-        call    PrintfStub_004c5580
+        call    Helper_Sprintf
         add     esp, 0x0c
         ret
         mov     edx, dword ptr [g_walkCallback]
         push    edx
         push    OFFSET g_data_004d56d0
         push    OFFSET g_data_0053a1c0
-        call    PrintfStub_004c5580
+        call    Helper_Sprintf
         add     esp, 0x0c
         ret
     }
@@ -1699,7 +1699,7 @@ __declspec(naked) void InitDispatchersJmp_004a4260(void) {
 extern void *g_iat_004d21b8;
 extern void *g_iat_004d203c;
 extern void *g_iat_004d21a8;
-__declspec(naked) void IATDriverQuery_004c4950(void) {
+__declspec(naked) void Helper_PostCreateWindow(void) {
     __asm {
         push    esi
         push    0

@@ -229,9 +229,9 @@ do_init:
 }
 
 static const char k_fsys_archive_path[] = "filesys.dat";
-static const char k_fsys_init_err1[]    = "FSYS_Init(1)";
-static const char k_fsys_init_err2[]    = "FSYS_Init(2)";
-static const char k_fsys_init_err3[]    = "FSYS_Init(3)";
+static const char k_fsys_init_err1[]    = "AppInit_PreInstall(1)";
+static const char k_fsys_init_err2[]    = "AppInit_PreInstall(2)";
+static const char k_fsys_init_err3[]    = "AppInit_PreInstall(3)";
 static const char k_fsys_rb[]           = "rb";
 
 /*
@@ -241,13 +241,13 @@ static const char k_fsys_rb[]           = "rb";
  * non-zero entries into g_fsys_entry_count, then validate that
  * the in-memory table is sorted strictly descending by hash.
  *
- * Reports "FSYS_Init(1)" / "(2)" / "(3)" via ShowErrorMessage on
+ * Reports "AppInit_PreInstall(1)" / "(2)" / "(3)" via ShowErrorMessage on
  * fopen / fread / sort failures (each is a soft warning - the
  * function still returns).
  *
  * @addr 0x004b1cf0
  */
-__declspec(naked) void FSYS_Init(void)
+__declspec(naked) void AppInit_PreInstall(void)
 {
     __asm {
         push    ebx
@@ -271,7 +271,7 @@ __declspec(naked) void FSYS_Init(void)
         mov     [g_fsys_archive], eax
         test    eax, eax
         jne     fopen_ok
-        push    offset k_fsys_init_err1    ; "FSYS_Init(1)"
+        push    offset k_fsys_init_err1    ; "AppInit_PreInstall(1)"
         call    ShowErrorMessage
         mov     eax, [g_fsys_archive]
         add     esp, 4
@@ -284,7 +284,7 @@ fopen_ok:
         add     esp, 10h
         cmp     eax, 1
         je      fread_ok
-        push    offset k_fsys_init_err2    ; "FSYS_Init(2)"
+        push    offset k_fsys_init_err2    ; "AppInit_PreInstall(2)"
         call    ShowErrorMessage
         add     esp, 4
 fread_ok:

@@ -282,7 +282,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesN.c
   - addr: 0x004051e0
-    name: Chain13PauseGateTailJmp_004051e0
+    name: Helper_TickFrameTail
     size: 544
     group: boot
     status: matched
@@ -1944,7 +1944,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004227b0
-    name: DualSetupSameCall_004227b0
+    name: Helper_PostPlayerTick
     size: 94
     group: game
     status: matched
@@ -7152,7 +7152,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00464830
-    name: PendingMatch_00464830
+    name: AppInit_Misc7
     size: 5812
     group: game
     status: matched
@@ -9900,7 +9900,7 @@ functions:
     status: matched
     file: src/engine/misc_matches8.c
   - addr: 0x00489240
-    name: PendingMatch_00489240
+    name: Helper_PerPlayerTick
     size: 1535
     group: game
     status: matched
@@ -10302,7 +10302,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x0048bc40
-    name: MStackPushTableSearchPop_0048bc40
+    name: Helper_DownloadSetup
     size: 174
     group: game
     status: matched
@@ -12192,7 +12192,7 @@ functions:
     status: matched
     file: src/engine/thunks.c
   - addr: 0x0049cbe0
-    name: Thunk_0049cbe0
+    name: Helper_TickFrame_PostFight
     size: 5
     group: game
     status: matched
@@ -12780,7 +12780,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004a1d50
-    name: AndNotLoop_004a1d50
+    name: Helper_TickFrame_Misc
     size: 48
     group: audio
     status: matched
@@ -13572,13 +13572,13 @@ functions:
     status: matched
     file: src/audio/timer.c
   - addr: 0x004ac520
-    name: CallTestStateClearReg_004ac520
+    name: Helper_TitleEnterStateC
     size: 70
     group: audio
     status: matched
     file: src/engine/misc_matchesLL.c
   - addr: 0x004ac570
-    name: AudioTeardownReentr_004ac570
+    name: Helper_TitleEnterStateB
     size: 116
     group: audio
     status: matched
@@ -13590,13 +13590,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac650
-    name: MidiSetPosition_004ac650
+    name: Audio_TimerSet
     size: 290
     group: audio
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ac780
-    name: MidiTempoTimePackSend_004ac780
+    name: Helper_TitleEnterStateA
     size: 357
     group: audio
     status: matched
@@ -13704,7 +13704,7 @@ functions:
     status: matched
     file: src/engine/renderer2_init.c
   - addr: 0x004ad7c0
-    name: EngineShutdown_004ad7c0
+    name: R2_Cleanup
     size: 141
     group: engine.install
     status: matched
@@ -13716,7 +13716,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ada10
-    name: PadStateTickRebind_004ada10
+    name: Renderer2_BeginFrame_D3D
     size: 522
     group: engine.install
     status: matched
@@ -13746,13 +13746,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ae950
-    name: QuadTestVtableCall_004ae950
+    name: Renderer2_PresentFrame
     size: 57
     group: engine.install
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004ae990
-    name: DSoundCreateBuffer170_004ae990
+    name: R2_Init3
     size: 170
     group: engine.install
     status: matched
@@ -13764,7 +13764,7 @@ functions:
     status: matched
     file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004aeae0
-    name: DSoundModeSetup_004aeae0
+    name: R2_Init4
     size: 297
     group: engine.install
     status: matched
@@ -13776,7 +13776,7 @@ functions:
     status: matched
     file: src/engine/dsound_set_axis_pan_123.c
   - addr: 0x004aec90
-    name: DSPrimaryFormatPair_004aec90
+    name: R2_Init8
     size: 274
     group: engine.install
     status: matched
@@ -13806,7 +13806,7 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004aef00
-    name: ComCallSetne_004aef00
+    name: R2_Init2
     size: 43
     group: engine.install
     status: matched
@@ -13818,7 +13818,7 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004aef50
-    name: COMVTable2CallInit_004aef50
+    name: R2_Init6
     size: 175
     group: engine.install
     status: matched
@@ -13830,7 +13830,7 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004af020
-    name: DSoundSlotSetup_004af020
+    name: R2_Init11
     size: 263
     group: engine.install
     status: matched
@@ -13842,7 +13842,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004af190
-    name: DInputEnumDevicesBoot_004af190
+    name: R2_Init9
     size: 127
     group: engine.install
     status: matched
@@ -13860,7 +13860,7 @@ functions:
     status: matched
     file: src/engine/com_release_pair.c
   - addr: 0x004af480
-    name: DirectXObjInitChain_004af480
+    name: R2_Init7
     size: 453
     group: engine.install
     status: matched
@@ -13872,7 +13872,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesBB.c
   - addr: 0x004af690
-    name: ComTwoGateCall_004af690
+    name: Renderer3_PresentFrame
     size: 39
     group: engine.install
     status: matched
@@ -13884,7 +13884,7 @@ functions:
     status: matched
     file: src/engine/com_sound_setup.c
   - addr: 0x004af730
-    name: DSoundQueryCaps333_004af730
+    name: Renderer3_BeginFrame_SW_FS
     size: 333
     group: engine.install
     status: matched
@@ -13902,13 +13902,13 @@ functions:
     status: matched
     file: src/engine/renderer3_init.c
   - addr: 0x004af960
-    name: DSoundCreateBuffer170_004af960
+    name: DDraw3_PostCreate
     size: 170
     group: engine.install
     status: matched
     file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004afa10
-    name: ComInitSequence_004afa10
+    name: DDraw3_Cleanup
     size: 77
     group: engine.install
     status: matched
@@ -13920,7 +13920,7 @@ functions:
     status: matched
     file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004afb00
-    name: Helper_InstallStub_AFB00
+    name: DDraw3_GetSurface
     size: 1
     group: engine.install
     status: matched
@@ -13932,7 +13932,7 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004afb30
-    name: ComCreateCheck_004afb30
+    name: DDraw3_Create
     size: 28
     group: engine.install
     status: matched
@@ -13944,7 +13944,7 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004afb70
-    name: DSoundModeInit342_004afb70
+    name: DDraw3_SetCooperativeLevel
     size: 342
     group: engine.install
     status: matched
@@ -13956,7 +13956,7 @@ functions:
     status: matched
     file: src/engine/com_release_pair.c
   - addr: 0x004afd10
-    name: DSoundModeSetup_004afd10
+    name: DDraw3_CreateSurface
     size: 297
     group: engine.install
     status: matched
@@ -13968,7 +13968,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004afec0
-    name: ComTwoGateCall_004afec0
+    name: Renderer5_PresentFrame
     size: 39
     group: engine.install
     status: matched
@@ -13980,7 +13980,7 @@ functions:
     status: matched
     file: src/engine/com_sound_setup.c
   - addr: 0x004aff60
-    name: DSoundQueryCaps333_004aff60
+    name: Renderer4_BeginFrame_SW_Win
     size: 333
     group: engine.install
     status: matched
@@ -13998,13 +13998,13 @@ functions:
     status: matched
     file: src/engine/renderer5_init.c
   - addr: 0x004b0190
-    name: DSoundCreateBuffer170_004b0190
+    name: DDraw5_PostCreate
     size: 170
     group: engine.ecm
     status: matched
     file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004b0240
-    name: ComInitSequence_004b0240
+    name: DDraw5_Cleanup
     size: 77
     group: engine.ecm
     status: matched
@@ -14016,7 +14016,7 @@ functions:
     status: matched
     file: src/engine/dsound_buffer_init_146.c
   - addr: 0x004b0330
-    name: Helper_EcmStub_0330
+    name: DDraw5_GetSurface
     size: 1
     group: engine.ecm
     status: matched
@@ -14028,7 +14028,7 @@ functions:
     status: matched
     file: src/engine/com_release.c
   - addr: 0x004b0360
-    name: ComCreateCheck_004b0360
+    name: DDraw5_Create
     size: 28
     group: engine.ecm
     status: matched
@@ -14040,7 +14040,7 @@ functions:
     status: matched
     file: src/engine/com_release_capture.c
   - addr: 0x004b03a0
-    name: DSoundModeInit342_004b03a0
+    name: DDraw5_SetCooperativeLevel
     size: 342
     group: engine.ecm
     status: matched
@@ -14052,7 +14052,7 @@ functions:
     status: matched
     file: src/engine/com_release_pair.c
   - addr: 0x004b0540
-    name: DSoundModeSetup_004b0540
+    name: DDraw5_CreateSurface
     size: 297
     group: engine.ecm
     status: matched
@@ -14070,7 +14070,7 @@ functions:
     status: matched
     file: src/engine/ecm_open.c
   - addr: 0x004b09a0
-    name: IATCriticalSection_004b09a0
+    name: Helper_ECM_PostCleanup
     size: 169
     group: engine.ecm
     status: matched
@@ -14124,7 +14124,7 @@ functions:
     status: matched
     file: src/engine/ecm.c
   - addr: 0x004b1270
-    name: ECM_DecodeFrame_Huffman_004b1270
+    name: ECM_DecodeFrame_Huffman
     size: 2423
     group: engine.ecm
     status: matched
@@ -14148,7 +14148,7 @@ functions:
     status: matched
     file: src/engine/ecm.c
   - addr: 0x004b1cf0
-    name: FSYS_Init
+    name: AppInit_PreInstall
     size: 237
     group: engine.fsys
     status: matched
@@ -14214,7 +14214,7 @@ functions:
     status: matched
     file: src/engine/fsys.c
   - addr: 0x004b21b0
-    name: ZeroByte_004b21b0
+    name: AppInit_PostDSound
     size: 8
     group: engine.app
     status: matched
@@ -14226,7 +14226,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b21d0
-    name: HudPerCharGlyph_004b21d0
+    name: Helper_DrawMenuText
     size: 272
     group: engine.app
     status: matched
@@ -14244,7 +14244,7 @@ functions:
     status: matched
     file: src/boot/app_init.c
   - addr: 0x004b2690
-    name: ElevenCallsJmp_004b2690
+    name: AppShutdown
     size: 60
     group: engine.app
     status: matched
@@ -14262,7 +14262,7 @@ functions:
     status: matched
     file: src/boot/main_loop.c
   - addr: 0x004b2840
-    name: DDrawBltJmp_004b2840
+    name: Renderer4_PresentFrame
     size: 74
     group: engine.app
     status: matched
@@ -14274,7 +14274,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b28a0
-    name: AudioBufferSetup_004b28a0
+    name: Renderer5_BeginFrame_SW_FS_Hi
     size: 140
     group: engine.app
     status: matched
@@ -14286,7 +14286,7 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004b2950
-    name: SWRendererInit_004b2950
+    name: Helper_GfxInit2
     size: 232
     group: engine.app
     status: matched
@@ -14298,7 +14298,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b2ac0
-    name: ZeroBuffer2A_004b2ac0
+    name: AppInit_Misc3
     size: 17
     group: engine.app
     status: matched
@@ -14316,7 +14316,7 @@ functions:
     status: matched
     file: src/engine/project_two.c
   - addr: 0x004b2d20
-    name: VertexProject3D_004b2d20
+    name: Helper_EmitLine
     size: 338
     group: engine.app
     status: matched
@@ -14442,13 +14442,13 @@ functions:
     status: matched
     file: src/engine/getters.c
   - addr: 0x004b3dc0
-    name: ResolutionLookup_004b3dc0
+    name: Helper_GetMenuExtents
     size: 96
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3e20
-    name: Switch5Mode_004b3e20
+    name: Helper_RendererPostInit
     size: 108
     group: engine.geo
     status: matched
@@ -14466,7 +14466,7 @@ functions:
     status: matched
     file: src/engine/try_init_renderer.c
   - addr: 0x004b40a0
-    name: SetRendererMode
+    name: Helper_GSM_PlayMusic
     size: 34
     group: engine.render
     status: matched
@@ -14502,7 +14502,7 @@ functions:
     status: matched
     file: src/engine/gfx_init.c
   - addr: 0x004b4410
-    name: Push4MultiCall_004b4410
+    name: Helper_GfxCleanup
     size: 51
     group: engine.geo
     status: matched
@@ -14532,7 +14532,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesCC.c
   - addr: 0x004b4650
-    name: SoundDisableIfActive_004b4650
+    name: Renderer1_BeginFrame_Glide
     size: 68
     group: engine.geo
     status: matched
@@ -14544,7 +14544,7 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004b46d0
-    name: DualTestCallIat_004b46d0
+    name: Renderer1_PresentFrame
     size: 27
     group: engine.geo
     status: matched
@@ -14562,19 +14562,19 @@ functions:
     status: matched
     file: src/engine/renderer1_init_glide.c
   - addr: 0x004b4c10
-    name: GlideProcResolve_004b4c10
+    name: Helper_GlideOpen
     size: 838
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b4f60
-    name: DSoundCreateBuffer170_004b4f60
+    name: Helper_GlideMode
     size: 170
     group: engine.geo
     status: matched
     file: src/engine/dsound_create_buffer_170.c
   - addr: 0x004b5010
-    name: FullscreenModeSwitch_004b5010
+    name: Helper_GlidePostInit
     size: 134
     group: engine.geo
     status: matched
@@ -14586,7 +14586,7 @@ functions:
     status: matched
     file: src/engine/dsound_set_axis_pan_123.c
   - addr: 0x004b5120
-    name: DDrawReleaseChain_004b5120
+    name: Helper_GlideError
     size: 97
     group: engine.geo
     status: matched
@@ -14616,7 +14616,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5450
-    name: CallShrAnd_004b5450
+    name: Helper_JoyButtonInit
     size: 18
     group: engine.geo
     status: matched
@@ -14634,19 +14634,19 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5840
-    name: SetState1_004b5840
+    name: Helper_TitleAudioReset
     size: 11
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004b5850
-    name: InputDispatchEntryPoint_004b5850
+    name: GameStateMachineMaybeRebuild
     size: 448
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b5a10
-    name: FillCosineTable_004b5a10
+    name: AppInit_PostJoy
     size: 84
     group: engine.geo
     status: matched
@@ -14658,7 +14658,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b5a80
-    name: RepStosInitState_004b5a80
+    name: AppInit_Misc2
     size: 52
     group: engine.geo
     status: matched
@@ -14712,7 +14712,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b6180
-    name: HudFontPrecache_004b6180
+    name: AppInit_Misc1
     size: 300
     group: game.menu
     status: matched
@@ -14748,13 +14748,13 @@ functions:
     status: matched
     file: src/game/draw_menu.c
   - addr: 0x004b6880
-    name: MenuQuadSubmit_004b6880
+    name: Helper_DrawMenu_PostRender
     size: 114
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b6900
-    name: PendingMatch_004b6900
+    name: Helper_GSM_VS
     size: 1820
     group: game.menu
     status: matched
@@ -14778,7 +14778,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7260
-    name: PendingMatch_004b7260
+    name: Helper_GSM_Tournament
     size: 2004
     group: game.menu
     status: matched
@@ -14790,7 +14790,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7b10
-    name: PendingMatch_004b7b10
+    name: Helper_GSM_Practice
     size: 464
     group: game.menu
     status: matched
@@ -14802,7 +14802,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b7df0
-    name: PendingMatch_004b7df0
+    name: Helper_GSM_Options
     size: 656
     group: game.menu
     status: matched
@@ -14814,55 +14814,55 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b81f0
-    name: PendingMatch_004b81f0
+    name: Helper_GSM_Config
     size: 722
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b84d0
-    name: MenuPageEnterDispatch_004b84d0
+    name: Helper_GSM_HandleEvent
     size: 346
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8630
-    name: MenuFlagBitDispatchSearch_004b8630
+    name: Helper_GSM_Sub18
     size: 255
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8730
-    name: MenuFlagBitDispatchSearch_004b8730
+    name: Helper_GSM_Sub19
     size: 255
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8830
-    name: MenuFlagBitDispatchSearch_004b8830
+    name: Helper_GSM_Sub1A
     size: 255
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8930
-    name: MenuFlagBitDispatchSearch_004b8930
+    name: Helper_GSM_Sub1B
     size: 255
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8a30
-    name: MenuKeypadEnterDispatch_004b8a30
+    name: Helper_GSM_Sub1C
     size: 408
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8bd0
-    name: MenuChoiceEnterDispatch_004b8bd0
+    name: Helper_GSM_Sub_Other1
     size: 408
     group: game.menu
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b8d70
-    name: MenuPollStateMachine_004b8d70
+    name: Helper_GSM_Sub_Other2
     size: 311
     group: game.menu
     status: matched
@@ -14874,7 +14874,7 @@ functions:
     status: matched
     file: src/audio/empty_stubs.c
   - addr: 0x004b8ec0
-    name: SetupBufferOffsets_004b8ec0
+    name: Helper_TickInit
     size: 92
     group: game.menu
     status: matched
@@ -14916,7 +14916,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b9770
-    name: RenderChainCopy_004b9770
+    name: Helper_PreTick
     size: 197
     group: engine.render
     status: matched
@@ -14952,7 +14952,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesPP.c
   - addr: 0x004ba130
-    name: WalkSceneGraphSiblings
+    name: Helper_TickInner
     size: 142
     group: engine.scenegraph
     status: matched
@@ -14982,7 +14982,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bae90
-    name: IndirectListWalk_004bae90
+    name: Helper_TickAlt
     size: 401
     group: engine.render
     status: matched
@@ -15036,7 +15036,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bc7e0
-    name: RouteRibbonEmit_004bc7e0
+    name: Helper_TickReinit
     size: 1123
     group: engine.render
     status: matched
@@ -15084,7 +15084,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesDD.c
   - addr: 0x004bd570
-    name: TwoArgCallSeq_004bd570
+    name: Helper_GeoLoadPre
     size: 21
     group: engine.geo
     status: matched
@@ -15156,13 +15156,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bd960
-    name: TripleStosd_004bd960
+    name: AppInit_Misc4
     size: 45
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesM.c
   - addr: 0x004bd990
-    name: CallJmp_004bd990
+    name: XformChainAdvance
     size: 10
     group: engine.geo
     status: matched
@@ -15348,7 +15348,7 @@ functions:
     status: matched
     file: src/engine/misc_matches9.c
   - addr: 0x004bea40
-    name: SetJmp_004bea40
+    name: Helper_TitleAudioCleanup
     size: 15
     group: engine.scenegraph
     status: matched
@@ -15390,7 +15390,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004bf0c0
-    name: PaletteTableBlit_004bf0c0
+    name: Helper_PaletteInit
     size: 454
     group: engine.scenegraph
     status: matched
@@ -15414,7 +15414,7 @@ functions:
     status: matched
     file: src/engine/render.c
   - addr: 0x004bf370
-    name: SpriteBlitDispatch_004bf370
+    name: Helper_TexUpload
     size: 237
     group: engine.scenegraph
     status: matched
@@ -15504,19 +15504,19 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3360
-    name: SubmitDrawEntry
+    name: Helper_DrawCursor
     size: 300
     group: engine.render
     status: matched
     file: src/engine/submit_draw.c
   - addr: 0x004c3490
-    name: VoiceStreamingCacheStart_004c3490
+    name: Helper_AudioRelease
     size: 635
     group: engine.render
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3710
-    name: ObjectSlotRelease_004c3710
+    name: Helper_AudioStop
     size: 206
     group: engine.render
     status: matched
@@ -15546,7 +15546,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3960
-    name: TextureSlotAllocDispatch_004c3960
+    name: Helper_AudioStartMusic
     size: 362
     group: engine.render
     status: matched
@@ -15570,13 +15570,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3e30
-    name: DSoundBufferDescBuild_004c3e30
+    name: Helper_DSI_post2
     size: 118
     group: engine.render
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c3eb0
-    name: VtableArgClamp_004c3eb0
+    name: Helper_TitleSetMaxVolume
     size: 60
     group: engine.render
     status: matched
@@ -15588,7 +15588,7 @@ functions:
     status: matched
     file: src/audio/dsound_init.c
   - addr: 0x004c4110
-    name: DSoundBufferDispatch_004c4110
+    name: Helper_DSI_post1
     size: 252
     group: platform.win32
     status: matched
@@ -15606,13 +15606,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c42f0
-    name: OneShotVtableWalk_004c42f0
+    name: Helper_TitleAudioStop
     size: 103
     group: platform.win32
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c4360
-    name: CallSetByte1_004c4360
+    name: Helper_AudioStartFresh
     size: 13
     group: platform.win32
     status: matched
@@ -15624,7 +15624,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c4390
-    name: GuardedSecondVtableWalk_004c4390
+    name: Helper_AudioStart
     size: 133
     group: platform.win32
     status: matched
@@ -15696,7 +15696,7 @@ functions:
     status: matched
     file: src/platform/error.c
   - addr: 0x004c4950
-    name: IATDriverQuery_004c4950
+    name: Helper_PostCreateWindow
     size: 75
     group: platform.win32
     status: matched
@@ -15720,7 +15720,7 @@ functions:
     status: matched
     file: src/boot/create_window.c
   - addr: 0x004c51f0
-    name: BootAuxAudioReferenceProbe_004c51f0
+    name: AppInit_Misc8
     size: 171
     group: boot
     status: matched
@@ -15756,7 +15756,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5580
-    name: PrintfStub_004c5580
+    name: Helper_Sprintf
     size: 104
     group: boot
     status: matched
@@ -15798,7 +15798,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQ.c
   - addr: 0x004c5800
-    name: TestBitClearOrCallTriple_004c5800
+    name: Helper_FClose
     size: 61
     group: boot
     status: matched
@@ -15810,7 +15810,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c58b0
-    name: TripleCallEdiSave_004c58b0
+    name: Helper_FTell
     size: 40
     group: boot
     status: matched
@@ -15822,7 +15822,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5a90
-    name: WrapperCallThree_004c5a90
+    name: Helper_FSeek
     size: 50
     group: boot
     status: matched
@@ -15834,7 +15834,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5b70
-    name: WrapThreeDispatch_004c5b70
+    name: Helper_FRead
     size: 55
     group: boot
     status: matched
@@ -15846,7 +15846,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5cf0
-    name: StreamLazyOpen_004c5cf0
+    name: Helper_FOpenPostInit
     size: 117
     group: boot
     status: matched
@@ -15858,13 +15858,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesEE.c
   - addr: 0x004c5db0
-    name: Push3ArgsCall_004c5db0
+    name: Helper_FOpen
     size: 21
     group: boot
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c5dd0
-    name: StackChkAlloca_004c5dd0
+    name: Helper_ChkStk
     size: 48
     group: boot
     status: matched
@@ -15900,13 +15900,13 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c6500
-    name: CallStoreField14_004c6500
+    name: Crt_srand
     size: 13
     group: boot
     status: matched
     file: src/engine/misc_matchesB.c
   - addr: 0x004c6510
-    name: CallShiftLea_004c6510
+    name: Crt_rand
     size: 45
     group: boot
     status: matched
@@ -15924,7 +15924,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c67f0
-    name: CallIfPushPushCall_004c67f0
+    name: _init_premain
     size: 48
     group: boot
     status: matched
@@ -15936,7 +15936,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesA.c
   - addr: 0x004c6840
-    name: PushZ1ArgCall_004c6840
+    name: _exit_post
     size: 18
     group: boot
     status: matched
@@ -16428,7 +16428,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004cbad0
-    name: Push40ArgCall_004cbad0
+    name: _isspace_crt
     size: 18
     group: crt
     status: matched
@@ -16440,7 +16440,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004cbb30
-    name: EnvpBuild_004cbb30
+    name: _init_main
     size: 238
     group: crt
     status: matched

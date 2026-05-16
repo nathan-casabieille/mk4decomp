@@ -59,7 +59,7 @@ extern unsigned int g_state_0058c7dc;
 extern void *g_iface_0058c7bc;
 extern void *g_data_004d2870;
 extern void *g_data_004d287c;
-__declspec(naked) void ComCallSetne_004aef00(void) {
+__declspec(naked) void R2_Init2(void) {
     __asm {
         mov     eax, dword ptr [g_iface_0058c7ac]
         test    eax, eax

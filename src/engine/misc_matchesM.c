@@ -451,7 +451,7 @@ __declspec(naked) void ZeroEightFields_004b8f20(void) {
  *   pop     edi
  *   ret
  */
-__declspec(naked) void TripleStosd_004bd960(void) {
+__declspec(naked) void AppInit_Misc4(void) {
     __asm {
         push    edi
         mov     ecx, 0x6f

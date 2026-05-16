@@ -302,14 +302,14 @@
     }
 
 /* @addr 0x004af730 */
-__declspec(naked) void DSoundQueryCaps333_004af730(void) {
+__declspec(naked) void Renderer3_BeginFrame_SW_FS(void) {
     DSQC_BODY(g_dsqc_730_state874, g_dsqc_730_state880,
               g_dsqc_730_iface, g_dsqc_730_iface_arg,
               g_dsqc_730_ret, g_dsqc_730_flag)
 }
 
 /* @addr 0x004aff60 */
-__declspec(naked) void DSoundQueryCaps333_004aff60(void) {
+__declspec(naked) void Renderer4_BeginFrame_SW_Win(void) {
     DSQC_BODY(g_dsqc_f60_state874, g_dsqc_f60_state880,
               g_dsqc_f60_iface, g_dsqc_f60_iface_arg,
               g_dsqc_f60_ret, g_dsqc_f60_flag)

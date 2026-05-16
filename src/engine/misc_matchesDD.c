@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_state_007b41a0;
 extern unsigned int g_state_007b41a8;
-__declspec(naked) void RepStosInitState_004b5a80(void) {
+__declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
         mov     ecx, 0xc0000
@@ -225,7 +225,7 @@ __declspec(naked) void SetVtable5Slots_004c5790(void) {
 extern void RangePathIATDispatch_004c6ff0(int);
 extern int FSeekImpl_004c5ad0(int, int, int);
 extern void RangePathIATDispatch_004c7060(int);
-__declspec(naked) void WrapperCallThree_004c5a90(void) {
+__declspec(naked) void Helper_FSeek(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]

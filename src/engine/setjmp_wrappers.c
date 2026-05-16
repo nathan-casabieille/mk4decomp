@@ -322,7 +322,7 @@ void SetJmp_004a1ad0(void) {
 }
 
 /* @addr 0x004bea40 */
-void SetJmp_004bea40(void) {
+void Helper_TitleAudioCleanup(void) {
     g_setjmp_00ab5750 = 0x00000000;
     IncCallVtablePushCall_004b0d80();
 }

@@ -43,16 +43,16 @@ void AppInit(HWND hwnd)
     g_pumpFlagE0 = 1;
     g_pumpFlagDC = 1;
     g_pumpFlagD8 = 1;
-    SetRendererMode(1);
+    Helper_GSM_PlayMusic(1);
     if (TryInitRenderer() < 0) {
         g_pumpFlagD8 = 0;
-        SetRendererMode(2);
+        Helper_GSM_PlayMusic(2);
         if (TryInitRenderer() < 0) {
             g_pumpFlagDC = 0;
-            SetRendererMode(3);
+            Helper_GSM_PlayMusic(3);
             if (TryInitRenderer() < 0) {
                 g_pumpFlagE0 = 0;
-                SetRendererMode(5);
+                Helper_GSM_PlayMusic(5);
                 if (TryInitRenderer() < 0) {
                     g_pumpFlagE4 = 0;
                 }

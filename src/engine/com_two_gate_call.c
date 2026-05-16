@@ -30,7 +30,7 @@ extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 
 /* @addr 0x004af690 */
-__declspec(naked) void ComTwoGateCall_004af690(void) {
+__declspec(naked) void Renderer3_PresentFrame(void) {
     __asm {
         mov     eax, dword ptr [g_state_0058c874]
         test    eax, eax
@@ -52,7 +52,7 @@ __declspec(naked) void ComTwoGateCall_004af690(void) {
 }
 
 /* @addr 0x004afec0 */
-__declspec(naked) void ComTwoGateCall_004afec0(void) {
+__declspec(naked) void Renderer5_PresentFrame(void) {
     __asm {
         mov     eax, dword ptr [g_state_0058c8f4]
         test    eax, eax

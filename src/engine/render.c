@@ -77,7 +77,7 @@ void PresentFrame(void)
  *
  * @addr 0x004b40a0
  */
-int SetRendererMode(int mode)
+int Helper_GSM_PlayMusic(int mode)
 {
     if (mode > 0) {
         g_clampedRendererMode = mode;

@@ -14,13 +14,13 @@ extern void *g_comptr_0058c8e0;
 extern int __stdcall func_004d12cc(int a, void **out, int b);
 
 /* @addr 0x004afb30 */
-int ComCreateCheck_004afb30(void) {
+int DDraw3_Create(void) {
     func_004d12cc(0, &g_comptr_0058c860, 0);
     return g_comptr_0058c860 != 0;
 }
 
 /* @addr 0x004b0360 */
-int ComCreateCheck_004b0360(void) {
+int DDraw5_Create(void) {
     func_004d12cc(0, &g_comptr_0058c8e0, 0);
     return g_comptr_0058c8e0 != 0;
 }

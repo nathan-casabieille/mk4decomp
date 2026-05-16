@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   adds 0x269ec3, stores back, returns shr 0x10 & 0x7fff.
  */
 extern void *PendingMatch_004c9df0(void);
-__declspec(naked) void CallShiftLea_004c6510(void) {
+__declspec(naked) void Crt_rand(void) {
     __asm {
         call    PendingMatch_004c9df0
         mov     ecx, dword ptr [eax + 0x14]
@@ -43,7 +43,7 @@ extern void *g_data_004d5000;
 extern void *g_data_004d5018;
 extern void *g_data_004d501c;
 extern void *g_data_004d5024;
-__declspec(naked) void CallIfPushPushCall_004c67f0(void) {
+__declspec(naked) void _init_premain(void) {
     __asm {
         mov     eax, dword ptr [g_iat_0051ffd8]
         test    eax, eax

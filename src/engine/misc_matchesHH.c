@@ -86,7 +86,7 @@ __declspec(naked) void CallPauseJmpThenSetChild_00497b10(void) {
 extern void func_004c6ff0_hh(void *);
 extern int FCloseImpl_004c5840(void *);
 extern void func_004c7060_hh(void *);
-__declspec(naked) void TestBitClearOrCallTriple_004c5800(void) {
+__declspec(naked) void Helper_FClose(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]

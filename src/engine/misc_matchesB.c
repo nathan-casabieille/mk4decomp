@@ -65,7 +65,7 @@ void CopyGlobal_004ac1f0(void) {
  *   ret
  */
 extern unsigned char g_byte_007af508;
-void ZeroByte_004b21b0(void) {
+void AppInit_PostDSound(void) {
     g_byte_007af508 = 0;
 }
 
@@ -74,7 +74,7 @@ void ZeroByte_004b21b0(void) {
  *   ret
  */
 extern unsigned int g_state_004f4e98;
-void SetState1_004b5840(void) {
+void Helper_TitleAudioReset(void) {
     g_state_004f4e98 = 1;
 }
 
@@ -118,10 +118,10 @@ void StoreAtMinus8_004b5b00(int *p, int v) {
  *   mov     byte ptr [g_byte_00f9efd4], 1
  *   ret
  */
-extern void OneShotVtableWalk_004c42f0(void);
+extern void Helper_TitleAudioStop(void);
 extern unsigned char g_byte_00f9efd4;
-void CallSetByte1_004c4360(void) {
-    OneShotVtableWalk_004c42f0();
+void Helper_AudioStartFresh(void) {
+    Helper_TitleAudioStop();
     g_byte_00f9efd4 = 1;
 }
 
@@ -168,7 +168,7 @@ __declspec(naked) void Loop1cBitMask_004c4450(void) {
  */
 extern void *PendingMatch_004c9df0(void);
 struct s_field14 { char _pad[0x14]; int v; };
-void CallStoreField14_004c6500(int x) {
+void Crt_srand(int x) {
     struct s_field14 *s = (struct s_field14 *)PendingMatch_004c9df0();
     s->v = x;
 }

@@ -174,7 +174,7 @@ __declspec(naked) void PushCallScaledClearJmp_0040bf20(void) {
  *   load scaled[0]; if non-zero set walk = own VA, call F, pause-test;
  *   clear dirty bit 1; ret.
  */
-extern void IndirectListWalk_004bae90(void);
+extern void Helper_TickAlt(void);
 __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -190,7 +190,7 @@ __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
         _emit   74h
         _emit   18h
         mov     dword ptr [g_walkCallback], 0x004084b0
-        call    IndirectListWalk_004bae90
+        call    Helper_TickAlt
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

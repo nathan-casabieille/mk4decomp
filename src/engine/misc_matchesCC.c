@@ -9,7 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004b2690 (60b): pure call chain — 11 calls + 1 jmp */
 extern void TestCallIat_004c44f0(void);
-extern void Push4MultiCall_004b4410(void);
+extern void Helper_GfxCleanup(void);
 extern void Helper_AppStub_2AE0(void);
 extern void Thunk_004b5ac0(void);
 extern void RegistryInstallEntry_004ad410(void);
@@ -20,10 +20,10 @@ extern void AuxAudio_Teardown_004ac9b0(void);
 extern void Helper_GeoStub_5370(void);
 extern void TestCallZero_004b1de0(void);
 extern void Helper_GeoStub_5A70(void);
-__declspec(naked) void ElevenCallsJmp_004b2690(void) {
+__declspec(naked) void AppShutdown(void) {
     __asm {
         call    TestCallIat_004c44f0
-        call    Push4MultiCall_004b4410
+        call    Helper_GfxCleanup
         call    Helper_AppStub_2AE0
         call    Thunk_004b5ac0
         call    RegistryInstallEntry_004ad410
@@ -118,24 +118,24 @@ __declspec(naked) void JumpTable5Way_004b41c0(void) {
 }
 
 /* @addr 0x004b4410 (51b): push 4; 7 calls; clear [g_state_004f4b3c] */
-extern int SetRendererMode(int mode);
+extern int Helper_GSM_PlayMusic(int mode);
 extern s32 TryInitRenderer(void);
 extern void Thunk_004bf320(void);
-extern void EngineShutdown_004ad7c0(void);
-extern void ComInitSequence_004afa10(void);
-extern void ComInitSequence_004b0240(void);
+extern void R2_Cleanup(void);
+extern void DDraw3_Cleanup(void);
+extern void DDraw5_Cleanup(void);
 extern void RendererTeardownSW_004b2a40(void);
 extern unsigned int g_state_004f4b3c;
-__declspec(naked) void Push4MultiCall_004b4410(void) {
+__declspec(naked) void Helper_GfxCleanup(void) {
     __asm {
         push    4
-        call    SetRendererMode
+        call    Helper_GSM_PlayMusic
         add     esp, 4
         call    TryInitRenderer
         call    Thunk_004bf320
-        call    EngineShutdown_004ad7c0
-        call    ComInitSequence_004afa10
-        call    ComInitSequence_004b0240
+        call    R2_Cleanup
+        call    DDraw3_Cleanup
+        call    DDraw5_Cleanup
         call    RendererTeardownSW_004b2a40
         mov     dword ptr [g_state_004f4b3c], 0
         ret

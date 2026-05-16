@@ -89,7 +89,7 @@ loop_entry:
  *
  * @addr 0x004ba130
  */
-__declspec(naked) void WalkSceneGraphSiblings(void)
+__declspec(naked) void Helper_TickInner(void)
 {
     __asm {
         mov     ecx, [g_currentNodeIdx]

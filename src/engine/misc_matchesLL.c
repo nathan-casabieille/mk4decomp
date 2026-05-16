@@ -19,7 +19,7 @@ extern u32 g_eventQueueNotMask;
  *   Push g_eventQueueCurrent on stack[idx*4]; set g_eventQueueCurrent = -1;
  *   call F; pause-test → ret; pop stack value back into g_eventQueueCurrent.
  */
-extern void Thunk_0049cbe0(void);
+extern void Helper_TickFrame_PostFight(void);
 __declspec(naked) void PushPopCurrentSetFFFFFFFF_00473070(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -28,7 +28,7 @@ __declspec(naked) void PushPopCurrentSetFFFFFFFF_00473070(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_eventQueueCurrent], 0xffffffff
-        call    Thunk_0049cbe0
+        call    Helper_TickFrame_PostFight
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -325,7 +325,7 @@ extern unsigned int g_state_005438e8;
 extern int func_004ac318(void);
 extern void *g_iat_004d2244;
 extern void *g_iat_004d2240;
-__declspec(naked) void CallTestStateClearReg_004ac520(void) {
+__declspec(naked) void Helper_TitleEnterStateC(void) {
     __asm {
         mov     eax, dword ptr [g_state_00543904]
         test    eax, eax
