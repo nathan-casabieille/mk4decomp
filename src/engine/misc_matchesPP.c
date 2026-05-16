@@ -172,26 +172,17 @@ extern unsigned int g_data_004ed4e0;
 extern void AggressorModeCluster_0047df30(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern int ArgSarStoreJmp_004594f0(unsigned int *p);
-__declspec(naked) void GuardedSetCallSetCall_0047dee0(void) {
-    __asm {
-        cmp     dword ptr [g_xformScratch2088], 1
-        _emit   75h
-        _emit   05h
-        jmp     AggressorModeCluster_0047df30
-        mov     dword ptr [g_walkCallback], 2
-        call    ScaledIndexConditionalAdd_0048e400
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        mov     eax, 0x0f
-        push    OFFSET g_data_004ed4e0
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00537e94], eax
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
+void GuardedSetCallSetCall_0047dee0(void) {
+    if (g_xformScratch2088 == 1) {
+        AggressorModeCluster_0047df30();
+        return;
     }
+    g_walkCallback = (void(*)(void))2;
+    ScaledIndexConditionalAdd_0048e400();
+    if (g_framePauseFlag) return;
+    g_walkCallback = (void(*)(void))0x0f;
+    g_state_00537e94 = 0x0f;
+    ArgSarStoreJmp_004594f0(&g_data_004ed4e0);
 }
 
 /* @addr 0x0048ea40 (67b)
@@ -300,22 +291,16 @@ __declspec(naked) void GuardedTripleCallSwapJmp_0048fee0(void) {
  */
 extern void SetWorkType02CountFFB_004a1790(void);
 extern void AudioInstall3StateSubXform_004a17d0(void);
-__declspec(naked) void TestEqJmpInitFightGroup_004a1740(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueEnd]
-        test    eax, eax
-        _emit   74h
-        _emit   05h
-        jmp     SetWorkType02CountFFB_004a1790
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_eventQueueWorkType], 0xfef20000
-        mov     dword ptr [eax*4 + 0x30], 0x25a
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, 0x00050000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     AudioInstall3StateSubXform_004a17d0
+void TestEqJmpInitFightGroup_004a1740(void) {
+    if (g_eventQueueEnd) {
+        SetWorkType02CountFFB_004a1790();
+        return;
     }
+    g_eventQueueWorkType = 0xfef20000;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x30) = 0x25a;
+    g_walkCallback = (void(*)(void))0x50000;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x6c) = 0x50000;
+    AudioInstall3StateSubXform_004a17d0();
 }
 
 /* @addr 0x004ac3a0 (68b)
@@ -498,27 +483,18 @@ extern unsigned int g_baseSel_00542060;
 extern void StoreByteJmp_0042f840(void);
 extern void CameraAimSplineDriver_00430e60(void);
 extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
-__declspec(naked) void DispatchOrInitFightGroup_0042f850(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0052aac4]
-        cmp     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     StoreByteJmp_0042f840
-        mov     eax, dword ptr [g_data_0052ab10]
-        mov     dword ptr [g_fightGroupHead], eax
-        call    CameraAimSplineDriver_00430e60
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [edx*4 + 0x64], ecx
-        jmp     PhaseInstall2DInterpDispatch_0042f8a0
-        ret
+void DispatchOrInitFightGroup_0042f850(void) {
+    unsigned int v = g_data_0052aac4;
+    g_walkCallback = (void(*)(void))v;
+    if (v == 2) {
+        StoreByteJmp_0042f840();
+        return;
     }
+    g_fightGroupHead = g_data_0052ab10;
+    CameraAimSplineDriver_00430e60();
+    if (g_framePauseFlag) return;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64) = (unsigned int)g_walkCallback;
+    PhaseInstall2DInterpDispatch_0042f8a0();
 }
 
 /* @addr 0x004667a0 (69b)
@@ -831,30 +807,21 @@ extern void SetJmp_00438f60(void);
 extern void ScaledChain3c74Jmp_0048e780(void);
 extern void CallPauseDirtyConstJmp_00438ca0(void);
 extern void StateDispatchYield_00471190(void);
-__declspec(naked) void GuardedDirtyDispatch_00438c50(void) {
-    __asm {
-        call    MStackPush3CmpCall_0048eec0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   39h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     SetJmp_00438f60
-        call    ScaledChain3c74Jmp_0048e780
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     CallPauseDirtyConstJmp_00438ca0
-        mov     dword ptr [g_walkCallback], 9
-        jmp     StateDispatchYield_00471190
-        ret
+void GuardedDirtyDispatch_00438c50(void) {
+    MStackPush3CmpCall_0048eec0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        SetJmp_00438f60();
+        return;
     }
+    ScaledChain3c74Jmp_0048e780();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        CallPauseDirtyConstJmp_00438ca0();
+        return;
+    }
+    g_walkCallback = (void(*)(void))9;
+    StateDispatchYield_00471190();
 }
 
 /* @addr 0x00448fc0 (72b)
@@ -866,26 +833,15 @@ extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void GuardedSeq_00473f50(void);
-__declspec(naked) void LoadStoreDoubleCallSet_00448fc0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_fightGroupHead], ecx
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   19h
-        mov     dword ptr [g_walkCallback], 2
-        mov     dword ptr [g_acc_00542078], 4
-        jmp     GuardedSeq_00473f50
-        ret
-    }
+void LoadStoreDoubleCallSet_00448fc0(void) {
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
+    MStackPush2RunCountdown_004089e0();
+    if (g_framePauseFlag) return;
+    MStackBracket7_DispatchAndChain_004b8fa0();
+    if (g_framePauseFlag) return;
+    g_walkCallback = (void(*)(void))2;
+    g_acc_00542078 = 4;
+    GuardedSeq_00473f50();
 }
 
 /* @addr 0x00470ee0 (72b)
@@ -961,26 +917,15 @@ __declspec(naked) void TwoEntryWrapperGuarded_004826f0(void) {
 extern unsigned int g_data_00541dc0;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void ZeroMultiGlobalsCmp_00404680(void);
-__declspec(naked) void ClearTwoCallSetStore_004a2270(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_data_00541dc0], 0
-        call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        call    ZeroMultiGlobalsCmp_00404680
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x1000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x0c], eax
-        ret
-    }
+void ClearTwoCallSetStore_004a2270(void) {
+    g_walkCallback = 0;
+    g_data_00541dc0 = 0;
+    BootInitGuardedCallChain_004265d0();
+    if (g_framePauseFlag) return;
+    ZeroMultiGlobalsCmp_00404680();
+    if (g_framePauseFlag) return;
+    g_walkCallback = (void(*)(void))0x1000;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x0c) = 0x1000;
 }
 
 /* @addr 0x00459fc0 (73b)
@@ -1034,30 +979,17 @@ extern void DualEntryInitCmp_00425b20(void);
 extern void Thunk_0049cbf0(void);
 extern void Init6Globals_004051b0(void);
 extern void PendingMatch_0045c8e0(void);
-__declspec(naked) void SentinelInitTripleCall_0048bbf0(void) {
-    __asm {
-        mov     eax, 0x8a9dcbef
-        mov     dword ptr [g_data_0053e35c], 0xfedcba98
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00541dbc], eax
-        call    DualEntryInitCmp_00425b20
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    Thunk_0049cbf0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    Init6Globals_004051b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     PendingMatch_0045c8e0
-        ret
-    }
+void SentinelInitTripleCall_0048bbf0(void) {
+    g_data_0053e35c = 0xfedcba98;
+    g_walkCallback = (void(*)(void))0x8a9dcbef;
+    g_data_00541dbc = 0x8a9dcbef;
+    DualEntryInitCmp_00425b20();
+    if (g_framePauseFlag) return;
+    Thunk_0049cbf0();
+    if (g_framePauseFlag) return;
+    Init6Globals_004051b0();
+    if (g_framePauseFlag) return;
+    PendingMatch_0045c8e0();
 }
 
 /* @addr 0x0048f6d0 (73b)
@@ -1070,29 +1002,18 @@ __declspec(naked) void SentinelInitTripleCall_0048bbf0(void) {
 extern unsigned int g_data_00542038;
 extern unsigned int g_data_0054203c;
 extern void DirtyToggleByGate_0048f350(void);
-__declspec(naked) void GuardedDirtyXformFromTable_0048f6d0(void) {
-    __asm {
-        call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3ah
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   31h
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00538158]
-        mov     eax, dword ptr [g_data_00542038]
-        cmp     ecx, edx
-        mov     dword ptr [g_xformEntityIdx], eax
-        _emit   74h
-        _emit   0ah
-        mov     eax, dword ptr [g_data_0054203c]
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [eax*4 + 0], edx
-        ret
+void GuardedDirtyXformFromTable_0048f6d0(void) {
+    unsigned int v;
+    DirtyToggleByGate_0048f350();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) return;
+    v = g_data_00542038;
+    g_xformEntityIdx = v;
+    if (g_fightGroupHead != g_data_00538158) {
+        v = g_data_0054203c;
+        g_xformEntityIdx = v;
     }
+    *(unsigned int *)(v * 4) = g_scaledInit_00542044;
 }
 
 /* @addr 0x00492870 (73b)
@@ -1267,29 +1188,16 @@ __declspec(naked) void CRTHandleLookup_004cd260(void) {
  */
 extern void MStackMagicModMul10_00424410(void);
 extern void ModMagicMul10Index_00424350(void);
-__declspec(naked) void WalkCbSubMul10_00431d50(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, 0x0001921f
-        sub     eax, ecx
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    MStackMagicModMul10_00424410
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   24h
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_acc_00542078], eax
-        call    ModMagicMul10Index_00424350
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ch
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueWorkType], ecx
-        ret
-    }
+void WalkCbSubMul10_00431d50(void) {
+    unsigned int v = 0x1921f - (unsigned int)g_walkCallback;
+    g_walkCallback = (void(*)(void))v;
+    g_eventQueueWorkType = v;
+    MStackMagicModMul10_00424410();
+    if (g_framePauseFlag) return;
+    g_acc_00542078 = (unsigned int)g_walkCallback;
+    ModMagicMul10Index_00424350();
+    if (g_framePauseFlag) return;
+    g_eventQueueWorkType = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x00433c10 (74b)
@@ -2033,29 +1941,16 @@ __declspec(naked) void PackedAdvanceCallTailJmp_004392c0(void) {
  *   jmp T.
  */
 extern void ChainShiftRight8_0045d9b0(void);
-__declspec(naked) void DualSwapTwoCallsJmp_0045d960(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_data_0053a498]
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_eventQueueWorkType], ecx
-        call    ChainShiftRight8_0045d9b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueTotal], edx
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    ChainShiftRight8_0045d9b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     CallSetPause_0041f830
-        ret
-    }
+void DualSwapTwoCallsJmp_0045d960(void) {
+    g_eventQueueTotal = g_xformEntityIdx;
+    g_eventQueueWorkType = g_data_0053a498;
+    ChainShiftRight8_0045d9b0();
+    if (g_framePauseFlag) return;
+    g_eventQueueTotal = g_scaledInit_00542044;
+    g_eventQueueWorkType = (unsigned int)g_walkCallback;
+    ChainShiftRight8_0045d9b0();
+    if (g_framePauseFlag) return;
+    CallSetPause_0041f830();
 }
 
 /* @addr 0x0048d4b0 (78b)
@@ -2326,31 +2221,18 @@ __declspec(naked) void LoopGuardedDecJmp_0042c790(void) {
  *   call F; pause → ret;
  *   if (dirty & 4): set bit 0 of dirty → ret; else clear bit 0 → ret.
  */
-__declspec(naked) void CmpEqWalkSetCallToggleDirty_00439c60(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_data_00538158]
-        cmp     eax, ecx
-        mov     dword ptr [g_walkCallback], 0x46
-        _emit   74h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 0x45
-        call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        test    byte ptr [g_xformDirtyFlags], 4
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   74h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void CmpEqWalkSetCallToggleDirty_00439c60(void) {
+    g_walkCallback = (void(*)(void))0x46;
+    if (g_fightGroupHead != g_data_00538158) {
+        g_walkCallback = (void(*)(void))0x45;
     }
+    SetJmp_0049cb90();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 4) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x00461360 (79b)

@@ -256,28 +256,16 @@ __declspec(naked) void SetWalkCurCallPauseDirty_00404c70(void) {
  *   store xformEntityIdx into [scaledInit*4 + 0x28]; ret.
  */
 extern void MStackPush2Burst6Init_00405450(void);
-__declspec(naked) void ScaledTestPauseStore_00408860(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [eax*4 + 0x28]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al,  0xfb
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        call    MStackPush2Burst6Init_00405450
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [ecx*4 + 0x28], edx
-        ret
+void ScaledTestPauseStore_00408860(void) {
+    unsigned int v = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x28);
+    g_walkCallback = (void(*)(void))v;
+    if (v) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFBu;
+        return;
     }
+    MStackPush2Burst6Init_00405450();
+    if (g_framePauseFlag) return;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x28) = g_xformEntityIdx;
 }
 
 /* @addr 0x00413070 (68b)
@@ -288,27 +276,18 @@ __declspec(naked) void ScaledTestPauseStore_00408860(void) {
 extern void func_004089e0_hh(void);
 extern void func_004b8fa0_hh(void);
 extern void Phase4StateInit4Helpers_004130c0(void);
-__declspec(naked) void PushStackCallPauseSet0xa_00413070(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    func_004089e0_hh
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        call    func_004b8fa0_hh
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0xa
-        jmp     Phase4StateInit4Helpers_004130c0
-        ret
-    }
+void PushStackCallPauseSet0xa_00413070(void) {
+    unsigned int top = g_state_004d57ac;
+    unsigned int v = g_fightGroupHead;
+    top++;
+    g_state_004d57ac = top;
+    *(unsigned int *)(top * 4) = v;
+    func_004089e0_hh();
+    if (g_framePauseFlag) return;
+    func_004b8fa0_hh();
+    if (g_framePauseFlag) return;
+    g_walkCallback = (void(*)(void))0xa;
+    Phase4StateInit4Helpers_004130c0();
 }
 
 /* @addr 0x004c5740 (65b): __aullshl 64-bit shift-left + fnclex init helper

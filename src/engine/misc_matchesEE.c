@@ -43,23 +43,10 @@ extern void *g_data_004d5000;
 extern void *g_data_004d5018;
 extern void *g_data_004d501c;
 extern void *g_data_004d5024;
-__declspec(naked) void _init_premain(void) {
-    __asm {
-        mov     eax, dword ptr [g_iat_0051ffd8]
-        test    eax, eax
-        _emit   74h
-        _emit   02h
-        call    eax
-        push    OFFSET g_data_004d5024
-        push    OFFSET g_data_004d501c
-        call    IterFnPtrs_004c6940
-        add     esp, 8
-        push    OFFSET g_data_004d5018
-        push    OFFSET g_data_004d5000
-        call    IterFnPtrs_004c6940
-        add     esp, 8
-        ret
-    }
+void _init_premain(void) {
+    if (g_iat_0051ffd8) g_iat_0051ffd8();
+    IterFnPtrs_004c6940(&g_data_004d501c, &g_data_004d5024);
+    IterFnPtrs_004c6940(&g_data_004d5000, &g_data_004d5018);
 }
 
 /* @addr 0x004c6960 (53b)
