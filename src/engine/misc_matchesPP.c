@@ -330,33 +330,22 @@ extern unsigned int g_data_007affe4;
 extern unsigned int g_data_007afff4;
 extern unsigned int g_data_007afff0;
 extern unsigned char g_byte_004f4b4c;
-extern void *g_iat_007b000c;
-__declspec(naked) void Renderer1_BeginFrame_Glide(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_007affe4]
-        test    eax, eax
-        _emit   74h
-        _emit   3ah
-        mov     eax, dword ptr [g_data_007afff4]
-        test    eax, eax
-        _emit   75h
-        _emit   31h
-        mov     eax, dword ptr [g_data_007afff0]
-        test    eax, eax
-        _emit   75h
-        _emit   28h
-        mov     eax, dword ptr [esp + 4]
-        test    eax, eax
-        _emit   74h
-        _emit   0fh
-        push    0xffff
-        push    0
-        push    0
-        call    dword ptr [g_iat_007b000c]
-        mov     byte ptr [g_byte_004f4b4c], 0xff
-        mov     dword ptr [g_data_007afff4], 1
-        ret
+extern void (__stdcall *g_iat_007b000c)(int, int, int);
+void Renderer1_BeginFrame_Glide(int arg) {
+    if (g_data_007affe4 == 0) {
+        return;
     }
+    if (g_data_007afff4 != 0) {
+        return;
+    }
+    if (g_data_007afff0 != 0) {
+        return;
+    }
+    if (arg != 0) {
+        g_iat_007b000c(0, 0, 0xffff);
+    }
+    g_byte_004f4b4c = 0xff;
+    g_data_007afff4 = 1;
 }
 
 /* @addr 0x004c54d0 (68b)
