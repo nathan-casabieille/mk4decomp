@@ -1,5 +1,7 @@
 # <img src=".github/mortal_kombat.png" width="32" alt=""> MK4 - Matching Decompilation
 
+[![CI](https://github.com/nathan-casabieille/mk4decomp/actions/workflows/ci.yml/badge.svg)](https://github.com/nathan-casabieille/mk4decomp/actions/workflows/ci.yml)
+
 A **matching decompilation** of **Mortal Kombat 4** (PC, 1998).
 
 Goal: reproduce `MK4.EXE` **byte-for-byte** from reconstructed C source,
@@ -19,7 +21,7 @@ matching, the C source is the canonical representation of the game.
 | Metric | Progress |
 |---|---|
 | Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
-| **Decompiled to C** | **~20%** (552 / 2829 functions) - contributions welcome |
+| **Decompiled to C** | **~20%** (582 / 2829 functions) - contributions welcome |
 
 Two distinct things, in plain words:
 
