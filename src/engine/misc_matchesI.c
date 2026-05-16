@@ -20,21 +20,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void BootPhaseGateBracketedInit_004060c0(void);
-__declspec(naked) void CallPauseDirtyScaledStore_00446380(void) {
-    __asm {
-        call    BootPhaseGateBracketedInit_004060c0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   12h
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [eax*4 + 0x4c], ecx
-        ret
-    }
+void CallPauseDirtyScaledStore_00446380(void) {
+    BootPhaseGateBracketedInit_004060c0();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c) = g_scaledInit_00542044;
 }
 
 /* @addr 0x00453750 (38b)
@@ -50,19 +40,11 @@ __declspec(naked) void CallPauseDirtyScaledStore_00446380(void) {
  */
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void func_00407310(void);
-__declspec(naked) void CallPauseScaledStoreXJmp_00453750(void) {
-    __asm {
-        call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_xformEntityIdx], ecx
-        jmp     func_00407310
-        ret
-    }
+void CallPauseScaledStoreXJmp_00453750(void) {
+    DirtyDoubleDeref_00408cb0();
+    if (g_framePauseFlag != 0) return;
+    g_xformEntityIdx = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x24);
+    func_00407310();
 }
 
 /* @addr 0x0045f440 (38b)
@@ -98,20 +80,13 @@ void NotMaskStorePair_0045f440(void) {
  */
 extern u32 g_xformScratch2088;
 extern void func_0047d960(void);
-__declspec(naked) void DirtyTestScaledCmpJmp_0046ea70(void) {
-    __asm {
-        cmp     dword ptr [g_xformScratch2088], 1
-        _emit   75h
-        _emit   1dh
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x70]
-        cmp     eax, 0x20e
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0047d960
-        ret
-    }
+void DirtyTestScaledCmpJmp_0046ea70(void) {
+    unsigned int v;
+    if (g_xformScratch2088 != 1) return;
+    v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x70);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0x20e) return;
+    func_0047d960();
 }
 
 /* @addr 0x004708a0 (31b)
@@ -121,13 +96,10 @@ __declspec(naked) void DirtyTestScaledCmpJmp_0046ea70(void) {
  *   jmp     T
  */
 extern void func_0048a000(void);
-__declspec(naked) void ScaledStoreCSet58Jmp_004708a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [eax*4 + 0x5c], 0x0c
-        mov     dword ptr [g_walkCallback], 0x58
-        jmp     func_0048a000
-    }
+void ScaledStoreCSet58Jmp_004708a0(void) {
+    *(unsigned int *)(g_xformEntityIdx * 4 + 0x5c) = 0x0c;
+    g_walkCallback = (void (*)(void))0x58;
+    func_0048a000();
 }
 
 /* @addr 0x00470f60 (35b)
@@ -143,18 +115,14 @@ __declspec(naked) void ScaledStoreCSet58Jmp_004708a0(void) {
  */
 extern unsigned int g_xformScratch94;
 extern void func_00490374(void);
-__declspec(naked) void ScaledAndCheckJmp_00470f60(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_walkCallback], eax
-        and     eax, 0x200
-        mov     dword ptr [g_xformScratch94], eax
-        _emit   74h
-        _emit   05h
-        jmp     func_00490374
-        ret
-    }
+void ScaledAndCheckJmp_00470f60(void) {
+    unsigned int v = *(unsigned int *)(g_fightGroupHead * 4 + 0x40);
+    unsigned int masked;
+    g_walkCallback = (void (*)(void))v;
+    masked = v & 0x200;
+    g_xformScratch94 = masked;
+    if (masked == 0) return;
+    func_00490374();
 }
 
 /* @addr 0x00472860 (36b)
