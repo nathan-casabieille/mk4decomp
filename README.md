@@ -39,18 +39,30 @@ MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
 ```
 
 The rebuild path:
-1. MSVC 5.0 SP3 compiles every C source (`src/*.c`) to COFF `.obj` files.
-2. `tools/decomp/synthesize.py` walks each `.obj`, locates every named
-   function, applies COFF relocations using maps from `config/symbols.yaml`,
-   header `/* 0xADDR */` comments, `config/iat_map.yaml` and the
-   `_XXXXXXXX` name suffix convention, and writes the resulting bytes into
-   a copy of orig as scaffold. Where a reloc target can't be derived from
-   our source alone (e.g. references into hand-coded BSS globals without an
-   address annotation, or mid-function labels of stubs), the slot's 4 bytes
-   are inherited from the scaffold so the EXE remains byte-identical to
-   the original.
-3. The output is compared against `game/MK4.EXE` and fails the build if a
-   single byte differs.
+1. **MSVC 5.0 SP3 compiles** every C source (`src/*.c`) to COFF `.obj` files.
+2. **`tools/decomp/synthesize.py`** (custom mini-linker) walks each `.obj`,
+   locates every named function, applies COFF relocations using a cascading
+   lookup, and overlays the bytes at the function's orig VA. Resolution
+   sources (all checked into the repo):
+   - `config/symbols.yaml` - canonical name + VA for every matched function
+   - `include/**/*.h` - `/* 0xADDR */` comments after extern declarations
+   - `config/iat_map.yaml` - Win32 IAT slot VAs (extracted once from PE imports)
+   - `config/extras_map.yaml` - learned address annotations for hand-coded globals
+   - `config/reloc_sites.yaml` - per-site disambiguation for the 507 truly-ambiguous
+     references where one source symbol maps to multiple distinct VAs
+3. **Verification.** `make matching` fails if a single byte differs from orig.
+
+**Scaffold model.** The non-`.text` content (PE header, IAT, `.rdata`, `.data`,
+`.rsrc`) is taken byte-for-byte from `game/MK4.EXE` and reused under the
+matching-decomp convention that *binary assets need not be re-emitted from
+source* (cf. oot's textures/sounds in `.bin` files). All **code** in `.text`
+is fully synthesized from our compiled OBJs - the scaffold is overwritten
+inside every function range with our reloc-resolved bytes.
+
+`tools/decomp/learn_sites.py` is a one-time bootstrap that derived
+`config/reloc_sites.yaml` from orig. Once committed, the build does **not**
+consult orig at the link step - resolution uses the checked-in tables.
+Orig is read only at verification.
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
 for the architectural map already produced by static RE - every
