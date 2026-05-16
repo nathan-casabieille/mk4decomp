@@ -187,22 +187,12 @@ __declspec(naked) void RangeCheckJmp_0045e590(void) {
 extern void func_004fa320(void);
 extern int func_0046d4d8(void *p);
 extern void *g_data_004ed5e0;
-__declspec(naked) void Set1017CallPausePush_0047e600(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x1017
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        call    func_004fa320
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0dh
-        push    OFFSET g_data_004ed5e0
-        call    func_0046d4d8
-        add     esp, 4
-        ret
-    }
+void Set1017CallPausePush_0047e600(void) {
+    g_walkCallback = (void (*)(void))0x1017;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x1017;
+    func_004fa320();
+    if (g_framePauseFlag != 0) return;
+    func_0046d4d8(&g_data_004ed5e0);
 }
 
 /* @addr 0x00482eb0 (53b)
