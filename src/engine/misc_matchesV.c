@@ -71,23 +71,13 @@ extern unsigned int g_state_00535df0;
 extern unsigned int g_state_0053a2c0;
 extern void func_004396f1(void);
 extern void func_004396ff(void);
-__declspec(naked) void StoreCallPauseDirtyStoreJmp_004396c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535df0]
-        mov     dword ptr [g_eventQueueIdx], eax
-        call    func_004396f1
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ah
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   11h
-        mov     ecx, dword ptr [g_state_0053a2c0]
-        mov     dword ptr [g_eventQueueIdx], ecx
-        jmp     func_004396ff
-        ret
-    }
+void StoreCallPauseDirtyStoreJmp_004396c0(void) {
+    g_eventQueueIdx = g_state_00535df0;
+    func_004396f1();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) != 0) return;
+    g_eventQueueIdx = g_state_0053a2c0;
+    func_004396ff();
 }
 
 /* @addr 0x004398b0 (54b)
