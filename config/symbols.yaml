@@ -7151,10 +7151,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesO.c
   - addr: 0x00464830
-    name: func_00464830
+    name: PendingMatch_00464830
     size: 5812
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00465ef0
     name: TripleBlockInstallSelf_00465ef0
     size: 257
