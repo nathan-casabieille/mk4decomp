@@ -5405,10 +5405,11 @@ functions:
     status: matched
     file: src/engine/dispatcher_complex_249.c
   - addr: 0x00447a90
-    name: func_00447a90
+    name: PendingMatch_00447a90
     size: 3258
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00448750
     name: PendingMatch_00448750
     size: 2119
