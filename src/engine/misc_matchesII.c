@@ -57,36 +57,20 @@ void PushPopScaled14_00405ad0(void) {
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
 extern void func_00409970_ii(void);
 extern void PushSetCallCleanup_00408580(void);
-__declspec(naked) void PushPopScaled1cDoubleCall_00408510(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    func_00409970_ii
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3ch
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [edx*4 + 0x1c]
-        test    eax, eax
-        mov     dword ptr [g_xformEntityIdx], eax
-        _emit   74h
-        _emit   0eh
-        call    PushSetCallCleanup_00408580
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
+void PushPopScaled1cDoubleCall_00408510(void) {
+    unsigned int v;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
+    func_00409970_ii();
+    if (g_framePauseFlag != 0) return;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x1c);
+    g_xformEntityIdx = v;
+    if (v != 0) {
+        PushSetCallCleanup_00408580();
+        if (g_framePauseFlag != 0) return;
     }
+    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x0040a7e0 (69b)
