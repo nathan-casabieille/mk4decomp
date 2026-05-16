@@ -13002,10 +13002,11 @@ functions:
     status: matched
     file: src/engine/misc_matches7.c
   - addr: 0x004a42d0
-    name: func_004a42d0
+    name: PendingMatch_004a42d0
     size: 1262
     group: audio
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004a47c0
     name: ChainInitDoublePushCall_004a47c0
     size: 183
