@@ -78,16 +78,11 @@ void ZeroTripleJmp_00491e50(void) {
  *   jmp     +5
  */
 extern void func_004930ed(void);
-__declspec(naked) void ScaledLoadCmp0fJmp_004930e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x34]
-        cmp     eax, 0x0f
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   05h
-        jmp     func_004930ed
-        ret
+void ScaledLoadCmp0fJmp_004930e0(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0x0f) {
+        func_004930ed();
     }
 }
 
@@ -114,15 +109,12 @@ void Const111ScaledStoreJmp_00495da0(void) {
  *   jmp     +2
  */
 extern void func_0045950e(void);
-__declspec(naked) void ArgSarStoreJmp_004594f0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        jmp     func_0045950e
-    }
+void ArgSarStoreJmp_004594f0(int arg) {
+    unsigned int base = g_baseSel_00542060;
+    int v = arg >> 2;
+    g_eventQueueTotal = (unsigned int)v;
+    *(int *)(base * 4 + 0x48) = v;
+    func_0045950e();
 }
 
 /* @addr 0x00490720 (30b)
@@ -133,14 +125,12 @@ __declspec(naked) void ArgSarStoreJmp_004594f0(void) {
  *   jmp     +2
  */
 extern void ScaledZeroFour_00490740(void);
-__declspec(naked) void ScaledMove48to58_00490720(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x48]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x58], ecx
-        jmp     ScaledZeroFour_00490740
-    }
+void ScaledMove48to58_00490720(void) {
+    packed_ptr fg = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(fg * 4 + 0x48);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(fg * 4 + 0x58) = v;
+    ScaledZeroFour_00490740();
 }
 
 /* @addr 0x0048c190 (25b)
@@ -152,15 +142,12 @@ __declspec(naked) void ScaledMove48to58_00490720(void) {
  *   jmp     +0x031407
  */
 extern void func_004bd5a2(void);
-__declspec(naked) void ScaledSet1OnNonZero_0048c190(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueEnd]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     dword ptr [eax*4 + 0], 1
-        jmp     func_004bd5a2
+void ScaledSet1OnNonZero_0048c190(void) {
+    unsigned int v = g_eventQueueEnd;
+    if (v != 0) {
+        *(unsigned int *)(v * 4) = 1;
     }
+    func_004bd5a2();
 }
 
 /* @addr 0x0048de00 (25b)

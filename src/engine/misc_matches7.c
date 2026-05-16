@@ -73,6 +73,11 @@ __declspec(naked) void MovsxAnd4Shr_004a1ce0(void) {
  *   and     eax, 0x20
  *   shr     eax, 5
  *   ret
+ *
+ * MSVC SP3 rewrites `((char)g_byte & 4) >> 2` as `(g_byte >> 2) & 1`,
+ * picking `mov al, m8` + `sar eax, 2` + `and eax, 1` (12b) instead of
+ * `movsx eax, m8` + `and eax, 4` + `shr eax, 2` (13b). Different
+ * bytes, different upper-eax semantics - left as naked.
  */
 __declspec(naked) void MovsxAnd20Shr5_004a1cf0(void) {
     __asm {
@@ -136,18 +141,12 @@ void AndStoreJmp_0049cc10(void) {
  *   jmp     T
  */
 extern void func_0049cf60(void);
-__declspec(naked) void CmpDivJmp_0049d080(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 2
-        _emit   7eh
-        _emit   0ah
-        cdq
-        sub     eax, edx
-        sar     eax, 1
-        mov     dword ptr [g_walkCallback], eax
-        jmp     func_0049cf60
+void CmpDivJmp_0049d080(void) {
+    int v = (int)g_walkCallback;
+    if (v > 2) {
+        g_walkCallback = (void (*)(void))(v / 2);
     }
+    func_0049cf60();
 }
 
 /* @addr 0x0049d430 (30b)
@@ -161,17 +160,12 @@ __declspec(naked) void CmpDivJmp_0049d080(void) {
  * .ret:
  *   ret
  */
-__declspec(naked) void ScaledZeroIfNonzero_0049d430(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        xor     ecx, ecx
-        cmp     eax, ecx
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0dh
-        mov     dword ptr [eax*4 + 8], ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        ret
+void ScaledZeroIfNonzero_0049d430(void) {
+    unsigned int v = g_scaledInit_00542044;
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0) {
+        *(unsigned int *)(v * 4 + 8) = 0;
+        g_scaledInit_00542044 = 0;
     }
 }
 

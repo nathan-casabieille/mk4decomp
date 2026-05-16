@@ -112,13 +112,9 @@ void ScaledMove74to70_0046eaa0(void) {
  *   jmp     +9
  */
 extern void func_0049008b(void);
-__declspec(naked) void ScaledLoadJmp_38_00490070(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     func_0049008b
-    }
+void ScaledLoadJmp_38_00490070(void) {
+    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    func_0049008b();
 }
 
 /* @addr 0x0048e7b0 (23b)
@@ -128,13 +124,9 @@ __declspec(naked) void ScaledLoadJmp_38_00490070(void) {
  *   jmp     +9
  */
 extern void func_0048e7cb(void);
-__declspec(naked) void ScaledLoadJmp_74_0048e7b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x74]
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_0048e7cb
-    }
+void ScaledLoadJmp_74_0048e7b0(void) {
+    g_walkCallback = *(void (**)(void))(g_baseSel_00542060 * 4 + 0x74);
+    func_0048e7cb();
 }
 
 /* @addr 0x00485d70 (27b)
@@ -147,14 +139,10 @@ __declspec(naked) void ScaledLoadJmp_74_0048e7b0(void) {
 extern unsigned int g_dual_0053a1a8;
 extern unsigned int g_dual_0053a1a4;
 extern void func_00485d8c(void);
-__declspec(naked) void DualLoadDualStoreJmp_00485d70(void) {
-    __asm {
-        mov     eax, dword ptr [g_dual_0053a1a8]
-        mov     ecx, dword ptr [g_dual_0053a1a4]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        jmp     func_00485d8c
-    }
+void DualLoadDualStoreJmp_00485d70(void) {
+    g_walkCallback        = (void (*)(void))g_dual_0053a1a8;
+    g_eventQueueCurrent   = g_dual_0053a1a4;
+    func_00485d8c();
 }
 
 /* @addr 0x00405430 already in misc_matches2 (different file no - wait,
@@ -172,19 +160,14 @@ __declspec(naked) void DualLoadDualStoreJmp_00485d70(void) {
  *   ret
  */
 extern unsigned int g_counter_0053a51c;
-__declspec(naked) void IncOrZero9_00422080(void) {
-    __asm {
-        mov     eax, dword ptr [g_counter_0053a51c]
-        inc     eax
-        cmp     eax, 9
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   07h
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_counter_0053a51c], eax
-        ret
+void IncOrZero9_00422080(void) {
+    unsigned int v = g_counter_0053a51c + 1;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 9) {
+        g_walkCallback = (void (*)(void))0;
+        v = 0;
     }
+    g_counter_0053a51c = v;
 }
 
 /* @addr 0x00409280 (22b)
