@@ -231,20 +231,12 @@ void BitTestFreeClear_004c8ae0(struct BitTestS *p) {
  *   call IAT [g_iat_004d213c](ecx).
  */
 extern unsigned int g_table_00fa0de0[];
-extern void (*g_iat_004d213c)(void *);
-__declspec(naked) void DivMod32IAT_004cd320(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, eax
-        and     eax, 0x1f
-        sar     ecx, 5
-        lea     edx, [eax + eax*8]
-        mov     eax, dword ptr [ecx*4 + g_table_00fa0de0]
-        lea     ecx, [eax + edx*4 + 0x0c]
-        push    ecx
-        call    dword ptr [g_iat_004d213c]
-        ret
-    }
+extern void (__stdcall *g_iat_004d213c)(void *);
+void DivMod32IAT_004cd320(int arg) {
+    int lo = arg & 0x1f;
+    int hi = arg >> 5;
+    void *p = (char *)g_table_00fa0de0[hi] + lo * 9 * 4 + 0x0c;
+    g_iat_004d213c(p);
 }
 
 /* @addr 0x004ce1f0 (35b)
