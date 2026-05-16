@@ -129,20 +129,11 @@ void LoadCmpAddrJmp_00493ed0(void) {
  */
 extern int MovsxAnd4Shr_004a1ce0(void);
 extern int MovsxAnd20Shr5_004a1cf0(void);
-__declspec(naked) void IsNonzeroBoolFlagged_004a1d00(void) {
-    __asm {
-        call    MovsxAnd4Shr_004a1ce0
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     eax, 1
-        ret
-        call    MovsxAnd20Shr5_004a1cf0
-        neg     eax
-        sbb     eax, eax
-        neg     eax
-        ret
+int IsNonzeroBoolFlagged_004a1d00(void) {
+    if (MovsxAnd4Shr_004a1ce0() != 0) {
+        return 1;
     }
+    return MovsxAnd20Shr5_004a1cf0() != 0 ? 1 : 0;
 }
 
 /* @addr 0x004a5680 (28b)
