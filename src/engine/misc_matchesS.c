@@ -366,19 +366,14 @@ __declspec(naked) void ScaledIncCmpDualJmp_00429800(void) {
 extern void func_0049e4d0(void);
 extern void InstallSelfThreeStateLeaPlus22_00437970(void);
 extern void func_0048121c(void);
-__declspec(naked) void CallPauseMStackPushSet2Jmp_00437930(void) {
-    __asm {
-        call    func_0049e4d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 2
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfThreeStateLeaPlus22_00437970
-        jmp     func_0048121c
-        ret
-    }
+void CallPauseMStackPushSet2Jmp_00437930(void) {
+    unsigned int top;
+    func_0049e4d0();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))2;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&InstallSelfThreeStateLeaPlus22_00437970;
+    func_0048121c();
 }
