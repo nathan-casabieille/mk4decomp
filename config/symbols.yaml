@@ -15406,10 +15406,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004bfc00
-    name: func_004bfc00
+    name: PendingMatch_004bfc00
     size: 1873
     group: engine.scenegraph
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c0360
     name: ScanlineTexBlitPaletted_004c0360
     size: 633
