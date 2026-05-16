@@ -10,20 +10,18 @@
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
 
+/* Table-base extern: &-reference defeats MSVC's constant-folding of
+ * `addr >> 2` so the runtime shift survives, matching orig encoding. */
+extern unsigned int g_table_00538168;   /* 0x00538168 (uninit .data) */
+
 /* @addr 0x004049c0 (14b)
- * "Init g_matrixStackTop with packed-ptr (0x53 8168 / 4)".
  *   mov     eax, 0x00538168
  *   shr     eax, 2
  *   mov     [g_matrixStackTop], eax
  *   ret
  */
-__declspec(naked) void MStackPackedInit_004049c0(void) {
-    __asm {
-        mov     eax, 0x00538168
-        shr     eax, 2
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPackedInit_004049c0(void) {
+    g_matrixStackTop = (int)((unsigned int)&g_table_00538168 >> 2);
 }
 
 /* @addr 0x00406ce0 (19b)
