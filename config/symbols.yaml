@@ -15685,10 +15685,11 @@ functions:
     status: matched
     file: src/engine/getters.c
   - addr: 0x004c49b0
-    name: WndProc
+    name: PendingMatch_004c49b0
     size: 1275
     group: platform.win32
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c5070
     name: Boot
     size: 371
