@@ -660,7 +660,7 @@ functions:
     status: matched
     file: src/engine/mstack_push_zero_call_pop.c
   - addr: 0x00407d50
-    name: PendingMatch_00407d50
+    name: MStackPushTripleFields_00407d50
     size: 1085
     group: boot
     status: matched
@@ -12576,7 +12576,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a09c0
-    name: PendingMatch_004a09c0
+    name: MStackDualPushSaveRestore_004a09c0
     size: 925
     group: audio
     status: matched
@@ -13182,7 +13182,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a7930
-    name: PendingMatch_004a7930
+    name: AudioStateMachineMulti_004a7930
     size: 1031
     group: audio
     status: matched
@@ -13248,7 +13248,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a85c0
-    name: PendingMatch_004a85c0
+    name: InstallSelfStateMachine2_004a85c0
     size: 943
     group: audio
     status: matched
@@ -16926,7 +16926,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004d0400
-    name: PendingMatch_004d0400
+    name: CrtFreeLocaleInfo_004d0400
     size: 1024
     group: other
     status: matched

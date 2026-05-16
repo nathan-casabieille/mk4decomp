@@ -7,43 +7,8 @@ static breakdown: top callees, globals touched, structural traits
 as a working list for contributors who want to give these functions
 real semantic names.
 
-Total: 104 functions, sorted by size.
+Total: 99 functions, sorted by size.
 
-
-## PendingMatch_004a09c0 @ 0x4a09c0 (925b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, cond jmps: 4
-- top callees: `CallSetPause_0041f830`×2, `Push16Call_00489f50`, `SaveCallRestoreOrXor_00404a00`, `SaveStateSnapshot_004aba40`, `TableLookupCall_00489ff0`, `MStackRestore27_004abd50`, `ChainDirtyBitWalker_00408c10`
-- top globals: `g_matrixStackTop`×12, `g_xformDirtyFlags`×8, `0x54206c`×4, `0x542060`×2, `g_dlChar13`×2, `g_dlChar24`×2, `g_fightGroupHead`×2, `0x542078`
-
-## PendingMatch_004a85c0 @ 0x4a85c0 (943b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: SEH (fs:[0]), x87 FPU, cond jmps: 4
-- top callees: `Push16Call_00489f50`×3, `DispatcherComplex260_00407030`×2, `MStackPushComplexCallPop_00406430`×2, `AudioByteTable8Loop_004a7f50`×2, `AudioInitArgs3_004a1f20`, `AudioBindEntry_004a1e40`, `SpawnLeftRightAudioCrew_004a8080`, `Helper_TickFrame_Misc`
-- top globals: `g_currentNodeIdx`×10, `0x542060`×6, `0x5433f4`
-
-## PendingMatch_004d0400 @ 0x4d0400 (1024b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, IAT calls: 1, cond jmps: 10
-- top callees: `FreeImpl_004c55f0`×17, `LoadArgPushCall_004c54b0`×4, `CrtGetLocaleInfo_004d0bc0`, `WcToMbDispatcher_004cdae0`, `MBToWCharCachedDispatch_004cd950`
-- top globals: `0x522bb0`×2, `0xf9fc78`×2, `0xf9fc7c`×2, `0xf9fc10`, `0xf9fc8c`, `0x522998`, `0x52299c`
-
-## PendingMatch_004a7930 @ 0x4a7930 (1031b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, cond jmps: 11
-- top callees: `Push16Call_00489f50`×3, `AudioByteTableLoop_004a76e0`×2, `PendingMatch_004a2a80`, `ScaledByteIdxDualCopy_004a3260`, `AudioState50b4BitDispatcher_004a32c0`, `RetZero_004a1c40`, `Helper_AudioStub_4140`, `Helper_AudioStub_4160`
-- top globals: `g_currentNodeIdx`×4, `0x542060`×2
-
-## PendingMatch_00407d50 @ 0x407d50 (1085b)
-
-- file: `src/engine/misc_matchesQQ.c`
-- traits: x87 FPU, cond jmps: 10
-- top callees: `Mul10Tail_00404af0`×3, `VoicePicker_00401000`×2, `ExtractBitsToVec3_00407c00`×2, `MStackPush8_004ab790`, `extern_0x52900d0`, `extern_0x5290122`, `MStackPop8_004ab860`
-- top globals: `g_matrixStackTop`×7, `0x54206c`×6, `g_eventQueueEnd`×5, `0x542078`×4, `g_framePauseFlag`×3, `g_pendingNodeType`×3, `g_fightGroupHead`×3, `0x542098`×3
 
 ## PendingMatch_004a93c0 @ 0x4a93c0 (1116b)
 
