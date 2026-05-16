@@ -16931,7 +16931,8 @@ functions:
     group: other
     status: stub
   - addr: 0x004f44e0
-    name: g_imaIndexTable
+    name: g_imaIndexTable_matched
     size: 1
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
