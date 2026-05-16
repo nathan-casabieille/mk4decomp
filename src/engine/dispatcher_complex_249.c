@@ -34,68 +34,35 @@ extern void DualPushSet7dCallPop_00474290(void);
 extern void DoubleStackPushAndJmp7d_00474050(void);
 
 #define DC249_BODY(WORKER_FN)                                                  \
-    __asm {                                                                    \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     ecx, dword ptr [g_xformEntityIdx]                        \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     edx, dword ptr [g_pendingNodeType]                       \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], edx                               \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     ecx, dword ptr [g_eventQueueTotal]                       \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     edx, dword ptr [g_eventQueueEnd]                         \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], edx                               \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     ecx, dword ptr [g_fightGroupHead]                        \
-        __asm inc     eax                                                      \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm call    PendingMatch_00447a90                                            \
-        __asm mov     eax, dword ptr [g_framePauseFlag]                        \
-        __asm test    eax, eax                                                 \
-        __asm _emit   75h                                                      \
-        __asm _emit   72h                                                      \
-        __asm call    WORKER_FN                                                \
-        __asm mov     eax, dword ptr [g_framePauseFlag]                        \
-        __asm test    eax, eax                                                 \
-        __asm _emit   75h                                                      \
-        __asm _emit   64h                                                      \
-        __asm mov     eax, dword ptr [g_matrixStackTop]                        \
-        __asm mov     edx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_fightGroupHead], edx                        \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     ecx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_eventQueueEnd], ecx                         \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     edx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_eventQueueTotal], edx                       \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     ecx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_pendingNodeType], ecx                       \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     edx, dword ptr [eax*4 + 0]                               \
-        __asm dec     eax                                                      \
-        __asm mov     dword ptr [g_xformEntityIdx], edx                        \
-        __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm ret                                                              \
-    }
+    do {                                                                       \
+        g_matrixStackTop++;                                                    \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;            \
+        g_matrixStackTop++;                                                    \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_pendingNodeType;           \
+        g_matrixStackTop++;                                                    \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueTotal;           \
+        g_matrixStackTop++;                                                    \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;             \
+        g_matrixStackTop++;                                                    \
+        *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;            \
+        PendingMatch_00447a90();                                               \
+        if (g_framePauseFlag != 0) return;                                     \
+        WORKER_FN();                                                           \
+        if (g_framePauseFlag != 0) return;                                     \
+        g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);            \
+        g_matrixStackTop--;                                                    \
+        g_eventQueueEnd = *(unsigned int *)(g_matrixStackTop * 4);             \
+        g_matrixStackTop--;                                                    \
+        g_eventQueueTotal = *(unsigned int *)(g_matrixStackTop * 4);           \
+        g_matrixStackTop--;                                                    \
+        g_pendingNodeType = *(unsigned int *)(g_matrixStackTop * 4);           \
+        g_matrixStackTop--;                                                    \
+        g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);            \
+        g_matrixStackTop--;                                                    \
+    } while (0)
 
 /* @addr 0x00447890 */
-__declspec(naked) void DispatcherComplex249_00447890(void) { DC249_BODY(DualPushSet7dCallPop_00474290) }
+void DispatcherComplex249_00447890(void) { DC249_BODY(DualPushSet7dCallPop_00474290); }
 
 /* @addr 0x00447990 */
-__declspec(naked) void DispatcherComplex249_00447990(void) { DC249_BODY(DoubleStackPushAndJmp7d_00474050) }
+void DispatcherComplex249_00447990(void) { DC249_BODY(DoubleStackPushAndJmp7d_00474050); }
