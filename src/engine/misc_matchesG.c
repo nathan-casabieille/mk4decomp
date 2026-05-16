@@ -302,22 +302,14 @@ void PushCallSet2147Jmp_00439320(void) {
  */
 extern void func_004085f0(void);
 extern void func_004058a0(void);
-__declspec(naked) void TripleSetCallPauseDirtyJmp_00446150(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [g_fightGroupHead], eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_004085f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0eh
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     func_004058a0
-        ret
-    }
+void TripleSetCallPauseDirtyJmp_00446150(void) {
+    unsigned int v = g_eventQueueIdx;
+    g_fightGroupHead = v;
+    g_scaledInit_00542044 = v;
+    func_004085f0();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    func_004058a0();
 }
 
 /* @addr 0x004462c0 (38b)
