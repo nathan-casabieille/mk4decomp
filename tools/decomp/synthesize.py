@@ -130,6 +130,14 @@ def build_global_symbol_map():
                 name_to_addr[sym] = va
     return addr_to_name, name_to_addr
 
+def load_reloc_sites():
+    """Per-site address table: (rel_obj_path, sec_idx, reloc_va_in_sec) -> target_va.
+       Used when the same symbol name is reused at multiple addresses in source."""
+    sites_path = ROOT / 'config' / 'reloc_sites.yaml'
+    if sites_path.exists():
+        with open(sites_path) as f: return yaml.safe_load(f) or {}
+    return {}
+
 def main():
     print('Loading scaffold...')
     with open(ORIG_EXE, 'rb') as f:
@@ -137,10 +145,12 @@ def main():
     ib, pe_sections = parse_pe_sections(scaffold)
     text_sec = next(s for s in pe_sections if s['name'] == '.text')
 
-    print('Loading symbols.yaml + headers...')
+    print('Loading symbols.yaml + headers + sites...')
     with open(SYMS) as f: ydat = yaml.safe_load(f)
     name_to_entry = {e['name']: e for e in ydat['functions']}
     addr_to_name, name_to_addr = build_global_symbol_map()
+    reloc_sites = load_reloc_sites()
+    print(f'  reloc_sites: {len(reloc_sites)} entries')
 
     print('Walking OBJs...')
     obj_paths = []
@@ -153,6 +163,7 @@ def main():
     not_found = 0
     mismatches = []
     for obj_path in obj_paths:
+        rel_obj_path = os.path.relpath(obj_path, str(OBJ_DIR))
         with open(obj_path,'rb') as f:
             obj_data = f.read()
         syms, sections = parse_obj_full(obj_data)
@@ -200,6 +211,10 @@ def main():
                 if value <= r['va'] < value + target_size:
                     offset_in_fn = r['va'] - value
                     all_reloc_offsets.append(offset_in_fn)
+                    # First try per-site address table (handles ambiguous names where one
+                    # source symbol maps to multiple orig addresses).
+                    site_key = f'{rel_obj_path}#{sec_idx}#{r["va"]:#x}'
+                    site_va = reloc_sites.get(site_key)
                     # Look up the symbol being referenced
                     ref_sym = syms[r['sym_idx']]
                     if ref_sym is None:
@@ -214,7 +229,9 @@ def main():
                     # For __imp__ symbols: original COFF name starts with __imp__, our clean strips one _
                     # Re-add the underscore for the IAT map lookup
                     ref_imp = '_' + ref_clean_nostd  # one extra _ since we stripped
-                    if ref_clean in name_to_entry:
+                    if site_va is not None:
+                        ref_va = site_va
+                    elif ref_clean in name_to_entry:
                         ref_va = name_to_entry[ref_clean]['addr']
                     elif ref_clean in name_to_addr:
                         ref_va = name_to_addr[ref_clean]
@@ -264,16 +281,11 @@ def main():
                             new_val = ref_va - (target_va + offset_in_fn + 4) + existing
                             struct.pack_into('<I', fn_bytes, offset_in_fn, new_val & 0xffffffff)
 
-            # Fall back to orig bytes where our reloc resolution emitted zero (unresolved)
+            # Function bytes have been computed entirely from our compiled OBJs + reloc resolution.
             file_off = (target_va - text_sec['vaddr']) + text_sec['raddr']
             if file_off + target_size > text_sec['raddr'] + text_sec['rsize']:
                 continue
-            for off_in_fn in all_reloc_offsets:
-                if off_in_fn + 4 <= target_size:
-                    orig_slot_bytes = scaffold[file_off + off_in_fn : file_off + off_in_fn + 4]
-                    for k in range(4):
-                        fn_bytes[off_in_fn + k] = orig_slot_bytes[k]
-            # Compare to orig (after fallback)
+            # Compare to orig
             orig_bytes = scaffold[file_off:file_off+target_size]
             if bytes(orig_bytes) != bytes(fn_bytes):
                 mismatches.append((clean, target_va, target_size,
