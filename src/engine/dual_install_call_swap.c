@@ -40,43 +40,23 @@ extern void SqDistThresholdRevertAdvance_00489d10(void);
 extern void CjChainResetThreshold_00490cc0(void);
 
 /* @addr 0x00489cd0 */
-__declspec(naked) void DualInstallCallSwap_00489cd0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_dualB_00542020]
-        mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_eventQueueTotal], ecx
-        call    SqDistThresholdRevertAdvance_00489d10
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, dword ptr [g_dualF_00542024]
-        mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [g_eventQueueTotal], eax
-        jmp     SqDistThresholdRevertAdvance_00489d10
-        ret
-    }
+void DualInstallCallSwap_00489cd0(void) {
+    g_pendingNodeType = g_scaledInit_00542044;
+    g_eventQueueTotal = g_dualB_00542020;
+    SqDistThresholdRevertAdvance_00489d10();
+    if (g_framePauseFlag) return;
+    g_pendingNodeType = g_xformEntityIdx;
+    g_eventQueueTotal = g_dualF_00542024;
+    SqDistThresholdRevertAdvance_00489d10();
 }
 
 /* @addr 0x00490c80 */
-__declspec(naked) void DualInstallCallSwap_00490c80(void) {
-    __asm {
-        mov     eax, dword ptr [g_player1NodeIdx]
-        mov     ecx, dword ptr [g_gtPlayerProbe2]
-        mov     dword ptr [g_fightGroupHead], eax
-        mov     dword ptr [g_baseSel_00542060], ecx
-        call    CjChainResetThreshold_00490cc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        mov     edx, dword ptr [g_player2NodeIdx]
-        mov     eax, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_fightGroupHead], edx
-        mov     dword ptr [g_baseSel_00542060], eax
-        jmp     CjChainResetThreshold_00490cc0
-        ret
-    }
+void DualInstallCallSwap_00490c80(void) {
+    g_fightGroupHead = g_player1NodeIdx;
+    g_baseSel_00542060 = g_gtPlayerProbe2;
+    CjChainResetThreshold_00490cc0();
+    if (g_framePauseFlag) return;
+    g_fightGroupHead = g_player2NodeIdx;
+    g_baseSel_00542060 = g_gtPlayerProbe1;
+    CjChainResetThreshold_00490cc0();
 }
