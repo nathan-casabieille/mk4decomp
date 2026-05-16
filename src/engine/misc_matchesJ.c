@@ -100,17 +100,11 @@ void CallPauseDirtyPushCall_00488ba0(void) {
  */
 extern void *g_data_004ef1f8;
 extern int func_00491508(void *);
-__declspec(naked) void LiteralPushCallEntZero_00488c00(void) {
-    __asm {
-        mov     eax, 0x00500d4c
-        push    OFFSET g_data_004ef1f8
-        shr     eax, 2
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     dword ptr [g_walkCallback], 0
-        call    func_00491508
-        add     esp, 4
-        ret
-    }
+extern int g_data_00500d4c;
+void LiteralPushCallEntZero_00488c00(void) {
+    g_xformEntityIdx = ((unsigned int)&g_data_00500d4c) >> 2;
+    g_walkCallback = (void (*)(void))0;
+    func_00491508(&g_data_004ef1f8);
 }
 
 /* @addr 0x00488c30 (43b)
