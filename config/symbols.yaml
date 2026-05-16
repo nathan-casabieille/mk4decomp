@@ -2931,10 +2931,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00429ef0
-    name: func_00429ef0
+    name: PendingMatch_00429ef0
     size: 3861
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0042ae10
     name: Init4Globals_0042ae10
     size: 36
