@@ -13248,7 +13248,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004a85c0
-    name: InstallSelfStateMachine2_004a85c0
+    name: AudioInstallSelfStateMachine2_004a85c0
     size: 943
     group: audio
     status: matched
@@ -16710,7 +16710,7 @@ functions:
     status: matched
     file: src/engine/misc_matchesFF.c
   - addr: 0x004cd350
-    name: CrtFloatFormatHelper_004cd350
+    name: CrtFileOpenImpl_004cd350
     size: 921
     group: crt
     status: matched
