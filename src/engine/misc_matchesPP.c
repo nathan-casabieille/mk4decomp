@@ -209,25 +209,15 @@ __declspec(naked) void GuardedWalkSwitchDirty_0048ea40(void) {
 extern unsigned int g_data_00542978;
 extern void ArgScaledTestStore_00494140(void);
 extern void ScaledLoadOrSetJmp_00406b20(void);
-__declspec(naked) void PushCallStoreClearJmp_00460420(void) {
-    __asm {
-        push    OFFSET g_data_00542978
-        call    ArgScaledTestStore_00494140
-        mov     ecx, dword ptr [g_framePauseFlag]
-        xor     eax, eax
-        add     esp, 4
-        cmp     ecx, eax
-        _emit   75h
-        _emit   2ah
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [ecx*4 + 0x24], edx
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        jmp     ScaledLoadOrSetJmp_00406b20
-        ret
+void PushCallStoreClearJmp_00460420(void) {
+    ArgScaledTestStore_00494140((int)&g_data_00542978);
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_xformEntityIdx;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    ScaledLoadOrSetJmp_00406b20();
 }
 
 /* @addr 0x0048fee0 (68b)
