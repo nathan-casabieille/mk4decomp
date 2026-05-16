@@ -1371,30 +1371,13 @@ extern unsigned int g_data_004d56c8;
 extern unsigned int g_data_004d56d0;
 extern unsigned int g_data_0053a1c0;
 extern void Helper_Sprintf(void *buf, void *fmt, unsigned int arg);
-__declspec(naked) void Sprintf2WaySelect_00426550(void) {
-    __asm {
-        mov     eax, 0x0053a1c0
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_currentNodeFlags]
-        cmp     eax, 2
-        _emit   75h
-        _emit   1ah
-        mov     ecx, dword ptr [g_walkCallback]
-        push    ecx
-        push    OFFSET g_data_004d56c8
-        push    OFFSET g_data_0053a1c0
-        call    Helper_Sprintf
-        add     esp, 0x0c
-        ret
-        mov     edx, dword ptr [g_walkCallback]
-        push    edx
-        push    OFFSET g_data_004d56d0
-        push    OFFSET g_data_0053a1c0
-        call    Helper_Sprintf
-        add     esp, 0x0c
-        ret
+void Sprintf2WaySelect_00426550(void) {
+    g_scaledInit_00542044 = (unsigned int)&g_data_0053a1c0 >> 2;
+    if (g_currentNodeFlags == 2) {
+        Helper_Sprintf(&g_data_0053a1c0, &g_data_004d56c8, (unsigned int)g_walkCallback);
+        return;
     }
+    Helper_Sprintf(&g_data_0053a1c0, &g_data_004d56d0, (unsigned int)g_walkCallback);
 }
 
 /* @addr 0x0042f4f0 (75b)
@@ -1455,33 +1438,26 @@ __declspec(naked) void SlotFieldSwap3c_004463b0(void) {
 extern void SetJmp_00405420(void);
 extern void ScaledLoadStore_00473ed0(void);
 extern void TripleChainSetupDualCall_00473da0(void);
-__declspec(naked) void GuardedDirty4ScaledJmp_00473d50(void) {
-    __asm {
-        call    SetJmp_00405420
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3ch
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     ScaledLoadStore_00473ed0
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   20h
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   12h
-        mov     eax, 0x004ec9e8
-        shr     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        jmp     TripleChainSetupDualCall_00473da0
-        ret
+extern unsigned int g_table_004ec9e8;
+void GuardedDirty4ScaledJmp_00473d50(void) {
+    SetJmp_00405420();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if ((g_xformDirtyFlags & 4) == 0) {
+        ScaledLoadStore_00473ed0();
+        return;
+    }
+    MStackPush2RunCountdown_004089e0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    MStackBracket7_DispatchAndChain_004b8fa0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    g_walkCallback = (void (*)(void))((unsigned int)&g_table_004ec9e8 >> 2);
+    TripleChainSetupDualCall_00473da0();
 }
 
 /* @addr 0x0048e630 (75b)
@@ -1525,23 +1501,18 @@ __declspec(naked) void PackedAdvanceCallContinue_0048e630(void) {
 extern unsigned int g_data_00543800;
 extern void *AllocNode(void);
 extern void Push16Call_00489f50(void);
-__declspec(naked) void InitDispatchersJmp_004a4260(void) {
-    __asm {
-        mov     dword ptr [g_pendingNodeType], 0x004200b0
-        mov     dword ptr [g_eventQueueWorkType], 0x1000
-        call    AllocNode
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   28h
-        mov     eax, 2
-        mov     dword ptr [g_data_00543800], 0xffffffff
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0052aac4], eax
-        mov     dword ptr [g_eventQueueWorkType], 0
-        jmp     Push16Call_00489f50
-        ret
+void InitDispatchersJmp_004a4260(void) {
+    g_pendingNodeType = 0x004200b0;
+    g_eventQueueWorkType = 0x1000;
+    AllocNode();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    g_data_00543800 = 0xffffffff;
+    g_walkCallback = (void (*)(void))2;
+    g_data_0052aac4 = 2;
+    g_eventQueueWorkType = 0;
+    Push16Call_00489f50();
 }
 
 /* @addr 0x004c4950 (75b)
