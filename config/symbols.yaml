@@ -6230,10 +6230,11 @@ functions:
     status: matched
     file: src/engine/misc_matches6.c
   - addr: 0x00459510
-    name: func_00459510
+    name: PendingMatch_00459510
     size: 2728
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00459fc0
     name: GuardedTwiceLoopback_00459fc0
     size: 73
