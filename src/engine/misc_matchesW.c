@@ -385,20 +385,10 @@ __declspec(naked) void ArgScaledLoadCmpP1_0048e550(void) {
  *   ret
  */
 extern void func_00490074(void);
-__declspec(naked) void SwapCallRestore_00490030(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_fightGroupHead], edx
-        call    func_00490074
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_fightGroupHead], eax
-        ret
-    }
+void SwapCallRestore_00490030(void) {
+    g_scaledInit_00542044 = g_fightGroupHead;
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    func_00490074();
+    if (g_framePauseFlag != 0) return;
+    g_fightGroupHead = g_scaledInit_00542044;
 }
