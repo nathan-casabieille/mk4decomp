@@ -120,14 +120,9 @@ __declspec(naked) void ZeroNDwords_004a5660(void) {
  *   jmp     T
  */
 extern void func_0049fa30(void);
-__declspec(naked) void AndStoreJmp_0049cc10(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_walkCallback]
-        and     ecx, eax
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_0049fa30
-    }
+void AndStoreJmp_0049cc10(void) {
+    g_walkCallback = (void(*)(void))((unsigned int)g_walkCallback & g_eventQueueCurrent);
+    func_0049fa30();
 }
 
 /* @addr 0x0049d080 (25b)
@@ -214,14 +209,12 @@ __declspec(naked) void StateAdd5Capped_0049fa00(void) {
 extern unsigned char g_byte_00543590;
 extern void func_004a4159(void);
 extern void func_004a4136(void);
-__declspec(naked) void CmpByteJmp_004a4180(void) {
-    __asm {
-        cmp     byte ptr [g_byte_00543590], 1
-        _emit   75h
-        _emit   05h
-        jmp     func_004a4159
-        jmp     func_004a4136
+void CmpByteJmp_004a4180(void) {
+    if (g_byte_00543590 == 1) {
+        func_004a4159();
+        return;
     }
+    func_004a4136();
 }
 
 /* @addr 0x004a42b0 (25b)
@@ -234,16 +227,10 @@ __declspec(naked) void CmpByteJmp_004a4180(void) {
  */
 extern unsigned int g_state_00543824;
 extern void func_0048a1ad(void);
-__declspec(naked) void TestZeroJmp_004a42b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00543824]
-        test    eax, eax
-        _emit   74h
-        _emit   0fh
-        mov     dword ptr [g_state_00543824], 0
-        jmp     func_0048a1ad
-        ret
-    }
+void TestZeroJmp_004a42b0(void) {
+    if (!g_state_00543824) return;
+    g_state_00543824 = 0;
+    func_0048a1ad();
 }
 
 /* @addr 0x0049c6d0 (27b)
@@ -254,14 +241,10 @@ __declspec(naked) void TestZeroJmp_004a42b0(void) {
  *   jmp     +0x25
  */
 extern void func_0049c6fa(void);
-__declspec(naked) void ArgSar_Set1_Jmp_0049c6d0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     dword ptr [g_eventQueueChild], 1
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueEnd], eax
-        jmp     func_0049c6fa
-    }
+void ArgSar_Set1_Jmp_0049c6d0(int arg) {
+    g_eventQueueChild = 1;
+    g_eventQueueEnd = (unsigned int)(arg >> 2);
+    func_0049c6fa();
 }
 
 /* @addr 0x0049c6f0 (27b)
@@ -272,12 +255,8 @@ __declspec(naked) void ArgSar_Set1_Jmp_0049c6d0(void) {
  *   jmp     +5
  */
 extern void func_0049c6fa_b(void);
-__declspec(naked) void ArgSar_Set0_Jmp_0049c6f0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     dword ptr [g_eventQueueChild], 0
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueEnd], eax
-        jmp     func_0049c6fa_b
-    }
+void ArgSar_Set0_Jmp_0049c6f0(int arg) {
+    g_eventQueueChild = 0;
+    g_eventQueueEnd = (unsigned int)(arg >> 2);
+    func_0049c6fa_b();
 }

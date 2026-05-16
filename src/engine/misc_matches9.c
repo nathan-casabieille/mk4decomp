@@ -210,20 +210,15 @@ __declspec(naked) void MemcpyByteN_004a5680(void) {
  */
 extern unsigned int g_count_005433b8;
 extern unsigned char g_target_005435a2;
-__declspec(naked) void Memset18Step_004a56a0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_count_005433b8]
-        test    ecx, ecx
-        _emit   7eh
-        _emit   0eh
-        mov     eax, OFFSET g_target_005435a2
-        mov     byte ptr [eax], 1
-        add     eax, 0x18
-        dec     ecx
-        _emit   75h
-        _emit   0f7h
-        ret
-    }
+void Memset18Step_004a56a0(void) {
+    int n = (int)g_count_005433b8;
+    unsigned char *p;
+    if (n <= 0) return;
+    p = &g_target_005435a2;
+    do {
+        *p = 1;
+        p += 0x18;
+    } while (--n);
 }
 
 /* @addr 0x004be610 (18b)
