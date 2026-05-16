@@ -192,21 +192,16 @@ extern void SelfInstallPhaseDispatch_0045fd30(void);
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
 extern void func_0048e7d0_b(void);
 extern void SelfInstallPhaseDispatch_00460000(void);
-__declspec(naked) void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
-    __asm {
-        call    func_0048e7d0_b
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 9
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET SelfInstallPhaseDispatch_00460000
-        jmp     func_004700f4
-        ret
-    }
+void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
+    unsigned int top;
+    func_0048e7d0_b();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))9;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_00460000;
+    func_004700f4();
 }
 
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
