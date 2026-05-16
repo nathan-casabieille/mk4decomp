@@ -246,29 +246,22 @@ extern void DualPathCallSetup_00458030(void);
 extern void TriplePackedTagged_004580a0(void);
 extern void CameraProjectionInitSweep_00458160(void);
 extern void SpawnTrioInitCluster_00458440(void);
-__declspec(naked) void QuadCallPauseJmp_00457ff0(void) {
-    __asm {
-        call    DoublePackedPtrInstall_00458ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2fh
-        call    DualPathCallSetup_00458030
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    TriplePackedTagged_004580a0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    CameraProjectionInitSweep_00458160
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     SpawnTrioInitCluster_00458440
-        ret
+void QuadCallPauseJmp_00457ff0(void) {
+    DoublePackedPtrInstall_00458ba0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    DualPathCallSetup_00458030();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    TriplePackedTagged_004580a0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    CameraProjectionInitSweep_00458160();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    SpawnTrioInitCluster_00458440();
 }
