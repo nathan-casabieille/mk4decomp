@@ -21,20 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern s32 g_dlNalt1;       /* 0x00537f48 */
 extern unsigned int g_state_005380e0;
-__declspec(naked) void TestP1ReplaceCurrent_004751c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_dlNalt1]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     eax, dword ptr [g_player1NodeIdx]
-        cmp     ecx, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0ch
-        mov     ecx, dword ptr [g_state_005380e0]
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        ret
-    }
+void TestP1ReplaceCurrent_004751c0(void) {
+    g_eventQueueCurrent = (unsigned int)g_dlNalt1;
+    g_walkCallback = (void (*)(void))g_player1NodeIdx;
+    if (g_eventQueueEnd == g_player1NodeIdx) return;
+    g_eventQueueCurrent = g_state_005380e0;
 }
 
 /* @addr 0x00480fb0 (38b)
