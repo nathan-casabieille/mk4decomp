@@ -24,23 +24,14 @@ extern packed_ptr g_fightGroupHead;
  *   sets g_walkCallback (0x54206c) = 0x4e5e28 >> 2, then jmp T.
  */
 extern void PendingMatch_00444ef0(void);
-__declspec(naked) void DoublePushScaledInitJmp_00444db0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_eventQueueWorkType]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], edx
-        mov     eax, 0x004e5e28
-        shr     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        jmp     PendingMatch_00444ef0
-    }
+extern unsigned int g_table_004e5e28;
+void DoublePushScaledInitJmp_00444db0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueWorkType;
+    g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e5e28 >> 2);
+    PendingMatch_00444ef0();
 }
 
 /* @addr 0x0044d1e0 (66b)
@@ -49,23 +40,16 @@ __declspec(naked) void DoublePushScaledInitJmp_00444db0(void) {
  *   Standard "scoped global swap" wrapper.
  */
 extern void func_0044aa40(void);
-__declspec(naked) void PushPopXformEntityCall_0044d1e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_eventQueueEnd]
-        mov     dword ptr [g_xformEntityIdx], edx
-        call    func_0044aa40
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopXformEntityCall_0044d1e0(void) {
+    unsigned int top;
+    top = g_state_004d57ac + 1;
+    g_state_004d57ac = top;
+    *(unsigned int *)(top * 4) = g_xformEntityIdx;
+    g_xformEntityIdx = g_eventQueueEnd;
+    func_0044aa40();
+    top = g_state_004d57ac;
+    g_xformEntityIdx = *(unsigned int *)(top * 4);
+    g_state_004d57ac = top - 1;
 }
 
 /* @addr 0x00460260 (66b)
@@ -77,26 +61,22 @@ extern void ScaledZeroFour_00490740(void);
 extern void ScaledInit_0048f720(void);
 extern void func_004602b0_pp(void);
 extern void MstackPopScaledChainPlusThunks_00471250(void);
-__declspec(naked) void GuardedDoubleCallSetJmp_00460260(void) {
-    __asm {
-        call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   33h
-        call    ScaledInit_0048f720
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_walkCallback], 0x0c
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004602b0_pp
-        jmp     MstackPopScaledChainPlusThunks_00471250
-        ret
+void GuardedDoubleCallSetJmp_00460260(void) {
+    unsigned int top;
+    ScaledZeroFour_00490740();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    ScaledInit_0048f720();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    top = g_state_004d57ac;
+    g_walkCallback = (void (*)(void))0x0c;
+    top++;
+    g_state_004d57ac = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&func_004602b0_pp;
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x0048e7d0 (66b)
