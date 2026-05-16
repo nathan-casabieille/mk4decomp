@@ -148,25 +148,16 @@ extern void func_00487640(void);
 extern void func_00487358(void);
 extern void func_0046f660(void);
 extern void func_0046025e(void);
-__declspec(naked) void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
-    __asm {
-        call    func_00487640
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    func_00487358
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   05h
-        jmp     func_0046f660
-        jmp     func_0046025e
-        ret
+void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
+    func_00487640();
+    if (g_framePauseFlag != 0) return;
+    func_00487358();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) {
+        func_0046f660();
+        return;
     }
+    func_0046025e();
 }
 
 /* @addr 0x00487150 (46b)
