@@ -590,28 +590,16 @@ __declspec(naked) void TestQueueGateState_004a1ba0(void) {
  */
 extern unsigned int g_data_0052aafc;
 extern unsigned int g_data_0053a510;
-__declspec(naked) void DispatchSetDirtyToggle_004ac150(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00538158]
-        mov     eax, dword ptr [g_data_0053a510]
-        cmp     ecx, edx
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0ah
-        mov     eax, dword ptr [g_data_0052aafc]
-        mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     ecx, 4
-        or      edx, ecx
-        test    eax, eax
-        mov     dword ptr [g_xformDirtyFlags], edx
-        _emit   74h
-        _emit   09h
-        mov     eax, edx
-        xor     eax, ecx
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void DispatchSetDirtyToggle_004ac150(void) {
+    unsigned int v = g_data_0053a510;
+    g_walkCallback = (void (*)(void))v;
+    if (g_fightGroupHead != g_data_00538158) {
+        v = g_data_0052aafc;
+        g_walkCallback = (void (*)(void))v;
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if (v != 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
 }
 
