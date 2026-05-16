@@ -16767,10 +16767,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ce3f0
-    name: func_004ce3f0
+    name: PendingMatch_004ce3f0
     size: 1923
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004ceb80
     name: PendingMatch_004ceb80
     size: 898
