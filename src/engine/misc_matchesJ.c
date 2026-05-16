@@ -78,22 +78,14 @@ extern void DualCondMatchSet_00488dc0(void);
 extern int func_00459500(void *);
 extern void *g_data_004ef1d0;
 extern void func_00488bd9(void);
-__declspec(naked) void CallPauseDirtyPushCall_00488ba0(void) {
-    __asm {
-        call    DualCondMatchSet_00488dc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   05h
-        jmp     func_00488bd9
-        push    OFFSET g_data_004ef1d0
-        call    func_00459500
-        add     esp, 4
-        ret
+void CallPauseDirtyPushCall_00488ba0(void) {
+    DualCondMatchSet_00488dc0();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) == 0) {
+        func_00488bd9();
+        return;
     }
+    func_00459500(&g_data_004ef1d0);
 }
 
 /* @addr 0x00488c00 (37b)
