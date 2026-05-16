@@ -3,7 +3,7 @@
  *
  * Each compiles to `e9 + rel32` (5 bytes). MSVC SP3 /O2 emits the
  * tail call as `jmp` for a void-returning function whose body is a
- * single call to another void-returning function — no frame setup,
+ * single call to another void-returning function - no frame setup,
  * no prologue/epilogue. Each is named `Thunk_VA` after its source
  * VA, jumping to the referenced target by name.
  */

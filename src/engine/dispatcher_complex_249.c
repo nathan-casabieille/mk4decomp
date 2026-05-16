@@ -20,7 +20,7 @@
  *   ret
  *
  * Note: the address ordering of the pop sequence is identical between
- * both stubs in this cluster — what differs is only the second call's
+ * both stubs in this cluster - what differs is only the second call's
  * target.
  */
 #include "engine/scenegraph.h"

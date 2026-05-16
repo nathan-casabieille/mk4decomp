@@ -173,7 +173,7 @@ __declspec(naked) void DirtyToggleScaledTest_0043a630(void) {
     }
 }
 
-/* MStackPushSetImm + jmp variants — 4 stubs */
+/* MStackPushSetImm + jmp variants - 4 stubs */
 extern int g_matrixStackTop;
 extern void func_0046cb00(void);
 extern void func_0046cb20(void);
@@ -276,7 +276,7 @@ __declspec(naked) void CallPauseMStackPushSet4Jmp_00460d40(void) {
     }
 }
 
-/* @addr 0x004464f0 already done — let me skip */
+/* @addr 0x004464f0 already done - let me skip */
 
 /* @addr 0x00464240 (60b)
  *   mov     eax, [0x0053a3c0]

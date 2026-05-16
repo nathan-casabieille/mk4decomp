@@ -322,7 +322,7 @@ __declspec(naked) void TestEqJmpInitFightGroup_004a1740(void) {
  *   sub esp,0x10; call init helper. If non-zero result, run
  *   DirectInput-style IAT call(0x814, 0x100, &local) on
  *   g_dsoundDevice to query/test some property. Returns
- *   (~(neg eax==0))&local — i.e., result if call succeeded
+ *   (~(neg eax==0))&local - i.e., result if call succeeded
  *   (eax=0) else 0.
  */
 extern void Helper_AuxAudio_PostInit(void);

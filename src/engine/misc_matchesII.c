@@ -294,11 +294,11 @@ __declspec(naked) void ExtractBitsToVec3_00407c00(void) {
     }
 }
 
-/* @addr 0x00404c70 (66b) — same as misc_matchesHH:SetWalkCurCallPauseDirty_00404c70
+/* @addr 0x00404c70 (66b) - same as misc_matchesHH:SetWalkCurCallPauseDirty_00404c70
  *   (already matched). Pick a different smaller stub: 0x00404680 size has been
  *   matched. Replace with 0x004196c0 already used; pick 0x0040bf20 already used.
  *   Substitute: 0x004084b0 already used. Pick 0x00404a00 (already matched in HH).
  *   Use a new stub: 0x004196c0 already taken. Pick a new candidate from the larger
- *   table — 0x004084b0 already done. Use 0x0040bf20 already done.
+ *   table - 0x004084b0 already done. Use 0x0040bf20 already done.
  *   Fallback: nothing else clean here, so emit only 9 in this batch.
  */

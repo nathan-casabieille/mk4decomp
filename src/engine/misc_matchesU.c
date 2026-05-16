@@ -288,7 +288,7 @@ __declspec(naked) void TwoCallPauseSetJmp2_00456180(void) {
     }
 }
 
-/* @addr 0x0045f5a0 (48b) — wait, that's done already. Skip. */
+/* @addr 0x0045f5a0 (48b) - wait, that's done already. Skip. */
 
 /* @addr 0x00450680 (53b)
  *   mov     ecx, [g_eventQueueCurrent]

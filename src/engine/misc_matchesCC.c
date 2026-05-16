@@ -7,7 +7,7 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
-/* @addr 0x004b2690 (60b): pure call chain — 11 calls + 1 jmp */
+/* @addr 0x004b2690 (60b): pure call chain - 11 calls + 1 jmp */
 extern void TestCallIat_004c44f0(void);
 extern void Helper_GfxCleanup(void);
 extern void Helper_AppStub_2AE0(void);

@@ -309,7 +309,7 @@ __declspec(naked) void GetFpuSw_004cf710(void) {
  *   dd 7d fe        fnstsw [ebp-2]? wait dd /7 mod=01 = fnstsw
  *   actually dd 7d fe = fnstsw word ptr [ebp-2]?
  *   dd is x87 group; 7d means /7 with disp8. 7d = mod=01 reg=111 rm=101 (ebp+disp8)
- *   /7 of dd is fnstsw m16 — yes, fnstsw [ebp-2]
+ *   /7 of dd is fnstsw m16 - yes, fnstsw [ebp-2]
  *   db e2           fnclex (if e2)? Actually db is x87, e2 = no /r form...
  *   db e2 = FNCLEX is db e2. Yes.
  *   Wait actually fnclex = db e2, fclex = 9b db e2. So this is fnclex.
@@ -320,7 +320,7 @@ __declspec(naked) void GetFpuSw_004cf710(void) {
  * - 55       push ebp
  * - 8b ec    mov ebp, esp
  * - 51       push ecx
- * - dd 7d fe fstp qword ptr [ebp-2]  ?? no, dd /7 = fstp — but fstp needs specific size
+ * - dd 7d fe fstp qword ptr [ebp-2]  ?? no, dd /7 = fstp - but fstp needs specific size
  *   Actually dd = x87, /7 in modr/m means group; let me look up:
  *   dd /0 = fld m64
  *   dd /1 = fisttp m64

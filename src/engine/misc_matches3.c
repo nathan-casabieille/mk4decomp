@@ -171,7 +171,7 @@ __declspec(naked) void DualLoadDualStoreJmp_00485d70(void) {
     }
 }
 
-/* @addr 0x00405430 already in misc_matches2 (different file no — wait,
+/* @addr 0x00405430 already in misc_matches2 (different file no - wait,
  * this was already added). Skip. */
 
 /* @addr 0x00422080 (29b)

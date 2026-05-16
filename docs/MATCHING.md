@@ -23,7 +23,7 @@ matched callees) and small functions (size < 200 bytes).
 `symbols.yaml` is auto-extended by `tools/decomp/discover_functions.py`
 which BFS-walks every CALL target from the known set. Functions
 discovered that way get an auto-generated name like
-`func_004acc50` — rename them as you go.
+`func_004acc50` - rename them as you go.
 
 ## 2. Read the original
 
@@ -80,7 +80,7 @@ the rebuilt .obj against the original .text bytes, masking the
 4-byte windows around relocations):
 
 ```python
-# tools/decomp/diff_one.py — call as: python3 diff_one.py <addr> <size> <obj>
+# tools/decomp/diff_one.py - call as: python3 diff_one.py <addr> <size> <obj>
 import struct, sys
 
 ADDR, SIZE, OBJ = int(sys.argv[1], 0), int(sys.argv[2], 0), sys.argv[3]
@@ -139,7 +139,7 @@ Iterate until `diffs: 0`. Then:
 
 ---
 
-## Cookbook — MSVC 5.0 SP3 + MASM `__asm` quirks
+## Cookbook - MSVC 5.0 SP3 + MASM `__asm` quirks
 
 This is the meat. Skim once now; come back when a diff doesn't
 converge.
@@ -192,7 +192,7 @@ mov     edx, dword ptr [g_ecmInputBuf]   ; correct: 8b 15 + reloc
 
 When MASM sees `mov [edx + g_nodeSlotsArea + 0xd8], eax` it
 sometimes drops the register and emits `mov ds:[m32], eax`
-(EAX-form, 5 bytes) — wrong encoding.
+(EAX-form, 5 bytes) - wrong encoding.
 
 **Fix:** declare a separate extern at the resolved address rather
 than do the arithmetic inside the brackets.
@@ -273,7 +273,7 @@ also(g_x);            /* not: int x = g_x; do_thing(x); helper(); also(x); */
 ### G. Minimize explicit locals when matching
 
 Each extra `int local` in MSVC's SP3 stack frame typically forces
-an extra push of a callee-saved register (ebx/esi/edi) — which
+an extra push of a callee-saved register (ebx/esi/edi) - which
 shows up in the prologue and shifts every byte after.
 
 **Fix:** inline expressions. Compute things in arguments to calls
@@ -309,14 +309,14 @@ MSVC SP3's sparse-switch idiom:
 
 The two tables are emitted **as data in `.text`** by the linker,
 right after the function. To match, declare both as extern arrays
-(in `.text` again — link script handles placement):
+(in `.text` again - link script handles placement):
 
 ```c
 extern u8  g_switchByteTable[];     /* N entries */
 extern u32 g_switchJumpTable[];     /* M entries */
 ```
 
-The function bytes only reference the symbols by relocation — the
+The function bytes only reference the symbols by relocation - the
 tables themselves can live in any source file (or be elided
 entirely if you're only diffing the function's body).
 
@@ -333,10 +333,10 @@ push    eax
 mov     fs:[0], esp
 ```
 
-Don't try to write this with `__try`/`__except` in C — MSVC SP3
+Don't try to write this with `__try`/`__except` in C - MSVC SP3
 generates a different scope table layout. Use `__declspec(naked)`
 and emit the bytes verbatim. The scope table itself lives in
-`.rdata` and can be a bare `extern u32 g_seh_scope_table[]` — the
+`.rdata` and can be a bare `extern u32 g_seh_scope_table[]` - the
 linker resolves it.
 
 ### K. `add esp, -X` vs `sub esp, X`
@@ -358,7 +358,7 @@ For stack frames ≥ 4 KB, MSVC SP3 generates a `__chkstk` call
 
 ```asm
 mov     eax, 0x4010
-call    __chkstk          ; e8 + reloc — adjusts esp by eax
+call    __chkstk          ; e8 + reloc - adjusts esp by eax
 push    ebx
 push    ebp
 push    esi
@@ -464,7 +464,7 @@ loop, putting `outer_loop:` after the entry `cmp+jg` instead of
 before, so the bottom `jle outer_loop` lands one cmp later.)
 
 **Structural divergence (random bytes):** a whole block is in the
-wrong place. Re-examine the control flow — usually a mis-labeled
+wrong place. Re-examine the control flow - usually a mis-labeled
 jump target. Compare the diff fragments to specific disasm
 sections and look for "jumps land at offset X but I expected Y".
 
@@ -491,12 +491,12 @@ symbol).
 
 ## Tips
 
-- **Work bottom-up** — if `A` calls `B`, get `B` matching first
+- **Work bottom-up** - if `A` calls `B`, get `B` matching first
 - **Pick small** functions to start (< 200 bytes); MSVC 5.0
   quirks become tractable at that scale
-- **Trust the disasm** — if MASM keeps fighting, drop down to
+- **Trust the disasm** - if MASM keeps fighting, drop down to
   `__declspec(naked) + __asm` and emit the bytes literally
-- **One match = forever** — once a function is byte-identical, it
+- **One match = forever** - once a function is byte-identical, it
   doesn't drift. No maintenance burden.
 - **If a function seems impossible**, leave a comment in the
   source explaining what you tried, mark `status: drafted`, and
@@ -523,18 +523,18 @@ become reachable.
 
 ## Batch matching: clusters of identical-shape stubs
 
-Many functions in the binary are auto-generated wrappers — empty
+Many functions in the binary are auto-generated wrappers - empty
 debug stubs (`c3` only), state-setters (mov+mov+ret), tail-call
 trampolines (`jmp Other`), guarded-sequel chains (`call A; if !pause:
 jmp B`), and so on. Each variant has a fixed opcode shape with only
 the relocation targets/constants differing. Matching them one at
-a time is wasteful — they can be matched **in batches of 10–50**
+a time is wasteful - they can be matched **in batches of 10–50**
 once you've identified the recurring shape.
 
 ### Tools
 
 `tools/decomp/batch_match.py` finds clusters of stubs that share
-the same opcode "signature" — bytes-with-reloc-positions-nulled.
+the same opcode "signature" - bytes-with-reloc-positions-nulled.
 It bootstraps from one template stub:
 
 ```sh
@@ -566,7 +566,7 @@ python3 tools/decomp/batch_match.py --template 0x00461860 \
 
 ### Recurring patterns we've already harvested
 
-(Keep this list up to date — each entry below was an independent
+(Keep this list up to date - each entry below was an independent
 batch in `git log`. Pattern bytes shown stripped of relocations.)
 
 | Pattern | Bytes (mask) | Count matched | Source file |

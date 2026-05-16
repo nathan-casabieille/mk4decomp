@@ -89,7 +89,7 @@ def main():
                         if ref_sym['sec'] > 0 and (ref_sym['sec']-1) in sec_idx_to_va:
                             continue
                         # NOTE: we DO override header /* 0xADDR */ comments and existing
-                        # extras_map entries — those are derived from manual research and
+                        # extras_map entries - those are derived from manual research and
                         # can be wrong (e.g. g_appFlags annotated as 0xf9f714, actually 0x7af914).
                         # Orig EXE is the ground truth.
 

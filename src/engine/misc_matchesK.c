@@ -39,7 +39,7 @@ __declspec(naked) void ScaledChain3c7c_0048f930(void) {
     }
 }
 
-/* MStackPushSetImmJmp family — 7 variants of:
+/* MStackPushSetImmJmp family - 7 variants of:
  *   mov     eax, [g_matrixStackTop]
  *   mov     ecx, [g_acc_00542078]
  *   inc     eax
@@ -233,7 +233,7 @@ __declspec(naked) void DualScaledStoreZero_00491080(void) {
  *   jne     .ret
  *   mov     eax, [g_state_00542080]
  *   mov     ecx, [g_state_00542080]
- *   wait, that's two same loads — actually:
+ *   wait, that's two same loads - actually:
  *   a17c205400 = mov eax, [0x0054207c]
  *   8b0d80205400 = mov ecx, [0x00542080]
  *   a374205400 = mov [0x00542074], eax

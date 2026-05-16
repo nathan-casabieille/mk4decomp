@@ -45,7 +45,7 @@ extern unsigned int g_scaledInit_00542044;
  * c701000000 = 5 bytes only? c7 01 00 00 00 00 = 6 bytes.
  *   Hex: c7 01 00 00 00 00. The byte string "c701000000" has length 10/2 = 5 bytes.
  *   So I'm miscounting: c7 01 00 00 00 = 5 bytes, but that's only `c7` opcode + `01` modr/m + `00 00 00` (3 bytes of imm32). Need 4 bytes for imm32.
- *   Re-look: "c701000000 008bc8" — the body has `c7 01 00 00 00 00 8b c8` = c7 01 00 00 00 00 (6 bytes) then 8b c8. OK my hex string parsing was wrong.
+ *   Re-look: "c701000000 008bc8" - the body has `c7 01 00 00 00 00 8b c8` = c7 01 00 00 00 00 (6 bytes) then 8b c8. OK my hex string parsing was wrong.
  *
  * Total: 7+2+5+2+3+6+2+3+2+1 = 33 ✓
  */
