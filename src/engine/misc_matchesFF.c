@@ -208,30 +208,19 @@ __declspec(naked) void Helper_TitleSetMaxVolume(void) {
  *     call F(arg[2]); arg[3] &= ~0x408; arg[0..2] = 0.
  */
 extern void FreeImpl_004c55f0(int);
-__declspec(naked) void BitTestFreeClear_004c8ae0(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 8]
-        mov     eax, dword ptr [esi + 0x0c]
-        test    al, 0x83
-        _emit   74h
-        _emit   25h
-        test    al, 8
-        _emit   74h
-        _emit   21h
-        mov     eax, dword ptr [esi + 8]
-        push    eax
-        call    FreeImpl_004c55f0
-        mov     eax, dword ptr [esi + 0x0c]
-        add     esp, 4
-        and     eax, 0xfffffbf7
-        mov     dword ptr [esi + 0x0c], eax
-        xor     eax, eax
-        mov     dword ptr [esi], eax
-        mov     dword ptr [esi + 8], eax
-        mov     dword ptr [esi + 4], eax
-        pop     esi
-        ret
+struct BitTestS {
+    int field0;
+    int field4;
+    int field8;
+    unsigned int field_c;
+};
+void BitTestFreeClear_004c8ae0(struct BitTestS *p) {
+    if ((p->field_c & 0x83) != 0 && (p->field_c & 8) != 0) {
+        FreeImpl_004c55f0(p->field8);
+        p->field_c &= 0xfffffbf7u;
+        p->field0 = 0;
+        p->field8 = 0;
+        p->field4 = 0;
     }
 }
 
@@ -262,23 +251,14 @@ __declspec(naked) void DivMod32IAT_004cd320(void) {
  *   arg1 = [esp+4]; arg2 = [esp+0xc]; ecx = arg2 + arg1;
  *   eax = (ecx < arg1 || ecx >= arg2) ? 1 : 0; *(arg3) = ecx; ret eax.
  */
-__declspec(naked) void AddOverflowCheck_004ce1f0(void) {
-    __asm {
-        mov     edx, dword ptr [esp + 4]
-        push    esi
-        mov     esi, dword ptr [esp + 0x0c]
-        xor     eax, eax
-        lea     ecx, [esi + edx*1]
-        cmp     ecx, edx
-        _emit   72h
-        _emit   04h
-        cmp     ecx, esi
-        _emit   73h
-        _emit   05h
-        mov     eax, 1
-        mov     edx, dword ptr [esp + 0x10]
-        pop     esi
-        mov     dword ptr [edx], ecx
-        ret
+int AddOverflowCheck_004ce1f0(unsigned int arg1, unsigned int arg2, unsigned int *result) {
+    unsigned int sum = arg2 + arg1;
+    int ret = 0;
+    if (sum < arg1) {
+        ret = 1;
+    } else if (sum < arg2) {
+        ret = 1;
     }
+    *result = sum;
+    return ret;
 }
