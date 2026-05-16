@@ -238,29 +238,24 @@ extern void StateDispatchTable_00490fc0(void);
 extern void BootFrameSetup_00408190(void);
 extern void GuardedChainCmpDualBitXor_004299a0(void);
 extern void ScaledMove48to58_00490720(void);
-__declspec(naked) void GuardedTripleCallSwapJmp_0048fee0(void) {
-    __asm {
-        call    StateDispatchTable_00490fc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   35h
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    BootFrameSetup_00408190
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    GuardedChainCmpDualBitXor_004299a0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     ScaledMove48to58_00490720
-        ret
+void GuardedTripleCallSwapJmp_0048fee0(void) {
+    unsigned int saved;
+    StateDispatchTable_00490fc0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    saved = (unsigned int)g_walkCallback;
+    g_walkCallback = (void (*)(void))0;
+    g_xformEntityIdx = saved;
+    BootFrameSetup_00408190();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    GuardedChainCmpDualBitXor_004299a0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    ScaledMove48to58_00490720();
 }
 
 /* @addr 0x004a1740 (68b)
@@ -554,26 +549,18 @@ __declspec(naked) void ScaledIndexConditionalAdd_0048e400(void) {
  *   eax = [ecx*4+0]; store → walk; ret.
  */
 extern u32 g_eventQueueTotal;
-__declspec(naked) void ScaledIndexCondCopy_0048e590(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     edx, dword ptr [g_fightGroupHead]
-        sar     eax, 2
-        push    esi
-        mov     esi, dword ptr [g_data_00538158]
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        _emit   74h
-        _emit   0dh
-        mov     ecx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [ecx*4 + 0]
-        pop     esi
-        mov     dword ptr [g_walkCallback], eax
-        ret
+extern unsigned int g_data_00538158;
+void ScaledIndexCondCopy_0048e590(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int v;
+    g_eventQueueTotal = packed;
+    v = *(unsigned int *)(packed * 4 + 0);
+    g_scaledInit_00542044 = v;
+    if (g_fightGroupHead != g_data_00538158) {
+        v = *(unsigned int *)(packed * 4 + 4);
+        g_scaledInit_00542044 = v;
     }
+    g_walkCallback = (void (*)(void))(*(unsigned int *)(v * 4 + 0));
 }
 
 /* @addr 0x004a1ba0 (69b)
