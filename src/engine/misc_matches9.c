@@ -174,25 +174,11 @@ __declspec(naked) void IsNonzeroBoolFlagged_004a1d00(void) {
  *   pop     esi
  *   ret
  */
-__declspec(naked) void MemcpyByteN_004a5680(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 0x10]
-        test    esi, esi
-        _emit   7eh
-        _emit   11h
-        mov     ecx, dword ptr [esp + 0x0c]
-        mov     eax, dword ptr [esp + 8]
-        mov     dl, byte ptr [ecx]
-        mov     byte ptr [eax], dl
-        inc     eax
-        inc     ecx
-        dec     esi
-        _emit   75h
-        _emit   0f7h
-        pop     esi
-        ret
-    }
+void MemcpyByteN_004a5680(unsigned char *dst, unsigned char *src, int n) {
+    if (n <= 0) return;
+    do {
+        *dst++ = *src++;
+    } while (--n);
 }
 
 /* @addr 0x004a56a0 (25b)
