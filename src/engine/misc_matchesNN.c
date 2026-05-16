@@ -14,27 +14,17 @@ extern u32 g_pendingNodeType;
  *   inc fightGroupHead[+0x28]; load fightGroupHead[+0x24] → scaled;
  *   or dirty |= 4; cmp [scaled+4], walk; if !=, dirty ^= 4 (clear).
  */
-__declspec(naked) void ScaledStoreOrFlagXor_00428560(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x28]
-        inc     eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x28], eax
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     ecx, 4
-        mov     eax, dword ptr [eax*4 + 0x24]
-        or      edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_xformDirtyFlags], edx
-        mov     edx, dword ptr [eax*4 + 4]
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     edx, eax
-        _emit   74h
-        _emit   06h
-        xor     dword ptr [g_xformDirtyFlags], ecx
-        ret
+void ScaledStoreOrFlagXor_00428560(void) {
+    unsigned int v;
+    unsigned int s;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x28) + 1;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = v;
+    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    g_scaledInit_00542044 = s;
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if (*(unsigned int *)(s * 4 + 4) != (unsigned int)g_walkCallback) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
 }
 
