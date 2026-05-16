@@ -195,20 +195,18 @@ extern unsigned int g_state_0053a51c;
 extern void func_00434983(void);
 extern void func_004348e1(void);
 extern void func_0043454c(void);
-__declspec(naked) void TriBranchJmp_00434530(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a51c]
-        cmp     eax, 8
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00434983
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004348e1
-        jmp     func_0043454c
+void TriBranchJmp_00434530(void) {
+    unsigned int v = g_state_0053a51c;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 8) {
+        func_00434983();
+        return;
     }
+    if (v == 0) {
+        func_004348e1();
+        return;
+    }
+    func_0043454c();
 }
 
 /* @addr 0x004398f0 (38b)
