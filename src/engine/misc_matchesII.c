@@ -18,62 +18,40 @@ extern u32 g_pendingNodeType;
  *   then pop stack back into g_scaledInit. Standard "save-restore" wrapper.
  */
 extern void ScaledAndMaskInitJmp_00405a00(void);
-__declspec(naked) void PushPopScaled18_004059a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [edx*4 + 0x18]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   13h
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    ScaledAndMaskInitJmp_00405a00
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
+void PushPopScaled18_004059a0(void) {
+    unsigned int v;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    v = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x18);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0) {
+        g_scaledInit_00542044 = v;
+        ScaledAndMaskInitJmp_00405a00();
+        if (g_framePauseFlag != 0) {
+            return;
+        }
     }
+    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x00405ad0 (90b): same shape but uses g_xformEntityIdx, field +0x14 */
 extern void MStackPush2ChainPrepend_00409970(void);
-__declspec(naked) void PushPopScaled14_00405ad0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, dword ptr [edx*4 + 0x14]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackPush2ChainPrepend_00409970
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
+void PushPopScaled14_00405ad0(void) {
+    unsigned int v;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
+    v = *(unsigned int *)(g_xformEntityIdx * 4 + 0x14);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0) {
+        g_xformEntityIdx = v;
     }
+    MStackPush2ChainPrepend_00409970();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
@@ -115,24 +93,13 @@ __declspec(naked) void PushPopScaled1cDoubleCall_00408510(void) {
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
  */
 extern void Copy3Fields38_0040a870(void);
-__declspec(naked) void StackPushAdd15CallPop_0040a7e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_eventQueueEnd]
-        add     edx, 0x15
-        mov     dword ptr [g_eventQueueEnd], edx
-        call    Copy3Fields38_0040a870
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueEnd], edx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void StackPushAdd15CallPop_0040a7e0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueEnd;
+    g_eventQueueEnd = g_eventQueueEnd + 0x15;
+    Copy3Fields38_0040a870();
+    g_eventQueueEnd = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x0040bf20 (66b)
