@@ -140,18 +140,12 @@ void CallPauseLitInitJmp_00488c30(void) {
  *   ret
  */
 extern void func_00488f04(void);
-__declspec(naked) void ScaledCmpJlJmp_00488ed0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [eax*4 + 0x7c]
-        cmp     eax, ecx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        _emit   7ch
-        _emit   05h
-        jmp     func_00488f04
-        ret
-    }
+void ScaledCmpJlJmp_00488ed0(void) {
+    unsigned int walk = (unsigned int)g_walkCallback;
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x7c);
+    g_eventQueueCurrent = v;
+    if ((int)v < (int)walk) return;
+    func_00488f04();
 }
 
 /* @addr 0x00489f60 (33b)
