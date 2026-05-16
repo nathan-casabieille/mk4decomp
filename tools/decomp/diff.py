@@ -33,15 +33,21 @@ def load_symbols():
 
 
 def read_pe_section_offset(pe_path: Path):
-    """Return (file_offset, virtual_address, size) of the .text section."""
+    """Return (file_offset, virtual_address_absolute, size) of the .text section.
+
+    virtual_address_absolute = ImageBase + RVA, so callers can pass the
+    full VA (e.g. 0x004572d0) into the (va - v_addr) math.
+    """
     with open(pe_path, "rb") as f:
-        # Skim PE header. 0x3c → e_lfanew → COFF header → optional → sections.
         f.seek(0x3c)
         pe_off = struct.unpack("<I", f.read(4))[0]
-        f.seek(pe_off + 4)        # skip PE signature
+        f.seek(pe_off + 4)
         coff = f.read(20)
         n_sections = struct.unpack_from("<H", coff, 2)[0]
         opt_size  = struct.unpack_from("<H", coff, 16)[0]
+        # Read ImageBase from optional header (offset 28 inside opt for PE32)
+        f.seek(pe_off + 4 + 20 + 28)
+        image_base = struct.unpack("<I", f.read(4))[0]
         f.seek(pe_off + 4 + 20 + opt_size)
         for _ in range(n_sections):
             section = f.read(40)
@@ -49,7 +55,7 @@ def read_pe_section_offset(pe_path: Path):
             if name == ".text":
                 v_size, v_addr = struct.unpack_from("<II", section, 8)
                 raw_size, raw_off = struct.unpack_from("<II", section, 16)
-                return raw_off, v_addr, raw_size
+                return raw_off, v_addr + image_base, raw_size
     raise SystemExit(f".text not found in {pe_path}")
 
 
