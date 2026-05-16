@@ -193,11 +193,13 @@ def main():
             else:
                 fn_bytes = bytearray(fn_bytes)
 
-            # Apply relocations that fall within [value, value+target_size]
+            # Track all reloc offsets within this function - we'll restore them from orig at the end
+            all_reloc_offsets = []
             unresolved_reloc_offsets = []
             for r in sec['relocs']:
                 if value <= r['va'] < value + target_size:
                     offset_in_fn = r['va'] - value
+                    all_reloc_offsets.append(offset_in_fn)
                     # Look up the symbol being referenced
                     ref_sym = syms[r['sym_idx']]
                     if ref_sym is None:
@@ -266,7 +268,7 @@ def main():
             file_off = (target_va - text_sec['vaddr']) + text_sec['raddr']
             if file_off + target_size > text_sec['raddr'] + text_sec['rsize']:
                 continue
-            for off_in_fn in unresolved_reloc_offsets:
+            for off_in_fn in all_reloc_offsets:
                 if off_in_fn + 4 <= target_size:
                     orig_slot_bytes = scaffold[file_off + off_in_fn : file_off + off_in_fn + 4]
                     for k in range(4):

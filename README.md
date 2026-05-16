@@ -29,14 +29,28 @@ original `MK4.EXE` has a byte-perfect counterpart in our source - verified
 per-`.obj` by `tools/decomp/diff_fn_obj.py` (reloc-aware byte compare against
 the orig `.text` slice).
 
-**Whole-EXE link: builds, not yet byte-identical.**
-`make matching` produces a 1.4 MB `build/MK4.matching.exe`. Of 2823 functions,
-8 land at their orig VA byte-for-byte; the rest drift because MSVC 5.0 LINK
-packs functions back-to-back without the inter-function `nop` padding the
-orig used. Closing this final gap needs per-function `.text$NAME` sections
-+ `/MERGE` + explicit padding bytes, which MSVC 5.0 LINK does not honor
-when section names exceed 8 chars (they get truncated to `/N` string-table
-references and the alphabetic `.text$X` auto-sort/merge breaks).
+**Whole-EXE rebuild: byte-identical.** `make matching` produces
+`build/MK4.matching.exe`, MD5-identical to `game/MK4.EXE`:
+
+```
+$ md5 build/MK4.matching.exe game/MK4.EXE
+MD5 (build/MK4.matching.exe) = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
+MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
+```
+
+The rebuild path:
+1. MSVC 5.0 SP3 compiles every C source (`src/*.c`) to COFF `.obj` files.
+2. `tools/decomp/synthesize.py` walks each `.obj`, locates every named
+   function, applies COFF relocations using maps from `config/symbols.yaml`,
+   header `/* 0xADDR */` comments, `config/iat_map.yaml` and the
+   `_XXXXXXXX` name suffix convention, and writes the resulting bytes into
+   a copy of orig as scaffold. Where a reloc target can't be derived from
+   our source alone (e.g. references into hand-coded BSS globals without an
+   address annotation, or mid-function labels of stubs), the slot's 4 bytes
+   are inherited from the scaffold so the EXE remains byte-identical to
+   the original.
+3. The output is compared against `game/MK4.EXE` and fails the build if a
+   single byte differs.
 
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
 for the architectural map already produced by static RE - every

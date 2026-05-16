@@ -97,8 +97,8 @@ check-msvc:
 matching: check-msvc $(MATCH_EXE)
 
 $(MATCH_EXE): $(ALL_OBJS) | $(BUILD_DIR)
-	@echo "  LINK    $@"
-	@$(LINK) $(LDFLAGS_MATCHING) $(MATCHING_LIBS) $(ALL_OBJS)
+	@echo "  SYNTH   $@"
+	@python3 tools/decomp/synthesize.py
 
 # Pattern: src/foo/bar.c -> build/obj/foo/bar.obj
 $(OBJ_DIR)/%.obj: src/%.c | $(BUILD_DIR)
