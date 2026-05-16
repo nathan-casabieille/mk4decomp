@@ -87,28 +87,20 @@ __declspec(naked) void CmpRangeJmpStateInit_00436250(void) {
  *   clear dirty bit 1; ret.
  */
 extern void func_004bae90_nn(void);
-__declspec(naked) void ScaledClear1cTestWalkCall_004460c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [eax*4 + 0x1c], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x0c]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   18h
-        mov     dword ptr [g_walkCallback], 0x004460c0
-        call    func_004bae90_nn
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ch
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void ScaledClear1cTestWalkCall_004460c0(void) {
+    unsigned int cb;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x1c) = 0;
+    cb = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x0c);
+    g_walkCallback = (void (*)(void))cb;
+    if (cb != 0) {
+        g_walkCallback = (void (*)(void))ScaledClear1cTestWalkCall_004460c0;
+        func_004bae90_nn();
+        if (g_framePauseFlag != 0) {
+            return;
+        }
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
 }
 
 /* @addr 0x00446bf0 (85b)
