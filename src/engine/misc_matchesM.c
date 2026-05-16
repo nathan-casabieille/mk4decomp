@@ -125,29 +125,11 @@ __declspec(naked) void TripleByteCheck20_004a1c80(void) {
 extern unsigned int g_state_004d50b8;
 extern unsigned int g_state_004d50c0;
 extern unsigned int g_state_004d50bc;
-__declspec(naked) void Test4StatesAny_004a1d20(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d50b4]
-        test    eax, eax
-        _emit   75h
-        _emit   1eh
-        mov     eax, dword ptr [g_state_004d50b8]
-        test    eax, eax
-        _emit   75h
-        _emit   15h
-        mov     eax, dword ptr [g_state_004d50c0]
-        test    eax, eax
-        _emit   75h
-        _emit   0ch
-        mov     eax, dword ptr [g_state_004d50bc]
-        test    eax, eax
-        _emit   75h
-        _emit   03h
-        xor     eax, eax
-        ret
-        mov     eax, 1
-        ret
+int Test4StatesAny_004a1d20(void) {
+    if (g_state_004d50b4 || g_state_004d50b8 || g_state_004d50c0 || g_state_004d50bc) {
+        return 1;
     }
+    return 0;
 }
 
 /* @addr 0x004a22c0 (44b)
