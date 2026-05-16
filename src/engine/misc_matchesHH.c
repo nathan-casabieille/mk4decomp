@@ -223,27 +223,19 @@ __declspec(naked) void SaveCallRestoreOrXor_00404a00(void) {
  */
 extern void Thunk_0049cb70(void);
 /* AllocNode declared in engine/scenegraph.h */
-__declspec(naked) void SetWalkCurCallPauseDirty_00404c70(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 0x0c]
-        mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_eventQueueCurrent], 0xffff
-        call    Thunk_0049cb70
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   14h
-        mov     eax, dword ptr [esp + 8]
-        mov     dword ptr [g_eventQueueWorkType], esi
-        mov     dword ptr [g_pendingNodeType], eax
-        call    AllocNode
-        pop     esi
-        ret
+void SetWalkCurCallPauseDirty_00404c70(int arg1, int arg2) {
+    g_walkCallback = (void (*)(void))arg2;
+    g_eventQueueCurrent = 0xffff;
+    Thunk_0049cb70();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if ((g_xformDirtyFlags & 1) != 0) {
+        return;
+    }
+    g_eventQueueWorkType = arg2;
+    g_pendingNodeType = arg1;
+    AllocNode();
 }
 
 /* @addr 0x00408860 (68b)
