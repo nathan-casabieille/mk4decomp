@@ -22,20 +22,11 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_00ab4e50;
 extern unsigned int g_state_00ab4e54;
 extern unsigned int g_state_00ab4e58;
-__declspec(naked) void CopyThreeFields_00404df0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        test    eax, eax
-        _emit   74h
-        _emit   26h
-        mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_state_00ab4e50], ecx
-        mov     edx, dword ptr [eax*4 + 0x58]
-        mov     dword ptr [g_state_00ab4e54], edx
-        mov     eax, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_state_00ab4e58], eax
-        ret
-    }
+void CopyThreeFields_00404df0(unsigned int arg) {
+    if (arg == 0) return;
+    g_state_00ab4e50 = *(unsigned int *)(arg * 4 + 0x54);
+    g_state_00ab4e54 = *(unsigned int *)(arg * 4 + 0x58);
+    g_state_00ab4e58 = *(unsigned int *)(arg * 4 + 0x5c);
 }
 
 /* @addr 0x004051b0 (47b)

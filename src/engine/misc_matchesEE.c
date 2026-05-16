@@ -110,8 +110,8 @@ void CmpCallPushIATCall2_004c6e90(int arg) {
  *   if (eax == 0) call IAT [g_iat_004d2158](result); xor eax; ret;
  *   else return 1.
  */
-extern void * (*g_iat_004d216c)(int, int, int);
-extern void (*g_iat_004d2158)(void *);
+extern void * (__stdcall *g_iat_004d216c)(int, int, int);
+extern void (__stdcall *g_iat_004d2158)(void *);
 extern void * g_state_00fa0ee4;
 extern int VirtualHeapAlloc_004c70d0(void);
 __declspec(naked) void CallIATIfThenCall_004c6ee0(void) {
