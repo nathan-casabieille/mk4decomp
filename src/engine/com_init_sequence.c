@@ -26,7 +26,7 @@
  * state was set, an external IAT call clears state first.
  */
 
-extern void *g_iat_004d2210;
+extern void (__stdcall *g_iat_004d2210)(int, int, int);
 
 extern void *g_state_0058c884;
 extern void *g_lock_0058c874;
@@ -48,51 +48,35 @@ extern void ComReleaseCapture_004b0380(void);
 extern void DSoundBufferInit146_004b0290(void);
 
 /* @addr 0x004afa10 */
-__declspec(naked) void DDraw3_Cleanup(void) {
-    __asm {
-        call    Renderer3_EndScene_SW_FS
-        call    ComRelease_004afb10
-        call    ComReleasePair_004afcd0
-        push    0
-        call    DDraw3_CreateSurface
-        add     esp, 4
-        call    ComReleaseCapture_004afb50
-        call    DSoundBufferInit146_004afa60
-        mov     eax, dword ptr [g_state_0058c884]
-        mov     dword ptr [g_lock_0058c874], 0
-        test    eax, eax
-        _emit   74h
-        _emit   0ch
-        push    1
-        push    0
-        push    0
-        call    dword ptr [g_iat_004d2210]
-        mov     dword ptr [g_state_0058c884], 0
-        ret
+void DDraw3_Cleanup(void) {
+    void *state;
+    Renderer3_EndScene_SW_FS();
+    ComRelease_004afb10();
+    ComReleasePair_004afcd0();
+    DDraw3_CreateSurface(0);
+    ComReleaseCapture_004afb50();
+    DSoundBufferInit146_004afa60();
+    state = g_state_0058c884;
+    g_lock_0058c874 = (void *)0;
+    if (state != 0) {
+        g_iat_004d2210(0, 0, 1);
     }
+    g_state_0058c884 = (void *)0;
 }
 
 /* @addr 0x004b0240 */
-__declspec(naked) void DDraw5_Cleanup(void) {
-    __asm {
-        call    Renderer5_EndScene_SW_FS_Hi
-        call    ComRelease_004b0340
-        call    ComReleasePair_004b0500
-        push    0
-        call    DDraw5_CreateSurface
-        add     esp, 4
-        call    ComReleaseCapture_004b0380
-        call    DSoundBufferInit146_004b0290
-        mov     eax, dword ptr [g_state_0058c904]
-        mov     dword ptr [g_lock_0058c8f4], 0
-        test    eax, eax
-        _emit   74h
-        _emit   0ch
-        push    1
-        push    0
-        push    0
-        call    dword ptr [g_iat_004d2210]
-        mov     dword ptr [g_state_0058c904], 0
-        ret
+void DDraw5_Cleanup(void) {
+    void *state;
+    Renderer5_EndScene_SW_FS_Hi();
+    ComRelease_004b0340();
+    ComReleasePair_004b0500();
+    DDraw5_CreateSurface(0);
+    ComReleaseCapture_004b0380();
+    DSoundBufferInit146_004b0290();
+    state = g_state_0058c904;
+    g_lock_0058c8f4 = (void *)0;
+    if (state != 0) {
+        g_iat_004d2210(0, 0, 1);
     }
+    g_state_0058c904 = (void *)0;
 }
