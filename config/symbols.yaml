@@ -16394,10 +16394,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004ca970
-    name: func_004ca970
+    name: PendingMatch_004ca970
     size: 3472
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004cb700
     name: FileTableClose_004cb700
     size: 372
