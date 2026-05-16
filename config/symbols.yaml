@@ -7485,10 +7485,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0046cd30
-    name: func_0046cd30
+    name: PendingMatch_0046cd30
     size: 3632
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0046db60
     name: GuardedChainClearFlagToggle_0046db60
     size: 102
