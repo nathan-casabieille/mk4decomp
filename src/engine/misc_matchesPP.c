@@ -1573,23 +1573,16 @@ __declspec(naked) void Helper_PostCreateWindow(void) {
  *   stores eax both to g_eventQueueCurrent and back to [ecx*4+0x34];
  *   then eax = [fightGroupHead*4+0x58] - walk; same dual store.
  */
-__declspec(naked) void DualFieldAddSubStore_00470340(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        add     eax, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [ecx*4 + 0x58]
-        sub     eax, edx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x58], eax
-        ret
-    }
+void DualFieldAddSubStore_00470340(void) {
+    unsigned int s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    unsigned int v;
+    g_scaledInit_00542044 = s;
+    v = (unsigned int)g_walkCallback + *(unsigned int *)(s * 4 + 0x34);
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(s * 4 + 0x34) = v;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x58) - (unsigned int)g_walkCallback;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x58) = v;
 }
 
 /* @addr 0x004a1b50 (76b)
