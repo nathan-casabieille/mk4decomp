@@ -25,21 +25,13 @@ extern unsigned char g_byte_0052435c;
 extern void *g_data_004d5084;
 extern int func_00401118(void *p, int a, int b);
 extern void func_0040136d(void);
-__declspec(naked) void OnceCall_00401340(void) {
-    __asm {
-        mov     al, byte ptr [g_byte_0052435c]
-        test    al, al
-        _emit   75h
-        _emit   1dh
-        push    0
-        push    0
-        push    OFFSET g_data_004d5084
-        mov     byte ptr [g_byte_0052435c], 1
-        call    func_00401118
-        add     esp, 0x0c
-        jmp     func_0040136d
-        ret
+void OnceCall_00401340(void) {
+    if (g_byte_0052435c != 0) {
+        return;
     }
+    g_byte_0052435c = 1;
+    func_00401118(&g_data_004d5084, 0, 0);
+    func_0040136d();
 }
 
 /* @addr 0x00435230 (37b)
@@ -56,19 +48,15 @@ __declspec(naked) void OnceCall_00401340(void) {
 extern void func_00485e50(void);
 extern void func_0043524c(void);
 extern void func_00437a91(void);
-__declspec(naked) void CallPauseCmpDoubleJmp_00435230(void) {
-    __asm {
-        call    func_00485e50
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   16h
-        cmp     dword ptr [g_walkCallback], 0x00013333
-        _emit   7eh
-        _emit   05h
-        jmp     func_0043524c
-        jmp     func_00437a91
-        ret
+void CallPauseCmpDoubleJmp_00435230(void) {
+    func_00485e50();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    if ((int)g_walkCallback > 0x13333) {
+        func_0043524c();
+    } else {
+        func_00437a91();
     }
 }
 
@@ -91,23 +79,18 @@ extern int func_004395b0(void);
 extern void func_00439600(void);
 extern void func_0043625b(void);
 extern void func_00435f4d(void);
-__declspec(naked) void DualCallPauseDirtyJmp_00435f20(void) {
-    __asm {
-        call    func_004395b0
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    func_00439600
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   74h
-        _emit   05h
-        jmp     func_0043625b
-        jmp     func_00435f4d
-        ret
+void DualCallPauseDirtyJmp_00435f20(void) {
+    if (func_004395b0() != 0) {
+        return;
+    }
+    func_00439600();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    if ((g_xformDirtyFlags & 1) != 0) {
+        func_0043625b();
+    } else {
+        func_00435f4d();
     }
 }
 

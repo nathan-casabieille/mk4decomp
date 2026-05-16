@@ -82,17 +82,9 @@ __declspec(naked) void Init6Struct_00404e20(void) {
  */
 extern int func_0049cb38(int, void *);
 extern void *g_data_004146d0;
-__declspec(naked) void PushCallScaledStore_004143c0(void) {
-    __asm {
-        push    0x8f
-        push    OFFSET g_data_004146d0
-        call    func_0049cb38
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        add     esp, 8
-        mov     dword ptr [eax*4 + 0x34], ecx
-        ret
-    }
+void PushCallScaledStore_004143c0(void) {
+    func_0049cb38((int)&g_data_004146d0, 0x8f);
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x34) = g_baseSel_00542060;
 }
 
 /* @addr 0x00414fe0 (40b)
@@ -107,18 +99,14 @@ __declspec(naked) void PushCallScaledStore_004143c0(void) {
  */
 extern void func_0049cc28(void);
 extern void func_00414e3c(void);
-__declspec(naked) void SetCallSetJmp_00414fe0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0xb1
-        call    func_0049cc28
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0xb2
-        jmp     func_00414e3c
-        ret
+void SetCallSetJmp_00414fe0(void) {
+    g_walkCallback = (void (*)(void))0xb1;
+    func_0049cc28();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    g_walkCallback = (void (*)(void))0xb2;
+    func_00414e3c();
 }
 
 /* @addr 0x0041f840 (38b)
@@ -131,16 +119,12 @@ __declspec(naked) void SetCallSetJmp_00414fe0(void) {
  * .skip:
  *   ret
  */
-__declspec(naked) void ScaledNeg1SetPause_0041f840(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0xd8]
-        test    ecx, ecx
-        _emit   74h
-        _emit   15h
-        mov     dword ptr [eax*4 + 0xd8], 0xffffffff
-        mov     dword ptr [g_framePauseFlag], 1
-        ret
+void ScaledNeg1SetPause_0041f840(void) {
+    unsigned int base = g_baseSel_00542060;
+    unsigned int *slot = (unsigned int *)(base * 4 + 0xd8);
+    if (*slot != 0) {
+        *slot = 0xffffffff;
+        g_framePauseFlag = 1;
     }
 }
 
