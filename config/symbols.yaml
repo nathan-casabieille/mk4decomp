@@ -5151,10 +5151,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00444ef0
-    name: func_00444ef0
+    name: PendingMatch_00444ef0
     size: 3976
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00445e80
     name: TwoCallPauseSetJmp_00445e80
     size: 54
