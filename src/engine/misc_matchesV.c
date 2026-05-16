@@ -207,40 +207,30 @@ void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
 extern void func_0048e4ce(void);
 extern void CjInstallSelfRouter_00470480(void);
-__declspec(naked) void CallPauseMStackPushSet3Jmp_00460d00(void) {
-    __asm {
-        call    func_0048e4ce
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 3
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET CjInstallSelfRouter_00470480
-        jmp     func_0046f6e0
-        ret
-    }
+void CallPauseMStackPushSet3Jmp_00460d00(void) {
+    unsigned int top;
+    func_0048e4ce();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))3;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
+    func_0046f6e0();
 }
 
 /* @addr 0x00460d40 (52b): same shape, value=4 */
 extern void func_0048e4ce_b(void);
-__declspec(naked) void CallPauseMStackPushSet4Jmp_00460d40(void) {
-    __asm {
-        call    func_0048e4ce_b
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 4
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET CjInstallSelfRouter_00470480
-        jmp     func_0046f6e0
-        ret
-    }
+void CallPauseMStackPushSet4Jmp_00460d40(void) {
+    unsigned int top;
+    func_0048e4ce_b();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))4;
+    top++;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter_00470480;
+    func_0046f6e0();
 }
 
 /* @addr 0x004464f0 already done - let me skip */
