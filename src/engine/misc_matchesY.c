@@ -41,21 +41,17 @@ void ScaledInitOrSelfPtr_0044ef10(void) {
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-__declspec(naked) void ScaledLoad1cZeroAndFE_00446640(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        xor     ecx, ecx
-        mov     eax, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [eax*4 + 0x1c], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x20]
-        and     ah, 0xfe
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x20], eax
-        ret
-    }
+void ScaledLoad1cZeroAndFE_00446640(void) {
+    unsigned int s;
+    unsigned int v;
+    s = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    g_walkCallback = 0;
+    g_scaledInit_00542044 = s;
+    *(unsigned int *)(s * 4 + 0x1c) = 0;
+    s = g_scaledInit_00542044;
+    v = *(unsigned int *)(s * 4 + 0x20) & 0xFFFFFEFFu;
+    g_walkCallback = (void(*)(void))v;
+    *(unsigned int *)(s * 4 + 0x20) = v;
 }
 
 /* @addr 0x00446880 (62b)
