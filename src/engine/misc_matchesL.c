@@ -23,22 +23,13 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_00489fe6_l(void);
 extern void func_00410dd8(void);
 extern void func_0049a64a(void);
-__declspec(naked) void Set43DualCallJmp_0049a620(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x43
-        call    func_00489fe6_l
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    func_00410dd8
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0049a64a
-        ret
-    }
+void Set43DualCallJmp_0049a620(void) {
+    g_walkCallback = (void (*)(void))0x43;
+    func_00489fe6_l();
+    if (g_framePauseFlag != 0) return;
+    func_00410dd8();
+    if (g_framePauseFlag != 0) return;
+    func_0049a64a();
 }
 
 /* @addr 0x0049d310 (42b)
