@@ -27,49 +27,28 @@ extern void *g_comptr_0058c8e0;   /* 0x0058c8e0 */
 extern unsigned int g_comret_0058c8f8;   /* 0x0058c8f8 */
 
 /* @addr 0x004aeee0 */
-__declspec(naked) void ComReleaseCapture_004aeee0(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c7ac]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     dword ptr [g_comret_0058c7dc], eax
-        mov     dword ptr [g_comptr_0058c7ac], 0
-        ret
+void ComReleaseCapture_004aeee0(void) {
+    void *p = g_comptr_0058c7ac;
+    if (p) {
+        g_comret_0058c7dc = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
     }
+    g_comptr_0058c7ac = 0;
 }
 
 /* @addr 0x004afb50 */
-__declspec(naked) void ComReleaseCapture_004afb50(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c860]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     dword ptr [g_comret_0058c878], eax
-        mov     dword ptr [g_comptr_0058c860], 0
-        ret
+void ComReleaseCapture_004afb50(void) {
+    void *p = g_comptr_0058c860;
+    if (p) {
+        g_comret_0058c878 = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
     }
+    g_comptr_0058c860 = 0;
 }
 
 /* @addr 0x004b0380 */
-__declspec(naked) void ComReleaseCapture_004b0380(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c8e0]
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     dword ptr [g_comret_0058c8f8], eax
-        mov     dword ptr [g_comptr_0058c8e0], 0
-        ret
+void ComReleaseCapture_004b0380(void) {
+    void *p = g_comptr_0058c8e0;
+    if (p) {
+        g_comret_0058c8f8 = ((unsigned int (__stdcall **)(void*))(*(void**)p))[2](p);
     }
+    g_comptr_0058c8e0 = 0;
 }

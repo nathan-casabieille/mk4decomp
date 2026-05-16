@@ -21,33 +21,17 @@ extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
 extern void DualGuardPushInstallJmp_004288e0(void);
 
 /* @addr 0x00428820 */
-__declspec(naked) void CallPauseScaledStoreJmp_00428820(void) {
-    __asm {
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [eax*4 + 0x28], ecx
-        jmp     CallPauseDirty1JmpDirty4StackPush_00428850
-        ret
-    }
+void CallPauseScaledStoreJmp_00428820(void) {
+    CopyJmp_00406ba0();
+    if (g_framePauseFlag) return;
+    *(unsigned int*)(g_fightGroupHead * 4 + 0x28) = g_eventQueueCurrent;
+    CallPauseDirty1JmpDirty4StackPush_00428850();
 }
 
 /* @addr 0x004288b0 */
-__declspec(naked) void CallPauseScaledStoreJmp_004288b0(void) {
-    __asm {
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [eax*4 + 0x28], ecx
-        jmp     DualGuardPushInstallJmp_004288e0
-        ret
-    }
+void CallPauseScaledStoreJmp_004288b0(void) {
+    CopyJmp_00406ba0();
+    if (g_framePauseFlag) return;
+    *(unsigned int*)(g_fightGroupHead * 4 + 0x28) = g_eventQueueCurrent;
+    DualGuardPushInstallJmp_004288e0();
 }

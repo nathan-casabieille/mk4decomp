@@ -34,51 +34,27 @@ extern int  TripleScaledChainStore_004908f0(void *p);
 extern void StageEventStartCluster_0047ff80(void);
 
 /* @addr 0x0047fec0 */
-__declspec(naked) void FourConstCallLitCallJmp_0047fec0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [eax*4 + 0x74], 0x00001011
-        mov     dword ptr [g_state_00537e94], 5
-        mov     dword ptr [g_walkCallback], 0x00008000
-        mov     dword ptr [g_eventQueueCurrent], 0
-        call    Wrapper_0048ff30
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        push    OFFSET g_lit_004ed7e0
-        call    TripleScaledChainStore_004908f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     StageEventStartCluster_0047ff80
-        ret
-    }
+void FourConstCallLitCallJmp_0047fec0(void) {
+    *(unsigned int*)(g_baseSel_00542060 * 4 + 0x74) = 0x1011;
+    g_state_00537e94 = 5;
+    g_walkCallback = (void(*)(void))0x8000;
+    g_eventQueueCurrent = 0;
+    Wrapper_0048ff30();
+    if (g_framePauseFlag) return;
+    TripleScaledChainStore_004908f0(&g_lit_004ed7e0);
+    if (g_framePauseFlag) return;
+    StageEventStartCluster_0047ff80();
 }
 
 /* @addr 0x0047ff20 */
-__declspec(naked) void FourConstCallLitCallJmp_0047ff20(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [eax*4 + 0x74], 0x00001011
-        mov     dword ptr [g_state_00537e94], 5
-        mov     dword ptr [g_walkCallback], 0x00008000
-        mov     dword ptr [g_eventQueueCurrent], 0
-        call    Wrapper_0048ff30
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        push    OFFSET g_lit_004ed7f0
-        call    TripleScaledChainStore_004908f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     StageEventStartCluster_0047ff80
-        ret
-    }
+void FourConstCallLitCallJmp_0047ff20(void) {
+    *(unsigned int*)(g_baseSel_00542060 * 4 + 0x74) = 0x1011;
+    g_state_00537e94 = 5;
+    g_walkCallback = (void(*)(void))0x8000;
+    g_eventQueueCurrent = 0;
+    Wrapper_0048ff30();
+    if (g_framePauseFlag) return;
+    TripleScaledChainStore_004908f0(&g_lit_004ed7f0);
+    if (g_framePauseFlag) return;
+    StageEventStartCluster_0047ff80();
 }

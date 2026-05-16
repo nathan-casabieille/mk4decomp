@@ -24,35 +24,21 @@ extern unsigned int g_acc_00542078;
 extern void MStackPush3TripleMul10WithAbs_0048b500(void);
 
 /* @addr 0x0048b480 */
-__declspec(naked) void CallPauseAddDualStore_0048b480(void) {
-    __asm {
-        call    MStackPush3TripleMul10WithAbs_0048b500
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_acc_0053a438]
-        mov     ecx, dword ptr [g_walkCallback]
-        add     eax, ecx
-        mov     dword ptr [g_acc_00542078], eax
-        mov     dword ptr [g_acc_0053a438], eax
-        ret
-    }
+void CallPauseAddDualStore_0048b480(void) {
+    unsigned int v;
+    MStackPush3TripleMul10WithAbs_0048b500();
+    if (g_framePauseFlag) return;
+    v = g_acc_0053a438 + (unsigned int)g_walkCallback;
+    g_acc_00542078 = v;
+    g_acc_0053a438 = v;
 }
 
 /* @addr 0x0048b4b0 */
-__declspec(naked) void CallPauseAddDualStore_0048b4b0(void) {
-    __asm {
-        call    MStackPush3TripleMul10WithAbs_0048b500
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   17h
-        mov     eax, dword ptr [g_acc_0053a440]
-        mov     ecx, dword ptr [g_walkCallback]
-        add     eax, ecx
-        mov     dword ptr [g_acc_00542078], eax
-        mov     dword ptr [g_acc_0053a440], eax
-        ret
-    }
+void CallPauseAddDualStore_0048b4b0(void) {
+    unsigned int v;
+    MStackPush3TripleMul10WithAbs_0048b500();
+    if (g_framePauseFlag) return;
+    v = g_acc_0053a440 + (unsigned int)g_walkCallback;
+    g_acc_00542078 = v;
+    g_acc_0053a440 = v;
 }

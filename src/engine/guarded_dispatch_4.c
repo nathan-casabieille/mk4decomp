@@ -15,35 +15,23 @@ extern void ScaledClearJmp_00428d60(void);
 extern void InstallSelfReentry_004890b0(void);
 
 /* @addr 0x00484b40 */
-__declspec(naked) void GuardedDispatch4_00484b40(void) {
-    __asm {
-        call    CallDualStoreXorBit_004285e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     InstallSelfTri_00484a90
-        jmp     FiveCallGuardSetTail_0046f6b0
-        ret
+void GuardedDispatch4_00484b40(void) {
+    CallDualStoreXorBit_004285e0();
+    if (g_framePauseFlag) return;
+    if (!(g_xformDirtyFlags & 4)) {
+        InstallSelfTri_00484a90();
+        return;
     }
+    FiveCallGuardSetTail_0046f6b0();
 }
 
 /* @addr 0x00489080 */
-__declspec(naked) void GuardedDispatch4_00489080(void) {
-    __asm {
-        call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   05h
-        jmp     ScaledClearJmp_00428d60
-        jmp     InstallSelfReentry_004890b0
-        ret
+void GuardedDispatch4_00489080(void) {
+    DirtyToggleByGate_0048f350();
+    if (g_framePauseFlag) return;
+    if (!(g_xformDirtyFlags & 4)) {
+        ScaledClearJmp_00428d60();
+        return;
     }
+    InstallSelfReentry_004890b0();
 }

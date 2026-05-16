@@ -31,61 +31,45 @@ extern void CallPauseMStackPushSet3Jmp_00460d00(void);
 extern void CallPauseMStackPushSet4Jmp_00460d40(void);
 
 /* @addr 0x0042b6c0 */
-__declspec(naked) void GuardedDispatch_0042b6c0(void) {
-    __asm {
-        call    QuadStageStateDispatch_0042c3e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        __asm _emit 75h __asm _emit 13h    /* jne SHORT ret_label */
-        test    byte ptr [g_xformDirtyFlags], 1
-        __asm _emit 74h __asm _emit 05h    /* je SHORT use_default */
-        jmp     InstallSelfDualEsi_0042c4f0
-        jmp     EightPackedSubInstallSelfWalk_0042b6f0
-        ret
+void GuardedDispatch_0042b6c0(void) {
+    QuadStageStateDispatch_0042c3e0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        InstallSelfDualEsi_0042c4f0();
+        return;
     }
+    EightPackedSubInstallSelfWalk_0042b6f0();
 }
 
 /* @addr 0x0042c570 */
-__declspec(naked) void GuardedDispatch_0042c570(void) {
-    __asm {
-        call    QuadStageStateDispatch_0042c3e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        __asm _emit 75h __asm _emit 13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        __asm _emit 74h __asm _emit 05h
-        jmp     EsiAliasInstallChainCall_0042c490
-        jmp     StageEventDamageCluster_0042c5a0
-        ret
+void GuardedDispatch_0042c570(void) {
+    QuadStageStateDispatch_0042c3e0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        EsiAliasInstallChainCall_0042c490();
+        return;
     }
+    StageEventDamageCluster_0042c5a0();
 }
 
 /* @addr 0x00460ca0 */
-__declspec(naked) void GuardedDispatch_00460ca0(void) {
-    __asm {
-        call    MStackPush2ChainSwap_0048f090
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        __asm _emit 75h __asm _emit 13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        __asm _emit 74h __asm _emit 05h
-        jmp     CallPauseMStackPushSet3Jmp_00460d00
-        jmp     CallPauseMStackPushSet4Jmp_00460d40
-        ret
+void GuardedDispatch_00460ca0(void) {
+    MStackPush2ChainSwap_0048f090();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        CallPauseMStackPushSet3Jmp_00460d00();
+        return;
     }
+    CallPauseMStackPushSet4Jmp_00460d40();
 }
 
 /* @addr 0x00460cd0 */
-__declspec(naked) void GuardedDispatch_00460cd0(void) {
-    __asm {
-        call    MStackPush2ChainSwap_0048f090
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        __asm _emit 75h __asm _emit 13h
-        test    byte ptr [g_xformDirtyFlags], 1
-        __asm _emit 74h __asm _emit 05h
-        jmp     CallPauseMStackPushSet4Jmp_00460d40
-        jmp     CallPauseMStackPushSet3Jmp_00460d00
-        ret
+void GuardedDispatch_00460cd0(void) {
+    MStackPush2ChainSwap_0048f090();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        CallPauseMStackPushSet4Jmp_00460d40();
+        return;
     }
+    CallPauseMStackPushSet3Jmp_00460d00();
 }

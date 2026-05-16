@@ -24,29 +24,19 @@ extern void Alarm4EntryInstallCountdown_00496960(void);
 extern int  ArgSarStoreJmp_004594f0(void *p);
 
 /* @addr 0x0047ef40 */
-__declspec(naked) void DirtyGuardLitOrJmp_0047ef40(void) {
-    __asm {
-        cmp     dword ptr [g_xformScratch2088], 1
-        _emit   75h
-        _emit   05h
-        jmp     DualEntryInstallScaledChain_0047ef60
-        push    OFFSET g_lit_004ed6d0
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
+void DirtyGuardLitOrJmp_0047ef40(void) {
+    if (g_xformScratch2088 == 1) {
+        DualEntryInstallScaledChain_0047ef60();
+        return;
     }
+    ArgSarStoreJmp_004594f0(&g_lit_004ed6d0);
 }
 
 /* @addr 0x00496940 */
-__declspec(naked) void DirtyGuardLitOrJmp_00496940(void) {
-    __asm {
-        cmp     dword ptr [g_xformScratch2088], 1
-        _emit   75h
-        _emit   05h
-        jmp     Alarm4EntryInstallCountdown_00496960
-        push    OFFSET g_lit_004f17a8
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
+void DirtyGuardLitOrJmp_00496940(void) {
+    if (g_xformScratch2088 == 1) {
+        Alarm4EntryInstallCountdown_00496960();
+        return;
     }
+    ArgSarStoreJmp_004594f0(&g_lit_004f17a8);
 }

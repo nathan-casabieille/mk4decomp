@@ -24,37 +24,23 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 
 /* @addr 0x0049fb10 */
-__declspec(naked) void Cmp2DirtySetOrClear_0049fb10(void) {
-    __asm {
-        mov     eax, dword ptr [g_active_0053a408]
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 2
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   75h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void Cmp2DirtySetOrClear_0049fb10(void) {
+    unsigned int state = g_active_0053a408;
+    g_walkCallback = (void(*)(void))state;
+    if (state == 2) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x0049fb40 */
-__declspec(naked) void Cmp2DirtySetOrClear_0049fb40(void) {
-    __asm {
-        mov     eax, dword ptr [g_active_00537e88]
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 2
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   75h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void Cmp2DirtySetOrClear_0049fb40(void) {
+    unsigned int state = g_active_00537e88;
+    g_walkCallback = (void(*)(void))state;
+    if (state == 2) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }

@@ -29,41 +29,21 @@ extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
 extern void Wrapper_00481060(void);
 
 /* @addr 0x00480fe0 */
-__declspec(naked) void ScaledLitLoadCall_00480fe0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, OFFSET g_lit_004ef4d0
-        shr     eax, 2
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542048], eax
-        call    ScaledChainCallPauseSetJmp_0048f8e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     Wrapper_00481060
-        ret
-    }
+void ScaledLitLoadCall_00480fe0(void) {
+    unsigned int idx = ((unsigned int)&g_lit_004ef4d0 >> 2) + (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = idx;
+    g_scaledInit_00542048 = *(unsigned int*)(idx * 4);
+    ScaledChainCallPauseSetJmp_0048f8e0();
+    if (g_framePauseFlag) return;
+    Wrapper_00481060();
 }
 
 /* @addr 0x00481020 */
-__declspec(naked) void ScaledLitLoadCall_00481020(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, OFFSET g_lit_004ef7d8
-        shr     eax, 2
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542048], eax
-        call    ScaledChainCallPauseSetJmp_0048f8e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     Wrapper_00481060
-        ret
-    }
+void ScaledLitLoadCall_00481020(void) {
+    unsigned int idx = ((unsigned int)&g_lit_004ef7d8 >> 2) + (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = idx;
+    g_scaledInit_00542048 = *(unsigned int*)(idx * 4);
+    ScaledChainCallPauseSetJmp_0048f8e0();
+    if (g_framePauseFlag) return;
+    Wrapper_00481060();
 }

@@ -27,31 +27,27 @@ extern void StoreFightFieldCallTailJmp_004667a0(void);
 extern void FourPackedSubInitCmpDispatch_004665b0(void);
 
 /* @addr 0x00466460 */
-__declspec(naked) void ScaledDecBranch_00466460(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 0x30]
-        dec     eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     ThunkPlus4FieldCjCopy_00466490
-        mov     dword ptr [ecx*4 + 0x30], eax
-        jmp     FourEntryAlarmInstall_004662e0
+void ScaledDecBranch_00466460(void) {
+    unsigned int idx = g_baseSel_00542060;
+    unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
+    g_walkCallback = v;
+    if (v == 0) {
+        ThunkPlus4FieldCjCopy_00466490();
+        return;
     }
+    *(unsigned int*)(idx*4 + 0x30) = v;
+    FourEntryAlarmInstall_004662e0();
 }
 
 /* @addr 0x00466770 */
-__declspec(naked) void ScaledDecBranch_00466770(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 0x30]
-        dec     eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     StoreFightFieldCallTailJmp_004667a0
-        mov     dword ptr [ecx*4 + 0x30], eax
-        jmp     FourPackedSubInitCmpDispatch_004665b0
+void ScaledDecBranch_00466770(void) {
+    unsigned int idx = g_baseSel_00542060;
+    unsigned int v = *(unsigned int*)(idx*4 + 0x30) - 1;
+    g_walkCallback = v;
+    if (v == 0) {
+        StoreFightFieldCallTailJmp_004667a0();
+        return;
     }
+    *(unsigned int*)(idx*4 + 0x30) = v;
+    FourPackedSubInitCmpDispatch_004665b0();
 }

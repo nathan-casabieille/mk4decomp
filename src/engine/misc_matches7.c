@@ -44,19 +44,11 @@ void ScaledStoreE0_0041f550(int x) {
  *   add     esp, 4
  *   ret
  */
-extern void func_0041f700(void);
-__declspec(naked) void LoadShlDerefCallSkip_0041f810(void) {
-    __asm {
-        mov     eax, dword ptr [g_pendingNodeType]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0xd8]
-        test    ecx, ecx
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    func_0041f700
-        add     esp, 4
-        ret
+extern void func_0041f700(unsigned int);
+void LoadShlDerefCallSkip_0041f810(void) {
+    unsigned int p = g_pendingNodeType * 4;
+    if (*(unsigned int*)(p + 0xd8)) {
+        func_0041f700(p);
     }
 }
 

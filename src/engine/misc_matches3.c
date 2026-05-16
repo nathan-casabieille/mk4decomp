@@ -34,16 +34,11 @@ void ZeroThreeFields_0040a8b0(void) {
  *   ret
  */
 extern void func_004066df(void);
-__declspec(naked) void ScaledLoadGuardedJmp_004066d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [eax*4 + 4]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   05h
-        jmp     func_004066df
-        ret
+void ScaledLoadGuardedJmp_004066d0(void) {
+    unsigned int v = *(unsigned int*)(g_scaledInit_00542044 * 4 + 4);
+    g_walkCallback = (void(*)(void))v;
+    if (v) {
+        func_004066df();
     }
 }
 
@@ -55,14 +50,9 @@ __declspec(naked) void ScaledLoadGuardedJmp_004066d0(void) {
  *   jmp     +8
  */
 extern void func_00429721(void);
-__declspec(naked) void ScaledLoadDecJmp_00429710(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + 4]
-        dec     ecx
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        jmp     func_00429721
-    }
+void ScaledLoadDecJmp_00429710(void) {
+    g_eventQueueCurrent = *(unsigned int*)(g_scaledInit_00542044 * 4 + 4) - 1;
+    func_00429721();
 }
 
 /* @addr 0x00429790 (23b)
@@ -72,13 +62,9 @@ __declspec(naked) void ScaledLoadDecJmp_00429710(void) {
  *   jmp     +0x29
  */
 extern void func_004297c0(void);
-__declspec(naked) void ScaledLoadJmp_24_00429790(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     func_004297c0
-    }
+void ScaledLoadJmp_24_00429790(void) {
+    g_scaledInit_00542044 = *(unsigned int*)(g_fightGroupHead * 4 + 0x24);
+    func_004297c0();
 }
 
 /* @addr 0x004774d0 (25b)

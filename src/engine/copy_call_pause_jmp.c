@@ -12,9 +12,9 @@
  * skip:
  *   ret
  *
- * The compiler emits two return-equivalent paths (the e9 + ret tail
- * is functionally dead since the e9's rel32 lands directly on the
- * ret), but the encoded layout is preserved here for byte-match.
+ * MSVC SP3 /O2 produces this exact layout from:
+ *   g_B = g_A; Func(); if (g_framePauseFlag) return; Tail();
+ * (tail-call optimization turns the final void(void) call into jmp.)
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
@@ -27,31 +27,17 @@ extern void MStackPush2ChainLLInsert_00406790(void);
 extern void StackPopDispatchTagged_0041f780(void);
 
 /* @addr 0x0048b4e0 */
-__declspec(naked) void CopyCallPauseJmp_0048b4e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueChild]
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    TierBranchChain_0048b6c0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     MStackPush3TripleMul10WithAbs_0048b500
-        ret
-    }
+void CopyCallPauseJmp_0048b4e0(void) {
+    g_eventQueueWorkType = g_eventQueueChild;
+    TierBranchChain_0048b6c0();
+    if (g_framePauseFlag) return;
+    MStackPush3TripleMul10WithAbs_0048b500();
 }
 
 /* @addr 0x004a19a0 */
-__declspec(naked) void CopyCallPauseJmp_004a19a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    MStackPush2ChainLLInsert_00406790
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     StackPopDispatchTagged_0041f780
-        ret
-    }
+void CopyCallPauseJmp_004a19a0(void) {
+    g_scaledInit_00542044 = g_fightGroupHead;
+    MStackPush2ChainLLInsert_00406790();
+    if (g_framePauseFlag) return;
+    StackPopDispatchTagged_0041f780();
 }

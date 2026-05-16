@@ -26,49 +26,25 @@ extern unsigned int g_secondary_00538068; /* 0x00538068 */
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0048f270 */
-__declspec(naked) void CondPlayerLookup_0048f270(void) {
-    __asm {
-        mov     eax, dword ptr [g_primary_0053a774]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_player1NodeIdx]
-        cmp     ecx, eax
-        _emit   74h
-        _emit   0ch
-        mov     edx, dword ptr [g_secondary_00535d04]
-        mov     dword ptr [g_walkCallback], edx
-        ret
+void CondPlayerLookup_0048f270(void) {
+    g_walkCallback = (void(*)(void))g_primary_0053a774;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_walkCallback = (void(*)(void))g_secondary_00535d04;
     }
 }
 
 /* @addr 0x0048f950 */
-__declspec(naked) void CondPlayerLookup_0048f950(void) {
-    __asm {
-        mov     eax, dword ptr [g_primary_0052d74c]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_player1NodeIdx]
-        cmp     ecx, eax
-        _emit   74h
-        _emit   0ch
-        mov     edx, dword ptr [g_secondary_00538068]
-        mov     dword ptr [g_walkCallback], edx
-        ret
+void CondPlayerLookup_0048f950(void) {
+    g_walkCallback = (void(*)(void))g_primary_0052d74c;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_walkCallback = (void(*)(void))g_secondary_00538068;
     }
 }
 
 /* @addr 0x004ac120 */
-__declspec(naked) void CondPlayerLookup_004ac120(void) {
-    __asm {
-        mov     eax, dword ptr [g_gtPlayerProbe2]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_player1NodeIdx]
-        cmp     ecx, eax
-        _emit   74h
-        _emit   0ch
-        mov     edx, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_scaledInit_00542044], edx
-        ret
+void CondPlayerLookup_004ac120(void) {
+    g_scaledInit_00542044 = g_gtPlayerProbe2;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_scaledInit_00542044 = g_gtPlayerProbe1;
     }
 }

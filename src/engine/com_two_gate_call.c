@@ -30,45 +30,21 @@ extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 
 /* @addr 0x004af690 */
-__declspec(naked) void Renderer3_PresentFrame(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0058c874]
-        test    eax, eax
-        _emit   74h
-        _emit   1dh
-        call    Renderer3_EndScene_SW_FS
-        mov     eax, dword ptr [g_comptr_0058c864]
-        test    eax, eax
-        _emit   74h
-        _emit   0fh
-        mov     ecx, dword ptr [eax]
-        push    1
-        push    0
-        push    eax
-        call    dword ptr [ecx + 0x2c]
-        mov     dword ptr [g_comret_0058c878], eax
-        ret
-    }
+void Renderer3_PresentFrame(void) {
+    void *p;
+    if (!g_state_0058c874) return;
+    Renderer3_EndScene_SW_FS();
+    p = g_comptr_0058c864;
+    if (!p) return;
+    g_comret_0058c878 = ((unsigned int (__stdcall **)(void*, int, int))(*(void**)p))[11](p, 0, 1);
 }
 
 /* @addr 0x004afec0 */
-__declspec(naked) void Renderer5_PresentFrame(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0058c8f4]
-        test    eax, eax
-        _emit   74h
-        _emit   1dh
-        call    Renderer5_EndScene_SW_FS_Hi
-        mov     eax, dword ptr [g_comptr_0058c8e4]
-        test    eax, eax
-        _emit   74h
-        _emit   0fh
-        mov     ecx, dword ptr [eax]
-        push    1
-        push    0
-        push    eax
-        call    dword ptr [ecx + 0x2c]
-        mov     dword ptr [g_comret_0058c8f8], eax
-        ret
-    }
+void Renderer5_PresentFrame(void) {
+    void *p;
+    if (!g_state_0058c8f4) return;
+    Renderer5_EndScene_SW_FS_Hi();
+    p = g_comptr_0058c8e4;
+    if (!p) return;
+    g_comret_0058c8f8 = ((unsigned int (__stdcall **)(void*, int, int))(*(void**)p))[11](p, 0, 1);
 }

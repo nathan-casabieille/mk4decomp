@@ -37,73 +37,46 @@ extern void *g_comptr_0058c8e4;
 extern unsigned int g_comret_0058c8f8;
 
 /* @addr 0x004af440 */
-__declspec(naked) void ComReleasePair_004af440(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c7b4]
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     eax, dword ptr [g_comptr_0058c7b0]
-        mov     dword ptr [g_comptr_0058c7b4], 0
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     edx, dword ptr [eax]
-        push    eax
-        call    dword ptr [edx + 0x08]
-        mov     dword ptr [g_comret_0058c7dc], eax
-        mov     dword ptr [g_comptr_0058c7b0], 0
-        ret
+void ComReleasePair_004af440(void) {
+    void *a = g_comptr_0058c7b4;
+    void *b;
+    if (a) {
+        ((unsigned int (__stdcall **)(void*))(*(void**)a))[2](a);
     }
+    b = g_comptr_0058c7b0;
+    g_comptr_0058c7b4 = 0;
+    if (b) {
+        g_comret_0058c7dc = ((unsigned int (__stdcall **)(void*))(*(void**)b))[2](b);
+    }
+    g_comptr_0058c7b0 = 0;
 }
 
 /* @addr 0x004afcd0 */
-__declspec(naked) void ComReleasePair_004afcd0(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c868]
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     eax, dword ptr [g_comptr_0058c864]
-        mov     dword ptr [g_comptr_0058c868], 0
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     edx, dword ptr [eax]
-        push    eax
-        call    dword ptr [edx + 0x08]
-        mov     dword ptr [g_comret_0058c878], eax
-        mov     dword ptr [g_comptr_0058c864], 0
-        ret
+void ComReleasePair_004afcd0(void) {
+    void *a = g_comptr_0058c868;
+    void *b;
+    if (a) {
+        ((unsigned int (__stdcall **)(void*))(*(void**)a))[2](a);
     }
+    b = g_comptr_0058c864;
+    g_comptr_0058c868 = 0;
+    if (b) {
+        g_comret_0058c878 = ((unsigned int (__stdcall **)(void*))(*(void**)b))[2](b);
+    }
+    g_comptr_0058c864 = 0;
 }
 
 /* @addr 0x004b0500 */
-__declspec(naked) void ComReleasePair_004b0500(void) {
-    __asm {
-        mov     eax, dword ptr [g_comptr_0058c8e8]
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x08]
-        mov     eax, dword ptr [g_comptr_0058c8e4]
-        mov     dword ptr [g_comptr_0058c8e8], 0
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     edx, dword ptr [eax]
-        push    eax
-        call    dword ptr [edx + 0x08]
-        mov     dword ptr [g_comret_0058c8f8], eax
-        mov     dword ptr [g_comptr_0058c8e4], 0
-        ret
+void ComReleasePair_004b0500(void) {
+    void *a = g_comptr_0058c8e8;
+    void *b;
+    if (a) {
+        ((unsigned int (__stdcall **)(void*))(*(void**)a))[2](a);
     }
+    b = g_comptr_0058c8e4;
+    g_comptr_0058c8e8 = 0;
+    if (b) {
+        g_comret_0058c8f8 = ((unsigned int (__stdcall **)(void*))(*(void**)b))[2](b);
+    }
+    g_comptr_0058c8e4 = 0;
 }

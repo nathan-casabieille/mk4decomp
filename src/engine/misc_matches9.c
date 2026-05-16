@@ -74,12 +74,10 @@ __declspec(naked) void Cmp200Jmp_0043bd30(void) {
  * which is -0x51e in signed.
  */
 extern void func_00480d3c(void);
-__declspec(naked) void Const20cFae2Jmp_00486510(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x20c
-        mov     dword ptr [g_eventQueueCurrent], 0xfffffae2
-        jmp     func_00480d3c
-    }
+void Const20cFae2Jmp_00486510(void) {
+    g_walkCallback = (void(*)(void))0x20c;
+    g_eventQueueCurrent = 0xfffffae2;
+    func_00480d3c();
 }
 
 /* @addr 0x004933b0 (30b)
@@ -93,17 +91,12 @@ __declspec(naked) void Const20cFae2Jmp_00486510(void) {
  */
 extern unsigned int g_state_0053a430;
 extern void func_0049b619(void);
-__declspec(naked) void TestStoreConstJmp_004933b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a430]
-        test    eax, eax
-        mov     dword ptr [g_eventQueueCurrent], eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0x0e
-        jmp     func_0049b619
-        ret
-    }
+void TestStoreConstJmp_004933b0(void) {
+    unsigned int s = g_state_0053a430;
+    g_eventQueueCurrent = s;
+    if (s) return;
+    g_walkCallback = (void(*)(void))0x0e;
+    func_0049b619();
 }
 
 /* @addr 0x00493ed0 (29b)
