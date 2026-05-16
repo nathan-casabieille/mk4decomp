@@ -212,25 +212,15 @@ __declspec(naked) void TripleAddVec3_00425130(void) {
  */
 extern unsigned int g_state_004d57ac;
 extern void (*g_iatPtr_00542058)(void);
-__declspec(naked) void IncStoreCallIATDec_00439520(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_eventQueueChild]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    dword ptr [g_iatPtr_00542058]
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueChild], edx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
+void IncStoreCallIATDec_00439520(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueChild;
+    g_iatPtr_00542058();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    g_eventQueueChild = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x00457ff0 (62b)
