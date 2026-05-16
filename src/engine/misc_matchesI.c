@@ -363,22 +363,14 @@ __declspec(naked) void ScaledDecOrZero_00483b50(void) {
  */
 extern void func_004ab608(void);
 extern void func_004871b1(void);
-__declspec(naked) void ScaledTestCallPauseJmp_00487180(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x30]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0eh
-        call    func_004ab608
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004871b1
-        ret
+void ScaledTestCallPauseJmp_00487180(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0) {
+        func_004ab608();
+        if (g_framePauseFlag != 0) return;
     }
+    func_004871b1();
 }
 
 /* @addr 0x004887d0 (42b)
