@@ -5470,10 +5470,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0044a7f0
-    name: func_0044a7f0
+    name: PendingMatch_0044a7f0
     size: 4633
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x0044ba10
     name: GuardedSeq_0044ba10
     size: 20
