@@ -24,6 +24,20 @@ stub (asm-only)         :   0
 Bytes of .text covered  : 975765 / 975765 (100.0% of identified)
 ```
 
+**Per-function matching: 100% (2823 / 2823).** Every function in the
+original `MK4.EXE` has a byte-perfect counterpart in our source - verified
+per-`.obj` by `tools/decomp/diff_fn_obj.py` (reloc-aware byte compare against
+the orig `.text` slice).
+
+**Whole-EXE link: builds, not yet byte-identical.**
+`make matching` produces a 1.4 MB `build/MK4.matching.exe`. Of 2823 functions,
+8 land at their orig VA byte-for-byte; the rest drift because MSVC 5.0 LINK
+packs functions back-to-back without the inter-function `nop` padding the
+orig used. Closing this final gap needs per-function `.text$NAME` sections
++ `/MERGE` + explicit padding bytes, which MSVC 5.0 LINK does not honor
+when section names exceed 8 chars (they get truncated to `/N` string-table
+references and the alphabetic `.text$X` auto-sort/merge breaks).
+
 See [analysis/notes/architecture.md](analysis/notes/architecture.md)
 for the architectural map already produced by static RE - every
 subsystem of the engine is documented at a high level.
