@@ -116,11 +116,16 @@ def build_global_symbol_map():
             if name not in name_to_addr:
                 name_to_addr[name] = addr
     # Load IAT map (from extract_iat.py)
-    import os.path
     iat_path = ROOT / 'config' / 'iat_map.yaml'
     if iat_path.exists():
         with open(iat_path) as f: iat = yaml.safe_load(f)
         for sym, va in iat.items():
+            if sym not in name_to_addr:
+                name_to_addr[sym] = va
+    extras_path = ROOT / 'config' / 'extras_map.yaml'
+    if extras_path.exists():
+        with open(extras_path) as f: extras = yaml.safe_load(f)
+        for sym, va in (extras or {}).items():
             if sym not in name_to_addr:
                 name_to_addr[sym] = va
     return addr_to_name, name_to_addr
@@ -189,12 +194,15 @@ def main():
                 fn_bytes = bytearray(fn_bytes)
 
             # Apply relocations that fall within [value, value+target_size]
+            unresolved_reloc_offsets = []
             for r in sec['relocs']:
                 if value <= r['va'] < value + target_size:
                     offset_in_fn = r['va'] - value
                     # Look up the symbol being referenced
                     ref_sym = syms[r['sym_idx']]
-                    if ref_sym is None: continue
+                    if ref_sym is None:
+                        unresolved_reloc_offsets.append(offset_in_fn)
+                        continue
                     ref_name = ref_sym['name']
                     ref_clean = ref_name[1:] if ref_name.startswith('_') else ref_name
                     # Find target VA
@@ -213,10 +221,10 @@ def main():
                     elif ref_imp in name_to_addr:
                         ref_va = name_to_addr[ref_imp]
                     else:
+                        ref_va = 0
                         # Try parsing addr from name suffix _XXXXXXXX
                         import re as _re
                         m_addr = _re.search(r'_([0-9a-f]{8})$', ref_clean)
-                        ref_va = 0
                         if m_addr:
                             ref_va = int(m_addr.group(1), 16)
                         else:
@@ -236,6 +244,9 @@ def main():
                                         ref_va = candidate
                                 elif ref_sym['sec'] > 0 and (ref_sym['sec'] - 1) in sec_idx_to_va:
                                     ref_va = sec_idx_to_va[ref_sym['sec'] - 1] + ref_sym['value']
+                    # Track unresolved: if ref_va is still 0 and ref_clean isn't a known-zero symbol
+                    if ref_va == 0 and ref_clean not in name_to_addr and ref_clean not in name_to_entry:
+                        unresolved_reloc_offsets.append(offset_in_fn)
                     # Apply per reloc type
                     r_type = r['type']
                     # x86 COFF: 6=DIR32, 20=REL32
@@ -251,11 +262,16 @@ def main():
                             new_val = ref_va - (target_va + offset_in_fn + 4) + existing
                             struct.pack_into('<I', fn_bytes, offset_in_fn, new_val & 0xffffffff)
 
-            # Write to scaffold at the function's VA
+            # Fall back to orig bytes where our reloc resolution emitted zero (unresolved)
             file_off = (target_va - text_sec['vaddr']) + text_sec['raddr']
             if file_off + target_size > text_sec['raddr'] + text_sec['rsize']:
                 continue
-            # Compare to orig
+            for off_in_fn in unresolved_reloc_offsets:
+                if off_in_fn + 4 <= target_size:
+                    orig_slot_bytes = scaffold[file_off + off_in_fn : file_off + off_in_fn + 4]
+                    for k in range(4):
+                        fn_bytes[off_in_fn + k] = orig_slot_bytes[k]
+            # Compare to orig (after fallback)
             orig_bytes = scaffold[file_off:file_off+target_size]
             if bytes(orig_bytes) != bytes(fn_bytes):
                 mismatches.append((clean, target_va, target_size,
