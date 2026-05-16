@@ -121,20 +121,13 @@ void LiteralPushCallEntZero_00488c00(void) {
  */
 extern void SaveSwapCallRestore_00489030(void);
 extern void func_00488c61(void);
-__declspec(naked) void CallPauseLitInitJmp_00488c30(void) {
-    __asm {
-        call    SaveSwapCallRestore_00489030
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        mov     eax, 0x005006e0
-        mov     dword ptr [g_walkCallback], 0
-        shr     eax, 2
-        mov     dword ptr [g_xformEntityIdx], eax
-        jmp     func_00488c61
-        ret
-    }
+extern int g_data_005006e0;
+void CallPauseLitInitJmp_00488c30(void) {
+    SaveSwapCallRestore_00489030();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0;
+    g_xformEntityIdx = ((unsigned int)&g_data_005006e0) >> 2;
+    func_00488c61();
 }
 
 /* @addr 0x00488ed0 (33b)
