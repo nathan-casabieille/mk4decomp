@@ -103,7 +103,6 @@ __declspec(naked) void func_0041f780_pp(void) { __asm ret }
 __declspec(naked) void func_0041f780_z(void) { __asm ret }
 __declspec(naked) void func_0041f780_zz(void) { __asm ret }
 __declspec(naked) void func_00420060(void) { __asm ret }
-__declspec(naked) void func_00420090(void) { __asm ret }
 __declspec(naked) void func_004202f5(void) { __asm ret }
 __declspec(naked) void func_0042038f(void) { __asm ret }
 __declspec(naked) void func_004214a0(void) { __asm ret }

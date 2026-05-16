@@ -1757,6 +1757,12 @@ functions:
     group: boot
     status: matched
     file: src/game/game_tick.c
+  - addr: 0x00420090
+    name: func_00420090
+    size: 18
+    group: engine
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004200b0
     name: GuardedSeq_004200b0
     size: 20
@@ -14455,7 +14461,7 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004b3e90
     name: PresentFrame
-    size: 44
+    size: 64
     group: engine.render
     status: matched
     file: src/engine/render.c
@@ -14485,13 +14491,13 @@ functions:
     file: src/engine/misc_matchesCC.c
   - addr: 0x004b4200
     name: BeginFrame
-    size: 204
+    size: 224
     group: engine.render
     status: matched
     file: src/engine/render.c
   - addr: 0x004b42e0
     name: DrawScene
-    size: 121
+    size: 144
     group: engine.render
     status: matched
     file: src/engine/draw_scene.c
@@ -15203,6 +15209,12 @@ functions:
     group: engine.scenegraph
     status: matched
     file: src/engine/scenegraph.c
+  - addr: 0x004bdc70
+    name: func_004bdc70
+    size: 48
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
   - addr: 0x004bdca0
     name: NodeApplyTransform_B
     size: 163
@@ -15212,6 +15224,12 @@ functions:
   - addr: 0x004bdd50
     name: NodeApplyTransform_B_Direct
     size: 98
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/scenegraph.c
+  - addr: 0x004bddc0
+    name: func_004bddc0
+    size: 48
     group: engine.scenegraph
     status: matched
     file: src/engine/scenegraph.c

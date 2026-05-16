@@ -21,7 +21,7 @@ matching, the C source is the canonical representation of the game.
   <img src=".github/progress.svg" alt="Progress: 100.0%">
 </p>
 
-**Per-function matching: 100% (2823 / 2823).** Every function in the
+**Per-function matching: 100% (2826 / 2826).** Every function in the
 original `MK4.EXE` has a byte-perfect counterpart in our source - verified
 per-`.obj` by `tools/decomp/diff_fn_obj.py` (reloc-aware byte compare against
 the orig `.text` slice).
