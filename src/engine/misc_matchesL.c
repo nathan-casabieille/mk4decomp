@@ -62,21 +62,14 @@ __declspec(naked) void ScaledStoreThree_0049d310(void) {
 
 /* @addr 0x0049fa20 (36b): same shape as 0x0042ee10 / 0x00464320 - cmp 3 / dirty manip */
 extern unsigned int g_state_0052aac4_l;
-__declspec(naked) void Cmp3DirtyToggle_0049fa20(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4_l]
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 3
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   74h
-        _emit   08h
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void Cmp3DirtyToggle_0049fa20(void) {
+    unsigned int state = g_state_0052aac4_l;
+    g_walkCallback = (void (*)(void))state;
+    if (state != 3) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }
 
 /* @addr 0x004a1120 (36b)
