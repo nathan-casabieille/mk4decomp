@@ -1677,31 +1677,18 @@ __declspec(naked) void GuardedClampStoreJmp_00428bd0(void) {
  *   if jae: dirty |= 1; else: dirty &= ~1; ret.
  */
 extern void ScaledMaskByte_004774d0(void);
-__declspec(naked) void SetTagsCallCmpToggleDirty_00458c70(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, 0x0053a53c
-        shr     ecx, 2
-        add     ecx, 0x3b
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_pendingNodeType], ecx
-        call    ScaledMaskByte_004774d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     edx, eax
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   73h
-        _emit   08h
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+extern unsigned int g_table_0053a53c;
+void SetTagsCallCmpToggleDirty_00458c70(void) {
+    g_eventQueueCurrent = (unsigned int)g_walkCallback;
+    g_pendingNodeType = ((unsigned int)&g_table_0053a53c >> 2) + 0x3b;
+    ScaledMaskByte_004774d0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    if (g_eventQueueCurrent < (unsigned int)g_walkCallback) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
+    } else {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
     }
 }
 
