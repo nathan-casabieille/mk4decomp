@@ -44,40 +44,24 @@ void ScaledInitOrSelfPtr_00489130(void) {
 
 /* @addr 0x00474050 (63b): DoubleStackPushAndJmp variant, value=0x7d */
 extern void func_004740d0_z(void);
-__declspec(naked) void DoubleStackPushAndJmp7d_00474050(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_fightGroupHead]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], edx
-        mov     dword ptr [g_scaledInit_00542044], 0x7d
-        jmp     func_004740d0_z
-    }
+void DoubleStackPushAndJmp7d_00474050(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
+    g_scaledInit_00542044 = 0x7d;
+    func_004740d0_z();
 }
 
 /* @addr 0x00474090 (63b): DoubleStackPushAndJmp variant, value=0x7b */
 extern void func_004740d0_zz(void);
-__declspec(naked) void DoubleStackPushAndJmp7b_00474090(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_fightGroupHead]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], edx
-        mov     dword ptr [g_scaledInit_00542044], 0x7b
-        jmp     func_004740d0_zz
-    }
+void DoubleStackPushAndJmp7b_00474090(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
+    g_scaledInit_00542044 = 0x7b;
+    func_004740d0_zz();
 }
 
 /* @addr 0x00475750 (62b)
@@ -98,25 +82,22 @@ void DoubleScaledCrossStore_00475750(void) {
  */
 extern void StageGameProgressCluster_00482780(void);
 extern void Wrapper_0048a360(void);
-__declspec(naked) void ScaledChainCmp61_00482740(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        cmp     eax, 0x61
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     StageGameProgressCluster_00482780
-        cmp     eax, 0x69
-        _emit   74h
-        _emit   05h
-        jmp     Wrapper_0048a360
-        ret
+void ScaledChainCmp61_00482740(void) {
+    unsigned int v;
+    v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4 + 0x30);
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4);
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0x61) {
+        StageGameProgressCluster_00482780();
+        return;
     }
+    if (v == 0x69) {
+        return;
+    }
+    Wrapper_0048a360();
 }
 
 /* @addr 0x0048e2f0 (60b)
@@ -167,20 +148,12 @@ void ScaledChainAndF000DirtyToggle_0048e740(void) {
  *   store both eventQueueCurrent and back to [ecx*4+0x40];
  *   load g_state_004d57ac; pop top into eventQueueNotMask; dec ; store.
  */
-__declspec(naked) void OrStoreDecStackPop_00490290(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_eventQueueNotMask]
-        or      eax, dword ptr [ecx*4 + 0x40]
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void OrStoreDecStackPop_00490290(void) {
+    unsigned int v = g_eventQueueNotMask | *(unsigned int *)(g_fightGroupHead * 4 + 0x40);
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x40) = v;
+    g_eventQueueNotMask = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x0048ac70 (65b)
@@ -195,6 +168,11 @@ extern void func_0048acb0(void);
 extern void IndirectDispatchCjStore_0048ae50(void);
 extern void LazyAllocOrPush_0048abe0(void);
 extern void func_0041f780_zz(void);
+/* This is a packed-helpers block: the main entry runs at 0x48ac70, but
+ * the unreachable trailing `ret; nop; nop; ret` at 0x48acb0 is the body
+ * of the inline `func_0048acb0` callback referenced by g_eventQueueChild.
+ * Converting the main to pure C would drop the trailing entry; kept as
+ * naked to preserve both. */
 __declspec(naked) void InitStateDualCall48ac70_0048ac70(void) {
     __asm {
         mov     eax, dword ptr [g_state_0052ab10]
