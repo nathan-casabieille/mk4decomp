@@ -172,5 +172,43 @@ return_skip:
         pop     ebx
         pop     ecx
         ret
+        /* alignment NOP + 5-entry jump table + 0x90 padding (35 bytes) absorbed from
+         * orig 0x4b407d..0x4b40a0; absolute VAs in the table are valid only when this
+         * function is placed at 0x4b3ed0 by synth. */
+        _emit    0x8d
+        _emit    0x49
+        _emit    0x00
+        _emit    0x64
+        _emit    0x3f
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x9b
+        _emit    0x3f
+        _emit    0x4b
+        _emit    0x00
+        _emit    0xc3
+        _emit    0x3f
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x12
+        _emit    0x40
+        _emit    0x4b
+        _emit    0x00
+        _emit    0xec
+        _emit    0x3f
+        _emit    0x4b
+        _emit    0x00
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
+        _emit    0x90
     }
 }

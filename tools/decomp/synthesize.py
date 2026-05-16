@@ -343,8 +343,16 @@ def main():
                     fn_bytes[i:i+3] = b'\x8d\x49\x00'
                 i = fn_bytes.find(b'\x90\x8b\xff', i+1)
             file_off = (target_va - text_sec['vaddr']) + text_sec['raddr']
-            if file_off + target_size > text_sec['raddr'] + text_sec['rsize']:
-                continue
+            # Clamp to .text on-disk bounds: a "function" that spans into .rdata/.data
+            # (e.g. BigDataBlob_004d1080) only gets its in-.text prefix placed here. The
+            # rest stays as scaffold for now; cross-section placement would need a
+            # multi-section synth pass.
+            text_limit = text_sec['raddr'] + text_sec['rsize']
+            if file_off + target_size > text_limit:
+                if file_off >= text_limit:
+                    continue
+                target_size = text_limit - file_off
+                fn_bytes = fn_bytes[:target_size]
             # Compare to orig
             orig_bytes = scaffold[file_off:file_off+target_size]
             if bytes(orig_bytes) != bytes(fn_bytes):

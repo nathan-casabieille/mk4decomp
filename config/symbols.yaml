@@ -14467,7 +14467,7 @@ functions:
     file: src/engine/render.c
   - addr: 0x004b3ed0
     name: TryInitRenderer
-    size: 429
+    size: 464
     group: engine.render
     status: matched
     file: src/engine/try_init_renderer.c
@@ -14743,7 +14743,7 @@ functions:
     file: src/engine/misc_matchesDD.c
   - addr: 0x004b6340
     name: GameStateMachine
-    size: 509
+    size: 640
     group: game.menu
     status: matched
     file: src/game/statemachine.c
@@ -14963,6 +14963,12 @@ functions:
     group: engine.scenegraph
     status: matched
     file: src/engine/scenegraph.c
+  - addr: 0x004ba1c0
+    name: func_004ba1c0
+    size: 1026
+    group: engine
+    status: matched
+    file: src/engine/func_004ba1c0.c
   - addr: 0x004ba5d0
     name: ZBucketClampStore_004ba5d0
     size: 92
@@ -15677,6 +15683,12 @@ functions:
     group: platform.win32
     status: matched
     file: src/platform/timer.c
+  - addr: 0x004c4588
+    name: func_004c4588
+    size: 24
+    group: boot
+    status: matched
+    file: src/boot/raw_fragments.c
   - addr: 0x004c45a0
     name: CallTwoSumShl_004c45a0
     size: 37
@@ -15727,7 +15739,7 @@ functions:
     file: src/engine/getters.c
   - addr: 0x004c49b0
     name: PendingMatch_004c49b0
-    size: 1275
+    size: 1728
     group: platform.win32
     status: matched
     file: src/engine/misc_matchesQQ.c
@@ -15745,7 +15757,7 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c52a0
     name: PumpMessages
-    size: 265
+    size: 288
     group: boot
     status: matched
     file: src/boot/pump_messages.c
@@ -15755,6 +15767,12 @@ functions:
     group: boot
     status: matched
     file: src/boot/winmain.c
+  - addr: 0x004c5457
+    name: func_004c5457
+    size: 89
+    group: boot
+    status: matched
+    file: src/boot/raw_fragments.c
   - addr: 0x004c54b0
     name: LoadArgPushCall_004c54b0
     size: 20
