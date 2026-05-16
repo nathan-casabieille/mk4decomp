@@ -270,21 +270,12 @@ void CallPauseTriCmpJmp_00460910(void) {
  */
 extern void StateDispatchTable_00490fc0(void);
 extern void func_00406ad0(void);
-__declspec(naked) void CallPauseScaledStoreCopyJmp_00461220(void) {
-    __asm {
-        call    StateDispatchTable_00490fc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x24], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_eventQueueIdx], edx
-        jmp     func_00406ad0
-        ret
-    }
+void CallPauseScaledStoreCopyJmp_00461220(void) {
+    StateDispatchTable_00490fc0();
+    if (g_framePauseFlag != 0) return;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = g_fightGroupHead;
+    func_00406ad0();
 }
 
 /* @addr 0x00464800 (47b)
