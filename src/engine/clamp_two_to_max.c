@@ -26,43 +26,31 @@ extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_clamp_0053e348;
 
 /* @addr 0x004226a0 */
-__declspec(naked) void ClampTwoToMax_004226a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_clamp_0053a6dc]
-        cmp     eax, 0x00010000
-        _emit   7eh
-        _emit   05h
-        mov     eax, 0x00010000
-        mov     dword ptr [g_clamp_0053a6dc], eax
-        mov     eax, dword ptr [g_clamp_0053a328]
-        cmp     eax, 0x00010000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   0ah
-        mov     eax, 0x00010000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_clamp_0053a328], eax
-        ret
+void ClampTwoToMax_004226a0(void) {
+    unsigned int v;
+    v = g_clamp_0053a6dc;
+    if ((int)v > 0x10000) {
+        g_clamp_0053a6dc = 0x10000;
+    }
+    v = g_clamp_0053a328;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 0x10000) {
+        g_walkCallback = (void (*)(void))0x10000;
+        g_clamp_0053a328 = 0x10000;
     }
 }
 
 /* @addr 0x004226e0 */
-__declspec(naked) void ClampTwoToMax_004226e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_clamp_00537f2c]
-        cmp     eax, 0x00010000
-        _emit   7eh
-        _emit   05h
-        mov     eax, 0x00010000
-        mov     dword ptr [g_clamp_00537f2c], eax
-        mov     eax, dword ptr [g_clamp_0053e348]
-        cmp     eax, 0x00010000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   0ah
-        mov     eax, 0x00010000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_clamp_0053e348], eax
-        ret
+void ClampTwoToMax_004226e0(void) {
+    unsigned int v;
+    v = g_clamp_00537f2c;
+    if ((int)v > 0x10000) {
+        g_clamp_00537f2c = 0x10000;
+    }
+    v = g_clamp_0053e348;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 0x10000) {
+        g_walkCallback = (void (*)(void))0x10000;
+        g_clamp_0053e348 = 0x10000;
     }
 }
