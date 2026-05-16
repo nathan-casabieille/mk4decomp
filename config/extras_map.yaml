@@ -455,6 +455,7 @@ $SG_titleDemo$S22390: 5196556
 $SG_titleNormal$S22391: 5196584
 $SG_titleWaiting$S22389: 5196528
 $SG_winfail$S22323: 5242280
+$T22272: 5057216
 $body_0x20$25198: 4415808
 $body_1a0$25330: 4563360
 $body_290$25398: 4543120
@@ -471,6 +472,7 @@ $body_ff0$25211: 4730864
 $tail_a00$25239: 4594176
 ??_C@_02JKAF@rb?$AA@: 5066844
 ??_C@_04HIKB@Path?$AA@: 5195528
+??_C@_0BA@CKOL@Mortal?5Kombat?54?$AA@: 5196584
 ??_C@_0BG@OIHO@Mortal?5Kombat?54?5Error?$AA@: 5242240
 ??_C@_0CN@DFL@Software?2GT?5Interactive?2Mortal?5K@: 5195536
 ??_C@_0L@DKNO@Gfx_Init?$CI?$CJ?$AA@: 5196608
@@ -485,6 +487,7 @@ DSEnumeratorThunk_004d12cc: 5051084
 DirectSoundCreate_thunk: 5051096
 DownloadPlayerChar_fwd: 4766960
 ECM_PlayThread@4: 4917840
+ESF_DecodeADPCM_Wrapper: 4899328
 FSYS_Init: 4922608
 FmodHelper_004ccb7d: 5026684
 Helper_AudioRelease2: 4994192
@@ -513,6 +516,7 @@ _amsg_exit: 5009040
 _cinit: 5028896
 _crt_startup_check: 5029584
 _except_handler3: 5008344
+_except_list: 0
 _exit: 5007392
 _ftol: 5003216
 _heap_init: 5009120
@@ -1273,6 +1277,7 @@ g_clientHeight: 16381884
 g_clientWidth: 16381880
 g_clipMaxScratch: 16191352
 g_clipMinScratch: 16191344
+g_cmdLine: 16381896
 g_cmdline: 16387816
 g_comptr_0058c7ac: 5818284
 g_comptr_0058c7b0: 5818288

@@ -102,17 +102,21 @@ def build_global_symbol_map():
         addr_to_name[e['addr']] = e['name']
         name_to_addr[e['name']] = e['addr']
     include_dir = ROOT / 'include'
+    # Accept both forms after the C declaration: `/* 0xHEX */` and `/* DAT_HEX */`.
+    addr_pat = r'(?:0x([0-9a-fA-F]+)|DAT_([0-9a-fA-F]+))'
+    def _coerce(m):
+        return int(m.group(2) or m.group(3), 16)
     for hp in include_dir.rglob('*.h'):
         with open(hp) as f: hc = f.read()
-        for m in _re.finditer(r'\b([A-Za-z_][\w]*)\s*(?:\([^)]*\)|\[[^\]]*\])?\s*;\s*/\*\s*(0x[0-9a-fA-F]+)', hc):
+        for m in _re.finditer(r'\b([A-Za-z_][\w]*)\s*(?:\([^)]*\)|\[[^\]]*\])?\s*;\s*/\*\s*' + addr_pat, hc):
             name = m.group(1)
-            addr = int(m.group(2), 16)
+            addr = int(m.group(2) or m.group(3), 16)
             if name not in name_to_addr:
                 name_to_addr[name] = addr
-        # Function-pointer form: extern TYPE (*NAME)(...);  /* 0xADDR */
-        for m in _re.finditer(r'\(\s*\*\s*([A-Za-z_][\w]*)\s*\)[^;]*;\s*/\*\s*(0x[0-9a-fA-F]+)', hc):
+        # Function-pointer form: extern TYPE (*NAME)(...);  /* 0xADDR */ or DAT_HEX
+        for m in _re.finditer(r'\(\s*\*\s*([A-Za-z_][\w]*)\s*\)[^;]*;\s*/\*\s*' + addr_pat, hc):
             name = m.group(1)
-            addr = int(m.group(2), 16)
+            addr = int(m.group(2) or m.group(3), 16)
             if name not in name_to_addr:
                 name_to_addr[name] = addr
     # Load IAT map (from extract_iat.py)

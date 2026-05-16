@@ -20,7 +20,7 @@ Usage: python3 tools/decomp/learn_sites.py
 import os, struct, sys, yaml, re
 from pathlib import Path
 sys.path.insert(0, 'tools/decomp')
-from synthesize import parse_obj_full, build_global_symbol_map, ORIG_EXE, OBJ_DIR, parse_pe_sections
+from synthesize import parse_obj_full, build_global_symbol_map, ORIG_EXE, OBJ_DIR, parse_pe_sections, scan_source_aliases
 
 ROOT = Path('.')
 SITES = ROOT / 'config' / 'reloc_sites.yaml'
@@ -32,6 +32,16 @@ text_sec = next(s for s in pe_sections if s['name'] == '.text')
 with open('config/symbols.yaml') as f: ydat = yaml.safe_load(f)
 name_to_entry = {e['name']: e for e in ydat['functions']}
 addr_to_name, name_to_addr = build_global_symbol_map()
+obj_aliases = scan_source_aliases()
+
+def resolve_yaml_name(obj_sym_name):
+    n = obj_sym_name[1:] if obj_sym_name.startswith('_') else obj_sym_name
+    if n in name_to_entry: return n
+    n2 = re.sub(r'@\d+$', '', n)
+    if n2 in name_to_entry: return n2
+    if n in obj_aliases and obj_aliases[n] in name_to_entry: return obj_aliases[n]
+    if n2 in obj_aliases and obj_aliases[n2] in name_to_entry: return obj_aliases[n2]
+    return None
 
 sites = {}  # key: f"{obj_path}#{sec_idx}#{offset}" -> target_va
 for root, dirs, files in os.walk(OBJ_DIR):
@@ -44,16 +54,14 @@ for root, dirs, files in os.walk(OBJ_DIR):
         sec_idx_to_va = {}
         for sym in syms:
             if sym is None: continue
-            n = sym['name']
-            cl = n[1:] if n.startswith('_') else n
-            if cl in name_to_entry and sym['sec'] > 0:
+            cl = resolve_yaml_name(sym['name'])
+            if cl and sym['sec'] > 0:
                 sec_idx_to_va[sym['sec'] - 1] = name_to_entry[cl]['addr'] - sym['value']
 
         for sym in syms:
             if sym is None: continue
-            n = sym['name']
-            cl = n[1:] if n.startswith('_') else n
-            if cl not in name_to_entry: continue
+            cl = resolve_yaml_name(sym['name'])
+            if cl is None: continue
             sec_idx = sym['sec']
             if sec_idx <= 0 or sec_idx > len(sections): continue
             sec = sections[sec_idx - 1]

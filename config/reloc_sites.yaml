@@ -33,6 +33,7 @@ boot/pump_messages.obj#3#0x85: 16381912
 boot/pump_messages.obj#3#0x98: 16381916
 boot/pump_messages.obj#3#0xab: 16381920
 engine/draw_scene.obj#2#0x15: 5196604
+engine/ecm_play_thread.obj#2#0x131: 5195696
 engine/gfx_init.obj#2#0x5e: 5196604
 engine/iter_load.obj#2#0x20: 4836304
 engine/joystick_init.obj#2#0xb4: 8061256
