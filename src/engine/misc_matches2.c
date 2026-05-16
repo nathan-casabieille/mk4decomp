@@ -13,13 +13,10 @@ extern unsigned int g_baseSel_00542060;
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     eax
  */
-__declspec(naked) void ScaledIndirectJmp_00433bf0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x6c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
-    }
+void ScaledIndirectJmp_00433bf0(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x6c);
+    g_scaledInit_00542044 = v;
+    ((void(*)(void))v)();
 }
 
 /* @addr 0x0049c850 (19b)
@@ -28,13 +25,10 @@ __declspec(naked) void ScaledIndirectJmp_00433bf0(void) {
  *   mov     [g_scaledInit_00542044], eax
  *   jmp     eax
  */
-__declspec(naked) void ScaledIndirectJmp_0049c850(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueEnd]
-        mov     eax, dword ptr [eax*4 + 0x0c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
-    }
+void ScaledIndirectJmp_0049c850(void) {
+    unsigned int v = *(unsigned int *)(g_eventQueueEnd * 4 + 0x0c);
+    g_scaledInit_00542044 = v;
+    ((void(*)(void))v)();
 }
 
 /* @addr 0x00473ed0 (19b)
@@ -94,14 +88,12 @@ void Const0x2005Store_00487120(void) {
  */
 extern void func_004ba317(void);
 extern void func_00489202(void);
-__declspec(naked) void CmpJmpTwoBranch_004871d0(void) {
-    __asm {
-        cmp     dword ptr [g_eventQueueChild], 5
-        _emit   7dh
-        _emit   05h
-        jmp     func_004ba317
-        jmp     func_00489202
+void CmpJmpTwoBranch_004871d0(void) {
+    if ((int)g_eventQueueChild < 5) {
+        func_004ba317();
+        return;
     }
+    func_00489202();
 }
 
 /* @addr 0x00405430 (23b)

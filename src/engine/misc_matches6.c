@@ -8,51 +8,35 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490330 (28b): scaled and ah, 0xdf */
-__declspec(naked) void ScaledAndAhdf_00490330(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xdf
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAhdf_00490330(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFDFu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490350 (28b): scaled and ah, 0xbf */
-__declspec(naked) void ScaledAndAhbf_00490350(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xbf
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAhbf_00490350(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFBFu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490370 (28b): scaled and ah, 0xfb */
-__declspec(naked) void ScaledAndAhfb_00490370(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xfb
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAhfb_00490370(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFBu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00490390 (28b): scaled and ah, 0xfe */
-__declspec(naked) void ScaledAndAhfe_00490390(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x40]
-        and     al, 0xfe
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x40], eax
-        ret
-    }
+void ScaledAndAhfe_00490390(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x40) & 0xFFFFFFFEu;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x40) = v;
 }
 
 /* @addr 0x00491500 (21b)
@@ -78,14 +62,11 @@ void ScaledZero44_00491500(void) {
 extern unsigned int g_zero_0053a470;
 extern unsigned int g_zero_0053a104;
 extern void func_00492e50(void);
-__declspec(naked) void ZeroTripleJmp_00491e50(void) {
-    __asm {
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_zero_0053a470], eax
-        mov     dword ptr [g_zero_0053a104], eax
-        jmp     func_00492e50
-    }
+void ZeroTripleJmp_00491e50(void) {
+    g_walkCallback = 0;
+    g_zero_0053a470 = 0;
+    g_zero_0053a104 = 0;
+    func_00492e50();
 }
 
 /* @addr 0x004930e0 (28b)
@@ -118,14 +99,10 @@ __declspec(naked) void ScaledLoadCmp0fJmp_004930e0(void) {
  *   jmp     +4
  */
 extern void func_00495dc8(void);
-__declspec(naked) void Const111ScaledStoreJmp_00495da0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x0111
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        jmp     func_00495dc8
-    }
+void Const111ScaledStoreJmp_00495da0(void) {
+    g_walkCallback = (void(*)(void))0x111;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x111;
+    func_00495dc8();
 }
 
 /* @addr 0x004594f0 (30b)
@@ -211,15 +188,9 @@ void DirtyFlagsManip_0048de00(void) {
  */
 extern void func_00490fd8(void);
 extern void func_0049b00f(void);
-__declspec(naked) void Const7cCallJmp_0049afe0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x7c
-        call    func_00490fd8
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0049b00f
-        ret
-    }
+void Const7cCallJmp_0049afe0(void) {
+    g_walkCallback = (void(*)(void))0x7c;
+    func_00490fd8();
+    if (g_framePauseFlag) return;
+    func_0049b00f();
 }

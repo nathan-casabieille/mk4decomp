@@ -106,12 +106,10 @@ __declspec(naked) void StrLen_004578e0(void) {
  *   jmp     T
  */
 extern void func_0048cbef(void);
-__declspec(naked) void DualConstJmpNeg1_0048cc20(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x71
-        mov     dword ptr [g_eventQueueCurrent], 0xffffffff
-        jmp     func_0048cbef
-    }
+void DualConstJmpNeg1_0048cc20(void) {
+    g_walkCallback = (void(*)(void))0x71;
+    g_eventQueueCurrent = 0xffffffff;
+    func_0048cbef();
 }
 
 /* @addr 0x0048fbd0 (25b)
@@ -120,12 +118,10 @@ __declspec(naked) void DualConstJmpNeg1_0048cc20(void) {
  *   jmp     T
  */
 extern void func_0048fb2c(void);
-__declspec(naked) void DualConstJmpBig_0048fbd0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x00010000
-        mov     dword ptr [g_eventQueueCurrent], 0x28
-        jmp     func_0048fb2c
-    }
+void DualConstJmpBig_0048fbd0(void) {
+    g_walkCallback = (void(*)(void))0x00010000;
+    g_eventQueueCurrent = 0x28;
+    func_0048fb2c();
 }
 
 /* @addr 0x00490110 (28b)
@@ -215,27 +211,17 @@ void ScaledAndAlfe_00490390(void) {
  *   ret
  */
 extern unsigned int g_acc_00542078;
-__declspec(naked) void ConditionalAcc4or3_0045e0b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformScratch2088]
-        mov     dword ptr [g_acc_00542078], 4
-        test    eax, eax
-        _emit   74h
-        _emit   0ah
-        mov     dword ptr [g_acc_00542078], 3
-        ret
+void ConditionalAcc4or3_0045e0b0(void) {
+    g_acc_00542078 = 4;
+    if (g_xformScratch2088) {
+        g_acc_00542078 = 3;
     }
 }
 
 /* @addr 0x0045e0d0 (30b): same shape, default=3, override=4 */
-__declspec(naked) void ConditionalAcc3or4_0045e0d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformScratch2088]
-        mov     dword ptr [g_acc_00542078], 3
-        test    eax, eax
-        _emit   74h
-        _emit   0ah
-        mov     dword ptr [g_acc_00542078], 4
-        ret
+void ConditionalAcc3or4_0045e0d0(void) {
+    g_acc_00542078 = 3;
+    if (g_xformScratch2088) {
+        g_acc_00542078 = 4;
     }
 }
