@@ -95,21 +95,13 @@ __declspec(naked) void CallTestPushSubCall_004c6960(void) {
 extern unsigned int g_state_00f9f84c_ee;
 extern void func_004cc030_ee(void);
 extern void func_004cc070_ee(int);
-extern void (*g_iat_004d2154)(int);
-__declspec(naked) void CmpCallPushIATCall2_004c6e90(void) {
-    __asm {
-        cmp     dword ptr [g_state_00f9f84c_ee], 1
-        _emit   75h
-        _emit   05h
-        call    func_004cc030_ee
-        mov     eax, dword ptr [esp + 4]
-        push    eax
-        call    func_004cc070_ee
-        add     esp, 4
-        push    0xff
-        call    dword ptr [g_iat_004d2154]
-        ret
+extern void (__stdcall *g_iat_004d2154)(int);
+void CmpCallPushIATCall2_004c6e90(int arg) {
+    if (g_state_00f9f84c_ee == 1) {
+        func_004cc030_ee();
     }
+    func_004cc070_ee(arg);
+    g_iat_004d2154(0xff);
 }
 
 /* @addr 0x004c6ee0 (55b)
