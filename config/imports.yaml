@@ -1,0 +1,457 @@
+import_directory_rva: 866448
+dlls:
+- name: KERNEL32.dll
+  name_rva: 867646
+  oft_rva: 866680
+  ft_rva: 860232
+  imports:
+  - name: QueryPerformanceCounter
+    hint: 453
+    hint_name_rva: 867554
+  - name: GetLogicalDrives
+    hint: 250
+    hint_name_rva: 867534
+  - name: LoadLibraryA
+    hint: 400
+    hint_name_rva: 867504
+  - name: CreateFileMappingA
+    hint: 50
+    hint_name_rva: 867624
+  - name: GetProcAddress
+    hint: 278
+    hint_name_rva: 867486
+  - name: FreeLibrary
+    hint: 152
+    hint_name_rva: 867520
+  - name: GetCurrentProcess
+    hint: 211
+    hint_name_rva: 867362
+  - name: GetCurrentThread
+    hint: 213
+    hint_name_rva: 867342
+  - name: GetPriorityClass
+    hint: 267
+    hint_name_rva: 867322
+  - name: GetThreadPriority
+    hint: 321
+    hint_name_rva: 867302
+  - name: CreateThread
+    hint: 67
+    hint_name_rva: 867286
+  - name: Sleep
+    hint: 575
+    hint_name_rva: 867278
+  - name: GetDriveTypeA
+    hint: 223
+    hint_name_rva: 867262
+  - name: SetCurrentDirectoryA
+    hint: 524
+    hint_name_rva: 867238
+  - name: CloseHandle
+    hint: 24
+    hint_name_rva: 867438
+  - name: ResumeThread
+    hint: 482
+    hint_name_rva: 867470
+  - name: TerminateThread
+    hint: 583
+    hint_name_rva: 867452
+  - name: SetPriorityClass
+    hint: 548
+    hint_name_rva: 867402
+  - name: SuspendThread
+    hint: 577
+    hint_name_rva: 867422
+  - name: SetThreadPriority
+    hint: 563
+    hint_name_rva: 867382
+  - name: QueryPerformanceFrequency
+    hint: 454
+    hint_name_rva: 867580
+  - name: GetLastError
+    hint: 244
+    hint_name_rva: 867608
+  - name: GetModuleFileNameA
+    hint: 252
+    hint_name_rva: 867196
+  - name: TerminateProcess
+    hint: 582
+    hint_name_rva: 868856
+  - name: RtlUnwind
+    hint: 485
+    hint_name_rva: 868876
+  - name: RaiseException
+    hint: 457
+    hint_name_rva: 869654
+  - name: SetEndOfFile
+    hint: 528
+    hint_name_rva: 869638
+  - name: HeapAlloc
+    hint: 360
+    hint_name_rva: 868796
+  - name: GetStringTypeW
+    hint: 302
+    hint_name_rva: 869620
+  - name: GetStringTypeA
+    hint: 299
+    hint_name_rva: 869602
+  - name: LCMapStringA
+    hint: 397
+    hint_name_rva: 869570
+  - name: CreateFileA
+    hint: 49
+    hint_name_rva: 869556
+  - name: LCMapStringW
+    hint: 398
+    hint_name_rva: 869586
+  - name: InterlockedIncrement
+    hint: 382
+    hint_name_rva: 869516
+  - name: InterlockedDecrement
+    hint: 379
+    hint_name_rva: 869492
+  - name: SetStdHandle
+    hint: 553
+    hint_name_rva: 869540
+  - name: GetEnvironmentStringsW
+    hint: 227
+    hint_name_rva: 869444
+  - name: GetEnvironmentStrings
+    hint: 225
+    hint_name_rva: 869420
+  - name: WideCharToMultiByte
+    hint: 622
+    hint_name_rva: 869470
+  - name: MultiByteToWideChar
+    hint: 427
+    hint_name_rva: 869372
+  - name: FreeEnvironmentStringsA
+    hint: 150
+    hint_name_rva: 869346
+  - name: FreeEnvironmentStringsW
+    hint: 151
+    hint_name_rva: 869394
+  - name: FlushFileBuffers
+    hint: 142
+    hint_name_rva: 869298
+  - name: TlsGetValue
+    hint: 586
+    hint_name_rva: 869284
+  - name: UnhandledExceptionFilter
+    hint: 592
+    hint_name_rva: 869318
+  - name: TlsAlloc
+    hint: 584
+    hint_name_rva: 869256
+  - name: SetLastError
+    hint: 542
+    hint_name_rva: 869268
+  - name: GetCurrentThreadId
+    hint: 214
+    hint_name_rva: 869220
+  - name: WriteFile
+    hint: 635
+    hint_name_rva: 869208
+  - name: TlsSetValue
+    hint: 587
+    hint_name_rva: 869242
+  - name: GetACP
+    hint: 157
+    hint_name_rva: 869186
+  - name: GetCPInfo
+    hint: 163
+    hint_name_rva: 869174
+  - name: GetOEMCP
+    hint: 265
+    hint_name_rva: 869196
+  - name: SetFilePointer
+    hint: 537
+    hint_name_rva: 869144
+  - name: GetFileType
+    hint: 239
+    hint_name_rva: 869130
+  - name: ReadFile
+    hint: 470
+    hint_name_rva: 869162
+  - name: SetHandleCount
+    hint: 539
+    hint_name_rva: 869096
+  - name: GetModuleHandleA
+    hint: 254
+    hint_name_rva: 867218
+  - name: GetLocaleInfoW
+    hint: 247
+    hint_name_rva: 869690
+  - name: GetLocaleInfoA
+    hint: 246
+    hint_name_rva: 869672
+  - name: GetStartupInfoA
+    hint: 296
+    hint_name_rva: 868888
+  - name: LeaveCriticalSection
+    hint: 399
+    hint_name_rva: 869056
+  - name: EnterCriticalSection
+    hint: 88
+    hint_name_rva: 869032
+  - name: VirtualAlloc
+    hint: 603
+    hint_name_rva: 869080
+  - name: GetStdHandle
+    hint: 298
+    hint_name_rva: 869114
+  - name: HeapFree
+    hint: 366
+    hint_name_rva: 868808
+  - name: GetFileAttributesA
+    hint: 232
+    hint_name_rva: 868820
+  - name: ExitProcess
+    hint: 107
+    hint_name_rva: 868842
+  - name: HeapDestroy
+    hint: 364
+    hint_name_rva: 868938
+  - name: InitializeCriticalSection
+    hint: 377
+    hint_name_rva: 868980
+  - name: GetCommandLineA
+    hint: 170
+    hint_name_rva: 868906
+  - name: GetVersion
+    hint: 332
+    hint_name_rva: 868924
+  - name: VirtualFree
+    hint: 606
+    hint_name_rva: 868966
+  - name: HeapCreate
+    hint: 362
+    hint_name_rva: 868952
+  - name: DeleteCriticalSection
+    hint: 76
+    hint_name_rva: 869008
+- name: USER32.dll
+  name_rva: 868300
+  oft_rva: 866984
+  ft_rva: 860536
+  imports:
+  - name: SetMenu
+    hint: 507
+    hint_name_rva: 867696
+  - name: GetWindowLongA
+    hint: 314
+    hint_name_rva: 867678
+  - name: SendNotifyMessageA
+    hint: 480
+    hint_name_rva: 867956
+  - name: PeekMessageA
+    hint: 431
+    hint_name_rva: 867992
+  - name: GetMenu
+    hint: 265
+    hint_name_rva: 867706
+  - name: GetWindowRect
+    hint: 317
+    hint_name_rva: 867716
+  - name: SetWindowPos
+    hint: 542
+    hint_name_rva: 867768
+  - name: ShowWindow
+    hint: 557
+    hint_name_rva: 867732
+  - name: GetWindowPlacement
+    hint: 316
+    hint_name_rva: 867746
+  - name: ShowCursor
+    hint: 553
+    hint_name_rva: 867818
+  - name: SetWindowLongA
+    hint: 539
+    hint_name_rva: 867784
+  - name: SetCursorPos
+    hint: 494
+    hint_name_rva: 867802
+  - name: ReleaseDC
+    hint: 461
+    hint_name_rva: 867868
+  - name: GetCursorPos
+    hint: 237
+    hint_name_rva: 867832
+  - name: GetSystemMetrics
+    hint: 300
+    hint_name_rva: 867848
+  - name: FillRect
+    hint: 204
+    hint_name_rva: 867906
+  - name: GetDC
+    hint: 238
+    hint_name_rva: 867880
+  - name: SetWindowTextA
+    hint: 545
+    hint_name_rva: 867888
+  - name: GetAsyncKeyState
+    hint: 215
+    hint_name_rva: 867918
+  - name: MapVirtualKeyA
+    hint: 396
+    hint_name_rva: 867938
+  - name: GetMessageA
+    hint: 277
+    hint_name_rva: 868246
+  - name: TranslateMessage
+    hint: 581
+    hint_name_rva: 868280
+  - name: DispatchMessageA
+    hint: 144
+    hint_name_rva: 868260
+  - name: LoadCursorA
+    hint: 370
+    hint_name_rva: 868206
+  - name: WaitMessage
+    hint: 605
+    hint_name_rva: 868232
+  - name: LoadIconA
+    hint: 374
+    hint_name_rva: 868220
+  - name: UpdateWindow
+    hint: 593
+    hint_name_rva: 868154
+  - name: RegisterClassA
+    hint: 446
+    hint_name_rva: 868188
+  - name: CreateWindowExA
+    hint: 85
+    hint_name_rva: 868170
+  - name: GetClientRect
+    hint: 228
+    hint_name_rva: 868102
+  - name: PostQuitMessage
+    hint: 435
+    hint_name_rva: 868136
+  - name: DefWindowProcA
+    hint: 128
+    hint_name_rva: 868118
+  - name: MessageBeep
+    hint: 404
+    hint_name_rva: 868062
+  - name: BeginPaint
+    hint: 9
+    hint_name_rva: 868088
+  - name: EndPaint
+    hint: 182
+    hint_name_rva: 868076
+  - name: SystemParametersInfoA
+    hint: 564
+    hint_name_rva: 868008
+  - name: SetCursor
+    hint: 492
+    hint_name_rva: 868050
+  - name: GetActiveWindow
+    hint: 213
+    hint_name_rva: 868032
+  - name: InvalidateRect
+    hint: 338
+    hint_name_rva: 867660
+  - name: MessageBoxA
+    hint: 405
+    hint_name_rva: 867978
+- name: GDI32.dll
+  name_rva: 868414
+  oft_rva: 866652
+  ft_rva: 860204
+  imports:
+  - name: CreateDIBSection
+    hint: 36
+    hint_name_rva: 868344
+  - name: DeleteObject
+    hint: 70
+    hint_name_rva: 868364
+  - name: SetDIBitsToDevice
+    hint: 344
+    hint_name_rva: 868324
+  - name: GetStockObject
+    hint: 250
+    hint_name_rva: 868396
+  - name: GetDeviceCaps
+    hint: 199
+    hint_name_rva: 868380
+  - name: GdiFlush
+    hint: 143
+    hint_name_rva: 868312
+- name: ADVAPI32.dll
+  name_rva: 868510
+  oft_rva: 866608
+  ft_rva: 860160
+  imports:
+  - name: RegCreateKeyExA
+    hint: 283
+    hint_name_rva: 868492
+  - name: RegCloseKey
+    hint: 279
+    hint_name_rva: 868424
+  - name: RegQueryValueExA
+    hint: 310
+    hint_name_rva: 868438
+  - name: RegOpenKeyExA
+    hint: 302
+    hint_name_rva: 868458
+  - name: RegSetValueExA
+    hint: 321
+    hint_name_rva: 868474
+- name: WINMM.dll
+  name_rva: 868700
+  oft_rva: 867148
+  ft_rva: 860700
+  imports:
+  - name: joyGetDevCapsA
+    hint: 26
+    hint_name_rva: 868622
+  - name: timeEndPeriod
+    hint: 148
+    hint_name_rva: 868684
+  - name: timeBeginPeriod
+    hint: 147
+    hint_name_rva: 868666
+  - name: joyGetPosEx
+    hint: 30
+    hint_name_rva: 868652
+  - name: joyGetPos
+    hint: 29
+    hint_name_rva: 868640
+  - name: auxSetVolume
+    hint: 23
+    hint_name_rva: 868606
+  - name: auxGetNumDevs
+    hint: 20
+    hint_name_rva: 868590
+  - name: auxGetDevCapsA
+    hint: 18
+    hint_name_rva: 868572
+  - name: auxGetVolume
+    hint: 21
+    hint_name_rva: 868556
+  - name: timeGetTime
+    hint: 151
+    hint_name_rva: 868542
+  - name: mciSendCommandA
+    hint: 50
+    hint_name_rva: 868524
+- name: DDRAW.dll
+  name_rva: 868754
+  oft_rva: 866632
+  ft_rva: 860184
+  imports:
+  - name: DirectDrawCreate
+    hint: 5
+    hint_name_rva: 868710
+  - name: DirectDrawEnumerateA
+    hint: 7
+    hint_name_rva: 868730
+- name: DSOUND.dll
+  name_rva: 868784
+  oft_rva: 866644
+  ft_rva: 860196
+  imports:
+  - name: DirectSoundCreate
+    hint: 3
+    hint_name_rva: 868764

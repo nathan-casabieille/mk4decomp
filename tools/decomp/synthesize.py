@@ -397,6 +397,89 @@ def main():
     text_uncov = sum(1 for v in text_synth if v == 0)
     print(f'.text synthesis: {sum(text_synth)}/{text_sec["vsize"]} covered ({pad_synth} via 0x90-fill, {pad_scaffold} bytes still scaffold)')
 
+    # PE structure synth: generate IAT / Import Directory / ILT / hint-name table
+    # / DLL-name strings from config/imports.yaml. Each piece is written at the
+    # exact RVA recorded in the manifest so the result is byte-identical without
+    # needing a real linker.
+    imports_path = ROOT / 'config' / 'imports.yaml'
+    if imports_path.exists() and rdata_synth is not None:
+        with open(imports_path) as f: imp = yaml.safe_load(f)
+        def rva_to_file(rva):
+            # .rdata: RVA 0xd2000..0xd454c -> file 0xd0800..0xd2d4c
+            return rva - 0xd2000 + rdata_sec['raddr']
+        def mark_rdata(file_off, n):
+            base = file_off - rdata_sec['raddr']
+            for i in range(n):
+                if 0 <= base + i < len(rdata_synth):
+                    rdata_synth[base + i] = 1
+
+        # 1. IAT slots (FT) + ILT (OFT): identical content - lists of hint/name RVAs
+        # terminated by a null entry, one block per DLL.
+        for dll in imp['dlls']:
+            for tbl_rva in (dll['oft_rva'], dll['ft_rva']):
+                file_off = rva_to_file(tbl_rva)
+                for k, ent in enumerate(dll['imports']):
+                    if 'ordinal' in ent:
+                        slot = 0x80000000 | ent['ordinal']
+                    else:
+                        slot = ent['hint_name_rva']
+                    struct.pack_into('<I', scaffold, file_off + k*4, slot)
+                # Null terminator
+                struct.pack_into('<I', scaffold, file_off + len(dll['imports'])*4, 0)
+                mark_rdata(file_off, (len(dll['imports']) + 1) * 4)
+
+        # 2. Hint/name entries: 2-byte hint + null-terminated function name
+        # at recorded RVA, with 0x00 padding to the next entry to keep
+        # subsequent entries 2-byte aligned (linker convention). Collect
+        # entries sorted by RVA so we can compute each entry's true on-disk
+        # footprint (incl. trailing pad).
+        all_entries = []
+        for dll in imp['dlls']:
+            for ent in dll['imports']:
+                if 'ordinal' in ent: continue
+                all_entries.append((ent['hint_name_rva'], ent['hint'], ent['name']))
+            all_entries.append((dll['name_rva'], None, dll['name']))
+        all_entries.sort()
+        for idx, (rva, hint, name) in enumerate(all_entries):
+            fo = rva_to_file(rva)
+            base = 0
+            if hint is not None:
+                struct.pack_into('<H', scaffold, fo, hint)
+                base = 2
+            name_bytes = name.encode('ascii') + b'\x00'
+            scaffold[fo+base:fo+base+len(name_bytes)] = name_bytes
+            written = base + len(name_bytes)
+            # Determine footprint = up to next entry's RVA (or end of hint/name table)
+            if idx + 1 < len(all_entries):
+                next_rva = all_entries[idx+1][0]
+            else:
+                # Last entry: footprint extends to end of .rdata virtual area.
+                # imports.yaml uses RVAs (relative to ImageBase), so subtract base.
+                next_rva = (rdata_sec['vaddr'] - ib) + rdata_sec['vsize']
+            footprint = next_rva - rva
+            if footprint > written:
+                # Pad bytes between this entry and the next are 0x00 in orig
+                scaffold[fo+written:fo+footprint] = b'\x00' * (footprint - written)
+            mark_rdata(fo, footprint)
+
+        # 3. DLL name strings are written by the consolidated loop above (the
+        # linker interleaves DLL names into the same RVA-ordered table as
+        # hint/name entries, with the same trailing-pad-to-next-entry rule).
+
+        # 4. Import Directory: 5-DWORD struct per DLL + 20-byte null terminator
+        imp_dir_off = rva_to_file(imp['import_directory_rva'])
+        for i, dll in enumerate(imp['dlls']):
+            off = imp_dir_off + i*20
+            struct.pack_into('<IIIII', scaffold, off,
+                             dll['oft_rva'], 0, 0, dll['name_rva'], dll['ft_rva'])
+        # Terminator
+        term_off = imp_dir_off + len(imp['dlls'])*20
+        struct.pack_into('<IIIII', scaffold, term_off, 0, 0, 0, 0, 0)
+        mark_rdata(imp_dir_off, (len(imp['dlls']) + 1) * 20)
+
+    if rdata_synth is not None:
+        print(f'.rdata synthesis (PE structure pass): {sum(rdata_synth)}/{rdata_sec["vsize"]} covered')
+
     # .rdata synthesis pass: walk every OBJ .rdata/.data section and place any named
     # symbol whose clean name resolves to a VA inside the orig .rdata range. Sizes are
     # estimated as (next-sym-in-section).value - this.value, falling back to
