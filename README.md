@@ -35,12 +35,6 @@ Two distinct things, in plain words:
   MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
   ```
 
-  <p align="center">
-    <img src=".github/gameplay.gif" alt="MK4 running from the recompiled executable">
-    <br>
-    <em>Gameplay from <code>build/MK4.matching.exe</code> - the byte-identical rebuild.</em>
-  </p>
-
 - **Decompiled to C = in progress.** The bytes match, but ~80% of the
   source is still `__declspec(naked) { __asm { ... } }` wrappers -
   semantically equivalent to orig but not readable C. The real
@@ -108,6 +102,14 @@ make diff                             # compare each function vs original
 
 When a function matches byte-for-byte, mark it `matched` in
 `config/symbols.yaml`.
+
+## In action
+
+<p align="center">
+  <img src=".github/gameplay.gif" alt="MK4 running from the recompiled executable">
+  <br>
+  <em>Gameplay from <code>build/MK4.matching.exe</code> - the byte-identical rebuild.</em>
+</p>
 
 ## Contributing
 
