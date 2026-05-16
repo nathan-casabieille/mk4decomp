@@ -2000,149 +2000,84 @@ __declspec(naked) void CmpEqInitCallElseJmp_0048d4b0(void) {
  *   walk = N (literal); jmp T.
  */
 extern void MStackPush3MaskBit_00492920(void);
-__declspec(naked) void DispatchSetWalk6_004926e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   36h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit_00492920
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], 6
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchSetWalk6_004926e0(void) {
+    unsigned int v;
+    if (g_data_0054356c) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void(*)(void))v;
+    if (v) return;
+    g_eventQueueCurrent = v;
+    MStackPush3MaskBit_00492920();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void(*)(void))6;
+    GuardedFourCallChain_004928c0();
 }
 
-__declspec(naked) void DispatchSetWalk5_00492730(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   36h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit_00492920
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], 5
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchSetWalk5_00492730(void) {
+    unsigned int v;
+    if (g_data_0054356c) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void(*)(void))v;
+    if (v) return;
+    g_eventQueueCurrent = v;
+    MStackPush3MaskBit_00492920();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void(*)(void))5;
+    GuardedFourCallChain_004928c0();
 }
 
-__declspec(naked) void DispatchSetWalk4_00492780(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   36h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit_00492920
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], 4
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchSetWalk4_00492780(void) {
+    unsigned int v;
+    if (g_data_0054356c) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void(*)(void))v;
+    if (v) return;
+    g_eventQueueCurrent = v;
+    MStackPush3MaskBit_00492920();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void(*)(void))4;
+    GuardedFourCallChain_004928c0();
 }
 
-__declspec(naked) void DispatchSetWalk3_004927d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   36h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit0_004929e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], 3
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchSetWalk3_004927d0(void) {
+    unsigned int v;
+    if (g_data_0054356c) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void(*)(void))v;
+    if (v) return;
+    g_eventQueueCurrent = v;
+    MStackPush3MaskBit0_004929e0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void(*)(void))3;
+    GuardedFourCallChain_004928c0();
 }
 
-__declspec(naked) void DispatchSetWalk2_00492820(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   44h
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   36h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit0_004929e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], 2
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchSetWalk2_00492820(void) {
+    unsigned int v;
+    if (g_data_0054356c) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void(*)(void))v;
+    if (v) return;
+    g_eventQueueCurrent = v;
+    MStackPush3MaskBit0_004929e0();
+    if (g_framePauseFlag) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void(*)(void))2;
+    GuardedFourCallChain_004928c0();
 }
 
 /* @addr 0x00428760 (79b)
