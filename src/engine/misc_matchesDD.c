@@ -256,21 +256,12 @@ extern unsigned int g_state_00f9f84c;
 extern void DualCondCleanupCall_004cc030(void);
 extern void RaiseAbortLocalized_004cc070(int);
 extern void (*g_iat_00520060)(int);
-__declspec(naked) void CmpCallPushIATCall_004c6e60(void) {
-    __asm {
-        cmp     dword ptr [g_state_00f9f84c], 1
-        _emit   75h
-        _emit   05h
-        call    DualCondCleanupCall_004cc030
-        mov     eax, dword ptr [esp + 4]
-        push    eax
-        call    RaiseAbortLocalized_004cc070
-        add     esp, 4
-        push    0xff
-        call    dword ptr [g_iat_00520060]
-        add     esp, 4
-        ret
+void CmpCallPushIATCall_004c6e60(int arg) {
+    if (g_state_00f9f84c == 1) {
+        DualCondCleanupCall_004cc030();
     }
+    RaiseAbortLocalized_004cc070(arg);
+    g_iat_00520060(0xff);
 }
 
 /* @addr 0x0042fea0 (64b)
