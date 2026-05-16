@@ -106,23 +106,15 @@ sub_loop:
  *   testb 1,[g_xformDirtyFlags]; set g_eventQueueChild based on dirty bit.
  */
 extern void MStackPush2ChainSwap_0048f090(void);
-__declspec(naked) void CallPauseScaledByteSet_0043c350(void) {
-    __asm {
-        call    MStackPush2ChainSwap_0048f090
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2fh
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x38]
-        mov     al,  byte  ptr [g_xformDirtyFlags]
-        test    al, 1
-        mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [g_eventQueueChild], 0xffff0000
-        _emit   74h
-        _emit   0ah
-        mov     dword ptr [g_eventQueueChild], 0x10000
-        ret
+void CallPauseScaledByteSet_0043c350(void) {
+    MStackPush2ChainSwap_0048f090();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    g_eventQueueEnd = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_eventQueueChild = 0xffff0000;
+    if ((g_xformDirtyFlags & 1) != 0) {
+        g_eventQueueChild = 0x10000;
     }
 }
 
@@ -132,25 +124,18 @@ __declspec(naked) void CallPauseScaledByteSet_0043c350(void) {
  */
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void ScaledTestPauseStore_00408860(void);
-__declspec(naked) void SpecialInitDirtyJmp_00446000(void) {
-    __asm {
-        mov     eax, 0x0051140c
-        shr     eax, 2
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackBracket1_TreeWalkRecursive2_00406dd0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   18h
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [ecx*4 + 0x5c], edx
-        jmp     ScaledTestPauseStore_00408860
-        ret
+extern unsigned int g_table_0051140c;
+void SpecialInitDirtyJmp_00446000(void) {
+    g_xformEntityIdx = (unsigned int)&g_table_0051140c >> 2;
+    MStackBracket1_TreeWalkRecursive2_00406dd0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if ((g_xformDirtyFlags & 4) != 0) {
+        return;
+    }
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = g_scaledInit_00542044;
+    ScaledTestPauseStore_00408860();
 }
 
 /* @addr 0x00460c60 (61b)
@@ -162,25 +147,21 @@ extern int DualGatedStateYield_0048fc80(void);
 extern unsigned int g_state_004d57ac_ff;
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
-__declspec(naked) void CallPauseCallTestStackPushJmp_00460c60(void) {
-    __asm {
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2eh
-        call    DualGatedStateYield_0048fc80
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_state_004d57ac_ff]
-        mov     dword ptr [g_walkCallback], 2
-        inc     eax
-        mov     dword ptr [g_state_004d57ac_ff], eax
-        mov     dword ptr [eax*4 + 0], OFFSET FiveCallGuardSetTail_0046f6b0
-        jmp     MstackPopScaledChainPlusThunks_00471250
-        ret
+void CallPauseCallTestStackPushJmp_00460c60(void) {
+    unsigned int top;
+    LeaPlus22StoreSelf_0048e4d0();
+    if (g_framePauseFlag != 0) {
+        return;
     }
+    if (DualGatedStateYield_0048fc80() != 0) {
+        return;
+    }
+    top = g_state_004d57ac_ff;
+    g_walkCallback = (void (*)(void))2;
+    top++;
+    g_state_004d57ac_ff = top;
+    *(unsigned int *)(top * 4) = (unsigned int)&FiveCallGuardSetTail_0046f6b0;
+    MstackPopScaledChainPlusThunks_00471250();
 }
 
 /* @addr 0x004c3eb0 (60b)
