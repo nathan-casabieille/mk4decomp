@@ -279,22 +279,14 @@ void CallPauseScaledStoreCopyJmp_00461220(void) {
  */
 extern void func_004bd5a4(void);
 extern void func_004bd584(void);
-__declspec(naked) void DualScaledLitInitJmp_00464800(void) {
-    __asm {
-        mov     eax, 0x0050b10c
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_004bd5a4
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        mov     ecx, 0x00511310
-        shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     func_004bd584
-        ret
-    }
+extern int g_data_0050b10c;
+extern int g_data_00511310;
+void DualScaledLitInitJmp_00464800(void) {
+    g_scaledInit_00542044 = ((unsigned int)&g_data_0050b10c) >> 2;
+    func_004bd5a4();
+    if (g_framePauseFlag != 0) return;
+    g_scaledInit_00542044 = ((unsigned int)&g_data_00511310) >> 2;
+    func_004bd584();
 }
 
 /* @addr 0x00470310 (46b)
