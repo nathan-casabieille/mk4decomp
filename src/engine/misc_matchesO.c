@@ -372,26 +372,14 @@ extern void func_00488282(void);
 extern void func_00490e82(void);
 extern void func_00490c14(void);
 extern void func_00470309(void);
-__declspec(naked) void TripleCallPauseJmp_00470500(void) {
-    __asm {
-        call    func_00488282
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    func_00490e82
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    func_00490c14
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00470309
-        ret
-    }
+void TripleCallPauseJmp_00470500(void) {
+    func_00488282();
+    if (g_framePauseFlag != 0) return;
+    func_00490e82();
+    if (g_framePauseFlag != 0) return;
+    func_00490c14();
+    if (g_framePauseFlag != 0) return;
+    func_00470309();
 }
 
 /* @addr 0x00480ef0 (47b)
