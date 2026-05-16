@@ -219,15 +219,11 @@ __declspec(naked) void ScaledLoadDirtyOrSetJmp_00473450(void) {
  *   jmp     +0x0c
  */
 extern void func_004757a4(void);
-__declspec(naked) void DualScaledLoadStoreJmp_00475790(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     ecx, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     edx, dword ptr [eax*4 + 0x44]
-        mov     dword ptr [g_eventQueueCurrent], edx
-        jmp     func_004757a4
-    }
+void DualScaledLoadStoreJmp_00475790(void) {
+    unsigned int idx = g_eventQueueIdx;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x3c);
+    g_eventQueueCurrent = *(unsigned int *)(idx * 4 + 0x44);
+    func_004757a4();
 }
 
 /* @addr 0x00476e00 (32b)
@@ -275,18 +271,12 @@ __declspec(naked) void ScaledAndFBJmp_00476fe0(void) {
  */
 extern void func_00489fe6(void);
 extern void func_0048d46e(void);
-__declspec(naked) void Set1dCallSet16Jmp_004809b0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0x1d
-        call    func_00489fe6
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0x16
-        jmp     func_0048d46e
-        ret
-    }
+void Set1dCallSet16Jmp_004809b0(void) {
+    g_walkCallback = (void (*)(void))0x1d;
+    func_00489fe6();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x16;
+    func_0048d46e();
 }
 
 /* @addr 0x00480d20 (44b)
@@ -299,17 +289,11 @@ __declspec(naked) void Set1dCallSet16Jmp_004809b0(void) {
  *   mov     [g_eventQueueCurrent], edx
  *   ret
  */
-__declspec(naked) void ScaledChainTwoStores_00480d20(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     edx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_eventQueueCurrent], edx
-        ret
-    }
+void ScaledChainTwoStores_00480d20(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_scaledInit_00542044 = v;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x54);
+    g_eventQueueCurrent = *(unsigned int *)(v * 4 + 0x5c);
 }
 
 /* @addr 0x004838d0 (44b)
