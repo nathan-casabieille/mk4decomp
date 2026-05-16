@@ -391,21 +391,10 @@ extern void func_00489520(void);
 extern void Wrapper_0048a280(void);
 extern int func_004594d0(void *p);
 extern void *g_data_004ef080;
-__declspec(naked) void TwoCallsPushCall_004887d0(void) {
-    __asm {
-        call    func_00489520
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        call    Wrapper_0048a280
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0dh
-        push    OFFSET g_data_004ef080
-        call    func_004594d0
-        add     esp, 4
-        ret
-    }
+void TwoCallsPushCall_004887d0(void) {
+    func_00489520();
+    if (g_framePauseFlag != 0) return;
+    Wrapper_0048a280();
+    if (g_framePauseFlag != 0) return;
+    func_004594d0(&g_data_004ef080);
 }
