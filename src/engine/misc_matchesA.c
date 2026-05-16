@@ -171,14 +171,14 @@ void AddStore_004bf0b0(void) {
  *   pop     esi
  *   ret
  */
-extern int func_004c3be0(int, int);
+extern int Snd3DSourceCleanupFiltered_004c3be0(int, int);
 __declspec(naked) void Loop16Init_004c4370(void) {
     __asm {
         push    esi
         xor     esi, esi
         push    esi
         push    -1
-        call    func_004c3be0
+        call    Snd3DSourceCleanupFiltered_004c3be0
         add     esp, 8
         inc     esi
         cmp     esi, 0x10
@@ -419,10 +419,10 @@ void Push2GlobalsCall_004bdae0(void) {
  *   nop * 11
  *   ret
  */
-extern void func_004bd5b0(void);
+extern void LoadGeoAsset_Default(void);
 __declspec(naked) void TailJmpRetNops_004bd5d0(void) {
     __asm {
-        jmp     func_004bd5b0
+        jmp     LoadGeoAsset_Default
         nop
         nop
         nop
@@ -450,7 +450,7 @@ __declspec(naked) void TailJmpRetNops_004bd5d0(void) {
  *   ret
  */
 extern unsigned int g_state_007af4e0;
-extern void func_004c5800(void *p);
+extern void TestBitClearOrCallTriple_004c5800(void *p);
 __declspec(naked) void TestCallZero_004b1de0(void) {
     __asm {
         mov     eax, dword ptr [g_state_007af4e0]
@@ -458,7 +458,7 @@ __declspec(naked) void TestCallZero_004b1de0(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    func_004c5800
+        call    TestBitClearOrCallTriple_004c5800
         add     esp, 4
         mov     dword ptr [g_state_007af4e0], 0
         ret

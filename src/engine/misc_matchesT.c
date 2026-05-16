@@ -51,7 +51,7 @@ __declspec(naked) void ScaledAndMaskInitJmp_00405a00(void) {
  *   mov     [g_walkCallback], 0    (g_framePauseFlag area)
  *   ret
  */
-extern unsigned int g_pendingNodeType;
+extern u32 g_pendingNodeType;
 __declspec(naked) void ScaledInitWithCounterAndType_0041f1b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -93,7 +93,7 @@ __declspec(naked) void ScaledInitWithCounterAndType_004314f0(void) {
  *   jmp     -0x2e
  *   jmp     -0x18bc23
  */
-extern void func_004283b0(void);
+extern void TripleBranchInstall_004283b0(void);
 extern void func_0042867d(void);
 extern void func_004283b3(void);
 extern void func_0042976e(void);
@@ -102,7 +102,7 @@ __declspec(naked) void MStackPushDualJmp_00428370(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004283b0
+        mov     dword ptr [eax*4 + 0], OFFSET TripleBranchInstall_004283b0
         jmp     func_0042867d
         nop
         nop
@@ -155,7 +155,7 @@ __declspec(naked) void MStackPushSet6Jmp_00438470(void) {
 
 /* @addr 0x004384b0 (53b): same shape value=0 + diff target */
 extern void func_004384e0(void);
-extern void func_0046f250(void);
+extern void StageTransitionCluster_0046f250(void);
 extern void func_0042b200(void);
 __declspec(naked) void MStackPushSet0Jmp_004384b0(void) {
     __asm {
@@ -164,7 +164,7 @@ __declspec(naked) void MStackPushSet0Jmp_004384b0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_004384e0
-        jmp     func_0046f250
+        jmp     StageTransitionCluster_0046f250
         nop
         nop
         nop

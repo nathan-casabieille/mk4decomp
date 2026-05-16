@@ -19,10 +19,10 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0x4c], ecx
  *   ret
  */
-extern void func_004060c0(void);
+extern void BootPhaseGateBracketedInit_004060c0(void);
 __declspec(naked) void CallPauseDirtyScaledStore_00446380(void) {
     __asm {
-        call    func_004060c0
+        call    BootPhaseGateBracketedInit_004060c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -48,11 +48,11 @@ __declspec(naked) void CallPauseDirtyScaledStore_00446380(void) {
  *   jmp     T
  *   ret
  */
-extern void func_00408cb0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
 extern void func_00407310(void);
 __declspec(naked) void CallPauseScaledStoreXJmp_00453750(void) {
     __asm {
-        call    func_00408cb0
+        call    DirtyDoubleDeref_00408cb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -96,7 +96,7 @@ void NotMaskStorePair_0045f440(void) {
  *   jmp     T
  *   ret
  */
-extern unsigned int g_xformScratch2088;
+extern u32 g_xformScratch2088;
 extern void func_0047d960(void);
 __declspec(naked) void DirtyTestScaledCmpJmp_0046ea70(void) {
     __asm {
@@ -356,13 +356,13 @@ __declspec(naked) void ScaledChainTwoStores_00480d20(void) {
  *   jmp     +5
  *   ret
  */
-extern void func_004ab690(void);
+extern void AudioVolumeRescale_004ab690(void);
 extern void func_004874f0(void);
 extern void func_00483906(void);
 __declspec(naked) void Set1f4CallDirtyJmp_004838d0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x01f4
-        call    func_004ab690
+        call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -450,7 +450,7 @@ __declspec(naked) void ScaledTestCallPauseJmp_00487180(void) {
  *   ret
  */
 extern void func_00489520(void);
-extern void func_0048a280(void);
+extern void Wrapper_0048a280(void);
 extern int func_004594d0(void *p);
 extern void *g_data_004ef080;
 __declspec(naked) void TwoCallsPushCall_004887d0(void) {
@@ -460,7 +460,7 @@ __declspec(naked) void TwoCallsPushCall_004887d0(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        call    func_0048a280
+        call    Wrapper_0048a280
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

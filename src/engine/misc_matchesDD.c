@@ -111,8 +111,8 @@ __declspec(naked) void TableSearchAsc_004b6300(void) {
  *     g_state_00ab5200 = 1; *arg = 0;
  *   }
  */
-extern void func_004b5ae0(int, int);
-extern void func_004b5b00(int, int);
+extern void SetHi6_004b5ae0(int, int);
+extern void StoreAtMinus8_004b5b00(int, int);
 extern unsigned int g_state_00ab5200;
 extern int g_data_00ab5204;
 __declspec(naked) void CleanupCallTwice_004bd530(void) {
@@ -125,12 +125,12 @@ __declspec(naked) void CleanupCallTwice_004bd530(void) {
         _emit   2bh
         push    4
         push    eax
-        call    func_004b5ae0
+        call    SetHi6_004b5ae0
         mov     eax, dword ptr [esi]
         add     esp, 8
         push    OFFSET g_data_00ab5204
         push    eax
-        call    func_004b5b00
+        call    StoreAtMinus8_004b5b00
         mov     dword ptr [g_state_00ab5200], 1
         add     esp, 8
         mov     dword ptr [esi], 0
@@ -145,7 +145,7 @@ __declspec(naked) void CleanupCallTwice_004bd530(void) {
  *   into g_scaledInit_00542044; pause-test breaks the loop.
  */
 extern unsigned int g_table_004ab4e78[];
-extern void func_004bd5b0(void);
+extern void LoadGeoAsset_Default(void);
 __declspec(naked) void TableWalkPause_004bd850(void) {
     __asm {
         push    esi
@@ -158,7 +158,7 @@ loop_top:
         _emit   18h
         and     eax, 0x7fffffff
         mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_004bd5b0
+        call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -222,27 +222,27 @@ __declspec(naked) void SetVtable5Slots_004c5790(void) {
 }
 
 /* @addr 0x004c5a90 (50b): wrapper that calls 3 functions on arg */
-extern void func_004c6ff0(int);
-extern int func_004c5ad0(int, int, int);
-extern void func_004c7060(int);
+extern void RangePathIATDispatch_004c6ff0(int);
+extern int FSeekImpl_004c5ad0(int, int, int);
+extern void RangePathIATDispatch_004c7060(int);
 __declspec(naked) void WrapperCallThree_004c5a90(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi
         push    esi
-        call    func_004c6ff0
+        call    RangePathIATDispatch_004c6ff0
         mov     eax, dword ptr [esp + 0x18]
         mov     ecx, dword ptr [esp + 0x14]
         add     esp, 4
         push    eax
         push    ecx
         push    esi
-        call    func_004c5ad0
+        call    FSeekImpl_004c5ad0
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    func_004c7060
+        call    RangePathIATDispatch_004c7060
         add     esp, 4
         mov     eax, edi
         pop     edi
@@ -256,18 +256,18 @@ __declspec(naked) void WrapperCallThree_004c5a90(void) {
  *   call IAT [g_iat_00520060](0xff); ret.
  */
 extern unsigned int g_state_00f9f84c;
-extern void func_004cc030(void);
-extern void func_004cc070(int);
+extern void DualCondCleanupCall_004cc030(void);
+extern void RaiseAbortLocalized_004cc070(int);
 extern void (*g_iat_00520060)(int);
 __declspec(naked) void CmpCallPushIATCall_004c6e60(void) {
     __asm {
         cmp     dword ptr [g_state_00f9f84c], 1
         _emit   75h
         _emit   05h
-        call    func_004cc030
+        call    DualCondCleanupCall_004cc030
         mov     eax, dword ptr [esp + 4]
         push    eax
-        call    func_004cc070
+        call    RaiseAbortLocalized_004cc070
         add     esp, 4
         push    0xff
         call    dword ptr [g_iat_00520060]
@@ -284,14 +284,14 @@ __declspec(naked) void CmpCallPushIATCall_004c6e60(void) {
  */
 extern unsigned int g_state_0053815c;
 extern unsigned int g_state_00538158_dd;
-extern unsigned int g_eventQueueWorkType;
-extern void func_0042fee0(void);
+extern u32 g_eventQueueWorkType;
+extern void MStackSignedMod_0042fee0(void);
 __declspec(naked) void LoadSetCallPauseStoreJmp_0042fea0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053815c]
         mov     dword ptr [g_eventQueueWorkType], 0x4ccc
         mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_0042fee0
+        call    MStackSignedMod_0042fee0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -300,7 +300,7 @@ __declspec(naked) void LoadSetCallPauseStoreJmp_0042fea0(void) {
         mov     edx, dword ptr [g_state_00538158_dd]
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_0042fee0
+        jmp     MStackSignedMod_0042fee0
         ret
     }
 }

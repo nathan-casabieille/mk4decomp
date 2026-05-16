@@ -19,8 +19,8 @@
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 
-extern void func_0041f830(void);
-extern void func_0048e710(int);
+extern void CallSetPause_0041f830(void);
+extern void ArgSarAddDerefJmp_0048e710(int);
 
 /* @addr 0x0048e6b0 */
 __declspec(naked) void StateInstallOrForward_0048e6b0(void) {
@@ -30,10 +30,10 @@ __declspec(naked) void StateInstallOrForward_0048e6b0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_0041f830
+        jmp     CallSetPause_0041f830
         mov     eax, dword ptr [esp + 4]
         push    eax
-        call    func_0048e710
+        call    ArgSarAddDerefJmp_0048e710
         add     esp, 4
         ret
     }
@@ -47,10 +47,10 @@ __declspec(naked) void StateInstallOrForward_0048e6e0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_0041f830
+        jmp     CallSetPause_0041f830
         mov     eax, dword ptr [esp + 4]
         push    eax
-        call    func_0048e710
+        call    ArgSarAddDerefJmp_0048e710
         add     esp, 4
         ret
     }

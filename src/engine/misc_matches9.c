@@ -145,17 +145,17 @@ __declspec(naked) void LoadCmpAddrJmp_00493ed0(void) {
  *   neg     eax
  *   ret
  */
-extern int func_004a1ce0(void);
-extern int func_004a1cf0(void);
+extern int MovsxAnd4Shr_004a1ce0(void);
+extern int MovsxAnd20Shr5_004a1cf0(void);
 __declspec(naked) void IsNonzeroBoolFlagged_004a1d00(void) {
     __asm {
-        call    func_004a1ce0
+        call    MovsxAnd4Shr_004a1ce0
         test    eax, eax
         _emit   74h
         _emit   06h
         mov     eax, 1
         ret
-        call    func_004a1cf0
+        call    MovsxAnd20Shr5_004a1cf0
         neg     eax
         sbb     eax, eax
         neg     eax

@@ -26,12 +26,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_pendingNodeType;     /* 0x0054204c */
-extern unsigned int g_xformEntityIdx;      /* 0x00542048 */
+extern u32 g_pendingNodeType;     /* 0x0054204c */
+extern packed_ptr g_xformEntityIdx;      /* 0x00542048 */
 
-extern void func_00447a90(void);
-extern void func_00474290(void);
-extern void func_00474050(void);
+extern void PendingMatch_00447a90(void);
+extern void DualPushSet7dCallPop_00474290(void);
+extern void DoubleStackPushAndJmp7d_00474050(void);
 
 #define DC249_BODY(WORKER_FN)                                                  \
     __asm {                                                                    \
@@ -60,7 +60,7 @@ extern void func_00474050(void);
         __asm inc     eax                                                      \
         __asm mov     dword ptr [g_matrixStackTop], eax                        \
         __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm call    func_00447a90                                            \
+        __asm call    PendingMatch_00447a90                                            \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
         __asm test    eax, eax                                                 \
         __asm _emit   75h                                                      \
@@ -95,7 +95,7 @@ extern void func_00474050(void);
     }
 
 /* @addr 0x00447890 */
-__declspec(naked) void DispatcherComplex249_00447890(void) { DC249_BODY(func_00474290) }
+__declspec(naked) void DispatcherComplex249_00447890(void) { DC249_BODY(DualPushSet7dCallPop_00474290) }
 
 /* @addr 0x00447990 */
-__declspec(naked) void DispatcherComplex249_00447990(void) { DC249_BODY(func_00474050) }
+__declspec(naked) void DispatcherComplex249_00447990(void) { DC249_BODY(DoubleStackPushAndJmp7d_00474050) }

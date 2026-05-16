@@ -6,11 +6,11 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_eventQueueEnd;
+extern packed_ptr g_xformEntityIdx;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueNotMask;
+extern u32 g_eventQueueIdx;
+extern u32 g_eventQueueEnd;
 
 /* @addr 0x0049d2d0 (52b)
  *   triple copy from a[0..8] into b[4..0xc] with each pass
@@ -82,7 +82,7 @@ __declspec(naked) void ArgScaledTestStore_00494140(void) {
  *   arg sar 2 → g_eventQueueEnd; +3 → g_eventQueueTotal;
  *   load [eax*4 + 0]; store at [baseSel*4 + 0x6c]; clear g_eventQueueTotal; jmp T.
  */
-extern void func_00494a60(void);
+extern void MoveDispatch4StateFsm_00494a60(void);
 __declspec(naked) void ArgScaledChain_004949b0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -94,7 +94,7 @@ __declspec(naked) void ArgScaledChain_004949b0(void) {
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [ecx*4 + 0x6c], eax
         mov     dword ptr [g_eventQueueTotal], 0
-        jmp     func_00494a60
+        jmp     MoveDispatch4StateFsm_00494a60
     }
 }
 
@@ -103,7 +103,7 @@ __declspec(naked) void ArgScaledChain_004949b0(void) {
  *   set [eax+0x6c]=0; reload walk into ecx; set [eax+0x70]=ecx; etc. for 0x74, 0x4c
  *   then jmp.
  */
-extern void func_00490780(void);
+extern void ZeroThreeSlots_00490780(void);
 __declspec(naked) void ScaledZeroFour_00490740(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -117,7 +117,7 @@ __declspec(naked) void ScaledZeroFour_00490740(void) {
         mov     dword ptr [eax + 0x74], edx
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x4c], ecx
-        jmp     func_00490780
+        jmp     ZeroThreeSlots_00490780
     }
 }
 
@@ -146,16 +146,16 @@ __declspec(naked) void ScaledChainDouble_004911f0(void) {
  *   call F2; jmp T2.
  */
 extern unsigned int g_state_0052aac4_aa;
-extern void func_004282c0(void);
+extern void DualTestDirtyToggle_004282c0(void);
 extern void func_0041f780_aa(void);
-extern void func_00491920(void);
-extern void func_004919c0(void);
+extern void IncCapped3e7_00491920(void);
+extern void RoundStartCluster_004919c0(void);
 __declspec(naked) void Set5CallPauseTestByteJmpCall_00491950(void) {
     __asm {
         mov     eax, 5
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_0052aac4_aa], eax
-        call    func_004282c0
+        call    DualTestDirtyToggle_004282c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -164,8 +164,8 @@ __declspec(naked) void Set5CallPauseTestByteJmpCall_00491950(void) {
         _emit   75h
         _emit   05h
         jmp     func_0041f780_aa
-        call    func_00491920
-        jmp     func_004919c0
+        call    IncCapped3e7_00491920
+        jmp     RoundStartCluster_004919c0
         ret
     }
 }
@@ -175,16 +175,16 @@ __declspec(naked) void Set5CallPauseTestByteJmpCall_00491950(void) {
  *                  load dirty flag; bl=4; if (dirty & bl) break; } while (1)
  *   pop ebx; ret
  */
-extern void func_004049d0(int);
-extern void func_00404a00(int);
+extern void SaveCallRestore_004049d0(int);
+extern void SaveCallRestoreOrXor_00404a00(int);
 __declspec(naked) void Push1eCallTestDirtyLoop_004923b0(void) {
     __asm {
         push    ebx
         push    0x1e
-        call    func_004049d0
+        call    SaveCallRestore_004049d0
         add     esp, 4
         push    0x1e
-        call    func_00404a00
+        call    SaveCallRestoreOrXor_00404a00
         mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         add     esp, 4
@@ -192,10 +192,10 @@ __declspec(naked) void Push1eCallTestDirtyLoop_004923b0(void) {
         _emit   75h
         _emit   1dh
         push    0x1e
-        call    func_004049d0
+        call    SaveCallRestore_004049d0
         add     esp, 4
         push    0x1e
-        call    func_00404a00
+        call    SaveCallRestoreOrXor_00404a00
         mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         test    al, bl
@@ -240,12 +240,12 @@ __declspec(naked) void ScaledLoadCmpStoreXfm_0048f2a0(void) {
  *   set 0xa → walk; call F; pause → ret;
  *   load g_fightGroupHead, g_state_00538158; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
-extern void func_004937b0(void);
+extern void SpecialAnimBuilder_004937b0(void);
 extern void func_00489ff0_aa(void);
 __declspec(naked) void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x0a
-        call    func_004937b0
+        call    SpecialAnimBuilder_004937b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

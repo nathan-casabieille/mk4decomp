@@ -6,9 +6,9 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x004390b0 (56b)
  *   mov     eax, [g_state_00535ddc]
@@ -174,7 +174,7 @@ __declspec(naked) void DirtyToggleScaledTest_0043a630(void) {
 }
 
 /* MStackPushSetImm + jmp variants — 4 stubs */
-extern unsigned int g_matrixStackTop;
+extern int g_matrixStackTop;
 extern void func_0046cb00(void);
 extern void func_0046cb20(void);
 extern void func_0046cb40(void);
@@ -182,8 +182,8 @@ extern void func_004611f4(void);
 extern void func_004700f4(void);
 extern void func_0046f6e0(void);
 extern void func_00472080(void);
-extern void func_0048e7d0(void);
-extern void func_0045fd30(void);
+extern void WalkCallbackSetClearDirty_0048e7d0(void);
+extern void SelfInstallPhaseDispatch_0045fd30(void);
 
 /* @addr 0x0045fcf0 (52b)
  *   call    F
@@ -200,7 +200,7 @@ extern void func_0045fd30(void);
  */
 __declspec(naked) void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
     __asm {
-        call    func_0048e7d0
+        call    WalkCallbackSetClearDirty_0048e7d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -209,17 +209,17 @@ __declspec(naked) void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
         mov     dword ptr [g_walkCallback], 0
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_0045fd30
+        mov     dword ptr [eax*4 + 0], OFFSET SelfInstallPhaseDispatch_0045fd30
         jmp     func_004611f4
         ret
     }
 }
-extern void func_0048e7d0(void);
-extern void func_0045fd30(void);
+extern void WalkCallbackSetClearDirty_0048e7d0(void);
+extern void SelfInstallPhaseDispatch_0045fd30(void);
 
 /* @addr 0x0045ffc0 (52b): same shape, value=9 */
 extern void func_0048e7d0_b(void);
-extern void func_00460000(void);
+extern void SelfInstallPhaseDispatch_00460000(void);
 __declspec(naked) void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
     __asm {
         call    func_0048e7d0_b
@@ -231,7 +231,7 @@ __declspec(naked) void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
         mov     dword ptr [g_walkCallback], 9
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00460000
+        mov     dword ptr [eax*4 + 0], OFFSET SelfInstallPhaseDispatch_00460000
         jmp     func_004700f4
         ret
     }
@@ -239,7 +239,7 @@ __declspec(naked) void CallPauseMStackPushSet9Jmp_0045ffc0(void) {
 
 /* @addr 0x00460d00 (52b): same shape, value=3, OFFSET 0x00470480 */
 extern void func_0048e4ce(void);
-extern void func_00470480(void);
+extern void CjInstallSelfRouter_00470480(void);
 __declspec(naked) void CallPauseMStackPushSet3Jmp_00460d00(void) {
     __asm {
         call    func_0048e4ce
@@ -251,7 +251,7 @@ __declspec(naked) void CallPauseMStackPushSet3Jmp_00460d00(void) {
         mov     dword ptr [g_walkCallback], 3
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00470480
+        mov     dword ptr [eax*4 + 0], OFFSET CjInstallSelfRouter_00470480
         jmp     func_0046f6e0
         ret
     }
@@ -270,7 +270,7 @@ __declspec(naked) void CallPauseMStackPushSet4Jmp_00460d40(void) {
         mov     dword ptr [g_walkCallback], 4
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00470480
+        mov     dword ptr [eax*4 + 0], OFFSET CjInstallSelfRouter_00470480
         jmp     func_0046f6e0
         ret
     }
@@ -342,7 +342,7 @@ __declspec(naked) void StoreCallPauseCmpDirty_00464240(void) {
  */
 extern int func_004594ec(void *);
 extern void *g_data_004eafb8;
-extern void func_0048a350(void);
+extern void Wrapper_0048a350(void);
 extern void func_0046b687(void);
 __declspec(naked) void DualEntryPushCall_0046b630(void) {
     __asm {
@@ -356,7 +356,7 @@ __declspec(naked) void DualEntryPushCall_0046b630(void) {
         mov     eax, 0x2010
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        call    func_0048a350
+        call    Wrapper_0048a350
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -415,7 +415,7 @@ __declspec(naked) void CallPauseTripleScaledJmp_0046c520(void) {
  *   ret
  */
 extern void func_00470450(void);
-extern void func_0046e2e0(void);
+extern void PendingMatch_0046e2e0(void);
 extern void func_0042b594(void);
 extern void func_0046e2b3(void);
 __declspec(naked) void CallPauseDirtyMStackPushFn_0046e2a0(void) {
@@ -431,7 +431,7 @@ __declspec(naked) void CallPauseDirtyMStackPushFn_0046e2a0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_0046e2e0
+        mov     dword ptr [eax*4 + 0], OFFSET PendingMatch_0046e2e0
         jmp     func_0042b594
         jmp     func_0046e2b3
         ret
@@ -452,11 +452,11 @@ __declspec(naked) void CallPauseDirtyMStackPushFn_0046e2a0(void) {
  *   mov     [g_eventQueueIdx], eax
  *   ret
  */
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_player2NodeIdx;
-extern unsigned int g_gtPlayerProbe1;
-extern unsigned int g_gtPlayerProbe2;
-extern unsigned int g_fightGroupHead;
+extern packed_ptr g_player1NodeIdx;
+extern packed_ptr g_player2NodeIdx;
+extern u32 g_gtPlayerProbe1;
+extern u32 g_gtPlayerProbe2;
+extern packed_ptr g_fightGroupHead;
 __declspec(naked) void CmpP1GTSetup_00470980(void) {
     __asm {
         mov     ecx, dword ptr [g_gtPlayerProbe2]

@@ -14,19 +14,19 @@
 
 extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
-extern void func_004a0130(void);
-extern void func_004a0440(void);
+extern void TripleTestInstallJmp_004a0130(void);
+extern void TripleTestInstallJmp_004a0440(void);
 
 /* @addr 0x004a0110 */
 void SetOnePairJmp_004a0110(void) {
     g_walkCallback = (void (*)(void))1;
     g_active_0053a408 = 1;
-    func_004a0130();
+    TripleTestInstallJmp_004a0130();
 }
 
 /* @addr 0x004a0420 */
 void SetOnePairJmp_004a0420(void) {
     g_walkCallback = (void (*)(void))1;
     g_active_00537e88 = 1;
-    func_004a0440();
+    TripleTestInstallJmp_004a0440();
 }

@@ -24,7 +24,7 @@
 
 extern unsigned int g_eq_00542098;
 
-extern void func_00474f20(void);
+extern void StateSwitchMStackPop_00474f20(void);
 
 /* @addr 0x00474e80 */
 __declspec(naked) void MStackPushSwapEqJmp_00474e80(void) {
@@ -43,7 +43,7 @@ __declspec(naked) void MStackPushSwapEqJmp_00474e80(void) {
         mov     dword ptr [g_walkCallback], eax
         sete    cl
         mov     dword ptr [g_eq_00542098], ecx
-        jmp     func_00474f20
+        jmp     StateSwitchMStackPop_00474f20
     }
 }
 
@@ -64,6 +64,6 @@ __declspec(naked) void MStackPushSwapEqJmp_00474ed0(void) {
         mov     dword ptr [g_walkCallback], eax
         sete    cl
         mov     dword ptr [g_eq_00542098], ecx
-        jmp     func_00474f20
+        jmp     StateSwitchMStackPop_00474f20
     }
 }

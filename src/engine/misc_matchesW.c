@@ -6,8 +6,8 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_xformEntityIdx;
+extern u32 g_eventQueueWorkType;
+extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00438650 (58b)
  *   mov     eax, [g_eventQueueChild]
@@ -269,7 +269,7 @@ __declspec(naked) void DualPushCallPause_00482eb0(void) {
  *   ret
  */
 extern void func_00484f50(void);
-extern void func_00484b40(void);
+extern void GuardedDispatch4_00484b40(void);
 extern void func_0042b594(void);
 extern void func_00484b13(void);
 __declspec(naked) void CallPauseDirtyMStackPush484b40_00484b00(void) {
@@ -285,7 +285,7 @@ __declspec(naked) void CallPauseDirtyMStackPush484b40_00484b00(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00484b40
+        mov     dword ptr [eax*4 + 0], OFFSET GuardedDispatch4_00484b40
         jmp     func_0042b594
         jmp     func_00484b13
         ret
@@ -350,8 +350,8 @@ __declspec(naked) void CmpEax1OrSetDirty_00488e90(void) {
  *   mov     [g_scaledInit_00542044], eax
  *   ret
  */
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_fightGroupHead;
+extern packed_ptr g_player1NodeIdx;
+extern packed_ptr g_fightGroupHead;
 __declspec(naked) void ArgScaledLoadCmpP1_0048e550(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

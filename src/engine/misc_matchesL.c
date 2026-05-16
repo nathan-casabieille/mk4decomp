@@ -53,7 +53,7 @@ __declspec(naked) void Set43DualCallJmp_0049a620(void) {
  *   mov     [eax + 0x0c], ecx
  *   ret
  */
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 __declspec(naked) void ScaledStoreThree_0049d310(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -236,7 +236,7 @@ __declspec(naked) void TableLookupCallJmp_004aa990(void) {
 
 /* @addr 0x004aa9c0 (41b): same shape with table=0x004f3f90 */
 extern void func_00407420(void);
-extern void func_00409420(void);
+extern void MStackPush2GatedTail_00409420(void);
 __declspec(naked) void TableLookupCallJmp_004aa9c0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -248,7 +248,7 @@ __declspec(naked) void TableLookupCallJmp_004aa9c0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_00409420
+        jmp     MStackPush2GatedTail_00409420
         ret
     }
 }

@@ -18,9 +18,9 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
-extern void func_0049cbb0(void);
-extern void func_0048fd60(void);
-extern void func_00491080(void);
+extern void Thunk_0049cbb0(void);
+extern void MStackPush4IndirectCall_0048fd60(void);
+extern void DualScaledStoreZero_00491080(void);
 
 /* @addr 0x0048e680 */
 void IterLoad_0048e680(int arg) {
@@ -29,7 +29,7 @@ void IterLoad_0048e680(int arg) {
     g_scaledInit_00542048 = *(unsigned int *)(p * 4);
     p++;
     g_eventQueueTotal = p;
-    func_0049cbb0();
+    Thunk_0049cbb0();
 }
 
 /* @addr 0x0048fd30 */
@@ -39,7 +39,7 @@ void IterLoad_0048fd30(int arg) {
     g_scaledInit_00542044 = *(unsigned int *)(p * 4);
     p++;
     g_eventQueueTotal = p;
-    func_0048fd60();
+    MStackPush4IndirectCall_0048fd60();
 }
 
 /* @addr 0x00491050 */
@@ -49,5 +49,5 @@ void IterLoad_00491050(int arg) {
     g_scaledInit_00542048 = *(unsigned int *)(p * 4);
     p++;
     g_eventQueueTotal = p;
-    func_00491080();
+    DualScaledStoreZero_00491080();
 }

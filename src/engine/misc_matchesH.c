@@ -123,12 +123,12 @@ __declspec(naked) void DualCallPauseDirtyJmp_00435f20(void) {
  *   jmp     +5
  *   ret
  */
-extern void func_00438b90(void);
+extern void PushPop84TripleCall_00438b90(void);
 extern void func_00438a04(void);
 extern void func_00438a09(void);
 __declspec(naked) void CmpJmpConstStoreJmp_004389e0(void) {
     __asm {
-        call    func_00438b90
+        call    PushPop84TripleCall_00438b90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -180,10 +180,10 @@ __declspec(naked) void CallPauseDirtyConstJmp_00438ca0(void) {
  *   mov     [g_walkCallback], 5
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET func_0043aab0
+ *   mov     [eax*4 + 0], OFFSET StateMachine4ArmCascade_0043aab0
  *   jmp     T
  */
-extern void func_0043aab0(void);
+extern void StateMachine4ArmCascade_0043aab0(void);
 extern void func_00440230(void);
 __declspec(naked) void MStackPush5Func_0043aa80(void) {
     __asm {
@@ -191,7 +191,7 @@ __declspec(naked) void MStackPush5Func_0043aa80(void) {
         mov     dword ptr [g_walkCallback], 5
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_0043aab0
+        mov     dword ptr [eax*4 + 0], OFFSET StateMachine4ArmCascade_0043aab0
         jmp     func_00440230
     }
 }
@@ -377,12 +377,12 @@ __declspec(naked) void CmpP1ScaledInit_004709c0(void) {
  *   jmp     +0x0f
  *   ret
  */
-extern void func_0048f350(void);
+extern void DirtyToggleByGate_0048f350(void);
 extern void func_00470f78(void);
 extern void func_00470f4d(void);
 __declspec(naked) void CallDirty4DualJmp_00470f30(void) {
     __asm {
-        call    func_0048f350
+        call    DirtyToggleByGate_0048f350
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

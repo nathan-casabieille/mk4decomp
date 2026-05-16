@@ -17,8 +17,8 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
 
-extern void func_00438060(void);
-extern void func_0043aa80(void);
+extern void InstallSelfWithStateInit_00438060(void);
+extern void MStackPush5Func_0043aa80(void);
 
 /* @addr 0x00438440 */
 void ScaledPopSaveJmp_00438440(void) {
@@ -27,7 +27,7 @@ void ScaledPopSaveJmp_00438440(void) {
     g_scaledInit_00542044 = n;
     g_scaledInit_00542048 = *(unsigned int *)(n * 4);
     *(unsigned int *)(idx * 4 + 4) = n;
-    func_00438060();
+    InstallSelfWithStateInit_00438060();
 }
 
 /* @addr 0x0043bb20 */
@@ -37,5 +37,5 @@ void ScaledPopSaveJmp_0043bb20(void) {
     g_scaledInit_00542044 = n;
     g_walkCallback = (void (*)(void))*(unsigned int *)(n * 4);
     *(unsigned int *)(idx * 4 + 4) = n;
-    func_0043aa80();
+    MStackPush5Func_0043aa80();
 }

@@ -21,14 +21,14 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-extern void func_00428080(void);
+extern void TripleCallCountdown_00428080(void);
 __declspec(naked) void SaveCallRestore_004049d0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi
         mov     esi, dword ptr [g_walkCallback]
         mov     dword ptr [g_walkCallback], eax
-        call    func_00428080
+        call    TripleCallCountdown_00428080
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

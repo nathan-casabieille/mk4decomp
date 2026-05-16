@@ -35,7 +35,7 @@
 
 extern void func_00405A40(void);
 extern void func_00405CB8(void);
-extern void func_00406740(void);
+extern void MStackCall_00406740(void);
 extern void func_00405E68(void);
 
 /* @addr 0x00405b30 */
@@ -78,7 +78,7 @@ __declspec(naked) void MStackPushCallCallPop_00405dd0(void) {
         test    eax, eax
         _emit   75h
         _emit   26h
-        call    func_00406740
+        call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

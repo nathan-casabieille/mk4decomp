@@ -29,9 +29,9 @@ extern unsigned int g_state_00537e94;
 
 extern void *g_lit_004ed7e0;
 extern void *g_lit_004ed7f0;
-extern void func_0048ff30(void);
-extern int  func_004908f0(void *p);
-extern void func_0047ff80(void);
+extern void Wrapper_0048ff30(void);
+extern int  TripleScaledChainStore_004908f0(void *p);
+extern void StageEventStartCluster_0047ff80(void);
 
 /* @addr 0x0047fec0 */
 __declspec(naked) void FourConstCallLitCallJmp_0047fec0(void) {
@@ -41,19 +41,19 @@ __declspec(naked) void FourConstCallLitCallJmp_0047fec0(void) {
         mov     dword ptr [g_state_00537e94], 5
         mov     dword ptr [g_walkCallback], 0x00008000
         mov     dword ptr [g_eventQueueCurrent], 0
-        call    func_0048ff30
+        call    Wrapper_0048ff30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
         push    OFFSET g_lit_004ed7e0
-        call    func_004908f0
+        call    TripleScaledChainStore_004908f0
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_0047ff80
+        jmp     StageEventStartCluster_0047ff80
         ret
     }
 }
@@ -66,19 +66,19 @@ __declspec(naked) void FourConstCallLitCallJmp_0047ff20(void) {
         mov     dword ptr [g_state_00537e94], 5
         mov     dword ptr [g_walkCallback], 0x00008000
         mov     dword ptr [g_eventQueueCurrent], 0
-        call    func_0048ff30
+        call    Wrapper_0048ff30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1bh
         push    OFFSET g_lit_004ed7f0
-        call    func_004908f0
+        call    TripleScaledChainStore_004908f0
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_0047ff80
+        jmp     StageEventStartCluster_0047ff80
         ret
     }
 }

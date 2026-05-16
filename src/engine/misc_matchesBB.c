@@ -6,8 +6,8 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_fightGroupHead;
+extern u32 g_eventQueueEnd;
+extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ac040 (54b): triple cross-store at offsets 0x54/0x58/0x5c */
 __declspec(naked) void ScaledTripleCopy54_004ac040(void) {
@@ -34,19 +34,19 @@ __declspec(naked) void ScaledTripleCopy54_004ac040(void) {
  *   push 0x15; push lit; call F3; mov ax,[m16]; add esp 8; push eax;
  *   call F4; add esp 4; jmp T; ret.
  */
-extern void func_00404a50(int);
-extern void func_0049e7e0(void);
+extern void TripleStageRollback_00404a50(int);
+extern void RoundWinTransition_0049e7e0(void);
 extern int func_0049cb40_bb(void *, int);
-extern int func_004be690(int);
+extern int TaggedSceneDispatch_004be690(int);
 extern void *g_data_004a0060;
 extern unsigned short g_word_004e2860;
-extern void func_004a1320(void);
+extern void InstallSelf3WaySubDec_004a1320(void);
 __declspec(naked) void PushCallPauseStorePushDispatch_004a12e0(void) {
     __asm {
         push    0x22f
-        call    func_00404a50
+        call    TripleStageRollback_00404a50
         add     esp, 4
-        call    func_0049e7e0
+        call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -57,9 +57,9 @@ __declspec(naked) void PushCallPauseStorePushDispatch_004a12e0(void) {
         mov     ax, word ptr [g_word_004e2860]
         add     esp, 8
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
-        jmp     func_004a1320
+        jmp     InstallSelf3WaySubDec_004a1320
         ret
     }
 }
@@ -69,8 +69,8 @@ __declspec(naked) void PushCallPauseStorePushDispatch_004a12e0(void) {
  *   set [eax*4 + 0x30]=0x25b; reload fightGroupHead → ecx;
  *   mov eax,0xfffb0000; store walk and [ecx*4 + 0x6c]=eax; jmp T.
  */
-extern unsigned int g_eventQueueWorkType;
-extern void func_004a17d0(void);
+extern u32 g_eventQueueWorkType;
+extern void AudioInstall3StateSubXform_004a17d0(void);
 __declspec(naked) void SetWorkType02CountFFB_004a1790(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -80,7 +80,7 @@ __declspec(naked) void SetWorkType02CountFFB_004a1790(void) {
         mov     eax, 0xfffb0000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     func_004a17d0
+        jmp     AudioInstall3StateSubXform_004a17d0
     }
 }
 
@@ -91,7 +91,7 @@ __declspec(naked) void SetWorkType02CountFFB_004a1790(void) {
  */
 extern void func_00404a00_bb(int);
 extern void func_0041f780_bb(void);
-extern void func_004a1a50(void);
+extern void InstallSelfPauseGate_004a1a50(void);
 __declspec(naked) void PushCallTestByte4Jmp_004a1a10(void) {
     __asm {
         push    0x25a
@@ -106,7 +106,7 @@ __declspec(naked) void PushCallTestByte4Jmp_004a1a10(void) {
         mov     eax, 0xfffb0000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     func_004a1a50
+        jmp     InstallSelfPauseGate_004a1a50
     }
 }
 
@@ -151,7 +151,7 @@ loop_start:
  *   stores [ecx*4 + 0] into g_scaledInit; calls 0x406790; loop.
  */
 extern signed char g_table_004f3260[];
-extern void func_00406790(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
 __declspec(naked) void TableWalkChainCall_004a30f0(void) {
     __asm {
         push    esi
@@ -162,7 +162,7 @@ loop_start2:
         add     ecx, eax
         mov     edx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], edx
-        call    func_00406790
+        call    MStackPush2ChainLLInsert_00406790
         add     esi, 0x24
         cmp     esi, 0x004f33c8
         _emit   72h
@@ -178,12 +178,12 @@ loop_start2:
  *   load walk; and 0xffff; imul g_state_00538150; shr 16; store walk.
  */
 extern unsigned int g_state_00538150;
-extern void func_004ab600(void);
+extern void DualAddSar_004ab600(void);
 __declspec(naked) void StorePauseImulShr16_004ab630(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_state_00538150], eax
-        call    func_004ab600
+        call    DualAddSar_004ab600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -203,7 +203,7 @@ __declspec(naked) void StorePauseImulShr16_004ab630(void) {
  *   load g_state_00538130 - walk → walk.
  */
 extern unsigned int g_state_00538130;
-extern void func_004ab700(void);
+extern void AudioMixerStep_004ab700(void);
 __declspec(naked) void StoreDoubleNegPauseSubStore_004ab750(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -215,7 +215,7 @@ __declspec(naked) void StoreDoubleNegPauseSubStore_004ab750(void) {
         _emit   07h
         neg     eax
         mov     dword ptr [g_walkCallback], eax
-        call    func_004ab700
+        call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -238,7 +238,7 @@ extern unsigned int g_state_0058c7ec;
 extern unsigned int g_state_0058c7b4;
 extern unsigned int g_state_0058c7b0;
 extern unsigned int g_state_0058c7dc;
-extern void func_004adc20(void);
+extern void Renderer2_EndScene_D3D(void);
 __declspec(naked) void QuadTestVtableCall_004ae950(void) {
     __asm {
         mov     eax, dword ptr [g_state_0058c7e0]
@@ -249,7 +249,7 @@ __declspec(naked) void QuadTestVtableCall_004ae950(void) {
         test    eax, eax
         _emit   75h
         _emit   26h
-        call    func_004adc20
+        call    Renderer2_EndScene_D3D
         mov     ecx, dword ptr [g_state_0058c7b4]
         test    ecx, ecx
         _emit   74h

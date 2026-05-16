@@ -12,10 +12,10 @@ extern unsigned int g_scaledInit_00542044;
  *   ((x * 13 << 4) + x) << 8 - x → effectively x * (13<<12 - 1) etc.
  *   adds 0x269ec3, stores back, returns shr 0x10 & 0x7fff.
  */
-extern void *func_004c9df0(void);
+extern void *PendingMatch_004c9df0(void);
 __declspec(naked) void CallShiftLea_004c6510(void) {
     __asm {
-        call    func_004c9df0
+        call    PendingMatch_004c9df0
         mov     ecx, dword ptr [eax + 0x14]
         lea     edx, [ecx + ecx*2]
         lea     edx, [ecx + edx*4]
@@ -38,7 +38,7 @@ __declspec(naked) void CallShiftLea_004c6510(void) {
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
 extern void (*g_iat_0051ffd8)(void);
-extern int func_004c6940(void *, void *);
+extern int IterFnPtrs_004c6940(void *, void *);
 extern void *g_data_004d5000;
 extern void *g_data_004d5018;
 extern void *g_data_004d501c;
@@ -52,11 +52,11 @@ __declspec(naked) void CallIfPushPushCall_004c67f0(void) {
         call    eax
         push    OFFSET g_data_004d5024
         push    OFFSET g_data_004d501c
-        call    func_004c6940
+        call    IterFnPtrs_004c6940
         add     esp, 8
         push    OFFSET g_data_004d5018
         push    OFFSET g_data_004d5000
-        call    func_004c6940
+        call    IterFnPtrs_004c6940
         add     esp, 8
         ret
     }
@@ -67,14 +67,14 @@ __declspec(naked) void CallIfPushPushCall_004c67f0(void) {
  *   if (arg.flags & 0x4000) return arg.field10 ? -1 : 0;
  *   else return 0.
  */
-extern int func_004c69a0(int);
-extern int func_004cb700(int);
+extern int FFlushImpl_004c69a0(int);
+extern int FileTableClose_004cb700(int);
 __declspec(naked) void CallTestPushSubCall_004c6960(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    esi
-        call    func_004c69a0
+        call    FFlushImpl_004c69a0
         add     esp, 4
         test    eax, eax
         _emit   74h
@@ -88,7 +88,7 @@ __declspec(naked) void CallTestPushSubCall_004c6960(void) {
         _emit   12h
         mov     eax, dword ptr [esi + 0x10]
         push    eax
-        call    func_004cb700
+        call    FileTableClose_004cb700
         add     esp, 4
         neg     eax
         sbb     eax, eax
@@ -134,7 +134,7 @@ __declspec(naked) void CmpCallPushIATCall2_004c6e90(void) {
 extern void * (*g_iat_004d216c)(int, int, int);
 extern void (*g_iat_004d2158)(void *);
 extern void * g_state_00fa0ee4;
-extern int func_004c70d0(void);
+extern int VirtualHeapAlloc_004c70d0(void);
 __declspec(naked) void CallIATIfThenCall_004c6ee0(void) {
     __asm {
         push    0
@@ -146,7 +146,7 @@ __declspec(naked) void CallIATIfThenCall_004c6ee0(void) {
         _emit   75h
         _emit   01h
         ret
-        call    func_004c70d0
+        call    VirtualHeapAlloc_004c70d0
         test    eax, eax
         _emit   75h
         _emit   0fh
@@ -164,7 +164,7 @@ __declspec(naked) void CallIATIfThenCall_004c6ee0(void) {
  *   loop: call 0x4c82b0(arg1, arg2, arg3); decrement count;
  *   break if [arg3] == -1 or count == 0. Calls with raw 3 args.
  */
-extern void func_004c82b0(int, int, int);
+extern void WriteCharBuffered_004c82b0(int, int, int);
 __declspec(naked) void PaddedLoopFunc_004c8300(void) {
     __asm {
         push    ebx
@@ -184,7 +184,7 @@ loop_top:
         push    esi
         push    edi
         push    ebx
-        call    func_004c82b0
+        call    WriteCharBuffered_004c82b0
         mov     eax, dword ptr [esi]
         add     esp, 0x0c
         cmp     eax, 0xffffffff
@@ -228,7 +228,7 @@ loop_top2:
         push    ebx
         push    eax
         inc     esi
-        call    func_004c82b0
+        call    WriteCharBuffered_004c82b0
         mov     eax, dword ptr [edi]
         add     esp, 0x0c
         cmp     eax, 0xffffffff
@@ -253,7 +253,7 @@ loop_top2:
  *   if word == arg call F.
  */
 extern unsigned int g_table_004ab4e78_ee[];
-extern void func_004bd8e0(void);
+extern void GeoLoadFixupLoop_004bd8e0(void);
 __declspec(naked) void TableWalkBoundedCmp_004bd890(void) {
     __asm {
         push    esi
@@ -272,7 +272,7 @@ loop_top3:
         cmp     ecx, edi
         _emit   75h
         _emit   05h
-        call    func_004bd8e0
+        call    GeoLoadFixupLoop_004bd8e0
         add     esi, 4
         cmp     esi, 0x00ab5034
         _emit   7ch
@@ -288,13 +288,13 @@ loop_top3:
  *   call 0x4c9200(arg1, arg2, arg3, state, edi); store ret;
  *   call 0x4c7040(state); restore ret; ret.
  */
-extern void * func_004c9440(void);
+extern void * HeapScanInit_004c9440(void);
 extern int func_004c9200(int, int, int, void *, int);
 extern void func_004c7040(void *);
 __declspec(naked) void WrapperCallSelf_004c5d70(void) {
     __asm {
         push    esi
-        call    func_004c9440
+        call    HeapScanInit_004c9440
         mov     esi, eax
         test    esi, esi
         _emit   75h

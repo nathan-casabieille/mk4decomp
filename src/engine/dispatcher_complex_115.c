@@ -46,15 +46,15 @@ extern unsigned int g_state4_0053a3e0;
 extern unsigned int g_state4_0053a700;
 extern unsigned int g_lit16_004e286c;
 
-extern void func_0049fa20(void);
-extern void func_0049e7e0(void);
-extern void func_0049fa00(void);
-extern int  func_004be690(int);
+extern void Cmp3DirtyToggle_0049fa20(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void StateAdd5Capped_0049fa00(void);
+extern int  TaggedSceneDispatch_004be690(int);
 
 /* @addr 0x0049f900 */
 __declspec(naked) void DispatcherComplex115_0049f900(void) {
     __asm {
-        call    func_0049fa20
+        call    Cmp3DirtyToggle_0049fa20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -75,19 +75,19 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
         mov     dword ptr [g_state1_0053a408], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state4_0053a3e0], eax
-        call    func_0049e7e0
+        call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh
-        call    func_0049fa00
+        call    StateAdd5Capped_0049fa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
         mov     ax, word ptr [g_lit16_004e286c]
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }
@@ -96,7 +96,7 @@ __declspec(naked) void DispatcherComplex115_0049f900(void) {
 /* @addr 0x0049f980 */
 __declspec(naked) void DispatcherComplex115_0049f980(void) {
     __asm {
-        call    func_0049fa20
+        call    Cmp3DirtyToggle_0049fa20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -117,19 +117,19 @@ __declspec(naked) void DispatcherComplex115_0049f980(void) {
         mov     dword ptr [g_state1_00537e88], 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state4_0053a700], eax
-        call    func_0049e7e0
+        call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   1dh
-        call    func_0049fa00
+        call    StateAdd5Capped_0049fa00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
         mov     ax, word ptr [g_lit16_004e286c]
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }

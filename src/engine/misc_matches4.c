@@ -35,11 +35,11 @@ __declspec(naked) void GDispatch4_004089c0(void) {
 }
 
 /* @addr 0x00439c40 (29b): same as above but mask=1, jne */
-extern void func_00439c60(void);
+extern void CmpEqWalkSetCallToggleDirty_00439c60(void);
 extern void func_004068e0(void);
 __declspec(naked) void GDispatch1_00439c40(void) {
     __asm {
-        call    func_00439c60
+        call    CmpEqWalkSetCallToggleDirty_00439c60
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -53,11 +53,11 @@ __declspec(naked) void GDispatch1_00439c40(void) {
 }
 
 /* @addr 0x00488da0 (29b): mask=1, je (skip-then-jmp) */
-extern void func_00488dc0(void);
+extern void DualCondMatchSet_00488dc0(void);
 extern void func_004814e0(void);
 __declspec(naked) void GDispatch1_00488da0(void) {
     __asm {
-        call    func_00488dc0
+        call    DualCondMatchSet_00488dc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -79,11 +79,11 @@ __declspec(naked) void GDispatch1_00488da0(void) {
  *   jmp     +3
  *   ret
  */
-extern void func_00460470(void);
+extern void MultiThunkDispatcher_00460470(void);
 extern void func_00435112(void);
 __declspec(naked) void CallPauseConstStoreJmp_004350f0(void) {
     __asm {
-        call    func_00460470
+        call    MultiThunkDispatcher_00460470
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -95,11 +95,11 @@ __declspec(naked) void CallPauseConstStoreJmp_004350f0(void) {
 }
 
 /* @addr 0x00438170 (30b): same shape, value=0x78 */
-extern void func_004393b0(void);
+extern void Push80SetWalkNegDualCallPop_004393b0(void);
 extern void func_00438192(void);
 __declspec(naked) void CallPauseConstStoreJmp_00438170(void) {
     __asm {
-        call    func_004393b0
+        call    Push80SetWalkNegDualCallPop_004393b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -111,11 +111,11 @@ __declspec(naked) void CallPauseConstStoreJmp_00438170(void) {
 }
 
 /* @addr 0x00481360 (30b): same shape, store walkCallback=0xb5 */
-extern void func_00416cb0(void);
+extern void BootChainMaskAndDispatch_00416cb0(void);
 extern void func_0049cc35(void);
 __declspec(naked) void CallPauseConstStoreJmp_00481360(void) {
     __asm {
-        call    func_00416cb0
+        call    BootChainMaskAndDispatch_00416cb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -171,8 +171,8 @@ __declspec(naked) void ConstStoreCallJmp_0046ff60(void) {
  *   mov     [g_framePauseFlag], 1
  *   ret
  */
-extern void func_0041f840(void);
+extern void ScaledNeg1SetPause_0041f840(void);
 void CallSetPause_0041f830(void) {
-    func_0041f840();
+    ScaledNeg1SetPause_0041f840();
     g_framePauseFlag = 1;
 }

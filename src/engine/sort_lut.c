@@ -10,7 +10,7 @@
 #include "engine/scenegraph.h"
 #include "engine/render.h"
 
-extern void _ftol(void);                            /* 0x004c57d0 */
+extern s32 _ftol(void);                            /* 0x004c57d0 */
 
 static const double k_31         = 31.0;            /* 0x004d2a50 */
 static const double k_inv_65536  = 1.52587890625e-05; /* 0x004d2a58 = 1/65536 */

@@ -6,18 +6,18 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_pendingNodeType;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueWorkType;
+extern u32 g_pendingNodeType;
 
 /* @addr 0x00424ba0 (65b)
  *   3-cell scaled-load test chain: deref [eax*4+0..8] in turn into walk;
  *   if any non-zero, jmp T1 else jmp T2.
  */
-extern void func_00424b70(void);
-extern void func_00424bf0(void);
+extern void IdentityMatrix_00424b70(void);
+extern void Mul10HeavyTransform_00424bf0(void);
 __declspec(naked) void ScaledTestChainDispatch_00424ba0(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -36,8 +36,8 @@ __declspec(naked) void ScaledTestChainDispatch_00424ba0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_00424b70
-        jmp     func_00424bf0
+        jmp     IdentityMatrix_00424b70
+        jmp     Mul10HeavyTransform_00424bf0
     }
 }
 
@@ -46,17 +46,17 @@ __declspec(naked) void ScaledTestChainDispatch_00424ba0(void) {
  *   set g_eventQueueChild = 1; jmp T2; nop;
  *   set g_eventQueueChild = 0; jmp T2 (a 2-stub block joined together).
  */
-extern void func_00406740(void);
-extern void func_0041f830(void);
-extern void func_00497b50(void);
+extern void MStackCall_00406740(void);
+extern void CallSetPause_0041f830(void);
+extern void PunchDispatcherCluster_00497b50(void);
 __declspec(naked) void CallPauseJmpThenSetChild_00497b10(void) {
     __asm {
-        call    func_00406740
+        call    MStackCall_00406740
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_0041f830
+        jmp     CallSetPause_0041f830
         ret
         nop
         nop
@@ -71,10 +71,10 @@ __declspec(naked) void CallPauseJmpThenSetChild_00497b10(void) {
         nop
         nop
         mov     dword ptr [g_eventQueueChild], 1
-        jmp     func_00497b50
+        jmp     PunchDispatcherCluster_00497b50
         nop
         mov     dword ptr [g_eventQueueChild], 0
-        jmp     func_00497b50
+        jmp     PunchDispatcherCluster_00497b50
     }
 }
 
@@ -84,7 +84,7 @@ __declspec(naked) void CallPauseJmpThenSetChild_00497b10(void) {
  *   call 0x4c7060(arg); restore eax; return.
  */
 extern void func_004c6ff0_hh(void *);
-extern int func_004c5840(void *);
+extern int FCloseImpl_004c5840(void *);
 extern void func_004c7060_hh(void *);
 __declspec(naked) void TestBitClearOrCallTriple_004c5800(void) {
     __asm {
@@ -104,7 +104,7 @@ __declspec(naked) void TestBitClearOrCallTriple_004c5800(void) {
         call    func_004c6ff0_hh
         add     esp, 4
         push    esi
-        call    func_004c5840
+        call    FCloseImpl_004c5840
         add     esp, 4
         mov     edi, eax
         push    esi
@@ -191,14 +191,14 @@ __declspec(naked) void ZeroMultiGlobalsCmp_00404680(void) {
  *   load dirty | 4; mov ax,4; restore walk = esi;
  *   if (g_scaledInit != 0) dirty ^= 4 (clear it again); store dirty; ret.
  */
-extern void func_004069b0(void);
+extern void MStackPush2LLWalkCompare_004069b0(void);
 __declspec(naked) void SaveCallRestoreOrXor_00404a00(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         push    esi
         mov     esi, dword ptr [g_walkCallback]
         mov     dword ptr [g_walkCallback], eax
-        call    func_004069b0
+        call    MStackPush2LLWalkCompare_004069b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -225,15 +225,15 @@ __declspec(naked) void SaveCallRestoreOrXor_00404a00(void) {
  *   testb 1,[dirty]; jne ret; load arg1; eventQueueWorkType = arg2;
  *   pendingNodeType = arg1; call F2.
  */
-extern void func_0049cb70(void);
-extern void func_0049cb60(void);
+extern void Thunk_0049cb70(void);
+/* AllocNode declared in engine/scenegraph.h */
 __declspec(naked) void SetWalkCurCallPauseDirty_00404c70(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 0x0c]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_eventQueueCurrent], 0xffff
-        call    func_0049cb70
+        call    Thunk_0049cb70
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -244,7 +244,7 @@ __declspec(naked) void SetWalkCurCallPauseDirty_00404c70(void) {
         mov     eax, dword ptr [esp + 8]
         mov     dword ptr [g_eventQueueWorkType], esi
         mov     dword ptr [g_pendingNodeType], eax
-        call    func_0049cb60
+        call    AllocNode
         pop     esi
         ret
     }
@@ -255,7 +255,7 @@ __declspec(naked) void SetWalkCurCallPauseDirty_00404c70(void) {
  *   else call F; pause → ret; load g_scaledInit and g_xformEntityIdx;
  *   store xformEntityIdx into [scaledInit*4 + 0x28]; ret.
  */
-extern void func_00405450(void);
+extern void MStackPush2Burst6Init_00405450(void);
 __declspec(naked) void ScaledTestPauseStore_00408860(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -268,7 +268,7 @@ __declspec(naked) void ScaledTestPauseStore_00408860(void) {
         and     al,  0xfb
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        call    func_00405450
+        call    MStackPush2Burst6Init_00405450
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -287,7 +287,7 @@ __declspec(naked) void ScaledTestPauseStore_00408860(void) {
  */
 extern void func_004089e0_hh(void);
 extern void func_004b8fa0_hh(void);
-extern void func_004130c0(void);
+extern void Phase4StateInit4Helpers_004130c0(void);
 __declspec(naked) void PushStackCallPauseSet0xa_00413070(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -306,7 +306,7 @@ __declspec(naked) void PushStackCallPauseSet0xa_00413070(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0xa
-        jmp     func_004130c0
+        jmp     Phase4StateInit4Helpers_004130c0
         ret
     }
 }
@@ -323,8 +323,8 @@ __declspec(naked) void PushStackCallPauseSet0xa_00413070(void) {
  *     [0x37..0x3f] nop * 9 + ret.
  */
 extern void func_004c5790_hh(void);
-extern int func_004c8450(void);
-extern void func_004c83e0(void);
+extern int LocaleNumericHelpers_004c8450(void);
+extern void Push3000010000Call_004c83e0(void);
 extern unsigned int g_state_00f9f7fc;
 __declspec(naked) void UllShlAndInit_004c5740(void) {
     __asm {
@@ -347,9 +347,9 @@ __declspec(naked) void UllShlAndInit_004c5740(void) {
         ret
         _emit   0cch
         call    func_004c5790_hh
-        call    func_004c8450
+        call    LocaleNumericHelpers_004c8450
         mov     dword ptr [g_state_00f9f7fc], eax
-        call    func_004c83e0
+        call    Push3000010000Call_004c83e0
         fnclex
         ret
         nop

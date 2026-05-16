@@ -26,9 +26,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void func_0048f160(void);
-extern void func_0048f210(void);
-extern void func_0042cd30(void);
+extern void State208cBit0Flag_0048f160(void);
+extern void GuardedRangeCmpToggle_0048f210(void);
+extern void MStackCjChainSwapDualCall_0042cd30(void);
 
 /* @addr 0x0042cc90 */
 __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
@@ -38,7 +38,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    func_0048f160
+        call    State208cBit0Flag_0048f160
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -52,7 +52,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
         mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   05h
-        jmp     func_0042cd30
+        jmp     MStackCjChainSwapDualCall_0042cd30
         ret
     }
 }
@@ -65,7 +65,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cce0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    func_0048f210
+        call    GuardedRangeCmpToggle_0048f210
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -79,7 +79,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cce0(void) {
         mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   05h
-        jmp     func_0042cd30
+        jmp     MStackCjChainSwapDualCall_0042cd30
         ret
     }
 }

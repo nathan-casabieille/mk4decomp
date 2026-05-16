@@ -24,8 +24,8 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_acc_00542078;
 
-extern void func_004089e0(void);
-extern void func_004b8fa0(void);
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 
 /* @addr 0x0044ba30 */
 __declspec(naked) void ScaledLoadTwoCallDualConst_0044ba30(void) {
@@ -33,12 +33,12 @@ __declspec(naked) void ScaledLoadTwoCallDualConst_0044ba30(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_fightGroupHead], ecx
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -55,12 +55,12 @@ __declspec(naked) void ScaledLoadTwoCallDualConst_00467c30(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_fightGroupHead], ecx
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

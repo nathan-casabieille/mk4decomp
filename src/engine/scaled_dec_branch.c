@@ -21,10 +21,10 @@
 
 extern unsigned int g_baseSel_00542060;
 
-extern void func_00466490(void);
-extern void func_004662e0(void);
-extern void func_004667a0(void);
-extern void func_004665b0(void);
+extern void ThunkPlus4FieldCjCopy_00466490(void);
+extern void FourEntryAlarmInstall_004662e0(void);
+extern void StoreFightFieldCallTailJmp_004667a0(void);
+extern void FourPackedSubInitCmpDispatch_004665b0(void);
 
 /* @addr 0x00466460 */
 __declspec(naked) void ScaledDecBranch_00466460(void) {
@@ -35,9 +35,9 @@ __declspec(naked) void ScaledDecBranch_00466460(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_00466490
+        jmp     ThunkPlus4FieldCjCopy_00466490
         mov     dword ptr [ecx*4 + 0x30], eax
-        jmp     func_004662e0
+        jmp     FourEntryAlarmInstall_004662e0
     }
 }
 
@@ -50,8 +50,8 @@ __declspec(naked) void ScaledDecBranch_00466770(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_004667a0
+        jmp     StoreFightFieldCallTailJmp_004667a0
         mov     dword ptr [ecx*4 + 0x30], eax
-        jmp     func_004665b0
+        jmp     FourPackedSubInitCmpDispatch_004665b0
     }
 }

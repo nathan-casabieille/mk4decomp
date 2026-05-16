@@ -6,18 +6,18 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_pendingNodeType;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueEnd;
+extern u32 g_pendingNodeType;
 
 /* @addr 0x004059a0 (90b)
  *   Push g_scaledInit on stack[idx*4]; load scaled[+0x18];
  *   if non-zero, set scaled, call F, pause-test;
  *   then pop stack back into g_scaledInit. Standard "save-restore" wrapper.
  */
-extern void func_00405a00(void);
+extern void ScaledAndMaskInitJmp_00405a00(void);
 __declspec(naked) void PushPopScaled18_004059a0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -32,7 +32,7 @@ __declspec(naked) void PushPopScaled18_004059a0(void) {
         _emit   74h
         _emit   13h
         mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_00405a00
+        call    ScaledAndMaskInitJmp_00405a00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -47,7 +47,7 @@ __declspec(naked) void PushPopScaled18_004059a0(void) {
 }
 
 /* @addr 0x00405ad0 (90b): same shape but uses g_xformEntityIdx, field +0x14 */
-extern void func_00409970(void);
+extern void MStackPush2ChainPrepend_00409970(void);
 __declspec(naked) void PushPopScaled14_00405ad0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -62,7 +62,7 @@ __declspec(naked) void PushPopScaled14_00405ad0(void) {
         _emit   74h
         _emit   05h
         mov     dword ptr [g_xformEntityIdx], eax
-        call    func_00409970
+        call    MStackPush2ChainPrepend_00409970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -78,7 +78,7 @@ __declspec(naked) void PushPopScaled14_00405ad0(void) {
 
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
 extern void func_00409970_ii(void);
-extern void func_00408580(void);
+extern void PushSetCallCleanup_00408580(void);
 __declspec(naked) void PushPopScaled1cDoubleCall_00408510(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -97,7 +97,7 @@ __declspec(naked) void PushPopScaled1cDoubleCall_00408510(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   0eh
-        call    func_00408580
+        call    PushSetCallCleanup_00408580
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -114,7 +114,7 @@ __declspec(naked) void PushPopScaled1cDoubleCall_00408510(void) {
 /* @addr 0x0040a7e0 (69b)
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
  */
-extern void func_0040a870(void);
+extern void Copy3Fields38_0040a870(void);
 __declspec(naked) void StackPushAdd15CallPop_0040a7e0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -125,7 +125,7 @@ __declspec(naked) void StackPushAdd15CallPop_0040a7e0(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_eventQueueEnd], edx
-        call    func_0040a870
+        call    Copy3Fields38_0040a870
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
@@ -141,18 +141,18 @@ __declspec(naked) void StackPushAdd15CallPop_0040a7e0(void) {
  *   testb 4,[dirty]; if cleared then jmp T; ret.
  */
 extern void *g_data_00408040;
-extern void func_00404cc0(void *);
-extern void func_00404df0(int);
+extern void ThreeChanPackClamp_00404cc0(void *);
+extern void CopyThreeFields_00404df0(int);
 extern void func_00405420_ii(void);
-extern void func_0040bf70(void);
+extern void BootMStackBracketedScaledStores_0040bf70(void);
 __declspec(naked) void PushCallScaledClearJmp_0040bf20(void) {
     __asm {
         push    OFFSET g_data_00408040
-        call    func_00404cc0
+        call    ThreeChanPackClamp_00404cc0
         mov     eax, dword ptr [g_fightGroupHead]
         add     esp, 4
         push    eax
-        call    func_00404df0
+        call    CopyThreeFields_00404df0
         add     esp, 4
         mov     dword ptr [g_scaledInit_00542044], 0
         call    func_00405420_ii
@@ -163,7 +163,7 @@ __declspec(naked) void PushCallScaledClearJmp_0040bf20(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
-        jmp     func_0040bf70
+        jmp     BootMStackBracketedScaledStores_0040bf70
         ret
     }
 }
@@ -174,7 +174,7 @@ __declspec(naked) void PushCallScaledClearJmp_0040bf20(void) {
  *   load scaled[0]; if non-zero set walk = own VA, call F, pause-test;
  *   clear dirty bit 1; ret.
  */
-extern void func_004bae90(void);
+extern void IndirectListWalk_004bae90(void);
 __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -190,7 +190,7 @@ __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
         _emit   74h
         _emit   18h
         mov     dword ptr [g_walkCallback], 0x004084b0
-        call    func_004bae90
+        call    IndirectListWalk_004bae90
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -240,11 +240,11 @@ __declspec(naked) void SetDirty4XorScaledLoad_004147b0(void) {
  *   set walk = 0x14ccc + store at [ecx*4 + 0x48]; eventQueueEnd+0x15 → g_scaledInit;
  *   jmp T.
  */
-extern void func_004191b0(void);
-extern void func_00412280(void);
+extern void SlotInitAndChainLink_004191b0(void);
+extern void BootGatedInitInstallPair_00412280(void);
 __declspec(naked) void CallPauseDirty4ScaledSet_004196c0(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -261,7 +261,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_004196c0(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }

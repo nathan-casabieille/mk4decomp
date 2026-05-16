@@ -21,12 +21,12 @@ extern unsigned int g_acc_0053a438;
 extern unsigned int g_acc_0053a440;
 extern unsigned int g_acc_00542078;
 
-extern void func_0048b500(void);
+extern void MStackPush3TripleMul10WithAbs_0048b500(void);
 
 /* @addr 0x0048b480 */
 __declspec(naked) void CallPauseAddDualStore_0048b480(void) {
     __asm {
-        call    func_0048b500
+        call    MStackPush3TripleMul10WithAbs_0048b500
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -43,7 +43,7 @@ __declspec(naked) void CallPauseAddDualStore_0048b480(void) {
 /* @addr 0x0048b4b0 */
 __declspec(naked) void CallPauseAddDualStore_0048b4b0(void) {
     __asm {
-        call    func_0048b500
+        call    MStackPush3TripleMul10WithAbs_0048b500
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -19,9 +19,9 @@
 
 extern void *g_lit_004ed6d0;
 extern void *g_lit_004f17a8;
-extern void func_0047ef60(void);
-extern void func_00496960(void);
-extern int  func_004594f0(void *p);
+extern void DualEntryInstallScaledChain_0047ef60(void);
+extern void Alarm4EntryInstallCountdown_00496960(void);
+extern int  ArgSarStoreJmp_004594f0(void *p);
 
 /* @addr 0x0047ef40 */
 __declspec(naked) void DirtyGuardLitOrJmp_0047ef40(void) {
@@ -29,9 +29,9 @@ __declspec(naked) void DirtyGuardLitOrJmp_0047ef40(void) {
         cmp     dword ptr [g_xformScratch2088], 1
         _emit   75h
         _emit   05h
-        jmp     func_0047ef60
+        jmp     DualEntryInstallScaledChain_0047ef60
         push    OFFSET g_lit_004ed6d0
-        call    func_004594f0
+        call    ArgSarStoreJmp_004594f0
         add     esp, 4
         ret
     }
@@ -43,9 +43,9 @@ __declspec(naked) void DirtyGuardLitOrJmp_00496940(void) {
         cmp     dword ptr [g_xformScratch2088], 1
         _emit   75h
         _emit   05h
-        jmp     func_00496960
+        jmp     Alarm4EntryInstallCountdown_00496960
         push    OFFSET g_lit_004f17a8
-        call    func_004594f0
+        call    ArgSarStoreJmp_004594f0
         add     esp, 4
         ret
     }

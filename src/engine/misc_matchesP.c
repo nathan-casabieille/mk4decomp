@@ -284,14 +284,14 @@ __declspec(naked) void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
  *   jmp     T
  *   ret
  */
-extern void func_0048fbc0(void);
+extern void Wrapper_0048fbc0(void);
 extern void func_00498e3c(void);
 __declspec(naked) void ScaledChainCallPauseSetJmp_0048f8e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        call    func_0048fbc0
+        call    Wrapper_0048fbc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -317,7 +317,7 @@ __declspec(naked) void ScaledChainCallPauseSetJmp_0048f8e0(void) {
  *   jmp     eax
  *   ret
  */
-extern unsigned int g_pendingNodeType;
+extern u32 g_pendingNodeType;
 __declspec(naked) void ScaledLoadJmpIfNonzero_00490e00(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueIdx]
@@ -354,12 +354,12 @@ __declspec(naked) void ScaledLoadJmpIfNonzero_00490e00(void) {
  *   xor     eax, eax
  *   ret
  */
-extern int func_004a1c50(void);
+extern int TripleByteCheck_004a1c50(void);
 extern int func_004a1c70(void);
 extern unsigned char g_byte_00543590;
 __declspec(naked) void DualCallSetByte_004a1cb0(void) {
     __asm {
-        call    func_004a1c50
+        call    TripleByteCheck_004a1c50
         test    eax, eax
         _emit   74h
         _emit   0bh

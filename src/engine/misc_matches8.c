@@ -28,10 +28,10 @@ void Push0_Push41d7d0_0041d550(void) {
 }
 
 /* @addr 0x00421c40 (16b): push 0x71; push DATA_PTR; call F; add esp,8; ret */
-extern int __cdecl func_0049cb40(void *, int);
+extern void StoreTwoCall_0049cb40(int, int);
 extern void *g_data_0048caa0;
 void Push71_Push48caa0_00421c40(void) {
-    func_0049cb40(&g_data_0048caa0, 0x71);
+    StoreTwoCall_0049cb40(&g_data_0048caa0, 0x71);
 }
 
 /* @addr 0x00463070 (20b): push 0; push 0x00463220; call F; add esp,8; jmp +0x0c */
@@ -71,15 +71,15 @@ __declspec(naked) void Push267_Push44eb60_Jmp_00489220(void) {
  *   add     esp, 4
  *   jmp     +7
  */
-extern int func_004049d0(int);
+extern int SaveCallRestore_004049d0(int);
 extern void func_00478131(void);
 __declspec(naked) void TwoCallJmp_00478120(void) {
     __asm {
         push    0x2b
-        call    func_004049d0
+        call    SaveCallRestore_004049d0
         add     esp, 4
         push    0x2c
-        call    func_004049d0
+        call    SaveCallRestore_004049d0
         add     esp, 4
         jmp     func_00478131
     }
@@ -116,10 +116,10 @@ __declspec(naked) void PushCallRetNopJmp_0043d580(void) {
  *   inc     dword ptr [g_walkCallback]
  *   ret
  */
-extern void func_004ab630(void);
+extern void StorePauseImulShr16_004ab630(void);
 __declspec(naked) void CallPauseInc_004ab670(void) {
     __asm {
-        call    func_004ab630
+        call    StorePauseImulShr16_004ab630
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -155,7 +155,7 @@ void StoreTwoCall_0049cb40(int arg1, int arg2) {
  *   mov     [g_xformEntityIdx], eax
  *   ret
  */
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 void SplitHi8Lo24_004abfc0(void) {
     unsigned int v = g_eventQueueCurrent;
     g_eventQueueCurrent = v >> 24;

@@ -83,12 +83,12 @@ void Add0fJmp_0044ccd0(void) {
  *   ret
  */
 extern unsigned int g_lit16_00542074;   /* alias of g_eventQueueWorkType (16-bit read) */
-extern int func_004be690(int);
+extern int TaggedSceneDispatch_004be690(int);
 __declspec(naked) void Push16Call_00489f50(void) {
     __asm {
         mov     ax, word ptr [g_lit16_00542074]
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }

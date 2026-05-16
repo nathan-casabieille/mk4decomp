@@ -215,8 +215,8 @@ __declspec(naked) void IncBoundedDirty_004a7db0(void) {
  *   mov     [g_scaledInit_00542044], eax
  *   ret
  */
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_player2NodeIdx;
+extern packed_ptr g_player1NodeIdx;
+extern packed_ptr g_player2NodeIdx;
 __declspec(naked) void CmpP1ScaledInitB_004ac100(void) {
     __asm {
         mov     eax, dword ptr [g_player1NodeIdx]

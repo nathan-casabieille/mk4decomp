@@ -7,13 +7,13 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
+extern u32 g_pendingNodeType;
+extern packed_ptr g_fightGroupHead;
 
 /* === ScaledInitOrSelfPtrSetType cluster (68b each) === */
 
 /* @addr 0x00434d60: jmp=0x00436120, type=8, ptr=own */
-extern void func_00436120(void);
+extern void ThresholdInitInstallSelfChain_00436120(void);
 __declspec(naked) void ScaledInitOrSelfPtrSetType_00434d60(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -23,7 +23,7 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_00434d60(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_00436120
+        jmp     ThresholdInitInstallSelfChain_00436120
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00434d60
         mov     dword ptr [eax + 0x84], ecx
@@ -34,7 +34,7 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_00434d60(void) {
 }
 
 /* @addr 0x0046a5e0: jmp=0x0046a630, type=3, ptr=own */
-extern void func_0046a630(void);
+extern void QuadEntryGateChain_0046a630(void);
 __declspec(naked) void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -44,7 +44,7 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_0046a630
+        jmp     QuadEntryGateChain_0046a630
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x0046a5e0
         mov     dword ptr [eax + 0x84], ecx
@@ -55,7 +55,7 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
 }
 
 /* @addr 0x0047a620: jmp=0x0047a670, type=0xa, ptr=own */
-extern void func_0047a670(void);
+extern void TripleSubInstallSelfPair_0047a670(void);
 __declspec(naked) void ScaledInitOrSelfPtrSetType_0047a620(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -65,7 +65,7 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_0047a620(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_0047a670
+        jmp     TripleSubInstallSelfPair_0047a670
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x0047a620
         mov     dword ptr [eax + 0x84], ecx
@@ -248,15 +248,15 @@ __declspec(naked) void ScaledLoadCmp1003JmpDispatch_00486530(void) {
  *   call F; pause-test → ret; clear walk + state_00538158 + state_0053815c;
  *   call F2; pause → ret; call F3; pause → ret; jmp T.
  */
-extern void func_00404f20(void);
+extern void BootInitChainHeavy_00404f20(void);
 extern unsigned int g_state_00538158_kk;
 extern unsigned int g_state_0053815c_kk;
-extern void func_00425b20(void);
-extern void func_00464320(void);
+extern void DualEntryInitCmp_00425b20(void);
+extern void Cmp9DirtyToggle_00464320(void);
 extern void func_00431230(void);
 __declspec(naked) void CallPauseClear3CallTriple_00428030(void) {
     __asm {
-        call    func_00404f20
+        call    BootInitChainHeavy_00404f20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -264,12 +264,12 @@ __declspec(naked) void CallPauseClear3CallTriple_00428030(void) {
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_state_00538158_kk], 0
         mov     dword ptr [g_state_0053815c_kk], 0
-        call    func_00425b20
+        call    DualEntryInitCmp_00425b20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    func_00464320
+        call    Cmp9DirtyToggle_00464320
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

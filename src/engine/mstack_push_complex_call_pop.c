@@ -38,7 +38,7 @@
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_lit_00541e90;
 extern unsigned int g_lit_00541e94;
-extern void func_00409970(void);
+extern void MStackPush2ChainPrepend_00409970(void);
 
 /* @addr 0x00406430 */
 __declspec(naked) void MStackPushComplexCallPop_00406430(void) {
@@ -57,7 +57,7 @@ __declspec(naked) void MStackPushComplexCallPop_00406430(void) {
         mov     dword ptr [edx*4 + 0x5c], 0x00010000
         mov     eax, dword ptr [g_lit_00541e90]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    func_00409970
+        call    MStackPush2ChainPrepend_00409970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -88,7 +88,7 @@ __declspec(naked) void MStackPushComplexCallPop_004064b0(void) {
         mov     dword ptr [edx*4 + 0x5c], 0x00010000
         mov     eax, dword ptr [g_lit_00541e94]
         mov     dword ptr [g_xformEntityIdx], eax
-        call    func_00409970
+        call    MStackPush2ChainPrepend_00409970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

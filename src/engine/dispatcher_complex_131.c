@@ -45,7 +45,7 @@ extern unsigned int g_state_0053a430;
 extern unsigned int g_X_0052aac4;
 extern void *g_lit_004e39d8;
 extern void *g_lit_004e3a28;
-extern int  func_0048e630(void *p);
+extern int  PackedAdvanceCallContinue_0048e630(void *p);
 
 /* @addr 0x00431530 */
 __declspec(naked) void DispatcherComplex131_00431530(void) {
@@ -66,7 +66,7 @@ __declspec(naked) void DispatcherComplex131_00431530(void) {
         push    OFFSET g_lit_004e39d8
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    func_0048e630
+        call    PackedAdvanceCallContinue_0048e630
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -105,7 +105,7 @@ __declspec(naked) void DispatcherComplex131_004315c0(void) {
         push    OFFSET g_lit_004e3a28
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        call    func_0048e630
+        call    PackedAdvanceCallContinue_0048e630
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

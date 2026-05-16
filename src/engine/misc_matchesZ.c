@@ -7,11 +7,11 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueNotMask;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00474b10 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x474b50 */
-extern void func_00474b50(void);
+extern void NetEntityScanAndPunish_00474b50(void);
 __declspec(naked) void ScaledInitOrSelfPtr_00474b10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -21,7 +21,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00474b10(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_00474b50
+        jmp     NetEntityScanAndPunish_00474b50
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00474b10
         mov     dword ptr [eax + 0x84], ecx
@@ -112,8 +112,8 @@ __declspec(naked) void DoubleScaledCrossStore_00475750(void) {
 /* @addr 0x00482740 (62b)
  *   3-level scaled chain (0x3c, 0x30, 0); cmp 0x61 → jmp T1; cmp 0x69 → jmp T2.
  */
-extern void func_00482780(void);
-extern void func_0048a360(void);
+extern void StageGameProgressCluster_00482780(void);
+extern void Wrapper_0048a360(void);
 __declspec(naked) void ScaledChainCmp61_00482740(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -126,11 +126,11 @@ __declspec(naked) void ScaledChainCmp61_00482740(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_00482780
+        jmp     StageGameProgressCluster_00482780
         cmp     eax, 0x69
         _emit   74h
         _emit   05h
-        jmp     func_0048a360
+        jmp     Wrapper_0048a360
         ret
     }
 }
@@ -141,11 +141,11 @@ __declspec(naked) void ScaledChainCmp61_00482740(void) {
  *   jmp [g_scaledInit_00542044]; ret.
  */
 extern void *g_data_004f1290;
-extern int func_0048e550(void *);
+extern int ArgScaledLoadCmpP1_0048e550(void *);
 __declspec(naked) void PushCallPauseScaledJmpInd_0048e2f0(void) {
     __asm {
         push    OFFSET g_data_004f1290
-        call    func_0048e550
+        call    ArgScaledLoadCmpP1_0048e550
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
@@ -216,8 +216,8 @@ __declspec(naked) void OrStoreDecStackPop_00490290(void) {
  */
 extern unsigned int g_state_0052ab10;
 extern void func_0048acb0(void);
-extern void func_0048ae50(void);
-extern void func_0048abe0(void);
+extern void IndirectDispatchCjStore_0048ae50(void);
+extern void LazyAllocOrPush_0048abe0(void);
 extern void func_0041f780_zz(void);
 __declspec(naked) void InitStateDualCall48ac70_0048ac70(void) {
     __asm {
@@ -226,12 +226,12 @@ __declspec(naked) void InitStateDualCall48ac70_0048ac70(void) {
         mov     dword ptr [g_fightGroupHead], eax
         add     eax, 0x15
         mov     dword ptr [g_eventQueueTotal], eax
-        call    func_0048ae50
+        call    IndirectDispatchCjStore_0048ae50
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    func_0048abe0
+        call    LazyAllocOrPush_0048abe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

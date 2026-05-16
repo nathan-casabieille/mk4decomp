@@ -9,19 +9,19 @@
  * tail-jumps into B.
  */
 
-extern void func_0041fcf0(void);
-extern void func_0043bdd0(void);
-extern void func_004bd590(void);
-extern void func_004bd6d0(void);
+extern void Wrapper_0041fcf0(void);
+extern void PendingMatch_0043bdd0(void);
+extern void TestCallPush4Zero_004bd590(void);
+extern void Helper_GeoLoadPost(void);
 
 /* @addr 0x00467d30 */
 void CallJmp_00467d30(void) {
-    func_0041fcf0();
-    func_0043bdd0();
+    Wrapper_0041fcf0();
+    PendingMatch_0043bdd0();
 }
 
 /* @addr 0x004bd990 */
 void CallJmp_004bd990(void) {
-    func_004bd590();
-    func_004bd6d0();
+    TestCallPush4Zero_004bd590();
+    Helper_GeoLoadPost();
 }

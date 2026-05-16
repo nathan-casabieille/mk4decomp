@@ -58,14 +58,14 @@
 extern unsigned int g_handleCount_004ffae0;   /* 0x004ffae0 */
 extern unsigned int g_validityTable_004fdae0; /* 0x004fdae0 (-> indexed by ecx*4) */
 
-extern void func_004cd2b0(int);   /* _lock_fhandle */
-extern void func_004cd320(int);   /* _unlock_fhandle */
-extern void *func_004c8ba0(void); /* &__doserrno */
-extern void *func_004c8bb0(void); /* &errno */
+extern void CritSecLazyEnter_004cd2b0(int);   /* _lock_fhandle */
+extern void DivMod32IAT_004cd320(int);   /* _unlock_fhandle */
+extern void *CallAdd8_004c8ba0(void); /* &__doserrno */
+extern void *CallAddC_004c8bb0(void); /* &errno */
 
-extern int  func_004c8e50(int handle, int a, int b);   /* per-helper op */
-extern int  func_004c9040(int handle, int a, int b);
-extern int  func_004c9b60(int handle, int a, int b);
+extern int  LseekImpl_004c8e50(int handle, int a, int b);   /* per-helper op */
+extern int  CrtReadCrlfDecode_004c9040(int handle, int a, int b);
+extern int  FileWriteWithLfToCrlf_004c9b60(int handle, int a, int b);
 
 /* @addr 0x004c8dd0 */
 __declspec(naked) void IOWrapper_004c8dd0(void) {
@@ -87,26 +87,26 @@ __declspec(naked) void IOWrapper_004c8dd0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    func_004cd2b0
+        call    CritSecLazyEnter_004cd2b0
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
         push    ecx
         push    edx
         push    esi
-        call    func_004c8e50
+        call    LseekImpl_004c8e50
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    func_004cd320
+        call    DivMod32IAT_004cd320
         add     esp, 4
         mov     eax, edi
         pop     edi
         pop     esi
         ret
-        call    func_004c8ba0
+        call    CallAdd8_004c8ba0
         mov     dword ptr [eax], 9
-        call    func_004c8bb0
+        call    CallAddC_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff
@@ -135,26 +135,26 @@ __declspec(naked) void IOWrapper_004c8fc0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    func_004cd2b0
+        call    CritSecLazyEnter_004cd2b0
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
         push    ecx
         push    edx
         push    esi
-        call    func_004c9040
+        call    CrtReadCrlfDecode_004c9040
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    func_004cd320
+        call    DivMod32IAT_004cd320
         add     esp, 4
         mov     eax, edi
         pop     edi
         pop     esi
         ret
-        call    func_004c8ba0
+        call    CallAdd8_004c8ba0
         mov     dword ptr [eax], 9
-        call    func_004c8bb0
+        call    CallAddC_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff
@@ -183,26 +183,26 @@ __declspec(naked) void IOWrapper_004c9ae0(void) {
         _emit   74h
         _emit   2ch
         push    esi
-        call    func_004cd2b0
+        call    CritSecLazyEnter_004cd2b0
         mov     ecx, dword ptr [esp + 0x18]
         mov     edx, dword ptr [esp + 0x14]
         add     esp, 4
         push    ecx
         push    edx
         push    esi
-        call    func_004c9b60
+        call    FileWriteWithLfToCrlf_004c9b60
         add     esp, 0x0c
         mov     edi, eax
         push    esi
-        call    func_004cd320
+        call    DivMod32IAT_004cd320
         add     esp, 4
         mov     eax, edi
         pop     edi
         pop     esi
         ret
-        call    func_004c8ba0
+        call    CallAdd8_004c8ba0
         mov     dword ptr [eax], 9
-        call    func_004c8bb0
+        call    CallAddC_004c8bb0
         mov     dword ptr [eax], 0
         pop     edi
         or      eax, 0xffffffff

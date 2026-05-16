@@ -7,8 +7,8 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_pendingNodeType;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_pendingNodeType;
 
 /* @addr 0x00428560 (85b)
  *   inc fightGroupHead[+0x28]; load fightGroupHead[+0x24] → scaled;
@@ -48,7 +48,7 @@ extern unsigned int g_state_00535ddc_nn;
 extern void func_00433b60(void);
 extern void func_00438f30(void);
 extern int func_00439890(void);
-extern void func_004335f0(void);
+extern void HitReactionStateCluster_004335f0(void);
 extern void func_00471200(void);
 extern void func_00436290(void);
 __declspec(naked) void CmpRangeJmpStateInit_00436250(void) {
@@ -73,7 +73,7 @@ __declspec(naked) void CmpRangeJmpStateInit_00436250(void) {
         mov     dword ptr [g_walkCallback], 2
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004335f0
+        mov     dword ptr [eax*4 + 0], OFFSET HitReactionStateCluster_004335f0
         jmp     func_00471200
         ret
         nop
@@ -117,7 +117,7 @@ __declspec(naked) void ScaledClear1cTestWalkCall_004460c0(void) {
  *   load walk, current; walk += 0x10000; push current, push walk; store walk;
  *   call F3; add esp 8; store eax → eventQueueCurrent.
  */
-extern unsigned int g_eventQueueCurrent;
+extern u32 g_eventQueueCurrent;
 extern int func_00404ae0(int, int);
 extern int func_00404ad0(int, int);
 extern void func_004ab730(void);

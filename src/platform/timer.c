@@ -20,7 +20,7 @@ static const double k_uintPivot  = 2147483648.0;    /* 0x004d2aa8 (2^31) */
  * tail. Declared as void(void) here; the .obj just needs a REL32
  * reloc to the symbol and the linker resolves at link time. */
 extern void __CIuintCvtPivot(void);                 /* 0x004c67ba */
-extern void _ftol(void);                            /* 0x004c57d0 */
+extern s32 _ftol(void);                            /* 0x004c57d0 */
 
 /*
  * @addr 0x004c4470

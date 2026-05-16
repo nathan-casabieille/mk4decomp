@@ -155,14 +155,14 @@ __declspec(naked) void ArgSarStoreJmp_004594f0(void) {
  *   mov     [eax*4 + 0x58], ecx
  *   jmp     +2
  */
-extern void func_00490740(void);
+extern void ScaledZeroFour_00490740(void);
 __declspec(naked) void ScaledMove48to58_00490720(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x48]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x58], ecx
-        jmp     func_00490740
+        jmp     ScaledZeroFour_00490740
     }
 }
 

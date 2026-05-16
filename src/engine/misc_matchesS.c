@@ -50,7 +50,7 @@ __declspec(naked) void ScaledChainOr8_00404e50(void) {
  *   mov     [eax + 0x5c], ecx
  *   ret
  */
-extern unsigned int g_pendingNodeType;
+extern u32 g_pendingNodeType;
 __declspec(naked) void Copy3Fields3c4044_00404e90(void) {
     __asm {
         mov     ecx, dword ptr [g_pendingNodeType]
@@ -124,7 +124,7 @@ __declspec(naked) void Copy3Fields38_0040a870(void) {
  *   mov     [eax + 0x38], ecx
  *   ret
  */
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 __declspec(naked) void Copy3FieldsNeg_0041aa40(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -265,7 +265,7 @@ __declspec(naked) void DualTestDirtyToggle_004282c0(void) {
  *   ret
  */
 extern unsigned int g_state_0052aac4_s;
-extern unsigned int g_dlMode;
+extern u32 g_dlMode;
 __declspec(naked) void Cmp2DirtyToggle_00423870(void) {
     __asm {
         mov     eax, dword ptr [g_state_0052aac4_s]
@@ -368,12 +368,12 @@ __declspec(naked) void ScaledIncCmpDualJmp_00429800(void) {
  *   mov     [g_walkCallback], 2
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET func_00437970
+ *   mov     [eax*4 + 0], OFFSET InstallSelfThreeStateLeaPlus22_00437970
  *   jmp     T
  *   ret
  */
 extern void func_0049e4d0(void);
-extern void func_00437970(void);
+extern void InstallSelfThreeStateLeaPlus22_00437970(void);
 extern void func_0048121c(void);
 __declspec(naked) void CallPauseMStackPushSet2Jmp_00437930(void) {
     __asm {
@@ -386,7 +386,7 @@ __declspec(naked) void CallPauseMStackPushSet2Jmp_00437930(void) {
         mov     dword ptr [g_walkCallback], 2
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00437970
+        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfThreeStateLeaPlus22_00437970
         jmp     func_0048121c
         ret
     }

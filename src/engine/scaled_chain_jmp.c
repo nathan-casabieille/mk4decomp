@@ -19,15 +19,15 @@
 
 extern unsigned int g_scaledInit_00542044;
 
-extern void func_004293b0(void);
-extern void func_00429960(void);
+extern void ScaledArrStore_004293b0(void);
+extern void ScaledArrStore_00429960(void);
 
 /* @addr 0x00429470 */
 void ScaledChainJmp_00429470(void) {
     unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
     g_scaledInit_00542044 = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
-    func_004293b0();
+    ScaledArrStore_004293b0();
 }
 
 /* @addr 0x004298e0 */
@@ -35,5 +35,5 @@ void ScaledChainJmp_004298e0(void) {
     unsigned int p = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
     g_scaledInit_00542044 = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
-    func_00429960();
+    ScaledArrStore_00429960();
 }

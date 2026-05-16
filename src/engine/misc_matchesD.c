@@ -63,7 +63,7 @@ __declspec(naked) void ScaledLoadOrSetJmp_00406b20(void) {
  *   mov     [eax + 0x0c], ecx
  *   ret
  */
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 void ScaledStoreThree_00409260(void) {
     unsigned int *base = (unsigned int *)(g_xformEntityIdx * 4);
     base[1] = (unsigned int)g_walkCallback;

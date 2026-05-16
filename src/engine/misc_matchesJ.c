@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], ecx
  *   ret
  */
-extern unsigned int g_dlNalt1;       /* 0x00537f48 */
+extern s32 g_dlNalt1;       /* 0x00537f48 */
 extern unsigned int g_state_005380e0;
 __declspec(naked) void TestP1ReplaceCurrent_004751c0(void) {
     __asm {
@@ -74,13 +74,13 @@ __declspec(naked) void ScaledLitAddJmp_00480fb0(void) {
  *   add     esp, 4
  *   ret
  */
-extern void func_00488dc0(void);
+extern void DualCondMatchSet_00488dc0(void);
 extern int func_00459500(void *);
 extern void *g_data_004ef1d0;
 extern void func_00488bd9(void);
 __declspec(naked) void CallPauseDirtyPushCall_00488ba0(void) {
     __asm {
-        call    func_00488dc0
+        call    DualCondMatchSet_00488dc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -133,11 +133,11 @@ __declspec(naked) void LiteralPushCallEntZero_00488c00(void) {
  *   jmp     +6
  *   ret
  */
-extern void func_00489030(void);
+extern void SaveSwapCallRestore_00489030(void);
 extern void func_00488c61(void);
 __declspec(naked) void CallPauseLitInitJmp_00488c30(void) {
     __asm {
-        call    func_00489030
+        call    SaveSwapCallRestore_00489030
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -189,7 +189,7 @@ __declspec(naked) void ScaledCmpJlJmp_00488ed0(void) {
  *   ret
  */
 extern unsigned short g_table_004ef998[];
-extern int func_004be690(int);
+extern int TaggedSceneDispatch_004be690(int);
 __declspec(naked) void TableLookupCall_00489f60(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -201,7 +201,7 @@ __declspec(naked) void TableLookupCall_00489f60(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }
@@ -220,7 +220,7 @@ __declspec(naked) void TableLookupCall_00489ff0(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }
@@ -239,7 +239,7 @@ __declspec(naked) void TableLookupCall_0048a130(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }
@@ -258,7 +258,7 @@ __declspec(naked) void TableLookupCall_0048a160(void) {
         _emit   74h
         _emit   09h
         push    eax
-        call    func_004be690
+        call    TaggedSceneDispatch_004be690
         add     esp, 4
         ret
     }
@@ -412,7 +412,7 @@ __declspec(naked) void IterStepScaledStore_0048e600(void) {
  *   mov     [g_walkCallback], ecx
  *   jmp     +0x2d
  */
-extern void func_0048e7b0(void);
+extern void ScaledLoadJmp_74_0048e7b0(void);
 __declspec(naked) void ScaledChain3c74Jmp_0048e780(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -420,7 +420,7 @@ __declspec(naked) void ScaledChain3c74Jmp_0048e780(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x74]
         mov     dword ptr [g_walkCallback], ecx
-        jmp     func_0048e7b0
+        jmp     ScaledLoadJmp_74_0048e7b0
     }
 }
 

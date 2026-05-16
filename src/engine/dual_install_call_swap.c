@@ -21,7 +21,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_xformEntityIdx;     /* 0x00542048 */
+extern packed_ptr g_xformEntityIdx;     /* 0x00542048 */
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
 
@@ -36,8 +36,8 @@ extern unsigned int g_dualB_0053803c;     /* g_gtPlayerProbe1 */
 extern unsigned int g_dualA_00538158;     /* g_player1NodeIdx */
 extern unsigned int g_dualA_0053815c;     /* g_player2NodeIdx */
 
-extern void func_00489d10(void);
-extern void func_00490cc0(void);
+extern void SqDistThresholdRevertAdvance_00489d10(void);
+extern void CjChainResetThreshold_00490cc0(void);
 
 /* @addr 0x00489cd0 */
 __declspec(naked) void DualInstallCallSwap_00489cd0(void) {
@@ -46,7 +46,7 @@ __declspec(naked) void DualInstallCallSwap_00489cd0(void) {
         mov     ecx, dword ptr [g_dualB_00542020]
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_eventQueueTotal], ecx
-        call    func_00489d10
+        call    SqDistThresholdRevertAdvance_00489d10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -55,7 +55,7 @@ __declspec(naked) void DualInstallCallSwap_00489cd0(void) {
         mov     eax, dword ptr [g_dualF_00542024]
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_eventQueueTotal], eax
-        jmp     func_00489d10
+        jmp     SqDistThresholdRevertAdvance_00489d10
         ret
     }
 }
@@ -67,7 +67,7 @@ __declspec(naked) void DualInstallCallSwap_00490c80(void) {
         mov     ecx, dword ptr [g_gtPlayerProbe2]
         mov     dword ptr [g_fightGroupHead], eax
         mov     dword ptr [g_baseSel_00542060], ecx
-        call    func_00490cc0
+        call    CjChainResetThreshold_00490cc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -76,7 +76,7 @@ __declspec(naked) void DualInstallCallSwap_00490c80(void) {
         mov     eax, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_baseSel_00542060], eax
-        jmp     func_00490cc0
+        jmp     CjChainResetThreshold_00490cc0
         ret
     }
 }

@@ -104,23 +104,23 @@ __declspec(naked) void TableSetBit_004c4420(void) {
  *   pop     esi
  *   ret
  */
-extern void func_004c6ff0(int);
-extern int func_004c5b70(int);
-extern void func_004c7060(int);
+extern void RangePathIATDispatch_004c6ff0(int);
+extern int WrapThreeDispatch_004c5b70(int);
+extern void RangePathIATDispatch_004c7060(int);
 __declspec(naked) void TripleCallEdiSave_004c58b0(void) {
     __asm {
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi
         push    esi
-        call    func_004c6ff0
+        call    RangePathIATDispatch_004c6ff0
         add     esp, 4
         push    esi
-        call    func_004c5b70
+        call    WrapThreeDispatch_004c5b70
         add     esp, 4
         mov     edi, eax
         push    esi
-        call    func_004c7060
+        call    RangePathIATDispatch_004c7060
         add     esp, 4
         mov     eax, edi
         pop     edi

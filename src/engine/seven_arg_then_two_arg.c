@@ -25,7 +25,7 @@
  *   ret
  */
 
-extern int func_004ce3f0(int a, int b, int c, int d, int e, int f, int g);
+extern int PendingMatch_004ce3f0(int a, int b, int c, int d, int e, int f, int g);
 extern int ForwardWithLiteral_004ccce0(int a, int b);
 extern int ForwardWithLiteral_004ccd00(int a, int b);
 
@@ -46,7 +46,7 @@ __declspec(naked) void SevenArgThenTwoArg_004ccd20(void) {
         push    eax
         push    ecx
         push    edx
-        call    func_004ce3f0
+        call    PendingMatch_004ce3f0
         mov     eax, dword ptr [esp + 0x2c]
         add     esp, 0x1c
         _emit   8dh
@@ -79,7 +79,7 @@ __declspec(naked) void SevenArgThenTwoArg_004ccd60(void) {
         push    eax
         push    ecx
         push    edx
-        call    func_004ce3f0
+        call    PendingMatch_004ce3f0
         mov     eax, dword ptr [esp + 0x2c]
         add     esp, 0x1c
         _emit   8dh

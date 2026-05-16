@@ -22,7 +22,7 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T2
  *   ret
  */
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern void func_0042fb6c(void);
 extern void func_0042fc62(void);
@@ -133,12 +133,12 @@ __declspec(naked) void Cmp30000And18000_004362b0(void) {
  *   jmp     +1
  *   ret
  */
-extern void func_004ab670(void);
+extern void CallPauseInc_004ab670(void);
 extern void func_004370f4(void);
 __declspec(naked) void Set14CallAddJmp_00436ff0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x14
-        call    func_004ab670
+        call    CallPauseInc_004ab670
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -279,11 +279,11 @@ __declspec(naked) void CallPauseTriCmpJmp_00460910(void) {
  *   jmp     T
  *   ret
  */
-extern void func_00490fc0(void);
+extern void StateDispatchTable_00490fc0(void);
 extern void func_00406ad0(void);
 __declspec(naked) void CallPauseScaledStoreCopyJmp_00461220(void) {
     __asm {
-        call    func_00490fc0
+        call    StateDispatchTable_00490fc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

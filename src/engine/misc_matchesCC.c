@@ -8,32 +8,32 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x004b2690 (60b): pure call chain — 11 calls + 1 jmp */
-extern void func_004c44f0(void);
-extern void func_004b4410(void);
-extern void func_004b2ae0(void);
-extern void func_004b5ac0(void);
-extern void func_004ad410(void);
-extern void func_004b62b0(void);
-extern void func_004b21c0(void);
-extern void func_004c4240(void);
-extern void func_004ac9b0(void);
-extern void func_004b5370(void);
-extern void func_004b1de0(void);
-extern void func_004b5a70(void);
+extern void TestCallIat_004c44f0(void);
+extern void Push4MultiCall_004b4410(void);
+extern void Helper_AppStub_2AE0(void);
+extern void Thunk_004b5ac0(void);
+extern void RegistryInstallEntry_004ad410(void);
+extern void Helper_MenuStub_62B0(void);
+extern void Helper_AppStub_21C0(void);
+extern void AudioShutdownSequence_004c4240(void);
+extern void AuxAudio_Teardown_004ac9b0(void);
+extern void Helper_GeoStub_5370(void);
+extern void TestCallZero_004b1de0(void);
+extern void Helper_GeoStub_5A70(void);
 __declspec(naked) void ElevenCallsJmp_004b2690(void) {
     __asm {
-        call    func_004c44f0
-        call    func_004b4410
-        call    func_004b2ae0
-        call    func_004b5ac0
-        call    func_004ad410
-        call    func_004b62b0
-        call    func_004b21c0
-        call    func_004c4240
-        call    func_004ac9b0
-        call    func_004b5370
-        call    func_004b1de0
-        jmp     func_004b5a70
+        call    TestCallIat_004c44f0
+        call    Push4MultiCall_004b4410
+        call    Helper_AppStub_2AE0
+        call    Thunk_004b5ac0
+        call    RegistryInstallEntry_004ad410
+        call    Helper_MenuStub_62B0
+        call    Helper_AppStub_21C0
+        call    AudioShutdownSequence_004c4240
+        call    AuxAudio_Teardown_004ac9b0
+        call    Helper_GeoStub_5370
+        call    TestCallZero_004b1de0
+        jmp     Helper_GeoStub_5A70
     }
 }
 
@@ -68,15 +68,15 @@ __declspec(naked) void CopyArgs16ToGlobals_004b2ff0(void) {
  *   call F; eax=arg-1; if (eax > 4) ret; jmp [tab + eax*4]
  *   table swaps entries 4<->5 (table[3]=case5, table[4]=case4).
  */
-extern void func_004b3db0(void);
+extern int Renderer_GetMode(void);
 extern void func_004b4600_cc(void);
-extern void func_004ad590(void);
-extern void func_004af880(void);
-extern void func_004b00b0(void);
-extern void func_004b2930(void);
+extern void VtRelease_Modal_004ad590(void);
+extern void Renderer3_EndScene_SW_FS(void);
+extern void Renderer5_EndScene_SW_FS_Hi(void);
+extern void Renderer4_EndScene_SW_Win(void);
 __declspec(naked) void JumpTable5Way_004b41c0(void) {
     __asm {
-        call    func_004b3db0
+        call    Renderer_GetMode
         dec     eax
         cmp     eax, 4
         _emit   77h
@@ -89,10 +89,10 @@ __declspec(naked) void JumpTable5Way_004b41c0(void) {
         _emit   4bh
         _emit   00h
         jmp     func_004b4600_cc
-        jmp     func_004ad590
-        jmp     func_004af880
-        jmp     func_004b00b0
-        jmp     func_004b2930
+        jmp     VtRelease_Modal_004ad590
+        jmp     Renderer3_EndScene_SW_FS
+        jmp     Renderer5_EndScene_SW_FS_Hi
+        jmp     Renderer4_EndScene_SW_Win
         ret
         _emit   0d2h
         _emit   41h
@@ -118,25 +118,25 @@ __declspec(naked) void JumpTable5Way_004b41c0(void) {
 }
 
 /* @addr 0x004b4410 (51b): push 4; 7 calls; clear [g_state_004f4b3c] */
-extern void func_004b40a0(int);
-extern void func_004b3ed0(void);
-extern void func_004bf320(void);
-extern void func_004ad7c0(void);
-extern void func_004afa10(void);
-extern void func_004b0240(void);
-extern void func_004b2a40(void);
+extern int SetRendererMode(int mode);
+extern s32 TryInitRenderer(void);
+extern void Thunk_004bf320(void);
+extern void EngineShutdown_004ad7c0(void);
+extern void ComInitSequence_004afa10(void);
+extern void ComInitSequence_004b0240(void);
+extern void RendererTeardownSW_004b2a40(void);
 extern unsigned int g_state_004f4b3c;
 __declspec(naked) void Push4MultiCall_004b4410(void) {
     __asm {
         push    4
-        call    func_004b40a0
+        call    SetRendererMode
         add     esp, 4
-        call    func_004b3ed0
-        call    func_004bf320
-        call    func_004ad7c0
-        call    func_004afa10
-        call    func_004b0240
-        call    func_004b2a40
+        call    TryInitRenderer
+        call    Thunk_004bf320
+        call    EngineShutdown_004ad7c0
+        call    ComInitSequence_004afa10
+        call    ComInitSequence_004b0240
+        call    RendererTeardownSW_004b2a40
         mov     dword ptr [g_state_004f4b3c], 0
         ret
     }
@@ -208,7 +208,7 @@ __declspec(naked) void EarlyOutDualPushIATStore_004b4600(void) {
 }
 
 /* @addr 0x004a9230 (64b): call F + load 1, 0; set 5 globals; jmp T. */
-extern void func_004a1ec0(void);
+extern void DrainQueueCallEach_004a1ec0(void);
 extern unsigned int g_state_0052aac4_cc;
 extern unsigned int g_state_0053a50c;
 extern unsigned int g_state_0054355c;
@@ -216,10 +216,10 @@ extern unsigned int g_state_00543710;
 extern unsigned int g_state_0054359c;
 extern unsigned int g_state_005433c8;
 extern unsigned char g_byte_00543834;
-extern void func_004a93c0(void);
+extern void PendingMatch_004a93c0(void);
 __declspec(naked) void CallSetMultiGlobalsJmp_004a9230(void) {
     __asm {
-        call    func_004a1ec0
+        call    DrainQueueCallEach_004a1ec0
         mov     eax, 1
         xor     ecx, ecx
         mov     dword ptr [g_state_0052aac4_cc], 2
@@ -229,32 +229,32 @@ __declspec(naked) void CallSetMultiGlobalsJmp_004a9230(void) {
         mov     dword ptr [g_state_0054359c], ecx
         mov     dword ptr [g_state_005433c8], ecx
         mov     byte  ptr [g_byte_00543834], al
-        jmp     func_004a93c0
+        jmp     PendingMatch_004a93c0
     }
 }
 
 /* @addr 0x004a1bf0 (65b): 3-stage call chain with byte/byte/byte stores */
-extern int func_004a1ba0(void);
-extern int func_004a1b00(void);
-extern int func_004a1b50(void);
+extern int TestQueueGateState_004a1ba0(void);
+extern int InputPollFlagBits_004a1b00(void);
+extern int InputPollFlagBitsHalf_004a1b50(void);
 extern unsigned char g_byte_00543590;
 __declspec(naked) void TripleCallByteCheck_004a1bf0(void) {
     __asm {
-        call    func_004a1ba0
+        call    TestQueueGateState_004a1ba0
         test    eax, eax
         _emit   74h
         _emit   0bh
         mov     eax, 1
         mov     byte  ptr [g_byte_00543590], al
         ret
-        call    func_004a1b00
+        call    InputPollFlagBits_004a1b00
         test    eax, eax
         _emit   74h
         _emit   0bh
         mov     eax, 1
         mov     byte  ptr [g_byte_00543590], al
         ret
-        call    func_004a1b50
+        call    InputPollFlagBitsHalf_004a1b50
         test    eax, eax
         _emit   74h
         _emit   0dh
@@ -267,26 +267,26 @@ __declspec(naked) void TripleCallByteCheck_004a1bf0(void) {
 }
 
 /* @addr 0x004a1d80 (61b): 6 push/call/add-esp sequences */
-extern void func_004bd890(int);
+extern void TableWalkBoundedCmp_004bd890(int);
 __declspec(naked) void SixCallSeqPushImm_004a1d80(void) {
     __asm {
         push    9
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         push    2
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         push    3
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         push    4
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         push    5
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         push    7
-        call    func_004bd890
+        call    TableWalkBoundedCmp_004bd890
         add     esp, 4
         ret
     }
@@ -298,14 +298,14 @@ __declspec(naked) void SixCallSeqPushImm_004a1d80(void) {
  *   jz → call F2; pause → ret;
  *   set [g_eventQueueNotMask] = 0x1002f; jmp T.
  */
-extern void func_00423720(void);
+extern void ZeroSlotsGatedDispatch_00423720(void);
 extern unsigned int g_state_0052ab40;
 extern unsigned int g_state_00542094;
-extern void func_004930e0(void);
-extern void func_0045f650(void);
+extern void ScaledLoadCmp0fJmp_004930e0(void);
+extern void HitReactionDispatcher_0045f650(void);
 __declspec(naked) void CallPauseLoadAndDispatch_004235f0(void) {
     __asm {
-        call    func_00423720
+        call    ZeroSlotsGatedDispatch_00423720
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -316,13 +316,13 @@ __declspec(naked) void CallPauseLoadAndDispatch_004235f0(void) {
         mov     dword ptr [g_state_00542094], eax
         _emit   74h
         _emit   0eh
-        call    func_004930e0
+        call    ScaledLoadCmp0fJmp_004930e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_eventQueueNotMask], 0x1002f
-        jmp     func_0045f650
+        jmp     HitReactionDispatcher_0045f650
         ret
     }
 }

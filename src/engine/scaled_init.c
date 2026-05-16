@@ -37,82 +37,82 @@ extern unsigned int g_table_004f1ba0;   /* 0x004f1ba0 */
 extern unsigned int g_table_004f1be8;   /* 0x004f1be8 */
 
 /* Externs for jump targets. */
-extern void func_00417e40(void);   /* 0x00417e40 */
-extern void func_00441e50(void);   /* 0x00441e50 */
-extern void func_00450f10(void);   /* 0x00450f10 */
-extern void func_0048d500(void);   /* 0x0048d500 */
-extern void func_0048f6d0(void);   /* 0x0048f6d0 */
-extern void func_004955d0(void);   /* 0x004955d0 */
+extern void Phase4SevenPackedDispatch_00417e40(void);   /* 0x00417e40 */
+extern void TwoStageSetupTripleCopy_00441e50(void);   /* 0x00441e50 */
+extern void TripleBlockChainScaledInits_00450f10(void);   /* 0x00450f10 */
+extern void MStackChainInstallDispatch_0048d500(void);   /* 0x0048d500 */
+extern void GuardedDirtyXformFromTable_0048f6d0(void);   /* 0x0048f6d0 */
+extern void GameModeHandlerCluster_004955d0(void);   /* 0x004955d0 */
 
 /* The wrappers. */
 /* @addr 0x00417e20 */
 void ScaledInit_00417e20(void) {
     g_eventQueueTotal = (unsigned int)&g_table_005420f0 >> 2;
-    func_00417e40();
+    Phase4SevenPackedDispatch_00417e40();
 }
 
 /* @addr 0x00441e10 */
 void ScaledInit_00441e10(void) {
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e56d8 >> 2);
-    func_00441e50();
+    TwoStageSetupTripleCopy_00441e50();
 }
 
 /* @addr 0x00441e30 */
 void ScaledInit_00441e30(void) {
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e56d8 >> 2);
-    func_00441e50();
+    TwoStageSetupTripleCopy_00441e50();
 }
 
 /* @addr 0x00450ed0 */
 void ScaledInit_00450ed0(void) {
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e7c90 >> 2);
-    func_00450f10();
+    TripleBlockChainScaledInits_00450f10();
 }
 
 /* @addr 0x00450ef0 */
 void ScaledInit_00450ef0(void) {
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e7c48 >> 2);
-    func_00450f10();
+    TripleBlockChainScaledInits_00450f10();
 }
 
 /* @addr 0x0048d430 */
 void ScaledInit_0048d430(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542ea8 >> 2;
-    func_0048d500();
+    MStackChainInstallDispatch_0048d500();
 }
 
 /* @addr 0x0048d450 */
 void ScaledInit_0048d450(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542ef8 >> 2;
-    func_0048d500();
+    MStackChainInstallDispatch_0048d500();
 }
 
 /* @addr 0x0048d470 */
 void ScaledInit_0048d470(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542e48 >> 2;
-    func_0048d500();
+    MStackChainInstallDispatch_0048d500();
 }
 
 /* @addr 0x0048d490 */
 void ScaledInit_0048d490(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542d00 >> 2;
-    func_0048d500();
+    MStackChainInstallDispatch_0048d500();
 }
 
 /* @addr 0x0048f720 */
 void ScaledInit_0048f720(void) {
     g_scaledInit_00542044 = (unsigned int)&g_table_00542fb0 >> 2;
-    func_0048f6d0();
+    GuardedDirtyXformFromTable_0048f6d0();
 }
 
 /* @addr 0x00495590 */
 void ScaledInit_00495590(void) {
     g_scaledInit_00542048 = (unsigned int)&g_table_004f1ba0 >> 2;
-    func_004955d0();
+    GameModeHandlerCluster_004955d0();
 }
 
 /* @addr 0x004955b0 */
 void ScaledInit_004955b0(void) {
     g_scaledInit_00542048 = (unsigned int)&g_table_004f1be8 >> 2;
-    func_004955d0();
+    GameModeHandlerCluster_004955d0();
 }

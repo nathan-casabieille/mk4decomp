@@ -21,26 +21,26 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void func_0042c3e0(void);
-extern void func_0042c4f0(void);
-extern void func_0042b6f0(void);
-extern void func_0042c490(void);
-extern void func_0042c5a0(void);
-extern void func_0048f090(void);
-extern void func_00460d00(void);
-extern void func_00460d40(void);
+extern void QuadStageStateDispatch_0042c3e0(void);
+extern void InstallSelfDualEsi_0042c4f0(void);
+extern void EightPackedSubInstallSelfWalk_0042b6f0(void);
+extern void EsiAliasInstallChainCall_0042c490(void);
+extern void StageEventDamageCluster_0042c5a0(void);
+extern void MStackPush2ChainSwap_0048f090(void);
+extern void CallPauseMStackPushSet3Jmp_00460d00(void);
+extern void CallPauseMStackPushSet4Jmp_00460d40(void);
 
 /* @addr 0x0042b6c0 */
 __declspec(naked) void GuardedDispatch_0042b6c0(void) {
     __asm {
-        call    func_0042c3e0
+        call    QuadStageStateDispatch_0042c3e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         __asm _emit 75h __asm _emit 13h    /* jne SHORT ret_label */
         test    byte ptr [g_xformDirtyFlags], 1
         __asm _emit 74h __asm _emit 05h    /* je SHORT use_default */
-        jmp     func_0042c4f0
-        jmp     func_0042b6f0
+        jmp     InstallSelfDualEsi_0042c4f0
+        jmp     EightPackedSubInstallSelfWalk_0042b6f0
         ret
     }
 }
@@ -48,14 +48,14 @@ __declspec(naked) void GuardedDispatch_0042b6c0(void) {
 /* @addr 0x0042c570 */
 __declspec(naked) void GuardedDispatch_0042c570(void) {
     __asm {
-        call    func_0042c3e0
+        call    QuadStageStateDispatch_0042c3e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         __asm _emit 75h __asm _emit 13h
         test    byte ptr [g_xformDirtyFlags], 1
         __asm _emit 74h __asm _emit 05h
-        jmp     func_0042c490
-        jmp     func_0042c5a0
+        jmp     EsiAliasInstallChainCall_0042c490
+        jmp     StageEventDamageCluster_0042c5a0
         ret
     }
 }
@@ -63,14 +63,14 @@ __declspec(naked) void GuardedDispatch_0042c570(void) {
 /* @addr 0x00460ca0 */
 __declspec(naked) void GuardedDispatch_00460ca0(void) {
     __asm {
-        call    func_0048f090
+        call    MStackPush2ChainSwap_0048f090
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         __asm _emit 75h __asm _emit 13h
         test    byte ptr [g_xformDirtyFlags], 1
         __asm _emit 74h __asm _emit 05h
-        jmp     func_00460d00
-        jmp     func_00460d40
+        jmp     CallPauseMStackPushSet3Jmp_00460d00
+        jmp     CallPauseMStackPushSet4Jmp_00460d40
         ret
     }
 }
@@ -78,14 +78,14 @@ __declspec(naked) void GuardedDispatch_00460ca0(void) {
 /* @addr 0x00460cd0 */
 __declspec(naked) void GuardedDispatch_00460cd0(void) {
     __asm {
-        call    func_0048f090
+        call    MStackPush2ChainSwap_0048f090
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         __asm _emit 75h __asm _emit 13h
         test    byte ptr [g_xformDirtyFlags], 1
         __asm _emit 74h __asm _emit 05h
-        jmp     func_00460d40
-        jmp     func_00460d00
+        jmp     CallPauseMStackPushSet4Jmp_00460d40
+        jmp     CallPauseMStackPushSet3Jmp_00460d00
         ret
     }
 }

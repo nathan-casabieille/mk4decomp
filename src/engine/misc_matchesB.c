@@ -22,11 +22,11 @@ __declspec(naked) void StoreByteJmp_0042f840(void) {
  *   inc     dword ptr [g_scaledInit_00542044]
  *   jmp     +5
  */
-extern void func_0045e1e0(void);
+extern void InputCheckCluster_0045e1e0(void);
 __declspec(naked) void IncJmp_0045e1d0(void) {
     __asm {
         inc     dword ptr [g_scaledInit_00542044]
-        jmp     func_0045e1e0
+        jmp     InputCheckCluster_0045e1e0
     }
 }
 
@@ -118,10 +118,10 @@ void StoreAtMinus8_004b5b00(int *p, int v) {
  *   mov     byte ptr [g_byte_00f9efd4], 1
  *   ret
  */
-extern void func_004c42f0(void);
+extern void OneShotVtableWalk_004c42f0(void);
 extern unsigned char g_byte_00f9efd4;
 void CallSetByte1_004c4360(void) {
-    func_004c42f0();
+    OneShotVtableWalk_004c42f0();
     g_byte_00f9efd4 = 1;
 }
 
@@ -166,10 +166,10 @@ __declspec(naked) void Loop1cBitMask_004c4450(void) {
  *   mov     [eax+0x14], ecx
  *   ret
  */
-extern void *func_004c9df0(void);
+extern void *PendingMatch_004c9df0(void);
 struct s_field14 { char _pad[0x14]; int v; };
 void CallStoreField14_004c6500(int x) {
-    struct s_field14 *s = (struct s_field14 *)func_004c9df0();
+    struct s_field14 *s = (struct s_field14 *)PendingMatch_004c9df0();
     s->v = x;
 }
 

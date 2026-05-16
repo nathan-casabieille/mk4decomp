@@ -6,9 +6,9 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
+extern u32 g_eventQueueWorkType;
+extern packed_ptr g_xformEntityIdx;
+extern u32 g_pendingNodeType;
 extern const int g_sinTable[];
 extern void Mul10Tail_00404af0(void);
 
@@ -78,7 +78,7 @@ __declspec(naked) void RandSarMod0xFFF_0041f230(void) {
  *   mov     [g_framePauseFlag], ecx
  *   ret
  */
-extern void func_00421f40(void);
+extern void InstallSelfStackReset_00421f40(void);
 __declspec(naked) void ScaledInitOrSelfPtr_00421f00(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -88,7 +88,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00421f00(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_00421f40
+        jmp     InstallSelfStackReset_00421f40
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00421f00
         mov     dword ptr [eax + 0x84], ecx
@@ -99,7 +99,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00421f00(void) {
 }
 
 /* @addr 0x00428950 (64b): same shape, store=own, jmp=0x428850 */
-extern void func_00428850(void);
+extern void CallPauseDirty1JmpDirty4StackPush_00428850(void);
 __declspec(naked) void ScaledInitOrSelfPtr_00428950(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -109,7 +109,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00428950(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_00428850
+        jmp     CallPauseDirty1JmpDirty4StackPush_00428850
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00428950
         mov     dword ptr [eax + 0x84], ecx
@@ -120,7 +120,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00428950(void) {
 }
 
 /* @addr 0x00429680 (64b): same shape, store=own, jmp=0x41f780 */
-extern void func_0041f780(void);
+extern void StackPopDispatchTagged_0041f780(void);
 __declspec(naked) void ScaledInitOrSelfPtr_00429680(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -130,7 +130,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00429680(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_0041f780
+        jmp     StackPopDispatchTagged_0041f780
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00429680
         mov     dword ptr [eax + 0x84], ecx
@@ -141,7 +141,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00429680(void) {
 }
 
 /* @addr 0x00442d90 (64b): same shape, store=own, jmp=0x442dd0 */
-extern void func_00442dd0(void);
+extern void DualSeqLoopDispatch_00442dd0(void);
 __declspec(naked) void ScaledInitOrSelfPtr_00442d90(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -151,7 +151,7 @@ __declspec(naked) void ScaledInitOrSelfPtr_00442d90(void) {
         test    ecx, ecx
         _emit   74h
         _emit   05h
-        jmp     func_00442dd0
+        jmp     DualSeqLoopDispatch_00442dd0
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00442d90
         mov     dword ptr [eax + 0x84], ecx
@@ -261,34 +261,34 @@ __declspec(naked) void IncStoreCallIATDec_00439520(void) {
  *   jmp     T
  *   ret
  */
-extern void func_00458ba0(void);
-extern void func_00458030(void);
-extern void func_004580a0(void);
-extern void func_00458160(void);
-extern void func_00458440(void);
+extern void DoublePackedPtrInstall_00458ba0(void);
+extern void DualPathCallSetup_00458030(void);
+extern void TriplePackedTagged_004580a0(void);
+extern void CameraProjectionInitSweep_00458160(void);
+extern void SpawnTrioInitCluster_00458440(void);
 __declspec(naked) void QuadCallPauseJmp_00457ff0(void) {
     __asm {
-        call    func_00458ba0
+        call    DoublePackedPtrInstall_00458ba0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2fh
-        call    func_00458030
+        call    DualPathCallSetup_00458030
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   21h
-        call    func_004580a0
+        call    TriplePackedTagged_004580a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   13h
-        call    func_00458160
+        call    CameraProjectionInitSweep_00458160
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_00458440
+        jmp     SpawnTrioInitCluster_00458440
         ret
     }
 }

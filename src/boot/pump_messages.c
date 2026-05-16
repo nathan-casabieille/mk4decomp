@@ -14,7 +14,7 @@
 #include "engine/render.h"
 #include "game/statemachine.h"
 
-extern int  TryInitRenderer(void);                       /* 0x004b3ed0 */
+extern s32 TryInitRenderer(void);                       /* 0x004b3ed0 */
 extern void UpdateWindowTitle(void);                     /* 0x004b22e0 */
 
 extern u32  g_pumpFlagD8;        /* 0x00f9f7d8 */

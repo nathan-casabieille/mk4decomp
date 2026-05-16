@@ -29,8 +29,8 @@
 
 extern void RangePathIATDispatch_004c6ff0(int);
 extern void RangePathIATDispatch_004c7060(int);
-extern int  func_004c5bb0(int a, int b, int c, int d);
-extern int  func_004c5fc0(int a, int b, int c, int d);
+extern int  Fread_004c5bb0(int a, int b, int c, int d);
+extern int  FWriteNoLock_004c5fc0(int a, int b, int c, int d);
 
 /* @addr 0x004c5b70 */
 __declspec(naked) void WrapThreeDispatch_004c5b70(void) {
@@ -48,7 +48,7 @@ __declspec(naked) void WrapThreeDispatch_004c5b70(void) {
         push    eax
         push    ecx
         push    edx
-        call    func_004c5bb0
+        call    Fread_004c5bb0
         add     esp, 0x10
         mov     edi, eax
         push    esi
@@ -77,7 +77,7 @@ __declspec(naked) void WrapThreeDispatch_004c5f80(void) {
         push    eax
         push    ecx
         push    edx
-        call    func_004c5fc0
+        call    FWriteNoLock_004c5fc0
         add     esp, 0x10
         mov     edi, eax
         push    esi

@@ -37,11 +37,11 @@ extern unsigned int g_state2_0053a354;
 extern unsigned int g_finalDest_0053a178;
 extern unsigned int g_finalDest_0053a250;
 
-extern void func_004a0d60(void);
-extern void func_004a0190(void);
-extern void func_004a0210(void);
-extern void func_004a04a0(void);
-extern void func_004a0520(void);
+extern void AudioVoiceSequencerCluster_004a0d60(void);
+extern void AudioStateRemap_004a0190(void);
+extern void AudioInstallSelfShiftedChainInit_004a0210(void);
+extern void AudioStateRemapB_004a04a0(void);
+extern void AudioInstallSelfChannel8_004a0520(void);
 
 /* @addr 0x004a0130 */
 __declspec(naked) void TripleTestInstallJmp_004a0130(void) {
@@ -49,7 +49,7 @@ __declspec(naked) void TripleTestInstallJmp_004a0130(void) {
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_acc_00542078], eax
-        call    func_004a0d60
+        call    AudioVoiceSequencerCluster_004a0d60
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -59,16 +59,16 @@ __declspec(naked) void TripleTestInstallJmp_004a0130(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_004a0190
+        jmp     AudioStateRemap_004a0190
         mov     eax, dword ptr [g_state2_0053a1bc]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_004a0190
+        jmp     AudioStateRemap_004a0190
         mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [g_finalDest_0053a178], eax
-        jmp     func_004a0210
+        jmp     AudioInstallSelfShiftedChainInit_004a0210
         ret
     }
 }
@@ -79,7 +79,7 @@ __declspec(naked) void TripleTestInstallJmp_004a0440(void) {
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_acc_00542078], eax
-        call    func_004a0d60
+        call    AudioVoiceSequencerCluster_004a0d60
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -89,16 +89,16 @@ __declspec(naked) void TripleTestInstallJmp_004a0440(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_004a04a0
+        jmp     AudioStateRemapB_004a04a0
         mov     eax, dword ptr [g_state2_0053a354]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   05h
-        jmp     func_004a04a0
+        jmp     AudioStateRemapB_004a04a0
         mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [g_finalDest_0053a250], eax
-        jmp     func_004a0520
+        jmp     AudioInstallSelfChannel8_004a0520
         ret
     }
 }

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542048;
 extern unsigned int g_extra_00535e68;
 extern unsigned int g_extra_0053a280;
 
-extern void func_0045daf0(void);
+extern void ChainWalkSelfRecursive_0045daf0(void);
 
 /* @addr 0x0045da80 */
 void TripleInstallJmp_0045da80(void) {
@@ -28,7 +28,7 @@ void TripleInstallJmp_0045da80(void) {
     g_scaledInit_00542044 = a;
     g_pendingNodeType = b;
     g_scaledInit_00542048 = c;
-    func_0045daf0();
+    ChainWalkSelfRecursive_0045daf0();
 }
 
 /* @addr 0x0045dab0 */
@@ -39,5 +39,5 @@ void TripleInstallJmp_0045dab0(void) {
     g_scaledInit_00542044 = a;
     g_pendingNodeType = b;
     g_scaledInit_00542048 = c;
-    func_0045daf0();
+    ChainWalkSelfRecursive_0045daf0();
 }

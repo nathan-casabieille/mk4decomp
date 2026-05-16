@@ -25,8 +25,8 @@ extern unsigned int g_scaledInit_00542048;
 
 extern void *g_lit_004ef4d0;
 extern void *g_lit_004ef7d8;
-extern void func_0048f8e0(void);
-extern void func_00481060(void);
+extern void ScaledChainCallPauseSetJmp_0048f8e0(void);
+extern void Wrapper_00481060(void);
 
 /* @addr 0x00480fe0 */
 __declspec(naked) void ScaledLitLoadCall_00480fe0(void) {
@@ -38,12 +38,12 @@ __declspec(naked) void ScaledLitLoadCall_00480fe0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542048], eax
-        call    func_0048f8e0
+        call    ScaledChainCallPauseSetJmp_0048f8e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_00481060
+        jmp     Wrapper_00481060
         ret
     }
 }
@@ -58,12 +58,12 @@ __declspec(naked) void ScaledLitLoadCall_00481020(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542048], eax
-        call    func_0048f8e0
+        call    ScaledChainCallPauseSetJmp_0048f8e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_00481060
+        jmp     Wrapper_00481060
         ret
     }
 }

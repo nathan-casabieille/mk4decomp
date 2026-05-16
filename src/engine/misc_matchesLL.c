@@ -6,20 +6,20 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueNotMask;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueEnd;
+extern u32 g_eventQueueIdx;
+extern u32 g_eventQueueWorkType;
+extern u32 g_pendingNodeType;
+extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00473070 (73b)
  *   Push g_eventQueueCurrent on stack[idx*4]; set g_eventQueueCurrent = -1;
  *   call F; pause-test → ret; pop stack value back into g_eventQueueCurrent.
  */
-extern void func_0049cbe0(void);
+extern void Thunk_0049cbe0(void);
 __declspec(naked) void PushPopCurrentSetFFFFFFFF_00473070(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -28,7 +28,7 @@ __declspec(naked) void PushPopCurrentSetFFFFFFFF_00473070(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_eventQueueCurrent], 0xffffffff
-        call    func_0049cbe0
+        call    Thunk_0049cbe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -129,14 +129,14 @@ __declspec(naked) void SetWalk0xaCrossStore_00445fb0(void) {
  *   3 calls + pause-test chain; testb 1,[dirty] → ret;
  *   push 0x4ee2f0; call F4; add esp 4; ret.
  */
-extern void func_00488f00(void);
+extern void CjTableThresholdDispatch_00488f00(void);
 extern void func_00484572(void);
 extern void func_004ae794(void);
-extern int func_00409400(void *);
+extern int LoadSetFpJmp_00409400(void *);
 extern void *g_data_004ee2f0;
 __declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
     __asm {
-        call    func_00488f00
+        call    CjTableThresholdDispatch_00488f00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -160,7 +160,7 @@ __declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
         _emit   00h
         _emit   00h
         push    OFFSET g_data_004ee2f0
-        call    func_00409400
+        call    LoadSetFpJmp_00409400
         add     esp, 4
         ret
     }
@@ -173,7 +173,7 @@ __declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
  */
 extern void func_0047f860(void);
 extern void func_00484342(void);
-extern void func_00483a20(void);
+extern void InstallSelfOrChainJmp_00483a20(void);
 extern void func_0042b988(void);
 __declspec(naked) void CallPauseDirty4StackPushFn_004839d0(void) {
     __asm {
@@ -193,7 +193,7 @@ __declspec(naked) void CallPauseDirty4StackPushFn_004839d0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00483a20
+        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfOrChainJmp_00483a20
         jmp     func_0042b988
         _emit   0e9h
         _emit   0bh

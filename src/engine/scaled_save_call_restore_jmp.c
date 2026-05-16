@@ -23,8 +23,8 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void func_00472fe0(void);
-extern void func_00406790(void);
+extern void InstallSelfMagicShift_00472fe0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
 
 /* @addr 0x00472f40 */
 __declspec(naked) void ScaledSaveCallRestoreJmp_00472f40(void) {
@@ -32,14 +32,14 @@ __declspec(naked) void ScaledSaveCallRestoreJmp_00472f40(void) {
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        call    func_00472fe0
+        call    InstallSelfMagicShift_00472fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   11h
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00406790
+        jmp     MStackPush2ChainLLInsert_00406790
         ret
     }
 }
@@ -50,14 +50,14 @@ __declspec(naked) void ScaledSaveCallRestoreJmp_00472f80(void) {
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        call    func_00472fe0
+        call    InstallSelfMagicShift_00472fe0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   11h
         mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00406790
+        jmp     MStackPush2ChainLLInsert_00406790
         ret
     }
 }

@@ -26,8 +26,8 @@ extern void *g_comptr_0058c8e4;
 extern unsigned int g_comret_0058c878;
 extern unsigned int g_comret_0058c8f8;
 
-extern void func_004af880(void);
-extern void func_004b00b0(void);
+extern void Renderer3_EndScene_SW_FS(void);
+extern void Renderer5_EndScene_SW_FS_Hi(void);
 
 /* @addr 0x004af690 */
 __declspec(naked) void ComTwoGateCall_004af690(void) {
@@ -36,7 +36,7 @@ __declspec(naked) void ComTwoGateCall_004af690(void) {
         test    eax, eax
         _emit   74h
         _emit   1dh
-        call    func_004af880
+        call    Renderer3_EndScene_SW_FS
         mov     eax, dword ptr [g_comptr_0058c864]
         test    eax, eax
         _emit   74h
@@ -58,7 +58,7 @@ __declspec(naked) void ComTwoGateCall_004afec0(void) {
         test    eax, eax
         _emit   74h
         _emit   1dh
-        call    func_004b00b0
+        call    Renderer5_EndScene_SW_FS_Hi
         mov     eax, dword ptr [g_comptr_0058c8e4]
         test    eax, eax
         _emit   74h

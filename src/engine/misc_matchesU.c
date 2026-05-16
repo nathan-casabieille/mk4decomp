@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 
 /* @addr 0x0045f5d0 (50b)
@@ -72,7 +72,7 @@ __declspec(naked) void CmpP1ScaledLoad7c_0045f610(void) {
  *   jmp     +8
  *   ret
  */
-extern void func_0048a190(void);
+extern void OrDualStore_0048a190(void);
 extern void func_00404e10(void);
 extern void func_004222c0(void);
 extern void func_004202f5(void);
@@ -84,7 +84,7 @@ __declspec(naked) void ScaledClearTripleCallJmp_004202c0(void) {
         test    ecx, ecx
         _emit   75h
         _emit   05h
-        call    func_0048a190
+        call    OrDualStore_0048a190
         call    func_00404e10
         call    func_004222c0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -111,12 +111,12 @@ __declspec(naked) void ScaledClearTripleCallJmp_004202c0(void) {
  *   jmp     -0x57
  *   ret
  */
-extern void func_004299a0(void);
+extern void GuardedChainCmpDualBitXor_004299a0(void);
 extern void func_004296d8(void);
 extern void func_004296fb(void);
 __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
     __asm {
-        call    func_004299a0
+        call    GuardedChainCmpDualBitXor_004299a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -149,14 +149,14 @@ __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
  *   mov     [ecx*4 + 0x60], edx
  *   ret
  */
-extern unsigned int g_xformEntityIdx;
-extern void func_00406c10(void);
+extern packed_ptr g_xformEntityIdx;
+extern void FramePauseScaledStore_00406c10(void);
 __declspec(naked) void Const4ec8f8DirtyScaledStore_00446580(void) {
     __asm {
         mov     eax, 0x004ec8f8
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    func_00406c10
+        call    FramePauseScaledStore_00406c10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -111,10 +111,10 @@ __declspec(naked) void ScaledMaskOrStore_00405880(void) {
  *   ret
  */
 extern unsigned int g_state_00541dc4;
-extern void func_004077b0(void);
+extern void BootChainPushAddSignFlag_004077b0(void);
 __declspec(naked) void CallPauseScaledStoreAdd_004078f0(void) {
     __asm {
-        call    func_004077b0
+        call    BootChainPushAddSignFlag_004077b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -308,8 +308,8 @@ __declspec(naked) void CopyScaledTriple_00446350(void) {
  *   jmp     T
  */
 extern unsigned int g_state_0053a278;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_eventQueueEnd;
+extern u32 g_eventQueueIdx;
+extern u32 g_eventQueueEnd;
 extern void func_00458886(void);
 __declspec(naked) void IncCmp28StoreOrJmp_00458880(void) {
     __asm {
@@ -342,10 +342,10 @@ __declspec(naked) void IncCmp28StoreOrJmp_00458880(void) {
  *   xor     eax, eax
  *   ret
  */
-extern void func_0045f5d0(void);
+extern void CmpP1ScaledLoad74_0045f5d0(void);
 __declspec(naked) void CallCmpDirtyTrueOrFalse_0045f570(void) {
     __asm {
-        call    func_0045f5d0
+        call    CmpP1ScaledLoad74_0045f5d0
         mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_eventQueueEnd]
         cmp     eax, ecx

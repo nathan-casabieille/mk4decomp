@@ -8,22 +8,22 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_state_00537e94;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueCurrent;
+extern u32 g_eventQueueWorkType;
 
 /* @addr 0x00428850 (84b)
  *   call F1; pause → ret; testb 1,[dirty]; je +5 → jmp T1;
  *   call F2; pause → ret; testb 4,[dirty]; je +0x1b →ret-tail;
  *   inc g_state_004d57ac; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
-extern void func_00429790(void);
+extern void ScaledLoadJmp_24_00429790(void);
 extern void func_00436670(void);
 extern void func_0048f330(void);
 extern void func_00428950_oo(void);
 extern void func_004939a0(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
     __asm {
-        call    func_00429790
+        call    ScaledLoadJmp_24_00429790
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -58,7 +58,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
 extern void func_0047d860(void);
 extern void func_00488bf0(void);
 extern void func_0048f330_oo(void);
-extern void func_00483ae0(void);
+extern void InstallSelfCallBitGate_00483ae0(void);
 extern void func_0042b988_oo(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
     __asm {
@@ -82,7 +82,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00483ae0
+        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfCallBitGate_00483ae0
         jmp     func_0042b988_oo
         _emit   0e9h
         _emit   0dh
@@ -98,13 +98,13 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
  *   call F1 (same); pause → ret; inc g_state_004d57ac; set walk=3;
  *   push 0x00439190 onto stack[idx*4]; jmp T2.
  */
-extern void func_0048e4d0(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern void func_0046ca80(void);
-extern void func_00439190(void);
+extern void DualCallPauseJmpDual_00439190(void);
 extern void func_00471270(void);
 __declspec(naked) void CallPauseJmpStateInit_004370e0(void) {
     __asm {
-        call    func_0048e4d0
+        call    LeaPlus22StoreSelf_0048e4d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -123,7 +123,7 @@ __declspec(naked) void CallPauseJmpStateInit_004370e0(void) {
         nop
         nop
         nop
-        call    func_0048e4d0
+        call    LeaPlus22StoreSelf_0048e4d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -132,7 +132,7 @@ __declspec(naked) void CallPauseJmpStateInit_004370e0(void) {
         mov     dword ptr [g_walkCallback], 3
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00439190
+        mov     dword ptr [eax*4 + 0], OFFSET DualCallPauseJmpDual_00439190
         jmp     func_00471270
         ret
     }
@@ -176,14 +176,14 @@ __declspec(naked) void PushPopState70Mask_00490650(void) {
  *   nop nop; call F3; pause → ret; jmp T.
  */
 extern void *g_data_004f12f8;
-extern int func_0048e630(void *);
+extern int PackedAdvanceCallContinue_0048e630(void *);
 extern void func_00489fd0(void);
 extern void func_004312e0(void);
 extern void func_00431470(void);
 __declspec(naked) void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
     __asm {
         push    OFFSET g_data_004f12f8
-        call    func_0048e630
+        call    PackedAdvanceCallContinue_0048e630
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

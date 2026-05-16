@@ -9,27 +9,27 @@
  * forward to a shared callee.
  */
 
-extern int __cdecl func_0048b800(int);
-extern int __cdecl func_004c6a20(int);
-extern int __cdecl func_004c6f50(int);
-extern int __cdecl func_004c6fd0(int);
+extern int __cdecl MStackAngleWrapDispatch_0048b800(int);
+extern int __cdecl LockIterTwoPath_004c6a20(int);
+extern int __cdecl Lock_004c6f50(int);
+extern int __cdecl TableLookupIatCall_004c6fd0(int);
 
 /* @addr 0x0048bac0 */
 void PushConstCall_0048bac0(void) {
-    func_0048b800(1);
+    MStackAngleWrapDispatch_0048b800(1);
 }
 
 /* @addr 0x004c6a10 */
 void PushConstCall_004c6a10(void) {
-    func_004c6a20(1);
+    LockIterTwoPath_004c6a20(1);
 }
 
 /* @addr 0x004c6920 */
 void PushConstCall_004c6920(void) {
-    func_004c6f50(0xd);
+    Lock_004c6f50(0xd);
 }
 
 /* @addr 0x004c6930 */
 void PushConstCall_004c6930(void) {
-    func_004c6fd0(0xd);
+    TableLookupIatCall_004c6fd0(0xd);
 }

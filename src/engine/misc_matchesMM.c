@@ -7,9 +7,9 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_pendingNodeType;
+extern u32 g_eventQueueEnd;
+extern u32 g_eventQueueIdx;
+extern u32 g_pendingNodeType;
 
 /* @addr 0x0041fd10 (91b)
  *   call F0; set g_state_0053a1f0=2; call F1; pause → ret;
@@ -17,7 +17,7 @@ extern unsigned int g_pendingNodeType;
  *   call F5; pause → ret; jmp T.
  */
 extern unsigned int g_state_0053a1f0;
-extern void func_0041fd00(void);
+extern void Wrapper_0041fd00(void);
 extern void func_0041f260(void);
 extern void func_004135b0(void);
 extern void func_00481fc0(void);
@@ -26,7 +26,7 @@ extern void func_0040517a(void);
 extern void func_004012f0(void);
 __declspec(naked) void Set2FiveCallPauseJmp_0041fd10(void) {
     __asm {
-        call    func_0041fd00
+        call    Wrapper_0041fd00
         mov     dword ptr [g_state_0053a1f0], 2
         call    func_0041f260
         mov     eax, dword ptr [g_framePauseFlag]
@@ -62,7 +62,7 @@ __declspec(naked) void Set2FiveCallPauseJmp_0041fd10(void) {
  *   push g_currentNodeFlags onto stack[idx*4]; 3-call pause chain;
  *   pop stack value back into g_currentNodeFlags.
  */
-extern unsigned int g_currentNodeFlags;
+extern u32 g_currentNodeFlags;
 extern void func_0049072e(void);
 extern void func_00490c0a(void);
 extern void func_0046121e(void);
@@ -201,7 +201,7 @@ __declspec(naked) void ScaledIncLoopState3_0048c210(void) {
  */
 extern unsigned int g_eventQueueCurrent_mm2;
 extern void func_004c5740_mm(void);
-extern int func_004c5690(int, int, int, int);
+extern int Alldiv_004c5690(int, int, int, int);
 __declspec(naked) void RangeMulMod_004ab2a0(void) {
     __asm {
         push    esi
@@ -239,7 +239,7 @@ __declspec(naked) void RangeMulMod_004ab2a0(void) {
         push    eax
         push    edi
         push    ecx
-        call    func_004c5690
+        call    Alldiv_004c5690
         pop     edi
         mov     dword ptr [g_walkCallback], eax
         pop     esi

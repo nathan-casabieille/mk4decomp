@@ -150,12 +150,12 @@ __declspec(naked) void IterStepDualStore_00490b40(void) {
  *   jmp     T
  *   ret
  */
-extern void func_0048f020(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
 extern void func_00490371(void);
 extern void func_0049126c(void);
 __declspec(naked) void DualCallPauseDirtyJmp_00490c30(void) {
     __asm {
-        call    func_0048f020
+        call    GuardedDualAndFlagToggle_0048f020
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -242,7 +242,7 @@ __declspec(naked) void DualScaledStoreZero_00491080(void) {
  */
 extern unsigned int g_state_0054207c;
 extern unsigned int g_state_00542080;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 extern void func_004245d4(void);
 extern void func_00404060(void);
 __declspec(naked) void SwapTwoGlobals_004911c0(void) {
@@ -303,12 +303,12 @@ __declspec(naked) void IncCapped3e7_00491920(void) {
  *   ret
  */
 extern unsigned int g_state_0053a51c;
-extern void func_004220a0(void);
+extern void GuardedScaledLookupCallJmp_004220a0(void);
 extern void func_0042a330(void);
 extern void func_0049199a(void);
 __declspec(naked) void TwoCallStatePauseJmp_00491990(void) {
     __asm {
-        call    func_004220a0
+        call    GuardedScaledLookupCallJmp_004220a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -382,14 +382,14 @@ __declspec(naked) void Const0303InitJmp_00495cf0(void) {
  *   jmp     T
  *   ret
  */
-extern void func_00406ba0(void);
+extern void CopyJmp_00406ba0(void);
 extern void func_00490d30(void);
 extern void func_0049020a(void);
 __declspec(naked) void StoreCallPauseCallPauseJmp_0048fa20(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_scaledInit_00542044], eax
-        call    func_00406ba0
+        call    CopyJmp_00406ba0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

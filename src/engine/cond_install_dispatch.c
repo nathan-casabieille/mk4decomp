@@ -27,9 +27,9 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void func_00476e00(void);
+extern void ScaledOr4Jmp_00476e00(void);
 extern void func_00476e90(void);
-extern void func_00476fe0(void);
+extern void ScaledAndFBJmp_00476fe0(void);
 extern void func_004baea0(void);
 
 /* @addr 0x00476e20 */
@@ -41,7 +41,7 @@ __declspec(naked) void CondInstallDispatch_00476e20(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   18h
-        mov     dword ptr [g_walkCallback], OFFSET func_00476e00
+        mov     dword ptr [g_walkCallback], OFFSET ScaledOr4Jmp_00476e00
         call    func_004baea0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -85,7 +85,7 @@ __declspec(naked) void CondInstallDispatch_00477000(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   18h
-        mov     dword ptr [g_walkCallback], OFFSET func_00476fe0
+        mov     dword ptr [g_walkCallback], OFFSET ScaledAndFBJmp_00476fe0
         call    func_004baea0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

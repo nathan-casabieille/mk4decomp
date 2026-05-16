@@ -71,13 +71,13 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_xformEntityIdx;
+extern u32 g_pendingNodeType;
+extern packed_ptr g_xformEntityIdx;
 
-extern void func_004060c0(void);
-extern void func_00406dd0(void);
-extern void func_00406c10(void);
-extern void func_00406790(void);
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
 
 #define DC260_BODY(WORKER_FN)                                                  \
     __asm {                                                                    \
@@ -87,7 +87,7 @@ extern void func_00406790(void);
         __asm push    ebx                                                      \
         __asm mov     dword ptr [g_matrixStackTop], eax                        \
         __asm mov     dword ptr [eax*4 + 0], ecx                               \
-        __asm call    func_004060c0                                            \
+        __asm call    BootPhaseGateBracketedInit_004060c0                                            \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
         __asm test    eax, eax                                                 \
         __asm _emit   0fh                                                      \
@@ -135,7 +135,7 @@ extern void func_00406790(void);
         __asm _emit   24h                                                      \
         __asm mov     ecx, dword ptr [g_pendingNodeType]                       \
         __asm mov     dword ptr [g_scaledInit_00542044], ecx                   \
-        __asm call    func_00406790                                            \
+        __asm call    MStackPush2ChainLLInsert_00406790                                            \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
         __asm test    eax, eax                                                 \
         __asm _emit   75h                                                      \
@@ -161,7 +161,7 @@ extern void func_00406790(void);
     }
 
 /* @addr 0x00407030 */
-__declspec(naked) void DispatcherComplex260_00407030(void) { DC260_BODY(func_00406dd0) }
+__declspec(naked) void DispatcherComplex260_00407030(void) { DC260_BODY(MStackBracket1_TreeWalkRecursive2_00406dd0) }
 
 /* @addr 0x00407400 */
-__declspec(naked) void DispatcherComplex260_00407400(void) { DC260_BODY(func_00406c10) }
+__declspec(naked) void DispatcherComplex260_00407400(void) { DC260_BODY(FramePauseScaledStore_00406c10) }

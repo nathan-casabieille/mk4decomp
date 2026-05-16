@@ -95,7 +95,7 @@ $(MATCH_EXE): $(ALL_OBJS) | $(BUILD_DIR)
 $(OBJ_DIR)/%.obj: src/%.c | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	@echo "  CL      $<"
-	@$(CL) $(CFLAGS_MATCHING) /c /Fo$@ $<
+	@$(CL) $(CFLAGS_MATCHING) /Zm800 /c /Fo$@ $<
 
 # Pattern: asm/foo.s -> build/obj/asm/foo.obj  (assembler - TODO)
 $(OBJ_DIR)/asm/%.obj: asm/%.s | $(BUILD_DIR)

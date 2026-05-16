@@ -8,22 +8,22 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_pendingNodeType;
+extern packed_ptr g_xformEntityIdx;
+extern u32 g_eventQueueEnd;
+extern u32 g_eventQueueWorkType;
+extern u32 g_pendingNodeType;
 
-extern void func_004191b0(void);
-extern void func_00412280(void);
-extern void func_004089e0(void);
-extern void func_004b8fa0(void);
+extern void SlotInitAndChainLink_004191b0(void);
+extern void BootGatedInitInstallPair_00412280(void);
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 
 /* === 83b cluster: CallPauseDirty4ScaledSetVariant === */
 
 /* @addr 0x00419780 (83b): val1=0x83, imm=0x11999 */
 __declspec(naked) void CallPauseDirty4ScaledSet_00419780(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -40,7 +40,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419780(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }
@@ -48,7 +48,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419780(void) {
 /* @addr 0x00419840 (83b): val1=0x86, imm=0x11999 */
 __declspec(naked) void CallPauseDirty4ScaledSet_00419840(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -65,7 +65,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419840(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }
@@ -73,7 +73,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419840(void) {
 /* @addr 0x00419980 (83b): val1=0x87, imm=0x11999 */
 __declspec(naked) void CallPauseDirty4ScaledSet_00419980(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -90,7 +90,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419980(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }
@@ -98,7 +98,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419980(void) {
 /* @addr 0x00419a40 (83b): val1=0x82, imm=0x11999 */
 __declspec(naked) void CallPauseDirty4ScaledSet_00419a40(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -115,7 +115,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419a40(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }
@@ -123,7 +123,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419a40(void) {
 /* @addr 0x00419b00 (83b): val1=0x88, imm=0x13333 */
 __declspec(naked) void CallPauseDirty4ScaledSet_00419b00(void) {
     __asm {
-        call    func_004191b0
+        call    SlotInitAndChainLink_004191b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -140,7 +140,7 @@ __declspec(naked) void CallPauseDirty4ScaledSet_00419b00(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00412280
+        jmp     BootGatedInitInstallPair_00412280
         ret
     }
 }
@@ -169,12 +169,12 @@ extern unsigned int g_data_004d7a08;
 /* @addr 0x00419720 (95b): addr1=0x4d7918/0xa, recurse 0x4196c0, addr2=0x4d78e8/9 */
 __declspec(naked) void DualCallPauseAddrSetRecurse_00419720(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -200,12 +200,12 @@ __declspec(naked) void DualCallPauseAddrSetRecurse_00419720(void) {
 /* @addr 0x004197e0 (95b): addr1=0x4d7ac8/6, recurse 0x419780, addr2=0x4d7b58/5 */
 __declspec(naked) void DualCallPauseAddrSetRecurse_004197e0(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -231,12 +231,12 @@ __declspec(naked) void DualCallPauseAddrSetRecurse_004197e0(void) {
 /* @addr 0x004198a0 (95b): addr1=0x4d79d8/0xc, recurse 0x419840, addr2=0x4d79a8/0xb */
 __declspec(naked) void DualCallPauseAddrSetRecurse_004198a0(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -262,12 +262,12 @@ __declspec(naked) void DualCallPauseAddrSetRecurse_004198a0(void) {
 /* @addr 0x004199e0 (95b): addr1=0x4d7978/0xe, recurse 0x419980, addr2=0x4d7948/0xd */
 __declspec(naked) void DualCallPauseAddrSetRecurse_004199e0(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -293,12 +293,12 @@ __declspec(naked) void DualCallPauseAddrSetRecurse_004199e0(void) {
 /* @addr 0x00419aa0 (95b): addr1=0x4d7a98/8, recurse 0x419a40, addr2=0x4d7a68/7 */
 __declspec(naked) void DualCallPauseAddrSetRecurse_00419aa0(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -324,12 +324,12 @@ __declspec(naked) void DualCallPauseAddrSetRecurse_00419aa0(void) {
 /* @addr 0x00419b60 (95b): addr1=0x4d7a38/0x10, recurse 0x419b00, addr2=0x4d7a08/0xf */
 __declspec(naked) void DualCallPauseAddrSetRecurse_00419b60(void) {
     __asm {
-        call    func_004089e0
+        call    MStackPush2RunCountdown_004089e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   50h
-        call    func_004b8fa0
+        call    MStackBracket7_DispatchAndChain_004b8fa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

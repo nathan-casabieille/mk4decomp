@@ -53,10 +53,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern void func_00426550(void);
-extern void func_00457900(void);
-extern void func_00457ad0(void);
-extern void func_00457b40(void);
+extern void Sprintf2WaySelect_00426550(void);
+extern void StreamChainStringInstall_00457900(void);
+extern void Push70CallScaleArith_00457ad0(void);
+extern void Push70CallScaleArith2_00457b40(void);
 
 #define BODY(WORKER_FN)                                                       \
     __asm {                                                                   \
@@ -70,7 +70,7 @@ extern void func_00457b40(void);
         __asm inc     eax                                                     \
         __asm mov     dword ptr [g_matrixStackTop], eax                       \
         __asm mov     dword ptr [eax*4 + 0], edx                              \
-        __asm call    func_00426550                                           \
+        __asm call    Sprintf2WaySelect_00426550                                           \
         __asm mov     eax, dword ptr [g_framePauseFlag]                       \
         __asm test    eax, eax                                                \
         __asm _emit   75h                                                     \
@@ -108,10 +108,10 @@ extern void func_00457b40(void);
     }
 
 /* @addr 0x00426310 */
-__declspec(naked) void DispatcherComplex181_00426310(void) { BODY(func_00457900) }
+__declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStringInstall_00457900) }
 
 /* @addr 0x004263d0 */
-__declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(func_00457ad0) }
+__declspec(naked) void DispatcherComplex181_004263d0(void) { BODY(Push70CallScaleArith_00457ad0) }
 
 /* @addr 0x00426490 */
-__declspec(naked) void DispatcherComplex181_00426490(void) { BODY(func_00457b40) }
+__declspec(naked) void DispatcherComplex181_00426490(void) { BODY(Push70CallScaleArith2_00457b40) }

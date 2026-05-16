@@ -25,8 +25,8 @@
  *   ret
  */
 
-extern int func_004c6f50(int);
-extern int func_004c6fd0(int);
+extern int Lock_004c6f50(int);
+extern int TableLookupIatCall_004c6fd0(int);
 extern void *g_iat_004d2140;
 extern void *g_iat_004d213c;
 
@@ -46,7 +46,7 @@ __declspec(naked) void RangePathIATDispatch_004c6ff0(void) {
         sar     eax, 5
         add     eax, 0x1c
         push    eax
-        call    func_004c6f50
+        call    Lock_004c6f50
         add     esp, 4
         pop     ebp
         ret
@@ -74,7 +74,7 @@ __declspec(naked) void RangePathIATDispatch_004c7060(void) {
         sar     eax, 5
         add     eax, 0x1c
         push    eax
-        call    func_004c6fd0
+        call    TableLookupIatCall_004c6fd0
         add     esp, 4
         pop     ebp
         ret

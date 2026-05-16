@@ -14,7 +14,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern void func_00436910(void);
+extern void InstallSelfMStackPushDispatch_00436910(void);
 extern void func_004677f8(void);
 
 /* @addr 0x004368f0 */
@@ -23,7 +23,7 @@ __declspec(naked) void ScaledAddrInit_004368f0(void) {
         mov     eax, 0x004e4780
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
-        jmp     func_00436910
+        jmp     InstallSelfMStackPushDispatch_00436910
     }
 }
 

@@ -66,7 +66,7 @@ __declspec(naked) void Shr96By1_004ce2c0(void) {
 /* @addr 0x004cf6d0 (40b)
  *   switch (arg) { case 1: errno=0x21; default: ret; case 2..3: errno=0x22; }
  */
-extern int *func_004c8ba0(void);
+extern int *CallAdd8_004c8ba0(void);
 __declspec(naked) void SwitchErrorCode_004cf6d0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -78,10 +78,10 @@ __declspec(naked) void SwitchErrorCode_004cf6d0(void) {
         cmp     eax, 3
         _emit   7fh
         _emit   17h
-        call    func_004c8ba0
+        call    CallAdd8_004c8ba0
         mov     dword ptr [eax], 0x22
         ret
-        call    func_004c8ba0
+        call    CallAdd8_004c8ba0
         mov     dword ptr [eax], 0x21
         ret
     }
@@ -273,8 +273,8 @@ __declspec(naked) void DualCondCleanupCall_004cc030(void) {
  *   FPU control word transactional update via two helpers (4cc520, 4cc5c0).
  *   Reads cw, computes new value, then sets new cw and returns the masked old value.
  */
-extern int func_004cc520(int);
-extern int func_004cc5c0(int);
+extern int DecodeModeFlags_004cc520(int);
+extern int EncodeModeFlags_004cc5c0(int);
 __declspec(naked) void FpuCwTxn_004cc4c0(void) {
     __asm {
         push    ebp
@@ -284,7 +284,7 @@ __declspec(naked) void FpuCwTxn_004cc4c0(void) {
         fstcw   word ptr [ebp - 4]
         mov     eax, dword ptr [ebp - 4]
         push    eax
-        call    func_004cc520
+        call    DecodeModeFlags_004cc520
         mov     ecx, dword ptr [ebp + 0x0c]
         mov     edx, dword ptr [ebp + 8]
         mov     esi, ecx
@@ -294,7 +294,7 @@ __declspec(naked) void FpuCwTxn_004cc4c0(void) {
         and     ecx, eax
         or      esi, ecx
         push    esi
-        call    func_004cc5c0
+        call    EncodeModeFlags_004cc5c0
         add     esp, 4
         mov     dword ptr [ebp + 0x0c], eax
         fldcw   word ptr [ebp + 0x0c]

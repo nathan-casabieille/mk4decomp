@@ -18,7 +18,7 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
-extern void func_0045d960(void);
+extern void DualSwapTwoCallsJmp_0045d960(void);
 
 /* @addr 0x0045d8e0 */
 __declspec(naked) void DualScaledInit_0045d8e0(void) {
@@ -29,7 +29,7 @@ __declspec(naked) void DualScaledInit_0045d8e0(void) {
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_scaledInit_00542048], ecx
-        jmp     func_0045d960
+        jmp     DualSwapTwoCallsJmp_0045d960
     }
 }
 
@@ -42,7 +42,7 @@ __declspec(naked) void DualScaledInit_0045d900(void) {
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_scaledInit_00542048], ecx
-        jmp     func_0045d960
+        jmp     DualSwapTwoCallsJmp_0045d960
     }
 }
 
@@ -55,7 +55,7 @@ __declspec(naked) void DualScaledInit_0045d920(void) {
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_scaledInit_00542048], ecx
-        jmp     func_0045d960
+        jmp     DualSwapTwoCallsJmp_0045d960
     }
 }
 
@@ -68,6 +68,6 @@ __declspec(naked) void DualScaledInit_0045d940(void) {
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_scaledInit_00542048], ecx
-        jmp     func_0045d960
+        jmp     DualSwapTwoCallsJmp_0045d960
     }
 }

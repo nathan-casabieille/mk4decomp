@@ -25,8 +25,8 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void func_00409aa0(void);
-extern void func_00407d50(void);
+extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+extern void PendingMatch_00407d50(void);
 
 /* @addr 0x004066f0 */
 __declspec(naked) void MStackPushZeroCallPop_004066f0(void) {
@@ -37,7 +37,7 @@ __declspec(naked) void MStackPushZeroCallPop_004066f0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_xformEntityIdx], 0
-        call    func_00409aa0
+        call    MStackBracket5_LinkedListUnlink_00409aa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -60,7 +60,7 @@ __declspec(naked) void MStackPushZeroCallPop_00407d00(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_eventQueueTotal], 0
-        call    func_00407d50
+        call    PendingMatch_00407d50
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

@@ -6,14 +6,14 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_xformEntityIdx;
+extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0041f7d0 (61b)
  *   walk a fixed-stride scenegraph chain from 0x0053e368 to 0x00541d68 step 0xe8;
  *   for each entry whose [+0xd8] != 0, set g_scaledInit_00542044 to (esi >> 2)
  *   and call F if it differs from g_baseSel_00542060.
  */
-extern void func_0041f710(void *p);
+extern void NodeUnlink_0041f710(void *p);
 __declspec(naked) void ScenegraphWalk_0041f7d0(void) {
     __asm {
         push    esi
@@ -31,7 +31,7 @@ loop_top:
         _emit   74h
         _emit   09h
         push    esi
-        call    func_0041f710
+        call    NodeUnlink_0041f710
         add     esp, 4
         add     esi, 0xe8
         cmp     esi, 0x00541d68
@@ -49,7 +49,7 @@ loop_top:
  */
 extern unsigned int g_state_0053a718;
 extern void func_00489ff0_ff(void);
-extern void func_00477920(void);
+extern void PollThenInit_00477920(void);
 __declspec(naked) void DecBoundCheckCallJmp_00421be0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a718]
@@ -66,7 +66,7 @@ __declspec(naked) void DecBoundCheckCallJmp_00421be0(void) {
         test    eax, eax
         _emit   75h
         _emit   05h
-        jmp     func_00477920
+        jmp     PollThenInit_00477920
         ret
     }
 }
@@ -112,10 +112,10 @@ sub_loop:
  *   load baseSel, scaled +0x38 → g_eventQueueEnd;
  *   testb 1,[g_xformDirtyFlags]; set g_eventQueueChild based on dirty bit.
  */
-extern void func_0048f090(void);
+extern void MStackPush2ChainSwap_0048f090(void);
 __declspec(naked) void CallPauseScaledByteSet_0043c350(void) {
     __asm {
-        call    func_0048f090
+        call    MStackPush2ChainSwap_0048f090
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -137,14 +137,14 @@ __declspec(naked) void CallPauseScaledByteSet_0043c350(void) {
  *   set g_xformEntityIdx = 0x51140c >> 2; call F; pause → ret;
  *   testb 4,[dirty]; jne ret; load baseSel, scaled, store into [ecx*4 + 0x5c]; jmp T.
  */
-extern void func_00406dd0(void);
-extern void func_00408860(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void ScaledTestPauseStore_00408860(void);
 __declspec(naked) void SpecialInitDirtyJmp_00446000(void) {
     __asm {
         mov     eax, 0x0051140c
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
-        call    func_00406dd0
+        call    MStackBracket1_TreeWalkRecursive2_00406dd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -155,7 +155,7 @@ __declspec(naked) void SpecialInitDirtyJmp_00446000(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x5c], edx
-        jmp     func_00408860
+        jmp     ScaledTestPauseStore_00408860
         ret
     }
 }
@@ -164,19 +164,19 @@ __declspec(naked) void SpecialInitDirtyJmp_00446000(void) {
  *   call F1; pause → ret; call F2; if eax != 0 → ret;
  *   inc g_state_004d57ac; set walk=2; push 0x46f6b0 to stack[idx*4]; jmp T.
  */
-extern void func_0048e4d0(void);
-extern int func_0048fc80(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern int DualGatedStateYield_0048fc80(void);
 extern unsigned int g_state_004d57ac_ff;
-extern void func_00471250(void);
-extern void func_0046f6b0(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
 __declspec(naked) void CallPauseCallTestStackPushJmp_00460c60(void) {
     __asm {
-        call    func_0048e4d0
+        call    LeaPlus22StoreSelf_0048e4d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2eh
-        call    func_0048fc80
+        call    DualGatedStateYield_0048fc80
         test    eax, eax
         _emit   75h
         _emit   25h
@@ -184,8 +184,8 @@ __declspec(naked) void CallPauseCallTestStackPushJmp_00460c60(void) {
         mov     dword ptr [g_walkCallback], 2
         inc     eax
         mov     dword ptr [g_state_004d57ac_ff], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_0046f6b0
-        jmp     func_00471250
+        mov     dword ptr [eax*4 + 0], OFFSET FiveCallGuardSetTail_0046f6b0
+        jmp     MstackPopScaledChainPlusThunks_00471250
         ret
     }
 }
@@ -233,7 +233,7 @@ __declspec(naked) void VtableArgClamp_004c3eb0(void) {
  *   if (arg[3] & 0x83) && (arg[3] & 8):
  *     call F(arg[2]); arg[3] &= ~0x408; arg[0..2] = 0.
  */
-extern void func_004c55f0(int);
+extern void FreeImpl_004c55f0(int);
 __declspec(naked) void BitTestFreeClear_004c8ae0(void) {
     __asm {
         push    esi
@@ -247,7 +247,7 @@ __declspec(naked) void BitTestFreeClear_004c8ae0(void) {
         _emit   21h
         mov     eax, dword ptr [esi + 8]
         push    eax
-        call    func_004c55f0
+        call    FreeImpl_004c55f0
         mov     eax, dword ptr [esi + 0x0c]
         add     esp, 4
         and     eax, 0xfffffbf7

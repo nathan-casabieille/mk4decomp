@@ -19,12 +19,12 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax*4 + 0], ecx
  *   jmp     T
  */
-extern unsigned int g_xformEntityIdx;
-extern void func_0048fbf0(void);
+extern packed_ptr g_xformEntityIdx;
+extern void SwapOrPassSet_0048fbf0(void);
 extern void func_00478328(void);
 __declspec(naked) void CallPauseEvtPushJmp_00422880(void) {
     __asm {
-        call    func_0048fbf0
+        call    SwapOrPassSet_0048fbf0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -81,12 +81,12 @@ __declspec(naked) void ScaledIncCmpJmp_004297d0(void) {
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern int func_004594f0(void *);
+extern int ArgSarStoreJmp_004594f0(void *);
 extern void *g_data_004e3540;
 __declspec(naked) void PushCallPauseDirtyClear_0042c9c0(void) {
     __asm {
         push    OFFSET g_data_004e3540
-        call    func_004594f0
+        call    ArgSarStoreJmp_004594f0
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax

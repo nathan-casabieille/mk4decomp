@@ -224,7 +224,7 @@ __declspec(naked) void TriBranchJmp_00434530(void) {
  *   mov     eax, 1
  *   ret
  */
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_eventQueueWorkType;
 extern void func_00439998(void);
 __declspec(naked) void ScaledCmp200eCallBool_004398f0(void) {
     __asm {
@@ -266,12 +266,12 @@ __declspec(naked) void ScaledCmp200eCallBool_004398f0(void) {
  * - jmp T
  * - ret
  */
-extern void func_004ab690(void);
+extern void AudioVolumeRescale_004ab690(void);
 extern void func_00439bff(void);
 __declspec(naked) void Set258Call_PauseDirtyJmp_00439b50(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x258
-        call    func_004ab690
+        call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -295,20 +295,20 @@ __declspec(naked) void Set258Call_PauseDirtyJmp_00439b50(void) {
  *   jmp     T
  *   ret
  */
-extern int func_00491050(void *);
+extern int IterLoad_00491050(void *);
 extern void *g_data_005422f8;
-extern void func_004903d0(void);
+extern void ScaledOrStore_004903d0(void);
 __declspec(naked) void PushCallSet2147Jmp_00439320(void) {
     __asm {
         push    OFFSET g_data_005422f8
-        call    func_00491050
+        call    IterLoad_00491050
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
         test    eax, eax
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0x2147
-        jmp     func_004903d0
+        jmp     ScaledOrStore_004903d0
         ret
     }
 }
