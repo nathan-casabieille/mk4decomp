@@ -16890,10 +16890,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesGG.c
   - addr: 0x004d0400
-    name: func_004d0400
+    name: PendingMatch_004d0400
     size: 1024
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0800
     name: Crt80BitFloatMul_004d0800
     size: 696
@@ -16913,10 +16914,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0bc0
-    name: func_004d0bc0
+    name: PendingMatch_004d0bc0
     size: 912
     group: other
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004d0f50
     name: MbToWcsDispatcher_004d0f50
     size: 304
