@@ -16089,10 +16089,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004c7920
-    name: func_004c7920
+    name: PendingMatch_004c7920
     size: 1824
     group: crt
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004c8040
     name: PendingMatch_004c8040
     size: 614
