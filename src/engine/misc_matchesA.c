@@ -21,39 +21,23 @@ extern unsigned int g_scaledInit_00542044;
 extern int g_min_007af984;
 extern int g_min_007af988;
 extern int g_min_007af98c;
-__declspec(naked) void MinOfThree_004b3d70(void) {
-    __asm {
-        mov     eax, dword ptr [g_min_007af984]
-        mov     ecx, dword ptr [g_min_007af988]
-        cmp     ecx, eax
-        _emit   7dh
-        _emit   02h
-        mov     eax, ecx
-        mov     ecx, dword ptr [g_min_007af98c]
-        cmp     ecx, eax
-        _emit   7dh
-        _emit   02h
-        mov     eax, ecx
-        ret
-    }
+int MinOfThree_004b3d70(void) {
+    int a = g_min_007af984;
+    int b = g_min_007af988;
+    if (b < a) a = b;
+    b = g_min_007af98c;
+    if (b < a) a = b;
+    return a;
 }
 
 /* @addr 0x004b3d90 (30b): max-of-three (jle instead of jge) */
-__declspec(naked) void MaxOfThree_004b3d90(void) {
-    __asm {
-        mov     eax, dword ptr [g_min_007af984]
-        mov     ecx, dword ptr [g_min_007af988]
-        cmp     ecx, eax
-        _emit   7eh
-        _emit   02h
-        mov     eax, ecx
-        mov     ecx, dword ptr [g_min_007af98c]
-        cmp     ecx, eax
-        _emit   7eh
-        _emit   02h
-        mov     eax, ecx
-        ret
-    }
+int MaxOfThree_004b3d90(void) {
+    int a = g_min_007af984;
+    int b = g_min_007af988;
+    if (b > a) a = b;
+    b = g_min_007af98c;
+    if (b > a) a = b;
+    return a;
 }
 
 /* @addr 0x004b46d0 (27b)
@@ -451,18 +435,12 @@ __declspec(naked) void TailJmpRetNops_004bd5d0(void) {
  */
 extern unsigned int g_state_007af4e0;
 extern void Helper_FClose(void *p);
-__declspec(naked) void TestCallZero_004b1de0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_007af4e0]
-        test    eax, eax
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    Helper_FClose
-        add     esp, 4
-        mov     dword ptr [g_state_007af4e0], 0
-        ret
+void TestCallZero_004b1de0(void) {
+    void *v = (void *)g_state_007af4e0;
+    if (v != 0) {
+        Helper_FClose(v);
     }
+    g_state_007af4e0 = 0;
 }
 
 /* @addr 0x004bd590 (30b): same shape with different addr
@@ -478,16 +456,9 @@ __declspec(naked) void TestCallZero_004b1de0(void) {
  */
 extern unsigned int g_state_0052ab00;
 extern void func_004b5c80(int);
-__declspec(naked) void TestCallPush4Zero_004bd590(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052ab00]
-        test    eax, eax
-        _emit   74h
-        _emit   14h
-        push    4
-        call    func_004b5c80
-        add     esp, 4
-        mov     dword ptr [g_state_0052ab00], 0
-        ret
+void TestCallPush4Zero_004bd590(void) {
+    if (g_state_0052ab00 != 0) {
+        func_004b5c80(4);
+        g_state_0052ab00 = 0;
     }
 }
