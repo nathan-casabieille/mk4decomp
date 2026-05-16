@@ -18,27 +18,23 @@ extern u32 g_pendingNodeType;
  */
 extern void IdentityMatrix_00424b70(void);
 extern void Mul10HeavyTransform_00424bf0(void);
-__declspec(naked) void ScaledTestChainDispatch_00424ba0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [eax*4 + 0]
-        test    ecx, ecx
-        mov     dword ptr [g_walkCallback], ecx
-        _emit   75h
-        _emit   26h
-        mov     ecx, dword ptr [eax*4 + 4]
-        test    ecx, ecx
-        mov     dword ptr [g_walkCallback], ecx
-        _emit   75h
-        _emit   15h
-        mov     eax, dword ptr [eax*4 + 8]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     IdentityMatrix_00424b70
-        jmp     Mul10HeavyTransform_00424bf0
+void ScaledTestChainDispatch_00424ba0(void) {
+    unsigned int *p = (unsigned int *)(g_xformEntityIdx * 4);
+    unsigned int v = p[0];
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) {
+        v = p[1];
+        g_walkCallback = (void (*)(void))v;
+        if (v == 0) {
+            v = p[2];
+            g_walkCallback = (void (*)(void))v;
+            if (v == 0) {
+                IdentityMatrix_00424b70();
+                return;
+            }
+        }
     }
+    Mul10HeavyTransform_00424bf0();
 }
 
 /* @addr 0x00497b10 (63b)
