@@ -5968,10 +5968,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00454510
-    name: func_00454510
+    name: PendingMatch_00454510
     size: 3284
     group: game
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x004551f0
     name: TripleThunkInstallBody_004551f0
     size: 330
