@@ -290,19 +290,11 @@ void Set258Call_PauseDirtyJmp_00439b50(void) {
 extern int IterLoad_00491050(void *);
 extern void *g_data_005422f8;
 extern void ScaledOrStore_004903d0(void);
-__declspec(naked) void PushCallSet2147Jmp_00439320(void) {
-    __asm {
-        push    OFFSET g_data_005422f8
-        call    IterLoad_00491050
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0x2147
-        jmp     ScaledOrStore_004903d0
-        ret
-    }
+void PushCallSet2147Jmp_00439320(void) {
+    IterLoad_00491050(&g_data_005422f8);
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x2147;
+    ScaledOrStore_004903d0();
 }
 
 /* @addr 0x00446150 (44b)
