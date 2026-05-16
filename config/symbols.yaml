@@ -1337,10 +1337,11 @@ functions:
     status: matched
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004155c0
-    name: func_004155c0
+    name: PendingMatch_004155c0
     size: 2686
     group: boot
-    status: stub
+    status: matched
+    file: src/engine/misc_matchesQQ.c
   - addr: 0x00416040
     name: Phase4SlotInitPackedHelper_00416040
     size: 887
