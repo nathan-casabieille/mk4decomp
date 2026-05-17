@@ -209,21 +209,14 @@ __declspec(naked) void AndStorePushCallZero_0048a220(void) {
  */
 extern void func_00426d80(void);
 extern void func_00414fa6(void);
-__declspec(naked) void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [ecx*4 + 0x34]
-        or      ah, 8
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        call    func_00426d80
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00414fa6
-        ret
-    }
+void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
+    unsigned int idx = g_fightGroupHead;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x34) | 0x800;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
+    func_00426d80();
+    if (g_framePauseFlag != 0) return;
+    func_00414fa6();
 }
 
 /* @addr 0x0048f8e0 (48b)
