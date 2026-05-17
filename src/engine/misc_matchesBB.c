@@ -10,23 +10,19 @@ extern u32 g_eventQueueEnd;
 extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ac040 (54b): triple cross-store at offsets 0x54/0x58/0x5c */
-__declspec(naked) void ScaledTripleCopy54_004ac040(void) {
-    __asm {
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     eax, dword ptr [g_fightGroupHead]
-        shl     ecx, 2
-        shl     eax, 2
-        mov     edx, dword ptr [ecx + 0x54]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [eax + 0x54], edx
-        mov     edx, dword ptr [ecx + 0x58]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [eax + 0x58], edx
-        mov     ecx, dword ptr [ecx + 0x5c]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x5c], ecx
-        ret
-    }
+void ScaledTripleCopy54_004ac040(void) {
+    unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
+    unsigned char *src = (unsigned char *)(g_eventQueueEnd * 4);
+    unsigned int v;
+    v = *(unsigned int *)(src + 0x54);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(dst + 0x54) = v;
+    v = *(unsigned int *)(src + 0x58);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(dst + 0x58) = v;
+    v = *(unsigned int *)(src + 0x5c);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(dst + 0x5c) = v;
 }
 
 /* @addr 0x004a12e0 (63b)
