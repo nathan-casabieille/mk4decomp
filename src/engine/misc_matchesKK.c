@@ -169,28 +169,16 @@ extern void func_0048a456(void);
 extern void func_00482a8e(void);
 extern void func_00489248(void);
 extern void func_00482c50(void);
-__declspec(naked) void CallPauseFourSet_00482be0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 1
-        call    func_0048a456
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2bh
-        mov     dword ptr [g_walkCallback], 0x9999
-        call    func_00482a8e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    func_00489248
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00482c50
-        ret
-    }
+void CallPauseFourSet_00482be0(void) {
+    g_walkCallback = (void (*)(void))1;
+    func_0048a456();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x9999;
+    func_00482a8e();
+    if (g_framePauseFlag != 0) return;
+    func_00489248();
+    if (g_framePauseFlag != 0) return;
+    func_00482c50();
 }
 
 /* @addr 0x00486530 (68b)
