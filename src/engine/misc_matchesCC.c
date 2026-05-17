@@ -215,32 +215,20 @@ extern int TestQueueGateState_004a1ba0(void);
 extern int InputPollFlagBits_004a1b00(void);
 extern int InputPollFlagBitsHalf_004a1b50(void);
 extern unsigned char g_byte_00543590;
-__declspec(naked) void TripleCallByteCheck_004a1bf0(void) {
-    __asm {
-        call    TestQueueGateState_004a1ba0
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     eax, 1
-        mov     byte  ptr [g_byte_00543590], al
-        ret
-        call    InputPollFlagBits_004a1b00
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     eax, 1
-        mov     byte  ptr [g_byte_00543590], al
-        ret
-        call    InputPollFlagBitsHalf_004a1b50
-        test    eax, eax
-        _emit   74h
-        _emit   0dh
-        mov     byte  ptr [g_byte_00543590], 2
-        mov     eax, 1
-        ret
-        xor     eax, eax
-        ret
+int TripleCallByteCheck_004a1bf0(void) {
+    if (TestQueueGateState_004a1ba0() != 0) {
+        g_byte_00543590 = 1;
+        return 1;
     }
+    if (InputPollFlagBits_004a1b00() != 0) {
+        g_byte_00543590 = 1;
+        return 1;
+    }
+    if (InputPollFlagBitsHalf_004a1b50() != 0) {
+        g_byte_00543590 = 2;
+        return 1;
+    }
+    return 0;
 }
 
 /* @addr 0x004a1d80 (61b): 6 push/call/add-esp sequences */
