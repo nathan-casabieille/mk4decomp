@@ -150,20 +150,10 @@ void AddStore_004bf0b0(void) {
  *   ret
  */
 extern int Snd3DSourceCleanupFiltered_004c3be0(int, int);
-__declspec(naked) void Loop16Init_004c4370(void) {
-    __asm {
-        push    esi
-        xor     esi, esi
-        push    esi
-        push    -1
-        call    Snd3DSourceCleanupFiltered_004c3be0
-        add     esp, 8
-        inc     esi
-        cmp     esi, 0x10
-        _emit   7ch
-        _emit   0efh
-        pop     esi
-        ret
+void Loop16Init_004c4370(void) {
+    int i;
+    for (i = 0; i < 16; i++) {
+        Snd3DSourceCleanupFiltered_004c3be0(-1, i);
     }
 }
 
