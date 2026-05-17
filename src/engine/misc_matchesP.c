@@ -176,22 +176,16 @@ void ScaledTestCallPauseJmpFar_00487150(void) {
 extern unsigned int g_state_0053a7b0;
 extern unsigned int g_state_00541fa8;
 extern int func_004be770(void *p);
-__declspec(naked) void AndStorePushCallZero_0048a220(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a7b0]
-        and     al, 0xfd
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_state_0053a7b0], eax
-        mov     eax, dword ptr [g_state_00541fa8]
-        test    eax, eax
-        _emit   74h
-        _emit   13h
-        push    eax
-        call    func_004be770
-        add     esp, 4
-        mov     dword ptr [g_state_00541fa8], 0
-        ret
-    }
+void AndStorePushCallZero_0048a220(void) {
+    unsigned int v;
+    void *p;
+    v = g_state_0053a7b0 & 0xFFFFFFFDu;
+    g_eventQueueCurrent = v;
+    g_state_0053a7b0 = v;
+    p = (void *)g_state_00541fa8;
+    if (p == 0) return;
+    func_004be770(p);
+    g_state_00541fa8 = 0;
 }
 
 /* @addr 0x0048d0c0 (48b)
