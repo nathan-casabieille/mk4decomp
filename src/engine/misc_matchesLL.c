@@ -75,24 +75,14 @@ void SetWorkTypeScaledCallStoreCcc_0041aa80(void) {
  */
 extern void func_00408c98(void);
 extern void func_004084d0(void);
-__declspec(naked) void SetWalk0xaCrossStore_00445fb0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [g_walkCallback], 0xa
-        mov     dword ptr [g_fightGroupHead], eax
-        call    func_00408c98
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     eax, dword ptr [edx*4 + 0x5c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     func_004084d0
-        ret
-    }
+void SetWalk0xaCrossStore_00445fb0(void) {
+    g_fightGroupHead = g_eventQueueIdx;
+    g_walkCallback = (void (*)(void))0xa;
+    func_00408c98();
+    if (g_framePauseFlag != 0) return;
+    g_xformEntityIdx = g_scaledInit_00542044;
+    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
+    func_004084d0();
 }
 
 /* @addr 0x00482e60 (70b)
