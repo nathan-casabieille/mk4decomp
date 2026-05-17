@@ -90,25 +90,20 @@ extern int func_00436090(void);
 extern void func_00430b96(void);
 extern void func_00436324(void);
 extern void func_004362cf(void);
-__declspec(naked) void Cmp30000And18000_004362b0(void) {
-    __asm {
-        call    func_00436090
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        mov     eax, dword ptr [g_state_00535ddc]
-        cmp     eax, 0x00030000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_00430b96
-        cmp     eax, 0x00018000
-        _emit   7dh
-        _emit   05h
-        jmp     func_004362cf
-        jmp     func_00436324
-        ret
+void Cmp30000And18000_004362b0(void) {
+    unsigned int v;
+    if (func_00436090() != 0) return;
+    v = g_state_00535ddc;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 0x30000) {
+        func_00430b96();
+        return;
     }
+    if ((int)v < 0x18000) {
+        func_004362cf();
+        return;
+    }
+    func_00436324();
 }
 
 /* @addr 0x00436ff0 (48b)
