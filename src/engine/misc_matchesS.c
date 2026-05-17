@@ -19,19 +19,17 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0], eax
  *   ret
  */
-__declspec(naked) void ScaledChainOr8_00404e50(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_eventQueueIdx], ecx
-        mov     eax, dword ptr [ecx*4 + 0]
-        or      al, 8
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0], eax
-        ret
-    }
+void ScaledChainOr8_00404e50(void) {
+    unsigned int s;
+    unsigned int e;
+    unsigned int v;
+    s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    g_scaledInit_00542044 = s;
+    e = *(unsigned int *)(s * 4 + 0x28);
+    g_eventQueueIdx = e;
+    v = *(unsigned int *)(e * 4) | 8;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(e * 4) = v;
 }
 
 /* @addr 0x00404e90 (54b)
