@@ -449,21 +449,12 @@ __declspec(naked) void CmpP1GTSetup_00470980(void) {
  */
 extern void func_0048f6f0(void);
 extern void func_0047c61b(void);
-__declspec(naked) void Set200dCallPauseJmp_0047c5e0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x200d
-        mov     edx, 0x004ed3e0
-        mov     dword ptr [g_walkCallback], eax
-        shr     edx, 2
-        mov     dword ptr [ecx*4 + 0x74], eax
-        mov     dword ptr [g_scaledInit_00542044], edx
-        call    func_0048f6f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0047c61b
-        ret
-    }
+extern int g_data_004ed3e0;
+void Set200dCallPauseJmp_0047c5e0(void) {
+    g_walkCallback = (void (*)(void))0x200d;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x200d;
+    g_scaledInit_00542044 = ((unsigned int)&g_data_004ed3e0) >> 2;
+    func_0048f6f0();
+    if (g_framePauseFlag != 0) return;
+    func_0047c61b();
 }
