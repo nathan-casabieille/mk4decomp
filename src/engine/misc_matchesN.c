@@ -315,24 +315,14 @@ __declspec(naked) void IncCmp28StoreOrJmp_00458880(void) {
  *   ret
  */
 extern void CmpP1ScaledLoad74_0045f5d0(void);
-__declspec(naked) void CallCmpDirtyTrueOrFalse_0045f570(void) {
-    __asm {
-        call    CmpP1ScaledLoad74_0045f5d0
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        cmp     eax, ecx
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   74h
-        _emit   0dh
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, 1
-        ret
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        xor     eax, eax
-        ret
+int CallCmpDirtyTrueOrFalse_0045f570(void) {
+    CmpP1ScaledLoad74_0045f5d0();
+    if (g_eventQueueCurrent != g_eventQueueEnd) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
+        return 1;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    return 0;
 }
 
 /* @addr 0x0045f5a0 (48b): same shape, swapped: jne (75) instead of je (74) */
