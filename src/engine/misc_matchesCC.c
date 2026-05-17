@@ -268,28 +268,13 @@ __declspec(naked) void TripleCallByteCheck_004a1bf0(void) {
 
 /* @addr 0x004a1d80 (61b): 6 push/call/add-esp sequences */
 extern void TableWalkBoundedCmp_004bd890(int);
-__declspec(naked) void SixCallSeqPushImm_004a1d80(void) {
-    __asm {
-        push    9
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        push    2
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        push    3
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        push    4
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        push    5
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        push    7
-        call    TableWalkBoundedCmp_004bd890
-        add     esp, 4
-        ret
-    }
+void SixCallSeqPushImm_004a1d80(void) {
+    TableWalkBoundedCmp_004bd890(9);
+    TableWalkBoundedCmp_004bd890(2);
+    TableWalkBoundedCmp_004bd890(3);
+    TableWalkBoundedCmp_004bd890(4);
+    TableWalkBoundedCmp_004bd890(5);
+    TableWalkBoundedCmp_004bd890(7);
 }
 
 /* @addr 0x004235f0 (64b)
