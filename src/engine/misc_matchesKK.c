@@ -96,30 +96,19 @@ extern unsigned int g_state_00537f2c;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537e88;
 extern void func_00420060(void);
-__declspec(naked) void CmpDualStateMatch_00421c50(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a6dc]
-        cmp     eax, 0x10000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   03h
-        xor     eax, eax
-        ret
-        mov     eax, dword ptr [g_state_00537f2c]
-        cmp     eax, 0x10000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   03h
-        xor     eax, eax
-        ret
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0053a408], eax
-        mov     dword ptr [g_state_00537e88], eax
-        call    func_00420060
-        mov     eax, 1
-        ret
-    }
+int CmpDualStateMatch_00421c50(void) {
+    unsigned int v;
+    v = g_state_0053a6dc;
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0x10000) return 0;
+    v = g_state_00537f2c;
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0x10000) return 0;
+    g_walkCallback = 0;
+    g_state_0053a408 = 0;
+    g_state_00537e88 = 0;
+    func_00420060();
+    return 1;
 }
 
 /* @addr 0x00451550 (68b): 4-call pause cleanup with set walk=5 then walk=6 */
