@@ -262,24 +262,18 @@ extern void func_00484f50(void);
 extern void GuardedDispatch4_00484b40(void);
 extern void func_0042b594(void);
 extern void func_00484b13(void);
-__declspec(naked) void CallPauseDirtyMStackPush484b40_00484b00(void) {
-    __asm {
-        call    func_00484f50
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   1bh
-        mov     eax, dword ptr [g_matrixStackTop]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET GuardedDispatch4_00484b40
-        jmp     func_0042b594
-        jmp     func_00484b13
-        ret
+void CallPauseDirtyMStackPush484b40_00484b00(void) {
+    unsigned int v;
+    func_00484f50();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) {
+        v = g_matrixStackTop + 1;
+        g_matrixStackTop = v;
+        *(unsigned int *)(v * 4) = (unsigned int)&GuardedDispatch4_00484b40;
+        func_0042b594();
+        return;
     }
+    func_00484b13();
 }
 
 /* @addr 0x00488e90 (56b)
