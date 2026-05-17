@@ -52,33 +52,23 @@ __declspec(naked) void ScaledAndMaskInitJmp_00405a00(void) {
  *   ret
  */
 extern u32 g_pendingNodeType;
-__declspec(naked) void ScaledInitWithCounterAndType_0041f1b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, 1
-        shl     eax, 2
-        mov     dword ptr [eax + 0x84], 0
-        mov     dword ptr [eax + 8], 0x0041f1b0
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 0x3c
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
-    }
+void ScaledInitWithCounterAndType_0041f1b0(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    *(unsigned int *)(base + 0x84) = 0;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitWithCounterAndType_0041f1b0;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 0x3c;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x004314f0 (53b): same shape as 0x0041f1b0 with different ptr/value */
-__declspec(naked) void ScaledInitWithCounterAndType_004314f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, 1
-        shl     eax, 2
-        mov     dword ptr [eax + 0x84], 0
-        mov     dword ptr [eax + 8], 0x004314f0
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 0x28
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
-    }
+void ScaledInitWithCounterAndType_004314f0(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    *(unsigned int *)(base + 0x84) = 0;
+    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitWithCounterAndType_004314f0;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 0x28;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x00428370 (51b): mstack push then jmp/dispatch
