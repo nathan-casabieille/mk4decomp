@@ -382,21 +382,11 @@ __declspec(naked) void Const0303InitJmp_00495cf0(void) {
 extern void CopyJmp_00406ba0(void);
 extern void func_00490d30(void);
 extern void func_0049020a(void);
-__declspec(naked) void StoreCallPauseCallPauseJmp_0048fa20(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    func_00490d30
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0049020a
-        ret
-    }
+void StoreCallPauseCallPauseJmp_0048fa20(void) {
+    g_scaledInit_00542044 = g_fightGroupHead;
+    CopyJmp_00406ba0();
+    if (g_framePauseFlag != 0) return;
+    func_00490d30();
+    if (g_framePauseFlag != 0) return;
+    func_0049020a();
 }
