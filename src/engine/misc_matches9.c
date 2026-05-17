@@ -238,15 +238,9 @@ void CallZero_004bea30(void) {
  *   ret
  */
 extern unsigned int g_state_00f9f008;
-extern void *g_iat_004d2220;
-__declspec(naked) void TestCallIat_004c44f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f9f008]
-        test    eax, eax
-        _emit   74h
-        _emit   08h
-        push    1
-        call    dword ptr [g_iat_004d2220]
-        ret
+extern void (__stdcall *g_iat_004d2220)(int);
+void TestCallIat_004c44f0(void) {
+    if (g_state_00f9f008 != 0) {
+        g_iat_004d2220(1);
     }
 }
