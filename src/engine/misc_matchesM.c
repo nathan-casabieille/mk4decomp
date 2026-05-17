@@ -163,22 +163,11 @@ void DualScaledStoreConst_004a22c0(void) {
  */
 extern int g_state_004f3ae4;
 extern int g_state_0054359c;
-__declspec(naked) void IncBoundedDirty_004a7db0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004f3ae4]
-        mov     ecx, dword ptr [g_state_0054359c]
-        dec     eax
-        cmp     ecx, eax
-        _emit   7dh
-        _emit   09h
-        mov     eax, ecx
-        inc     eax
-        mov     dword ptr [g_state_0054359c], eax
-        ret
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void IncBoundedDirty_004a7db0(void) {
+    if (g_state_0054359c < g_state_004f3ae4 - 1) {
+        g_state_0054359c = g_state_0054359c + 1;
+    } else {
+        g_xformDirtyFlags |= 1;
     }
 }
 
