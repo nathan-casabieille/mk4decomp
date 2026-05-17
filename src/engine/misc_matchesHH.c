@@ -188,31 +188,15 @@ __declspec(naked) void ZeroMultiGlobalsCmp_00404680(void) {
  *   if (g_scaledInit != 0) dirty ^= 4 (clear it again); store dirty; ret.
  */
 extern void MStackPush2LLWalkCompare_004069b0(void);
-__declspec(naked) void SaveCallRestoreOrXor_00404a00(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    esi
-        mov     esi, dword ptr [g_walkCallback]
-        mov     dword ptr [g_walkCallback], eax
-        call    MStackPush2LLWalkCompare_004069b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   2dh
-        mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, 4
-        mov     dword ptr [g_walkCallback], esi
-        or      edx, eax
-        test    ecx, ecx
-        mov     dword ptr [g_xformDirtyFlags], edx
-        _emit   74h
-        _emit   0ah
-        mov     ecx, edx
-        xor     ecx, eax
-        mov     dword ptr [g_xformDirtyFlags], ecx
-        pop     esi
-        ret
+void SaveCallRestoreOrXor_00404a00(int arg) {
+    void (*save)(void) = g_walkCallback;
+    g_walkCallback = (void (*)(void))arg;
+    MStackPush2LLWalkCompare_004069b0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = save;
+    g_xformDirtyFlags |= 4;
+    if (g_scaledInit_00542044 != 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
 }
 
