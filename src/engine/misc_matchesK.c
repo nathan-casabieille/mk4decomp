@@ -167,20 +167,13 @@ void DualCallPauseDirtyJmp_00490c30(void) {
  *   mov     [eax + 0x64], ecx
  *   ret
  */
-__declspec(naked) void InitThreeFields_00490e90(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        xor     ecx, ecx
-        shl     eax, 2
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x60], ecx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x68], ecx
-        mov     ecx, 0x0004c7ae
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x64], ecx
-        ret
-    }
+void InitThreeFields_00490e90(void) {
+    unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(base + 0x60) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x68) = (unsigned int)g_walkCallback;
+    g_walkCallback = (void (*)(void))0x0004c7ae;
+    *(unsigned int *)(base + 0x64) = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x00491080 (43b)
