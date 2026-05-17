@@ -14,23 +14,19 @@ extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x00434d60: jmp=0x00436120, type=8, ptr=own */
 extern void ThresholdInitInstallSelfChain_00436120(void);
-__declspec(naked) void ScaledInitOrSelfPtrSetType_00434d60(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     ThresholdInitInstallSelfChain_00436120
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x00434d60
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 8
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+extern void ScaledInitOrSelfPtrSetType_00434d60(void);
+void ScaledInitOrSelfPtrSetType_00434d60(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int v = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (v != 0) {
+        ThresholdInitInstallSelfChain_00436120();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_00434d60;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 8;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x0046a5e0: jmp=0x0046a630, type=3, ptr=own */
