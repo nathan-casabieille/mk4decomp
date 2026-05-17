@@ -288,26 +288,18 @@ extern unsigned int g_state_0052ab40;
 extern unsigned int g_state_00542094;
 extern void ScaledLoadCmp0fJmp_004930e0(void);
 extern void HitReactionDispatcher_0045f650(void);
-__declspec(naked) void CallPauseLoadAndDispatch_004235f0(void) {
-    __asm {
-        call    ZeroSlotsGatedDispatch_00423720
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   31h
-        mov     eax, dword ptr [g_state_0052ab40]
-        mov     dword ptr [g_walkCallback], eax
-        and     eax, 4
-        mov     dword ptr [g_state_00542094], eax
-        _emit   74h
-        _emit   0eh
-        call    ScaledLoadCmp0fJmp_004930e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_eventQueueNotMask], 0x1002f
-        jmp     HitReactionDispatcher_0045f650
-        ret
+void CallPauseLoadAndDispatch_004235f0(void) {
+    unsigned int v;
+    ZeroSlotsGatedDispatch_00423720();
+    if (g_framePauseFlag != 0) return;
+    v = g_state_0052ab40;
+    g_walkCallback = (void (*)(void))v;
+    v = v & 4;
+    g_state_00542094 = v;
+    if (v != 0) {
+        ScaledLoadCmp0fJmp_004930e0();
+        if (g_framePauseFlag != 0) return;
     }
+    g_eventQueueNotMask = 0x1002f;
+    HitReactionDispatcher_0045f650();
 }
