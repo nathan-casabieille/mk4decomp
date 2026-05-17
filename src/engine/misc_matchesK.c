@@ -310,15 +310,12 @@ __declspec(naked) void ScaledAddDeref_00494800(void) {
  *   jmp     T
  */
 extern void func_0048d8d0(void);
-__declspec(naked) void Const0303InitJmp_00495cf0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x0303
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        mov     dword ptr [g_state_0054207c], 0x0002000f
-        jmp     func_0048d8d0
-    }
+void Const0303InitJmp_00495cf0(void) {
+    unsigned int v = 0x0303;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
+    g_state_0054207c = 0x0002000f;
+    func_0048d8d0();
 }
 
 /* @addr 0x0048fa20 (44b)
