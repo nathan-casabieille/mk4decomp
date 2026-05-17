@@ -39,17 +39,12 @@ void TestP1ReplaceCurrent_004751c0(void) {
  *   jmp     T
  */
 extern void func_0048f8be(void);
-__declspec(naked) void ScaledLitAddJmp_00480fb0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, 0x004ef4d0
-        shr     eax, 2
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_xformEntityIdx], eax
-        jmp     func_0048f8be
-    }
+extern int g_data_004ef4d0;
+void ScaledLitAddJmp_00480fb0(void) {
+    unsigned int v = (((unsigned int)&g_data_004ef4d0) >> 2) + (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = v;
+    g_xformEntityIdx = *(unsigned int *)(v * 4);
+    func_0048f8be();
 }
 
 /* @addr 0x00488ba0 (42b)
