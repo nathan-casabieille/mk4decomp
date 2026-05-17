@@ -163,19 +163,16 @@ __declspec(naked) void TestByteSelectInit_004111d0(void) {
  *   jmp     T
  */
 extern void func_00429868(void);
-__declspec(naked) void IterStepScaledStore24_00428730(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [eax*4 + 0x24], ecx
-        jmp     func_00429868
-    }
+void IterStepScaledStore24_00428730(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int v;
+    g_eventQueueTotal = packed;
+    v = *(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
+    g_scaledInit_00542044 = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = v;
+    func_00429868();
 }
 
 /* @addr 0x0042c3b0 (48b)
