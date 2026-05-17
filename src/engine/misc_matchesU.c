@@ -206,25 +206,14 @@ __declspec(naked) void ScaledInitWithCounterAndType_00446940(void) {
 extern void func_00455746(void);
 extern void func_00455760(void);
 extern void func_0042038f(void);
-__declspec(naked) void Set2CallDirtyCallPauseJmp_004535e0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 2
-        call    func_00455746
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   13h
-        call    func_00455760
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0042038f
-        ret
-    }
+void Set2CallDirtyCallPauseJmp_004535e0(void) {
+    g_walkCallback = (void (*)(void))2;
+    func_00455746();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    func_00455760();
+    if (g_framePauseFlag != 0) return;
+    func_0042038f();
 }
 
 /* @addr 0x00456180 (54b)
@@ -244,23 +233,14 @@ __declspec(naked) void Set2CallDirtyCallPauseJmp_004535e0(void) {
 extern void func_00408990(void);
 extern void func_00478f90(void);
 extern void func_00407f40(void);
-__declspec(naked) void TwoCallPauseSetJmp2_00456180(void) {
-    __asm {
-        call    func_00408990
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        call    func_00478f90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   19h
-        mov     dword ptr [g_acc_00542078], 2
-        mov     dword ptr [g_walkCallback], 3
-        jmp     func_00407f40
-        ret
-    }
+void TwoCallPauseSetJmp2_00456180(void) {
+    func_00408990();
+    if (g_framePauseFlag != 0) return;
+    func_00478f90();
+    if (g_framePauseFlag != 0) return;
+    g_acc_00542078 = 2;
+    g_walkCallback = (void (*)(void))3;
+    func_00407f40();
 }
 
 /* @addr 0x0045f5a0 (48b) - wait, that's done already. Skip. */
