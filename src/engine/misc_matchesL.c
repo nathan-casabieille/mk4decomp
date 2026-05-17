@@ -84,18 +84,15 @@ void Cmp3DirtyToggle_0049fa20(void) {
  */
 extern void func_004a1141(void);
 extern void func_004a1136(void);
-__declspec(naked) void IncWrap0fJmp_004a1120(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        inc     eax
-        cmp     eax, 0x0f
-        mov     dword ptr [g_walkCallback], eax
-        _emit   77h
-        _emit   05h
-        jmp     func_004a1141
-        mov     dword ptr [g_walkCallback], 1
-        jmp     func_004a1136
+void IncWrap0fJmp_004a1120(void) {
+    unsigned int v = (unsigned int)g_walkCallback + 1;
+    g_walkCallback = (void (*)(void))v;
+    if (v <= 0x0f) {
+        func_004a1141();
+        return;
     }
+    g_walkCallback = (void (*)(void))1;
+    func_004a1136();
 }
 
 /* @addr 0x004a1ae0 (32b)
