@@ -92,18 +92,16 @@ __declspec(naked) void MStackPushSet0001_00490260(void) { MSTACK_PUSH_SET(1, fun
  *   jmp     T
  */
 extern void func_0049000a(void);
-__declspec(naked) void IterStepNegStore_00490b10(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueEnd], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        neg     ecx
-        mov     dword ptr [g_eventQueueEnd], eax
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     func_0049000a
-    }
+void IterStepNegStore_00490b10(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    int v;
+    g_eventQueueEnd = packed;
+    v = *(int *)(packed * 4);
+    packed++;
+    v = -v;
+    g_eventQueueEnd = packed;
+    g_walkCallback = (void (*)(void))v;
+    func_0049000a();
 }
 
 /* @addr 0x00490b40 (44b)
