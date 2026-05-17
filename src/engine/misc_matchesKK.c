@@ -76,25 +76,15 @@ __declspec(naked) void ScaledInitOrSelfPtrSetType_0047a620(void) {
 }
 
 /* @addr 0x0048a7c0 (68b): zero 6 dwords at offsets 0x6c..0x80 of fightGroupHead*4 */
-__declspec(naked) void ZeroSixStores6c80_0048a7c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        xor     ecx, ecx
-        shl     eax, 2
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x6c], ecx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x70], ecx
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x74], edx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x78], ecx
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x7c], edx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x80], ecx
-        ret
-    }
+void ZeroSixStores6c80_0048a7c0(void) {
+    unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
+    g_walkCallback = 0;
+    *(unsigned int *)(base + 0x6c) = 0;
+    *(unsigned int *)(base + 0x70) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x74) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x78) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x7c) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x80) = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x00490e40 (68b): same shape, offsets 0x60, 0x64, 0x68, 0x78, 0x7c, 0x80 */
