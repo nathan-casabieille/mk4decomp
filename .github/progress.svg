@@ -18,11 +18,11 @@
         fill="#0a0a0a" stroke="url(#borderGrad)" stroke-width="2"/>
 
   <!-- Filled portion -->
-  <rect x="4" y="4" width="196.29" height="36" rx="4" ry="4"
+  <rect x="4" y="4" width="196.50" height="36" rx="4" ry="4"
         fill="url(#fillGrad)"/>
 
   <!-- Top highlight on filled portion only -->
-  <rect x="4" y="4" width="196.29" height="8" rx="4" ry="4"
+  <rect x="4" y="4" width="196.50" height="8" rx="4" ry="4"
         fill="#ffffff" opacity="0.18"/>
 
   <!-- Percent text -->
