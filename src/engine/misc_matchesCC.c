@@ -215,20 +215,16 @@ extern unsigned int g_state_0054359c;
 extern unsigned int g_state_005433c8;
 extern unsigned char g_byte_00543834;
 extern void PendingMatch_004a93c0(void);
-__declspec(naked) void CallSetMultiGlobalsJmp_004a9230(void) {
-    __asm {
-        call    DrainQueueCallEach_004a1ec0
-        mov     eax, 1
-        xor     ecx, ecx
-        mov     dword ptr [g_state_0052aac4_cc], 2
-        mov     dword ptr [g_state_0053a50c], 0x0e
-        mov     dword ptr [g_state_0054355c], eax
-        mov     dword ptr [g_state_00543710], eax
-        mov     dword ptr [g_state_0054359c], ecx
-        mov     dword ptr [g_state_005433c8], ecx
-        mov     byte  ptr [g_byte_00543834], al
-        jmp     PendingMatch_004a93c0
-    }
+void CallSetMultiGlobalsJmp_004a9230(void) {
+    DrainQueueCallEach_004a1ec0();
+    g_state_0052aac4_cc = 2;
+    g_state_0053a50c = 0x0e;
+    g_state_0054355c = 1;
+    g_state_00543710 = 1;
+    g_state_0054359c = 0;
+    g_state_005433c8 = 0;
+    g_byte_00543834 = 1;
+    PendingMatch_004a93c0();
 }
 
 /* @addr 0x004a1bf0 (65b): 3-stage call chain with byte/byte/byte stores */
