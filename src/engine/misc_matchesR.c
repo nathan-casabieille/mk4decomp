@@ -107,26 +107,12 @@ __declspec(naked) void TableSetBit_004c4420(void) {
 extern void RangePathIATDispatch_004c6ff0(int);
 extern int Helper_FRead(int);
 extern void RangePathIATDispatch_004c7060(int);
-__declspec(naked) void Helper_FTell(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 8]
-        push    edi
-        push    esi
-        call    RangePathIATDispatch_004c6ff0
-        add     esp, 4
-        push    esi
-        call    Helper_FRead
-        add     esp, 4
-        mov     edi, eax
-        push    esi
-        call    RangePathIATDispatch_004c7060
-        add     esp, 4
-        mov     eax, edi
-        pop     edi
-        pop     esi
-        ret
-    }
+int Helper_FTell(int arg) {
+    int saved;
+    RangePathIATDispatch_004c6ff0(arg);
+    saved = Helper_FRead(arg);
+    RangePathIATDispatch_004c7060(arg);
+    return saved;
 }
 
 /* @addr 0x004c5dd0 (48b): copy with byte/dword check
