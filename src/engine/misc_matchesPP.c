@@ -1352,26 +1352,16 @@ void Sprintf2WaySelect_00426550(void) {
  *   push-arg calls (0x249, 0x24a) to SaveCallRestore_004049d0.
  */
 extern void SaveCallRestore_004049d0(int);
-__declspec(naked) void PushPopPendingTwoCalls_0042f4f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_pendingNodeType]
-        inc     eax
-        push    0x249
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        call    SaveCallRestore_004049d0
-        add     esp, 4
-        push    0x24a
-        call    SaveCallRestore_004049d0
-        mov     eax, dword ptr [g_state_004d57ac]
-        add     esp, 4
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopPendingTwoCalls_0042f4f0(void) {
+    unsigned int top;
+    top = g_state_004d57ac + 1;
+    g_state_004d57ac = top;
+    *(unsigned int *)(top * 4) = g_pendingNodeType;
+    SaveCallRestore_004049d0(0x249);
+    SaveCallRestore_004049d0(0x24a);
+    top = g_state_004d57ac;
+    g_pendingNodeType = *(unsigned int *)(top * 4);
+    g_state_004d57ac = top - 1;
 }
 
 /* @addr 0x004463b0 (75b)
