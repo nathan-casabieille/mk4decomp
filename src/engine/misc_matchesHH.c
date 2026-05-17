@@ -158,28 +158,19 @@ extern unsigned int g_state_00541d90;
 extern unsigned int g_state_0053a3e0;
 extern unsigned int g_state_0053a700;
 extern unsigned int g_state_00535e44;
-__declspec(naked) void ZeroMultiGlobalsCmp_00404680(void) {
-    __asm {
-        mov     ecx, dword ptr [g_state_0054355c_hh]
-        xor     eax, eax
-        cmp     ecx, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0053a3c0], eax
-        mov     dword ptr [g_state_00537f10], eax
-        _emit   75h
-        _emit   0dh
-        cmp     dword ptr [g_state_00543710_hh], eax
-        _emit   75h
-        _emit   05h
-        mov     dword ptr [g_state_00535de4], eax
-        mov     dword ptr [g_state_0052ab00], eax
-        mov     dword ptr [g_state_00537f8c], eax
-        mov     dword ptr [g_state_00541d90], eax
-        mov     dword ptr [g_state_0053a3e0], eax
-        mov     dword ptr [g_state_0053a700], eax
-        mov     dword ptr [g_state_00535e44], eax
-        ret
+void ZeroMultiGlobalsCmp_00404680(void) {
+    g_walkCallback = 0;
+    g_state_0053a3c0 = 0;
+    g_state_00537f10 = 0;
+    if (g_state_0054355c_hh == 0 && g_state_00543710_hh == 0) {
+        g_state_00535de4 = 0;
     }
+    g_state_0052ab00 = 0;
+    g_state_00537f8c = 0;
+    g_state_00541d90 = 0;
+    g_state_0053a3e0 = 0;
+    g_state_0053a700 = 0;
+    g_state_00535e44 = 0;
 }
 
 /* @addr 0x00404a00 (77b)
