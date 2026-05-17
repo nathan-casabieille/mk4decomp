@@ -214,15 +214,13 @@ void MStackPushPtr1Jmp_00438e70(void) {
  *   jmp     T
  */
 extern void func_0043930c(void);
-__declspec(naked) void MStackPushPtr1Jmp_00438ef0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 1
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004391b0
-        jmp     func_0043930c
-    }
+void MStackPushPtr1Jmp_00438ef0(void) {
+    unsigned int v = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))1;
+    v++;
+    g_matrixStackTop = v;
+    *(unsigned int *)(v * 4) = (unsigned int)&func_004391b0;
+    func_0043930c();
 }
 
 /* @addr 0x00438f20 (38b)
