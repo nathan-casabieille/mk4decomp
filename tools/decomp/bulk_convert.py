@@ -343,6 +343,80 @@ def match_cmp_dual_init_with_skip(lines):
     return None
 
 
+def match_dst_first_triple_cross_store(lines):
+    """Pattern: dst-first src-second triple cross-store.
+        mov ecx, [src_glb]      ; src in ecx (6-byte mov)
+        mov eax, [dst_glb]      ; dst in eax (5-byte mov)
+        shl ecx, 2
+        shl eax, 2
+        mov edx, [ecx + OFF1]
+        mov [g_walkCallback], edx
+        mov [eax + OFF1], edx
+        mov edx, [ecx + OFF2]
+        mov [g_walkCallback], edx
+        mov [eax + OFF2], edx
+        mov ecx, [ecx + OFF3]   ; last iter reuses ecx as val
+        mov [g_walkCallback], ecx
+        mov [eax + OFF3], ecx
+        ret
+    Convertible via dst-first decl order in C. Validated on
+    Copy3Fields3c4044_00404e90 and ScaledTripleCopy54_004ac040.
+    """
+    if len(lines) != 15:
+        return None
+    if lines[-1][0] != "ret":
+        return None
+    # First two: mov ecx, [src_glb]; mov eax, [dst_glb]
+    m_src = re.match(r'^ecx,\s*dword ptr\s*\[(\w+)\]$', lines[0][1])
+    if lines[0][0] != "mov" or not m_src:
+        return None
+    src_glb = m_src.group(1)
+    m_dst = re.match(r'^eax,\s*dword ptr\s*\[(\w+)\]$', lines[1][1])
+    if lines[1][0] != "mov" or not m_dst:
+        return None
+    dst_glb = m_dst.group(1)
+    if lines[2] != ("shl", "ecx, 2"):
+        return None
+    if lines[3] != ("shl", "eax, 2"):
+        return None
+    # 3 iterations: load val from [ecx + OFFn], store walk, store [eax + OFFn]
+    offsets = []
+    for k in range(3):
+        base = 4 + k * 3
+        # Iter 0,1: val into edx. Iter 2: val into ecx (last reuse).
+        val_reg = "edx" if k < 2 else "ecx"
+        m_load = re.match(rf'^{val_reg},\s*dword ptr\s*\[ecx \+ (\w+)\]$', lines[base][1])
+        if lines[base][0] != "mov" or not m_load:
+            return None
+        off = int(m_load.group(1), 0)
+        if lines[base + 1] != ("mov", f"dword ptr [g_walkCallback], {val_reg}"):
+            return None
+        m_store = re.match(rf'^dword ptr\s*\[eax \+ (\w+)\],\s*{val_reg}$', lines[base + 2][1])
+        if lines[base + 2][0] != "mov" or not m_store:
+            return None
+        # Must be same offset
+        if int(m_store.group(1), 0) != off:
+            return None
+        offsets.append(off)
+    return {
+        "src_glb": src_glb, "dst_glb": dst_glb,
+        "offsets": offsets,
+    }
+
+
+def emit_dst_first_triple_cross_store(info):
+    out = (
+        f"    unsigned char *dst = (unsigned char *)({info['dst_glb']} * 4);\n"
+        f"    unsigned char *src = (unsigned char *)({info['src_glb']} * 4);\n"
+        f"    unsigned int v;\n"
+    )
+    for off in info["offsets"]:
+        out += f"    v = *(unsigned int *)(src + {off:#x});\n"
+        out += f"    g_walkCallback = (void (*)(void))v;\n"
+        out += f"    *(unsigned int *)(dst + {off:#x}) = v;\n"
+    return out
+
+
 def match_zero_multi_conditional(lines):
     """Pattern: xor eax, eax; cmp [glb_g1], eax; mov [walk], eax; mov [g_a], eax;
     mov [g_b], eax; jne +0xd; cmp [glb_g2], eax; jne +5; mov [g_cond], eax;
@@ -433,6 +507,7 @@ PATTERNS = [
     ("xor_zero_n_globals", match_xor_zero_n_globals, emit_xor_zero_n_globals),
     ("triple_field_copy", match_triple_field_copy, emit_triple_field_copy),
     ("zero_multi_conditional", match_zero_multi_conditional, emit_zero_multi_conditional),
+    ("dst_first_triple_cross_store", match_dst_first_triple_cross_store, emit_dst_first_triple_cross_store),
 ]
 
 
