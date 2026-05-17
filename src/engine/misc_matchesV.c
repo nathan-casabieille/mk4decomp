@@ -256,28 +256,15 @@ void CallPauseMStackPushSet4Jmp_00460d40(void) {
  */
 extern unsigned int g_state_0053a3c0_v;
 extern void func_00463ec0(void);
-__declspec(naked) void StoreCallPauseCmpDirty_00464240(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a3c0_v]
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    func_00463ec0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     ecx, eax
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   76h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void StoreCallPauseCmpDirty_00464240(void) {
+    g_eventQueueCurrent = g_state_0053a3c0_v;
+    func_00463ec0();
+    if (g_framePauseFlag != 0) return;
+    if (g_eventQueueCurrent > (unsigned int)g_walkCallback) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
 /* @addr 0x0046b630 (59b)
