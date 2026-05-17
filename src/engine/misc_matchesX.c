@@ -27,40 +27,24 @@ extern void Mul10Tail_00404af0(void);
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-__declspec(naked) void RandSarMod0xFFFSub400_0041f1f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueWorkType]
-        push    eax
-        push    0x028be602
-        call    Mul10Tail_00404af0
-        sar     eax, 0x10
-        sub     eax, 0x400
-        add     esp, 8
-        and     eax, 0xfff
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     ecx, dword ptr [eax*4 + g_sinTable]
-        sar     ecx, 0x0c
-        mov     dword ptr [g_walkCallback], ecx
-        ret
-    }
+void RandSarMod0xFFFSub400_0041f1f0(void) {
+    int r;
+    unsigned int idx;
+    r = ((int (*)(int, int))Mul10Tail_00404af0)(0x028be602, (int)g_eventQueueWorkType);
+    r = (r >> 16) - 0x400;
+    idx = (unsigned int)r & 0xfff;
+    g_eventQueueWorkType = idx;
+    g_walkCallback = (void (*)(void))(g_sinTable[idx] >> 12);
 }
 
 /* @addr 0x0041f230 (49b): same shape, no `sub`, esp adjust earlier */
-__declspec(naked) void RandSarMod0xFFF_0041f230(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueWorkType]
-        push    eax
-        push    0x028be602
-        call    Mul10Tail_00404af0
-        sar     eax, 0x10
-        and     eax, 0xfff
-        add     esp, 8
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     ecx, dword ptr [eax*4 + g_sinTable]
-        sar     ecx, 0x0c
-        mov     dword ptr [g_walkCallback], ecx
-        ret
-    }
+void RandSarMod0xFFF_0041f230(void) {
+    int r;
+    unsigned int idx;
+    r = ((int (*)(int, int))Mul10Tail_00404af0)(0x028be602, (int)g_eventQueueWorkType);
+    idx = (unsigned int)(r >> 16) & 0xfff;
+    g_eventQueueWorkType = idx;
+    g_walkCallback = (void (*)(void))(g_sinTable[idx] >> 12);
 }
 
 /* @addr 0x00421f00 (64b)
