@@ -181,27 +181,11 @@ __declspec(naked) void Helper_ChkStk(void) {
  *   pop     esi
  *   ret
  */
-__declspec(naked) void IterFnPtrs_004c6940(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 8]
-        push    edi
-        mov     edi, dword ptr [esp + 0x10]
-        cmp     esi, edi
-        _emit   73h
-        _emit   0fh
-        mov     eax, dword ptr [esi]
-        test    eax, eax
-        _emit   74h
-        _emit   02h
-        call    eax
-        add     esi, 4
-        cmp     esi, edi
-        _emit   72h
-        _emit   0f1h
-        pop     edi
-        pop     esi
-        ret
+void IterFnPtrs_004c6940(void (**start)(void), void (**end)(void)) {
+    while (start < end) {
+        void (*f)(void) = *start;
+        if (f != 0) f();
+        start++;
     }
 }
 
