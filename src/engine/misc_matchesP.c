@@ -76,22 +76,14 @@ void CallPauseCmpStateJmp_0046a520(void) {
  */
 extern void func_0048eff0(void);
 extern void func_0046fc35(void);
-__declspec(naked) void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
-    __asm {
-        call    func_0048eff0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   22h
-        mov     al, byte ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_walkCallback], 0x0e14
-        test    al, 1
-        _emit   75h
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 0xfffff1ec
-        jmp     func_0046fc35
-        ret
+void CallPauseDirtyTwoSetsJmp_0046fbe0(void) {
+    func_0048eff0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x0e14;
+    if ((g_xformDirtyFlags & 1) == 0) {
+        g_walkCallback = (void (*)(void))0xfffff1ec;
     }
+    func_0046fc35();
 }
 
 /* @addr 0x0046fc20 (49b): same as 0x0046fbe0 with constants swapped */
