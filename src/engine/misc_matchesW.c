@@ -336,22 +336,12 @@ __declspec(naked) void CmpEax1OrSetDirty_00488e90(void) {
  */
 extern packed_ptr g_player1NodeIdx;
 extern packed_ptr g_fightGroupHead;
-__declspec(naked) void ArgScaledLoadCmpP1_0048e550(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     edx, dword ptr [g_fightGroupHead]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     ecx, dword ptr [g_player1NodeIdx]
-        cmp     edx, ecx
-        _emit   74h
-        _emit   0ch
-        mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        ret
-    }
+void ArgScaledLoadCmpP1_0048e550(int arg) {
+    unsigned int idx = (unsigned int)(arg >> 2);
+    g_eventQueueTotal = idx;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4);
+    if (g_fightGroupHead == g_player1NodeIdx) return;
+    g_scaledInit_00542044 = *(unsigned int *)(idx * 4 + 4);
 }
 
 /* @addr 0x00490030 (54b)
