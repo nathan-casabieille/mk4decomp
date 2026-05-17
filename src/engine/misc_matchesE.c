@@ -185,23 +185,17 @@ void NegateThree_00425360(void) {
  *   mov     [eax + 0x1c], ecx
  *   ret
  */
-__declspec(naked) void IdentityMatrix_00424b70(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, 0x00010000
-        shl     eax, 2
-        mov     dword ptr [eax], ecx
-        mov     dword ptr [eax + 0x10], ecx
-        mov     dword ptr [eax + 0x20], ecx
-        xor     ecx, ecx
-        mov     dword ptr [eax + 4], ecx
-        mov     dword ptr [eax + 8], ecx
-        mov     dword ptr [eax + 0x0c], ecx
-        mov     dword ptr [eax + 0x14], ecx
-        mov     dword ptr [eax + 0x18], ecx
-        mov     dword ptr [eax + 0x1c], ecx
-        ret
-    }
+void IdentityMatrix_00424b70(void) {
+    int *base = (int *)(g_scaledInit_00542044 * 4);
+    base[0] = 0x10000;
+    base[4] = 0x10000;
+    base[8] = 0x10000;
+    base[1] = 0;
+    base[2] = 0;
+    base[3] = 0;
+    base[5] = 0;
+    base[6] = 0;
+    base[7] = 0;
 }
 
 /* @addr 0x004238b0 (38b)
