@@ -1186,28 +1186,21 @@ __declspec(naked) void SaveSwapCallRestore_00489030(void) {
 extern void PushCallTestByte4Jmp_004a1a10(void);
 extern void SaveCallRestoreOrXor_00404a00(int);
 extern void InstallSelfPauseGate_004a1a50(void);
-__declspec(naked) void GuardedCallDirtyJmpInit_004a19c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueEnd]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     PushCallTestByte4Jmp_004a1a10
-        push    0x25b
-        call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_xformDirtyFlags]
-        add     esp, 4
-        test    al, 4
-        _emit   74h
-        _emit   05h
-        jmp     func_0041f780_pp
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, 0x00050000
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x6c], eax
-        jmp     InstallSelfPauseGate_004a1a50
+void GuardedCallDirtyJmpInit_004a19c0(void) {
+    unsigned int v = g_eventQueueEnd;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) {
+        PushCallTestByte4Jmp_004a1a10();
+        return;
     }
+    SaveCallRestoreOrXor_00404a00(0x25b);
+    if ((g_xformDirtyFlags & 4) != 0) {
+        func_0041f780_pp();
+        return;
+    }
+    g_walkCallback = (void (*)(void))0x00050000;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0x00050000;
+    InstallSelfPauseGate_004a1a50();
 }
 
 /* @addr 0x004a1b00 (74b)
