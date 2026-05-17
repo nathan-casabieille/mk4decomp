@@ -251,26 +251,13 @@ extern void *g_iat_005200b4;
 extern void *g_iat_005200a4;
 extern void *g_iat_00520094;
 extern void *g_iat_00520074;
-extern void *g_iat_004d215c;
-__declspec(naked) void FourIndirectCalls_004c6f20(void) {
-    __asm {
-        mov     eax, dword ptr [g_iat_005200b4]
-        push    esi
-        mov     esi, dword ptr [g_iat_004d215c]
-        push    eax
-        call    esi
-        mov     ecx, dword ptr [g_iat_005200a4]
-        push    ecx
-        call    esi
-        mov     edx, dword ptr [g_iat_00520094]
-        push    edx
-        call    esi
-        mov     eax, dword ptr [g_iat_00520074]
-        push    eax
-        call    esi
-        pop     esi
-        ret
-    }
+extern void (__stdcall *g_iat_004d215c)(void *);
+void FourIndirectCalls_004c6f20(void) {
+    void (__stdcall *f)(void *) = g_iat_004d215c;
+    f(g_iat_005200b4);
+    f(g_iat_005200a4);
+    f(g_iat_00520094);
+    f(g_iat_00520074);
 }
 
 /* @addr 0x004c89b0 (41b): strchr-like search
