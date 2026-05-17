@@ -59,7 +59,14 @@ extern void func_0049048e(void);
     }
 
 /* @addr 0x00490140 */
-__declspec(naked) void MStackPushSet0200_00490140(void) { MSTACK_PUSH_SET(0x0200, func_0049036e) }
+void MStackPushSet0200_00490140(void) {
+    unsigned int acc = g_acc_00542078;
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = acc;
+    g_acc_00542078 = 0x0200;
+    func_0049036e();
+}
 /* @addr 0x00490170 */
 __declspec(naked) void MStackPushSet0080_00490170(void) { MSTACK_PUSH_SET(0x80, func_0049039e) }
 /* @addr 0x004901a0 */
