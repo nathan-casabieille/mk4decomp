@@ -105,20 +105,11 @@ void IncWrap0fJmp_004a1120(void) {
  */
 extern unsigned char g_byte_004d50b8[1];
 extern unsigned int g_state_004d50b4;
-__declspec(naked) void TestByteOrAndCheck_004a1ae0(void) {
-    __asm {
-        test    byte ptr [g_byte_004d50b8], 0x22
-        _emit   74h
-        _emit   06h
-        mov     eax, 1
-        ret
-        mov     eax, dword ptr [g_state_004d50b4]
-        and     eax, 0x4040
-        neg     eax
-        sbb     eax, eax
-        neg     eax
-        ret
-    }
+int TestByteOrAndCheck_004a1ae0(void) {
+    int v;
+    if ((g_byte_004d50b8[0] & 0x22) != 0) return 1;
+    v = g_state_004d50b4 & 0x4040;
+    return v != 0;
 }
 
 /* @addr 0x004aa3f0 (32b)
