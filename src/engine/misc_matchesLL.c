@@ -38,26 +38,17 @@ void PushPopCurrentSetFFFFFFFF_00473070(void) {
  *   call F; pause-test → ret; pop stack value back into g_eventQueueNotMask.
  */
 extern void func_0048a150(void);
-__declspec(naked) void PushPopNotMaskSetWalk0xc_0047d510(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_eventQueueNotMask]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     dword ptr [g_walkCallback], 0x0c
-        call    func_0048a150
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueNotMask], edx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopNotMaskSetWalk0xc_0047d510(void) {
+    unsigned int top;
+    top = g_state_004d57ac + 1;
+    g_state_004d57ac = top;
+    *(unsigned int *)(top * 4) = g_eventQueueNotMask;
+    g_walkCallback = (void (*)(void))0x0c;
+    func_0048a150();
+    if (g_framePauseFlag != 0) return;
+    top = g_state_004d57ac;
+    g_eventQueueNotMask = *(unsigned int *)(top * 4);
+    g_state_004d57ac = top - 1;
 }
 
 /* @addr 0x0041aa80 (70b)
