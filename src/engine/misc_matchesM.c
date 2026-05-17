@@ -382,19 +382,15 @@ extern unsigned int g_state_00ab4dac;
 extern unsigned int g_state_00ab4db0;
 extern unsigned int g_state_00ab4db4;
 extern unsigned int g_state_00ab4db8;
-__declspec(naked) void ZeroEightFields_004b8f20(void) {
-    __asm {
-        xor     eax, eax
-        mov     dword ptr [g_state_00ab4d9c], eax
-        mov     dword ptr [g_state_00ab4da0], eax
-        mov     dword ptr [g_state_00ab4da4], eax
-        mov     dword ptr [g_state_00ab4da8], eax
-        mov     dword ptr [g_state_00ab4dac], eax
-        mov     dword ptr [g_state_00ab4db0], eax
-        mov     dword ptr [g_state_00ab4db4], eax
-        mov     dword ptr [g_state_00ab4db8], eax
-        ret
-    }
+void ZeroEightFields_004b8f20(void) {
+    g_state_00ab4d9c = 0;
+    g_state_00ab4da0 = 0;
+    g_state_00ab4da4 = 0;
+    g_state_00ab4da8 = 0;
+    g_state_00ab4dac = 0;
+    g_state_00ab4db0 = 0;
+    g_state_00ab4db4 = 0;
+    g_state_00ab4db8 = 0;
 }
 
 /* @addr 0x004bd960 (45b): rep stosd 3 blocks
