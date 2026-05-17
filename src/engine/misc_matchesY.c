@@ -225,27 +225,14 @@ extern void SlotPhaseResetInstallChain_0048e0e0(void);
 extern int IterStepScaledStore24_00428730(void *);
 extern void *g_data_00542958;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
-__declspec(naked) void CallPauseScaledStorePushCall_0045fca0(void) {
-    __asm {
-        call    SlotPhaseResetInstallChain_0048e0e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   32h
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, 0x2001
-        mov     dword ptr [g_walkCallback], eax
-        push    OFFSET g_data_00542958
-        mov     dword ptr [ecx*4 + 0x74], eax
-        call    IterStepScaledStore24_00428730
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     SelfInstallPhaseDispatch_0045fd30
-        ret
-    }
+void CallPauseScaledStorePushCall_0045fca0(void) {
+    SlotPhaseResetInstallChain_0048e0e0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x2001;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = 0x2001;
+    IterStepScaledStore24_00428730(&g_data_00542958);
+    if (g_framePauseFlag != 0) return;
+    SelfInstallPhaseDispatch_0045fd30();
 }
 
 /* @addr 0x00474010 (63b)
