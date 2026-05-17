@@ -1785,31 +1785,18 @@ void DualSwapTwoCallsJmp_0045d960(void) {
  */
 extern void MStackChainInstallDispatch_0048d500(void);
 extern void TableHitOrSchedule_004be7a0(int);
-__declspec(naked) void CmpEqInitCallElseJmp_0048d4b0(void) {
-    __asm {
-        cmp     dword ptr [g_walkCallback], 8
-        _emit   75h
-        _emit   32h
-        mov     eax, 0x00542db8
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    MStackChainInstallDispatch_0048d500
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   16h
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   0dh
-        push    0x1392
-        call    TableHitOrSchedule_004be7a0
-        add     esp, 4
-        ret
-        mov     ecx, 0x00542db8
-        shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     MStackChainInstallDispatch_0048d500
+extern unsigned char g_data_00542db8;
+void CmpEqInitCallElseJmp_0048d4b0(void) {
+    if ((unsigned int)g_walkCallback == 8) {
+        g_scaledInit_00542044 = (unsigned int)&g_data_00542db8 >> 2;
+        MStackChainInstallDispatch_0048d500();
+        if (g_framePauseFlag != 0) return;
+        if ((g_xformDirtyFlags & 1) != 0) return;
+        TableHitOrSchedule_004be7a0(0x1392);
+        return;
     }
+    g_scaledInit_00542044 = (unsigned int)&g_data_00542db8 >> 2;
+    MStackChainInstallDispatch_0048d500();
 }
 
 /* === Five 78b clones: dispatch at 0x004926e0 / 30 / 80 / d0 / 20 ===
