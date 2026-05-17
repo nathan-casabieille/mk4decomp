@@ -330,17 +330,11 @@ void TwoCallStatePauseJmp_00491990(void) {
  *   mov     [g_scaledInit_00542044], ecx
  *   ret
  */
-__declspec(naked) void ScaledAddDeref_00494800(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [eax*4 + 0x30]
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        ret
-    }
+void ScaledAddDeref_00494800(void) {
+    unsigned int idx;
+    idx = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30) + (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = idx;
+    g_scaledInit_00542044 = *(unsigned int *)(idx * 4);
 }
 
 /* @addr 0x00495cf0 (38b)
