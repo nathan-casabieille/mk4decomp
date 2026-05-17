@@ -140,28 +140,16 @@ extern void func_004089e0_kk(void);
 extern void func_004b8f90(void);
 extern void func_00451580(void);
 extern void func_00451598(void);
-__declspec(naked) void QuadCallPauseSetCallSeq_00451550(void) {
-    __asm {
-        call    func_004089e0_kk
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   35h
-        call    func_004b8f90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        mov     dword ptr [g_walkCallback], 5
-        call    func_00451580
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 6
-        jmp     func_00451598
-        ret
-    }
+void QuadCallPauseSetCallSeq_00451550(void) {
+    func_004089e0_kk();
+    if (g_framePauseFlag != 0) return;
+    func_004b8f90();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))5;
+    func_00451580();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))6;
+    func_00451598();
 }
 
 /* @addr 0x00482be0 (68b): set 1, call F1, pause, set 0x9999, call F2, pause, call F3, pause, jmp T */
