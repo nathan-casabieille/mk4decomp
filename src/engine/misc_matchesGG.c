@@ -67,23 +67,18 @@ __declspec(naked) void Shr96By1_004ce2c0(void) {
  *   switch (arg) { case 1: errno=0x21; default: ret; case 2..3: errno=0x22; }
  */
 extern int *Crt_errno_004c8ba0(void);
-__declspec(naked) void SwitchErrorCode_004cf6d0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        cmp     eax, 1
-        _emit   74h
-        _emit   13h
-        _emit   7eh
-        _emit   1ch
-        cmp     eax, 3
-        _emit   7fh
-        _emit   17h
-        call    Crt_errno_004c8ba0
-        mov     dword ptr [eax], 0x22
-        ret
-        call    Crt_errno_004c8ba0
-        mov     dword ptr [eax], 0x21
-        ret
+void SwitchErrorCode_004cf6d0(int arg) {
+    int *errno_ptr;
+    switch (arg) {
+    case 1:
+        errno_ptr = Crt_errno_004c8ba0();
+        *errno_ptr = 0x21;
+        return;
+    case 2:
+    case 3:
+        errno_ptr = Crt_errno_004c8ba0();
+        *errno_ptr = 0x22;
+        return;
     }
 }
 
