@@ -278,19 +278,11 @@ __declspec(naked) void GuardedScaledCall_0048a020(void) {
  */
 extern unsigned int g_acc_00542078;
 extern void func_0048b606(void);
-__declspec(naked) void StoreCallPauseStore_0048b450(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueChild]
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    func_0048b606
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ch
-        mov     ecx, dword ptr [g_acc_00542078]
-        mov     dword ptr [g_currentNodeFlags], ecx
-        ret
-    }
+void StoreCallPauseStore_0048b450(void) {
+    g_eventQueueWorkType = g_eventQueueChild;
+    func_0048b606();
+    if (g_framePauseFlag != 0) return;
+    g_currentNodeFlags = g_acc_00542078;
 }
 
 /* @addr 0x0048e3e0 (31b)
