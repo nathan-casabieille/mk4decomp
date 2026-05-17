@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="44" viewBox="0 0 600 44" role="img" aria-label="Progress 27.1%">
-  <title>Progress: 27.1%</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="44" viewBox="0 0 600 44" role="img" aria-label="Progress 27.2%">
+  <title>Progress: 27.2%</title>
   <defs>
     <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%"   stop-color="#ffd24a"/>
@@ -18,11 +18,11 @@
         fill="#0a0a0a" stroke="url(#borderGrad)" stroke-width="2"/>
 
   <!-- Filled portion -->
-  <rect x="4" y="4" width="160.71" height="36" rx="4" ry="4"
+  <rect x="4" y="4" width="161.13" height="36" rx="4" ry="4"
         fill="url(#fillGrad)"/>
 
   <!-- Top highlight on filled portion only -->
-  <rect x="4" y="4" width="160.71" height="8" rx="4" ry="4"
+  <rect x="4" y="4" width="161.13" height="8" rx="4" ry="4"
         fill="#ffffff" opacity="0.18"/>
 
   <!-- Percent text -->
@@ -34,6 +34,6 @@
         stroke="#1a0a0a" stroke-width="1.2"
         paint-order="stroke fill"
         letter-spacing="2">
-    27.1%
+    27.2%
   </text>
 </svg>

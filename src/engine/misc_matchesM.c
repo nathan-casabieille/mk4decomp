@@ -140,15 +140,10 @@ int Test4StatesAny_004a1d20(void) {
  *   mov     [ecx*4 + 0], 2
  *   ret
  */
-__declspec(naked) void DualScaledStoreConst_004a22c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [eax*4 + 0], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_walkCallback], 2
-        mov     dword ptr [ecx*4 + 0], 2
-        ret
-    }
+void DualScaledStoreConst_004a22c0(void) {
+    *(unsigned int *)(g_eventQueueIdx * 4) = 0;
+    g_walkCallback = (void (*)(void))2;
+    *(unsigned int *)(g_scaledInit_00542044 * 4) = 2;
 }
 
 /* @addr 0x004a7db0 (38b)
