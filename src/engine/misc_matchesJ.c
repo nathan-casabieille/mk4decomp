@@ -296,18 +296,12 @@ void StoreCallPauseStore_0048b450(void) {
  *   ret
  */
 extern unsigned int g_state_0052aac4_j;
-__declspec(naked) void Cmp2OrSet0b_0048e3e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4_j]
-        cmp     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0fh
-        mov     eax, 0x0b
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_0052aac4_j], eax
-        ret
-    }
+void Cmp2OrSet0b_0048e3e0(void) {
+    unsigned int v = g_state_0052aac4_j;
+    g_walkCallback = (void (*)(void))v;
+    if (v == 2) return;
+    g_walkCallback = (void (*)(void))0x0b;
+    g_state_0052aac4_j = 0x0b;
 }
 
 /* @addr 0x0048e5e0 (32b)
