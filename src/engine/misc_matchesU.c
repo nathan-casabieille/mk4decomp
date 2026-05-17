@@ -247,18 +247,9 @@ extern void *g_data_00450790;
 extern unsigned int g_state_0052d750;
 extern unsigned int g_state_0052d754;
 extern unsigned int g_state_0052d758;
-__declspec(naked) void StoreThreeStatesPushCall_00450680(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     edx, dword ptr [g_eventQueueWorkType]
-        push    0x93
-        push    OFFSET g_data_00450790
-        mov     dword ptr [g_state_0052d750], eax
-        mov     dword ptr [g_state_0052d754], ecx
-        mov     dword ptr [g_state_0052d758], edx
-        call    func_004acabc
-        add     esp, 8
-        ret
-    }
+void StoreThreeStatesPushCall_00450680(void) {
+    g_state_0052d750 = (unsigned int)g_walkCallback;
+    g_state_0052d754 = g_eventQueueCurrent;
+    g_state_0052d758 = g_eventQueueWorkType;
+    func_004acabc(&g_data_00450790, 0x93);
 }
