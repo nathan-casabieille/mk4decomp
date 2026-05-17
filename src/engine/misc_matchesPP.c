@@ -1833,28 +1833,19 @@ void DispatchSetWalk2_00492820(void) {
  *   eax = g_fightGroupHead; g_scaledInit = ecx; [eax*4+0x24] = ecx;
  *   ecx = g_fightGroupHead; walk = 0; [ecx*4+0x28] = 0; ret.
  */
-__declspec(naked) void GuardedPackedSlotInit_00428760(void) {
-    __asm {
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        xor     edx, edx
-        cmp     eax, edx
-        _emit   75h
-        _emit   3eh
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [eax*4 + 0x24], ecx
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx*4 + 0x28], edx
-        ret
-    }
+void GuardedPackedSlotInit_00428760(int arg0) {
+    unsigned int packed;
+    unsigned int v;
+    CopyJmp_00406ba0();
+    if (g_framePauseFlag != 0) return;
+    packed = (unsigned int)(arg0 >> 2);
+    g_eventQueueTotal = packed;
+    v = *(unsigned int *)(packed * 4);
+    g_eventQueueTotal = packed + 1;
+    g_scaledInit_00542044 = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = v;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
 }
 
 /* @addr 0x0042c790 (79b)
