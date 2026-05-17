@@ -300,22 +300,11 @@ extern void *g_data_004234f0;
 extern void *g_data_00423570;
 extern unsigned int g_state_00538040;
 extern unsigned int g_state_00538044;
-__declspec(naked) void DualPushCallStore_004231b0(void) {
-    __asm {
-        push    3
-        push    OFFSET g_data_004234f0
-        call    func_0049cb34
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        add     esp, 8
-        mov     dword ptr [g_state_00538040], eax
-        push    4
-        push    OFFSET g_data_00423570
-        call    func_0049cb34
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        add     esp, 8
-        mov     dword ptr [g_state_00538044], ecx
-        ret
-    }
+void DualPushCallStore_004231b0(void) {
+    func_0049cb34(&g_data_004234f0, 3);
+    g_state_00538040 = g_scaledInit_00542044;
+    func_0049cb34(&g_data_00423570, 4);
+    g_state_00538044 = g_scaledInit_00542044;
 }
 
 /* @addr 0x00429800 (52b)
