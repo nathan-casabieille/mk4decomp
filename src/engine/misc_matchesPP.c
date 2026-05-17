@@ -121,25 +121,17 @@ __declspec(naked) void WalkCallbackSetClearDirty_0048e7d0(void) {
 extern int g_data_00ab4e6c;
 extern int g_data_00ab4e5c;
 extern int g_data_00ab4e60;
-__declspec(naked) void ClampMulShiftStore_004ba0e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        mov     eax, dword ptr [eax*4 + 0x14]
-        imul    eax, dword ptr [g_data_00ab4e6c]
-        sar     eax, 8
-        mov     dword ptr [g_data_00ab4e5c], eax
-        _emit   79h
-        _emit   07h
-        xor     eax, eax
-        mov     dword ptr [g_data_00ab4e5c], eax
-        cmp     eax, 0x100
-        _emit   7eh
-        _emit   0ah
-        mov     dword ptr [g_data_00ab4e5c], 0x100
-        mov     ecx, dword ptr [g_tickW1]
-        mov     dword ptr [g_data_00ab4e60], ecx
-        ret
+void ClampMulShiftStore_004ba0e0(void) {
+    int v = (*(int *)(g_xformEntityIdx * 4 + 0x14) * g_data_00ab4e6c) >> 8;
+    g_data_00ab4e5c = v;
+    if (v < 0) {
+        v = 0;
+        g_data_00ab4e5c = v;
     }
+    if (v > 0x100) {
+        g_data_00ab4e5c = 0x100;
+    }
+    g_data_00ab4e60 = (int)g_tickW1;
 }
 
 /* @addr 0x0047dee0 (67b)
