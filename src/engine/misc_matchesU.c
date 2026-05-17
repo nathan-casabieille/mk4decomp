@@ -62,24 +62,17 @@ extern void OrDualStore_0048a190(void);
 extern void func_00404e10(void);
 extern void func_004222c0(void);
 extern void func_004202f5(void);
-__declspec(naked) void ScaledClearTripleCallJmp_004202c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x84]
-        mov     dword ptr [eax*4 + 0x84], 0
-        test    ecx, ecx
-        _emit   75h
-        _emit   05h
-        call    OrDualStore_0048a190
-        call    func_00404e10
-        call    func_004222c0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004202f5
-        ret
+void ScaledClearTripleCallJmp_004202c0(void) {
+    unsigned int base = g_baseSel_00542060;
+    unsigned int v = *(unsigned int *)(base * 4 + 0x84);
+    *(unsigned int *)(base * 4 + 0x84) = 0;
+    if (v == 0) {
+        OrDualStore_0048a190();
     }
+    func_00404e10();
+    func_004222c0();
+    if (g_framePauseFlag != 0) return;
+    func_004202f5();
 }
 
 /* @addr 0x00429750 (56b)
