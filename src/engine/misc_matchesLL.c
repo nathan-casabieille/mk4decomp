@@ -199,28 +199,16 @@ void ScaledStateNegCallPauseLoad_00489e90(void) {
 extern unsigned int g_state_00538158_ll;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
-__declspec(naked) void LoadCmpStateOrDirtyToggle_0048e330(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_state_00538158_ll]
-        mov     eax, dword ptr [g_state_00537f48]
-        cmp     ecx, edx
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0ah
-        mov     eax, dword ptr [g_state_005380e0]
-        mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     ecx, 4
-        or      edx, ecx
-        cmp     eax, 6
-        mov     dword ptr [g_xformDirtyFlags], edx
-        _emit   74h
-        _emit   09h
-        mov     eax, edx
-        xor     eax, ecx
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void LoadCmpStateOrDirtyToggle_0048e330(void) {
+    unsigned int v = g_state_00537f48;
+    g_walkCallback = (void (*)(void))v;
+    if (g_fightGroupHead != g_state_00538158_ll) {
+        v = g_state_005380e0;
+        g_walkCallback = (void (*)(void))v;
+    }
+    g_xformDirtyFlags |= 4;
+    if (v != 6) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
 }
 
