@@ -223,28 +223,22 @@ void DualScaledLoadStoreJmp_00475790(void) {
  *   jmp     T
  */
 extern void func_00476e1d(void);
-__declspec(naked) void ScaledOr4Jmp_00476e00(void) {
-    __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x20]
-        or      al, 4
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x20], eax
-        jmp     func_00476e1d
-    }
+void ScaledOr4Jmp_00476e00(void) {
+    unsigned int scaled = g_scaledInit_00542044;
+    unsigned int v = *(unsigned int *)(scaled * 4 + 0x20) | 4;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(scaled * 4 + 0x20) = v;
+    func_00476e1d();
 }
 
 /* @addr 0x00476fe0 (32b): same shape, and al, 0xfb */
 extern void func_00476ffd(void);
-__declspec(naked) void ScaledAndFBJmp_00476fe0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x20]
-        and     al, 0xfb
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x20], eax
-        jmp     func_00476ffd
-    }
+void ScaledAndFBJmp_00476fe0(void) {
+    unsigned int scaled = g_scaledInit_00542044;
+    unsigned int v = *(unsigned int *)(scaled * 4 + 0x20) & 0xfffffffbu;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(scaled * 4 + 0x20) = v;
+    func_00476ffd();
 }
 
 /* @addr 0x004809b0 (40b)
