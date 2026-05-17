@@ -383,8 +383,6 @@ def main():
     if not args.files:
         import glob
         args.files = sorted(glob.glob(str(ROOT / "src/engine/misc_matches*.c")))
-        # Skip QQ for now (too risky)
-        args.files = [f for f in args.files if "QQ" not in f]
 
     # Initial sanity check
     ok, _ = run_make_matching()
