@@ -196,15 +196,13 @@ __declspec(naked) void AddDerefJmp_00433e70(void) {
  */
 extern void func_0043928c(void);
 extern void func_004391b0(void);
-__declspec(naked) void MStackPushPtr1Jmp_00438e70(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 3
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004391b0
-        jmp     func_0043928c
-    }
+void MStackPushPtr1Jmp_00438e70(void) {
+    unsigned int v = g_matrixStackTop;
+    g_walkCallback = (void (*)(void))3;
+    v++;
+    g_matrixStackTop = v;
+    *(unsigned int *)(v * 4) = (unsigned int)&func_004391b0;
+    func_0043928c();
 }
 
 /* @addr 0x00438ef0 (37b)
