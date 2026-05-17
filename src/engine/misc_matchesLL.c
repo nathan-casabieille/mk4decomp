@@ -305,31 +305,14 @@ extern unsigned int g_state_00543904;
 extern unsigned int g_state_00543900;
 extern unsigned int g_state_005438e8;
 extern int func_004ac318(void);
-extern void *g_iat_004d2244;
-extern void *g_iat_004d2240;
-__declspec(naked) void Helper_TitleEnterStateC(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00543904]
-        test    eax, eax
-        _emit   74h
-        _emit   1eh
-        call    func_004ac318
-        test    eax, eax
-        _emit   74h
-        _emit   15h
-        mov     eax, dword ptr [g_state_005438e8]
-        push    0
-        push    2
-        push    0x808
-        push    eax
-        call    dword ptr [g_iat_004d2244]
-        mov     eax, dword ptr [g_state_00543900]
-        test    eax, eax
-        _emit   75h
-        _emit   0bh
-        call    dword ptr [g_iat_004d2240]
-        mov     dword ptr [g_state_00543900], eax
-        mov     dword ptr [g_state_00543904], 0
-        ret
+extern void (__stdcall *g_iat_004d2244)(int, int, int, int);
+extern int (__stdcall *g_iat_004d2240)(void);
+void Helper_TitleEnterStateC(void) {
+    if (g_state_00543904 != 0 && func_004ac318() != 0) {
+        g_iat_004d2244((int)g_state_005438e8, 0x808, 2, 0);
     }
+    if (g_state_00543900 == 0) {
+        g_state_00543900 = (unsigned int)g_iat_004d2240();
+    }
+    g_state_00543904 = 0;
 }
