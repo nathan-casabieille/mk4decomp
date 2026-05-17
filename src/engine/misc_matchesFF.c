@@ -14,32 +14,20 @@ extern packed_ptr g_xformEntityIdx;
  *   and call F if it differs from g_baseSel_00542060.
  */
 extern void NodeUnlink_0041f710(void *p);
-__declspec(naked) void ScenegraphWalk_0041f7d0(void) {
-    __asm {
-        push    esi
-        mov     esi, 0x0053e368
-loop_top:
-        mov     eax, dword ptr [esi + 0xd8]
-        test    eax, eax
-        _emit   74h
-        _emit   1dh
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, esi
-        sar     eax, 2
-        cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   74h
-        _emit   09h
-        push    esi
-        call    NodeUnlink_0041f710
-        add     esp, 4
-        add     esi, 0xe8
-        cmp     esi, 0x00541d68
-        _emit   72h
-        _emit   0cbh
-        pop     esi
-        ret
-    }
+extern unsigned int g_data_0053e368;
+extern unsigned int g_data_00541d68;
+void ScenegraphWalk_0041f7d0(void) {
+    unsigned char *p = (unsigned char *)&g_data_0053e368;
+    do {
+        unsigned int v;
+        if (*(unsigned int *)(p + 0xd8) == 0) goto advance;
+        v = (unsigned int)((int)(unsigned int)p >> 2);
+        g_scaledInit_00542044 = v;
+        if (v == g_baseSel_00542060) goto advance;
+        NodeUnlink_0041f710(p);
+    advance:
+        p += 0xe8;
+    } while ((unsigned int)p < (unsigned int)&g_data_00541d68);
 }
 
 /* @addr 0x00421be0 (61b)
