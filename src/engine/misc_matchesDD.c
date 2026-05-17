@@ -222,30 +222,12 @@ void SetVtable5Slots_004c5790(void) {
 extern void RangePathIATDispatch_004c6ff0(int);
 extern int FSeekImpl_004c5ad0(int, int, int);
 extern void RangePathIATDispatch_004c7060(int);
-__declspec(naked) void Helper_FSeek(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 8]
-        push    edi
-        push    esi
-        call    RangePathIATDispatch_004c6ff0
-        mov     eax, dword ptr [esp + 0x18]
-        mov     ecx, dword ptr [esp + 0x14]
-        add     esp, 4
-        push    eax
-        push    ecx
-        push    esi
-        call    FSeekImpl_004c5ad0
-        add     esp, 0x0c
-        mov     edi, eax
-        push    esi
-        call    RangePathIATDispatch_004c7060
-        add     esp, 4
-        mov     eax, edi
-        pop     edi
-        pop     esi
-        ret
-    }
+int Helper_FSeek(int arg0, int arg1, int arg2) {
+    int saved;
+    RangePathIATDispatch_004c6ff0(arg0);
+    saved = FSeekImpl_004c5ad0(arg0, arg1, arg2);
+    RangePathIATDispatch_004c7060(arg0);
+    return saved;
 }
 
 /* @addr 0x004c6e60 (42b)
