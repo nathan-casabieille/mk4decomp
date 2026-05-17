@@ -235,25 +235,12 @@ __declspec(naked) void IterFnPtrs_004c6940(void) {
  *   xor     eax, eax
  *   ret
  */
-extern int *g_state_00f9f854;
-__declspec(naked) void IndirectCall_004c6ec0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f9f854]
-        test    eax, eax
-        _emit   74h
-        _emit   14h
-        mov     ecx, dword ptr [esp + 4]
-        push    ecx
-        call    eax
-        add     esp, 4
-        test    eax, eax
-        _emit   74h
-        _emit   06h
-        mov     eax, 1
-        ret
-        xor     eax, eax
-        ret
+extern int (*g_state_00f9f854)(int);
+int IndirectCall_004c6ec0(int arg) {
+    if (g_state_00f9f854 != 0 && g_state_00f9f854(arg) != 0) {
+        return 1;
     }
+    return 0;
 }
 
 /* @addr 0x004c6f20 (43b): four indirect calls
