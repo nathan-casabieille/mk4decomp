@@ -183,28 +183,20 @@ void StorePauseImulShr16_004ab630(void) {
  */
 extern unsigned int g_state_00538130;
 extern void AudioMixerStep_004ab700(void);
-__declspec(naked) void StoreDoubleNegPauseSubStore_004ab750(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00538130], eax
-        add     eax, eax
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7dh
-        _emit   07h
-        neg     eax
-        mov     dword ptr [g_walkCallback], eax
-        call    AudioMixerStep_004ab700
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        mov     eax, dword ptr [g_state_00538130]
-        mov     ecx, dword ptr [g_walkCallback]
-        sub     ecx, eax
-        mov     dword ptr [g_walkCallback], ecx
-        ret
+void StoreDoubleNegPauseSubStore_004ab750(void) {
+    int saved;
+    int v;
+    saved = (int)g_walkCallback;
+    g_state_00538130 = (unsigned int)saved;
+    v = saved + saved;
+    g_walkCallback = (void (*)(void))v;
+    if (v < 0) {
+        v = -v;
+        g_walkCallback = (void (*)(void))v;
     }
+    AudioMixerStep_004ab700();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback - g_state_00538130);
 }
 
 /* @addr 0x004ae950 (57b)
