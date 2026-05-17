@@ -224,6 +224,86 @@ def emit_multi_call_pause_tail(info):
     return out
 
 
+def match_triple_field_copy(lines):
+    """Pattern: 3 iterations of (load src_glb; load dst_glb; load arr[src_glb*4+SRC_N];
+    store walkCallback; store arr[dst_glb*4+DST_N]); then ret OR tail-jmp.
+
+    Each iteration reloads both src_glb and dst_glb via DIFFERENT registers (eax+ecx, then
+    edx+ecx, then edx+ecx). MSVC re-emits the load pattern naturally for this 3-store-via-pointer
+    pattern because g_walkCallback may alias the index globals (conservative MSVC alias analysis).
+
+    Returns dict(src_glb, dst_glb, offsets=[(src_off1,dst_off1),...], tail=None|str).
+    """
+    # Two shapes: 16 lines (ends with ret), 17 lines (ends with jmp T then ret-impl).
+    # The 3 iterations are 5 lines each = 15 lines; +1 for final ret OR +1 jmp.
+    if len(lines) not in (16, 17):
+        return None
+    tail = None
+    if lines[-1][0] == 'ret':
+        body = lines[:-1]
+    elif lines[-1][0] == 'jmp':
+        tail = lines[-1][1]
+        body = lines[:-1]
+    else:
+        return None
+    if len(body) != 15:
+        return None
+
+    # Parse three 5-line blocks
+    iters = []
+    src_glb, dst_glb = None, None
+    for k in range(3):
+        chunk = body[k*5:(k+1)*5]
+        # mov reg1, [src_glb]
+        m1 = re.match(r'^(eax|edx),\s*dword ptr\s*\[(\w+)\]$', chunk[0][1])
+        if chunk[0][0] != 'mov' or not m1:
+            return None
+        sg = m1.group(2)
+        if src_glb is None:
+            src_glb = sg
+        elif src_glb != sg:
+            return None
+        # mov ecx, [dst_glb]
+        m2 = re.match(r'^ecx,\s*dword ptr\s*\[(\w+)\]$', chunk[1][1])
+        if chunk[1][0] != 'mov' or not m2:
+            return None
+        dg = m2.group(1)
+        if dst_glb is None:
+            dst_glb = dg
+        elif dst_glb != dg:
+            return None
+        # mov eax, [<src_reg>*4 + SRC_OFF]
+        reg_used = m1.group(1)
+        m3 = re.match(rf'^eax,\s*dword ptr\s*\[{reg_used}\*4 \+ (\w+)\]$', chunk[2][1])
+        if chunk[2][0] != 'mov' or not m3:
+            return None
+        src_off = int(m3.group(1), 0)
+        # mov [g_walkCallback], eax
+        if chunk[3] != ('mov', 'dword ptr [g_walkCallback], eax'):
+            return None
+        # mov [ecx*4 + DST_OFF], eax
+        m5 = re.match(r'^dword ptr\s*\[ecx\*4 \+ (\w+)\],\s*eax$', chunk[4][1])
+        if chunk[4][0] != 'mov' or not m5:
+            return None
+        dst_off = int(m5.group(1), 0)
+        iters.append((src_off, dst_off))
+    return {
+        'src_glb': src_glb, 'dst_glb': dst_glb,
+        'offsets': iters, 'tail': tail,
+    }
+
+
+def emit_triple_field_copy(info):
+    out = "    unsigned int val;\n"
+    for src_off, dst_off in info['offsets']:
+        out += f"    val = *(unsigned int *)({info['src_glb']} * 4 + {src_off:#x});\n"
+        out += f"    g_walkCallback = (void (*)(void))val;\n"
+        out += f"    *(unsigned int *)({info['dst_glb']} * 4 + {dst_off:#x}) = val;\n"
+    if info['tail']:
+        out += f"    {info['tail']}();\n"
+    return out
+
+
 def match_xor_zero_n_globals(lines):
     """Pattern: xor eax, eax; mov [g_X], eax (xN); ret.
 
@@ -258,6 +338,7 @@ PATTERNS = [
     ("set_walk_call_pause_tailjmp", match_set_walk_call_pause_tailjmp, emit_set_walk_call_pause_tailjmp),
     ("multi_call_pause_tail", match_multi_call_pause_tail, emit_multi_call_pause_tail),
     ("xor_zero_n_globals", match_xor_zero_n_globals, emit_xor_zero_n_globals),
+    ("triple_field_copy", match_triple_field_copy, emit_triple_field_copy),
 ]
 
 
