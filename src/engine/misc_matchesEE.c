@@ -102,29 +102,15 @@ extern void * (__stdcall *g_iat_004d216c)(int, int, int);
 extern void (__stdcall *g_iat_004d2158)(void *);
 extern void * g_state_00fa0ee4;
 extern int VirtualHeapAlloc_004c70d0(void);
-__declspec(naked) void CallIATIfThenCall_004c6ee0(void) {
-    __asm {
-        push    0
-        push    0x1000
-        push    0
-        call    dword ptr [g_iat_004d216c]
-        test    eax, eax
-        mov     dword ptr [g_state_00fa0ee4], eax
-        _emit   75h
-        _emit   01h
-        ret
-        call    VirtualHeapAlloc_004c70d0
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     eax, dword ptr [g_state_00fa0ee4]
-        push    eax
-        call    dword ptr [g_iat_004d2158]
-        xor     eax, eax
-        ret
-        mov     eax, 1
-        ret
+int CallIATIfThenCall_004c6ee0(void) {
+    void *p = g_iat_004d216c(0, 0x1000, 0);
+    g_state_00fa0ee4 = p;
+    if (p == 0) return 0;
+    if (VirtualHeapAlloc_004c70d0() == 0) {
+        g_iat_004d2158(g_state_00fa0ee4);
+        return 0;
     }
+    return 1;
 }
 
 /* @addr 0x004c8300 (57b)
