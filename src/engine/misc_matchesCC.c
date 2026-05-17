@@ -173,31 +173,19 @@ __declspec(naked) void AbsClampIATCall_004b44f0(void) {
  *   ret.
  */
 extern unsigned int g_state_007afff0;
-extern void (*g_iat_007b0040)(int, int);
-__declspec(naked) void EarlyOutDualPushIATStore_004b4600(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_007affe4]
-        test    eax, eax
-        _emit   74h
-        _emit   37h
-        mov     eax, dword ptr [g_state_007afff0]
-        test    eax, eax
-        _emit   74h
-        _emit   2eh
-        cmp     eax, 2
-        _emit   75h
-        _emit   15h
-        push    1
-        push    1
-        call    dword ptr [g_iat_007b0040]
-        mov     dword ptr [g_state_007afff0], 0
-        ret
-        push    0
-        push    0
-        call    dword ptr [g_iat_007b0040]
-        mov     dword ptr [g_state_007afff0], 0
-        ret
+extern void (__stdcall *g_iat_007b0040)(int, int);
+void EarlyOutDualPushIATStore_004b4600(void) {
+    unsigned int v;
+    if (g_state_007affe4 == 0) return;
+    v = g_state_007afff0;
+    if (v == 0) return;
+    if (v == 2) {
+        g_iat_007b0040(1, 1);
+        g_state_007afff0 = 0;
+        return;
     }
+    g_iat_007b0040(0, 0);
+    g_state_007afff0 = 0;
 }
 
 /* @addr 0x004a9230 (64b): call F + load 1, 0; set 5 globals; jmp T. */
