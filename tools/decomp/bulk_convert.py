@@ -333,12 +333,106 @@ def emit_xor_zero_n_globals(info):
     return out
 
 
+def match_cmp_dual_init_with_skip(lines):
+    """Pattern: mov regA, [glb1]; mov regB, [glb2]; mov [dst1], regA;
+    mov regC, [glb3]; cmp regC, regB; mov [dst2], regA; je +5; mov regC, [glb4]; mov regB, [glb5]; mov [dst2], regC; mov [dst1], regB; ret.
+
+    Matches CmpP1GTSetup-style: load player1 settings, store, check fightGroupHead == p1, swap to player2 if not.
+    """
+    # Hard to generalize, leave as stub for now
+    return None
+
+
+def match_zero_multi_conditional(lines):
+    """Pattern: xor eax, eax; cmp [glb_g1], eax; mov [walk], eax; mov [g_a], eax;
+    mov [g_b], eax; jne +0xd; cmp [glb_g2], eax; jne +5; mov [g_cond], eax;
+    mov [g_x1], eax; ... mov [g_xn], eax; ret.
+
+    Matches ZeroMultiGlobalsCmp_00404680-style: zero many globals unconditionally,
+    plus one extra if both guards are 0.
+    """
+    if len(lines) < 10:
+        return None
+    if not (lines[0][0] == "mov" and re.match(r'^ecx,\s*dword ptr\s*\[(\w+)\]$', lines[0][1])):
+        return None
+    g1_m = re.match(r'^ecx,\s*dword ptr\s*\[(\w+)\]$', lines[0][1])
+    g1 = g1_m.group(1)
+    if lines[1] != ("xor", "eax, eax"):
+        return None
+    if lines[2] != ("cmp", "ecx, eax"):
+        return None
+    # Now N unconditional zero stores
+    i = 3
+    pre_stores = []
+    while i < len(lines) and lines[i][0] == "mov":
+        m = re.match(r'^dword ptr\s*\[(\w+)\],\s*eax$', lines[i][1])
+        if not m:
+            break
+        pre_stores.append(m.group(1))
+        i += 1
+    if i >= len(lines):
+        return None
+    # Expect: _emit 75h; _emit XXh
+    if lines[i][0] != "_emit" or lines[i][1] != "75h":
+        return None
+    if lines[i+1][0] != "_emit":
+        return None
+    i += 2
+    # Expect: cmp dword ptr [g2], eax
+    m2 = re.match(r'^dword ptr\s*\[(\w+)\],\s*eax$', lines[i][1])
+    if lines[i][0] != "cmp" or not m2:
+        return None
+    g2 = m2.group(1)
+    i += 1
+    # Expect: _emit 75h; _emit 05h
+    if lines[i][0] != "_emit" or lines[i][1] != "75h":
+        return None
+    if lines[i+1][0] != "_emit" or lines[i+1][1] != "05h":
+        return None
+    i += 2
+    # Now the one conditional store
+    m3 = re.match(r'^dword ptr\s*\[(\w+)\],\s*eax$', lines[i][1])
+    if lines[i][0] != "mov" or not m3:
+        return None
+    cond_store = m3.group(1)
+    i += 1
+    # More unconditional zero stores
+    post_stores = []
+    while i < len(lines) and lines[i][0] == "mov":
+        m = re.match(r'^dword ptr\s*\[(\w+)\],\s*eax$', lines[i][1])
+        if not m:
+            break
+        post_stores.append(m.group(1))
+        i += 1
+    if i >= len(lines) or lines[i][0] != "ret":
+        return None
+    return {
+        "g1": g1, "g2": g2,
+        "pre_stores": pre_stores,
+        "cond_store": cond_store,
+        "post_stores": post_stores,
+    }
+
+
+def emit_zero_multi_conditional(info):
+    out = ""
+    for g in info["pre_stores"]:
+        out += f"    {g} = 0;\n"
+    out += f"    if ({info['g1']} == 0 && {info['g2']} == 0) {{\n"
+    out += f"        {info['cond_store']} = 0;\n"
+    out += f"    }}\n"
+    for g in info["post_stores"]:
+        out += f"    {g} = 0;\n"
+    return out
+
+
 PATTERNS = [
     ("call_pause_tailjmp", match_call_pause_tailjmp, emit_call_pause_tailjmp),
     ("set_walk_call_pause_tailjmp", match_set_walk_call_pause_tailjmp, emit_set_walk_call_pause_tailjmp),
     ("multi_call_pause_tail", match_multi_call_pause_tail, emit_multi_call_pause_tail),
     ("xor_zero_n_globals", match_xor_zero_n_globals, emit_xor_zero_n_globals),
     ("triple_field_copy", match_triple_field_copy, emit_triple_field_copy),
+    ("zero_multi_conditional", match_zero_multi_conditional, emit_zero_multi_conditional),
 ]
 
 

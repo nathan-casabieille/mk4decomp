@@ -13,23 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  *   adds 0x269ec3, stores back, returns shr 0x10 & 0x7fff.
  */
 extern void *PendingMatch_004c9df0(void);
-__declspec(naked) void Crt_rand(void) {
-    __asm {
-        call    PendingMatch_004c9df0
-        mov     ecx, dword ptr [eax + 0x14]
-        lea     edx, [ecx + ecx*2]
-        lea     edx, [ecx + edx*4]
-        shl     edx, 4
-        add     edx, ecx
-        shl     edx, 8
-        sub     edx, ecx
-        lea     ecx, [ecx + edx*4 + 0x00269ec3]
-        mov     dword ptr [eax + 0x14], ecx
-        mov     eax, ecx
-        shr     eax, 0x10
-        and     eax, 0x7fff
-        ret
-    }
+int Crt_rand(void) {
+    unsigned char *p = (unsigned char *)PendingMatch_004c9df0();
+    unsigned int v = *(unsigned int *)(p + 0x14) * 214013u + 0x269ec3u;
+    *(unsigned int *)(p + 0x14) = v;
+    return (int)((v >> 16) & 0x7fff);
 }
 
 /* @addr 0x004c67f0 (48b)
