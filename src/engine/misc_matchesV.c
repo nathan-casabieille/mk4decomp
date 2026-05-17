@@ -375,24 +375,18 @@ extern void func_00470450(void);
 extern void PendingMatch_0046e2e0(void);
 extern void func_0042b594(void);
 extern void func_0046e2b3(void);
-__declspec(naked) void CallPauseDirtyMStackPushFn_0046e2a0(void) {
-    __asm {
-        call    func_00470450
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   1bh
-        mov     eax, dword ptr [g_matrixStackTop]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET PendingMatch_0046e2e0
-        jmp     func_0042b594
-        jmp     func_0046e2b3
-        ret
+void CallPauseDirtyMStackPushFn_0046e2a0(void) {
+    unsigned int top;
+    func_00470450();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) {
+        top = g_matrixStackTop + 1;
+        g_matrixStackTop = top;
+        *(unsigned int *)(top * 4) = (unsigned int)&PendingMatch_0046e2e0;
+        func_0042b594();
+        return;
     }
+    func_0046e2b3();
 }
 
 /* @addr 0x00470980 (55b)
