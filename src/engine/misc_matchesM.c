@@ -305,23 +305,12 @@ __declspec(naked) void DualAddSar_004ab600(void) {
  *   ret
  */
 extern char g_table_004f3ac8[16];
-__declspec(naked) void MarkSlot_004ab270(void) {
-    __asm {
-        mov     ecx, dword ptr [esp + 4]
-        push    esi
-        xor     eax, eax
-        mov     dl, 1
-        movsx   esi, byte ptr [eax + g_table_004f3ac8]
-        cmp     ecx, esi
-        _emit   75h
-        _emit   06h
-        mov     byte ptr [eax + g_table_004f3ac8], dl
-        inc     eax
-        cmp     eax, 0x10
-        _emit   7ch
-        _emit   0e9h
-        pop     esi
-        ret
+void MarkSlot_004ab270(int arg) {
+    int i;
+    for (i = 0; i < 16; i++) {
+        if (arg == (int)(signed char)g_table_004f3ac8[i]) {
+            g_table_004f3ac8[i] = 1;
+        }
     }
 }
 
