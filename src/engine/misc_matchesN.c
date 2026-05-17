@@ -272,19 +272,16 @@ extern unsigned int g_state_0053a278;
 extern u32 g_eventQueueIdx;
 extern u32 g_eventQueueEnd;
 extern void func_00458886(void);
-__declspec(naked) void IncCmp28StoreOrJmp_00458880(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a278]
-        mov     dword ptr [g_eventQueueIdx], eax
-        inc     eax
-        cmp     eax, 0x28
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7ch
-        _emit   0ah
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_eventQueueEnd], 1
-        jmp     func_00458886
+void IncCmp28StoreOrJmp_00458880(void) {
+    int v = (int)g_state_0053a278;
+    g_eventQueueIdx = (unsigned int)v;
+    v++;
+    g_walkCallback = (void (*)(void))v;
+    if (v >= 0x28) {
+        g_walkCallback = 0;
     }
+    g_eventQueueEnd = 1;
+    func_00458886();
 }
 
 /* @addr 0x0045f570 (48b)
