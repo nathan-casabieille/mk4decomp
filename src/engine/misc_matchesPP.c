@@ -1699,28 +1699,17 @@ void SetTagsCallCmpToggleDirty_00458c70(void) {
  *   add esp 8; restore [head*4+0x70] = eax; ret.
  */
 extern void EsiEdiAliasDualMul10_004906b0(void);
-__declspec(naked) void NotMaskCallStore70_0047e640(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueNotMask]
-        mov     dword ptr [g_walkCallback], eax
-        call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   34h
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_eventQueueNotMask]
-        mov     eax, dword ptr [ecx*4 + 0x70]
-        push    eax
-        push    edx
-        mov     dword ptr [g_walkCallback], eax
-        call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], eax
-        add     esp, 8
-        mov     dword ptr [ecx*4 + 0x70], eax
-        ret
-    }
+void NotMaskCallStore70_0047e640(void) {
+    unsigned int v;
+    unsigned int r;
+    g_walkCallback = (void (*)(void))g_eventQueueNotMask;
+    EsiEdiAliasDualMul10_004906b0();
+    if (g_framePauseFlag != 0) return;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x70);
+    g_walkCallback = (void (*)(void))v;
+    r = ((unsigned int (*)(int, int))Mul10Tail_00404af0)((int)g_eventQueueNotMask, (int)v);
+    g_walkCallback = (void (*)(void))r;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x70) = r;
 }
 
 /* @addr 0x004c9750 (77b)
