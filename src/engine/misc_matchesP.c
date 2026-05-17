@@ -20,19 +20,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_004611c0(void);
 extern void func_0045faec(void);
-__declspec(naked) void ZeroScaledZeroCallPauseJmp_0045fa90(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [eax*4 + 0x28], 0
-        call    func_004611c0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0045faec
-        ret
-    }
+void ZeroScaledZeroCallPauseJmp_0045fa90(void) {
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_004611c0();
+    if (g_framePauseFlag != 0) return;
+    func_0045faec();
 }
 
 /* @addr 0x0046a520 (50b)
