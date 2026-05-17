@@ -159,18 +159,12 @@ void Set2CallIncJmp_00472860(void) {
  */
 extern void func_004ab620_b(void);
 extern void func_00489f7e_b(void);
-__declspec(naked) void Set4CallAddJmp_00472890(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 4
-        call    func_004ab620_b
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ch
-        add     dword ptr [g_walkCallback], 0x42
-        jmp     func_00489f7e_b
-        ret
-    }
+void Set4CallAddJmp_00472890(void) {
+    g_walkCallback = (void (*)(void))4;
+    func_004ab620_b();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback + 0x42);
+    func_00489f7e_b();
 }
 
 /* @addr 0x00473450 (44b)
