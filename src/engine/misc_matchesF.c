@@ -16,27 +16,20 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     ecx, [g_xformEntityIdx]
  *   inc     eax
  *   mov     [g_eventQueueCurrent], eax
- *   mov     [eax*4 + 0], ecx
+ *   mov     [ecx*4 + 0], eax
  *   jmp     T
  */
 extern packed_ptr g_xformEntityIdx;
 extern void SwapOrPassSet_0048fbf0(void);
 extern void func_00478328(void);
-__declspec(naked) void CallPauseEvtPushJmp_00422880(void) {
-    __asm {
-        call    SwapOrPassSet_0048fbf0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        mov     eax, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0], eax
-        jmp     func_00478328
-        ret
-    }
+void CallPauseEvtPushJmp_00422880(void) {
+    unsigned int v;
+    SwapOrPassSet_0048fbf0();
+    if (g_framePauseFlag != 0) return;
+    v = g_eventQueueCurrent + 1;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(g_xformEntityIdx * 4) = v;
+    func_00478328();
 }
 
 /* @addr 0x004297d0 (45b)
