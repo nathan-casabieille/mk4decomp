@@ -24,41 +24,25 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
 
 /* @addr 0x0046dbd0 */
-__declspec(naked) void DualScaledInitCmp_0046dbd0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_player1NodeIdx]
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, 0x00541e24
-        mov     dword ptr [g_pendingNodeType], ecx
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, 0x00541e40
-        shr     eax, 2
-        cmp     edx, ecx
-        mov     dword ptr [g_scaledInit_00542048], eax
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_scaledInit_00542044], eax
-        ret
+extern unsigned int g_data_00541e24;
+extern unsigned int g_data_00541e40;
+void DualScaledInitCmp_0046dbd0(void) {
+    g_pendingNodeType = g_player1NodeIdx;
+    g_scaledInit_00542044 = (unsigned int)&g_data_00541e24 >> 2;
+    g_scaledInit_00542048 = (unsigned int)&g_data_00541e40 >> 2;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_scaledInit_00542044 = (unsigned int)&g_data_00541e40 >> 2;
     }
 }
 
 /* @addr 0x0046df50 */
-__declspec(naked) void DualScaledInitCmp_0046df50(void) {
-    __asm {
-        mov     ecx, dword ptr [g_player1NodeIdx]
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, 0x00541e44
-        mov     dword ptr [g_pendingNodeType], ecx
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, 0x0052aa88
-        shr     eax, 2
-        cmp     edx, ecx
-        mov     dword ptr [g_scaledInit_00542048], eax
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_scaledInit_00542044], eax
-        ret
+extern unsigned int g_data_00541e44;
+extern unsigned int g_data_0052aa88;
+void DualScaledInitCmp_0046df50(void) {
+    g_pendingNodeType = g_player1NodeIdx;
+    g_scaledInit_00542044 = (unsigned int)&g_data_00541e44 >> 2;
+    g_scaledInit_00542048 = (unsigned int)&g_data_0052aa88 >> 2;
+    if (g_fightGroupHead != g_player1NodeIdx) {
+        g_scaledInit_00542044 = (unsigned int)&g_data_0052aa88 >> 2;
     }
 }
