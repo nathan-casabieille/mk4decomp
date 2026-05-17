@@ -399,18 +399,12 @@ __declspec(naked) void ScaledChain3c74Jmp_0048e780(void) {
  *   jmp     +0x1d
  */
 extern void func_0048ee77(void);
-__declspec(naked) void CmpP2P1ScaledJmp_0048ee50(void) {
-    __asm {
-        mov     eax, dword ptr [g_player2NodeIdx]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, dword ptr [g_player1NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     func_0048ee77
+void CmpP2P1ScaledJmp_0048ee50(void) {
+    g_scaledInit_00542044 = g_player2NodeIdx;
+    if (g_fightGroupHead == g_player2NodeIdx) {
+        g_scaledInit_00542044 = g_player1NodeIdx;
     }
+    func_0048ee77();
 }
 
 /* @addr 0x0048ee90 (39b)
