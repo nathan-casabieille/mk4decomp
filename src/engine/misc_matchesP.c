@@ -311,23 +311,14 @@ __declspec(naked) void ScaledLoadJmpIfNonzero_00490e00(void) {
 extern int TripleByteCheck_004a1c50(void);
 extern int func_004a1c70(void);
 extern unsigned char g_byte_00543590;
-__declspec(naked) void DualCallSetByte_004a1cb0(void) {
-    __asm {
-        call    TripleByteCheck_004a1c50
-        test    eax, eax
-        _emit   74h
-        _emit   0bh
-        mov     eax, 1
-        mov     byte ptr [g_byte_00543590], al
-        ret
-        call    func_004a1c70
-        test    eax, eax
-        _emit   74h
-        _emit   0dh
-        mov     byte ptr [g_byte_00543590], 2
-        mov     eax, 1
-        ret
-        xor     eax, eax
-        ret
+int DualCallSetByte_004a1cb0(void) {
+    if (TripleByteCheck_004a1c50() != 0) {
+        g_byte_00543590 = 1;
+        return 1;
     }
+    if (func_004a1c70() != 0) {
+        g_byte_00543590 = 2;
+        return 1;
+    }
+    return 0;
 }
