@@ -210,17 +210,11 @@ __declspec(naked) void InitThreeFields_00490e90(void) {
  *   jmp     T
  */
 extern void func_004907fa(void);
-__declspec(naked) void DualScaledStoreZero_00491080(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [eax*4 + 0x24], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [edx*4 + 0x28], eax
-        jmp     func_004907fa
-    }
+void DualScaledStoreZero_00491080(void) {
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_eventQueueIdx;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_004907fa();
 }
 
 /* @addr 0x004911c0 (42b)
