@@ -240,20 +240,12 @@ __declspec(naked) void ScaledOrAh8CallPauseJmp_0048d0c0(void) {
  */
 extern void Wrapper_0048fbc0(void);
 extern void func_00498e3c(void);
-__declspec(naked) void ScaledChainCallPauseSetJmp_0048f8e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        call    Wrapper_0048fbc0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_scaledInit_00542044], 0x0048fa20
-        jmp     func_00498e3c
-        ret
-    }
+void ScaledChainCallPauseSetJmp_0048f8e0(void) {
+    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    Wrapper_0048fbc0();
+    if (g_framePauseFlag != 0) return;
+    g_scaledInit_00542044 = 0x0048fa20;
+    func_00498e3c();
 }
 
 /* @addr 0x00490e00 (49b)
