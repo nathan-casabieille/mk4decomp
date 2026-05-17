@@ -20,21 +20,19 @@ extern void AuxAudio_Teardown_004ac9b0(void);
 extern void Helper_GeoStub_5370(void);
 extern void TestCallZero_004b1de0(void);
 extern void Helper_GeoStub_5A70(void);
-__declspec(naked) void AppShutdown(void) {
-    __asm {
-        call    TestCallIat_004c44f0
-        call    Helper_GfxCleanup
-        call    Helper_AppStub_2AE0
-        call    Thunk_004b5ac0
-        call    RegistryInstallEntry_004ad410
-        call    Helper_MenuStub_62B0
-        call    Helper_AppStub_21C0
-        call    AudioShutdownSequence_004c4240
-        call    AuxAudio_Teardown_004ac9b0
-        call    Helper_GeoStub_5370
-        call    TestCallZero_004b1de0
-        jmp     Helper_GeoStub_5A70
-    }
+void AppShutdown(void) {
+    TestCallIat_004c44f0();
+    Helper_GfxCleanup();
+    Helper_AppStub_2AE0();
+    Thunk_004b5ac0();
+    RegistryInstallEntry_004ad410();
+    Helper_MenuStub_62B0();
+    Helper_AppStub_21C0();
+    AudioShutdownSequence_004c4240();
+    AuxAudio_Teardown_004ac9b0();
+    Helper_GeoStub_5370();
+    TestCallZero_004b1de0();
+    Helper_GeoStub_5A70();
 }
 
 /* @addr 0x004b2ff0 (58b)
