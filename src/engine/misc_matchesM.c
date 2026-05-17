@@ -248,19 +248,12 @@ __declspec(naked) void DivLongPushCall_004ab320(void) {
  *   mov     [eax + 0x74], edx
  *   ret
  */
-__declspec(naked) void ZeroThreeFields6c_004abfe0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        xor     ecx, ecx
-        shl     eax, 2
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x6c], ecx
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x70], ecx
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax + 0x74], edx
-        ret
-    }
+void ZeroThreeFields6c_004abfe0(void) {
+    unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
+    g_walkCallback = 0;
+    *(unsigned int *)(base + 0x6c) = 0;
+    *(unsigned int *)(base + 0x70) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 0x74) = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x004ab600 (39b)
