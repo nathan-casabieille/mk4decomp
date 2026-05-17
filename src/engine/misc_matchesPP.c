@@ -533,32 +533,17 @@ void ScaledIndexCondCopy_0048e590(int arg) {
 extern unsigned int g_data_00ab4334;
 extern unsigned int g_data_004f2fc8;
 extern int Helper_JoyButtonInit(int);
-__declspec(naked) void TestQueueGateState_004a1ba0(void) {
-    __asm {
-        push    0x0d
-        call    Helper_JoyButtonInit
-        add     esp, 4
-        test    eax, eax
-        _emit   74h
-        _emit   2ah
-        mov     eax, dword ptr [g_data_00ab4334]
-        test    eax, eax
-        _emit   75h
-        _emit   14h
-        mov     eax, dword ptr [g_data_004f2fc8]
-        test    eax, eax
-        _emit   75h
-        _emit   0bh
-        mov     eax, 1
-        mov     dword ptr [g_data_004f2fc8], eax
-        ret
-        mov     dword ptr [g_data_004f2fc8], 1
-        xor     eax, eax
-        ret
-        mov     dword ptr [g_data_004f2fc8], 0
-        xor     eax, eax
-        ret
+int TestQueueGateState_004a1ba0(void) {
+    if (Helper_JoyButtonInit(0x0d) == 0) {
+        g_data_004f2fc8 = 0;
+        return 0;
     }
+    if (g_data_00ab4334 != 0 || g_data_004f2fc8 != 0) {
+        g_data_004f2fc8 = 1;
+        return 0;
+    }
+    g_data_004f2fc8 = 1;
+    return 1;
 }
 
 /* @addr 0x004ac150 (69b)
