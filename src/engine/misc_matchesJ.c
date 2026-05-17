@@ -240,24 +240,16 @@ __declspec(naked) void TableLookupCall_0048a160(void) {
  */
 extern unsigned int g_state_00541dc0;
 extern int func_004be690_b(int);
-__declspec(naked) void GuardedScaledCall_0048a020(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00541dc0]
-        test    eax, eax
-        _emit   7ch
-        _emit   23h
-        mov     eax, dword ptr [g_walkCallback]
-        test    eax, eax
-        _emit   7ch
-        _emit   1ah
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        push    eax
-        mov     dword ptr [g_walkCallback], eax
-        call    func_004be690_b
-        add     esp, 4
-        ret
-    }
+void GuardedScaledCall_0048a020(void) {
+    unsigned int walk;
+    int v;
+    if ((int)g_state_00541dc0 < 0) return;
+    walk = (unsigned int)g_walkCallback;
+    if ((int)walk < 0) return;
+    g_scaledInit_00542044 = walk;
+    v = *(int *)(walk * 4);
+    g_walkCallback = (void (*)(void))v;
+    func_004be690_b(v);
 }
 
 /* @addr 0x0048b450 (37b)
