@@ -377,15 +377,11 @@ __declspec(naked) void IterStepScaledStore_0048e600(void) {
  *   jmp     +0x2d
  */
 extern void ScaledLoadJmp_74_0048e7b0(void);
-__declspec(naked) void ScaledChain3c74Jmp_0048e780(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 0x74]
-        mov     dword ptr [g_walkCallback], ecx
-        jmp     ScaledLoadJmp_74_0048e7b0
-    }
+void ScaledChain3c74Jmp_0048e780(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c);
+    g_scaledInit_00542044 = v;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x74);
+    ScaledLoadJmp_74_0048e7b0();
 }
 
 /* @addr 0x0048ee50 (35b)
