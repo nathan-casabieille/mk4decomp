@@ -309,19 +309,15 @@ void Set1f4CallDirtyJmp_004838d0(void) {
  *   mov     [ecx*4 + 0x7c], eax
  *   ret
  */
-__declspec(naked) void ScaledDecOrZero_00483b50(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 0x7c]
-        dec     eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   79h
-        _emit   07h
-        xor     eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x7c], eax
-        ret
+void ScaledDecOrZero_00483b50(void) {
+    unsigned int b = g_baseSel_00542060;
+    int v = *(int *)(b * 4 + 0x7c) - 1;
+    g_walkCallback = (void (*)(void))v;
+    if (v < 0) {
+        v = 0;
+        g_walkCallback = (void (*)(void))v;
     }
+    *(int *)(b * 4 + 0x7c) = v;
 }
 
 /* @addr 0x00487180 (41b)
