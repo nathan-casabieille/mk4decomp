@@ -74,18 +74,14 @@ __declspec(naked) void Init6Globals_004051b0(void) {
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-__declspec(naked) void ScaledMaskOrStore_00405880(void) {
-    __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueCurrent], 0xf0ffffff
-        mov     eax, dword ptr [ecx*4 + 0x20]
-        and     eax, 0xf0ffffff
-        or      eax, edx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [ecx*4 + 0x20], eax
-        ret
-    }
+void ScaledMaskOrStore_00405880(void) {
+    unsigned int idx = g_scaledInit_00542044;
+    unsigned int walk = (unsigned int)g_walkCallback;
+    unsigned int v;
+    g_eventQueueCurrent = 0xf0ffffff;
+    v = (*(unsigned int *)(idx * 4 + 0x20) & 0xf0ffffff) | walk;
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(idx * 4 + 0x20) = v;
 }
 
 /* @addr 0x004078f0 (48b)
