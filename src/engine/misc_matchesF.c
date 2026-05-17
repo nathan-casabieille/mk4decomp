@@ -46,20 +46,21 @@ void CallPauseEvtPushJmp_00422880(void) {
  */
 extern void func_004296d8(void);
 extern void func_004296e8(void);
-__declspec(naked) void ScaledIncCmpJmp_004297d0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [eax*4 + 0x28]
-        inc     eax
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     edx, dword ptr [ecx*4 + 4]
-        cmp     eax, edx
-        _emit   7dh
-        _emit   05h
-        jmp     func_004296d8
-        jmp     func_004296e8
+void ScaledIncCmpJmp_004297d0(void) {
+    unsigned int idx;
+    unsigned int scaled;
+    unsigned int v;
+    int cmp_val;
+    idx = g_fightGroupHead;
+    scaled = g_scaledInit_00542044;
+    v = *(unsigned int *)(idx * 4 + 0x28) + 1;
+    g_eventQueueCurrent = v;
+    cmp_val = *(int *)(scaled * 4 + 4);
+    if ((int)v < cmp_val) {
+        func_004296d8();
+        return;
     }
+    func_004296e8();
 }
 
 /* @addr 0x0042c9c0 (35b)
