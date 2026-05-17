@@ -58,26 +58,14 @@ void PushPopNotMaskSetWalk0xc_0047d510(void) {
  */
 extern unsigned int g_data_004d7b28;
 extern void func_00419190(void);
-__declspec(naked) void SetWorkTypeScaledCallStoreCcc_0041aa80(void) {
-    __asm {
-        mov     eax, OFFSET g_data_004d7b28
-        mov     dword ptr [g_eventQueueWorkType], 2
-        shr     eax, 2
-        mov     dword ptr [g_pendingNodeType], eax
-        call    func_00419190
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   20h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   75h
-        _emit   17h
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, 0x14ccc
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        ret
-    }
+void SetWorkTypeScaledCallStoreCcc_0041aa80(void) {
+    g_eventQueueWorkType = 2;
+    g_pendingNodeType = (unsigned int)&g_data_004d7b28 >> 2;
+    func_00419190();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    g_walkCallback = (void (*)(void))0x14ccc;
+    *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
 }
 
 /* @addr 0x00445fb0 (70b)
