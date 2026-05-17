@@ -322,21 +322,22 @@ void DualPushCallStore_004231b0(void) {
  */
 extern void func_0042985c(void);
 extern void func_004298d7(void);
-__declspec(naked) void ScaledIncCmpDualJmp_00429800(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [eax*4 + 0x28]
-        inc     eax
-        mov     dword ptr [g_walkCallback], eax
-        mov     edx, dword ptr [ecx*4 + 4]
-        cmp     eax, edx
-        _emit   7ch
-        _emit   05h
-        jmp     func_0042985c
-        jmp     func_004298d7
+void ScaledIncCmpDualJmp_00429800(void) {
+    unsigned int idx;
+    unsigned int scaled;
+    unsigned int v;
+    int cmp_val;
+    idx = g_fightGroupHead;
+    scaled = *(unsigned int *)(idx * 4 + 0x24);
+    g_scaledInit_00542044 = scaled;
+    v = *(unsigned int *)(idx * 4 + 0x28) + 1;
+    g_walkCallback = (void (*)(void))v;
+    cmp_val = *(int *)(scaled * 4 + 4);
+    if ((int)v >= cmp_val) {
+        func_0042985c();
+        return;
     }
+    func_004298d7();
 }
 
 /* @addr 0x00437930 (52b)
