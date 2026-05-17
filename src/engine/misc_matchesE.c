@@ -47,18 +47,13 @@ extern unsigned int g_struct_00ab4e4c;
 extern unsigned int g_struct_00ab4e50;
 extern unsigned int g_struct_00ab4e54;
 extern unsigned int g_struct_00ab4e58;
-__declspec(naked) void Init6Struct_00404e20(void) {
-    __asm {
-        xor     eax, eax
-        mov     dword ptr [g_struct_00ab4e50], eax
-        mov     dword ptr [g_struct_00ab4e54], eax
-        mov     dword ptr [g_struct_00ab4e58], eax
-        mov     eax, 0x00008000
-        mov     word ptr [g_struct_00ab4e44], ax
-        mov     word ptr [g_struct_00ab4e48], ax
-        mov     word ptr [g_struct_00ab4e4c], ax
-        ret
-    }
+void Init6Struct_00404e20(void) {
+    g_struct_00ab4e50 = 0;
+    g_struct_00ab4e54 = 0;
+    g_struct_00ab4e58 = 0;
+    *(unsigned short *)&g_struct_00ab4e44 = 0x8000;
+    *(unsigned short *)&g_struct_00ab4e48 = 0x8000;
+    *(unsigned short *)&g_struct_00ab4e4c = 0x8000;
 }
 
 /* @addr 0x004143c0 (37b)
