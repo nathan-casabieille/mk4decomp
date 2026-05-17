@@ -154,21 +154,19 @@ void Init28fDecLoad_00421d20(void) {
  *   mov     [eax + 8], ecx
  *   ret
  */
-__declspec(naked) void NegateThree_00425360(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax]
-        mov     edx, dword ptr [eax + 4]
-        neg     ecx
-        mov     dword ptr [eax], ecx
-        mov     ecx, dword ptr [eax + 8]
-        neg     edx
-        neg     ecx
-        mov     dword ptr [eax + 4], edx
-        mov     dword ptr [eax + 8], ecx
-        ret
-    }
+void NegateThree_00425360(void) {
+    int *base;
+    int a, b, c;
+    base = (int *)(g_scaledInit_00542044 * 4);
+    a = base[0];
+    b = base[1];
+    a = -a;
+    base[0] = a;
+    c = base[2];
+    b = -b;
+    c = -c;
+    base[1] = b;
+    base[2] = c;
 }
 
 /* @addr 0x00424b70 (42b)
