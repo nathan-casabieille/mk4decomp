@@ -925,33 +925,20 @@ extern unsigned int g_data_0054356c;
 extern unsigned int g_data_0053a404;
 extern void MStackPush3MaskBit0_004929e0(void);
 extern void GuardedFourCallChain_004928c0(void);
-__declspec(naked) void DispatchGuardedDirtyTest_00492870(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054356c]
-        test    eax, eax
-        _emit   75h
-        _emit   3fh
-        mov     eax, dword ptr [g_data_0053a404]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   31h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        call    MStackPush3MaskBit0_004929e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1eh
-        mov     cl, byte ptr [g_xformDirtyFlags]
-        mov     eax, 1
-        test    cl, al
-        _emit   74h
-        _emit   05h
-        mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_walkCallback], eax
-        jmp     GuardedFourCallChain_004928c0
-        ret
+void DispatchGuardedDirtyTest_00492870(void) {
+    unsigned int v;
+    if (g_data_0054356c != 0) return;
+    v = g_data_0053a404;
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0) return;
+    g_eventQueueCurrent = 0;
+    MStackPush3MaskBit0_004929e0();
+    if (g_framePauseFlag != 0) return;
+    if (g_xformDirtyFlags & 1) {
+        g_eventQueueCurrent = 1;
     }
+    g_walkCallback = (void (*)(void))1;
+    GuardedFourCallChain_004928c0();
 }
 
 /* @addr 0x004ab700 (73b)
