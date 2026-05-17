@@ -145,28 +145,17 @@ __declspec(naked) void CallPauseJmpStateInit_004370e0(void) {
  */
 extern unsigned int g_state_004d50a8;
 extern unsigned int g_state_004d50a4;
-__declspec(naked) void PushPopState70Mask_00490650(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_state_004d50a8]
-        mov     edx, dword ptr [g_state_004d50a4]
-        shl     eax, 0x10
-        and     edx, 0xffff
-        mov     dword ptr [g_eventQueueCurrent], eax
-        or      edx, eax
-        mov     eax, dword ptr [g_state_004d57ac]
-        not     edx
-        mov     dword ptr [g_walkCallback], edx
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_state_004d57ac], eax
-        ret
-    }
+void PushPopState70Mask_00490650(void) {
+    unsigned int hi;
+    unsigned int packed;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueCurrent;
+    hi = g_state_004d50a8 << 0x10;
+    packed = (g_state_004d50a4 & 0xffff) | hi;
+    g_eventQueueCurrent = hi;
+    g_walkCallback = (void (*)(void))~packed;
+    g_eventQueueCurrent = *(unsigned int *)(g_state_004d57ac * 4);
+    g_state_004d57ac--;
 }
 
 /* @addr 0x0048e380 (84b)
