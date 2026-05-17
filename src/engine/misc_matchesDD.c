@@ -115,27 +115,12 @@ extern void SetHi6_004b5ae0(int, int);
 extern void StoreAtMinus8_004b5b00(int, int);
 extern unsigned int g_state_00ab5200;
 extern int g_data_00ab5204;
-__declspec(naked) void CleanupCallTwice_004bd530(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 8]
-        mov     eax, dword ptr [esi]
-        test    eax, eax
-        _emit   74h
-        _emit   2bh
-        push    4
-        push    eax
-        call    SetHi6_004b5ae0
-        mov     eax, dword ptr [esi]
-        add     esp, 8
-        push    OFFSET g_data_00ab5204
-        push    eax
-        call    StoreAtMinus8_004b5b00
-        mov     dword ptr [g_state_00ab5200], 1
-        add     esp, 8
-        mov     dword ptr [esi], 0
-        pop     esi
-        ret
+void CleanupCallTwice_004bd530(int *arg) {
+    if (*arg != 0) {
+        SetHi6_004b5ae0(*arg, 4);
+        StoreAtMinus8_004b5b00(*arg, (int)&g_data_00ab5204);
+        g_state_00ab5200 = 1;
+        *arg = 0;
     }
 }
 
