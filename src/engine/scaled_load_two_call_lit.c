@@ -29,49 +29,25 @@ extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void StunDownCluster_00451fc0(void);
 
 /* @addr 0x00451f20 */
-__declspec(naked) void ScaledLoadTwoCallLit_00451f20(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x64]
-        mov     dword ptr [g_fightGroupHead], ecx
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        mov     edx, 0x004e7ae8
-        shr     edx, 2
-        mov     dword ptr [g_eventQueueEnd], edx
-        jmp     StunDownCluster_00451fc0
-        ret
-    }
+extern unsigned int g_data_004e7ae8;
+void ScaledLoadTwoCallLit_00451f20(void) {
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
+    MStackPush2RunCountdown_004089e0();
+    if (g_framePauseFlag != 0) return;
+    MStackBracket7_DispatchAndChain_004b8fa0();
+    if (g_framePauseFlag != 0) return;
+    g_eventQueueEnd = (unsigned int)&g_data_004e7ae8 >> 2;
+    StunDownCluster_00451fc0();
 }
 
 /* @addr 0x00451f70 */
-__declspec(naked) void ScaledLoadTwoCallLit_00451f70(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x64]
-        mov     dword ptr [g_fightGroupHead], ecx
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   21h
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        mov     edx, 0x004e7a78
-        shr     edx, 2
-        mov     dword ptr [g_eventQueueEnd], edx
-        jmp     StunDownCluster_00451fc0
-        ret
-    }
+extern unsigned int g_data_004e7a78;
+void ScaledLoadTwoCallLit_00451f70(void) {
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x64);
+    MStackPush2RunCountdown_004089e0();
+    if (g_framePauseFlag != 0) return;
+    MStackBracket7_DispatchAndChain_004b8fa0();
+    if (g_framePauseFlag != 0) return;
+    g_eventQueueEnd = (unsigned int)&g_data_004e7a78 >> 2;
+    StunDownCluster_00451fc0();
 }
