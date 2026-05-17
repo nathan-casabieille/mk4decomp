@@ -174,27 +174,15 @@ extern unsigned int g_state_0053815c_kk;
 extern void DualEntryInitCmp_00425b20(void);
 extern void Cmp9DirtyToggle_00464320(void);
 extern void func_00431230(void);
-__declspec(naked) void CallPauseClear3CallTriple_00428030(void) {
-    __asm {
-        call    BootInitChainHeavy_00404f20
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3fh
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_state_00538158_kk], 0
-        mov     dword ptr [g_state_0053815c_kk], 0
-        call    DualEntryInitCmp_00425b20
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    Cmp9DirtyToggle_00464320
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00431230
-        ret
-    }
+void CallPauseClear3CallTriple_00428030(void) {
+    BootInitChainHeavy_00404f20();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = 0;
+    g_state_00538158_kk = 0;
+    g_state_0053815c_kk = 0;
+    DualEntryInitCmp_00425b20();
+    if (g_framePauseFlag != 0) return;
+    Cmp9DirtyToggle_00464320();
+    if (g_framePauseFlag != 0) return;
+    func_00431230();
 }
