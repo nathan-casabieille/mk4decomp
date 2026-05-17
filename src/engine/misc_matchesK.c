@@ -116,19 +116,15 @@ void IterStepNegStore_00490b10(int arg) {
  *   mov     [eax*4 + 0x44], ecx
  *   ret
  */
-__declspec(naked) void IterStepDualStore_00490b40(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [eax*4 + 0x44], ecx
-        ret
-    }
+void IterStepDualStore_00490b40(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int v;
+    g_eventQueueTotal = packed;
+    v = *(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
+    g_pendingNodeType = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x44) = v;
 }
 
 /* @addr 0x00490c30 (43b)
