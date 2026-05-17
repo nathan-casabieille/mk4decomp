@@ -22,22 +22,15 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_004bae62(void);
-__declspec(naked) void ScaledAndMaskInitJmp_00405a00(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [eax*4 + 0x20]
-        and     dl, 0x7f
-        mov     dword ptr [eax*4 + 0x20], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_walkCallback], 0x00405a00
-        mov     eax, dword ptr [eax*4 + 0]
-        test    eax, eax
-        mov     dword ptr [g_eventQueueCurrent], eax
-        _emit   74h
-        _emit   05h
-        jmp     func_004bae62
-        ret
-    }
+extern void ScaledAndMaskInitJmp_00405a00(void);
+void ScaledAndMaskInitJmp_00405a00(void) {
+    unsigned int v;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x20) &= 0xffffff7fu;
+    g_walkCallback = (void (*)(void))&ScaledAndMaskInitJmp_00405a00;
+    v = *(unsigned int *)(g_scaledInit_00542044 * 4);
+    g_eventQueueCurrent = v;
+    if (v == 0) return;
+    func_004bae62();
 }
 
 /* @addr 0x0041f1b0 (53b)
