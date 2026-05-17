@@ -226,20 +226,15 @@ extern unsigned int g_state_00542080;
 extern u32 g_eventQueueWorkType;
 extern void func_004245d4(void);
 extern void func_00404060(void);
-__declspec(naked) void SwapTwoGlobals_004911c0(void) {
-    __asm {
-        call    func_004245d4
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        mov     eax, dword ptr [g_state_0054207c]
-        mov     ecx, dword ptr [g_state_00542080]
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_acc_00542078], ecx
-        jmp     func_00404060
-        ret
-    }
+void SwapTwoGlobals_004911c0(void) {
+    unsigned int a, b;
+    func_004245d4();
+    if (g_framePauseFlag != 0) return;
+    a = g_state_0054207c;
+    b = g_state_00542080;
+    g_eventQueueWorkType = a;
+    g_acc_00542078 = b;
+    func_00404060();
 }
 
 /* @addr 0x00491920 (34b)
