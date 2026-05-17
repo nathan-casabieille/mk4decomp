@@ -173,29 +173,20 @@ extern unsigned int g_state_0052d74c;
 extern unsigned int g_state_00538068;
 extern void func_00489c60(void);
 extern void func_00489c30(void);
-__declspec(naked) void ScaledStateNegCallPauseLoad_00489e90(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_pendingNodeType], eax
-        mov     eax, dword ptr [g_state_0052d74c]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7dh
-        _emit   0eh
-        call    func_00489c60
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1fh
-        mov     eax, dword ptr [g_state_00538068]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        test    eax, eax
-        mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7dh
-        _emit   05h
-        jmp     func_00489c30
-        ret
+void ScaledStateNegCallPauseLoad_00489e90(void) {
+    int v;
+    g_pendingNodeType = g_scaledInit_00542044;
+    v = (int)g_state_0052d74c;
+    g_walkCallback = (void (*)(void))v;
+    if (v < 0) {
+        func_00489c60();
+        if (g_framePauseFlag != 0) return;
+    }
+    v = (int)g_state_00538068;
+    g_pendingNodeType = g_xformEntityIdx;
+    g_walkCallback = (void (*)(void))v;
+    if (v < 0) {
+        func_00489c30();
     }
 }
 
