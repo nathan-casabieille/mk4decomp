@@ -85,9 +85,14 @@ def main():
                             continue
                         if ref_imp in name_to_addr and ref_imp.startswith('__imp__'):
                             continue
-                        # Skip section-relative refs (local labels resolve via per-OBJ section map).
+                        # Section-relative refs: usually skipped (synth resolves them via
+                        # per-OBJ section+value). EXCEPTION: MSVC's `$LNNNN` local-label
+                        # numbering is unstable across source edits, so the cached extras_map
+                        # name->addr mapping can desync. Always refresh `$L*` from orig EXE
+                        # bytes to keep extras_map in sync with the current OBJ's numbering.
                         if ref_sym['sec'] > 0 and (ref_sym['sec']-1) in sec_idx_to_va:
-                            continue
+                            if not ref_cl.startswith('$L'):
+                                continue
                         # NOTE: we DO override header /* 0xADDR */ comments and existing
                         # extras_map entries - those are derived from manual research and
                         # can be wrong (e.g. g_appFlags annotated as 0xf9f714, actually 0x7af914).
