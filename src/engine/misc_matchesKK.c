@@ -31,46 +31,37 @@ void ScaledInitOrSelfPtrSetType_00434d60(void) {
 
 /* @addr 0x0046a5e0: jmp=0x0046a630, type=3, ptr=own */
 extern void QuadEntryGateChain_0046a630(void);
-__declspec(naked) void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     QuadEntryGateChain_0046a630
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x0046a5e0
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 3
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
+void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int v = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (v != 0) {
+        QuadEntryGateChain_0046a630();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0046a5e0;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 3;
+    g_framePauseFlag = 1;
 }
 
 /* @addr 0x0047a620: jmp=0x0047a670, type=0xa, ptr=own */
 extern void TripleSubInstallSelfPair_0047a670(void);
-__declspec(naked) void ScaledInitOrSelfPtrSetType_0047a620(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     ecx, dword ptr [eax + 0x84]
-        mov     dword ptr [eax + 0x84], 0
-        test    ecx, ecx
-        _emit   74h
-        _emit   05h
-        jmp     TripleSubInstallSelfPair_0047a670
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x0047a620
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 0x0a
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
+extern void ScaledInitOrSelfPtrSetType_0047a620(void);
+void ScaledInitOrSelfPtrSetType_0047a620(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    unsigned int v = *(unsigned int *)(base + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (v != 0) {
+        TripleSubInstallSelfPair_0047a670();
+        return;
     }
+    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0047a620;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_pendingNodeType = 0xa;
+    g_framePauseFlag = 1;
 }
-
 /* @addr 0x0048a7c0 (68b): zero 6 dwords at offsets 0x6c..0x80 of fightGroupHead*4 */
 void ZeroSixStores6c80_0048a7c0(void) {
     unsigned char *base = (unsigned char *)(g_fightGroupHead * 4);
