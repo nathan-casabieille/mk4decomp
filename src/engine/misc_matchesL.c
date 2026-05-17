@@ -196,20 +196,11 @@ void TableLookupCallJmp_004aa990(void) {
 /* @addr 0x004aa9c0 (41b): same shape with table=0x004f3f90 */
 extern void func_00407420(void);
 extern void MStackPush2GatedTail_00409420(void);
-__declspec(naked) void TableLookupCallJmp_004aa9c0(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [eax*4 + g_table_004f3f90]
-        sar     ecx, 2
-        mov     dword ptr [g_xformEntityIdx], ecx
-        call    func_00407420
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     MStackPush2GatedTail_00409420
-        ret
-    }
+void TableLookupCallJmp_004aa9c0(void) {
+    g_xformEntityIdx = (unsigned int)((int)g_table_004f3f90[(unsigned int)g_walkCallback] >> 2);
+    func_00407420();
+    if (g_framePauseFlag != 0) return;
+    MStackPush2GatedTail_00409420();
 }
 
 /* @addr 0x004ab300 (31b)
