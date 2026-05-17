@@ -186,20 +186,11 @@ extern void *g_table_004f3f40[];
 extern void *g_table_004f3f90[];
 extern void func_004073f0(void);
 extern void func_004093f0(void);
-__declspec(naked) void TableLookupCallJmp_004aa990(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [eax*4 + g_table_004f3f40]
-        sar     ecx, 2
-        mov     dword ptr [g_xformEntityIdx], ecx
-        call    func_004073f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004093f0
-        ret
-    }
+void TableLookupCallJmp_004aa990(void) {
+    g_xformEntityIdx = (unsigned int)((int)g_table_004f3f40[(unsigned int)g_walkCallback] >> 2);
+    func_004073f0();
+    if (g_framePauseFlag != 0) return;
+    func_004093f0();
 }
 
 /* @addr 0x004aa9c0 (41b): same shape with table=0x004f3f90 */
