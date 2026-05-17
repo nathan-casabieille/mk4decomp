@@ -68,7 +68,14 @@ void MStackPushSet0200_00490140(void) {
     func_0049036e();
 }
 /* @addr 0x00490170 */
-__declspec(naked) void MStackPushSet0080_00490170(void) { MSTACK_PUSH_SET(0x80, func_0049039e) }
+void MStackPushSet0080_00490170(void) {
+    unsigned int acc = g_acc_00542078;
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = acc;
+    g_acc_00542078 = 0x0080;
+    func_0049039e();
+}
 /* @addr 0x004901a0 */
 __declspec(naked) void MStackPushSet0008_004901a0(void) { MSTACK_PUSH_SET(8, func_004903ce) }
 /* @addr 0x004901d0 */
