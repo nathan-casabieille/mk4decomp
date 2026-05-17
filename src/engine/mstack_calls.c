@@ -39,266 +39,145 @@ extern void func_54633efe(void);   /* 0x54633efe */
 
 /* The wrappers. */
 /* @addr 0x00406250 */
-__declspec(naked) void MStackCall_00406250(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ecf1e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406250(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ecf1e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x004062a0 */
-__declspec(naked) void MStackCall_004062a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ecf6e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_004062a0(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ecf6e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x004062f0 */
-__declspec(naked) void MStackCall_004062f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ecfbe
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_004062f0(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ecfbe();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00406340 */
-__declspec(naked) void MStackCall_00406340(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed00e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406340(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed00e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00406390 */
-__declspec(naked) void MStackCall_00406390(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed05e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406390(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed05e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x004063e0 */
-__declspec(naked) void MStackCall_004063e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed0ae
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_004063e0(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed0ae();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x004065b0 */
-__declspec(naked) void MStackCall_004065b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed27e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_004065b0(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed27e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00406600 */
-__declspec(naked) void MStackCall_00406600(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed2ce
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406600(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed2ce();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00406740 */
-__declspec(naked) void MStackCall_00406740(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed40e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406740(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed40e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00406b50 */
-__declspec(naked) void MStackCall_00406b50(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_545ed81e
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_00406b50(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_545ed81e();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x0044d230 */
-__declspec(naked) void MStackCall_0044d230(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_currentNodeIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_currentNodeIdx], edx
-        call    func_54633efe
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4]
-        dec     eax
-        mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackCall_0044d230(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_fightGroupHead;
+    func_54633efe();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
