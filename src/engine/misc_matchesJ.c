@@ -328,17 +328,12 @@ __declspec(naked) void Cmp2OrSet0b_0048e3e0(void) {
  *   mov     [g_eventQueueTotal], eax
  *   ret
  */
-__declspec(naked) void IterStepNoSecond_0048e5e0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_eventQueueTotal], eax
-        ret
-    }
+void IterStepNoSecond_0048e5e0(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    g_eventQueueTotal = packed;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
 }
 
 /* @addr 0x0048e600 (44b)
