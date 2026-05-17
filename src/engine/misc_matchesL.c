@@ -165,17 +165,9 @@ __declspec(naked) void ShiftDownThreeAndAppend_004aa3f0(void) {
  *   mov     [g_eventQueueCurrent], eax
  *   ret
  */
-__declspec(naked) void SplitInt32_004aa410(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, eax
-        sar     eax, 0x10
-        and     ecx, 0xffff
-        and     eax, 0xffff
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_eventQueueCurrent], eax
-        ret
-    }
+void SplitInt32_004aa410(int arg) {
+    g_walkCallback = (void (*)(void))((unsigned int)arg & 0xffff);
+    g_eventQueueCurrent = ((unsigned int)(arg >> 16)) & 0xffff;
 }
 
 /* @addr 0x004aa990 (41b)
