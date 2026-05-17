@@ -41,3 +41,4 @@ __pycache__/
 .cache/
 compile_commands.json
 config/msvc50.env
+MKDA_E_140.png
