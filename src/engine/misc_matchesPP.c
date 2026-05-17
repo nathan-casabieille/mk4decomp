@@ -1435,28 +1435,20 @@ void GuardedDirty4ScaledJmp_00473d50(void) {
  */
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
-__declspec(naked) void PackedAdvanceCallContinue_0048e630(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_eventQueueTotal], eax
-        call    SetJmp_0049cb90
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        mov     eax, dword ptr [g_eventQueueTotal]
-        mov     edx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_eventQueueTotal], eax
-        jmp     Thunk_0049cbd0
-        ret
-    }
+void PackedAdvanceCallContinue_0048e630(int arg0) {
+    unsigned int packed;
+    packed = (unsigned int)(arg0 >> 2);
+    g_eventQueueTotal = packed;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
+    SetJmp_0049cb90();
+    if (g_framePauseFlag != 0) return;
+    packed = g_eventQueueTotal;
+    g_xformEntityIdx = *(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
+    Thunk_0049cbd0();
 }
 
 /* @addr 0x004a4260 (75b)
