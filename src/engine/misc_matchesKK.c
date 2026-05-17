@@ -188,28 +188,16 @@ void CallPauseFourSet_00482be0(void) {
 extern void func_0048cf38(void);
 extern void func_0040ccf0(void);
 extern void func_00489fb2(void);
-__declspec(naked) void ScaledLoadCmp1003JmpDispatch_00486530(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x74]
-        cmp     eax, 0x1003
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   2bh
-        call    func_0048cf38
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        call    func_0040ccf0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     dword ptr [g_walkCallback], 0x3b
-        jmp     func_00489fb2
-        ret
-    }
+void ScaledLoadCmp1003JmpDispatch_00486530(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
+    g_walkCallback = (void (*)(void))v;
+    if (v != 0x1003) return;
+    func_0048cf38();
+    if (g_framePauseFlag != 0) return;
+    func_0040ccf0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))0x3b;
+    func_00489fb2();
 }
 
 /* @addr 0x00428030 (78b)
