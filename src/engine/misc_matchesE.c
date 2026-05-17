@@ -214,20 +214,14 @@ extern unsigned char g_byte_00542040;
 extern unsigned int g_state_0052ab40;
 extern unsigned int g_state_0053a7d8;
 extern unsigned int g_state_0053a748;
-__declspec(naked) void TestCmpZeroFour_004238b0(void) {
-    __asm {
-        mov     cl, byte ptr [g_byte_00542040]
-        xor     eax, eax
-        cmp     cl, al
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        mov     dword ptr [g_state_0052ab40], eax
-        mov     byte ptr [g_byte_00542040], al
-        mov     dword ptr [g_state_0053a7d8], eax
-        mov     dword ptr [g_state_0053a748], eax
-        ret
+void TestCmpZeroFour_004238b0(void) {
+    g_walkCallback = (void (*)(void))0;
+    if (g_byte_00542040 == 0) {
+        g_state_0052ab40 = 0;
     }
+    g_byte_00542040 = 0;
+    g_state_0053a7d8 = 0;
+    g_state_0053a748 = 0;
 }
 
 /* @addr 0x0042ae10 (36b)
