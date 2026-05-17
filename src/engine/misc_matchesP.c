@@ -147,23 +147,16 @@ void DualCallPauseDirtyDoubleJmp_00486fc0(void) {
 extern void func_00486848(void);
 extern void func_004ba31a(void);
 extern void func_004871a3(void);
-__declspec(naked) void ScaledTestCallPauseJmpFar_00487150(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [eax*4 + 0x30]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004871a3
-        call    func_00486848
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_004ba31a
-        ret
+void ScaledTestCallPauseJmpFar_00487150(void) {
+    unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) {
+        func_004871a3();
+        return;
     }
+    func_00486848();
+    if (g_framePauseFlag != 0) return;
+    func_004ba31a();
 }
 
 /* @addr 0x0048a220 (46b)
