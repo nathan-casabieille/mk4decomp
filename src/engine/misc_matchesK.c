@@ -150,24 +150,14 @@ __declspec(naked) void IterStepDualStore_00490b40(void) {
 extern void GuardedDualAndFlagToggle_0048f020(void);
 extern void func_00490371(void);
 extern void func_0049126c(void);
-__declspec(naked) void DualCallPauseDirtyJmp_00490c30(void) {
-    __asm {
-        call    GuardedDualAndFlagToggle_0048f020
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1ch
-        test    byte ptr [g_xformDirtyFlags], 1
-        _emit   75h
-        _emit   0eh
-        call    func_00490371
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0049126c
-        ret
+void DualCallPauseDirtyJmp_00490c30(void) {
+    GuardedDualAndFlagToggle_0048f020();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 1) == 0) {
+        func_00490371();
+        if (g_framePauseFlag != 0) return;
     }
+    func_0049126c();
 }
 
 /* @addr 0x00490e90 (43b)
