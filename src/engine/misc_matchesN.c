@@ -48,19 +48,15 @@ extern unsigned int g_state_00537f08;
 extern unsigned int g_state_0053a380;
 extern unsigned int g_state_00535d08;
 extern void func_00404efb(void);
-__declspec(naked) void Init6Globals_004051b0(void) {
-    __asm {
-        xor     eax, eax
-        mov     dword ptr [g_state_0053a188], eax
-        mov     dword ptr [g_state_0053a498], eax
-        mov     dword ptr [g_state_0053a79c], eax
-        mov     dword ptr [g_state_00537f08], eax
-        mov     dword ptr [g_state_0053a380], eax
-        mov     eax, 1
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00535d08], eax
-        jmp     func_00404efb
-    }
+void Init6Globals_004051b0(void) {
+    g_state_0053a188 = 0;
+    g_state_0053a498 = 0;
+    g_state_0053a79c = 0;
+    g_state_00537f08 = 0;
+    g_state_0053a380 = 0;
+    g_walkCallback = (void (*)(void))1;
+    g_state_00535d08 = 1;
+    func_00404efb();
 }
 
 /* @addr 0x00405880 (49b)
