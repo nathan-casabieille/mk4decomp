@@ -45,19 +45,14 @@ void Set43DualCallJmp_0049a620(void) {
  *   ret
  */
 extern u32 g_eventQueueWorkType;
-__declspec(naked) void ScaledStoreThree_0049d310(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_walkCallback]
-        shl     eax, 2
-        mov     dword ptr [eax + 4], ecx
-        mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [eax + 8], edx
-        mov     ecx, dword ptr [g_eventQueueWorkType]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x0c], ecx
-        ret
-    }
+void ScaledStoreThree_0049d310(void) {
+    unsigned char *base = (unsigned char *)(g_scaledInit_00542044 * 4);
+    unsigned int v;
+    *(unsigned int *)(base + 4) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(base + 8) = g_eventQueueCurrent;
+    v = g_eventQueueWorkType;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(base + 0x0c) = v;
 }
 
 /* @addr 0x0049fa20 (36b): same shape as 0x0042ee10 / 0x00464320 - cmp 3 / dirty manip */
