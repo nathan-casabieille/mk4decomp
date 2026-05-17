@@ -175,17 +175,13 @@ void MStackPush5Func_0043aa80(void) {
  *   mov     [ecx*4 + 0x20], eax
  *   ret
  */
-__declspec(naked) void ScaledChainOrAh1_004462f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [ecx*4 + 0x20]
-        or      ah, 1
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x20], eax
-        ret
-    }
+void ScaledChainOrAh1_004462f0(void) {
+    unsigned int scaled = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c);
+    unsigned int v;
+    g_scaledInit_00542044 = scaled;
+    v = *(unsigned int *)(scaled * 4 + 0x20) | 0x100;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(scaled * 4 + 0x20) = v;
 }
 
 /* @addr 0x004464f0 (33b)
