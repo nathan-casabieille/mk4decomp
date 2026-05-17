@@ -278,19 +278,14 @@ void SwapTwoGlobals_004911c0(void) {
  *   ret
  */
 extern unsigned int g_state_00535de4;
-__declspec(naked) void IncCapped3e7_00491920(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535de4]
-        inc     eax
-        cmp     eax, 0x03e7
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   0ah
-        mov     eax, 0x03e7
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00535de4], eax
-        ret
+void IncCapped3e7_00491920(void) {
+    int v = (int)g_state_00535de4 + 1;
+    g_walkCallback = (void (*)(void))v;
+    if (v > 0x03e7) {
+        v = 0x03e7;
+        g_walkCallback = (void (*)(void))v;
     }
+    g_state_00535de4 = (unsigned int)v;
 }
 
 /* @addr 0x00491990 (44b)
