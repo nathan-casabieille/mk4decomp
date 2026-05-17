@@ -97,21 +97,14 @@ void PushCallPauseDirtyClear_0042c9c0(void) {
  *   ret
  */
 extern unsigned int g_state_0052aac4;
-__declspec(naked) void Cmp7DirtyToggle_0042ee10(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4]
-        mov     dword ptr [g_walkCallback], eax
-        cmp     eax, 7
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   74h
-        _emit   08h
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void Cmp7DirtyToggle_0042ee10(void) {
+    unsigned int state = g_state_0052aac4;
+    g_walkCallback = (void (*)(void))state;
+    if (state != 7) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
+        return;
     }
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }
 
 /* @addr 0x004338e0 (34b)
