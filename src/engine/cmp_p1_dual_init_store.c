@@ -26,6 +26,10 @@
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_scaledInit_00542048;
+extern unsigned int g_data_0053a1a0;
+extern unsigned int g_data_0053a518;
+extern unsigned int g_data_0053a3e4;
+extern unsigned int g_data_0053a474;
 
 /* @addr 0x00433d30 */
 __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
