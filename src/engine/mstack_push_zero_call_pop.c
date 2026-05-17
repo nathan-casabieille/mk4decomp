@@ -29,47 +29,27 @@ extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void PendingMatch_00407d50(void);
 
 /* @addr 0x004066f0 */
-__declspec(naked) void MStackPushZeroCallPop_004066f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     dword ptr [g_xformEntityIdx], 0
-        call    MStackBracket5_LinkedListUnlink_00409aa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPushZeroCallPop_004066f0(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_xformEntityIdx;
+    g_xformEntityIdx = 0;
+    MStackBracket5_LinkedListUnlink_00409aa0();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x00407d00 */
-__declspec(naked) void MStackPushZeroCallPop_00407d00(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_eventQueueTotal]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     dword ptr [g_eventQueueTotal], 0
-        call    PendingMatch_00407d50
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_eventQueueTotal], edx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPushZeroCallPop_00407d00(void) {
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)(top * 4) = g_eventQueueTotal;
+    g_eventQueueTotal = 0;
+    PendingMatch_00407d50();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_eventQueueTotal = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
