@@ -148,26 +148,18 @@ __declspec(naked) void PauseTestCmp2CallStore_0045bfe0(void) {
  */
 extern unsigned int g_state_00535ddc_w;
 extern void func_0045e60c(void);
-__declspec(naked) void RangeCheckJmp_0045e590(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535ddc_w]
-        cmp     eax, 0x1cccc
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7dh
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        cmp     eax, 0x30000
-        _emit   7eh
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        jmp     func_0045e60c
+void RangeCheckJmp_0045e590(void) {
+    int v = (int)g_state_00535ddc_w;
+    g_walkCallback = (void (*)(void))v;
+    if (v < 0x1cccc) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
+        return;
     }
+    if (v > 0x30000) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
+        return;
+    }
+    func_0045e60c();
 }
 
 /* @addr 0x0047e600 (51b)
