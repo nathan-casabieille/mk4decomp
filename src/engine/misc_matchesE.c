@@ -22,21 +22,12 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void TripleCallCountdown_00428080(void);
-__declspec(naked) void SaveCallRestore_004049d0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        push    esi
-        mov     esi, dword ptr [g_walkCallback]
-        mov     dword ptr [g_walkCallback], eax
-        call    TripleCallCountdown_00428080
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   06h
-        mov     dword ptr [g_walkCallback], esi
-        pop     esi
-        ret
-    }
+void SaveCallRestore_004049d0(unsigned int arg) {
+    void (*saved)(void) = g_walkCallback;
+    g_walkCallback = (void (*)(void))arg;
+    TripleCallCountdown_00428080();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = saved;
 }
 
 /* @addr 0x00404e20 (41b): zero a struct of various sizes
