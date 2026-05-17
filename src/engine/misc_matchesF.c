@@ -122,19 +122,14 @@ extern unsigned int g_state_0053a3c0;
 extern void func_00433901(void);
 extern int func_004392a0(void *);
 extern void *g_data_004e44c0;
-__declspec(naked) void Cmp3JmpOrPushCall_004338e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a3c0]
-        cmp     eax, 3
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_00433901
-        push    OFFSET g_data_004e44c0
-        call    func_004392a0
-        add     esp, 4
-        ret
+void Cmp3JmpOrPushCall_004338e0(void) {
+    int v = (int)g_state_0053a3c0;
+    g_walkCallback = (void (*)(void))v;
+    if (v > 3) {
+        func_00433901();
+        return;
     }
+    func_004392a0(&g_data_004e44c0);
 }
 
 /* @addr 0x00433e50 (32b)
