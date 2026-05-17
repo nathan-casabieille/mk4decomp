@@ -165,31 +165,19 @@ void GuardedSetCallSetCall_0047dee0(void) {
  *   branch (codegen quirk: cmp flags preserved across load).
  */
 extern void ScaledChain3c74_0048f910(void);
-__declspec(naked) void GuardedWalkSwitchDirty_0048ea40(void) {
-    __asm {
-        call    ScaledChain3c74_0048f910
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   34h
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 0x2005
-        _emit   75h
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        cmp     eax, 0x2002
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        _emit   75h
-        _emit   08h
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
+void GuardedWalkSwitchDirty_0048ea40(void) {
+    unsigned int v;
+    ScaledChain3c74_0048f910();
+    if (g_framePauseFlag != 0) return;
+    v = (unsigned int)g_walkCallback;
+    if (v == 0x2005) {
+        g_xformDirtyFlags |= 1;
+        return;
+    }
+    if (v == 0x2002) {
+        g_xformDirtyFlags |= 1;
+    } else {
+        g_xformDirtyFlags &= 0xFFFFFFFEu;
     }
 }
 
