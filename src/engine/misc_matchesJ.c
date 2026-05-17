@@ -348,19 +348,15 @@ void IterStepNoSecond_0048e5e0(int arg) {
  *   mov     [eax*4 + 0x4c], ecx
  *   ret
  */
-__declspec(naked) void IterStepScaledStore_0048e600(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_eventQueueTotal], eax
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x4c], ecx
-        ret
-    }
+void IterStepScaledStore_0048e600(int arg) {
+    unsigned int packed = (unsigned int)(arg >> 2);
+    unsigned int v;
+    g_eventQueueTotal = packed;
+    v = *(unsigned int *)(packed * 4);
+    packed++;
+    g_eventQueueTotal = packed;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c) = v;
 }
 
 /* @addr 0x0048e780 (35b)
