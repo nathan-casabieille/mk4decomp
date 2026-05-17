@@ -124,20 +124,15 @@ extern void DDraw3_Cleanup(void);
 extern void DDraw5_Cleanup(void);
 extern void RendererTeardownSW_004b2a40(void);
 extern unsigned int g_state_004f4b3c;
-__declspec(naked) void Helper_GfxCleanup(void) {
-    __asm {
-        push    4
-        call    Helper_GSM_PlayMusic
-        add     esp, 4
-        call    TryInitRenderer
-        call    Thunk_004bf320
-        call    R2_Cleanup
-        call    DDraw3_Cleanup
-        call    DDraw5_Cleanup
-        call    RendererTeardownSW_004b2a40
-        mov     dword ptr [g_state_004f4b3c], 0
-        ret
-    }
+void Helper_GfxCleanup(void) {
+    Helper_GSM_PlayMusic(4);
+    TryInitRenderer();
+    Thunk_004bf320();
+    R2_Cleanup();
+    DDraw3_Cleanup();
+    DDraw5_Cleanup();
+    RendererTeardownSW_004b2a40();
+    g_state_004f4b3c = 0;
 }
 
 /* @addr 0x004b44f0 (52b)
