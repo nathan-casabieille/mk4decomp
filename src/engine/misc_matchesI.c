@@ -138,18 +138,12 @@ void ScaledAndCheckJmp_00470f60(void) {
  */
 extern void func_004ab620(void);
 extern void func_00489f7e(void);
-__declspec(naked) void Set2CallIncJmp_00472860(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 2
-        call    func_004ab620
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0bh
-        inc     dword ptr [g_walkCallback]
-        jmp     func_00489f7e
-        ret
-    }
+void Set2CallIncJmp_00472860(void) {
+    g_walkCallback = (void (*)(void))2;
+    func_004ab620();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))((unsigned int)g_walkCallback + 1);
+    func_00489f7e();
 }
 
 /* @addr 0x00472890 (37b)
