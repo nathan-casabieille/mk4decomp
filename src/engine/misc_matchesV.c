@@ -395,22 +395,13 @@ extern packed_ptr g_player2NodeIdx;
 extern u32 g_gtPlayerProbe1;
 extern u32 g_gtPlayerProbe2;
 extern packed_ptr g_fightGroupHead;
-__declspec(naked) void CmpP1GTSetup_00470980(void) {
-    __asm {
-        mov     ecx, dword ptr [g_gtPlayerProbe2]
-        mov     eax, dword ptr [g_player1NodeIdx]
-        mov     dword ptr [g_eventQueueIdx], ecx
-        mov     ecx, dword ptr [g_fightGroupHead]
-        cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   74h
-        _emit   16h
-        mov     edx, dword ptr [g_player2NodeIdx]
-        mov     eax, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_scaledInit_00542044], edx
-        mov     dword ptr [g_eventQueueIdx], eax
-        ret
-    }
+void CmpP1GTSetup_00470980(void) {
+    unsigned int p1 = g_player1NodeIdx;
+    g_eventQueueIdx = g_gtPlayerProbe2;
+    g_scaledInit_00542044 = p1;
+    if (g_fightGroupHead == p1) return;
+    g_scaledInit_00542044 = g_player2NodeIdx;
+    g_eventQueueIdx = g_gtPlayerProbe1;
 }
 
 /* @addr 0x0047c5e0 (57b)
