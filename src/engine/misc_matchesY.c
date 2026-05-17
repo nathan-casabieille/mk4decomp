@@ -157,31 +157,22 @@ extern unsigned int g_state_00535ddc_y;
 extern void TriEntryGateMain_00435440(void);
 extern void GuardedSeq_00433bb0(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
-__declspec(naked) void DualCallTestPauseRange_004353f0(void) {
-    __asm {
-        call    Cmp2CallDirtyCall_004398b0
-        test    eax, eax
-        _emit   75h
-        _emit   37h
-        call    Wrapper_00439310
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        mov     eax, dword ptr [g_walkCallback]
-        test    eax, eax
-        _emit   7dh
-        _emit   05h
-        jmp     TriEntryGateMain_00435440
-        mov     eax, dword ptr [g_state_00535ddc_y]
-        cmp     eax, 0x30000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     GuardedSeq_00433bb0
-        jmp     PrefixThunkInstallSelf3State_00438f80
-        ret
+void DualCallTestPauseRange_004353f0(void) {
+    int state_y;
+    if (((int (*)(void))Cmp2CallDirtyCall_004398b0)() != 0) return;
+    Wrapper_00439310();
+    if (g_framePauseFlag != 0) return;
+    if ((int)g_walkCallback < 0) {
+        TriEntryGateMain_00435440();
+        return;
     }
+    state_y = (int)g_state_00535ddc_y;
+    g_walkCallback = (void (*)(void))state_y;
+    if (state_y > 0x30000) {
+        GuardedSeq_00433bb0();
+        return;
+    }
+    PrefixThunkInstallSelf3State_00438f80();
 }
 
 /* @addr 0x00466090 (61b)
