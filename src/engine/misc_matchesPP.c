@@ -1142,24 +1142,14 @@ void RangeDispatch4_00434ec0(void) {
  *   fightGroupHead from g_pendingNodeType; ret.
  */
 extern void GatedScaledSubSat_0048fb40(void);
-__declspec(naked) void SaveSwapCallRestore_00489030(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_pendingNodeType], eax
-        mov     edx, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_walkCallback], 0x10000
-        mov     dword ptr [g_fightGroupHead], edx
-        mov     dword ptr [g_eventQueueCurrent], 0x3c
-        call    GatedScaledSubSat_0048fb40
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0ah
-        mov     eax, dword ptr [g_pendingNodeType]
-        mov     dword ptr [g_fightGroupHead], eax
-        ret
-    }
+void SaveSwapCallRestore_00489030(void) {
+    g_pendingNodeType = g_fightGroupHead;
+    g_fightGroupHead = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
+    g_walkCallback = (void (*)(void))0x10000;
+    g_eventQueueCurrent = 0x3c;
+    GatedScaledSubSat_0048fb40();
+    if (g_framePauseFlag != 0) return;
+    g_fightGroupHead = g_pendingNodeType;
 }
 
 /* @addr 0x004a19c0 (74b)
