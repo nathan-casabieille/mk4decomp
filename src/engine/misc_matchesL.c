@@ -215,18 +215,11 @@ void TableLookupCallJmp_004aa9c0(void) {
  *   mov     [g_walkCallback], eax
  *   ret
  */
-__declspec(naked) void DivBy_004ab300(void) {
-    __asm {
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        test    ecx, ecx
-        _emit   75h
-        _emit   07h
-        mov     dword ptr [g_walkCallback], ecx
-        ret
-        mov     eax, dword ptr [g_walkCallback]
-        cdq
-        idiv    ecx
-        mov     dword ptr [g_walkCallback], eax
-        ret
+void DivBy_004ab300(void) {
+    int divisor = (int)g_eventQueueCurrent;
+    if (divisor == 0) {
+        g_walkCallback = (void (*)(void))divisor;
+        return;
     }
+    g_walkCallback = (void (*)(void))((int)g_walkCallback / divisor);
 }
