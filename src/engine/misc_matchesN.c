@@ -249,17 +249,13 @@ __declspec(naked) void ScaledAddStore_004406e0(void) {
  *   jmp     T
  */
 extern void func_00405e90(void);
-__declspec(naked) void CopyScaledTriple_00446120(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [g_fightGroupHead], eax
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x78]
-        mov     dword ptr [g_eventQueueEnd], ecx
-        mov     edx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_scaledInit_00542044], edx
-        jmp     func_00405e90
-    }
+void CopyScaledTriple_00446120(void) {
+    unsigned int base;
+    g_fightGroupHead = g_eventQueueIdx;
+    base = g_baseSel_00542060;
+    g_eventQueueEnd = *(unsigned int *)(base * 4 + 0x78);
+    g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
+    func_00405e90();
 }
 
 /* @addr 0x00446350 (46b): same shape with offsets 0x5c->disp, 0x78->disp swapped */
