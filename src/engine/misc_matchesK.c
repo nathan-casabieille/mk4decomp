@@ -303,23 +303,13 @@ extern unsigned int g_state_0053a51c;
 extern void GuardedScaledLookupCallJmp_004220a0(void);
 extern void func_0042a330(void);
 extern void func_0049199a(void);
-__declspec(naked) void TwoCallStatePauseJmp_00491990(void) {
-    __asm {
-        call    GuardedScaledLookupCallJmp_004220a0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1dh
-        mov     eax, dword ptr [g_state_0053a51c]
-        mov     dword ptr [g_walkCallback], eax
-        call    func_0042a330
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0049199a
-        ret
-    }
+void TwoCallStatePauseJmp_00491990(void) {
+    GuardedScaledLookupCallJmp_004220a0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))g_state_0053a51c;
+    func_0042a330();
+    if (g_framePauseFlag != 0) return;
+    func_0049199a();
 }
 
 /* @addr 0x00494800 (39b)
