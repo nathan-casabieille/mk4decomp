@@ -48,24 +48,17 @@ extern void func_0046c740(void);
 extern void func_004594c8(void *p);
 extern void *g_data_004eabb0;
 extern void func_0046a542(void);
-__declspec(naked) void CallPauseCmpStateJmp_0046a520(void) {
-    __asm {
-        call    func_0046c740
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        mov     eax, dword ptr [g_state_00535ddc]
-        cmp     eax, 0x00030000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_0046a542
-        push    OFFSET g_data_004eabb0
-        call    func_004594c8
-        add     esp, 4
-        ret
+void CallPauseCmpStateJmp_0046a520(void) {
+    unsigned int v;
+    func_0046c740();
+    if (g_framePauseFlag != 0) return;
+    v = g_state_00535ddc;
+    g_walkCallback = (void (*)(void))v;
+    if ((int)v > 0x30000) {
+        func_0046a542();
+        return;
     }
+    func_004594c8(&g_data_004eabb0);
 }
 
 /* @addr 0x0046fbe0 (49b)
