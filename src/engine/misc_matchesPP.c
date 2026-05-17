@@ -1304,22 +1304,17 @@ void PushPopPendingTwoCalls_0042f4f0(void) {
  *   [g_eventQueueIdx*4+0x3c]→walk; copies into eax-slot+0x3c.
  *   Then re-reads idx slot's +0x3c → walk and back into ecx-slot.
  */
-__declspec(naked) void SlotFieldSwap3c_004463b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_eventQueueIdx]
-        mov     eax, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [ecx*4 + 0x3c]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x3c], ecx
-        mov     edx, dword ptr [g_eventQueueIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [edx*4 + 0x3c]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x3c], eax
-        ret
-    }
+void SlotFieldSwap3c_004463b0(void) {
+    unsigned int idx;
+    unsigned int v;
+    idx = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
+    g_scaledInit_00542044 = idx;
+    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x3c) = v;
+    v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x3c) = v;
 }
 
 /* @addr 0x00473d50 (75b)
