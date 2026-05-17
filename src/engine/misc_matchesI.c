@@ -181,21 +181,15 @@ void Set4CallAddJmp_00472890(void) {
  *   jmp     +4
  */
 extern void func_00473461(void);
-__declspec(naked) void ScaledLoadDirtyOrSetJmp_00473450(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [eax*4 + 0x18]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     func_00473461
+void ScaledLoadDirtyOrSetJmp_00473450(void) {
+    unsigned int v = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
+    g_walkCallback = (void (*)(void))v;
+    if (v == 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
+        return;
     }
+    g_scaledInit_00542044 = v;
+    func_00473461();
 }
 
 /* @addr 0x00475790 (36b)
