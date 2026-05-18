@@ -42,9 +42,7 @@ In plain words:
 - **Pure C = the real decompilation metric.** Only functions whose body
   contains no `__asm` block count - i.e. portable C, retargetable to a
   non-x86 build (e.g. WASM/Emscripten). The progress bar tracks this.
-  **Hybrid** functions (no `naked`, body still `__asm`) are a stepping
-  stone toward pure C, not progress in themselves. **This is where
-  contributions are needed.**
+  **This is where contributions are needed.**
 
 Run `python3 tools/decomp/progress.py` for a live per-subsystem breakdown.
 
