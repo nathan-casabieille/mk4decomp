@@ -318,21 +318,11 @@ extern unsigned int g_state_007ab064;
 extern void *g_iface_007ab05c;
 extern int func_004b0982(int);
 void IncCallVtablePushCall_004b0d80(void) {
-    __asm {
-        mov     edx, dword ptr [g_state_007ab064]
-        mov     eax, dword ptr [g_iface_007ab05c]
-        inc     edx
-        test    eax, eax
-        mov     dword ptr [g_state_007ab064], edx
-        _emit   74h
-        _emit   06h
-        mov     ecx, dword ptr [eax]
-        push    eax
-        call    dword ptr [ecx + 0x48]
-        push    0
-        call    func_004b0982
-        add     esp, 4
-        }
+    g_state_007ab064++;
+    if (g_iface_007ab05c != 0) {
+        ((void (__stdcall *)(void *))((void **)*(void **)g_iface_007ab05c)[0x12])(g_iface_007ab05c);
+    }
+    func_004b0982(0);
 }
 
 /* @addr 0x004b8f20 (43b): zero 8 fields
