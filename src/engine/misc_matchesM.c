@@ -260,7 +260,7 @@ void ZeroThreeFields6c_004abfe0(void) {
  */
 extern int g_state_004d5100;
 extern int g_state_004d5104;
-__declspec(naked) void DualAddSar_004ab600(void) {
+void DualAddSar_004ab600(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d5100]
         mov     ecx, dword ptr [g_state_004d5104]
@@ -272,7 +272,6 @@ __declspec(naked) void DualAddSar_004ab600(void) {
         mov     dword ptr [g_walkCallback], eax
         add     ecx, edx
         mov     dword ptr [g_state_004d5104], ecx
-        ret
     }
 }
 
