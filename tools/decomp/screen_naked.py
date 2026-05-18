@@ -72,6 +72,57 @@ def classify(body):
 
     body_text = '\n'.join(lines).lower()
 
+    # Multiple `ret` instructions usually mean packed sub-helpers (one
+    # symbols.yaml entry covers >1 function body separated by nop padding).
+    ret_count = sum(1 for l in lines if re.match(r'^ret\b', l, re.IGNORECASE))
+    if ret_count >= 2:
+        flags.append(f'multi_ret({ret_count})_packed_helpers')
+
+    # `ret` followed by `nop` padding then more instructions is the
+    # classic packed-helper signature.
+    for i, l in enumerate(lines):
+        if not re.match(r'^ret\b', l, re.IGNORECASE):
+            continue
+        if i + 1 >= len(lines):
+            continue
+        if re.match(r'^nop\b', lines[i+1], re.IGNORECASE):
+            # ret followed by nop — likely a sub-helper boundary
+            flags.append('ret_then_nop')
+            break
+
+    # Long nop runs (>=4) indicate 16-byte alignment for a packed sub-helper.
+    nop_run = 0
+    max_nop_run = 0
+    for l in lines:
+        if re.match(r'^nop\b', l, re.IGNORECASE):
+            nop_run += 1
+            max_nop_run = max(max_nop_run, nop_run)
+        else:
+            nop_run = 0
+    if max_nop_run >= 4:
+        flags.append(f'nop_pad({max_nop_run})')
+
+    # Any nop sandwiched between a tail (ret/jmp) and a non-tail instruction
+    # is a packed-helper boundary, regardless of run length.
+    for i, l in enumerate(lines):
+        if not re.match(r'^nop\b', l, re.IGNORECASE):
+            continue
+        # Find the last non-nop before this nop
+        j = i - 1
+        while j >= 0 and re.match(r'^nop\b', lines[j], re.IGNORECASE):
+            j -= 1
+        if j < 0:
+            continue
+        prev = lines[j]
+        if re.match(r'^(ret|jmp)\b', prev, re.IGNORECASE):
+            # find next non-nop after the nop
+            k = i + 1
+            while k < len(lines) and re.match(r'^nop\b', lines[k], re.IGNORECASE):
+                k += 1
+            if k < len(lines):
+                flags.append('packed_via_nop')
+                break
+
     if BYTE_REG_RE.search(body_text):
         flags.append('byte_op')
     if WORD_REG_RE.search(body_text):
@@ -120,11 +171,16 @@ def classify(body):
 def hard_blocker_score(flags):
     """Higher = harder. 0 = no blockers (easy candidate)."""
     HARD = {'byte_op', 'word_op', 'fpu', 'setcc', 'multi_prec',
-            'computed_jmp', 'dec_jcc', 'raw_emit'}
+            'computed_jmp', 'dec_jcc', 'raw_emit', 'ret_then_nop',
+            'packed_via_nop'}
     score = sum(1 for f in flags if f in HARD)
     # push callee-saved is a soft -1 (not always blocker)
     for f in flags:
         if f.startswith('push_callee_saved'):
+            score += 1
+        if f.startswith('multi_ret'):
+            score += 1
+        if f.startswith('nop_pad'):
             score += 1
     return score
 
