@@ -187,6 +187,43 @@ def mut_invert_first_if(fn_text):
     return fn_text[:m.start(2)] + new_cond + fn_text[m.end(2):]
 
 
+def mut_shift_assign(fn_text):
+    """Rewrite `x = expr * 4;` as `x = expr; x <<= 2;` to coax `shl reg, 2`
+    (3 bytes) instead of MSVC's `lea reg2, [reg1*4]` (7 bytes). MSVC SP3 picks
+    LEA when the source is a global being read (preserves the original reg);
+    `<<= 2` explicitly overwrites and emits the shorter shl-in-place.
+
+    Targets simple lines like:
+        unsigned int a = g_cj_054 * 4;
+        a = g_cj_054 * 4;
+    """
+    lines = fn_text.split('\n')
+    out = []
+    for line in lines:
+        m = re.match(r'^(\s*)(?:(unsigned\s+(?:int|char)|int|unsigned)\s+)?(\w+)\s*=\s*([^;]+?)\s*\*\s*4\s*;(.*)$', line)
+        if not m:
+            out.append(line)
+            continue
+        indent, type_, name, rhs, tail = m.groups()
+        type_prefix = (type_ + ' ') if type_ else ''
+        out.append(f'{indent}{type_prefix}{name} = {rhs};{tail}')
+        out.append(f'{indent}{name} <<= 2;')
+    return '\n'.join(out)
+
+
+def mut_swap_add_operands(fn_text):
+    """For `(a + b) * 4` expressions in SIB-index positions, swap to `(b + a) * 4`.
+    Coaxes MSVC to pick the opposite register for the running-sum in `add`.
+
+    Targets `*(unsigned int *)((G1 + G2) * 4 ...) = ...` and similar."""
+    out = re.sub(
+        r'\(\s*(g_\w+)\s*\+\s*(g_\w+)\s*\)',
+        r'(\2 + \1)',
+        fn_text,
+    )
+    return out
+
+
 def mut_swap_pair_statements(fn_text):
     """Swap the FIRST pair of consecutive global-store statements that
     look like simple assignments (no side effects).
@@ -210,6 +247,8 @@ MUTATIONS = {
     'tail_cast': mut_tail_cast,
     'invert_if': mut_invert_first_if,
     'swap_pair': mut_swap_pair_statements,
+    'shift_assign': mut_shift_assign,
+    'swap_add': mut_swap_add_operands,
 }
 
 COMBOS = [
@@ -219,9 +258,12 @@ COMBOS = [
     ('int_ret+tail_cast', ['int_ret', 'tail_cast']),
     ('invert_if', ['invert_if']),
     ('swap_pair', ['swap_pair']),
+    ('shift_assign', ['shift_assign']),
+    ('swap_add', ['swap_add']),
     ('int_ret+invert_if', ['int_ret', 'invert_if']),
     ('int_ret+invert_if+tail_cast', ['int_ret', 'invert_if', 'tail_cast']),
     ('uint_arg+int_ret', ['uint_arg', 'int_ret']),
+    ('shift_assign+swap_add', ['shift_assign', 'swap_add']),
 ]
 
 
