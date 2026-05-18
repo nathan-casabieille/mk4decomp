@@ -96,7 +96,10 @@ def extract_function(src, func_name):
 def mut_int_ret(fn_text):
     """Change `void Name(` -> `int Name(` and replace trailing fall-through
     `}` with `return g_framePauseFlag; }`. Also convert each bare `return;`
-    statement to `return g_framePauseFlag;`."""
+    statement to `return g_framePauseFlag;`.
+
+    Note: forward declarations elsewhere in the file are updated by
+    `update_forward_decls` once the mutation is applied."""
     # Replace return type (first `void` followed by name pattern)
     new = re.sub(
         r'((?:^|\n)(?:\s*extern\s+)?)void(\s+\w+\s*\([^)]*\)\s*\{)',
@@ -112,6 +115,13 @@ def mut_int_ret(fn_text):
     if not re.search(r'return[^\n;]*;\s*\n\}\n?$', new):
         new = re.sub(r'\n\}\n?$', '\n    return g_framePauseFlag;\n}\n', new)
     return new
+
+
+def update_forward_decls(src, func_name, new_type='int'):
+    """Update `extern void Foo(` -> `extern int  Foo(` everywhere in src.
+    Also `extern void Foo(void);` -> `extern int  Foo(void);`. Idempotent."""
+    pat = re.compile(r'\bextern\s+void(\s+' + re.escape(func_name) + r'\b)')
+    return pat.sub(f'extern {new_type} ' + r'\1', src)
 
 
 def mut_uint_arg(fn_text):
@@ -289,7 +299,11 @@ def main():
             print(f'  {name:<32}  (no-op, skipped)')
             continue
         # Apply
-        src_path.write_text(before + new_fn + after)
+        full_src = before + new_fn + after
+        # If int_ret was applied, also update forward declarations
+        if 'int_ret' in mutations:
+            full_src = update_forward_decls(full_src, args.func, 'int ')
+        src_path.write_text(full_src)
         diffs, out = run_fast_try(src_path, args.func)
         dt = time.time() - t0
         results.append((diffs, name, mutations, new_fn))

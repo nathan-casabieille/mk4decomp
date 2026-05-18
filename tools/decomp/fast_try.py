@@ -95,9 +95,12 @@ def main():
         ['python3', str(diff_script), str(obj_path), name, hex(addr), str(size)],
         capture_output=True, text=True, timeout=30,
     )
-    output = res.stdout
+    # diff_fn_obj.py prints diff details on stdout but uses raise SystemExit
+    # for size-mismatch errors which go to stderr.
+    output = res.stdout + res.stderr
     print(output, end='')
 
+    t2 = time.time()
     # Parse "diffs=N" from output
     for line in output.split('\n'):
         if 'diffs=' in line:
@@ -105,13 +108,16 @@ def main():
                 diffs = int(line.split('diffs=')[1].split()[0].rstrip(':'))
             except (ValueError, IndexError):
                 continue
-            t2 = time.time()
             if diffs == 0:
                 print(f'\nMATCH (per-OBJ diff). Total: {t2-t0:.1f}s. Run try_conv.py to confirm full synth.')
                 sys.exit(0)
             else:
                 print(f'\nFAIL: {diffs} byte diffs. Total: {t2-t0:.1f}s. Revert and retry.')
                 sys.exit(1)
+    # Size mismatch (rebuilt smaller or larger than orig)
+    if 'exceed section size' in output:
+        print(f'\nSIZE MISMATCH: MSVC compiled this function to fewer bytes than orig (or trailing data missing). Total: {t2-t0:.1f}s. Revert.')
+        sys.exit(1)
     print('ERROR: could not parse diff output', file=sys.stderr)
     sys.exit(2)
 
