@@ -2062,26 +2062,20 @@ ret_label:
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
 extern unsigned int g_data_0053815c;
-__declspec(naked) void GuardedSelfRefSet_0048d070(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        shl     eax, 2
-        mov     dword ptr [eax + 0x84], 0
-        mov     ecx, dword ptr [g_fightGroupHead]
-        cmp     ecx, dword ptr [g_data_00538158]
-        _emit   74h
-        _emit   08h
-        cmp     ecx, dword ptr [g_data_0053815c]
-        _emit   75h
-        _emit   05h
-        jmp     func_0041f780_pp
-        mov     ecx, 1
-        mov     dword ptr [eax + 8], 0x0048d070
-        mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_pendingNodeType], 0x0a
-        mov     dword ptr [g_framePauseFlag], ecx
-        ret
-    }
+extern void GuardedSelfRefSet_0048d070(void);
+void GuardedSelfRefSet_0048d070(void) {
+    unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
+    *(unsigned int *)(base + 0x84) = 0;
+    do {
+        if (g_fightGroupHead == g_data_00538158) break;
+        if (g_fightGroupHead == g_data_0053815c) break;
+        *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet_0048d070;
+        *(unsigned int *)(base + 0x84) = 1;
+        g_pendingNodeType = 0x0a;
+        g_framePauseFlag = 1;
+        return;
+    } while (0);
+    func_0041f780_pp();
 }
 
 /* @addr 0x00491e70 (80b)
