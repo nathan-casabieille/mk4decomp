@@ -243,25 +243,18 @@ void DualTestDirtyToggle_004282c0(void) {
 extern unsigned int g_state_0052aac4_s;
 extern u32 g_dlMode;
 void Cmp2DirtyToggle_00423870(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052aac4_s]
-        cmp     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0eh
-        mov     eax, dword ptr [g_dlMode]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        }
+    unsigned int state;
+    unsigned int mode;
+    state = g_state_0052aac4_s;
+    g_walkCallback = (void (*)(void))state;
+    if (state == 2) goto clear_bit;
+    mode = g_dlMode;
+    g_walkCallback = (void (*)(void))mode;
+    if (mode == 0) goto clear_bit;
+    g_xformDirtyFlags |= 1;
+    return;
+clear_bit:
+    g_xformDirtyFlags &= 0xfffffffe;
 }
 
 /* @addr 0x004231b0 (53b)
