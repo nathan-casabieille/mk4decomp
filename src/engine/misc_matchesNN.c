@@ -103,7 +103,7 @@ extern u32 g_eventQueueCurrent;
 extern int func_00404ae0(int, int);
 extern int func_00404ad0(int, int);
 extern void func_004ab730(void);
-__declspec(naked) void PushImmCallSetCallAdjustCall_00446bf0(void) {
+void PushImmCallSetCallAdjustCall_00446bf0(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
@@ -126,8 +126,7 @@ __declspec(naked) void PushImmCallSetCallAdjustCall_00446bf0(void) {
         call    func_00404ad0
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004a1940 (85b)
@@ -161,7 +160,7 @@ extern unsigned int g_state_007af994;
 extern unsigned int g_state_007af998;
 extern unsigned int g_state_007af99c;
 extern unsigned short g_word_007af9a0;
-__declspec(naked) void DirtyTestScaledCopy_004ba6c0(void) {
+void DirtyTestScaledCopy_004ba6c0(void) {
     __asm {
         test    byte ptr [g_xformDirtyFlags], 0x10
         _emit   74h
@@ -182,6 +181,5 @@ __declspec(naked) void DirtyTestScaledCopy_004ba6c0(void) {
         mov     word  ptr [g_word_007af9a0], cx
         mov     dword ptr [g_xformDirtyFlags], eax
         xor     eax, eax
-        ret
-    }
+        }
 }

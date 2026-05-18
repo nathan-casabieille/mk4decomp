@@ -23,8 +23,7 @@ void *AllocNode(void)
  *
  * @addr 0x004be050
  */
-__declspec(naked) void NodeApplyMatrix(void)
-{
+void NodeApplyMatrix(void) {
     __asm {
         mov     eax, [g_matrixStackTop]
         mov     ecx, [g_currentNodeIdx]
@@ -73,8 +72,7 @@ loop_entry:
         dec     eax
         mov     [g_currentNodeIdx], edx
         mov     [g_matrixStackTop], eax
-        ret
-    }
+        }
 }
 
 /*
@@ -224,8 +222,7 @@ void NodeApplyTransform_C(void)
  *
  * @addr 0x004be130
  */
-__declspec(naked) void NodeApplyTransform_B_Swapped(void)
-{
+void NodeApplyTransform_B_Swapped(void) {
     __asm {
         mov     eax, [g_matrixStackTop]
         mov     ecx, [g_xformEntityIdx]
@@ -277,8 +274,7 @@ __declspec(naked) void NodeApplyTransform_B_Swapped(void)
         mov     [g_matrixStackTop], eax
 paused:
         add     esp, 0Ch
-        ret
-    }
+        }
 }
 
 /*

@@ -50,7 +50,7 @@ extern unsigned int g_scaledInit_00542044;
  * Total: 7+2+5+2+3+6+2+3+2+1 = 33 ✓
  */
 extern int g_list_004ffdec;
-__declspec(naked) void ListInitLoop_00401310(void) {
+void ListInitLoop_00401310(void) {
     __asm {
         cmp     dword ptr [g_list_004ffdec], -1
         _emit   74h
@@ -63,8 +63,7 @@ __declspec(naked) void ListInitLoop_00401310(void) {
         cmp     dword ptr [eax], -1
         _emit   75h
         _emit   0f0h
-        ret
-    }
+        }
 }
 
 /* @addr 0x00401370 (34b)
@@ -80,9 +79,8 @@ __declspec(naked) void ListInitLoop_00401310(void) {
  *   pop     edi
  *   ret
  */
-__declspec(naked) void Init0AndMax_00401370(void) {
+void Init0AndMax_00401370(void) {
     __asm {
-        push    edi
         mov     ecx, 0x0c
         xor     eax, eax
         mov     edi, 0x00523ae8
@@ -91,9 +89,7 @@ __declspec(naked) void Init0AndMax_00401370(void) {
         mov     eax, 0x7fffffff
         mov     edi, 0x00523b28
         rep     stosd
-        pop     edi
-        ret
-    }
+        }
 }
 
 /* @addr 0x0041fcc0 (37b)
@@ -162,7 +158,7 @@ __declspec(naked) void OrListLoop_0041fcc0(void) {
  * Body: a1 482054 00 8b15 442054 00 8d0c85 00000000 8d0495 00000000 8a10 83c004 8811 41 8b50fc 85d2 75f1 c3
  * 5+6+7+7+2+3+2+1+3+2+2+1 = 41 ✓
  */
-__declspec(naked) void CopyByteUntilNull_004265a0(void) {
+void CopyByteUntilNull_004265a0(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -176,8 +172,7 @@ __declspec(naked) void CopyByteUntilNull_004265a0(void) {
         test    edx, edx
         _emit   75h
         _emit   0f1h
-        ret
-    }
+        }
 }
 
 /* @addr 0x00434530 (34b)

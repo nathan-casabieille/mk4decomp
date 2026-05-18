@@ -201,7 +201,7 @@ loop_top:
  */
 extern unsigned char g_byte_00f9f8c1[];
 extern unsigned short g_word_005229a2[];
-__declspec(naked) void IndexedBitTest_004cbaf0(void) {
+void IndexedBitTest_004cbaf0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     cl,  byte  ptr [esp + 0x0c]
@@ -225,8 +225,7 @@ __declspec(naked) void IndexedBitTest_004cbaf0(void) {
         _emit   01h
         ret
         mov     eax, 1
-        ret
-    }
+        }
 }
 
 /* @addr 0x004cc030 (61b)

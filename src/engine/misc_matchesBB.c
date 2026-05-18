@@ -99,11 +99,8 @@ void PushCallTestByte4Jmp_004a1a10(void) {
  *   writing AND-NOT result into [src1] and replacing [src2] with NOT(src1).
  */
 extern unsigned int g_table_004f2fd4[];
-__declspec(naked) void Helper_TickFrame_Misc(void) {
+void Helper_TickFrame_Misc(void) {
     __asm {
-        push    ebx
-        push    esi
-        push    edi
         mov     ecx, OFFSET g_table_004f2fd4
         mov     esi, 8
 loop_start:
@@ -122,11 +119,7 @@ loop_start:
         mov     dword ptr [edx], eax
         _emit   75h
         _emit   0e1h
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    }
+        }
 }
 
 /* @addr 0x004a30f0 (48b)
@@ -136,9 +129,8 @@ loop_start:
  */
 extern signed char g_table_004f3260[];
 extern void MStackPush2ChainLLInsert_00406790(void);
-__declspec(naked) void TableWalkChainCall_004a30f0(void) {
+void TableWalkChainCall_004a30f0(void) {
     __asm {
-        push    esi
         mov     esi, OFFSET g_table_004f3260
 loop_start2:
         movsx   eax, byte ptr [esi]
@@ -151,9 +143,7 @@ loop_start2:
         cmp     esi, 0x004f33c8
         _emit   72h
         _emit   0d8h
-        pop     esi
-        ret
-    }
+        }
 }
 
 /* @addr 0x004ab630 (53b)

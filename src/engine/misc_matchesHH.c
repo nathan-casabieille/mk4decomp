@@ -117,7 +117,7 @@ __declspec(naked) void Helper_FClose(void) {
  *   pack a double from 3 dword args: high/low 32 bits + biased exponent.
  *   builds the 16-bit sign+exponent word at [esp+6], then fld it.
  */
-__declspec(naked) void PackDoubleFromInts_004cde40(void) {
+void PackDoubleFromInts_004cde40(void) {
     __asm {
         sub     esp, 8
         mov     eax, dword ptr [esp + 0x0c]
@@ -139,8 +139,7 @@ __declspec(naked) void PackDoubleFromInts_004cde40(void) {
         _emit   24h
         _emit   00h
         add     esp, 8
-        ret
-    }
+        }
 }
 
 /* @addr 0x00404680 (71b)
@@ -268,7 +267,7 @@ extern void func_004c5790_hh(void);
 extern int LocaleNumericHelpers_004c8450(void);
 extern void Push3000010000Call_004c83e0(void);
 extern unsigned int g_state_00f9f7fc;
-__declspec(naked) void UllShlAndInit_004c5740(void) {
+void UllShlAndInit_004c5740(void) {
     __asm {
         cmp     cl, 0x40
         _emit   73h
@@ -303,6 +302,5 @@ __declspec(naked) void UllShlAndInit_004c5740(void) {
         nop
         nop
         nop
-        ret
-    }
+        }
 }

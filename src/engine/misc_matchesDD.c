@@ -131,9 +131,8 @@ void CleanupCallTwice_004bd530(int *arg) {
  */
 extern unsigned int g_table_004ab4e78[];
 extern void LoadGeoAsset_Default(void);
-__declspec(naked) void TableWalkPause_004bd850(void) {
+void TableWalkPause_004bd850(void) {
     __asm {
-        push    esi
         mov     esi, OFFSET g_table_004ab4e78
 loop_top:
         mov     eax, dword ptr [esi]
@@ -152,16 +151,14 @@ loop_top:
         cmp     esi, 0x00ab5034
         _emit   7ch
         _emit   0cfh
-        pop     esi
-        ret
-    }
+        }
 }
 
 /* @addr 0x004be210 (52b)
  *   scaled load; 16-bit neg of 3 word fields at offsets 0,2,4;
  *   set g_xformDirtyFlags |= 0x30.
  */
-__declspec(naked) void ScaledNegThreeWords_004be210(void) {
+void ScaledNegThreeWords_004be210(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         shl     eax, 2
@@ -177,8 +174,7 @@ __declspec(naked) void ScaledNegThreeWords_004be210(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         or      al,  0x30
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c5790 (56b): set 5 vtable slots at 0x00522160..0x00522174 */

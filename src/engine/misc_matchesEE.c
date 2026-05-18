@@ -44,9 +44,8 @@ void _init_premain(void) {
  */
 extern int FFlushImpl_004c69a0(int);
 extern int FileTableClose_004cb700(int);
-__declspec(naked) void CallTestPushSubCall_004c6960(void) {
+void CallTestPushSubCall_004c6960(void) {
     __asm {
-        push    esi
         mov     esi, dword ptr [esp + 8]
         push    esi
         call    FFlushImpl_004c69a0
@@ -70,9 +69,7 @@ __declspec(naked) void CallTestPushSubCall_004c6960(void) {
         pop     esi
         ret
         xor     eax, eax
-        pop     esi
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c6e90 (39b)
@@ -207,10 +204,8 @@ loop_top2:
  */
 extern unsigned int g_table_004ab4e78_ee[];
 extern void GeoLoadFixupLoop_004bd8e0(void);
-__declspec(naked) void TableWalkBoundedCmp_004bd890(void) {
+void TableWalkBoundedCmp_004bd890(void) {
     __asm {
-        push    esi
-        push    edi
         mov     edi, dword ptr [esp + 0x0c]
         mov     esi, OFFSET g_table_004ab4e78_ee
 loop_top3:
@@ -230,10 +225,7 @@ loop_top3:
         cmp     esi, 0x00ab5034
         _emit   7ch
         _emit   0d4h
-        pop     edi
-        pop     esi
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c5d70 (55b)

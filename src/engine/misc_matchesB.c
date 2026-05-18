@@ -132,7 +132,7 @@ void Helper_AudioStartFresh(void) {
  * 7c ee              jl .loop
  * c3                 ret
  */
-__declspec(naked) void Loop1cBitMask_004c4450(void) {
+void Loop1cBitMask_004c4450(void) {
     __asm {
         mov     eax, 0x00f8fade
         mov     cl, byte ptr [eax]
@@ -142,8 +142,7 @@ __declspec(naked) void Loop1cBitMask_004c4450(void) {
         mov     byte ptr [eax - 0x1c], cl
         _emit   7ch
         _emit   0eeh
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c6500 (13b)
