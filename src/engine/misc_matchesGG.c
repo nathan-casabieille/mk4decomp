@@ -237,31 +237,17 @@ extern unsigned int g_state_00f9f84c_gg;
 extern unsigned int g_state_00520064;
 extern void (*g_state_00f9fbfc)(void);
 extern void func_004cc070_gg(int);
-__declspec(naked) void DualCondCleanupCall_004cc030(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f9f84c_gg]
-        cmp     eax, 1
-        _emit   74h
-        _emit   0dh
-        test    eax, eax
-        _emit   75h
-        _emit   2eh
-        cmp     dword ptr [g_state_00520064], 1
-        _emit   75h
-        _emit   25h
-        push    0xfc
-        call    func_004cc070_gg
-        mov     eax, dword ptr [g_state_00f9fbfc]
-        add     esp, 4
-        test    eax, eax
-        _emit   74h
-        _emit   02h
-        call    eax
-        push    0xff
-        call    func_004cc070_gg
-        add     esp, 4
-        ret
+void DualCondCleanupCall_004cc030(void) {
+    unsigned int v = g_state_00f9f84c_gg;
+    if (v != 1) {
+        if (v != 0) return;
+        if (g_state_00520064 != 1) return;
     }
+    func_004cc070_gg(0xfc);
+    if (g_state_00f9fbfc != 0) {
+        g_state_00f9fbfc();
+    }
+    func_004cc070_gg(0xff);
 }
 
 /* @addr 0x004cc4c0 (59b)
