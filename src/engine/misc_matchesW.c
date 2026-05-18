@@ -104,26 +104,16 @@ void ScaledInitOrSet13b6_00446600(void) {
 extern unsigned char g_byte_00542071;
 extern void func_0045c005(void);
 void PauseTestCmp2CallStore_0045bfe0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_framePauseFlag]
-        xor     eax, eax
-        mov     al, byte ptr [g_byte_00542071]
-        test    ecx, ecx
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   25h
-        cmp     eax, 2
-        _emit   75h
-        _emit   20h
-        call    func_0045c005
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   12h
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [ecx*4 + 0x24], eax
-        }
+    unsigned int pause;
+    unsigned int b;
+    pause = g_framePauseFlag;
+    b = (unsigned int)g_byte_00542071;
+    g_walkCallback = (void (*)(void))b;
+    if (pause != 0) return;
+    if (b != 2) return;
+    func_0045c005();
+    if (g_framePauseFlag != 0) return;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = (unsigned int)g_walkCallback;
 }
 
 /* @addr 0x0045e590 (55b)
