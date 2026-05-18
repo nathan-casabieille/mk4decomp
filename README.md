@@ -37,7 +37,7 @@ Two distinct things, in plain words:
   MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
   ```
 
-- **Decompiled to C = in progress.** The bytes match, but ~70% of the
+- **Decompiled to C = in progress.** The bytes match, but ~51% of the
   source is still `__declspec(naked) { __asm { ... } }` wrappers -
   semantically equivalent to orig but not readable C. The real
   decompilation work is converting those wrappers to pure C while keeping
@@ -115,7 +115,7 @@ When a function matches byte-for-byte, mark it `matched` in
 
 ## Contributing
 
-**The byte-match is done. The C decompilation is not.** About 1831
+**The byte-match is done. The C decompilation is not.** About 1447
 functions in `src/` are still `__declspec(naked) { __asm { ... } }`
 wrappers around the original assembly. Each one needs to be rewritten
 in pure C while keeping `make matching` byte-identical to orig.
