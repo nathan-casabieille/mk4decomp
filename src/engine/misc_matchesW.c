@@ -66,21 +66,22 @@ void DecOrZeroDirty4_00438650(void) {
  *   ret
  */
 void ScaledInitOrSet13b6_00446600(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, 1
-        mov     eax, dword ptr [eax*4 + 0x60]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        shl     eax, 2
-        mov     dword ptr [eax + 0x1c], ecx
-        mov     ecx, dword ptr [eax + 0x20]
-        or      ch, 1
-        mov     dword ptr [eax + 0x20], ecx
-        mov     ecx, 0x13b6
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x38], ecx
-        }
+    unsigned int idx;
+    unsigned int one;
+    unsigned int field;
+    unsigned int v;
+    idx = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x60);
+    one = 1;
+    g_walkCallback = (void (*)(void))one;
+    g_scaledInit_00542044 = idx;
+    idx <<= 2;
+    *(unsigned int *)(idx + 0x1c) = one;
+    field = *(unsigned int *)(idx + 0x20);
+    field |= 0x100;
+    *(unsigned int *)(idx + 0x20) = field;
+    v = 0x13b6;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx + 0x38) = v;
 }
 
 /* @addr 0x0045bfe0 (60b)
