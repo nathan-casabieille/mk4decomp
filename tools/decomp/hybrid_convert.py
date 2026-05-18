@@ -184,12 +184,12 @@ def main():
             ok, msg = try_function(src_path, n, dry_run=args.dry_run)
             dt = time.time() - t0
             mark = 'OK' if ok else 'FAIL'
-            print(f'  [{mark}] {n}  ({dt:.1f}s)  {msg}')
+            print(f'  [{mark}] {n}  ({dt:.1f}s)  {msg}', flush=True)
             if ok:
                 passed += 1
             else:
                 failed.append((n, msg))
-        print(f'\nSummary: {passed}/{len(names)} passed')
+        print(f'\nSummary: {passed}/{len(names)} passed', flush=True)
         return
     if not args.func:
         print('ERROR: need either <func> or --all', file=sys.stderr)
