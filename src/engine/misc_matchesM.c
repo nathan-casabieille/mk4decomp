@@ -51,7 +51,7 @@ __declspec(naked) void Push15PushDataCallWordCallJmp_004a1080(void) {
 extern unsigned char g_byte_004d50b8;
 extern unsigned char g_byte_004d50b4;
 extern char g_byte_004d50c0;
-__declspec(naked) void TripleByteCheck_004a1c50(void) {
+void TripleByteCheck_004a1c50(void) {
     __asm {
         mov     cl, byte ptr [g_byte_004d50b8]
         mov     eax, 1
@@ -64,8 +64,7 @@ __declspec(naked) void TripleByteCheck_004a1c50(void) {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 4
         shr     eax, 2
-        ret
-    }
+        }
 }
 
 /* @addr 0x004a1c80 (45b)
@@ -84,7 +83,7 @@ __declspec(naked) void TripleByteCheck_004a1c50(void) {
  *   ret
  */
 extern unsigned int g_state_004d50b4;
-__declspec(naked) void TripleByteCheck20_004a1c80(void) {
+void TripleByteCheck20_004a1c80(void) {
     __asm {
         test    byte ptr [g_byte_004d50b8], 0x10
         _emit   74h
@@ -100,8 +99,7 @@ __declspec(naked) void TripleByteCheck20_004a1c80(void) {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 0x20
         shr     eax, 5
-        ret
-    }
+        }
 }
 
 /* @addr 0x004a1d20 (45b)
@@ -206,7 +204,7 @@ void CmpP1ScaledInitB_004ac100(void) {
  *   ret
  */
 extern int func_004cb680(int a, int b, int c, int d);
-__declspec(naked) void DivLongPushCall_004ab320(void) {
+void DivLongPushCall_004ab320(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
@@ -221,8 +219,7 @@ __declspec(naked) void DivLongPushCall_004ab320(void) {
         push    0
         call    func_004cb680
         mov     dword ptr [g_walkCallback], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004abfe0 (38b)
@@ -320,7 +317,7 @@ void MarkSlot_004ab270(int arg) {
 extern unsigned int g_state_007ab064;
 extern void *g_iface_007ab05c;
 extern int func_004b0982(int);
-__declspec(naked) void IncCallVtablePushCall_004b0d80(void) {
+void IncCallVtablePushCall_004b0d80(void) {
     __asm {
         mov     edx, dword ptr [g_state_007ab064]
         mov     eax, dword ptr [g_iface_007ab05c]
@@ -335,8 +332,7 @@ __declspec(naked) void IncCallVtablePushCall_004b0d80(void) {
         push    0
         call    func_004b0982
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x004b8f20 (43b): zero 8 fields
@@ -425,7 +421,7 @@ extern unsigned int g_state_00ab5754;
 extern unsigned int g_state_00ab575c;
 extern unsigned int g_state_00ab5760;
 extern int func_004bedd0(unsigned int *, unsigned int *);
-__declspec(naked) void TestPushPushCall_004bea50(void) {
+void TestPushPushCall_004bea50(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00ab5754]
         xor     eax, eax
@@ -439,6 +435,5 @@ __declspec(naked) void TestPushPushCall_004bea50(void) {
         mov     dword ptr [g_state_00ab5760], eax
         call    func_004bedd0
         add     esp, 8
-        ret
-    }
+        }
 }
