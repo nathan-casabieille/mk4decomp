@@ -84,7 +84,7 @@ void GuardedDoubleCallSetJmp_00460260(void) {
  *   0x2002, 0x106, 0x107}, set bit 0 of g_xformDirtyFlags; else
  *   clear bit 0. Two distinct return paths.
  */
-__declspec(naked) void WalkCallbackSetClearDirty_0048e7d0(void) {
+void WalkCallbackSetClearDirty_0048e7d0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x2001
@@ -109,8 +109,7 @@ __declspec(naked) void WalkCallbackSetClearDirty_0048e7d0(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004ba0e0 (66b)
@@ -258,7 +257,7 @@ void TestEqJmpInitFightGroup_004a1740(void) {
 extern void Helper_AuxAudio_PostInit(void);
 extern void *g_dsoundDevice_005438e8;
 extern void *g_iat_004d2244;
-__declspec(naked) void DSoundQueryProperty_004ac3a0(void) {
+void DSoundQueryProperty_004ac3a0(void) {
     __asm {
         sub     esp, 0x10
         call    Helper_AuxAudio_PostInit
@@ -284,8 +283,7 @@ __declspec(naked) void DSoundQueryProperty_004ac3a0(void) {
         not     eax
         and     eax, ecx
         add     esp, 0x10
-        ret
-    }
+        }
 }
 
 /* @addr 0x004b4650 (68b)
@@ -578,7 +576,7 @@ void DispatchSetDirtyToggle_004ac150(void) {
 extern unsigned int g_data_00ab4e2c;
 extern unsigned int g_data_00ab4e30;
 extern unsigned int g_data_0053a50c;
-__declspec(naked) void DispatchScaledLEA_004b8f50(void) {
+void DispatchScaledLEA_004b8f50(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00ab4e2c]
         mov     edx, dword ptr [g_data_00ab4e30]
@@ -598,8 +596,7 @@ __declspec(naked) void DispatchScaledLEA_004b8f50(void) {
         lea     edx, [eax + eax*2]
         lea     eax, [edx*2 + 0x004f62a8]
         mov     dword ptr [g_data_00ab4e2c], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x00440990 (71b)
@@ -1014,7 +1011,7 @@ extern unsigned int g_data_00fa0ee0;
 extern void *g_data_00fa0de0;
 extern int *Crt_errno_004c8ba0(void);
 extern int *Crt_doserrno_004c8bb0(void);
-__declspec(naked) void CRTHandleLookup_004cd260(void) {
+void CRTHandleLookup_004cd260(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [g_data_00fa0ee0]
@@ -1038,8 +1035,7 @@ __declspec(naked) void CRTHandleLookup_004cd260(void) {
         call    Crt_doserrno_004c8bb0
         mov     dword ptr [eax], 0
         or      eax, 0xffffffff
-        ret
-    }
+        }
 }
 
 /* @addr 0x00431d50 (74b)
@@ -1179,7 +1175,7 @@ void GuardedCallDirtyJmpInit_004a19c0(void) {
  */
 extern unsigned char g_byte_004d50b8;
 extern unsigned char g_byte_004d50b4;
-__declspec(naked) void InputPollFlagBits_004a1b00(void) {
+void InputPollFlagBits_004a1b00(void) {
     __asm {
         mov     al, byte ptr [g_byte_004d50b8]
         test    al, 2
@@ -1211,8 +1207,7 @@ __declspec(naked) void InputPollFlagBits_004a1b00(void) {
         movsx   eax, al
         and     eax, 4
         shr     eax, 2
-        ret
-    }
+        }
 }
 
 /* @addr 0x004b2840 (74b)
@@ -1461,7 +1456,7 @@ void DualFieldAddSubStore_00470340(void) {
  *   [0x4d50b4] AS a dword (uses ah for 0x40, 0x10, 0x20 high-byte
  *   tests), then cl bit 0x10. Final fallback: (cl & 0x40) >> 6.
  */
-__declspec(naked) void InputPollFlagBitsHalf_004a1b50(void) {
+void InputPollFlagBitsHalf_004a1b50(void) {
     __asm {
         mov     cl, byte ptr [g_byte_004d50b8]
         test    cl, 0x20
@@ -1493,8 +1488,7 @@ __declspec(naked) void InputPollFlagBitsHalf_004a1b50(void) {
         movsx   eax, cl
         and     eax, 0x40
         shr     eax, 6
-        ret
-    }
+        }
 }
 
 /* @addr 0x004aa940 (76b)
@@ -1930,7 +1924,7 @@ __declspec(naked) void FiveSetWalkJmp_00461360(void) {
  *   dst offsets 0,2,4,6,8,10,12,14,16. Looks like a quat or
  *   matrix-row swizzle.
  */
-__declspec(naked) void Word9Reorder_004b3b30(void) {
+void Word9Reorder_004b3b30(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [esp + 8]
@@ -1952,8 +1946,7 @@ __declspec(naked) void Word9Reorder_004b3b30(void) {
         mov     word ptr [ecx + 0x0e], dx
         mov     ax, word ptr [eax + 0x10]
         mov     word ptr [ecx + 0x10], ax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004bdb00 (79b)
@@ -2126,7 +2119,7 @@ void RemapWalkAndJmp_00491ec0(void) {
  *   load g_scaledInit's [+0x18] → g_fightGroupHead;
  *   store eax → [g_fightGroupHead*4+0x24]; ret.
  */
-__declspec(naked) void ScaledChainStore24_004a7d40(void) {
+void ScaledChainStore24_004a7d40(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x0050a0f0
@@ -2144,8 +2137,7 @@ __declspec(naked) void ScaledChainStore24_004a7d40(void) {
         mov     ecx, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [ecx*4 + 0x24], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004ac1a0 (80b)
@@ -2244,7 +2236,7 @@ loop_top:
  *   not C0/C2/C3 conditions in fnstsw ax bits 0x41), else 0.
  */
 extern double g_data_004d2b58;
-__declspec(naked) void FPUPrecisionCheck_004c8400(void) {
+void FPUPrecisionCheck_004c8400(void) {
     __asm {
         push    ebp
         mov     ebp, esp
@@ -2271,8 +2263,7 @@ __declspec(naked) void FPUPrecisionCheck_004c8400(void) {
         xor     eax, eax
         mov     esp, ebp
         pop     ebp
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c82b0 (66b)
@@ -2285,7 +2276,7 @@ __declspec(naked) void FPUPrecisionCheck_004c8400(void) {
  *   increment *counter.
  */
 extern int Flsbuf_004c77f0(void);
-__declspec(naked) void WriteCharBuffered_004c82b0(void) {
+void WriteCharBuffered_004c82b0(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
         mov     eax, dword ptr [ecx + 4]
@@ -2315,6 +2306,5 @@ cont:
         ret
         mov     eax, dword ptr [esp + 0x0c]
         inc     dword ptr [eax]
-        ret
-    }
+        }
 }
