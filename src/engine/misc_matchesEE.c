@@ -204,28 +204,21 @@ loop_top2:
  */
 extern unsigned int g_table_004ab4e78_ee[];
 extern void GeoLoadFixupLoop_004bd8e0(void);
-void TableWalkBoundedCmp_004bd890(void) {
-    __asm {
-        mov     edi, dword ptr [esp + 0x0c]
-        mov     esi, OFFSET g_table_004ab4e78_ee
-loop_top3:
-        mov     eax, dword ptr [esi]
-        test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   7eh
-        _emit   16h
-        mov     eax, dword ptr [eax*4 + 0]
-        xor     ecx, ecx
-        mov     cx,  word  ptr [eax + 4]
-        cmp     ecx, edi
-        _emit   75h
-        _emit   05h
-        call    GeoLoadFixupLoop_004bd8e0
-        add     esi, 4
-        cmp     esi, 0x00ab5034
-        _emit   7ch
-        _emit   0d4h
+extern unsigned int g_data_00ab5034;
+void TableWalkBoundedCmp_004bd890(int arg) {
+    unsigned int *p = g_table_004ab4e78_ee;
+    do {
+        unsigned int v = *p;
+        g_scaledInit_00542044 = v;
+        if ((int)v > 0) {
+            unsigned int slot = *(unsigned int *)(v * 4);
+            unsigned int w = (unsigned int)*(unsigned short *)(slot + 4);
+            if ((int)w == arg) {
+                GeoLoadFixupLoop_004bd8e0();
+            }
         }
+        p++;
+    } while ((int)p < (int)&g_data_00ab5034);
 }
 
 /* @addr 0x004c5d70 (55b)
