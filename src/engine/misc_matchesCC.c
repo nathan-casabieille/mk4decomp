@@ -46,20 +46,12 @@ extern unsigned int g_state_007af988;
 extern unsigned short g_word_007af95c;
 extern unsigned short g_word_007af962;
 extern unsigned short g_word_007af968;
-__declspec(naked) void CopyArgs16ToGlobals_004b2ff0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_007af9bc]
-        mov     ecx, dword ptr [g_state_007af98c]
-        mov     dx,  word  ptr [esp + 4]
-        mov     dword ptr [g_state_007af9b8], eax
-        mov     ax,  word  ptr [esp + 8]
-        mov     dword ptr [g_state_007af988], ecx
-        mov     cx,  word  ptr [esp + 0x0c]
-        mov     word  ptr [g_word_007af95c], dx
-        mov     word  ptr [g_word_007af962], ax
-        mov     word  ptr [g_word_007af968], cx
-        ret
-    }
+void CopyArgs16ToGlobals_004b2ff0(unsigned short a, unsigned short b, unsigned short c) {
+    g_state_007af9b8 = g_state_007af9bc;
+    g_state_007af988 = g_state_007af98c;
+    g_word_007af95c = a;
+    g_word_007af962 = b;
+    g_word_007af968 = c;
 }
 
 /* @addr 0x004b41c0 (64b): 5-way jump-table dispatcher.
