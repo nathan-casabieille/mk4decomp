@@ -2119,25 +2119,25 @@ void RemapWalkAndJmp_00491ec0(void) {
  *   load g_scaledInit's [+0x18] → g_fightGroupHead;
  *   store eax → [g_fightGroupHead*4+0x24]; ret.
  */
+extern unsigned int g_data_0050a0f0;
 void ScaledChainStore24_004a7d40(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, 0x0050a0f0
-        shr     eax, 2
-        add     ecx, eax
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0]
-        and     eax, 0xffffff
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     eax, dword ptr [eax]
-        sar     eax, 2
-        and     eax, 0x3fffff
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     ecx, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_fightGroupHead], ecx
-        mov     dword ptr [ecx*4 + 0x24], eax
-        }
+    unsigned int p;
+    unsigned int sc;
+    int v;
+    p = (unsigned int)g_walkCallback;
+    p += (unsigned int)&g_data_0050a0f0 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_data_0050a0f0 >> 2;
+    sc = g_scaledInit_00542044;
+    v = *(int *)(p * 4) & 0xffffff;
+    g_xformEntityIdx = (unsigned int)v;
+    v = *(int *)v;
+    v = (v >> 2) & 0x3fffff;
+    g_xformEntityIdx = (unsigned int)v;
+    {
+        unsigned int chain = *(unsigned int *)(sc * 4 + 0x18);
+        g_fightGroupHead = chain;
+        *(int *)(chain * 4 + 0x24) = v;
+    }
 }
 
 /* @addr 0x004ac1a0 (80b)
