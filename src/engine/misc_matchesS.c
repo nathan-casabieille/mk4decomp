@@ -178,25 +178,18 @@ void MStackPushCallPop_0040a830(void) {
 extern unsigned int g_state_0053a408_s;
 extern unsigned int g_state_00537e88_s;
 void DualTestDirtyToggle_00427ea0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0053a408_s]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   75h
-        _emit   0eh
-        mov     eax, dword ptr [g_state_00537e88_s]
-        test    eax, eax
-        mov     dword ptr [g_walkCallback], eax
-        _emit   74h
-        _emit   0dh
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al, 1
-        mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        and     al, 0xfe
-        mov     dword ptr [g_xformDirtyFlags], eax
-        }
+    unsigned int s1;
+    unsigned int s2;
+    s1 = g_state_0053a408_s;
+    g_walkCallback = (void (*)(void))s1;
+    if (s1 != 0) goto set_bit;
+    s2 = g_state_00537e88_s;
+    g_walkCallback = (void (*)(void))s2;
+    if (s2 != 0) goto set_bit;
+    g_xformDirtyFlags &= 0xfffffffe;
+    return;
+set_bit:
+    g_xformDirtyFlags |= 1;
 }
 
 /* @addr 0x004282c0 (54b): same as 0x00427ea0 with je/jne swapped at first jcc */
