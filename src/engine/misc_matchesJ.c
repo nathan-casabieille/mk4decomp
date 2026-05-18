@@ -149,7 +149,7 @@ void ScaledCmpJlJmp_00488ed0(void) {
  */
 extern unsigned short g_table_004ef998[];
 extern int TaggedSceneDispatch_004be690(int);
-__declspec(naked) void TableLookupCall_00489f60(void) {
+void TableLookupCall_00489f60(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x32
@@ -162,13 +162,12 @@ __declspec(naked) void TableLookupCall_00489f60(void) {
         push    eax
         call    TaggedSceneDispatch_004be690
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x00489ff0 (33b): same shape with cmp=0x70, table=0x004efa00 */
 extern unsigned short g_table_004efa00[];
-__declspec(naked) void TableLookupCall_00489ff0(void) {
+void TableLookupCall_00489ff0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x70
@@ -181,13 +180,12 @@ __declspec(naked) void TableLookupCall_00489ff0(void) {
         push    eax
         call    TaggedSceneDispatch_004be690
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x0048a130 (33b): same shape with cmp=0x41, table=0x004efd18 */
 extern unsigned short g_table_004efd18[];
-__declspec(naked) void TableLookupCall_0048a130(void) {
+void TableLookupCall_0048a130(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x41
@@ -200,13 +198,12 @@ __declspec(naked) void TableLookupCall_0048a130(void) {
         push    eax
         call    TaggedSceneDispatch_004be690
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x0048a160 (33b): same shape with cmp=0x13, table=0x004efae0 */
 extern unsigned short g_table_004efae0[];
-__declspec(naked) void TableLookupCall_0048a160(void) {
+void TableLookupCall_0048a160(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 0x13
@@ -219,8 +216,7 @@ __declspec(naked) void TableLookupCall_0048a160(void) {
         push    eax
         call    TaggedSceneDispatch_004be690
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x0048a020 (45b)
@@ -377,7 +373,7 @@ void CmpP2P1ScaledJmp_0048ee50(void) {
  *   mov     [g_walkCallback], ecx
  *   ret
  */
-__declspec(naked) void ScaledSubStore_0048ee90(void) {
+void ScaledSubStore_0048ee90(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x48]
@@ -386,8 +382,7 @@ __declspec(naked) void ScaledSubStore_0048ee90(void) {
         sub     ecx, eax
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], ecx
-        ret
-    }
+        }
 }
 
 /* @addr 0x0048f3c0 (43b)
