@@ -610,27 +610,18 @@ __declspec(naked) void DispatchScaledLEA_004b8f50(void) {
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void DispatcherComplex260_00407400(void);
 extern void DispatcherComplex260_00407030(void);
-__declspec(naked) void GuardedCallStoreSlotsCmp_00440990(void) {
-    __asm {
-        call    DirtyDoubleDeref_00408cb0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   33h
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     edx, dword ptr [eax*4 + 0x28]
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueIdx], edx
-        cmp     eax, 2
-        _emit   74h
-        _emit   0bh
-        call    DispatcherComplex260_00407400
-        mov     eax, dword ptr [g_framePauseFlag]
-        ret
-        jmp     DispatcherComplex260_00407030
+int GuardedCallStoreSlotsCmp_00440990(void) {
+    unsigned int s;
+    DirtyDoubleDeref_00408cb0();
+    if (g_framePauseFlag != 0) return g_framePauseFlag;
+    s = g_scaledInit_00542044;
+    g_xformEntityIdx = *(unsigned int *)(s * 4 + 0x24);
+    g_eventQueueIdx = *(unsigned int *)(s * 4 + 0x28);
+    if ((unsigned int)g_walkCallback != 2) {
+        DispatcherComplex260_00407400();
+        return g_framePauseFlag;
     }
+    return ((int (*)(void))DispatcherComplex260_00407030)();
 }
 
 /* @addr 0x00470cc0 (71b)
