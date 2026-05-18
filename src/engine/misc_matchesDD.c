@@ -131,27 +131,20 @@ void CleanupCallTwice_004bd530(int *arg) {
  */
 extern unsigned int g_table_004ab4e78[];
 extern void LoadGeoAsset_Default(void);
+extern unsigned int g_data_00ab5034;
 void TableWalkPause_004bd850(void) {
-    __asm {
-        mov     esi, OFFSET g_table_004ab4e78
-loop_top:
-        mov     eax, dword ptr [esi]
-        test    eax, 0x80000000
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   74h
-        _emit   18h
-        and     eax, 0x7fffffff
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    LoadGeoAsset_Default
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0bh
-        add     esi, 4
-        cmp     esi, 0x00ab5034
-        _emit   7ch
-        _emit   0cfh
+    unsigned int *p = g_table_004ab4e78;
+    do {
+        unsigned int v = *p;
+        g_scaledInit_00542044 = v;
+        if ((v & 0x80000000) != 0) {
+            v &= 0x7fffffff;
+            g_scaledInit_00542044 = v;
+            LoadGeoAsset_Default();
+            if (g_framePauseFlag != 0) return;
         }
+        p++;
+    } while ((int)p < (int)&g_data_00ab5034);
 }
 
 /* @addr 0x004be210 (52b)
