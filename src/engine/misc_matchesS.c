@@ -116,24 +116,22 @@ void Copy3Fields38_0040a870(void) {
  */
 extern packed_ptr g_xformEntityIdx;
 void Copy3FieldsNeg_0041aa40(void) {
-    __asm {
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        shl     ecx, 2
-        shl     eax, 2
-        mov     edx, dword ptr [ecx + 0x30]
-        neg     edx
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [eax + 0x30], edx
-        mov     edx, dword ptr [ecx + 0x34]
-        neg     edx
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [eax + 0x34], edx
-        mov     ecx, dword ptr [ecx + 0x38]
-        neg     ecx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax + 0x38], ecx
-        }
+    unsigned char *src;
+    unsigned char *dst;
+    int v;
+    dst = (unsigned char *)g_scaledInit_00542044;
+    src = (unsigned char *)g_xformEntityIdx;
+    src = (unsigned char *)((unsigned int)src << 2);
+    dst = (unsigned char *)((unsigned int)dst << 2);
+    v = -*(int *)(src + 0x30);
+    g_walkCallback = (void (*)(void))v;
+    *(int *)(dst + 0x30) = v;
+    v = -*(int *)(src + 0x34);
+    g_walkCallback = (void (*)(void))v;
+    *(int *)(dst + 0x34) = v;
+    v = -*(int *)(src + 0x38);
+    g_walkCallback = (void (*)(void))v;
+    *(int *)(dst + 0x38) = v;
 }
 
 /* @addr 0x0040a830 (54b)
