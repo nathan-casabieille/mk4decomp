@@ -59,24 +59,12 @@ extern unsigned int g_state_0058c7dc;
 extern void *g_iface_0058c7bc;
 extern void *g_data_004d2870;
 extern void *g_data_004d287c;
-__declspec(naked) void R2_Init2(void) {
-    __asm {
-        mov     eax, dword ptr [g_iface_0058c7ac]
-        test    eax, eax
-        _emit   74h
-        _emit   14h
-        mov     ecx, dword ptr [eax]
-        push    OFFSET g_data_004d287c
-        push    OFFSET g_data_004d2870
-        push    eax
-        call    dword ptr [ecx]
-        mov     dword ptr [g_state_0058c7dc], eax
-        mov     ecx, dword ptr [g_iface_0058c7bc]
-        xor     eax, eax
-        test    ecx, ecx
-        setne   al
-        ret
+int R2_Init2(void) {
+    void *p = g_iface_0058c7ac;
+    if (p != 0) {
+        g_state_0058c7dc = ((unsigned int (__stdcall **)(void *, void *, void *))(*(void **)p))[0](p, &g_data_004d2870, &g_data_004d287c);
     }
+    return g_iface_0058c7bc != 0;
 }
 
 /* @addr 0x004be760 (46b)
