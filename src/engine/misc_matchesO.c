@@ -146,7 +146,7 @@ void Set14CallAddJmp_00436ff0(void) {
  *   ret
  */
 extern void func_004385f4(void);
-__declspec(naked) void DecJneSetCallSetJmp_004389b0(void) {
+void DecJneSetCallSetJmp_004389b0(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
@@ -160,8 +160,7 @@ __declspec(naked) void DecJneSetCallSetJmp_004389b0(void) {
         _emit   75h
         _emit   0ah
         mov     dword ptr [g_eventQueueChild], 0x0d
-        ret
-    }
+        }
 }
 
 /* @addr 0x00438ea0 (46b)
@@ -186,7 +185,7 @@ extern void *g_data_004e4910;
 extern int func_004399be(void *);
 extern int func_004399be_b(void *);
 extern int func_004399be_c(void *);
-__declspec(naked) void TripleStubPushCall_00438ea0(void) {
+void TripleStubPushCall_00438ea0(void) {
     __asm {
         push    OFFSET g_data_004e4890
         call    func_004399be
@@ -203,8 +202,7 @@ __declspec(naked) void TripleStubPushCall_00438ea0(void) {
         push    OFFSET g_data_004e4910
         call    func_004399be_c
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x00460910 (46b)

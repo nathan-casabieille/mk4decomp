@@ -244,7 +244,7 @@ u64 StreamReadQword_004c83a0(u32 *stream) {
  *   mov     ax, [eax-4]                  ; word read with 66 prefix
  *   ret
  */
-__declspec(naked) void StreamReadWord_004c83c0(void) {
+void StreamReadWord_004c83c0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [eax]
@@ -252,8 +252,7 @@ __declspec(naked) void StreamReadWord_004c83c0(void) {
         mov     dword ptr [eax], ecx
         mov     eax, ecx
         mov     ax, word ptr [eax - 4]
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c83e0 (19b)
@@ -336,15 +335,14 @@ __declspec(naked) void Copy3Dwords_004cca00(void) {
  *   mov     [ecx+8], eax
  *   ret
  */
-__declspec(naked) void ZeroThreeFromArg_004cca20(void) {
+void ZeroThreeFromArg_004cca20(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
         xor     eax, eax
         mov     dword ptr [ecx], eax
         mov     dword ptr [ecx + 4], eax
         mov     dword ptr [ecx + 8], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004b2ac0 (17b): zero a buffer using rep stosd

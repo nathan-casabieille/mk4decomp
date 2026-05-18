@@ -27,7 +27,7 @@ extern packed_ptr g_xformEntityIdx;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-__declspec(naked) void DecOrZeroDirty4_00438650(void) {
+void DecOrZeroDirty4_00438650(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax
@@ -46,8 +46,7 @@ __declspec(naked) void DecOrZeroDirty4_00438650(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfb
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x00446600 (58b)
@@ -66,7 +65,7 @@ __declspec(naked) void DecOrZeroDirty4_00438650(void) {
  *   mov     [eax + 0x38], ecx
  *   ret
  */
-__declspec(naked) void ScaledInitOrSet13b6_00446600(void) {
+void ScaledInitOrSet13b6_00446600(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, 1
@@ -81,8 +80,7 @@ __declspec(naked) void ScaledInitOrSet13b6_00446600(void) {
         mov     ecx, 0x13b6
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x38], ecx
-        ret
-    }
+        }
 }
 
 /* @addr 0x0045bfe0 (60b)
@@ -105,7 +103,7 @@ __declspec(naked) void ScaledInitOrSet13b6_00446600(void) {
  */
 extern unsigned char g_byte_00542071;
 extern void func_0045c005(void);
-__declspec(naked) void PauseTestCmp2CallStore_0045bfe0(void) {
+void PauseTestCmp2CallStore_0045bfe0(void) {
     __asm {
         mov     ecx, dword ptr [g_framePauseFlag]
         xor     eax, eax
@@ -125,8 +123,7 @@ __declspec(naked) void PauseTestCmp2CallStore_0045bfe0(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x24], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x0045e590 (55b)
@@ -288,7 +285,7 @@ void CallPauseDirtyMStackPush484b40_00484b00(void) {
  *   ret
  */
 extern unsigned int g_state_00537f98;
-__declspec(naked) void CmpEax1OrSetDirty_00488e90(void) {
+void CmpEax1OrSetDirty_00488e90(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, 1
@@ -308,8 +305,7 @@ __declspec(naked) void CmpEax1OrSetDirty_00488e90(void) {
         ret
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x0048e550 (54b)

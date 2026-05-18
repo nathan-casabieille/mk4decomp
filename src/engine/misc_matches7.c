@@ -59,13 +59,12 @@ void LoadShlDerefCallSkip_0041f810(void) {
  *   ret
  */
 extern char g_byte_004d50c0;
-__declspec(naked) void MovsxAnd4Shr_004a1ce0(void) {
+void MovsxAnd4Shr_004a1ce0(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 4
         shr     eax, 2
-        ret
-    }
+        }
 }
 
 /* @addr 0x004a1cf0 (14b)
@@ -79,13 +78,12 @@ __declspec(naked) void MovsxAnd4Shr_004a1ce0(void) {
  * `movsx eax, m8` + `and eax, 4` + `shr eax, 2` (13b). Different
  * bytes, different upper-eax semantics - left as naked.
  */
-__declspec(naked) void MovsxAnd20Shr5_004a1cf0(void) {
+void MovsxAnd20Shr5_004a1cf0(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 0x20
         shr     eax, 5
-        ret
-    }
+        }
 }
 
 /* @addr 0x00404af0 already covered above? Check addr - yes the first entry */

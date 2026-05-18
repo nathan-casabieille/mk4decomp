@@ -115,7 +115,7 @@ void Copy3Fields38_0040a870(void) {
  *   ret
  */
 extern packed_ptr g_xformEntityIdx;
-__declspec(naked) void Copy3FieldsNeg_0041aa40(void) {
+void Copy3FieldsNeg_0041aa40(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -133,8 +133,7 @@ __declspec(naked) void Copy3FieldsNeg_0041aa40(void) {
         neg     ecx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x38], ecx
-        ret
-    }
+        }
 }
 
 /* @addr 0x0040a830 (54b)
@@ -180,7 +179,7 @@ void MStackPushCallPop_0040a830(void) {
  */
 extern unsigned int g_state_0053a408_s;
 extern unsigned int g_state_00537e88_s;
-__declspec(naked) void DualTestDirtyToggle_00427ea0(void) {
+void DualTestDirtyToggle_00427ea0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a408_s]
         test    eax, eax
@@ -199,12 +198,11 @@ __declspec(naked) void DualTestDirtyToggle_00427ea0(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004282c0 (54b): same as 0x00427ea0 with je/jne swapped at first jcc */
-__declspec(naked) void DualTestDirtyToggle_004282c0(void) {
+void DualTestDirtyToggle_004282c0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a408_s]
         test    eax, eax
@@ -223,8 +221,7 @@ __declspec(naked) void DualTestDirtyToggle_004282c0(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x00423870 (55b)
@@ -247,7 +244,7 @@ __declspec(naked) void DualTestDirtyToggle_004282c0(void) {
  */
 extern unsigned int g_state_0052aac4_s;
 extern u32 g_dlMode;
-__declspec(naked) void Cmp2DirtyToggle_00423870(void) {
+void Cmp2DirtyToggle_00423870(void) {
     __asm {
         mov     eax, dword ptr [g_state_0052aac4_s]
         cmp     eax, 2
@@ -266,8 +263,7 @@ __declspec(naked) void Cmp2DirtyToggle_00423870(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004231b0 (53b)

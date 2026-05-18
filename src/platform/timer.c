@@ -31,8 +31,7 @@ extern s32 _ftol(void);                            /* 0x004c57d0 */
  * up to ten bytes more than the original. Pinning the byte sequence
  * via __asm to keep the eax-reuse pattern.
  */
-__declspec(naked) void Timer_Init(void)
-{
+void Timer_Init(void) {
     __asm {
         mov     eax, dword ptr [g_timerInitedSkip]
         sub     esp, 8
@@ -83,8 +82,7 @@ skip_div:
         call    dword ptr [QueryPerformanceCounter]
 epi:
         add     esp, 8
-        ret
-    }
+        }
 }
 
 /*
@@ -95,8 +93,7 @@ epi:
  * Pinned via __asm because that idiom is a CRT call sequence,
  * not something a high-level C statement names directly.
  */
-__declspec(naked) u32 QueryMicroTimer(void)
-{
+u32 QueryMicroTimer(void) {
     __asm {
         fld     qword ptr [g_qpcUsPerTick]
         fcomp   qword ptr [k_qpcZero]
@@ -147,6 +144,5 @@ fallback:
         lea     eax, [eax + eax*4]                   ; *125
         shl     eax, 3                                ; *1000 -> ms->us
         add     esp, 8
-        ret
-    }
+        }
 }

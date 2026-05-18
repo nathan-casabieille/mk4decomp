@@ -115,7 +115,7 @@ void PushCallScaledClearJmp_0040bf20(void) {
  *   clear dirty bit 1; ret.
  */
 extern void Helper_TickAlt(void);
-__declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
+void ScaledLoadCallSet1c_004084b0(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     edx, dword ptr [g_eventQueueCurrent]
@@ -138,8 +138,7 @@ __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     al,  0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004147b0 (87b)
@@ -147,7 +146,7 @@ __declspec(naked) void ScaledLoadCallSet1c_004084b0(void) {
  *     dirty ^= 4 (back); load scaled+0x18 → scaled; load scaled+0x28 → eax;
  *     set walk = 0x414600 + store at [eax*4 + 0x10]; ret.
  */
-__declspec(naked) void SetDirty4XorScaledLoad_004147b0(void) {
+void SetDirty4XorScaledLoad_004147b0(void) {
     __asm {
         mov     eax, dword ptr [g_xformDirtyFlags]
         mov     ecx, 4
@@ -170,8 +169,7 @@ __declspec(naked) void SetDirty4XorScaledLoad_004147b0(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [eax*4 + 0x10], ecx
-        ret
-    }
+        }
 }
 
 /* @addr 0x004196c0 (83b)
@@ -197,7 +195,7 @@ void CallPauseDirty4ScaledSet_004196c0(void) {
  *   triple bit-extract from g_walkCallback: low 11 bits, mid 11 bits, high 10 bits;
  *   store each into a 3-vec at g_pendingNodeType*4 with stride 4.
  */
-__declspec(naked) void ExtractBitsToVec3_00407c00(void) {
+void ExtractBitsToVec3_00407c00(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_pendingNodeType]
@@ -217,8 +215,7 @@ __declspec(naked) void ExtractBitsToVec3_00407c00(void) {
         shl     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x00404c70 (66b) - same as misc_matchesHH:SetWalkCurCallPauseDirty_00404c70

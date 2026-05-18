@@ -94,7 +94,7 @@ extern void func_00484572(void);
 extern void func_004ae794(void);
 extern int LoadSetFpJmp_00409400(void *);
 extern void *g_data_004ee2f0;
-__declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
+void TripleCallPauseTestPush_00482e60(void) {
     __asm {
         call    CjTableThresholdDispatch_00488f00
         mov     eax, dword ptr [g_framePauseFlag]
@@ -122,8 +122,7 @@ __declspec(naked) void TripleCallPauseTestPush_00482e60(void) {
         push    OFFSET g_data_004ee2f0
         call    LoadSetFpJmp_00409400
         add     esp, 4
-        ret
-    }
+        }
 }
 
 /* @addr 0x004839d0 (70b)
@@ -222,7 +221,7 @@ extern unsigned int g_state_00537f48_ll;
 extern unsigned int g_state_005380e0_ll;
 extern unsigned char g_byte_0054372c;
 extern unsigned char g_byte_00543724;
-__declspec(naked) void StateCmpAndStoreByte_004a98f0(void) {
+void StateCmpAndStoreByte_004a98f0(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00537f94]
         mov     edx, 1
@@ -247,8 +246,7 @@ __declspec(naked) void StateCmpAndStoreByte_004a98f0(void) {
         _emit   75h
         _emit   06h
         mov     byte ptr [g_byte_00543724], dl
-        ret
-    }
+        }
 }
 
 /* @addr 0x004ac520 (70b)

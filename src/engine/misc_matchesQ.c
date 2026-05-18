@@ -22,7 +22,7 @@ extern u32 g_eventQueueWorkType;
 extern double g_const_004d27b0;
 extern double g_const_004d27b8;
 extern int func_004cb7b0(void);
-__declspec(naked) void FpuSqrtMul_004ab350(void) {
+void FpuSqrtMul_004ab350(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
         test    eax, eax
@@ -34,8 +34,7 @@ __declspec(naked) void FpuSqrtMul_004ab350(void) {
         fmul    qword ptr [g_const_004d27b8]
         call    func_004cb7b0
         mov     dword ptr [g_walkCallback], eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004aef00 (43b): COM-style call with capture
@@ -90,7 +89,7 @@ int R2_Init2(void) {
  *   ret
  */
 extern int g_table_004f7d40[16];
-__declspec(naked) void TableSearch_004be760(void) {
+void TableSearch_004be760(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
         cmp     ax, 0x64
@@ -112,8 +111,7 @@ __declspec(naked) void TableSearch_004be760(void) {
         lea     eax, [ecx + 2]
         ret
         xor     eax, eax
-        ret
-    }
+        }
 }
 
 /* @addr 0x004c4210 (37b)
