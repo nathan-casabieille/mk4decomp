@@ -303,7 +303,7 @@ void IncCapped3e7_00491920(void) {
  *   ret
  */
 extern unsigned int g_state_0053a51c;
-extern void GuardedScaledLookupCallJmp_004220a0(void);
+extern int GuardedScaledLookupCallJmp_004220a0(void);
 extern void func_0042a330(void);
 extern void func_0049199a(void);
 void TwoCallStatePauseJmp_00491990(void) {
