@@ -21,9 +21,11 @@ matching, the C source is the canonical representation of the game.
 | Metric | Progress |
 |---|---|
 | Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
-| **Decompiled to C** | **~49%** (1382 / 2829 functions) - contributions welcome |
+| **Pure C (no `__asm`)** | **~37%** (1051 / 2829 functions) - contributions welcome |
+| Hybrid (no `naked`, body still `__asm`) | ~12% (331 / 2829 functions) |
+| Still `__declspec(naked)` | ~51% (1446 / 2829 functions) |
 
-Two distinct things, in plain words:
+In plain words:
 
 - **Byte-perfect rebuild = done.** `make matching` produces a
   `build/MK4.matching.exe` that is MD5-identical to `game/MK4.EXE`.
@@ -37,11 +39,12 @@ Two distinct things, in plain words:
   MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
   ```
 
-- **Decompiled to C = in progress.** The bytes match, but ~51% of the
-  source is still `__declspec(naked) { __asm { ... } }` wrappers -
-  semantically equivalent to orig but not readable C. The real
-  decompilation work is converting those wrappers to pure C while keeping
-  the byte-match. **This is where contributions are needed.**
+- **Pure C = the real decompilation metric.** Only functions whose body
+  contains no `__asm` block count - i.e. portable C, retargetable to a
+  non-x86 build (e.g. WASM/Emscripten). The progress bar tracks this.
+  **Hybrid** functions (no `naked`, body still `__asm`) are a stepping
+  stone toward pure C, not progress in themselves. **This is where
+  contributions are needed.**
 
 Run `python3 tools/decomp/progress.py` for a live per-subsystem breakdown.
 
@@ -115,20 +118,22 @@ When a function matches byte-for-byte, mark it `matched` in
 
 ## Contributing
 
-**The byte-match is done. The C decompilation is not.** About 1447
-functions in `src/` are still `__declspec(naked) { __asm { ... } }`
-wrappers around the original assembly. Each one needs to be rewritten
-in pure C while keeping `make matching` byte-identical to orig.
+**The byte-match is done. The C decompilation is not.** About 1777
+functions in `src/` (1446 naked + 331 hybrid) still have an
+`__asm { ... }` block in their body. Each one needs to be rewritten in
+pure C while keeping `make matching` byte-identical to orig.
 
 ### Pick a function and convert it
 
 ```sh
-# 1. Find a __declspec(naked) function in any file under src/.
-grep -l "__declspec(naked)" src/ -r | head
+# 1. Find a function that still contains __asm in any file under src/.
+#    Either fully naked (preferred for clean conversions) or hybrid.
+grep -l "__declspec(naked)" src/ -r | head      # fully naked
+grep -lE "\b__asm\b"        src/ -r | head      # naked OR hybrid
 
-# 2. Rewrite the body in pure C in the same file (replace the
-#    __declspec(naked) declaration with a normal one), using the
-#    matching tactics documented in docs/MATCHING.md.
+# 2. Rewrite the body in pure C in the same file (drop both the
+#    __declspec(naked) qualifier - if present - and the __asm block),
+#    using the matching tactics documented in docs/MATCHING.md.
 
 # 3. Compile just that file and diff against orig (per-function,
 #    reloc-aware).
