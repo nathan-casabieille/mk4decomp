@@ -354,22 +354,14 @@ __declspec(naked) void InitGlobalsAndZero_004c9800(void) {
  *   ret
  */
 extern unsigned int g_state_00fa0ee0;
-__declspec(naked) void TestHandleBit_004cc2b0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_state_00fa0ee0]
-        cmp     eax, ecx
-        _emit   72h
-        _emit   03h
-        xor     eax, eax
-        ret
-        mov     ecx, eax
-        and     eax, 0x1f
-        sar     ecx, 5
-        lea     edx, [eax + eax*8]
-        mov     eax, dword ptr [ecx*4 + 0x00fa0de0]
-        mov     al, byte ptr [eax + edx*4 + 4]
-        and     eax, 0x40
-        ret
-    }
+extern unsigned int g_table_00fa0de0[];
+int TestHandleBit_004cc2b0(int handle) {
+    int hi;
+    int lo;
+    unsigned char *base;
+    if ((unsigned int)handle >= g_state_00fa0ee0) return 0;
+    hi = handle >> 5;
+    lo = handle & 0x1f;
+    base = (unsigned char *)g_table_00fa0de0[hi];
+    return base[lo * 9 * 4 + 4] & 0x40;
 }
