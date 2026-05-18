@@ -165,6 +165,30 @@ def classify(body):
     if len(walk_stores) >= 3:
         flags.append(f'multi_walk_store({len(walk_stores)})')
 
+    # Alternating-register reload pattern: `mov ecx, [global]; ...; mov edx, [global]; ...; mov ecx, [global]`
+    # MSVC SP3 won't reproduce this scheduler trick from natural C.
+    alt_reload_re = re.compile(
+        r'mov\s+ecx\s*,\s*dword ptr\s*\[\s*([\w_]+)\s*\][\s\S]*?'
+        r'mov\s+edx\s*,\s*dword ptr\s*\[\s*\1\s*\][\s\S]*?'
+        r'mov\s+ecx\s*,\s*dword ptr\s*\[\s*\1\s*\]'
+    )
+    if alt_reload_re.search(body_text):
+        flags.append('alt_reg_reload')
+
+    # Dual-pop dec-once-between-pops pattern: not easily coaxable in C
+    # Looks like:  mov reg, [eax*4 + arr]; dec eax; mov [global], reg; mov reg2, [eax*4 + arr]; dec eax
+    dual_pop_re = re.compile(
+        r'mov\s+\w+\s*,\s*\[\s*eax\*4\s*\+[\s\S]*?\]\s*\n\s*dec\s+eax[\s\S]*?'
+        r'mov\s+\w+\s*,\s*\[\s*eax\*4\s*\+'
+    )
+    if dual_pop_re.search(body_text):
+        flags.append('dual_pop_dec_chain')
+
+    # Self-install: mov [eax + N], offset SELF_FUNC -- needs OFFSET symbol handling
+    if re.search(r'mov\s+dword ptr\s*\[\s*eax\s*\+\s*\w+\s*\]\s*,\s*0x00[34][0-9a-f]+', body_text):
+        # heuristic: 0x004xxxxx is in .text range
+        flags.append('self_install_addr')
+
     return flags
 
 
@@ -172,7 +196,8 @@ def hard_blocker_score(flags):
     """Higher = harder. 0 = no blockers (easy candidate)."""
     HARD = {'byte_op', 'word_op', 'fpu', 'setcc', 'multi_prec',
             'computed_jmp', 'dec_jcc', 'raw_emit', 'ret_then_nop',
-            'packed_via_nop'}
+            'packed_via_nop', 'alt_reg_reload', 'dual_pop_dec_chain',
+            'self_install_addr'}
     score = sum(1 for f in flags if f in HARD)
     # push callee-saved is a soft -1 (not always blocker)
     for f in flags:
