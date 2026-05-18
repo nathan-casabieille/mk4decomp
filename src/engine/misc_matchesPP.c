@@ -1924,29 +1924,16 @@ __declspec(naked) void FiveSetWalkJmp_00461360(void) {
  *   dst offsets 0,2,4,6,8,10,12,14,16. Looks like a quat or
  *   matrix-row swizzle.
  */
-void Word9Reorder_004b3b30(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [esp + 8]
-        mov     dx, word ptr [eax]
-        mov     word ptr [ecx], dx
-        mov     dx, word ptr [eax + 6]
-        mov     word ptr [ecx + 2], dx
-        mov     dx, word ptr [eax + 0x0c]
-        mov     word ptr [ecx + 4], dx
-        mov     dx, word ptr [eax + 2]
-        mov     word ptr [ecx + 6], dx
-        mov     dx, word ptr [eax + 8]
-        mov     word ptr [ecx + 8], dx
-        mov     dx, word ptr [eax + 0x0e]
-        mov     word ptr [ecx + 0x0a], dx
-        mov     dx, word ptr [eax + 4]
-        mov     word ptr [ecx + 0x0c], dx
-        mov     dx, word ptr [eax + 0x0a]
-        mov     word ptr [ecx + 0x0e], dx
-        mov     ax, word ptr [eax + 0x10]
-        mov     word ptr [ecx + 0x10], ax
-        }
+void Word9Reorder_004b3b30(unsigned short *src, unsigned short *dst) {
+    dst[0] = src[0];
+    dst[1] = src[3];
+    dst[2] = src[6];
+    dst[3] = src[1];
+    dst[4] = src[4];
+    dst[5] = src[7];
+    dst[6] = src[2];
+    dst[7] = src[5];
+    dst[8] = src[8];
 }
 
 /* @addr 0x004bdb00 (79b)
