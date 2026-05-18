@@ -65,25 +65,82 @@ def find_function(src, name):
     return pattern.search(src)
 
 
+def strip_callee_saved_push_pop(body):
+    """Strip matched `push <reg>` (callee-saved) at start and `pop <reg>` at
+    end (in reverse order). MSVC auto-inserts save/restore for non-naked
+    inline asm using these regs.
+
+    Returns the stripped body (or unchanged if no matched pair found)."""
+    lines = body.split('\n')
+    # Find leading callee-saved pushes (after optional blank lines)
+    push_re = re.compile(r'^\s*push\s+(esi|edi|ebx|ebp)\s*$', re.IGNORECASE)
+    pop_re = re.compile(r'^\s*pop\s+(esi|edi|ebx|ebp)\s*$', re.IGNORECASE)
+
+    leading_pushes = []  # list of (line_idx, reg)
+    i = 0
+    while i < len(lines):
+        s = lines[i].strip()
+        if not s:
+            i += 1
+            continue
+        m = push_re.match(lines[i])
+        if m:
+            leading_pushes.append((i, m.group(1).lower()))
+            i += 1
+            continue
+        break
+
+    if not leading_pushes:
+        return body
+
+    # Find trailing pops (in reverse order matching pushes)
+    trailing_pops = []  # list of (line_idx, reg)
+    j = len(lines) - 1
+    while j >= 0:
+        s = lines[j].strip()
+        if not s:
+            j -= 1
+            continue
+        m = pop_re.match(lines[j])
+        if m:
+            trailing_pops.append((j, m.group(1).lower()))
+            j -= 1
+            continue
+        break
+
+    if not trailing_pops:
+        return body
+
+    # Match pushes to pops: pop order is reverse of push order
+    n = min(len(leading_pushes), len(trailing_pops))
+    matched = []
+    for k in range(n):
+        push_reg = leading_pushes[k][1]
+        pop_reg = trailing_pops[k][1]
+        if push_reg != pop_reg:
+            break
+        matched.append(k)
+
+    if not matched:
+        return body
+
+    # Strip the matched lines (set them to empty)
+    strip_indices = set()
+    for k in matched:
+        strip_indices.add(leading_pushes[k][0])
+        strip_indices.add(trailing_pops[k][0])
+
+    new_lines = [l for idx, l in enumerate(lines) if idx not in strip_indices]
+    return '\n'.join(new_lines)
+
+
 def strip_naked_and_tail_ret(src, name):
     """Return new_src (and (start, end)) with the function converted to
-    non-naked form with the trailing `ret` removed from the asm.
+    non-naked form with the trailing `ret` removed from the asm. Also strips
+    matched callee-saved push/pop pairs.
 
     Returns (new_src, ok) where ok=True on success.
     """
-    m = find_function(src, name)
-    if not m:
-        return src, False
-    ret_type = m.group(1).strip()
-    body = m.group(2)
-    # Strip trailing `ret` (and surrounding whitespace) from asm body
-    body_stripped = re.sub(r'\n\s*ret\s*\n\s*$', '\n', body)
-    if body_stripped == body:
-        # Couldn't strip — function may have non-trivial structure
-        return src, False
-    replacement = f'{ret_type} {name}(void) {{\n    __asm {{{body_stripped}    }}\n}}'
-    # Need to also handle the parameter list (extract from match)
-    # Re-find with parameter capture
     pat = re.compile(
         r'__declspec\s*\(\s*naked\s*\)\s+'
         r'(\w+(?:\s*\*)?)\s+'
@@ -100,9 +157,12 @@ def strip_naked_and_tail_ret(src, name):
     ret_type = m.group(1).strip()
     args = m.group(2).strip()
     body = m.group(3)
+    # Strip trailing ret
     body_stripped = re.sub(r'\n\s*ret\s*\n(\s*)$', r'\n\1', body)
     if body_stripped == body:
         return src, False
+    # Then strip matched callee-saved push/pop pairs
+    body_stripped = strip_callee_saved_push_pop(body_stripped)
     replacement = f'{ret_type} {name}({args}) {{\n    __asm {{{body_stripped}    }}\n}}'
     new_src = src[:m.start()] + replacement + src[m.end():]
     return new_src, True
