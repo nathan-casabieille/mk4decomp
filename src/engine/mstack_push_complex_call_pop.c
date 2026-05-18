@@ -41,63 +41,43 @@ extern unsigned int g_lit_00541e94;
 extern void MStackPush2ChainPrepend_00409970(void);
 
 /* @addr 0x00406430 */
-__declspec(naked) void MStackPushComplexCallPop_00406430(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x34]
-        or      al, 0xa2
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [edx*4 + 0x5c], 0x00010000
-        mov     eax, dword ptr [g_lit_00541e90]
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackPush2ChainPrepend_00409970
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPushComplexCallPop_00406430(void) {
+    unsigned int idx;
+    unsigned int v;
+    unsigned int top;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
+    idx = g_scaledInit_00542044;
+    v = *(unsigned int *)(idx * 4 + 0x34);
+    v |= 0xa2;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
+    g_xformEntityIdx = g_lit_00541e90;
+    MStackPush2ChainPrepend_00409970();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
 
 /* @addr 0x004064b0 */
-__declspec(naked) void MStackPushComplexCallPop_004064b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_xformEntityIdx]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [ecx*4 + 0x34]
-        or      al, 0xa2
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x34], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [edx*4 + 0x5c], 0x00010000
-        mov     eax, dword ptr [g_lit_00541e94]
-        mov     dword ptr [g_xformEntityIdx], eax
-        call    MStackPush2ChainPrepend_00409970
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   18h
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + 0]
-        dec     eax
-        mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_matrixStackTop], eax
-        ret
-    }
+void MStackPushComplexCallPop_004064b0(void) {
+    unsigned int idx;
+    unsigned int v;
+    unsigned int top;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
+    idx = g_scaledInit_00542044;
+    v = *(unsigned int *)(idx * 4 + 0x34);
+    v |= 0xa2;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(idx * 4 + 0x34) = v;
+    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
+    g_xformEntityIdx = g_lit_00541e94;
+    MStackPush2ChainPrepend_00409970();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *(unsigned int *)(top * 4);
+    g_matrixStackTop = top - 1;
 }
