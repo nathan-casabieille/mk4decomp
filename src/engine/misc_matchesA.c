@@ -244,15 +244,11 @@ u64 StreamReadQword_004c83a0(u32 *stream) {
  *   mov     ax, [eax-4]                  ; word read with 66 prefix
  *   ret
  */
-void StreamReadWord_004c83c0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [eax]
-        add     ecx, 4
-        mov     dword ptr [eax], ecx
-        mov     eax, ecx
-        mov     ax, word ptr [eax - 4]
-        }
+unsigned short StreamReadWord_004c83c0(unsigned char **stream) {
+    unsigned char *p = *stream;
+    *stream = p + 4;
+    p = *stream;
+    return *(unsigned short *)(p - 4);
 }
 
 /* @addr 0x004c83e0 (19b)
