@@ -159,22 +159,21 @@ loop_top:
  *   set g_xformDirtyFlags |= 0x30.
  */
 void ScaledNegThreeWords_004be210(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        shl     eax, 2
-        mov     cx,  word  ptr [eax]
-        mov     dx,  word  ptr [eax + 2]
-        neg     cx
-        mov     word  ptr [eax], cx
-        mov     cx,  word  ptr [eax + 4]
-        neg     dx
-        neg     cx
-        mov     word  ptr [eax + 2], dx
-        mov     word  ptr [eax + 4], cx
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        or      al,  0x30
-        mov     dword ptr [g_xformDirtyFlags], eax
-        }
+    unsigned int idx;
+    short a;
+    short b;
+    short c;
+    idx = g_scaledInit_00542044 * 4;
+    a = *(short *)(idx);
+    b = *(short *)(idx + 2);
+    a = (short)-(int)a;
+    *(short *)(idx) = a;
+    c = *(short *)(idx + 4);
+    b = (short)-(int)b;
+    c = (short)-(int)c;
+    *(short *)(idx + 2) = b;
+    *(short *)(idx + 4) = c;
+    g_xformDirtyFlags |= 0x30;
 }
 
 /* @addr 0x004c5790 (56b): set 5 vtable slots at 0x00522160..0x00522174 */
