@@ -26,50 +26,21 @@ extern int Lock_004c6f50(int);
 extern void *g_iat_004d2140;
 extern void *g_iat_004d213c;
 
+#pragma optimize("y", off)
 /* @addr 0x004c7030 */
-__declspec(naked) void TwoPathIATDispatch_004c7030(void) {
-    __asm {
-        push    ebp
-        mov     ebp, esp
-        mov     eax, dword ptr [ebp + 8]
-        cmp     eax, 0x14
-        _emit   7dh
-        _emit   0eh
-        add     eax, 0x1c
-        push    eax
-        call    Lock_004c6f50
-        add     esp, 4
-        pop     ebp
-        ret
-        mov     eax, dword ptr [ebp + 0x0c]
-        add     eax, 0x20
-        push    eax
-        call    dword ptr [g_iat_004d2140]
-        pop     ebp
-        ret
+void TwoPathIATDispatch_004c7030(int a, int b) {
+    if (a < 0x14) {
+        Lock_004c6f50(a + 0x1c);
+        return;
     }
+    ((void (__stdcall *)(int))g_iat_004d2140)(b + 0x20);
 }
 
 /* @addr 0x004c70a0 */
-__declspec(naked) void TwoPathIATDispatch_004c70a0(void) {
-    __asm {
-        push    ebp
-        mov     ebp, esp
-        mov     eax, dword ptr [ebp + 8]
-        cmp     eax, 0x14
-        _emit   7dh
-        _emit   0eh
-        add     eax, 0x1c
-        push    eax
-        call    Lock_004c6f50
-        add     esp, 4
-        pop     ebp
-        ret
-        mov     eax, dword ptr [ebp + 0x0c]
-        add     eax, 0x20
-        push    eax
-        call    dword ptr [g_iat_004d213c]
-        pop     ebp
-        ret
+void TwoPathIATDispatch_004c70a0(int a, int b) {
+    if (a < 0x14) {
+        Lock_004c6f50(a + 0x1c);
+        return;
     }
+    ((void (__stdcall *)(int))g_iat_004d213c)(b + 0x20);
 }
