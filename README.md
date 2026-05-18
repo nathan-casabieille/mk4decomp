@@ -21,7 +21,7 @@ matching, the C source is the canonical representation of the game.
 | Metric | Progress |
 |---|---|
 | Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
-| **Decompiled to C** | **~36%** (1032 / 2829 functions) - contributions welcome |
+| **Decompiled to C** | **~36%** (1033 / 2829 functions) - contributions welcome |
 
 Two distinct things, in plain words:
 
