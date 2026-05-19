@@ -64,17 +64,33 @@ void ScaledInitWithCounterAndType_004314f0(void) {
     g_framePauseFlag = 1;
 }
 
-/* @addr 0x00428370 (51b): mstack push then jmp/dispatch
- *   mov     eax, [g_matrixStackTop]
- *   inc     eax
- *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], 0x004283b0
- *   jmp     +0x2f5
- *   nop * 5
- *   test    byte [g_xformDirtyFlags], 4
- *   jne     +5
- *   jmp     -0x2e
- *   jmp     -0x18bc23
+/* @addr 0x00428370 (51b): packed multi-entry helper - keep naked.
+ *
+ * This 51-byte symbol covers TWO independent code blocks under one
+ * function name:
+ *
+ *   Block A (offsets 0x00..0x1a, 27b): mstack push + tail-jmp.
+ *     mov     eax, [g_matrixStackTop]
+ *     inc     eax
+ *     mov     [g_matrixStackTop], eax
+ *     mov     [eax*4 + 0], OFFSET TripleBranchInstall_004283b0
+ *     jmp     func_0042867d                  ; tail call, exits here
+ *
+ *   Block B (offsets 0x1f..0x32, 19b - reached only via external
+ *   jmp from a different call site, falling into the middle of this
+ *   "function"). Preceded by 5 nops of alignment padding (0x1b..0x1f).
+ *     test    byte [g_xformDirtyFlags], 4
+ *     jne     +5                             ; if dirty, take far jmp
+ *     jmp     func_004283b3                  ; back into block A
+ *     jmp     func_0042976e                  ; far backward dispatch
+ *
+ * Why naked: blocks A and B are reachable from disjoint entry points.
+ * MSVC has no construct for "two entry points in one function". Any
+ * `__asm { ... }` block in a function with C body disables /O2 for
+ * the WHOLE function - MSVC emits a debug-mode prologue (push ebp;
+ * mov ebp, esp; push regs), promotes locals to stack, uses `add eax, 1`
+ * instead of `inc eax`, and emits `call` instead of TCO `jmp`. 50/51
+ * bytes change vs orig. See [[packed-helpers-one-naked]] memory.
  */
 extern void TripleBranchInstall_004283b0(void);
 extern void func_0042867d(void);
