@@ -421,16 +421,12 @@ void DirtyFlagsManipB_0048f3c0(void) {
  *   jmp     eax
  */
 extern unsigned int g_state_0052aac4_k;
-__declspec(naked) void ArgSarAddDerefJmp_0048e710(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_state_0052aac4_k]
-        sar     eax, 2
-        add     eax, ecx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
-    }
+void ArgSarAddDerefJmp_0048e710(int arg) {
+    unsigned int c = g_state_0052aac4_k;
+    unsigned int v = (unsigned int)(arg >> 2) + c;
+    g_walkCallback = (void (*)(void))c;
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4);
+    g_scaledInit_00542044 = v;
+    ((void (*)(void))v)();
 }
