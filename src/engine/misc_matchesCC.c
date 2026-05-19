@@ -64,46 +64,13 @@ extern void VtRelease_Modal_004ad590(void);
 extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 extern void Renderer4_EndScene_SW_Win(void);
-__declspec(naked) void JumpTable5Way_004b41c0(void) {
-    __asm {
-        call    Renderer_GetMode
-        dec     eax
-        cmp     eax, 4
-        _emit   77h
-        _emit   20h
-        _emit   0ffh
-        _emit   24h
-        _emit   85h
-        _emit   0ech
-        _emit   41h
-        _emit   4bh
-        _emit   00h
-        jmp     func_004b4600_cc
-        jmp     VtRelease_Modal_004ad590
-        jmp     Renderer3_EndScene_SW_FS
-        jmp     Renderer5_EndScene_SW_FS_Hi
-        jmp     Renderer4_EndScene_SW_Win
-        ret
-        _emit   0d2h
-        _emit   41h
-        _emit   4bh
-        _emit   00h
-        _emit   0d7h
-        _emit   41h
-        _emit   4bh
-        _emit   00h
-        _emit   0dch
-        _emit   41h
-        _emit   4bh
-        _emit   00h
-        _emit   0e6h
-        _emit   41h
-        _emit   4bh
-        _emit   00h
-        _emit   0e1h
-        _emit   41h
-        _emit   4bh
-        _emit   00h
+void JumpTable5Way_004b41c0(void) {
+    switch (Renderer_GetMode()) {
+        case 1: func_004b4600_cc(); return;
+        case 2: VtRelease_Modal_004ad590(); return;
+        case 3: Renderer3_EndScene_SW_FS(); return;
+        case 5: Renderer5_EndScene_SW_FS_Hi(); return;
+        case 4: Renderer4_EndScene_SW_Win(); return;
     }
 }
 
@@ -134,28 +101,13 @@ void Helper_GfxCleanup(void) {
  */
 extern unsigned int g_state_007affe4;
 extern float g_data_004d29c8;
-extern void (*g_iat_007b0030)(float);
-__declspec(naked) void AbsClampIATCall_004b44f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_007affe4]
-        test    eax, eax
-        _emit   74h
-        _emit   2ah
-        mov     eax, dword ptr [esp + 4]
-        cdq
-        xor     eax, edx
-        sub     eax, edx
-        cmp     eax, 0x64
-        _emit   7eh
-        _emit   08h
-        mov     dword ptr [esp + 4], 0x64
-        fild    dword ptr [esp + 4]
-        push    ecx
-        fmul    dword ptr [g_data_004d29c8]
-        fstp    dword ptr [esp]
-        call    dword ptr [g_iat_007b0030]
-        ret
-    }
+extern void (__stdcall *g_iat_007b0030)(float);
+extern int __cdecl abs(int);
+#pragma intrinsic(abs)
+void AbsClampIATCall_004b44f0(int arg) {
+    if (g_state_007affe4 == 0) return;
+    if (abs(arg) > 0x64) arg = 0x64;
+    g_iat_007b0030((float)arg * g_data_004d29c8);
 }
 
 /* @addr 0x004b4600 (65b)
