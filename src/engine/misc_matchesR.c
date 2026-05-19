@@ -54,21 +54,10 @@ int BuildMaskFromArray_004c38d0(void) {
  *   mov     [eax], cl
  *   ret
  */
-__declspec(naked) void TableSetBit_004c4420(void) {
-    __asm {
-        mov     ax, word ptr [esp + 4]
-        cmp     ax, 0x0898
-        _emit   73h
-        _emit   1dh
-        movsx   eax, ax
-        mov     ecx, eax
-        shl     ecx, 3
-        sub     ecx, eax
-        lea     eax, [ecx*4 + 0x00f8fade]
-        mov     cl, byte ptr [ecx*4 + 0x00f8fade]
-        or      cl, 4
-        mov     byte ptr [eax], cl
-        ret
+extern unsigned int g_data_00f8fade;
+void TableSetBit_004c4420(short idx) {
+    if ((unsigned short)idx < 0x0898) {
+        *(unsigned char *)((&g_data_00f8fade) + idx * 7) |= 4;
     }
 }
 
