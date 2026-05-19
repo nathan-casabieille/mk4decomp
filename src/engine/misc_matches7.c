@@ -100,19 +100,11 @@ void MovsxAnd20Shr5_004a1cf0(void) {
  * .ret:
  *   ret
  */
-__declspec(naked) void ZeroNDwords_004a5660(void) {
-    __asm {
-        mov     ecx, dword ptr [esp + 8]
-        test    ecx, ecx
-        _emit   7eh
-        _emit   0ah
-        push    edi
-        mov     edi, dword ptr [esp + 8]
-        xor     eax, eax
-        rep     stosd
-        pop     edi
-        ret
-    }
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+void ZeroNDwords_004a5660(int *p, int n) {
+    if (n <= 0) return;
+    memset(p, 0, n * 4);
 }
 
 /* @addr 0x0049cc10 (24b)
