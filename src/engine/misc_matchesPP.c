@@ -1505,24 +1505,17 @@ void PushPopScaledInit343c_004aa940(void) {
  *   Hand-rolled tail-dispatch: pops a 24-bit "next" + 8-bit "tag"
  *   from a stack-of-callbacks, invokes the next.
  */
-__declspec(naked) void StackPopDispatchTagged_0041f780(void) {
-    __asm {
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [ecx*4 + 4]
-        dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [ecx*4 + 4], eax
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        sar     eax, 0x18
-        mov     dword ptr [ecx*4 + 0x84], eax
-        mov     eax, dword ptr [g_walkCallback]
-        and     eax, 0xffffff
-        mov     dword ptr [g_walkCallback], eax
-        jmp     eax
-    }
+void StackPopDispatchTagged_0041f780(void) {
+    unsigned int base = g_baseSel_00542060;
+    unsigned int top = *(unsigned int *)(base * 4 + 4) - 1;
+    unsigned int walk;
+    g_scaledInit_00542044 = top;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(top * 4);
+    *(unsigned int *)(base * 4 + 4) = top;
+    *(int *)(g_baseSel_00542060 * 4 + 0x84) = (int)g_walkCallback >> 24;
+    walk = (unsigned int)g_walkCallback & 0xffffff;
+    g_walkCallback = (void (*)(void))walk;
+    ((void (*)(void))walk)();
 }
 
 /* @addr 0x00428bd0 (77b)
