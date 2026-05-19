@@ -21,9 +21,9 @@ matching, the C source is the canonical representation of the game.
 | Metric | Progress |
 |---|---|
 | Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
-| **Pure C (no `__asm`)** | **~40%** (1128 / 2829 functions) - contributions welcome |
+| **Pure C (no `__asm`)** | **~40%** (1129 / 2829 functions) - contributions welcome |
 | Hybrid (no `naked`, body still `__asm`) | ~10% (293 / 2829 functions) |
-| Still `__declspec(naked)` | ~50% (1407 / 2829 functions) |
+| Still `__declspec(naked)` | ~50% (1406 / 2829 functions) |
 
 In plain words:
 
@@ -116,8 +116,8 @@ When a function matches byte-for-byte, mark it `matched` in
 
 ## Contributing
 
-**The byte-match is done. The C decompilation is not.** About 1700
-functions in `src/` (1407 naked + 293 hybrid) still have an
+**The byte-match is done. The C decompilation is not.** About 1699
+functions in `src/` (1406 naked + 293 hybrid) still have an
 `__asm { ... }` block in their body. Each one needs to be rewritten in
 pure C while keeping `make matching` byte-identical to orig.
 
