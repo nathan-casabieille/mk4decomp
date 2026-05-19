@@ -493,6 +493,58 @@ register choice (pointer in ecx, value in eax) is a fingerprint of
 the intrinsic - plain C array zeroing always puts the pointer in eax
 instead.
 
+### S. Callee-saved zero across function calls
+
+When the original pushes a callee-saved register (esi/edi/ebx) at
+prologue, does `xor esi, esi` (or similar), and uses that register as
+0 for multiple stores after one or more function calls, the source
+was almost certainly a local that survives across the calls:
+
+```c
+void f(void) {
+    unsigned int zero = 0;     /* lives across call -> callee-saved reg */
+    helper();                   /* may clobber caller-saved regs */
+    g_a = zero;                 /* still 0 because esi/edi was saved */
+    g_b = zero;
+    ...
+}
+```
+
+MSVC SP3 keeps `zero` in a callee-saved register because it's live
+across the call. The 7-store clear sequence in `Audio_TimerTeardown_004ac5f0`
+matched perfectly with this pattern.
+
+### T. `__stdcall` cast for IAT function pointers (suppress `add esp, N`)
+
+Win32 IAT slots are stdcall (callee cleans the stack). When the orig
+calls a Win32 API through an IAT slot, there is *no* `add esp, N`
+after the call. Calling the same slot from C without an explicit
+calling-convention cast emits cdecl semantics (caller cleans stack
+with `add esp, N`), shifting all subsequent bytes.
+
+**Fix:** cast the IAT slot to a `__stdcall` function pointer at every
+call site:
+
+```c
+extern void *g_iat_004d2244;
+
+/* WRONG (emits add esp, 0x10): */
+((void (*)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_004d2244)(a, b, c, d);
+
+/* RIGHT (callee cleanup, no add esp): */
+((void (__stdcall *)(unsigned int, unsigned int, unsigned int, unsigned int))g_iat_004d2244)(a, b, c, d);
+```
+
+Better: declare the IAT slot as a typed pointer once:
+
+```c
+extern void (__stdcall *g_iat_004d2244)(unsigned int, unsigned int, unsigned int, unsigned int);
+g_iat_004d2244(a, b, c, d);
+```
+
+Used together with **S**, this unblocked `Audio_TimerTeardown_004ac5f0`,
+`RendererTeardownSW_004b2a40`, `Helper_FRead`, `WrapThreeDispatch_004c5f80`.
+
 ---
 
 ## Common debugging patterns
