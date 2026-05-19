@@ -1544,28 +1544,21 @@ __declspec(naked) void StackPopDispatchTagged_0041f780(void) {
  *   jmp T.
  */
 extern void CopyJmp_00406ba0(void);
-__declspec(naked) void GuardedClampStoreJmp_00428bd0(void) {
-    __asm {
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   3eh
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [edx*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     eax, dword ptr [edx*4 + 0x28]
-        mov     dword ptr [g_walkCallback], eax
-        mov     ecx, dword ptr [ecx*4 + 4]
-        cmp     eax, ecx
-        _emit   7ch
-        _emit   08h
-        lea     eax, [ecx - 1]
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [edx*4 + 0x28], eax
-        jmp     GuardedChainCmpDualBitXor_004299a0
-        ret
+void GuardedClampStoreJmp_00428bd0(void) {
+    unsigned int scaled, walk;
+    CopyJmp_00406ba0();
+    if (g_framePauseFlag) return;
+    scaled = *(unsigned int *)(g_fightGroupHead * 4 + 0x24);
+    g_scaledInit_00542044 = scaled;
+    walk = *(unsigned int *)(g_fightGroupHead * 4 + 0x28);
+    g_walkCallback = (void (*)(void))walk;
+    scaled = *(unsigned int *)(scaled * 4 + 4);
+    if ((int)walk >= (int)scaled) {
+        walk = scaled - 1;
+        g_walkCallback = (void (*)(void))walk;
     }
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = walk;
+    GuardedChainCmpDualBitXor_004299a0();
 }
 
 /* @addr 0x00458c70 (77b)
