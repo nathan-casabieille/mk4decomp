@@ -1630,29 +1630,15 @@ __declspec(naked) void CRTSignalDispatch_004c9750(void) {
  *   walk = eax; jmp eax.
  */
 extern void StorePauseImulShr16_004ab630(void);
-__declspec(naked) void PackedAdvanceCallTailJmp_004392c0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [eax*4 + 0]
-        inc     eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    StorePauseImulShr16_004ab630
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   20h
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_walkCallback]
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
-        ret
-    }
+void PackedAdvanceCallTailJmp_004392c0(packed_ptr arg) {
+    g_scaledInit_00542044 = (unsigned int)((int)arg >> 2);
+    g_walkCallback = *(void (**)(void))(g_scaledInit_00542044 * 4);
+    g_scaledInit_00542044++;
+    StorePauseImulShr16_004ab630();
+    if (g_framePauseFlag) return;
+    g_scaledInit_00542044 += (unsigned int)g_walkCallback;
+    g_scaledInit_00542044 = *(unsigned int *)(g_scaledInit_00542044 * 4);
+    ((void (*)(void))g_scaledInit_00542044)();
 }
 
 /* @addr 0x0045d960 (78b)
