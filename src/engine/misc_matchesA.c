@@ -331,14 +331,10 @@ __declspec(naked) void Copy3Dwords_004cca00(void) {
  *   mov     [ecx+8], eax
  *   ret
  */
-void ZeroThreeFromArg_004cca20(void) {
-    __asm {
-        mov     ecx, dword ptr [esp + 4]
-        xor     eax, eax
-        mov     dword ptr [ecx], eax
-        mov     dword ptr [ecx + 4], eax
-        mov     dword ptr [ecx + 8], eax
-        }
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+void ZeroThreeFromArg_004cca20(unsigned int *p) {
+    memset(p, 0, 12);
 }
 
 /* @addr 0x004b2ac0 (17b): zero a buffer using rep stosd
