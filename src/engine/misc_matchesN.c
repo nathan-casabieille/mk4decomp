@@ -213,17 +213,16 @@ __declspec(naked) void StoreLitRetSet2_0042c3b0(void) {
  *   mov     [eax*4 + 0x70], ecx
  *   ret
  */
-__declspec(naked) void ScaledAddStore_004406e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + 0x70]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     edx, dword ptr [eax*4 + 0x4c]
-        add     ecx, edx
-        mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0x70], ecx
-        ret
+void ScaledAddStore_004406e0(void) {
+    unsigned int base = g_scaledInit_00542044;
+    unsigned int v_70 = *(unsigned int *)(base * 4 + 0x70);
+    g_walkCallback = (void (*)(void))v_70;
+    {
+        unsigned int v_4c = *(unsigned int *)(base * 4 + 0x4c);
+        unsigned int sum = v_70 + v_4c;
+        g_eventQueueCurrent = v_4c;
+        g_walkCallback = (void (*)(void))sum;
+        *(unsigned int *)(base * 4 + 0x70) = sum;
     }
 }
 
