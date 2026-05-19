@@ -107,23 +107,14 @@ void ScaledChainCmp61_00482740(void) {
  */
 extern void *g_data_004f1290;
 extern int ArgScaledLoadCmpP1_0048e550(void *);
-__declspec(naked) void PushCallPauseScaledJmpInd_0048e2f0(void) {
-    __asm {
-        push    OFFSET g_data_004f1290
-        call    ArgScaledLoadCmpP1_0048e550
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x7c]
-        mov     dword ptr [g_walkCallback], ecx
-        mov     edx, dword ptr [eax*4 + 0x80]
-        mov     dword ptr [g_currentNodeFlags], edx
-        jmp     dword ptr [g_scaledInit_00542044]
-        ret
-    }
+void PushCallPauseScaledJmpInd_0048e2f0(void) {
+    unsigned int base;
+    ArgScaledLoadCmpP1_0048e550(&g_data_004f1290);
+    if (g_framePauseFlag) return;
+    base = g_baseSel_00542060;
+    g_walkCallback = (void (*)(void))*(unsigned int *)(base * 4 + 0x7c);
+    g_currentNodeFlags = *(unsigned int *)(base * 4 + 0x80);
+    (*(void (**)(void))&g_scaledInit_00542044)();
 }
 
 /* @addr 0x0048e740 (62b)
