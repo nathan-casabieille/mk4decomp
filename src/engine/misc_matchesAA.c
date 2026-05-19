@@ -167,26 +167,19 @@ __declspec(naked) void Push1eCallTestDirtyLoop_004923b0(void) {
 extern unsigned int g_state_00538158;
 extern unsigned int g_state_00535d04;
 extern unsigned int g_state_0053a774;
-__declspec(naked) void ScaledLoadCmpStoreXfm_0048f2a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00538158]
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_state_00535d04]
-        push    esi
-        mov     esi, dword ptr [g_state_0053a774]
-        cmp     ecx, eax
-        mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        _emit   74h
-        _emit   10h
-        cmp     ecx, eax
-        mov     dword ptr [g_walkCallback], edx
-        _emit   74h
-        _emit   06h
-        mov     dword ptr [g_eventQueueCurrent], esi
-        pop     esi
-        ret
+void ScaledLoadCmpStoreXfm_0048f2a0(void) {
+    unsigned int s1 = g_state_00538158;
+    unsigned int fg = g_fightGroupHead;
+    unsigned int s2 = g_state_00535d04;
+    unsigned int s3 = g_state_0053a774;
+    g_walkCallback = (void (*)(void))s3;
+    g_eventQueueCurrent = s2;
+    g_scaledInit_00542044 = s1;
+    if (fg != s1) {
+        g_walkCallback = (void (*)(void))s2;
+    }
+    if (fg != s1) {
+        g_eventQueueCurrent = s3;
     }
 }
 
