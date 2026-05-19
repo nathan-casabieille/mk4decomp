@@ -56,17 +56,11 @@ __declspec(naked) void ScaledStoreCallEpilogue_0042f4d0(void) {
  *   ret
  */
 extern unsigned int g_extra_0052ab3c;
-__declspec(naked) void ZeroLargeBlock_0041f270(void) {
-    __asm {
-        push    edi
-        mov     ecx, 0x0e80
-        xor     eax, eax
-        mov     edi, 0x0053e368
-        rep     stosd
-        mov     dword ptr [g_extra_0052ab3c], 0
-        pop     edi
-        ret
-    }
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+void ZeroLargeBlock_0041f270(void) {
+    g_extra_0052ab3c = 0;
+    memset(g_nodeSlotsArea, 0, 0x0e80 * 4);
 }
 
 /* @addr 0x004578e0 (21b): strlen-style counter
