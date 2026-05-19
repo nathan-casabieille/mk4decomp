@@ -150,73 +150,45 @@ void ScaledCmpJlJmp_00488ed0(void) {
 extern unsigned short g_table_004ef998[];
 extern int TaggedSceneDispatch_004be690(int);
 void TableLookupCall_00489f60(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 0x32
-        _emit   77h
-        _emit   16h
-        mov     ax, word ptr [eax*2 + g_table_004ef998]
-        test    ax, ax
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        }
+    unsigned int idx = (unsigned int)g_walkCallback;
+    unsigned short val;
+    if (idx > 0x32) return;
+    val = g_table_004ef998[idx];
+    if (val == 0) return;
+    ((int (*)(unsigned short))TaggedSceneDispatch_004be690)(val);
 }
 
 /* @addr 0x00489ff0 (33b): same shape with cmp=0x70, table=0x004efa00 */
 extern unsigned short g_table_004efa00[];
 void TableLookupCall_00489ff0(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 0x70
-        _emit   77h
-        _emit   16h
-        mov     ax, word ptr [eax*2 + g_table_004efa00]
-        test    ax, ax
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        }
+    unsigned int idx = (unsigned int)g_walkCallback;
+    unsigned short val;
+    if (idx > 0x70) return;
+    val = g_table_004efa00[idx];
+    if (val == 0) return;
+    ((int (*)(unsigned short))TaggedSceneDispatch_004be690)(val);
 }
 
 /* @addr 0x0048a130 (33b): same shape with cmp=0x41, table=0x004efd18 */
 extern unsigned short g_table_004efd18[];
 void TableLookupCall_0048a130(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 0x41
-        _emit   77h
-        _emit   16h
-        mov     ax, word ptr [eax*2 + g_table_004efd18]
-        test    ax, ax
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        }
+    unsigned int idx = (unsigned int)g_walkCallback;
+    unsigned short val;
+    if (idx > 0x41) return;
+    val = g_table_004efd18[idx];
+    if (val == 0) return;
+    ((int (*)(unsigned short))TaggedSceneDispatch_004be690)(val);
 }
 
 /* @addr 0x0048a160 (33b): same shape with cmp=0x13, table=0x004efae0 */
 extern unsigned short g_table_004efae0[];
 void TableLookupCall_0048a160(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, 0x13
-        _emit   77h
-        _emit   16h
-        mov     ax, word ptr [eax*2 + g_table_004efae0]
-        test    ax, ax
-        _emit   74h
-        _emit   09h
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        }
+    unsigned int idx = (unsigned int)g_walkCallback;
+    unsigned short val;
+    if (idx > 0x13) return;
+    val = g_table_004efae0[idx];
+    if (val == 0) return;
+    ((int (*)(unsigned short))TaggedSceneDispatch_004be690)(val);
 }
 
 /* @addr 0x0048a020 (45b)
