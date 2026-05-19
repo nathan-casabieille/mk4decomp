@@ -255,31 +255,12 @@ void FourIndirectCalls_004c6f20(void) {
  *   pop     esi
  *   ret
  */
-extern int func_004ca0a0(void *, int, int);
-__declspec(naked) void StrSearchCall_004c89b0(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 0x0c]
-        test    esi, esi
-        _emit   74h
-        _emit   1eh
-        mov     edx, dword ptr [esp + 8]
-        push    edi
-        mov     edi, edx
-        or      ecx, 0xffffffff
-        xor     eax, eax
-        add     esi, edx
-        repne   scasb
-        not     ecx
-        push    ecx
-        push    edx
-        push    esi
-        call    func_004ca0a0
-        add     esp, 0x0c
-        pop     edi
-        pop     esi
-        ret
-    }
+extern int func_004ca0a0(void *, const char *, int);
+extern unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+void StrSearchCall_004c89b0(char *arg1, int arg2) {
+    if (arg2 == 0) return;
+    func_004ca0a0(arg1 + arg2, arg1, strlen(arg1) + 1);
 }
 
 /* @addr 0x004c9800 (50b)
