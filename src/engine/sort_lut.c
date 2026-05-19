@@ -10,70 +10,39 @@
 #include "engine/scenegraph.h"
 #include "engine/render.h"
 
-extern s32 _ftol(void);                            /* 0x004c57d0 */
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
 
-static const double k_31         = 31.0;            /* 0x004d2a50 */
-static const double k_inv_65536  = 1.52587890625e-05; /* 0x004d2a58 = 1/65536 */
-static const double k_neg_one    = -1.0;            /* 0x004d2a60 */
+/* Declaration order is reversed from .rdata pool order: MSVC SP3 emits
+ * the second fmul operand FIRST in code, so to get `fmul k_31` ahead of
+ * `fmul k_inv_65536` in the loop body, k_31 must follow k_inv_65536 in
+ * source. The orig .rdata pool is k_31, k_inv_65536, k_neg_one. */
+static const double k_inv_65536  = 1.52587890625e-05;/* 0x004d2a58 = 1/65536 */
+static const double k_31         = 31.0;             /* 0x004d2a50 */
+static const double k_neg_one    = -1.0;             /* 0x004d2a60 */
 
 /*
- * @addr 0x004bf290
+ * @addr 0x004bf290 (130 bytes)
  *
- * Naked + __asm because:
- *  - The prologue uses `push ecx` as a 1-byte stack-slot allocation
- *    (vs `sub esp, 4` = 3 bytes); MSVC won't emit that from a C
- *    "u32 i" local declaration.
- *  - The FPU sequence (fld st(0); fmul; fmul; fsub neg-one; fdivr)
- *    encodes one specific evaluation tree of the bucket formula -
- *    pure C would re-associate.
- *  - The 768-entry tail uses the imul-magic / sar 0x1f / add idiom
- *    for n/3, which is hard to coax from `n / 3` literally.
+ * Pure-C reformulation. The loop computes
+ *   sort = (s32)(i / (i * 31 / 65536 + 1))
+ * but encoded as -k_neg_one so the .rdata pool keeps a literal -1.0.
  */
-__declspec(naked) void BuildSortKeyLUT(void)
+void BuildSortKeyLUT(void)
 {
-    __asm {
-        push    ecx                              ; allocate stack slot for `i`
-        push    esi
-        push    edi
-        mov     ecx, 0x108000
-        xor     eax, eax
-        mov     edi, offset g_paletteScratch
-        push    eax                              ; arg=0 for Helper_PaletteInit
-        rep     stosd                            ; clear g_paletteScratch
-        call    Helper_PaletteInit
-        add     esp, 4
-        mov     dword ptr [esp + 8], 0           ; i = 0
-        mov     esi, offset g_zSortKeyLUT
-loop_top:
-        fild    dword ptr [esp + 8]              ; st0 = (double)i
-        fld     st(0)                            ; st1 = i, st0 = i
-        fmul    qword ptr [k_31]                 ; st0 = 31*i
-        fmul    qword ptr [k_inv_65536]          ; st0 = 31*i/65536
-        fsub    qword ptr [k_neg_one]            ; st0 = 31*i/65536 + 1
-        fdivr   st(0), st(1)                     ; st0 = i / (31*i/65536 + 1)
-        call    _ftol                            ; eax = (s32)st0; pop FPU
-        mov     ecx, dword ptr [esp + 8]
-        mov     word ptr [esi], ax
-        add     esi, 2
-        inc     ecx
-        cmp     esi, offset g_zSortKeyLUT + 0x20000
-        mov     dword ptr [esp + 8], ecx
-        fstp    st(0)                            ; pop the dup'd st1
-        jl      loop_top
-        xor     ecx, ecx
-div3_top:
-        mov     eax, 0x55555556
-        imul    ecx
-        mov     eax, edx
-        shr     eax, 31
-        add     edx, eax
-        mov     byte ptr [ecx + g_div3Table], dl
-        inc     ecx
-        cmp     ecx, 0x300
-        jl      div3_top
-        pop     edi
-        pop     esi
-        pop     ecx
-        ret
+    int i;
+    int j;
+
+    memset(g_paletteScratch, 0, 0x108000 * 4);
+    Helper_PaletteInit(0);
+
+    for (i = 0; i < 0x10000; i++) {
+        double di = (double)i;
+        double denom = di * k_31 * k_inv_65536 - k_neg_one;
+        g_zSortKeyLUT[i] = (u16)(s32)(di / denom);
+    }
+
+    for (j = 0; j < 0x300; j++) {
+        g_div3Table[j] = (u8)(j / 3);
     }
 }
