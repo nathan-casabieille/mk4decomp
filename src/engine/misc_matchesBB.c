@@ -33,31 +33,17 @@ void ScaledTripleCopy54_004ac040(void) {
 extern void TripleStageRollback_00404a50(int);
 extern void RoundWinTransition_0049e7e0(void);
 extern int func_0049cb40_bb(void *, int);
-extern int TaggedSceneDispatch_004be690(int);
+extern int TaggedSceneDispatch_004be690(unsigned short);
 extern void *g_data_004a0060;
 extern unsigned short g_word_004e2860;
 extern void InstallSelf3WaySubDec_004a1320(void);
-__declspec(naked) void PushCallPauseStorePushDispatch_004a12e0(void) {
-    __asm {
-        push    0x22f
-        call    TripleStageRollback_00404a50
-        add     esp, 4
-        call    RoundWinTransition_0049e7e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   23h
-        push    0x15
-        push    OFFSET g_data_004a0060
-        call    func_0049cb40_bb
-        mov     ax, word ptr [g_word_004e2860]
-        add     esp, 8
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        jmp     InstallSelf3WaySubDec_004a1320
-        ret
-    }
+void PushCallPauseStorePushDispatch_004a12e0(void) {
+    TripleStageRollback_00404a50(0x22f);
+    RoundWinTransition_0049e7e0();
+    if (g_framePauseFlag) return;
+    func_0049cb40_bb(&g_data_004a0060, 0x15);
+    TaggedSceneDispatch_004be690(g_word_004e2860);
+    ((int (*)(void))InstallSelf3WaySubDec_004a1320)();
 }
 
 /* @addr 0x004a1790 (54b)
