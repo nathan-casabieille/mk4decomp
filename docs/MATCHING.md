@@ -446,6 +446,53 @@ lea     esi, [esi + eax - 8]      ; might pick: SIB: idx=eax, base=esi
 
 When in doubt, use `*1` to disambiguate.
 
+### R. CRT intrinsics: `memset` / `memcpy` / `strcpy` unlock conversions
+
+When the orig has `rep stosd` / `rep movsd` / `repne scasb + rep
+movsd + rep movsb` patterns, MSVC SP3 will not produce them from a
+natural C loop. They come from CRT intrinsics. Declare and force them
+explicitly:
+
+```c
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void ZeroBuffer(unsigned int *p) {
+    memset(p, 0, 12);           /* unrolls to xor eax; mov; mov; mov */
+}
+
+void ZeroBlock(unsigned int *p, int n) {
+    if (n <= 0) return;
+    memset(p, 0, n * 4);        /* push edi; mov ecx, n; xor eax;
+                                   mov edi, p; rep stosd; pop edi */
+}
+```
+
+`memset(p, 0, K)` where K is a compile-time multiple of 4 inlines to
+`push edi / mov ecx / xor eax / mov edi / rep stosd / pop edi`.
+
+`memset(p, 0, K)` where K is a constant with a 2-byte remainder
+(e.g. 30 = 7*4 + 2) emits the canonical `rep stosd; stosw` sequence.
+
+`memset(p, 0, K)` where K is a constant with a 1-byte remainder
+(e.g. 257 = 64*4 + 1) emits `rep stosd; stosb`.
+
+`memset(p, 0, V*4)` where V is a variable emits the early-out + rep
+stosd pattern matching `if (n<=0) return;` followed by stosd.
+
+`strcpy(dst, src)` emits the canonical inline strlen + rep movsd +
+rep movsb pattern: `or ecx,-1; xor eax,eax; repne scasb; not ecx;
+sub edi,ecx; mov esi,edi; mov edi,dst; shr ecx,2; rep movsd; mov
+ecx,len; and ecx,3; rep movsb`.
+
+These intrinsics were the key to converting `ZeroThreeFromArg`,
+`AppInit_Misc3`, `AppInit_Misc4`, `ZeroNDwords_004a5660`,
+`InitGlobalsAndZero_004c9800`, and `ECM_OpenTrack_004be9c0` after
+manual register-allocation tricks all failed. The orig's MSVC SP3
+register choice (pointer in ecx, value in eax) is a fingerprint of
+the intrinsic - plain C array zeroing always puts the pointer in eax
+instead.
+
 ---
 
 ## Common debugging patterns
