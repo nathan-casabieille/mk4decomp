@@ -325,22 +325,17 @@ __declspec(naked) void DualEntryPushCall_0046b630(void) {
  *   ret
  */
 extern void func_0046e750(void);
-__declspec(naked) void CallPauseTripleScaledJmp_0046c520(void) {
-    __asm {
-        call    func_0046e750
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   24h
-        mov     eax, dword ptr [g_eventQueueWorkType]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0x0c]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
-        ret
-    }
+void CallPauseTripleScaledJmp_0046c520(void) {
+    unsigned int v;
+    func_0046e750();
+    if (g_framePauseFlag) return;
+    v = g_eventQueueWorkType;
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4 + 0x0c);
+    g_scaledInit_00542044 = v;
+    v = *(unsigned int *)(v * 4);
+    g_scaledInit_00542044 = v;
+    ((void (*)(void))v)();
 }
 
 /* @addr 0x0046e2a0 (56b)
