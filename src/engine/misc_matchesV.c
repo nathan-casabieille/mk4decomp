@@ -128,25 +128,15 @@ int Cmp2CallDirtyCall_004398b0(void) {
  *   ret
  */
 extern void func_0043a665(void);
-__declspec(naked) void DirtyToggleScaledTest_0043a630(void) {
-    __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     ecx, 4
-        mov     eax, dword ptr [eax*4 + 0]
-        or      edx, ecx
-        test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_xformDirtyFlags], edx
-        _emit   74h
-        _emit   11h
-        xor     edx, ecx
-        test    eax, eax
-        mov     dword ptr [g_xformDirtyFlags], edx
-        _emit   74h
-        _emit   05h
-        jmp     func_0043a665
-        ret
+void DirtyToggleScaledTest_0043a630(void) {
+    unsigned int s = *(unsigned int *)(g_scaledInit_00542044 * 4);
+    g_scaledInit_00542044 = s;
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if (s != 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+    if (s != 0) {
+        func_0043a665();
     }
 }
 
