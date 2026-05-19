@@ -346,16 +346,11 @@ void ZeroThreeFromArg_004cca20(unsigned int *p) {
  *   pop     edi
  *   ret
  */
-__declspec(naked) void AppInit_Misc3(void) {
-    __asm {
-        push    edi
-        mov     ecx, 0x2a
-        xor     eax, eax
-        mov     edi, 0x007af958
-        rep     stosd
-        pop     edi
-        ret
-    }
+extern unsigned int g_data_007af958[];
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+void AppInit_Misc3(void) {
+    memset(g_data_007af958, 0, 0x2a * 4);
 }
 
 /* @addr 0x004bdae0 (22b)
