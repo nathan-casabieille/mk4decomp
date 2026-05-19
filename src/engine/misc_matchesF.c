@@ -163,16 +163,12 @@ __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
  *   mov     [g_eventQueueChild], eax
  *   jmp     eax
  */
-__declspec(naked) void AddDerefJmp_00433e70(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueChild]
-        mov     ecx, dword ptr [g_eventQueueCurrent]
-        add     eax, ecx
-        mov     dword ptr [g_eventQueueChild], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_eventQueueChild], eax
-        jmp     eax
-    }
+void AddDerefJmp_00433e70(void) {
+    unsigned int v = g_eventQueueChild + g_eventQueueCurrent;
+    g_eventQueueChild = v;
+    v = *(unsigned int *)(v * 4);
+    g_eventQueueChild = v;
+    ((void (*)(void))v)();
 }
 
 /* @addr 0x00438e70 (37b)
