@@ -28,29 +28,16 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-__declspec(naked) void BuildMaskFromArray_004c38d0(void) {
-    __asm {
-        push    esi
-        xor     ecx, ecx
-        xor     eax, eax
-        mov     esi, 0x00f9eb80
-        cmp     word ptr [esi], 0xffff
-        _emit   74h
-        _emit   09h
-        mov     edx, 1
-        shl     edx, cl
-        _emit   0ebh
-        _emit   02h
-        xor     edx, edx
-        or      eax, edx
-        add     esi, 4
-        inc     ecx
-        cmp     esi, 0x00f9ebc0
-        _emit   7ch
-        _emit   0e1h
-        pop     esi
-        ret
+int BuildMaskFromArray_004c38d0(void) {
+    int i = 0;
+    int mask = 0;
+    int p = 0x00f9eb80;
+    while (p < 0x00f9ebc0) {
+        mask |= (*(short *)p != -1) ? (1 << i) : 0;
+        p += 4;
+        i++;
     }
+    return mask;
 }
 
 /* @addr 0x004c4420 (41b)
