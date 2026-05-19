@@ -18,22 +18,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern int func_00498b40(void *p, int n);
-extern int func_004be698(int v);
+extern int func_004be698(unsigned short v);
 extern void *g_data_004a6068;
 extern unsigned short g_word_004e2860;
 extern void func_00428c10(void);
-__declspec(naked) void Push15PushDataCallWordCallJmp_004a1080(void) {
-    __asm {
-        push    0x15
-        push    OFFSET g_data_004a6068
-        call    func_00498b40
-        mov     ax, word ptr [g_word_004e2860]
-        add     esp, 8
-        push    eax
-        call    func_004be698
-        add     esp, 4
-        jmp     func_00428c10
-    }
+int Push15PushDataCallWordCallJmp_004a1080(void) {
+    func_00498b40(&g_data_004a6068, 0x15);
+    func_004be698(g_word_004e2860);
+    return ((int (*)(void))func_00428c10)();
 }
 
 /* @addr 0x004a1c50 (38b)
@@ -51,20 +43,16 @@ __declspec(naked) void Push15PushDataCallWordCallJmp_004a1080(void) {
 extern unsigned char g_byte_004d50b8;
 extern unsigned char g_byte_004d50b4;
 extern char g_byte_004d50c0;
-void TripleByteCheck_004a1c50(void) {
+int TripleByteCheck_004a1c50(void) {
+    int v = 1;
+    if (g_byte_004d50b8 & v) return v;
+    if (g_byte_004d50b4 & 0x10) return v;
     __asm {
-        mov     cl, byte ptr [g_byte_004d50b8]
-        mov     eax, 1
-        test    cl, al
-        _emit   75h
-        _emit   16h
-        test    byte ptr [g_byte_004d50b4], 0x10
-        _emit   75h
-        _emit   0dh
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 4
         shr     eax, 2
-        }
+    }
+    /* asm sets eax; falls into compiler-emitted ret */
 }
 
 /* @addr 0x004a1c80 (45b)
@@ -83,23 +71,15 @@ void TripleByteCheck_004a1c50(void) {
  *   ret
  */
 extern unsigned int g_state_004d50b4;
-void TripleByteCheck20_004a1c80(void) {
+int TripleByteCheck20_004a1c80(void) {
+    if (g_byte_004d50b8 & 0x10) return 1;
+    if (g_state_004d50b4 & 0x1000) return 1;
     __asm {
-        test    byte ptr [g_byte_004d50b8], 0x10
-        _emit   74h
-        _emit   06h
-        mov     eax, 1
-        ret
-        mov     eax, dword ptr [g_state_004d50b4]
-        test    ah, 0x10
-        _emit   74h
-        _emit   06h
-        mov     eax, 1
-        ret
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 0x20
         shr     eax, 5
-        }
+        ret
+    }
 }
 
 /* @addr 0x004a1d20 (45b)
@@ -203,23 +183,15 @@ void CmpP1ScaledInitB_004ac100(void) {
  *   mov     [g_walkCallback], eax
  *   ret
  */
-extern int func_004cb680(int a, int b, int c, int d);
+extern int func_004cb680(int a, int b, __int64 c);
+typedef int (__stdcall *DivLongFn)(int a, int b, __int64 c);
 void DivLongPushCall_004ab320(void) {
-    __asm {
-        mov     eax, dword ptr [g_walkCallback]
-        test    eax, eax
-        _emit   75h
-        _emit   06h
-        mov     dword ptr [g_walkCallback], eax
-        ret
-        cdq
-        push    edx
-        push    eax
-        push    1
-        push    0
-        call    func_004cb680
-        mov     dword ptr [g_walkCallback], eax
-        }
+    int v = (int)g_walkCallback;
+    if (v == 0) {
+        g_walkCallback = (void (*)(void))v;
+        return;
+    }
+    g_walkCallback = (void (*)(void))((DivLongFn)func_004cb680)(0, 1, (__int64)v);
 }
 
 /* @addr 0x004abfe0 (38b)
@@ -258,18 +230,13 @@ void ZeroThreeFields6c_004abfe0(void) {
 extern int g_state_004d5100;
 extern int g_state_004d5104;
 void DualAddSar_004ab600(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_004d5100]
-        mov     ecx, dword ptr [g_state_004d5104]
-        add     eax, ecx
-        mov     edx, eax
-        mov     dword ptr [g_state_004d5100], eax
-        sar     edx, 0x1f
-        add     edx, eax
-        mov     dword ptr [g_walkCallback], eax
-        add     ecx, edx
-        mov     dword ptr [g_state_004d5104], ecx
-    }
+    int a = g_state_004d5100;
+    int b = g_state_004d5104;
+    int sum = a + b;
+    int temp = (sum >> 31) + sum;
+    g_state_004d5100 = sum;
+    g_walkCallback = (void (*)(void))sum;
+    g_state_004d5104 += temp;
 }
 
 /* @addr 0x004ab270 (34b)
