@@ -20,9 +20,14 @@
  * .iat_path:
  *   add     eax, 0x20
  *   push    eax
- *   call    [iat_slot]
+ *   call    [iat_slot]                ; ff 15 absolute indirect
  *   pop     ebp
  *   ret
+ *
+ * Stays naked: MSVC SP3 picks `add eax, -0x522600` (05 form) over
+ * `sub eax, 0x522600` (2d form) for the imm32 subtraction. Both forms
+ * are 5 bytes but different opcodes; not coaxable from C source (see
+ * memory: sub-vs-add-neg).
  */
 
 extern int Lock_004c6f50(int);

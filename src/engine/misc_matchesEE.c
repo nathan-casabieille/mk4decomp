@@ -223,39 +223,17 @@ void TableWalkBoundedCmp_004bd890(int arg) {
 
 /* @addr 0x004c5d70 (55b)
  *   call F to get state; if !state ret;
- *   call 0x4c9200(arg1, arg2, arg3, state, edi); store ret;
+ *   call 0x4c9200(arg1, arg2, arg3, state); store ret;
  *   call 0x4c7040(state); restore ret; ret.
  */
 extern void * HeapScanInit_004c9440(void);
-extern int func_004c9200(int, int, int, void *, int);
+extern int func_004c9200(int, int, int, void *);
 extern void func_004c7040(void *);
-__declspec(naked) void WrapperCallSelf_004c5d70(void) {
-    __asm {
-        push    esi
-        call    HeapScanInit_004c9440
-        mov     esi, eax
-        test    esi, esi
-        _emit   75h
-        _emit   02h
-        pop     esi
-        ret
-        mov     eax, dword ptr [esp + 0x10]
-        mov     ecx, dword ptr [esp + 0x0c]
-        mov     edx, dword ptr [esp + 8]
-        push    edi
-        push    esi
-        push    eax
-        push    ecx
-        push    edx
-        call    func_004c9200
-        add     esp, 0x10
-        mov     edi, eax
-        push    esi
-        call    func_004c7040
-        add     esp, 4
-        mov     eax, edi
-        pop     edi
-        pop     esi
-        ret
-    }
+int WrapperCallSelf_004c5d70(int a, int b, int c) {
+    int ret;
+    void *state = HeapScanInit_004c9440();
+    if (state == 0) return (int)state;
+    ret = func_004c9200(a, b, c, state);
+    func_004c7040(state);
+    return ret;
 }
