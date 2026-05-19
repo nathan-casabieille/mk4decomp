@@ -317,24 +317,17 @@ extern unsigned int g_state_00f9facc;
 extern unsigned int g_state_00f9fad0;
 extern unsigned int g_state_00f9fad4;
 extern unsigned int g_state_00f9fad8;
-__declspec(naked) void InitGlobalsAndZero_004c9800(void) {
-    __asm {
-        push    edi
-        mov     ecx, 0x40
-        xor     eax, eax
-        mov     edi, 0x00f9f8c0
-        rep     stosd
-        stosb
-        xor     eax, eax
-        pop     edi
-        mov     dword ptr [g_state_00f9fac8], eax
-        mov     dword ptr [g_state_00fa0dc4], eax
-        mov     dword ptr [g_state_00f9facc], eax
-        mov     dword ptr [g_state_00f9fad0], eax
-        mov     dword ptr [g_state_00f9fad4], eax
-        mov     dword ptr [g_state_00f9fad8], eax
-        ret
-    }
+extern unsigned int g_data_00f9f8c0;
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+void InitGlobalsAndZero_004c9800(void) {
+    memset(&g_data_00f9f8c0, 0, 0x40 * 4 + 1);
+    g_state_00f9fac8 = 0;
+    g_state_00fa0dc4 = 0;
+    g_state_00f9facc = 0;
+    g_state_00f9fad0 = 0;
+    g_state_00f9fad4 = 0;
+    g_state_00f9fad8 = 0;
 }
 
 /* @addr 0x004cc2b0 (43b)
