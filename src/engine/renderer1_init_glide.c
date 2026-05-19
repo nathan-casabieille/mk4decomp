@@ -21,6 +21,15 @@
  * scratch slot).  The 32-element bit-pattern fill uses an
  * `and dl, 1; neg dl; sbb edx, edx; and edx, 7; or esi, edx`
  * idiom that no C body would reproduce.
+ *
+ * NB: pure-C conversion attempted at length (see notes below). Got
+ * within 26 bytes (592 vs 618 with stdcall casts + volatile dup
+ * stores + int-cast for g_glideTable2). MSVC SP3 caches the zero
+ * constant in EBX (callee-saved), emitting 27x `push ebx` (1b)
+ * instead of orig's `push 0` (2b); no #pragma optimize variant
+ * (g/s/t/w/a/p) nor source restructuring (volatile counter, register
+ * hints, separate locals, explicit constant expressions) coaxed
+ * MSVC into a caller-saved register for the zero. Kept as naked.
  */
 __declspec(naked) int Renderer1_Init_Glide(HWND hwnd)
 {
