@@ -251,23 +251,15 @@ void ScaledChainCallPauseSetJmp_0048f8e0(void) {
  *   ret
  */
 extern u32 g_pendingNodeType;
-__declspec(naked) void ScaledLoadJmpIfNonzero_00490e00(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueIdx]
-        xor     edx, edx
-        mov     ecx, dword ptr [eax*4 + 0x4c]
-        cmp     ecx, edx
-        mov     dword ptr [g_pendingNodeType], ecx
-        _emit   74h
-        _emit   18h
-        mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [eax*4 + 0x4c], edx
-        mov     eax, dword ptr [g_pendingNodeType]
-        cmp     eax, edx
-        _emit   74h
-        _emit   02h
-        jmp     eax
-        ret
+void ScaledLoadJmpIfNonzero_00490e00(void) {
+    unsigned int idx = g_eventQueueIdx;
+    unsigned int v = *(unsigned int *)(idx * 4 + 0x4c);
+    g_pendingNodeType = v;
+    if (v == 0) return;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(idx * 4 + 0x4c) = 0;
+    if (g_pendingNodeType != 0) {
+        ((void (*)(void))g_pendingNodeType)();
     }
 }
 
