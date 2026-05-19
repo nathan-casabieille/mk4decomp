@@ -205,28 +205,24 @@ __declspec(naked) void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
  *   if !=, set walk=2 (always); cmp 0x11; if !=, set walk=4 (always);
  *   add eax, walk → g_scaledInit; load *4+0 → g_scaledInit; jmp eax.
  */
-__declspec(naked) void ScaledChainCmpDispatch_0048e4f0(void) {
-    __asm {
-        mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_baseSel_00542060]
-        sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, dword ptr [ecx*4 + 0x34]
-        cmp     ecx, 0x10
-        mov     dword ptr [g_walkCallback], ecx
-        _emit   75h
-        _emit   0bh
-        mov     ecx, 2
-        mov     dword ptr [g_walkCallback], ecx
-        cmp     ecx, 0x11
-        _emit   75h
-        _emit   0bh
-        mov     ecx, 4
-        mov     dword ptr [g_walkCallback], ecx
-        add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        jmp     eax
+void ScaledChainCmpDispatch_0048e4f0(int arg) {
+    unsigned int idx = (unsigned int)(arg >> 2);
+    unsigned int walk;
+    unsigned int target;
+    g_scaledInit_00542044 = idx;
+    walk = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x34);
+    g_walkCallback = (void (*)(void))walk;
+    if (walk == 0x10) {
+        walk = 2;
+        g_walkCallback = (void (*)(void))walk;
     }
+    if (walk == 0x11) {
+        walk = 4;
+        g_walkCallback = (void (*)(void))walk;
+    }
+    idx += walk;
+    g_scaledInit_00542044 = idx;
+    target = *(unsigned int *)(idx * 4);
+    g_scaledInit_00542044 = target;
+    ((void (*)(void))target)();
 }
