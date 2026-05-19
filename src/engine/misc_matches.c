@@ -80,16 +80,10 @@ void Add0fJmp_0044ccd0(void) {
  *   add     esp, 4
  *   ret
  */
-extern unsigned int g_lit16_00542074;   /* alias of g_eventQueueWorkType (16-bit read) */
-extern int TaggedSceneDispatch_004be690(int);
-__declspec(naked) void Push16Call_00489f50(void) {
-    __asm {
-        mov     ax, word ptr [g_lit16_00542074]
-        push    eax
-        call    TaggedSceneDispatch_004be690
-        add     esp, 4
-        ret
-    }
+extern unsigned short g_lit16_00542074;
+extern int TaggedSceneDispatch_004be690(unsigned short);
+void Push16Call_00489f50(void) {
+    TaggedSceneDispatch_004be690(g_lit16_00542074);
 }
 
 /* @addr 0x00490130 (14b)
