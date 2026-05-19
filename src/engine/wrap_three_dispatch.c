@@ -33,59 +33,19 @@ extern int  Fread_004c5bb0(int a, int b, int c, int d);
 extern int  FWriteNoLock_004c5fc0(int a, int b, int c, int d);
 
 /* @addr 0x004c5b70 */
-__declspec(naked) void Helper_FRead(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 0x14]
-        push    edi
-        push    esi
-        call    RangePathIATDispatch_004c6ff0
-        mov     eax, dword ptr [esp + 0x18]
-        mov     ecx, dword ptr [esp + 0x14]
-        mov     edx, dword ptr [esp + 0x10]
-        add     esp, 4
-        push    esi
-        push    eax
-        push    ecx
-        push    edx
-        call    Fread_004c5bb0
-        add     esp, 0x10
-        mov     edi, eax
-        push    esi
-        call    RangePathIATDispatch_004c7060
-        add     esp, 4
-        mov     eax, edi
-        pop     edi
-        pop     esi
-        ret
-    }
+int Helper_FRead(int a, int b, int c, int fd) {
+    int ret;
+    RangePathIATDispatch_004c6ff0(fd);
+    ret = Fread_004c5bb0(a, b, c, fd);
+    RangePathIATDispatch_004c7060(fd);
+    return ret;
 }
 
 /* @addr 0x004c5f80 */
-__declspec(naked) void WrapThreeDispatch_004c5f80(void) {
-    __asm {
-        push    esi
-        mov     esi, dword ptr [esp + 0x14]
-        push    edi
-        push    esi
-        call    RangePathIATDispatch_004c6ff0
-        mov     eax, dword ptr [esp + 0x18]
-        mov     ecx, dword ptr [esp + 0x14]
-        mov     edx, dword ptr [esp + 0x10]
-        add     esp, 4
-        push    esi
-        push    eax
-        push    ecx
-        push    edx
-        call    FWriteNoLock_004c5fc0
-        add     esp, 0x10
-        mov     edi, eax
-        push    esi
-        call    RangePathIATDispatch_004c7060
-        add     esp, 4
-        mov     eax, edi
-        pop     edi
-        pop     esi
-        ret
-    }
+int WrapThreeDispatch_004c5f80(int a, int b, int c, int fd) {
+    int ret;
+    RangePathIATDispatch_004c6ff0(fd);
+    ret = FWriteNoLock_004c5fc0(a, b, c, fd);
+    RangePathIATDispatch_004c7060(fd);
+    return ret;
 }
