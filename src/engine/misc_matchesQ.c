@@ -135,27 +135,16 @@ void TableSearch_004be760(void) {
  *   ret
  */
 extern int func_004c3700(int);
-__declspec(naked) void IterateCallSkip_004c4210(void) {
-    __asm {
-        push    esi
-        push    edi
-        xor     esi, esi
-        mov     edi, 0x00f8fade
-        test    byte ptr [edi], 4
-        _emit   75h
-        _emit   09h
-        push    esi
-        call    func_004c3700
-        add     esp, 4
-        inc     esi
-        add     edi, 0x1c
-        cmp     si, 0x0898
-        _emit   7ch
-        _emit   0e7h
-        pop     edi
-        pop     esi
-        ret
-    }
+void IterateCallSkip_004c4210(void) {
+    int i = 0;
+    unsigned char *p = (unsigned char *)0x00f8fade;
+    do {
+        if ((*p & 4) == 0) {
+            func_004c3700(i);
+        }
+        i++;
+        p += 0x1c;
+    } while ((short)i < 0x0898);
 }
 
 /* @addr 0x004c45a0 (37b)
