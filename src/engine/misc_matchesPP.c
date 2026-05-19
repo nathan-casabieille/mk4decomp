@@ -476,28 +476,17 @@ __declspec(naked) void StoreFightFieldCallTailJmp_004667a0(void) {
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053a498;
-__declspec(naked) void ScaledIndexConditionalAdd_0048e400(void) {
-    __asm {
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, 0x00541ee8
-        push    esi
-        mov     esi, dword ptr [g_data_00538158]
-        shr     eax, 2
-        lea     eax, [eax + ecx*2]
-        xor     ecx, ecx
-        cmp     edx, esi
-        _emit   74h
-        _emit   05h
-        mov     ecx, 1
-        add     eax, ecx
-        mov     ecx, dword ptr [g_data_0053a498]
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [eax*4 + 0], ecx
-        pop     esi
-        ret
-    }
+extern unsigned int g_data_00541ee8;
+void ScaledIndexConditionalAdd_0048e400(void) {
+    unsigned int eax_v = ((unsigned int)&g_data_00541ee8 >> 2) + (unsigned int)g_walkCallback * 2;
+    unsigned int adj = 0;
+    unsigned int data;
+    if (g_fightGroupHead != g_data_00538158) adj = 1;
+    eax_v += adj;
+    data = g_data_0053a498;
+    g_scaledInit_00542044 = eax_v;
+    g_walkCallback = (void (*)(void))data;
+    *(unsigned int *)(eax_v * 4) = data;
 }
 
 /* @addr 0x0048e590 (69b)
