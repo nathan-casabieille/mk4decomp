@@ -2521,7 +2521,13 @@ functions:
     file: src/engine/guarded_sequels.c
   - addr: 0x004284a0
     name: GuardedLoopWithCallback_004284a0
-    size: 69
+    size: 27
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x004284c0
+    name: func_004284c0
+    size: 37
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c

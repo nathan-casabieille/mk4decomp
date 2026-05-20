@@ -365,41 +365,35 @@ skip_zero:
     }
 }
 
-/* @addr 0x004284a0 (69b)
- *   inc g_state_004d57ac, push 0x004284c0 onto stack[idx*4],
- *   jmp T1, 5 nops align;
- *   tail (at 0x4284c0): test dirty&4; if set, jmp T2;
- *   else dec g_eventQueueChild, if zero jmp T2, else jmp 0x4284a0
- *   (loop back to entry).
- */
+/* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (func_004284c0)
+ * and tail-jmp into the indirect-call dispatcher. Entry A of the original
+ * 69-byte packed block; the 5-byte nop gap to entry B is filled by 0x90-fill. */
 extern void EsiInstallChainCallIndirect_00428680(void);
 extern void func_0041f780_pp(void);
-__declspec(naked) void GuardedLoopWithCallback_004284a0(void) {
+extern void func_004284c0(void);
+void GuardedLoopWithCallback_004284a0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&func_004284c0;
+    EsiInstallChainCallIndirect_00428680();
+}
+
+/* @addr 0x004284c0 (37b): if (dirty & 4) tail-jmp func_0041f780_pp;
+ *   else dec g_eventQueueChild; if zero tail-jmp func_0041f780_pp;
+ *   else loop back to GuardedLoopWithCallback_004284a0 (e9 c0 ff ff ff,
+ *   rel32=-0x40). The internal je+e9+jmp roundabout via cross-function
+ *   tail-jmp into the entry-A symbol can't be coaxed from pure C; keep naked. */
+__declspec(naked) void func_004284c0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], 0x004284c0
-        jmp     EsiInstallChainCallIndirect_00428680
-        nop
-        nop
-        nop
-        nop
-        nop
         test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   05h
+        je      short L_g4_continue
         jmp     func_0041f780_pp
+L_g4_continue:
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
-        _emit   74h
-        _emit   05h
-        _emit   0e9h
-        _emit   0c0h
-        _emit   0ffh
-        _emit   0ffh
-        _emit   0ffh
+        je      short L_g4_done
+        jmp     GuardedLoopWithCallback_004284a0
+L_g4_done:
         jmp     func_0041f780_pp
     }
 }
