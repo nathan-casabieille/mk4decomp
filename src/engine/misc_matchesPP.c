@@ -2093,36 +2093,18 @@ void ScaledChainStore24_004a7d40(void) {
  *   stage compares walk against a different global (538158, 538158
  *   again, 53815c) and either keeps or removes the bit-4 flag.
  */
-__declspec(naked) void ThreeStageDirtyToggle_004ac1a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     ecx, dword ptr [g_data_00538158]
-        mov     edx, 4
-        push    esi
-        or      eax, edx
-        mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, dword ptr [g_walkCallback]
-        cmp     eax, ecx
-        _emit   74h
-        _emit   2dh
-        mov     esi, dword ptr [g_xformDirtyFlags]
-        xor     esi, edx
-        cmp     eax, ecx
-        mov     dword ptr [g_xformDirtyFlags], esi
-        _emit   74h
-        _emit   1bh
-        mov     ecx, dword ptr [g_data_0053815c]
-        or      esi, edx
-        cmp     ecx, eax
-        mov     dword ptr [g_xformDirtyFlags], esi
-        _emit   74h
-        _emit   09h
-        mov     eax, esi
-        xor     eax, edx
-        mov     dword ptr [g_xformDirtyFlags], eax
-        pop     esi
-        ret
-    }
+void ThreeStageDirtyToggle_004ac1a0(void) {
+    unsigned int dirty;
+    g_xformDirtyFlags |= 4;
+    if (g_walkCallback == g_data_00538158) return;
+    dirty = g_xformDirtyFlags ^ 4;
+    g_xformDirtyFlags = dirty;
+    if (g_walkCallback == g_data_00538158) return;
+    dirty |= 4;
+    g_xformDirtyFlags = dirty;
+    if (g_data_0053815c == (unsigned int)g_walkCallback) return;
+    dirty ^= 4;
+    g_xformDirtyFlags = dirty;
 }
 
 /* @addr 0x004b5c90 (80b)
