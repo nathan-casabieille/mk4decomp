@@ -41,8 +41,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
         call    State208cBit0Flag_0048f160
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
-        _emit   75h
-        _emit   26h
+        jne     short L_mscpd_ret_a
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
@@ -50,9 +49,9 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
         mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
         mov     dword ptr [g_walkCallback], edx
-        _emit   74h
-        _emit   05h
+        je      short L_mscpd_ret_a
         jmp     MStackCjChainSwapDualCall_0042cd30
+L_mscpd_ret_a:
         ret
     }
 }
@@ -68,8 +67,7 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cce0(void) {
         call    GuardedRangeCmpToggle_0048f210
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
-        _emit   75h
-        _emit   26h
+        jne     short L_mscpd_ret_b
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
@@ -77,9 +75,9 @@ __declspec(naked) void MStackPushCallPopDirtyJmp_0042cce0(void) {
         mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
         mov     dword ptr [g_walkCallback], edx
-        _emit   74h
-        _emit   05h
+        je      short L_mscpd_ret_b
         jmp     MStackCjChainSwapDualCall_0042cd30
+L_mscpd_ret_b:
         ret
     }
 }
