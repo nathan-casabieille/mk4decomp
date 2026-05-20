@@ -316,53 +316,31 @@ void NodeApplyTransform_C_Direct(void)
 extern void InitOrAllZeroLoopback_004bdb00(void);
 
 /* @addr 0x004bdc70 (48b game) - dispatch on 3-entry probe at (g_xformEntityIdx*4)+{0,4,8}.
- * If any of the 3 entries is non-zero, tail-jmp to NodeApplyTransform_B; else tail-jmp
- * to InitOrAllZeroLoopback_004bdb00. Bytes match orig including the disp32=0 SIB form
- * (no base symbol, raw pointer arithmetic - same pattern as the _Direct variants).
- */
-__declspec(naked) void DispatchProbeOrTransformB_004bdc70(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        cmp     dword ptr [eax*4 + 0], 0
-        jne     L_dispatch
-        mov     ecx, dword ptr [eax*4 + 4]
-        test    ecx, ecx
-        jne     L_dispatch
-        mov     ecx, dword ptr [eax*4 + 8]
-        test    ecx, ecx
-        jne     L_dispatch
-        jmp     InitOrAllZeroLoopback_004bdb00
-    L_dispatch:
-        _emit   0e9h
-        _emit   01h
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        _emit   90h
+ * If any of the 3 entries is non-zero, tail-jmp NodeApplyTransform_B (the immediately
+ * following function at 0x004bdca0, encoded as e9 01 00 00 00); else tail-jmp
+ * InitOrAllZeroLoopback_004bdb00. The trailing 0x90 byte at offset 47 is orig padding
+ * that the synth's 0x90-fill restores. */
+void DispatchProbeOrTransformB_004bdc70(void) {
+    unsigned int idx = g_xformEntityIdx;
+    if (*(unsigned int *)(idx * 4 + 0) == 0 &&
+        *(unsigned int *)(idx * 4 + 4) == 0 &&
+        *(unsigned int *)(idx * 4 + 8) == 0) {
+        InitOrAllZeroLoopback_004bdb00();
+        return;
     }
+    NodeApplyTransform_B();
 }
 
 /* @addr 0x004bddc0 (48b game) - sibling of DispatchProbeOrTransformB_004bdc70: same dispatch pattern,
  * but second tail-jmp targets NodeApplyTransform_C instead of _B (rel32=0xa1).
  */
-__declspec(naked) void DispatchProbeOrTransformC_004bddc0(void) {
-    __asm {
-        mov     eax, dword ptr [g_xformEntityIdx]
-        cmp     dword ptr [eax*4 + 0], 0
-        jne     L_dispatch
-        mov     ecx, dword ptr [eax*4 + 4]
-        test    ecx, ecx
-        jne     L_dispatch
-        mov     ecx, dword ptr [eax*4 + 8]
-        test    ecx, ecx
-        jne     L_dispatch
-        jmp     InitOrAllZeroLoopback_004bdb00
-    L_dispatch:
-        _emit   0e9h
-        _emit   0a1h
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        _emit   90h
+void DispatchProbeOrTransformC_004bddc0(void) {
+    unsigned int idx = g_xformEntityIdx;
+    if (*(unsigned int *)(idx * 4 + 0) == 0 &&
+        *(unsigned int *)(idx * 4 + 4) == 0 &&
+        *(unsigned int *)(idx * 4 + 8) == 0) {
+        InitOrAllZeroLoopback_004bdb00();
+        return;
     }
+    NodeApplyTransform_C();
 }
