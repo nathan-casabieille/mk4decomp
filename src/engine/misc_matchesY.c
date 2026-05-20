@@ -71,31 +71,24 @@ void ScaledLoad1cZeroAndFE_00446640(void) {
  */
 extern void MStackCall_00406340(void);
 extern void Cmp2OrSet0b_0048e3e0(void);
-__declspec(naked) void ScaledLoadJmpPauseSetMax_00446880(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
-        jmp     MStackCall_00406340
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        call    Cmp2OrSet0b_0048e3e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     eax, 0xfff
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00537e94], eax
-        ret
-    }
+/* Entry A (23b @ 0x00446880): load baseSel[+0x4c] into g_scaledInit,
+ * tail-jmp MStackCall_00406340. Entry B (sub-entry at +0x20) lives in
+ * func_004468a0. The 9-byte nop gap is filled by 0x90-fill. */
+void ScaledLoadJmpPauseSetMax_00446880(void) {
+    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x4c);
+    MStackCall_00406340();
+}
+
+/* @addr 0x004468a0 (30b): call Cmp2OrSet0b, then if !pause set both
+ * g_walkCallback and g_state_00537e94 to 0xfff. Orphan sub-entry of the
+ * original packed 62-byte block. */
+void func_004468a0(void) {
+    int v;
+    Cmp2OrSet0b_0048e3e0();
+    if (g_framePauseFlag != 0) return;
+    v = 0xfff;
+    g_walkCallback = (void (*)(void))v;
+    g_state_00537e94 = v;
 }
 
 /* @addr 0x004390f0 (62b)

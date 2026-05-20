@@ -5389,7 +5389,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00446880
     name: ScaledLoadJmpPauseSetMax_00446880
-    size: 62
+    size: 23
+    group: game
+    status: matched
+    file: src/engine/misc_matchesY.c
+  - addr: 0x004468a0
+    name: func_004468a0
+    size: 30
     group: game
     status: matched
     file: src/engine/misc_matchesY.c
