@@ -159,32 +159,19 @@ extern void func_0048acb0(void);
 extern void IndirectDispatchCjStore_0048ae50(void);
 extern void LazyAllocOrPush_0048abe0(void);
 extern void func_0041f780_zz(void);
-/* This is a packed-helpers block: the main entry runs at 0x48ac70, but
- * the unreachable trailing `ret; nop; nop; ret` at 0x48acb0 is the body
- * of the inline `func_0048acb0` callback referenced by g_eventQueueChild.
- * Converting the main to pure C would drop the trailing entry; kept as
- * naked to preserve both. */
-__declspec(naked) void InitStateDualCall48ac70_0048ac70(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_0052ab10]
-        mov     dword ptr [g_eventQueueChild], OFFSET func_0048acb0
-        mov     dword ptr [g_fightGroupHead], eax
-        add     eax, 0x15
-        mov     dword ptr [g_eventQueueTotal], eax
-        call    IndirectDispatchCjStore_0048ae50
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   13h
-        call    LazyAllocOrPush_0048abe0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0041f780_zz
-        ret
-        nop
-        nop
-        ret
-    }
+/* @addr 0x0048ac70 (62b): state init + dual call/pause-gate chain;
+ * sets g_eventQueueChild to OFFSET func_0048acb0 (the trailing inline
+ * `ret` stub at offset 0x40), then primes fightGroupHead/total from
+ * g_state_0052ab10. The 2-byte nop gap + 1-byte `ret` stub at the
+ * function tail are filled by 0x90-fill + the existing stub in stubs.c. */
+void InitStateDualCall48ac70_0048ac70(void) {
+    unsigned int v = g_state_0052ab10;
+    g_eventQueueChild = (unsigned int)&func_0048acb0;
+    g_fightGroupHead = v;
+    g_eventQueueTotal = v + 0x15;
+    IndirectDispatchCjStore_0048ae50();
+    if (g_framePauseFlag != 0) return;
+    LazyAllocOrPush_0048abe0();
+    if (g_framePauseFlag != 0) return;
+    func_0041f780_zz();
 }

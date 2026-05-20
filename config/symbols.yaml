@@ -10291,7 +10291,7 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0048ac70
     name: InitStateDualCall48ac70_0048ac70
-    size: 65
+    size: 62
     group: game
     status: matched
     file: src/engine/misc_matchesZ.c
