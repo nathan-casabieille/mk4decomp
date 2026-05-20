@@ -9367,7 +9367,13 @@ functions:
     file: src/engine/misc_matchesLL.c
   - addr: 0x00482eb0
     name: DualPushCallPause_00482eb0
-    size: 53
+    size: 36
+    group: game
+    status: matched
+    file: src/engine/misc_matchesW.c
+  - addr: 0x00482ee0
+    name: func_00482ee0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesW.c

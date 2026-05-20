@@ -199,52 +199,24 @@ void Set1017CallPausePush_0047e600(void) {
     func_0046d4d8(&g_data_004ed5e0);
 }
 
-/* @addr 0x00482eb0 (53b)
- *   push    0x004ee340
- *   call    F1
- *   mov     eax, [g_framePauseFlag]
- *   add     esp, 4
- *   test    eax, eax
- *   jne     +0x0d
- *   push    0x004ee348
- *   call    F2
- *   add     esp, 4
- *   ret
- *   nop * 12
- *   jmp     +0xb
- */
+/* @addr 0x00482eb0 (36b): push F1-arg + call + pause + push F2-arg + call.
+ * Entry A of the original 53-byte packed block; the 5-byte tail-jmp
+ * sub-entry at +0x30 (func_00482ee0) is split into its own symbol.
+ * The 12-byte nop gap is filled by 0x90-fill. */
 extern int func_004907bc(void *);
 extern int func_00459500(void *);
 extern void *g_data_004ee340;
 extern void *g_data_004ee348;
 extern void func_00482eec(void);
-__declspec(naked) void DualPushCallPause_00482eb0(void) {
-    __asm {
-        push    OFFSET g_data_004ee340
-        call    func_004907bc
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   0dh
-        push    OFFSET g_data_004ee348
-        call    func_00459500
-        add     esp, 4
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     func_00482eec
-    }
+void DualPushCallPause_00482eb0(void) {
+    func_004907bc(&g_data_004ee340);
+    if (g_framePauseFlag != 0) return;
+    func_00459500(&g_data_004ee348);
+}
+
+/* @addr 0x00482ee0 (5b): tail-jmp into func_00482eec sub-entry. */
+void func_00482ee0(void) {
+    func_00482eec();
 }
 
 /* @addr 0x00484b00 (56b)
