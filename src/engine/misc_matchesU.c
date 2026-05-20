@@ -98,17 +98,17 @@ __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
         call    GuardedChainCmpDualBitXor_004299a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
-        _emit   75h
-        _emit   29h
+        jne     short L_cpsdj_ret
         mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x28]
         dec     ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        _emit   78h
-        _emit   05h
+        js      short L_cpsdj_neg
         jmp     func_004296d8
+L_cpsdj_neg:
         mov     dword ptr [g_eventQueueCurrent], 0
         jmp     func_004296fb
+L_cpsdj_ret:
         ret
     }
 }

@@ -649,13 +649,19 @@ def _toggle_compound(line):
 
 
 def _toggle_shift_mul(line):
-    """Toggle `x * (1<<N)` <-> `x << N` for power-of-2 multipliers."""
-    # x * 4  ->  x << 2
+    """Toggle `x * (1<<N)` <-> `x << N` for power-of-2 multipliers.
+
+    Wraps the result in parens because `<<` has lower precedence than `+`,
+    so `g_x * 4 + 8` becoming `g_x << 2 + 8` would silently change semantics
+    to `g_x << 10`. With parens: `(g_x << 2) + 8` preserves the original
+    arithmetic.
+    """
+    # x * 4  ->  (x << 2)
     def shl(m):
         n = int(m.group(2))
         if n & (n - 1) == 0 and n > 1:
             shift = n.bit_length() - 1
-            return f'{m.group(1)} << {shift}'
+            return f'({m.group(1)} << {shift})'
         return m.group(0)
     return re.sub(r'(\w+(?:\.\w+|\[[^\]]+\])*)\s*\*\s*(\d+)', shl, line)
 
