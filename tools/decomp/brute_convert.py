@@ -501,6 +501,139 @@ def variants_perm_decls(fn_text, max_n=24):
 MATRICES['perm_decls'] = None  # marker - handled specially in main()
 
 
+# Match a "simple global store" line in a function body:
+#     <global> = <expr>;
+# where <global> is a single identifier (not a deref). Used by
+# helpers_split to find consecutive distinct stores.
+_STORE_RE = re.compile(
+    r'^(\s*)(g_\w+)\s*=\s*([^;]+?);\s*$'
+)
+
+
+def find_store_sequence(body_lines):
+    """Find the longest run of consecutive direct-global stores in body_lines.
+
+    Returns (start_idx, end_idx, [(line_idx, indent, global_name, expr), ...])
+    or None if no run of length >= 3 found.
+    """
+    runs = []
+    cur = []
+    for i, ln in enumerate(body_lines):
+        m = _STORE_RE.match(ln)
+        if m:
+            cur.append((i, m.group(1), m.group(2), m.group(3).strip()))
+        else:
+            if len(cur) >= 3:
+                runs.append(cur)
+            cur = []
+    if len(cur) >= 3:
+        runs.append(cur)
+    if not runs:
+        return None
+    # Pick the longest run
+    longest = max(runs, key=len)
+    start_idx = longest[0][0]
+    end_idx = longest[-1][0]
+    return start_idx, end_idx, longest
+
+
+def variants_helpers_split(fn_text):
+    """Generate helper-split variants of an existing pure-C function.
+
+    Finds a run of consecutive direct global stores in the body and
+    tries replacing them with helper-function call patterns:
+    - all-inline (baseline)
+    - single N-arg helper
+    - N separate single-arg helpers
+    - 2-then-rest split
+    """
+    head, decls, body, tail = parse_decl_block(fn_text)
+    if body is None:
+        # No decl block - try whole function
+        lines = fn_text.split('\n')
+        open_idx = None
+        for i, ln in enumerate(lines):
+            if ln.rstrip().endswith('{'):
+                open_idx = i
+                break
+        if open_idx is None:
+            return
+        head = lines[:open_idx+1]
+        decls = []
+        body = lines[open_idx+1:-1]
+        tail = lines[-1]
+
+    run = find_store_sequence(body)
+    if run is None:
+        return
+    start_idx, end_idx, store_list = run
+
+    # Unique global names (lose duplicates)
+    seen_globals = []
+    unique_stores = []
+    for i, indent, g, expr in store_list:
+        if g in seen_globals:
+            continue
+        seen_globals.append(g)
+        unique_stores.append((i, indent, g, expr))
+
+    if len(unique_stores) < 3:
+        return
+
+    n = len(unique_stores)
+    if n > 6:
+        unique_stores = unique_stores[:6]
+        n = 6
+
+    # Find the function name (for helper naming hash)
+    fn_name_match = re.search(r'\b(\w+)\s*\(', '\n'.join(head))
+    fn_name = fn_name_match.group(1) if fn_name_match else 'fn'
+    suffix = re.sub(r'[^a-zA-Z0-9]', '_', fn_name)[-12:]
+
+    indent = unique_stores[0][1]
+
+    def emit_helpers_separate(stores_to_split):
+        """Emit N separate single-arg static __inline helpers."""
+        helpers = []
+        calls = []
+        for j, (_, _, g, expr) in enumerate(stores_to_split):
+            hname = f'_set_{j}_{suffix}'
+            # Determine cast: if g is a function pointer name, use cast
+            if 'walkCallback' in g or 'Callback' in g:
+                helpers.append(f'static __inline void {hname}(unsigned int v) {{ {g} = (void (*)(void))v; }}')
+                calls.append(f'{indent}{hname}({expr});')
+            else:
+                helpers.append(f'static __inline void {hname}(unsigned int v) {{ {g} = v; }}')
+                calls.append(f'{indent}{hname}({expr});')
+        return helpers, calls
+
+    # Variant 1: all separate single-arg helpers
+    for cast_walkcb in (False,):  # only relevant variant
+        helpers, calls = emit_helpers_separate(unique_stores)
+        # Build full function
+        new_body = body[:start_idx] + calls + body[end_idx+1:]
+        full = '\n'.join(helpers) + '\n' + '\n'.join(head + decls + new_body + [tail])
+        yield 'separate_helpers', full
+
+    # Variant 2: single N-arg helper
+    helper_args = ', '.join(f'unsigned int a{j}' for j in range(n))
+    helper_body = []
+    for j, (_, _, g, _) in enumerate(unique_stores):
+        if 'Callback' in g:
+            helper_body.append(f'{g} = (void (*)(void))a{j};')
+        else:
+            helper_body.append(f'{g} = a{j};')
+    helper = f'static __inline void _set_n_{suffix}({helper_args}) {{ {" ".join(helper_body)} }}'
+    call_args = ', '.join(s[3] for s in unique_stores)
+    new_calls = [f'{indent}_set_n_{suffix}({call_args});']
+    new_body = body[:start_idx] + new_calls + body[end_idx+1:]
+    full = helper + '\n' + '\n'.join(head + decls + new_body + [tail])
+    yield 'single_nargs', full
+
+
+MATRICES['helpers_split'] = None  # marker
+
+
 # --- driver ---------------------------------------------------------
 
 def update_forward_decls(src, func_name, new_type):
@@ -558,6 +691,16 @@ def main():
         variants = list(variants_perm_decls(fn_text))[:args.max]
         if not variants:
             print('ERROR: perm_decls found no permutable decl block (need >= 2 scalar decls at function head)',
+                  file=sys.stderr)
+            sys.exit(2)
+    elif args.matrix == 'helpers_split':
+        if is_naked:
+            print('ERROR: helpers_split requires a pure-C function (not naked). Convert first.',
+                  file=sys.stderr)
+            sys.exit(2)
+        variants = list(variants_helpers_split(fn_text))[:args.max]
+        if not variants:
+            print('ERROR: helpers_split found no run of >=3 consecutive direct global stores',
                   file=sys.stderr)
             sys.exit(2)
     elif args.matrix:
