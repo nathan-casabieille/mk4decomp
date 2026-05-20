@@ -191,18 +191,18 @@ __declspec(naked) void DecCallPushCall_00466090(void) {
         dec     eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_0053a238], eax
-        _emit   74h
-        _emit   05h
+        je      short L_dcpc_body
         jmp     TripleBlockInstallSelf_00465ef0
+L_dcpc_body:
         mov     dword ptr [g_walkCallback], 6
         call    AndShlStore_00409280
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
-        _emit   75h
-        _emit   0dh
+        jne     short L_dcpc_ret
         push    OFFSET g_data_004ea990
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
+L_dcpc_ret:
         ret
     }
 }
