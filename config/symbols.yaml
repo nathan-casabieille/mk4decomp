@@ -11929,7 +11929,19 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00497b10
     name: CallPauseJmpThenSetChild_00497b10
-    size: 63
+    size: 20
+    group: game
+    status: matched
+    file: src/engine/misc_matchesHH.c
+  - addr: 0x00497b30
+    name: func_00497b30
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesHH.c
+  - addr: 0x00497b40
+    name: func_00497b40
+    size: 15
     group: game
     status: matched
     file: src/engine/misc_matchesHH.c

@@ -37,41 +37,29 @@ void ScaledTestChainDispatch_00424ba0(void) {
     Mul10HeavyTransform_00424bf0();
 }
 
-/* @addr 0x00497b10 (63b)
- *   call F; pause-test → ret; jmp T1; nop padding (12);
- *   set g_eventQueueChild = 1; jmp T2; nop;
- *   set g_eventQueueChild = 0; jmp T2 (a 2-stub block joined together).
- */
+/* @addr 0x00497b10 (20b): MStackCall + pause-gated tail-jmp to CallSetPause.
+ * Entry A of the original 63-byte packed block; entries B (set child=1) and
+ * C (set child=0) live in func_00497b30 / func_00497b40. The 12-byte nop gap
+ * before entry B is filled by 0x90-fill. */
 extern void MStackCall_00406740(void);
 extern void CallSetPause_0041f830(void);
 extern void PunchDispatcherCluster_00497b50(void);
-__declspec(naked) void CallPauseJmpThenSetChild_00497b10(void) {
-    __asm {
-        call    MStackCall_00406740
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     CallSetPause_0041f830
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        mov     dword ptr [g_eventQueueChild], 1
-        jmp     PunchDispatcherCluster_00497b50
-        nop
-        mov     dword ptr [g_eventQueueChild], 0
-        jmp     PunchDispatcherCluster_00497b50
-    }
+void CallPauseJmpThenSetChild_00497b10(void) {
+    MStackCall_00406740();
+    if (g_framePauseFlag != 0) return;
+    CallSetPause_0041f830();
+}
+
+/* @addr 0x00497b30 (15b): set g_eventQueueChild = 1; tail-jmp PunchDispatcher. */
+void func_00497b30(void) {
+    g_eventQueueChild = 1;
+    PunchDispatcherCluster_00497b50();
+}
+
+/* @addr 0x00497b40 (15b): set g_eventQueueChild = 0; tail-jmp PunchDispatcher. */
+void func_00497b40(void) {
+    g_eventQueueChild = 0;
+    PunchDispatcherCluster_00497b50();
 }
 
 /* @addr 0x004c5800 (61b)
