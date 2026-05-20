@@ -27,24 +27,20 @@ extern unsigned int g_acc_00542078;
 extern void func_0042fb6c(void);
 extern void func_0042fc62(void);
 extern void func_0042f87c(void);
-__declspec(naked) void SubCmpCallPauseJmp_0042fc40(void) {
-    __asm {
-        mov     eax, dword ptr [g_eventQueueWorkType]
-        mov     ecx, dword ptr [g_acc_00542078]
-        sub     eax, 0x0a3d
-        cmp     ecx, eax
-        mov     dword ptr [g_eventQueueWorkType], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_0042fb6c
-        call    func_0042fc62
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0042f87c
-        ret
+void SubCmpCallPauseJmp_0042fc40(void) {
+    unsigned int new_wt;
+    int acc;
+    new_wt = g_eventQueueWorkType;
+    new_wt -= 0x0a3d;
+    acc = (int)g_acc_00542078;
+    g_eventQueueWorkType = new_wt;
+    if (acc > (int)new_wt) {
+        func_0042fb6c();
+        return;
     }
+    func_0042fc62();
+    if (g_framePauseFlag != 0) return;
+    func_0042f87c();
 }
 
 /* @addr 0x00431da0 (47b)
