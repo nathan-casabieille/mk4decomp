@@ -223,54 +223,27 @@ __declspec(naked) void MStackPushSet4Jmp_004384f0(void) {
     }
 }
 
-/* @addr 0x00439190 (52b)
- *   call    F1
- *   mov     eax, [g_framePauseFlag]
- *   test    eax, eax
- *   jne     +5
- *   jmp     T1
- *   ret
- *   nop * 11
- *   call    F2
- *   mov     eax, [g_framePauseFlag]
- *   test    eax, eax
- *   jne     +5
- *   jmp     T2
- *   ret
- */
+/* @addr 0x00439190 (20b): call F1; if pause, ret; else tail-jmp T1.
+ *   Originally a 52-byte slot covering this 20-byte entry plus a 12-byte
+ *   nop gap and a twin 20-byte entry at +0x20 (func_004391b0). Split into
+ *   two pure-C functions; the gap is filled by the synth via 0x90-fill. */
 extern void func_00423c10(void);
 extern void func_00423bf0(void);
 extern void func_00477670(void);
 extern void func_0046f680(void);
-__declspec(naked) void DualCallPauseJmpDual_00439190(void) {
-    __asm {
-        call    func_00423c10
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00477670
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        call    func_00423bf0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0046f680
-        ret
-    }
+void DualCallPauseJmpDual_00439190(void) {
+    func_00423c10();
+    if (g_framePauseFlag != 0) return;
+    func_00477670();
+}
+
+/* @addr 0x004391b0 (20b): twin of DualCallPauseJmpDual_00439190 at +0x20 in
+ * the original packed slot. Reached via OFFSET func_004391b0 references
+ * (e.g. from misc_matchesF.c). */
+void func_004391b0(void) {
+    func_00423bf0();
+    if (g_framePauseFlag != 0) return;
+    func_0046f680();
 }
 
 /* @addr 0x00439680 (54b)

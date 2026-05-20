@@ -4381,7 +4381,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439190
     name: DualCallPauseJmpDual_00439190
-    size: 52
+    size: 20
+    group: game
+    status: matched
+    file: src/engine/misc_matchesT.c
+  - addr: 0x004391b0
+    name: func_004391b0
+    size: 20
     group: game
     status: matched
     file: src/engine/misc_matchesT.c
