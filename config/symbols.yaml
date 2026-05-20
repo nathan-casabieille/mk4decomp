@@ -4075,7 +4075,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004370e0
     name: CallPauseJmpStateInit_004370e0
-    size: 84
+    size: 20
+    group: game
+    status: matched
+    file: src/engine/misc_matchesOO.c
+  - addr: 0x00437100
+    name: func_00437100
+    size: 52
     group: game
     status: matched
     file: src/engine/misc_matchesOO.c

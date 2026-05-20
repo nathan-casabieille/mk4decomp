@@ -93,49 +93,31 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
     }
 }
 
-/* @addr 0x004370e0 (84b)
- *   call F1; pause → jmp T1; ret; nop * 12;
- *   call F1 (same); pause → ret; inc g_state_004d57ac; set walk=3;
- *   push 0x00439190 onto stack[idx*4]; jmp T2.
- */
+/* @addr 0x004370e0 (20b): call LeaPlus22StoreSelf; if !pause tail-jmp
+ * func_0046ca80. Entry A of the original 84-byte packed block; entry B
+ * (at +0x20) lives in func_00437100. The 12-byte nop gap is filled
+ * by 0x90-fill. */
 extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern void func_0046ca80(void);
 extern void DualCallPauseJmpDual_00439190(void);
 extern void func_00471270(void);
-__declspec(naked) void CallPauseJmpStateInit_004370e0(void) {
-    __asm {
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_0046ca80
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_walkCallback], 3
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET DualCallPauseJmpDual_00439190
-        jmp     func_00471270
-        ret
-    }
+void CallPauseJmpStateInit_004370e0(void) {
+    LeaPlus22StoreSelf_0048e4d0();
+    if (g_framePauseFlag != 0) return;
+    func_0046ca80();
+}
+
+/* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
+ * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp func_00471270.
+ * Orphan sub-entry of the original packed block. */
+void func_00437100(void) {
+    LeaPlus22StoreSelf_0048e4d0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))3;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) =
+        (unsigned int)&DualCallPauseJmpDual_00439190;
+    func_00471270();
 }
 
 /* @addr 0x00490650 (84b)
