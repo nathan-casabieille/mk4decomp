@@ -782,43 +782,37 @@ void ClearTwoCallSetStore_004a2270(void) {
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x0c) = 0x1000;
 }
 
-/* @addr 0x00459fc0 (73b)
- *   Inc g_state_004d57ac, push 0x459fe0 onto stack[idx*4], jmp T;
- *   5 nops align; tail at 0x459fe0:
- *   double "dec g_eventQueueChild; if zero jmp T1" with same target,
- *   else jmp 0x459fc0 (loop back to entry).
- */
+/* @addr 0x00459fc0 (27b): mstack-push func_00459fe0 onto stack[idx*4], tail-jmp
+ * Phase3IndirectInstallChain_0045a010. Entry A of the original 73-byte packed
+ * block; entry B (loop body) lives in func_00459fe0. */
 extern void Phase3IndirectInstallChain_0045a010(void);
 extern void PendingMatch_00459510(void);
-__declspec(naked) void GuardedTwiceLoopback_00459fc0(void) {
+extern void func_00459fe0(void);
+void GuardedTwiceLoopback_00459fc0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&func_00459fe0;
+    Phase3IndirectInstallChain_0045a010();
+}
+
+/* @addr 0x00459fe0 (41b): loop body - double "dec g_eventQueueChild; if zero
+ * tail-jmp PendingMatch_00459510", else loop back to GuardedTwiceLoopback_00459fc0
+ * (e9 b7 ff ff ff = rel32 -0x49). The 5-byte nop gap before this entry is
+ * filled by 0x90-fill. */
+__declspec(naked) void func_00459fe0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], 0x00459fe0
-        jmp     Phase3IndirectInstallChain_0045a010
-        nop
-        nop
-        nop
-        nop
-        nop
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
-        _emit   75h
-        _emit   05h
+        jne     short L_gtl_check2
         jmp     PendingMatch_00459510
+L_gtl_check2:
         mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
         mov     dword ptr [g_eventQueueChild], eax
-        _emit   75h
-        _emit   05h
+        jne     short L_gtl_loop
         jmp     PendingMatch_00459510
-        _emit   0e9h
-        _emit   0b7h
-        _emit   0ffh
-        _emit   0ffh
-        _emit   0ffh
+L_gtl_loop:
+        jmp     GuardedTwiceLoopback_00459fc0
     }
 }
 

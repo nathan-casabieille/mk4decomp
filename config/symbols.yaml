@@ -6319,7 +6319,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00459fc0
     name: GuardedTwiceLoopback_00459fc0
-    size: 73
+    size: 27
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x00459fe0
+    name: func_00459fe0
+    size: 41
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c
