@@ -419,6 +419,88 @@ MATRICES = {
 }
 
 
+# --- generic variant generators (work on any function) -------------
+
+# Match a simple local declaration line at the function head:
+#     <type> <name>;
+# where <type> is a single token like `unsigned`, `int`, `unsigned int`,
+# or two-token `unsigned int` / `signed char`. We restrict to scalar
+# types to keep ordering safe.
+_DECL_RE = re.compile(
+    r'^(\s*)((?:unsigned\s+|signed\s+)?(?:int|char|short|long|u(?:8|16|32)|s(?:8|16|32)))\s+(\w+)\s*;\s*$'
+)
+
+
+def parse_decl_block(fn_text):
+    """Return (head_lines, decl_lines, body_lines, tail_line).
+
+    head_lines: lines from start (signature, opening brace, leading comments) up to the
+                first matched declaration line.
+    decl_lines: consecutive declaration lines parsed via _DECL_RE.
+    body_lines: everything after the declaration block up to the closing brace.
+    tail_line:  the closing `}` line.
+    Returns (None, None, None, None) if no decl block found.
+    """
+    lines = fn_text.split('\n')
+    # Find the opening brace
+    open_idx = None
+    for i, ln in enumerate(lines):
+        if ln.rstrip().endswith('{'):
+            open_idx = i
+            break
+    if open_idx is None:
+        return None, None, None, None
+    # Find consecutive decl lines after the opening brace
+    decls = []
+    body_start = open_idx + 1
+    while body_start < len(lines):
+        m = _DECL_RE.match(lines[body_start])
+        if not m:
+            break
+        decls.append((lines[body_start], m.group(3)))  # (raw_line, var_name)
+        body_start += 1
+    if len(decls) < 2:
+        return None, None, None, None
+    head_lines = lines[:open_idx + 1]
+    decl_lines = [d[0] for d in decls]
+    body_lines = lines[body_start:-1]  # everything between decls and final `}`
+    tail_line = lines[-1]
+    return head_lines, decl_lines, body_lines, tail_line
+
+
+def variants_perm_decls(fn_text, max_n=24):
+    """Generate variants by permuting the local-declaration block.
+
+    Works on already-pure-C function. Useful when MSVC's natural decl-order
+    register allocation differs from orig - reordering decls flips it.
+
+    Yields (name, full_function_text). Skips if the function has < 2 decls
+    in the head block.
+    """
+    head, decls, body, tail = parse_decl_block(fn_text)
+    if decls is None:
+        return
+    n = len(decls)
+    if n < 2:
+        return
+    # Cap at 24 (4!) to keep the search space manageable
+    perms = list(itertools.permutations(range(n)))
+    if len(perms) > max_n:
+        perms = perms[:max_n]
+    for perm in perms:
+        new_decls = [decls[i] for i in perm]
+        lines = head + new_decls + body + [tail]
+        order_names = []
+        for i in perm:
+            # Extract var name from decl line
+            m = _DECL_RE.match(decls[i])
+            order_names.append(m.group(3) if m else f'd{i}')
+        yield f'decl_order=' + '_'.join(order_names), '\n'.join(lines)
+
+
+MATRICES['perm_decls'] = None  # marker - handled specially in main()
+
+
 # --- driver ---------------------------------------------------------
 
 def update_forward_decls(src, func_name, new_type):
@@ -467,6 +549,17 @@ def main():
     if args.variant_file:
         with open(args.variant_file) as f:
             variants = [('variant_file', f.read())]
+    elif args.matrix == 'perm_decls':
+        # Generic permutation of local declarations - operates on the existing fn_text
+        if is_naked:
+            print('ERROR: perm_decls requires a pure-C function (not naked). Convert first.',
+                  file=sys.stderr)
+            sys.exit(2)
+        variants = list(variants_perm_decls(fn_text))[:args.max]
+        if not variants:
+            print('ERROR: perm_decls found no permutable decl block (need >= 2 scalar decls at function head)',
+                  file=sys.stderr)
+            sys.exit(2)
     elif args.matrix:
         variants = list(MATRICES[args.matrix]())[:args.max]
     else:
