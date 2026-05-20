@@ -3943,7 +3943,19 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00436250
     name: CmpRangeJmpStateInit_00436250
-    size: 85
+    size: 27
+    group: game
+    status: matched
+    file: src/engine/misc_matchesNN.c
+  - addr: 0x00436270
+    name: func_00436270
+    size: 47
+    group: game
+    status: matched
+    file: src/engine/misc_matchesNN.c
+  - addr: 0x004362a0
+    name: func_004362a0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesNN.c

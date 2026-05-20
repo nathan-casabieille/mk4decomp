@@ -41,34 +41,35 @@ extern int func_00439890(void);
 extern void HitReactionStateCluster_004335f0(void);
 extern void func_00471200(void);
 extern void func_00436290(void);
-__declspec(naked) void CmpRangeJmpStateInit_00436250(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00535ddc_nn]
-        cmp     eax, 0x30000
-        mov     dword ptr [g_walkCallback], eax
-        _emit   7eh
-        _emit   05h
-        jmp     func_00433b60
-        jmp     func_00438f30
-        nop
-        nop
-        nop
-        nop
-        nop
-        call    func_00439890
-        test    eax, eax
-        _emit   75h
-        _emit   25h
-        mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_walkCallback], 2
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET HitReactionStateCluster_004335f0
-        jmp     func_00471200
-        ret
-        nop
-        jmp     func_00436290
+/* @addr 0x00436250 (27b): if state_ddc > 0x30000 tail-jmp func_00433b60,
+ * else tail-jmp func_00438f30. Entry A of the original 85-byte packed
+ * block; entries B (call + mstack-push) and C (single tail-jmp) live in
+ * func_00436270 / func_004362a0. The 5-byte nop gap is filled by 0x90-fill. */
+void CmpRangeJmpStateInit_00436250(void) {
+    int v = (int)g_state_00535ddc_nn;
+    g_walkCallback = (void (*)(void))v;
+    if (v > 0x30000) {
+        func_00433b60();
+        return;
     }
+    func_00438f30();
+}
+
+/* @addr 0x00436270 (47b): call func_00439890; if non-zero ret;
+ * else mstack-push HitReactionStateCluster_004335f0, set walkCallback=2,
+ * tail-jmp func_00471200. Orphan sub-entry. */
+void func_00436270(void) {
+    if (func_00439890() != 0) return;
+    g_walkCallback = (void (*)(void))2;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) =
+        (unsigned int)&HitReactionStateCluster_004335f0;
+    func_00471200();
+}
+
+/* @addr 0x004362a0 (5b): orphan tail-jmp into func_00436290. */
+void func_004362a0(void) {
+    func_00436290();
 }
 
 /* @addr 0x004460c0 (85b)
