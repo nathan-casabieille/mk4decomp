@@ -422,12 +422,11 @@ MATRICES = {
 # --- generic variant generators (work on any function) -------------
 
 # Match a simple local declaration line at the function head:
-#     <type> <name>;
+#     <type> [*]<name>;
 # where <type> is a single token like `unsigned`, `int`, `unsigned int`,
-# or two-token `unsigned int` / `signed char`. We restrict to scalar
-# types to keep ordering safe.
+# or two-token `unsigned int` / `signed char`. Accept optional pointer.
 _DECL_RE = re.compile(
-    r'^(\s*)((?:unsigned\s+|signed\s+)?(?:int|char|short|long|u(?:8|16|32)|s(?:8|16|32)))\s+(\w+)\s*;\s*$'
+    r'^(\s*)((?:unsigned\s+|signed\s+)?(?:int|char|short|long|u(?:8|16|32)|s(?:8|16|32)))\s+(\*?\w+)\s*;\s*$'
 )
 
 
