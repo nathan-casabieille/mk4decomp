@@ -21,9 +21,9 @@ matching, the C source is the canonical representation of the game.
 | Metric | Progress |
 |---|---|
 | Byte-perfect rebuild | **100%** (2829 / 2829 functions) |
-| **Pure C (no `__asm`)** | **~42%** (1195 / 2831 functions) - contributions welcome |
-| Hybrid (no `naked`, body still `__asm`) | ~10% (285 / 2831 functions) |
-| Still `__declspec(naked)` | ~48% (1351 / 2831 functions) |
+| **Pure C (no `__asm`)** | **~42%** (1201 / 2838 functions) - contributions welcome |
+| Hybrid (no `naked`, body still `__asm`) | ~10% (285 / 2838 functions) |
+| Still `__declspec(naked)` | ~48% (1352 / 2838 functions) |
 
 In plain words:
 

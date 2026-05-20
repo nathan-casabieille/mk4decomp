@@ -5437,7 +5437,49 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00448750
     name: PendingMatch_00448750
-    size: 2119
+    size: 190
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448810
+    name: func_00448810
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448850
+    name: func_00448850
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448890
+    name: func_00448890
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004488d0
+    name: func_004488d0
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448910
+    name: func_00448910
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448950
+    name: func_00448950
+    size: 54
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00448990
+    name: func_00448990
+    size: 1543
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
