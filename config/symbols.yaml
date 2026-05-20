@@ -3061,7 +3061,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042c790
     name: LoopGuardedDecJmp_0042c790
-    size: 79
+    size: 46
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x0042c7c0
+    name: func_0042c7c0
+    size: 31
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c

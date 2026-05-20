@@ -1783,43 +1783,34 @@ void GuardedPackedSlotInit_00428760(int arg0) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
 }
 
-/* @addr 0x0042c790 (79b)
- *   Loop wrapper with internal counter [g_baseSel*4+0x5c]:
- *   stores walk into counter, calls F, pause → ret;
- *   else pushes 0x4e37d0 + calls F2; ret;
- *   2 nops align; tail re-loads counter, decrements, if non-zero
- *   jmp back to loop top, else jmp T2.
- */
+/* @addr 0x0042c790 (46b): loop-head wrapper - stores walk into baseSel[+0x5c]
+ * as counter, calls Cascade3ChainInit, then if !pause tail-calls
+ * ArgSarStoreJmp_004594f0(0x4e37d0). Entry A of the original 79-byte packed
+ * block; entry B (loop body) lives in func_0042c7c0. */
 extern unsigned int g_data_004e37d0;
 extern void Cascade3ChainInit_0048fa50(void);
 extern void TripleEntryStateCascade_0042c7e0(void);
-__declspec(naked) void LoopGuardedDecJmp_0042c790(void) {
+void LoopGuardedDecJmp_0042c790(void) {
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x5c) = (unsigned int)g_walkCallback;
+    Cascade3ChainInit_0048fa50();
+    if (g_framePauseFlag != 0) return;
+    ArgSarStoreJmp_004594f0(&g_data_004e37d0);
+}
+
+/* @addr 0x0042c7c0 (31b): loop body - reload counter from baseSel[+0x5c],
+ * decrement, store as new walkCallback; if counter hit zero tail-jmp
+ * TripleEntryStateCascade_0042c7e0, else loop back to LoopGuardedDecJmp_0042c790
+ * (e9 b6 ff ff ff = rel32 -0x4a). The 2-byte nop gap before this entry is
+ * filled by 0x90-fill. */
+__declspec(naked) void func_0042c7c0(void) {
     __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x5c], ecx
-        call    Cascade3ChainInit_0048fa50
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0dh
-        push    OFFSET g_data_004e37d0
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
-        nop
-        nop
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         dec     ecx
         mov     dword ptr [g_walkCallback], ecx
-        _emit   74h
-        _emit   05h
-        _emit   0e9h
-        _emit   0b6h
-        _emit   0ffh
-        _emit   0ffh
-        _emit   0ffh
+        je      short L_lgdj_done
+        jmp     LoopGuardedDecJmp_0042c790
+L_lgdj_done:
         jmp     TripleEntryStateCascade_0042c7e0
     }
 }
