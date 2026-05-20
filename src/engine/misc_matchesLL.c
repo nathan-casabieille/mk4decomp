@@ -134,33 +134,18 @@ extern void func_0047f860(void);
 extern void func_00484342(void);
 extern void InstallSelfOrChainJmp_00483a20(void);
 extern void func_0042b988(void);
-__declspec(naked) void CallPauseDirty4StackPushFn_004839d0(void) {
-    __asm {
-        call    func_0047f860
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   37h
-        call    func_00484342
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        test    byte ptr [g_xformDirtyFlags], 4
-        _emit   74h
-        _emit   1bh
-        mov     eax, dword ptr [g_state_004d57ac]
-        inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [eax*4 + 0], OFFSET InstallSelfOrChainJmp_00483a20
-        jmp     func_0042b988
-        _emit   0e9h
-        _emit   0bh
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        ret
+void CallPauseDirty4StackPushFn_004839d0(void) {
+    func_0047f860();
+    if (g_framePauseFlag != 0) return;
+    func_00484342();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) {
+        g_state_004d57ac++;
+        *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&InstallSelfOrChainJmp_00483a20;
+        func_0042b988();
+        return;
     }
+    InstallSelfOrChainJmp_00483a20();
 }
 
 /* @addr 0x00489e90 (70b)
