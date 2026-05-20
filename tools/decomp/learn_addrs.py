@@ -7,9 +7,11 @@ record symbol_name -> address in config/extras_map.yaml.
 This is a one-time discovery pass. Once extras_map.yaml is committed, the
 build no longer needs to consult game/MK4.EXE for symbol resolution.
 
-Usage: python3 tools/decomp/learn_addrs.py
+Usage: python3 tools/decomp/learn_addrs.py [--quick] [--labels-only]
+  --quick        : skip OBJ files that haven't been rebuilt since last extras_map mtime
+  --labels-only  : only refresh `$L*` MSVC local-label entries (fast post-conversion mode)
 """
-import os, struct, sys, yaml, re
+import os, struct, sys, yaml, re, argparse
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from synthesize import parse_obj_full, build_global_symbol_map, ORIG_EXE, OBJ_DIR, parse_pe_sections, scan_source_aliases
@@ -18,6 +20,12 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 EXTRAS = ROOT / 'config' / 'extras_map.yaml'
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--quick', action='store_true',
+                    help='skip OBJ files older than extras_map.yaml')
+    ap.add_argument('--labels-only', action='store_true',
+                    help='only refresh $L* entries (post-conversion fast path)')
+    args = ap.parse_args()
     with open(ORIG_EXE,'rb') as f: orig = f.read()
     ib, pe_sections = parse_pe_sections(orig)
     text_sec = next(s for s in pe_sections if s['name'] == '.text')
@@ -42,12 +50,17 @@ def main():
     else:
         extras = {}
 
+    extras_mtime = EXTRAS.stat().st_mtime if EXTRAS.exists() else 0
+
     learned_count = 0
     learned_names = set()
     for root, dirs, files in os.walk(OBJ_DIR):
         for fn in files:
             if not fn.endswith('.obj'): continue
-            with open(os.path.join(root, fn),'rb') as f: obj = f.read()
+            obj_path = os.path.join(root, fn)
+            if args.quick and os.path.getmtime(obj_path) < extras_mtime:
+                continue
+            with open(obj_path,'rb') as f: obj = f.read()
             syms, sections = parse_obj_full(obj)
             sec_idx_to_va = {}
             for sym in syms:
@@ -85,6 +98,9 @@ def main():
                             continue
                         if ref_imp in name_to_addr and ref_imp.startswith('__imp__'):
                             continue
+                        # --labels-only fast path: skip everything except $L*
+                        if args.labels_only and not ref_cl.startswith('$L'):
+                            continue
                         # Section-relative refs: usually skipped (synth resolves them via
                         # per-OBJ section+value). EXCEPTION: MSVC's `$LNNNN` local-label
                         # numbering is unstable across source edits, so the cached extras_map
@@ -121,6 +137,12 @@ def main():
                         if ref_cl in extras and extras[ref_cl] == ref_va:
                             continue  # already correctly recorded
                         if ref_cl in extras and extras[ref_cl] != ref_va:
+                            # --labels-only is a defensive refresh: only ADD new entries,
+                            # never silently override. A `$L22501` whose OBJ position
+                            # changed but whose name didn't (MSVC reused a label number
+                            # for a different scope) would otherwise corrupt extras_map.
+                            if args.labels_only:
+                                continue
                             print(f'  override {ref_cl}: {extras[ref_cl]:#x} -> {ref_va:#x}')
                         extras[ref_cl] = ref_va
                         learned_names.add(ref_cl)

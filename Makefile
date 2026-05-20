@@ -100,6 +100,15 @@ $(MATCH_EXE): $(ALL_OBJS) | $(BUILD_DIR)
 	@echo "  SYNTH   $@"
 	@python3 tools/decomp/synthesize.py
 
+# Refresh extras_map.yaml from current .obj files + orig EXE.
+# Run after a batch of naked->C conversions to refresh stale $L* labels.
+learn-addrs: $(ALL_OBJS)
+	@python3 tools/decomp/learn_addrs.py --labels-only
+
+# Same as learn-addrs but full (slower, picks up newly-referenced globals).
+learn-addrs-full: $(ALL_OBJS)
+	@python3 tools/decomp/learn_addrs.py
+
 # Pattern: src/foo/bar.c -> build/obj/foo/bar.obj
 $(OBJ_DIR)/%.obj: src/%.c | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
