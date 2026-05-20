@@ -633,6 +633,69 @@ def variants_helpers_split(fn_text):
 MATRICES['helpers_split'] = None  # marker
 
 
+# --- expression-form variants -------------------------------------
+
+def _toggle_compound(line):
+    """Toggle `x = x OP y;` <-> `x OP= y;` for common ops."""
+    # x = x + y;  ->  x += y;
+    m = re.match(r'^(\s*)(\w+(?:\.\w+|\[[^\]]+\])*)\s*=\s*\2\s*([\+\-\*\/&|\^])\s*(.+?);\s*$', line)
+    if m:
+        return f'{m.group(1)}{m.group(2)} {m.group(3)}= {m.group(4)};'
+    # x += y;  ->  x = x + y;
+    m = re.match(r'^(\s*)(\w+(?:\.\w+|\[[^\]]+\])*)\s*([\+\-\*\/&|\^])=\s*(.+?);\s*$', line)
+    if m:
+        return f'{m.group(1)}{m.group(2)} = {m.group(2)} {m.group(3)} {m.group(4)};'
+    return None
+
+
+def _toggle_shift_mul(line):
+    """Toggle `x * (1<<N)` <-> `x << N` for power-of-2 multipliers."""
+    # x * 4  ->  x << 2
+    def shl(m):
+        n = int(m.group(2))
+        if n & (n - 1) == 0 and n > 1:
+            shift = n.bit_length() - 1
+            return f'{m.group(1)} << {shift}'
+        return m.group(0)
+    return re.sub(r'(\w+(?:\.\w+|\[[^\]]+\])*)\s*\*\s*(\d+)', shl, line)
+
+
+def variants_expressions(fn_text):
+    """Generate variants by toggling expression forms.
+
+    For each line, try:
+    - compound-assign toggle (x = x + y <-> x += y)
+    - shift vs multiply (x * 4 <-> x << 2)
+
+    Yields all single-line variations (one mutation at a time).
+    """
+    lines = fn_text.split('\n')
+    yielded = set()
+    yielded.add(fn_text)
+    for i, ln in enumerate(lines):
+        # Compound assign toggle
+        new_ln = _toggle_compound(ln)
+        if new_ln and new_ln != ln:
+            new_lines = list(lines)
+            new_lines[i] = new_ln
+            variant = '\n'.join(new_lines)
+            if variant not in yielded:
+                yielded.add(variant)
+                yield f'compound@line{i}', variant
+        # Shift toggle
+        new_ln = _toggle_shift_mul(ln)
+        if new_ln != ln:
+            new_lines = list(lines)
+            new_lines[i] = new_ln
+            variant = '\n'.join(new_lines)
+            if variant not in yielded:
+                yielded.add(variant)
+                yield f'shift@line{i}', variant
+
+
+MATRICES['expressions'] = None  # marker
+
+
 # --- driver ---------------------------------------------------------
 
 def update_forward_decls(src, func_name, new_type):
@@ -700,6 +763,16 @@ def main():
         variants = list(variants_helpers_split(fn_text))[:args.max]
         if not variants:
             print('ERROR: helpers_split found no run of >=3 consecutive direct global stores',
+                  file=sys.stderr)
+            sys.exit(2)
+    elif args.matrix == 'expressions':
+        if is_naked:
+            print('ERROR: expressions requires a pure-C function (not naked). Convert first.',
+                  file=sys.stderr)
+            sys.exit(2)
+        variants = list(variants_expressions(fn_text))[:args.max]
+        if not variants:
+            print('ERROR: expressions found no toggleable expression in the function body',
                   file=sys.stderr)
             sys.exit(2)
     elif args.matrix:
