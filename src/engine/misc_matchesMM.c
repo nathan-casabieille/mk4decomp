@@ -122,25 +122,16 @@ __declspec(naked) void PushPopWalkDecMod_004923f0(void) {
  */
 extern unsigned int g_data_00541d70;
 extern unsigned int g_state_0053a1ac;
-__declspec(naked) void ScaledIncLoopState3_0048c210(void) {
-    __asm {
-        mov     eax, OFFSET g_data_00541d70
-        mov     dword ptr [g_walkCallback], 0
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_state_0053a1ac], 3
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_state_0053a1ac]
-        inc     eax
-        dec     ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_state_0053a1ac], ecx
-        _emit   79h
-        _emit   0d9h
-        ret
-    }
+void ScaledIncLoopState3_0048c210(void) {
+    unsigned int p = (unsigned int)&g_data_00541d70 >> 2;
+    g_walkCallback = (void (*)(void))0;
+    g_scaledInit_00542044 = p;
+    g_state_0053a1ac = 3;
+    *(unsigned int *)(p * 4) = (unsigned int)g_walkCallback;
+    do {
+        g_scaledInit_00542044++;
+        g_state_0053a1ac--;
+    } while ((int)g_state_0053a1ac >= 0);
 }
 
 /* @addr 0x004ab2a0 (89b)
