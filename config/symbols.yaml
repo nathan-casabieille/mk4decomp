@@ -3517,7 +3517,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004326a0
     name: PendingMatch_004326a0
-    size: 2085
+    size: 108
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00432710
+    name: func_00432710
+    size: 1973
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
