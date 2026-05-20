@@ -1123,7 +1123,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004111d0
     name: TestByteSelectInit_004111d0
-    size: 50
+    size: 28
+    group: boot
+    status: matched
+    file: src/engine/misc_matchesN.c
+  - addr: 0x004111f0
+    name: func_004111f0
+    size: 18
     group: boot
     status: matched
     file: src/engine/misc_matchesN.c

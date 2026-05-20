@@ -102,44 +102,27 @@ void CallPauseScaledStoreAdd_004078f0(void) {
     g_state_00541dc4 = g_fightGroupHead + 0x0a;
 }
 
-/* @addr 0x004111d0 (50b)
- *   mov     al, byte ptr [0x004f360c]
- *   test    al, al
- *   je      +0x12
- *   mov     eax, 0x004d5c38
- *   shr     eax, 2
- *   mov     [g_eventQueueIdx], eax
- *   jmp     +0x25
- *   ret
- *   nop * 4
- *   mov     eax, 0x004d5c20
- *   shr     eax, 2
- *   mov     [g_eventQueueIdx], eax
- *   jmp     +0x0e
- */
+/* @addr 0x004111d0 (28b): byte-gate + set g_eventQueueIdx = (0x004d5c38>>2);
+ * tail-jmp func_004111fa (= PendingMatch_00411210 via extras_map). Entry A
+ * of the original 50-byte packed block; sub-entry at +0x20 (func_004111f0)
+ * referenced from data table at g_data_004d5818 in data.c. */
 extern unsigned char g_byte_004f360c;
+extern unsigned int g_data_004d5c20;
+extern unsigned int g_data_004d5c38;
 extern void func_004111fa(void);
 extern void func_00411202(void);
-__declspec(naked) void TestByteSelectInit_004111d0(void) {
-    __asm {
-        mov     al, byte ptr [g_byte_004f360c]
-        test    al, al
-        _emit   74h
-        _emit   12h
-        mov     eax, 0x004d5c38
-        shr     eax, 2
-        mov     dword ptr [g_eventQueueIdx], eax
-        jmp     func_004111fa
-        ret
-        nop
-        nop
-        nop
-        nop
-        mov     eax, 0x004d5c20
-        shr     eax, 2
-        mov     dword ptr [g_eventQueueIdx], eax
-        jmp     func_00411202
-    }
+void TestByteSelectInit_004111d0(void) {
+    if (g_byte_004f360c == 0) return;
+    g_eventQueueIdx = (unsigned int)&g_data_004d5c38 >> 2;
+    func_004111fa();
+}
+
+/* @addr 0x004111f0 (18b): set g_eventQueueIdx = (0x004d5c20>>2); tail-jmp
+ * func_00411202 (= PendingMatch_00411210). The 4-byte nop gap before this
+ * entry is filled by 0x90-fill. Referenced from g_data_004d5818 in data.c. */
+void func_004111f0(void) {
+    g_eventQueueIdx = (unsigned int)&g_data_004d5c20 >> 2;
+    func_00411202();
 }
 
 /* @addr 0x00428730 (48b)
