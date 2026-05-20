@@ -131,33 +131,14 @@ void Set5CallPauseTestByteJmpCall_00491950(void) {
  */
 extern void SaveCallRestore_004049d0(int);
 extern void SaveCallRestoreOrXor_00404a00(int);
-__declspec(naked) void Push1eCallTestDirtyLoop_004923b0(void) {
-    __asm {
-        push    ebx
-        push    0x1e
-        call    SaveCallRestore_004049d0
-        add     esp, 4
-        push    0x1e
-        call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_xformDirtyFlags]
-        mov     bl, 4
-        add     esp, 4
-        test    al, bl
-        _emit   75h
-        _emit   1dh
-        push    0x1e
-        call    SaveCallRestore_004049d0
-        add     esp, 4
-        push    0x1e
-        call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_xformDirtyFlags]
-        add     esp, 4
-        test    al, bl
-        _emit   74h
-        _emit   0e3h
-        pop     ebx
-        ret
-    }
+void Push1eCallTestDirtyLoop_004923b0(void) {
+    SaveCallRestore_004049d0(0x1e);
+    SaveCallRestoreOrXor_00404a00(0x1e);
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    do {
+        SaveCallRestore_004049d0(0x1e);
+        SaveCallRestoreOrXor_00404a00(0x1e);
+    } while ((g_xformDirtyFlags & 4) == 0);
 }
 
 /* @addr 0x0048f2a0 (63b)
