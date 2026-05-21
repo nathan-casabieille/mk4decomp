@@ -4651,7 +4651,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00439f70
     name: StoreCallPauseTestByte_DualCmpStoreClear_00439f70
-    size: 83
+    size: 44
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00439fa0
+    name: func_00439fa0
+    size: 35
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
