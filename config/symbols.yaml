@@ -8488,7 +8488,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/test_p1_replace_current.c
   - addr: 0x004751f0
     name: InstallSelfPackedTailJmp_004751f0
     size: 188
@@ -9412,7 +9412,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/scaled_lit_add_jmp.c
   - addr: 0x00480fe0
     name: ScaledLitLoadCall_00480fe0
     size: 53
@@ -10186,7 +10186,7 @@ functions:
     size: 42
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/call_pause_dirty_push_call.c
   - addr: 0x00488bd0
     name: Wrapper_00488bd0
     size: 14
@@ -10204,13 +10204,13 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/literal_push_call_ent_zero.c
   - addr: 0x00488c30
     name: CallPauseLitInitJmp_00488c30
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/call_pause_lit_init_jmp.c
   - addr: 0x00488c60
     name: Wrapper_00488c60
     size: 14
@@ -10252,7 +10252,7 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/scaled_cmp_jl_jmp.c
   - addr: 0x00488f00
     name: CjTableThresholdDispatch_00488f00
     size: 276
@@ -10360,7 +10360,7 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/table_lookup_call_variants.c
   - addr: 0x00489f90
     name: GatedWordPushCall_00489f90
     size: 91
@@ -10372,13 +10372,13 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/table_lookup_call_variants.c
   - addr: 0x0048a020
     name: GuardedScaledCall_0048a020
     size: 45
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/guarded_scaled_call.c
   - addr: 0x0048a050
     name: ByteWordTableTaggedDispatch_0048a050
     size: 219
@@ -10390,13 +10390,13 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/table_lookup_call_variants.c
   - addr: 0x0048a160
     name: TableLookupCall_0048a160
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/table_lookup_call_variants.c
   - addr: 0x0048a190
     name: OrDualStore_0048a190
     size: 24
@@ -10618,7 +10618,7 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/store_call_pause_store.c
   - addr: 0x0048b480
     name: CallPauseAddDualStore_0048b480
     size: 38
@@ -10942,7 +10942,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/cmp2_or_set_0b.c
   - addr: 0x0048e400
     name: ScaledIndexConditionalAdd_0048e400
     size: 69
@@ -10990,13 +10990,13 @@ functions:
     size: 32
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/iter_step_no_second.c
   - addr: 0x0048e600
     name: IterStepScaledStore_0048e600
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/iter_step_scaled_store.c
   - addr: 0x0048e630
     name: PackedAdvanceCallContinue_0048e630
     size: 75
@@ -11026,7 +11026,7 @@ functions:
     size: 40
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/arg_sar_add_deref_jmp.c
   - addr: 0x0048e740
     name: ScaledChainAndF000DirtyToggle_0048e740
     size: 62
@@ -11038,7 +11038,7 @@ functions:
     size: 35
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/scaled_chain_3c74_jmp.c
   - addr: 0x0048e7b0
     name: ScaledLoadJmp_74_0048e7b0
     size: 23
@@ -11122,7 +11122,7 @@ functions:
     size: 35
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/cmp_p2_p1_scaled_jmp.c
   - addr: 0x0048ee80
     name: CopyJmp_0048ee80
     size: 15
@@ -11134,7 +11134,7 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/scaled_sub_store.c
   - addr: 0x0048eec0
     name: MStackPush3CmpCall_0048eec0
     size: 208
@@ -11206,7 +11206,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesJ.c
+    file: src/engine/dirty_flags_manip_b.c
   - addr: 0x0048f3f0
     name: InstallSelfIndirectJmp_0048f3f0
     size: 114
