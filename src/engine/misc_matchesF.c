@@ -140,6 +140,11 @@ void Cmp3JmpOrPushCall_004338e0(void) {
  *   mov     [g_data_00542070], eax
  *   mov     [g_eventQueueWorkType], ecx
  *   jmp     func_00433e80
+ *
+ * Keep naked: orig schedules both loads first, then both shifts, then
+ * both stores (uses eax AND ecx). MSVC SP3 pure C reuses eax for both
+ * values (`load; shr; store; load; shr; store;`), losing the
+ * interleave (saves 1b but diverges in 11/32 bytes).
  */
 extern void func_00433e80(void);
 extern unsigned int g_data_00542070;
