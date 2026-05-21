@@ -15577,7 +15577,13 @@ functions:
     file: src/engine/misc_matchesA.c
   - addr: 0x004bf090
     name: LoadStoreRetNopJmp_004bf090
-    size: 21
+    size: 11
+    group: engine.scenegraph
+    status: matched
+    file: src/engine/misc_matchesA.c
+  - addr: 0x004bf0a0
+    name: func_004bf0a0
+    size: 5
     group: engine.scenegraph
     status: matched
     file: src/engine/misc_matchesA.c

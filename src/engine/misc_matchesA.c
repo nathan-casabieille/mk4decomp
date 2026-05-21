@@ -101,27 +101,21 @@ __declspec(naked) void MovAndStoreRetJmp_004bf070(void) {
     }
 }
 
-/* @addr 0x004bf090 (21b)
+/* @addr 0x004bf090 (11b)
  *   mov     eax, [g_state_00f85b38]
  *   mov     [0x00f85b34], eax
  *   ret
- *   nop * 5
- *   jmp     +0x0b
  */
 extern unsigned int g_state_00f85b34;
 extern void func_004bf0a8(void);
-__declspec(naked) void LoadStoreRetNopJmp_004bf090(void) {
-    __asm {
-        mov     eax, dword ptr [g_state_00f85b38]
-        mov     dword ptr [g_state_00f85b34], eax
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     func_004bf0a8
-    }
+void LoadStoreRetNopJmp_004bf090(void) {
+    g_state_00f85b34 = g_state_00f85b38;
+}
+
+/* @addr 0x004bf0a0 (5b) tail-jmp wrapper to AddStore_004bf0b0
+ * (resolved via the func_004bf0a8 alias in extras_map). */
+void func_004bf0a0(void) {
+    func_004bf0a8();
 }
 
 /* @addr 0x004bf0b0 (16b)
