@@ -12301,7 +12301,25 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00498720
     name: QuadSubVec2GateInstallSelfPair_00498720
-    size: 469
+    size: 16
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498730
+    name: func_00498730
+    size: 64
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498770
+    name: func_00498770
+    size: 32
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498790
+    name: func_00498790
+    size: 357
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
