@@ -7009,7 +7009,31 @@ functions:
     file: src/engine/misc_matchesH.c
   - addr: 0x00461360
     name: FiveSetWalkJmp_00461360
-    size: 79
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x00461370
+    name: func_00461370
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x00461380
+    name: func_00461380
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x00461390
+    name: func_00461390
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x004613a0
+    name: func_004613a0
+    size: 15
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c

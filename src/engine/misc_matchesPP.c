@@ -1794,34 +1794,40 @@ void CmpEqWalkSetCallToggleDirty_00439c60(void) {
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }
 
-/* @addr 0x00461360 (79b)
- *   Five 15-byte mini-stubs concatenated, each "set walk = N;
- *   jmp T". N = 4, 8, 0x10, 0x20, 0x80. Single nop pad between
- *   each entry (total 79 = 5*15 + 4 nops).
- */
+/* @addr 0x00461360 (79b orig, split into 5x15b entries with 1-byte
+ * nop pad between). Each entry is "set walkCallback = N; tail-jmp T".
+ * Split into 5 separate pure-C functions; the 1-byte nop gaps fall
+ * out as synth 0x90-fill. N = 4, 8, 0x10, 0x20, 0x80. */
 extern void OrDualStore_0048e4b0(void);
-/* This is a packed-helpers block under one symbol: 5 mini-entries
- * at +0x00, +0x10, +0x20, +0x30, +0x40, each `set walk = N; jmp T`
- * separated by a `nop`. Only the +0x00 entry is reached via the
- * function symbol; the others must be called from elsewhere via
- * direct addresses. Kept as naked to preserve the mid-fn entries. */
-__declspec(naked) void FiveSetWalkJmp_00461360(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 4
-        jmp     OrDualStore_0048e4b0
-        nop
-        mov     dword ptr [g_walkCallback], 8
-        jmp     OrDualStore_0048e4b0
-        nop
-        mov     dword ptr [g_walkCallback], 0x10
-        jmp     OrDualStore_0048e4b0
-        nop
-        mov     dword ptr [g_walkCallback], 0x20
-        jmp     OrDualStore_0048e4b0
-        nop
-        mov     dword ptr [g_walkCallback], 0x80
-        jmp     OrDualStore_0048e4b0
-    }
+
+/* @addr 0x00461360 (15b) walk=4 entry */
+void FiveSetWalkJmp_00461360(void) {
+    g_walkCallback = (void (*)(void))4;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x00461370 (15b) walk=8 entry */
+void func_00461370(void) {
+    g_walkCallback = (void (*)(void))8;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x00461380 (15b) walk=0x10 entry */
+void func_00461380(void) {
+    g_walkCallback = (void (*)(void))0x10;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x00461390 (15b) walk=0x20 entry */
+void func_00461390(void) {
+    g_walkCallback = (void (*)(void))0x20;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x004613a0 (15b) walk=0x80 entry */
+void func_004613a0(void) {
+    g_walkCallback = (void (*)(void))0x80;
+    OrDualStore_0048e4b0();
 }
 
 /* @addr 0x004b3b30 (79b)
