@@ -5815,7 +5815,49 @@ functions:
     file: src/engine/misc_matchesY.c
   - addr: 0x0044ef50
     name: PoseChainAdvanceCluster_0044ef50
-    size: 1372
+    size: 1152
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f3d0
+    name: func_0044f3d0
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f3f0
+    name: func_0044f3f0
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f410
+    name: func_0044f410
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f430
+    name: func_0044f430
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f450
+    name: func_0044f450
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f470
+    name: func_0044f470
+    size: 28
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0044f490
+    name: func_0044f490
+    size: 28
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
