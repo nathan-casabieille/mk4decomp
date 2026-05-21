@@ -3904,7 +3904,7 @@ functions:
     size: 65
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/dual_call_test_pause_range.c
   - addr: 0x00435440
     name: TriEntryGateMain_00435440
     size: 423
@@ -4480,7 +4480,7 @@ functions:
     size: 62
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/call_pause_test_byte_jmp_calls.c
   - addr: 0x00439130
     name: QuadGuardBitGateJmp_00439130
     size: 90
@@ -5470,7 +5470,7 @@ functions:
     size: 61
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/scaled_load_1c_zero_and_fe.c
   - addr: 0x00446680
     name: GuardedCascadeBaseSelBit_00446680
     size: 272
@@ -5488,13 +5488,13 @@ functions:
     size: 23
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/scaled_load_jmp_pause_set_max.c
   - addr: 0x004468a0
     name: func_004468a0
     size: 30
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/scaled_load_jmp_pause_set_max.c
   - addr: 0x004468c0
     name: TripleStringPauseChain_004468c0
     size: 116
@@ -5824,7 +5824,7 @@ functions:
     size: 64
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/scaled_init_or_self_ptr.c
   - addr: 0x0044ef50
     name: PoseChainAdvanceCluster_0044ef50
     size: 1152
@@ -5968,7 +5968,7 @@ functions:
     size: 62
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/call_pause_test_byte4_zero_cb.c
   - addr: 0x00451aa0
     name: SetJmp_00451aa0
     size: 15
@@ -6856,7 +6856,7 @@ functions:
     size: 65
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/call_pause_scaled_store_push_call.c
   - addr: 0x0045fcf0
     name: CallPauseMStackPushSet0Jmp_0045fcf0
     size: 52
@@ -7024,7 +7024,7 @@ functions:
     size: 65
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/not_shr_cmp1_store.c
   - addr: 0x00460dd0
     name: UnlinkChainInstall_00460dd0
     size: 97
@@ -7432,7 +7432,7 @@ functions:
     size: 61
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/dec_call_push_call.c
   - addr: 0x004660d0
     name: MoveStackPipeline_004660d0
     size: 518
@@ -8344,7 +8344,7 @@ functions:
     size: 63
     group: game
     status: matched
-    file: src/engine/misc_matchesY.c
+    file: src/engine/double_stack_push_and_jmp.c
   - addr: 0x00474050
     name: DoubleStackPushAndJmp7d_00474050
     size: 63
