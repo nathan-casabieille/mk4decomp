@@ -3499,7 +3499,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00431920
     name: AiAngleDistComputation_00431920
-    size: 853
+    size: 848
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00431c70
+    name: func_00431c70
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
