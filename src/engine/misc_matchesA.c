@@ -367,29 +367,14 @@ void Push2GlobalsCall_004bdae0(void) {
     func_004bbb70(g_pendingNodeType, g_scaledInit_00542044);
 }
 
-/* @addr 0x004bd5d0 (17b)
- *   jmp     -0x25
- *   nop * 11
- *   ret
- */
+/* @addr 0x004bd5d0 (5b) tail-jmp wrapper. */
 extern void LoadGeoAsset_Default(void);
-__declspec(naked) void TailJmpRetNops_004bd5d0(void) {
-    __asm {
-        jmp     LoadGeoAsset_Default
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        ret
-    }
+void TailJmpRetNops_004bd5d0(void) {
+    LoadGeoAsset_Default();
 }
+
+/* @addr 0x004bd5e0 (1b) one-byte ret stub packed after the wrapper. */
+void func_004bd5e0(void) {}
 
 /* @addr 0x004b1de0 (29b)
  *   mov     eax, [g_state_007af4e0]

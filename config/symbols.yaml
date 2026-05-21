@@ -15289,7 +15289,13 @@ functions:
     file: src/engine/thunks.c
   - addr: 0x004bd5d0
     name: TailJmpRetNops_004bd5d0
-    size: 17
+    size: 5
+    group: engine.geo
+    status: matched
+    file: src/engine/misc_matchesA.c
+  - addr: 0x004bd5e0
+    name: func_004bd5e0
+    size: 1
     group: engine.geo
     status: matched
     file: src/engine/misc_matchesA.c

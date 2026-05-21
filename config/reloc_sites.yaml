@@ -40,8 +40,8 @@ engine/gfx_init.obj#2#0x5e: 5196604
 engine/iter_load.obj#2#0x20: 4836304
 engine/joystick_init.obj#2#0xb4: 8061256
 engine/misc_matches8.obj#21#0x1: 5513324
-engine/misc_matchesA.obj#48#0x1: 11227648
-engine/misc_matchesA.obj#48#0x15: 11227648
+engine/misc_matchesA.obj#51#0x1: 11227648
+engine/misc_matchesA.obj#51#0x15: 11227648
 engine/misc_matchesC.obj#2#0x2: 5513304
 engine/misc_matchesCC.obj#20#0x1c: 5513364
 engine/misc_matchesE.obj#2#0x11: 4358032
@@ -98,8 +98,8 @@ engine/misc_matchesO.obj#4#0x1: 5513352
 engine/misc_matchesOO.obj#2#0x1: 4364208
 engine/misc_matchesP.obj#18#0x13: 4836304
 engine/misc_matchesP.obj#20#0x1: 5513288
-engine/misc_matchesPP.obj#150#0x7: 5472600
-engine/misc_matchesPP.obj#37#0xf: 11223860
+engine/misc_matchesPP.obj#153#0x7: 5472600
+engine/misc_matchesPP.obj#40#0xf: 11223860
 engine/misc_matchesQQ.obj#1101#0x1: 4857536
 engine/misc_matchesQQ.obj#1125#0x69: 4785984
 engine/misc_matchesQQ.obj#1138#0xfb: 4361600
