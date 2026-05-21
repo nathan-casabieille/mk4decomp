@@ -67,47 +67,32 @@ void ScaledInitWithCounterAndType_004314f0(void) {
 /* @addr 0x00428370 (51b): packed multi-entry helper - keep naked.
  *
  * This 51-byte symbol covers TWO independent code blocks under one
- * function name:
+ * function name. Block A converted to pure C; Block B kept naked
+ * (it uses raw _emit jne and has no entry from Block A - reached
+ * only via external jmp landing at 0x00428390).
  *
  *   Block A (offsets 0x00..0x1a, 27b): mstack push + tail-jmp.
- *     mov     eax, [g_matrixStackTop]
- *     inc     eax
- *     mov     [g_matrixStackTop], eax
- *     mov     [eax*4 + 0], OFFSET TripleBranchInstall_004283b0
- *     jmp     func_0042867d                  ; tail call, exits here
- *
- *   Block B (offsets 0x1f..0x32, 19b - reached only via external
- *   jmp from a different call site, falling into the middle of this
- *   "function"). Preceded by 5 nops of alignment padding (0x1b..0x1f).
- *     test    byte [g_xformDirtyFlags], 4
- *     jne     +5                             ; if dirty, take far jmp
- *     jmp     func_004283b3                  ; back into block A
- *     jmp     func_0042976e                  ; far backward dispatch
- *
- * Why naked: blocks A and B are reachable from disjoint entry points.
- * MSVC has no construct for "two entry points in one function". Any
- * `__asm { ... }` block in a function with C body disables /O2 for
- * the WHOLE function - MSVC emits a debug-mode prologue (push ebp;
- * mov ebp, esp; push regs), promotes locals to stack, uses `add eax, 1`
- * instead of `inc eax`, and emits `call` instead of TCO `jmp`. 50/51
- * bytes change vs orig. See [[packed-helpers-one-naked]] memory.
+ *   Block B (offsets 0x20..0x32, 19b at 0x00428390): test/jne/jmp/jmp.
+ *   5-byte nop pad between, filled by synth 0x90.
  */
 extern void TripleBranchInstall_004283b0(void);
 extern void func_0042867d(void);
 extern void func_004283b3(void);
 extern void func_0042976e(void);
-__declspec(naked) void MStackPushDualJmp_00428370(void) {
+
+void MStackPushDualJmp_00428370(void) {
+    int top = g_matrixStackTop;
+    top++;
+    g_matrixStackTop = top;
+    *(void(**)(void))((unsigned int)top * 4) = TripleBranchInstall_004283b0;
+    func_0042867d();
+}
+
+/* @addr 0x00428390 (19b naked): Block B - reached only via external
+ * jmp from a different call site. Uses _emit jne for the back-jump
+ * into Block A and a forward tail-jmp. */
+__declspec(naked) void func_00428390(void) {
     __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET TripleBranchInstall_004283b0
-        jmp     func_0042867d
-        nop
-        nop
-        nop
-        nop
-        nop
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   05h

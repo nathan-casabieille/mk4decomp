@@ -2509,7 +2509,13 @@ functions:
     file: src/engine/guarded_sequels.c
   - addr: 0x00428370
     name: MStackPushDualJmp_00428370
-    size: 51
+    size: 27
+    group: game
+    status: matched
+    file: src/engine/misc_matchesT.c
+  - addr: 0x00428390
+    name: func_00428390
+    size: 19
     group: game
     status: matched
     file: src/engine/misc_matchesT.c
