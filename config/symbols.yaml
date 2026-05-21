@@ -3127,7 +3127,19 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0042ce60
     name: PauseGuardChainTriple_0042ce60
-    size: 82
+    size: 14
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0042ce70
+    name: func_0042ce70
+    size: 20
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0042ce90
+    name: func_0042ce90
+    size: 34
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
