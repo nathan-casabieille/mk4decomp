@@ -3358,7 +3358,7 @@ functions:
     size: 50
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/sub_cmp_call_pause_jmp.c
   - addr: 0x0042fc80
     name: PoseBlendDriver_0042fc80
     size: 544
@@ -3538,7 +3538,7 @@ functions:
     size: 47
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/add_store_call_pause_jmp.c
   - addr: 0x00431dd0
     name: DualMul10AccumState88_00431dd0
     size: 179
@@ -4000,7 +4000,7 @@ functions:
     size: 49
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/cmp_30000_and_18000.c
   - addr: 0x004362f0
     name: TripleThresholdDispatch_004362f0
     size: 149
@@ -4102,7 +4102,7 @@ functions:
     size: 48
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/set14_call_add_jmp.c
   - addr: 0x00437020
     name: InstallSelfMStackCountdown_00437020
     size: 183
@@ -4336,7 +4336,7 @@ functions:
     size: 48
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/dec_jne_set_call_set_jmp.c
   - addr: 0x004389e0
     name: CmpJmpConstStoreJmp_004389e0
     size: 44
@@ -4408,19 +4408,19 @@ functions:
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/triple_stub_push_call.c
   - addr: 0x00438eb0
     name: func_00438eb0
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/triple_stub_push_call.c
   - addr: 0x00438ec0
     name: func_00438ec0
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/triple_stub_push_call.c
   - addr: 0x00438ed0
     name: Wrapper_00438ed0
     size: 14
@@ -6952,7 +6952,7 @@ functions:
     size: 46
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/call_pause_tri_cmp_jmp.c
   - addr: 0x00460940
     name: Push84CallTestInstallJmp_00460940
     size: 120
@@ -7072,7 +7072,7 @@ functions:
     size: 50
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/call_pause_scaled_store_copy_jmp.c
   - addr: 0x00461260
     name: NineEntryFlagDispatch_00461260
     size: 222
@@ -7408,7 +7408,7 @@ functions:
     size: 47
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/dual_scaled_lit_init_jmp.c
   - addr: 0x00464830
     name: AppInit_Misc7
     size: 5812
@@ -7966,7 +7966,7 @@ functions:
     size: 46
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/scaled_chain_neg_store.c
   - addr: 0x00470340
     name: DualFieldAddSubStore_00470340
     size: 76
@@ -7990,7 +7990,7 @@ functions:
     size: 48
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/triple_call_pause_jmp.c
   - addr: 0x00470530
     name: ComboScriptDispatchCluster_00470530
     size: 772
@@ -9400,7 +9400,7 @@ functions:
     size: 47
     group: game
     status: matched
-    file: src/engine/misc_matchesO.c
+    file: src/engine/call_pause_dirty_scaled_set7.c
   - addr: 0x00480f20
     name: DualEntryDecLoop_00480f20
     size: 144
