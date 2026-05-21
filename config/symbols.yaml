@@ -4312,7 +4312,7 @@ functions:
     size: 58
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/dec_or_zero_dirty4.c
   - addr: 0x00438690
     name: StateGateMStackOverlap_00438690
     size: 226
@@ -5464,7 +5464,7 @@ functions:
     size: 58
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/scaled_init_or_set_13b6.c
   - addr: 0x00446640
     name: ScaledLoad1cZeroAndFE_00446640
     size: 61
@@ -6538,7 +6538,7 @@ functions:
     size: 60
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/pause_test_cmp2_call_store.c
   - addr: 0x0045c020
     name: ScaledIterStep_0045c020
     size: 45
@@ -6736,7 +6736,7 @@ functions:
     size: 55
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/range_check_jmp.c
   - addr: 0x0045e5d0
     name: TripleEntryGate_0045e5d0
     size: 111
@@ -9172,7 +9172,7 @@ functions:
     size: 51
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/set1017_call_pause_push.c
   - addr: 0x0047e640
     name: NotMaskCallStore70_0047e640
     size: 77
@@ -9688,13 +9688,13 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/dual_push_call_pause.c
   - addr: 0x00482ee0
     name: func_00482ee0
     size: 5
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/dual_push_call_pause.c
   - addr: 0x00482ef0
     name: Chain3CallGuarded_00482ef0
     size: 101
@@ -9868,7 +9868,7 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/call_pause_dirty_mstack_push.c
   - addr: 0x00484b40
     name: GuardedDispatch4_00484b40
     size: 34
@@ -10246,7 +10246,7 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/cmp_eax1_or_set_dirty.c
   - addr: 0x00488ed0
     name: ScaledCmpJlJmp_00488ed0
     size: 33
@@ -10978,7 +10978,7 @@ functions:
     size: 54
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/arg_scaled_load_cmp_p1.c
   - addr: 0x0048e590
     name: ScaledIndexCondCopy_0048e590
     size: 69
@@ -11392,7 +11392,7 @@ functions:
     size: 54
     group: game
     status: matched
-    file: src/engine/misc_matchesW.c
+    file: src/engine/swap_call_restore.c
   - addr: 0x00490070
     name: ScaledLoadJmp_38_00490070
     size: 23

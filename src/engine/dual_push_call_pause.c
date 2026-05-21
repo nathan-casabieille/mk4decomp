@@ -1,0 +1,30 @@
+/**
+ * Auto-split from misc_matchesW.c
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+extern u32 g_eventQueueWorkType;
+extern packed_ptr g_xformEntityIdx;
+
+/* @addr 0x00482eb0 (36b): push F1-arg + call + pause + push F2-arg + call.
+ * Entry A of the original 53-byte packed block; the 5-byte tail-jmp
+ * sub-entry at +0x30 (func_00482ee0) is split into its own symbol.
+ * The 12-byte nop gap is filled by 0x90-fill. */
+extern int func_004907bc(void *);
+extern int func_00459500(void *);
+extern void *g_data_004ee340;
+extern void *g_data_004ee348;
+extern void func_00482eec(void);
+void DualPushCallPause_00482eb0(void) {
+    func_004907bc(&g_data_004ee340);
+    if (g_framePauseFlag != 0) return;
+    func_00459500(&g_data_004ee348);
+}
+
+/* @addr 0x00482ee0 (5b): tail-jmp into func_00482eec sub-entry. */
+void func_00482ee0(void) {
+    func_00482eec();
+}
