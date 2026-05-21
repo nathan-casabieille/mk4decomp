@@ -15931,7 +15931,13 @@ functions:
     file: src/boot/raw_fragments.c
   - addr: 0x004c45a0
     name: CallTwoSumShl_004c45a0
-    size: 37
+    size: 31
+    group: platform.win32
+    status: matched
+    file: src/engine/misc_matchesQ.c
+  - addr: 0x004c45c0
+    name: TailJmpTo_004c45d0
+    size: 5
     group: platform.win32
     status: matched
     file: src/engine/misc_matchesQ.c

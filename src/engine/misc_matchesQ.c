@@ -184,9 +184,13 @@ __declspec(naked) void CallTwoSumShl_004c45a0(void) {
         pop     edi
         pop     esi
         ret
-        nop
-        jmp     func_004c45c1
     }
+}
+
+/* @addr 0x004c45c0 (5b) tail-jmp wrapper to CallThreeSumLea_004c45d0
+ * (resolved via the func_004c45c1 alias in extras_map -> 0x4c45d0). */
+void TailJmpTo_004c45d0(void) {
+    func_004c45c1();
 }
 
 /* @addr 0x004c45d0 (35b): similar pattern with different params
