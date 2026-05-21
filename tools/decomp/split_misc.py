@@ -18,8 +18,8 @@ def find_func_span(lines, fn_name):
     """Find the line span of fn_name's definition in `lines`.
     Returns (preceding_comment_start, fn_start, fn_end) all inclusive 0-indexed.
     """
-    # Find the function definition line
-    pat = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?\w+(?:\s*\*)?\s+' + re.escape(fn_name) + r'\s*\(')
+    # Find the function definition line (handle multi-word return types)
+    pat = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?(?:(?:unsigned|signed)\s+)?\w+(?:\s*\*)?\s+' + re.escape(fn_name) + r'\s*\(')
     fn_start = None
     for i, line in enumerate(lines):
         if pat.match(line):
@@ -82,7 +82,7 @@ def main():
 
     # Pull the header (#include lines + shared externs at top, before any function)
     header_end = 0
-    pat = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?\w+(?:\s*\*)?\s+(\w+_[0-9a-fA-F]{8})\s*\(')
+    pat = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?(?:(?:unsigned|signed)\s+)?\w+(?:\s*\*)?\s+(\w+_[0-9a-fA-F]{8})\s*\(')
     for i, line in enumerate(lines):
         if pat.match(line) and pat.match(line).group(1) in mapping:
             header_end = i

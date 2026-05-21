@@ -14,3 +14,13 @@ void func_004111f0(void) {
     g_eventQueueIdx = (unsigned int)&g_data_004d5c20 >> 2;
     func_00411202();
 }
+
+/* h1 @ 0x00416e20 (48b): bootstrap wrapper - install func_00416e50
+ * as state callback w/ priority 0xb6, then store packed_ptr into
+ * scaled-state slot. */
+extern void StoreTwoCall_0049cb40(unsigned int, unsigned int);
+extern void func_00416e50(void);
+void PendingMatch_00416e20(void) {
+    StoreTwoCall_0049cb40((unsigned int)&func_00416e50, 0xb6);
+    *(unsigned int *)(g_data_00542044 * 4 + 0x2c) = g_data_0054205c;
+}

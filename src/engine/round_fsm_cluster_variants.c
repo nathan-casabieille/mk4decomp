@@ -1,0 +1,599 @@
+/**
+ * Auto-split from misc_matchesQQ.c
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_scaledInit_00542044;
+extern packed_ptr g_xformEntityIdx;
+extern u32 g_eventQueueEnd;
+extern unsigned int g_baseSel_00542060;
+extern u32 g_eventQueueWorkType;
+extern unsigned int g_acc_00542078;
+extern unsigned int g_cj_0054205c;
+extern u32 g_framePauseFlag;
+extern unsigned int g_state_0053a718;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542084;
+extern unsigned int g_state_0054208c;
+extern unsigned int g_state_00542088;
+extern unsigned int g_state_00542094;
+extern unsigned int g_state_00535ddc;
+extern unsigned int g_state_00537e88;
+extern unsigned int g_state_0053a408;
+extern unsigned int g_state_00537f94;
+extern unsigned int g_state_00542080;
+extern u32 g_pendingNodeType;
+
+extern void StoreTwoCall_0049cb40(int, int);
+extern void SetJmp_0049cb90(void);
+extern void Thunk_0049cbd0(void);
+extern void ScaledZeroFour_00490740(void);
+extern void WalkCbSubMul10_00431d50(void);
+extern void Mul10Tail_00404af0(unsigned int a, unsigned int b);
+extern void BootMod6487eClampAndChainMul10_00407510(void);
+extern void SpawnListBatchLoader_00477710(void);
+extern void MStackPush2TableNot_00426230(void);
+extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void ScaledLoadDecJmp_00429710(void);
+extern void ScaledStoreCurDirtyClear_004296f0(void);
+extern void MStackBitmaskIncMod_00492450(void);
+extern void MStackBitmaskUpdate_00492510(void);
+extern void Push1eCallTestDirtyLoop_004923b0(void);
+extern void MStackLoopFieldInit_00492280(void);
+extern void TaggedSceneDispatch_004be690(void);
+extern void CallPauseDirty4StackPushFn_004839d0(void);
+extern void CallPauseDirty1JmpDirty4StackPush_00483a80(void);
+extern void Cmp2CallDirtyCall_004398b0(void);
+extern void QuadBlockArgInstallChain_0043a950(void);
+extern void InstallSelfChainSet84_80CallW_004363f0(void);
+extern void Wrapper_00436490(void);
+extern void MoveFsmCluster_004364a0(void);
+extern void CallPauseTestByteJmpCalls_004390f0(void);
+extern void InstallSelfFullPath_0047a840(void);
+extern void InstallSelfCountdownChain_0047a950(void);
+extern void CopyJmp_0048ef90(void);
+extern void DualTestDirtyToggle_004282c0(void);
+extern void TripleVecAccCallStore_00476880(void);
+extern void Thunk_004bd5c0(void);
+extern void AllocSlotPushTripleGlobals_00427470(void);
+extern void MStackPop4Rewrite_004274f0(void);
+extern void Push70CallScaleArith_00457ad0(void);
+extern void StreamChainStringInstall_00457900(void);
+extern void MStackFrameCdeclDouble_004903f0(void);
+extern void ChainTableWalkStore_004917e0(void);
+extern void Push16Call_00489f50(void);
+extern void DispatcherComplex260_00407030(void);
+extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern unsigned int g_state_0054207c;
+extern unsigned int g_cj_00542058;
+extern unsigned int g_data_0053a180;
+extern unsigned int g_state_00541fa4;
+extern unsigned int g_state_00541fa8;
+extern unsigned int g_state_0053a7b0;
+extern unsigned int g_data_0053a770;
+extern unsigned int g_data_0053a46c;
+
+extern void ScaledArrStore_004298c0(void);
+extern void DualFieldAddSubStore_00470340(void);
+extern void IterStepDualStore_00490b40(int);
+extern void ScaledXorStore_004900f0(void);
+extern void ChainWalkInstall_0049b7c0(void);
+extern void FpuSqrtMul_004ab350(void);
+extern void PendingMatch_0042b930(void);
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackBracketed3StoreCall_00475990(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void Wrapper_0048a350(void);
+extern void Wrapper_0048a3a0(void);
+extern void Helper_DownloadSetup(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void Wrapper_0048ec20(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void SetJmp_00438f50(void);
+extern void SetJmp_00438f60(void);
+extern void GuardedDispatch_0042b6c0(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+extern void DirtyToggleByGate_0048f350(void);
+extern void GameDispatchValidateState_004339c0(void);
+extern void CrouchAttackFsmCluster_0046f7a0(void);
+extern void MStackPushVec3Mul10_004767e0(void);
+extern void LiteralPushCallEntZero_00488c00(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
+extern void IterLoad_00491050(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void CallPauseScaledStorePushCall_0045fca0(void);
+extern void LoadGeoAsset_Default(void);
+extern void DispatcherComplex260_00407400(void);
+extern void PushSetCallPop_00406530(void);
+extern unsigned int g_state_0053a3c0;
+extern unsigned int g_state_00538158;
+extern unsigned int g_data_00535cf8;
+extern unsigned int g_cj_00542054;
+extern unsigned int g_data_005437f0;
+extern unsigned int g_data_00543598;
+extern unsigned int g_data_0054358c;
+extern unsigned int g_data_00535e70;
+extern unsigned int g_data_00535e74;
+extern unsigned int g_data_00535e78;
+extern unsigned int g_data_00535e7c;
+
+/* ------------------------------------------------------------------ */
+/* Cinematic FSM cluster (560b game, 4 packed helpers)                 */
+/* ------------------------------------------------------------------ */
+extern void ScaledChainJmp_00429470(void);
+extern void TriPhaseDecCounterListAdvance_0047ad20(void);
+extern void RoundFsmCluster_0047aff0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void IterStepDualStore_00490b40(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern unsigned int g_data_004ed138;
+extern unsigned int g_data_004ed15c;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541dc4;
+
+__declspec(naked) void CinematicFsmCluster_0047aaf0(void)
+{
+    __asm {
+        /* === Helper 1 (0x47aaf0): tiny accumulator === */
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_data_00542084]
+        add      eax, dword ptr [ecx*4 + 0x54]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x54], eax
+        ret
+        nop
+        /* === Helper 2: cinematic frame counter === */
+        mov      eax, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_data_00538038]
+        cmp      eax, edx
+        mov      dword ptr [g_data_00542044], ecx
+        je       short L_ab37
+        mov      ecx, dword ptr [g_data_0053803c]
+        mov      dword ptr [g_data_00542044], ecx
+    L_ab37:
+        mov      eax, dword ptr [ecx*4 + 0x5c]
+        dec      eax
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00541dc4], eax
+        jne      short L_ab55
+        mov      eax, 5
+        mov      dword ptr [g_data_0054206c], eax
+    L_ab55:
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        mov      eax, dword ptr [g_data_00541dc4]
+        test     eax, eax
+        jne      short L_ab6a
+        jmp      Wrapper_0048a300
+    L_ab6a:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* === Helper 3: 0x215 event + post-stage === */
+        mov      dword ptr [g_data_0054206c], 0xc
+        call     ScaledIndexConditionalAdd_0048e400
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_abac
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      eax, 0x215
+        mov      dword ptr [g_data_0054206c], eax
+        push     OFFSET g_data_004ed138
+        mov      dword ptr [ecx*4 + 0x74], eax
+        call     ArgSarStoreJmp_004594f0
+        add      esp, 4
+    L_abac:
+        ret
+        nop
+        nop
+        nop
+        /* === Helper 4 (0x47abb0): cinematic dispatcher === */
+    L_abb0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        sub      eax, 0
+        je       short L_ac89
+        dec      eax
+        je       short L_abe1
+        call     FiveCallGuardSetTail_0046f6b0
+        pop      esi
+        ret
+    L_abe1:
+        call     RoundFsmCluster_0047aff0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_ad1e
+        mov      eax, dword ptr [g_data_00542080]
+        dec      eax
+        mov      dword ptr [g_data_00542080], eax
+        jne      L_aca9
+        call     MStackPushSet0008_004901a0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_ad1e
+        call     ScaledZero44_00491500
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_ad1e
+        mov      dword ptr [esi + 8], OFFSET L_abb0
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      edx, OFFSET L_abb0
+        mov      dword ptr [ecx*4 + 0x84], 2
+        mov      eax, dword ptr [esi + 4]
+        add      edx, 0x2000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], 0
+        call     ScaledChainJmp_00429470
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      esi
+        ret
+    L_ac89:
+        push     OFFSET g_data_004ed15c
+        call     IterStepDualStore_00490b40
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      short L_ad1e
+        mov      dword ptr [g_data_00542080], 0xf
+    L_aca9:
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_data_00542080]
+        inc      eax
+        mov      dword ptr [g_data_0054206c], 0x16
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], ecx
+        call     CmpEqInitCallElseJmp_0048d4b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_ad1e
+        mov      eax, dword ptr [g_data_004d57ac]
+        mov      cl, byte ptr [g_data_0054208c]
+        mov      edx, dword ptr [eax*4]
+        dec      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      eax, 1
+        test     cl, al
+        mov      dword ptr [g_data_00542080], edx
+        je       short L_ad07
+        call     TriPhaseDecCounterListAdvance_0047ad20
+        pop      esi
+        ret
+    L_ad07:
+        mov      dword ptr [esi + 8], OFFSET L_abb0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+    L_ad1e:
+        pop      esi
+        ret
+    }
+}
+
+__declspec(naked) void RoundFsmCluster_004308a0(void)
+{
+    __asm {
+    L_08a0:
+        mov      eax, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_data_0052ab10]
+        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_data_0054205c], ecx
+        mov      edx, dword ptr [ecx*4 + 0x5c]
+        push     esi
+        mov      dword ptr [g_data_0054206c], edx
+        mov      esi, dword ptr [eax*4 + 0x5c]
+        sub      esi, edx
+        mov      dword ptr [g_data_00542074], esi
+        mov      ecx, dword ptr [ecx*4 + 0x58]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      eax, dword ptr [eax*4 + 0x58]
+        sub      eax, ecx
+        mov      dword ptr [g_data_00542078], eax
+        mov      dword ptr [g_data_0054207c], eax
+        call     Atan2QuadrantLookup_004245b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_098f
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      eax, 0x6487e
+        sub      eax, ecx
+        mov      ecx, dword ptr [g_data_00542058]
+        lea      esi, [edx*4]
+        mov      dword ptr [g_data_0054207c], eax
+        shl      ecx, 2
+        mov      dword ptr [esi + 0x60], eax
+        mov      eax, dword ptr [esi + 0x5c]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      edx, dword ptr [ecx + 0x5c]
+        sub      edx, eax
+        mov      dword ptr [g_data_00542074], edx
+        mov      eax, dword ptr [esi + 0x54]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      ecx, dword ptr [ecx + 0x54]
+        sub      ecx, eax
+        mov      dword ptr [g_data_00542078], ecx
+        call     Atan2QuadrantLookup_004245b0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_098f
+        mov      edx, dword ptr [g_data_0054206c]
+        mov      dword ptr [esi + 0x64], edx
+        mov      dword ptr [g_data_0054207c], 0
+        mov      dword ptr [esi + 0x60], 0
+        mov      eax, dword ptr [g_data_0054207c]
+        mov      dword ptr [esi + 0x64], eax
+        mov      ecx, dword ptr [g_data_0054207c]
+        mov      dword ptr [esi + 0x68], ecx
+    L_098f:
+        pop      esi
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+    L_09a0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        cmp      eax, 3
+        ja       L_0b45
+        jmp      dword ptr [eax*4 + L_jmptbl]
+    L_09ce:
+        mov      eax, dword ptr [g_data_00542088]
+        mov      ecx, 0x10000
+        cmp      eax, ecx
+        jl       L_0b10
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_00542088], ecx
+        mov      dword ptr [edx*4 + 0x74], ecx
+        mov      eax, dword ptr [g_data_00538158]
+        mov      dword ptr [g_data_00542058], eax
+        jmp      L_0a36
+    L_09ff:
+        mov      ecx, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [ecx*4 + 0x5c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      eax, dword ptr [edx*4 + 0x5c]
+        sub      eax, ecx
+        mov      dword ptr [g_data_00542070], eax
+        jns      L_0a2f
+        neg      eax
+        mov      dword ptr [g_data_00542070], eax
+    L_0a2f:
+        cmp      eax, 0x120000
+        jle      L_0a58
+    L_0a36:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_09a0
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0a58:
+        mov      dword ptr [g_data_00542084], 0xd4f
+        mov      dword ptr [g_data_00542088], 0x147a
+        jmp      L_0aa3
+    L_0a6e:
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_data_00542084]
+        mov      eax, dword ptr [ecx*4 + 0x74]
+        mov      dword ptr [g_data_0054206c], eax
+        sub      eax, edx
+        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [ecx*4 + 0x74], eax
+        mov      eax, dword ptr [g_data_00542088]
+        mov      ecx, dword ptr [g_data_00542070]
+        cmp      ecx, eax
+        jle      L_0ac5
+    L_0aa3:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_09a0
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0ac5:
+        mov      ecx, dword ptr [g_data_0054205c]
+        mov      dword ptr [ecx*4 + 0x74], eax
+        jmp      L_0b7c
+    L_0ad7:
+        push     OFFSET g_data_004e39c0
+        call     TripleScaledChainStore54_004313d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        test     eax, eax
+        jne      L_0bb8
+        call     L_08a0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_0bb8
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [edx*4 + 0x74]
+    L_0b10:
+        mov      ecx, dword ptr [g_data_0054205c]
+        add      eax, 0x7ae
+        mov      dword ptr [g_data_00542088], eax
+        mov      dword ptr [ecx*4 + 0x74], eax
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_09a0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0b45:
+        mov      edx, dword ptr [g_data_00542058]
+        mov      ecx, dword ptr [edx*4 + 0x5c]
+        mov      edx, dword ptr [g_data_0054205c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      eax, dword ptr [edx*4 + 0x5c]
+        sub      eax, ecx
+        mov      dword ptr [g_data_00542070], eax
+        jns      L_0b75
+        neg      eax
+        mov      dword ptr [g_data_00542070], eax
+    L_0b75:
+        cmp      eax, 0x70000
+        jle      L_0b9e
+    L_0b7c:
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_09a0
+        mov      dword ptr [esi + 0x84], 4
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0b9e:
+        mov      dword ptr [g_data_0054206c], 0
+        mov      dword ptr [edx*4 + 0x74], 0
+        call     StackPopDispatchTagged_0041f780
+    L_0bb8:
+        pop      esi
+        ret
+        _emit 0x8b
+        _emit 0xff
+    L_jmptbl:
+        _emit 0xd7
+        _emit 0x0a
+        _emit 0x43
+        _emit 0x00
+        _emit 0xce
+        _emit 0x09
+        _emit 0x43
+        _emit 0x00
+        _emit 0xff
+        _emit 0x09
+        _emit 0x43
+        _emit 0x00
+        _emit 0x6e
+        _emit 0x0a
+        _emit 0x43
+        _emit 0x00
+        nop
+        nop
+        nop
+        nop
+    L_0bd0:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], 0
+        sub      eax, 0
+        je       L_0cec
+        dec      eax
+        je       L_0cac
+        dec      eax
+        je       L_0c3c
+        mov      ecx, dword ptr [g_data_00542084]
+        push     ecx
+        push     0xeb85
+        call     Mul10Tail_00404af0
+        add      esp, 8
+        cmp      eax, 0x24d
+        mov      dword ptr [g_data_00542084], eax
+        jge      L_0c2b
+        mov      eax, 0x24d
+        mov      dword ptr [g_data_00542084], eax
+    L_0c2b:
+        mov      ecx, dword ptr [g_data_00542088]
+        test     ecx, ecx
+        jg       L_0c72
+        call     StackPopDispatchTagged_0041f780
+        pop      esi
+        ret      
+    L_0c3c:
+        mov      edx, dword ptr [g_data_00542084]
+        push     edx
+        push     0x1147a
+        call     Mul10Tail_00404af0
+        add      esp, 8
+        cmp      eax, 0xf5c
+        mov      dword ptr [g_data_00542084], eax
+        jle      L_0c66
+        mov      eax, 0xf5c
+        mov      dword ptr [g_data_00542084], eax
+    L_0c66:
+        cmp      dword ptr [g_data_00542088], 0xc924
+        jg       L_0cb6
+    L_0c72:
+        sub      dword ptr [g_data_00542088], eax
+        call     GuardedArithDualCallChain_00431e90
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_0d25
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_0bd0
+        mov      dword ptr [esi + 0x84], 3
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0cac:
+        mov      eax, 0x28f
+        mov      dword ptr [g_data_00542084], eax
+    L_0cb6:
+        sub      dword ptr [g_data_00542088], eax
+        call     GuardedArithDualCallChain_00431e90
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_0d25
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_0bd0
+        mov      dword ptr [esi + 0x84], 2
+        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_data_00541e6c], eax
+        pop      esi
+        ret      
+    L_0cec:
+        mov      dword ptr [g_data_00542088], 0x1921f
+        call     GuardedArithDualCallChain_00431e90
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_0d25
+        mov      eax, 1
+        mov      dword ptr [esi + 8], OFFSET L_0bd0
+        mov      dword ptr [esi + 0x84], eax
+        mov      dword ptr [g_data_0054204c], 0x16
+        mov      dword ptr [g_data_00541e6c], eax
+    L_0d25:
+        pop      esi
+        ret      
+    }
+}

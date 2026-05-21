@@ -56,7 +56,8 @@ def main():
     # Find all functions in input_path
     with open(input_path) as f:
         content = f.read()
-    fn_pattern = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?(?:\w+\s+\**)?\s*(\w+_[0-9a-fA-F]{8})\s*\(', re.MULTILINE)
+    # Allow multi-word return types like `unsigned int`, `unsigned short`, `unsigned char`
+    fn_pattern = re.compile(r'^(?:__declspec\(naked\)\s+)?(?:static\s+)?(?:extern\s+)?(?:(?:unsigned|signed)\s+)?(?:\w+\s+\**)?\s*(\w+_[0-9a-fA-F]{8})\s*\(', re.MULTILINE)
     file_fns = []
     seen = set()
     for m in fn_pattern.finditer(content):
