@@ -82,12 +82,14 @@ void Init16BitFields_004bcc50(void) {
     g_word_00ab47fa = 0;
 }
 
-/* @addr 0x004bf070 (21b)
+/* @addr 0x004bf070 (16b)
  *   mov     eax, 0x00b4d00f
  *   and     eax, 0xfffe0000
  *   mov     [0x00f85b38], eax
  *   ret
- *   jmp     +0x0b
+ *
+ * Keep naked: MSVC SP3 constant-folds `0x00b4d00f & 0xfffe0000`
+ * into a single `mov [g], imm32` (10b), losing the load+and form.
  */
 extern unsigned int g_state_00f85b38;
 extern void func_004bf088(void);
@@ -97,8 +99,13 @@ __declspec(naked) void MovAndStoreRetJmp_004bf070(void) {
         and     eax, 0xfffe0000
         mov     dword ptr [g_state_00f85b38], eax
         ret
-        jmp     func_004bf088
     }
+}
+
+/* @addr 0x004bf080 (5b) tail-jmp wrapper to LoadStoreRetNopJmp_004bf090
+ * (resolved via the func_004bf088 alias in extras_map). */
+void func_004bf080(void) {
+    func_004bf088();
 }
 
 /* @addr 0x004bf090 (11b)
