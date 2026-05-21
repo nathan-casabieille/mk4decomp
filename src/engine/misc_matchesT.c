@@ -116,45 +116,21 @@ __declspec(naked) void MStackPushDualJmp_00428370(void) {
     }
 }
 
-/* @addr 0x00438470 (53b): packed multi-entry helper - keep naked.
- *
- * Same shape as MStackPushDualJmp_00428370: one symbol covering two
- * disjoint code blocks.
- *
- *   Block A (offsets 0x00..0x20, 37b): set walk=6, mstack push,
- *   tail-jmp to func_0046f230. Reached from the symbol's entry.
- *     mov     eax, [g_matrixStackTop]
- *     mov     [g_walkCallback], 6
- *     inc     eax
- *     mov     [g_matrixStackTop], eax
- *     mov     [eax*4 + 0], OFFSET func_004384a0
- *     jmp     func_0046f230                  ; tail call exit
- *
- *   Padding (offsets 0x21..0x2b, 11b): 11x nop for alignment.
- *
- *   Block B (offsets 0x2c..0x30, 5b): single tail-jmp, reached only
- *   via external jmp landing at offset +0x2c of this "function".
- *     jmp     func_0042b1c0                  ; far backward dispatch
- *
- * Why naked: any `__asm { ... }` block in a function with C body
- * disables /O2 for the whole function, producing a debug-mode
- * prologue, stack-spilled locals, `add eax, 1` instead of `inc eax`,
- * and `call` instead of TCO `jmp` (50+ bytes diverge). See
- * [[packed-helpers-one-naked]] and [[hybrid-asm-tail-template]]
- * "When NOT to use" for the diagnosis.
+/* @addr 0x00438470 (37b main + 11 nop pad + 5b sub-entry at +0x30):
+ *   set walk=6, mstack-push func_004384a0, tail-jmp func_0046f230.
+ *   Sub-entry MStackCleanupFrom_004384a0 (below) is a 5b tail-jmp
+ *   wrapper into func_0042b1c0; the 11-byte gap is synth 0x90 fill.
  */
 extern void func_004384a0(void);
 extern void func_0046f230(void);
 extern void func_0042b1c0(void);
-__declspec(naked) void MStackPushSet6Jmp_00438470(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 6
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004384a0
-        jmp     func_0046f230
-    }
+void MStackPushSet6Jmp_00438470(void) {
+    int top = g_matrixStackTop;
+    g_walkCallback = (void(*)(void))6;
+    top++;
+    g_matrixStackTop = top;
+    *(void(**)(void))((unsigned int)top * 4) = func_004384a0;
+    func_0046f230();
 }
 
 /* @addr 0x004384a0 (5b) packed mstack-pop-callback tail-jmp wrapper. */
@@ -166,15 +142,13 @@ void MStackCleanupFrom_004384a0(void) {
 extern void func_004384e0(void);
 extern void StageTransitionCluster_0046f250(void);
 extern void func_0042b200(void);
-__declspec(naked) void MStackPushSet0Jmp_004384b0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 0
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_004384e0
-        jmp     StageTransitionCluster_0046f250
-    }
+void MStackPushSet0Jmp_004384b0(void) {
+    int top = g_matrixStackTop;
+    g_walkCallback = (void(*)(void))0;
+    top++;
+    g_matrixStackTop = top;
+    *(void(**)(void))((unsigned int)top * 4) = func_004384e0;
+    StageTransitionCluster_0046f250();
 }
 
 /* @addr 0x004384e0 (5b) packed mstack-pop-callback tail-jmp wrapper. */
@@ -186,15 +160,13 @@ void MStackCleanupFrom_004384e0(void) {
 extern void func_00438520(void);
 extern void func_0046f230_c(void);
 extern void func_0042b240(void);
-__declspec(naked) void MStackPushSet4Jmp_004384f0(void) {
-    __asm {
-        mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_walkCallback], 4
-        inc     eax
-        mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + 0], OFFSET func_00438520
-        jmp     func_0046f230_c
-    }
+void MStackPushSet4Jmp_004384f0(void) {
+    int top = g_matrixStackTop;
+    g_walkCallback = (void(*)(void))4;
+    top++;
+    g_matrixStackTop = top;
+    *(void(**)(void))((unsigned int)top * 4) = func_00438520;
+    func_0046f230_c();
 }
 
 /* @addr 0x00438520 (5b) packed mstack-pop-callback tail-jmp wrapper. */
