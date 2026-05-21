@@ -1,38 +1,14 @@
 /**
- * Miscellaneous one-off matches for small unmatched stubs.
+ * Small game-state one-off helpers.
  *
- * Each function here represents a unique pattern not shared with any
- * other stub in the binary. Grouped together for organizational
- * convenience.
+ * Five tiny utilities that don't belong elsewhere: dirty-flag toggle,
+ * zero-init wrappers, packed-ptr add+jmp, 16-bit-arg event call, and
+ * a single bit-clear on the fight-group entry's flag-field.
  */
 #include "engine/scenegraph.h"
 
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_baseSel_00542060;
-
-/* Table-base extern: &-reference defeats MSVC's constant-folding of
- * `addr >> 2` so the runtime shift survives, matching orig encoding. */
-extern unsigned int g_table_00538168;   /* 0x00538168 (uninit .data) */
-
-/* @addr 0x004049c0 (14b)
- *   mov     eax, 0x00538168
- *   shr     eax, 2
- *   mov     [g_matrixStackTop], eax
- *   ret
- */
-void MStackPackedInit_004049c0(void) {
-    g_matrixStackTop = (int)((unsigned int)&g_table_00538168 >> 2);
-}
-
-/* @addr 0x00406ce0 (19b)
- *   mov     eax, [g_scaledInit_00542044]
- *   mov     ecx, [g_walkCallback]
- *   mov     [eax*4 + 0x24], ecx
- *   ret
- */
-void ScaledStoreIdx24_00406ce0(void) {
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x24) = (unsigned int)g_walkCallback;
-}
 
 /* @addr 0x004296c0 (17b)
  *   mov     eax, [g_xformDirtyFlags]

@@ -160,7 +160,7 @@ functions:
     size: 14
     group: boot
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/boot/small_init_helpers.c
   - addr: 0x004049d0
     name: SaveCallRestore_004049d0
     size: 38
@@ -550,7 +550,7 @@ functions:
     size: 19
     group: boot
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/boot/small_init_helpers.c
   - addr: 0x00406d00
     name: RecursiveMStackByteStream_00406d00
     size: 207
@@ -1846,7 +1846,7 @@ functions:
     size: 18
     group: game
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/engine/small_helpers.c
   - addr: 0x00421c40
     name: Push71_Push48caa0_00421c40
     size: 16
@@ -2824,7 +2824,7 @@ functions:
     size: 17
     group: game
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/engine/small_helpers.c
   - addr: 0x004296e0
     name: Thunk_004296e0
     size: 5
@@ -4210,7 +4210,7 @@ functions:
     size: 6
     group: game
     status: matched
-    file: src/engine/misc_matchesC.c
+    file: src/engine/small_jmp_wrappers.c
   - addr: 0x00438170
     name: CallPauseConstStoreJmp_00438170
     size: 30
@@ -5716,7 +5716,7 @@ functions:
     size: 18
     group: game
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/engine/small_helpers.c
   - addr: 0x0044ccf0
     name: GuardedChainDualAdd_0044ccf0
     size: 91
@@ -6916,7 +6916,7 @@ functions:
     size: 30
     group: game
     status: matched
-    file: src/engine/misc_matchesC.c
+    file: src/engine/small_jmp_wrappers.c
   - addr: 0x00460420
     name: PushCallStoreClearJmp_00460420
     size: 68
@@ -10354,7 +10354,7 @@ functions:
     size: 16
     group: game
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/engine/small_helpers.c
   - addr: 0x00489f60
     name: TableLookupCall_00489f60
     size: 33
@@ -11422,7 +11422,7 @@ functions:
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matches.c
+    file: src/engine/small_helpers.c
   - addr: 0x00490140
     name: MStackPushSet0200_00490140
     size: 39
@@ -16576,7 +16576,7 @@ functions:
     size: 22
     group: boot
     status: matched
-    file: src/engine/misc_matchesC.c
+    file: src/boot/table_lookup_iat_call.c
   - addr: 0x004c6ff0
     name: RangePathIATDispatch_004c6ff0
     size: 54

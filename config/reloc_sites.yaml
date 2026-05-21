@@ -42,7 +42,6 @@ engine/joystick_init.obj#2#0xb4: 8061256
 engine/misc_matches8.obj#24#0x1: 5513324
 engine/misc_matchesA.obj#56#0x1: 11227648
 engine/misc_matchesA.obj#56#0x15: 11227648
-engine/misc_matchesC.obj#2#0x2: 5513304
 engine/misc_matchesCC.obj#20#0x1c: 5513364
 engine/misc_matchesE.obj#2#0x11: 4358032
 engine/misc_matchesF.obj#12#0x17: 5513288
@@ -526,4 +525,5 @@ game/fight.obj#2#0x5c: 5481632
 game/fight.obj#2#0x6: 5481632
 game/fight.obj#2#0xa9: 5481632
 game/fight.obj#2#0xae: 5481632
+game/small_jmp_wrappers.obj#2#0x2: 5513304
 platform/exit.obj#2#0x38: 5007392
