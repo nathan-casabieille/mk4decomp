@@ -69,27 +69,23 @@ void TwoCallJmp_00478120(void) {
     func_00478131();
 }
 
-/* @addr 0x0043d580 (21b)
+/* @addr 0x0043d580 (14b)
  *   push    0x004e5120
  *   call    F
  *   add     esp, 4
  *   ret
- *   nop nop
- *   jmp     +0x0b
  */
 extern int func_00459500(void *);
 extern void *g_data_004e5120;
 extern void func_0043d590(void);
-__declspec(naked) void PushCallRetNopJmp_0043d580(void) {
-    __asm {
-        push    OFFSET g_data_004e5120
-        call    func_00459500
-        add     esp, 4
-        ret
-        nop
-        nop
-        jmp     func_0043d590
-    }
+void PushCallRetNopJmp_0043d580(void) {
+    func_00459500(&g_data_004e5120);
+}
+
+/* @addr 0x0043d590 (5b) tail-jmp wrapper to CountdownStoreCallChain_0043d5a0
+ * (resolved via the func_0043d590 alias in extras_map -> 0x43d5a0). */
+void TailJmpTo_0043d5a0(void) {
+    func_0043d590();
 }
 
 /* @addr 0x004ab670 (21b)

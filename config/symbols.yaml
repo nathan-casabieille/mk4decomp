@@ -4915,7 +4915,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0043d580
     name: PushCallRetNopJmp_0043d580
-    size: 21
+    size: 14
+    group: game
+    status: matched
+    file: src/engine/misc_matches8.c
+  - addr: 0x0043d590
+    name: TailJmpTo_0043d5a0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matches8.c
