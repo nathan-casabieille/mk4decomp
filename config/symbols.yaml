@@ -12181,7 +12181,25 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00498930
     name: func_00498930
-    size: 640
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498980
+    name: func_00498980
+    size: 368
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498af0
+    name: func_00498af0
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00498b20
+    name: func_00498b20
+    size: 144
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
