@@ -122,59 +122,45 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_load_0052ab10;
+extern unsigned int g_data_005380b0;
+extern unsigned int g_data_005380b4;
+extern unsigned int g_data_005380b8;
+extern unsigned int g_data_005380a4;
+extern unsigned int g_data_00541d6c;
+extern unsigned int g_state_0053a278;
+extern unsigned char g_data_0050b130;
+
 /* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
-__declspec(naked) void SequencedInit3CallB_00458ae0(void) {
-    __asm {
-        push    esi
-        call    BootInitGuardedCallChain_004265d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        xor     esi, esi
-        cmp     eax, esi
-        _emit   0fh
-        _emit   85h
-        _emit   9eh
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        mov     eax, 0x0050b130
-        shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
-        call    LoadGeoAsset_Default
-        cmp     dword ptr [g_pause_00541e6c], esi
-        _emit   0fh
-        _emit   85h
-        _emit   80h
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        mov     dword ptr [g_x_0054206c], esi
-        call    CopyGlobal_004ac1f0
-        cmp     dword ptr [g_pause_00541e6c], esi
-        _emit   75h
-        _emit   6dh
-        mov     eax, dword ptr [g_load_0052ab10]
-        mov     dword ptr [g_x_0054206c], esi
-        mov     dword ptr [g_scaledInit_00542044], eax
-        shl     eax, 2
-        mov     dword ptr [eax + 0x60], esi
-        mov     ecx, dword ptr [g_x_0054206c]
-        mov     dword ptr [eax + 0x64], ecx
-        mov     edx, dword ptr [g_x_0054206c]
-        mov     dword ptr [eax + 0x68], edx
-        mov     ecx, dword ptr [g_x_0054206c]
-        mov     dword ptr [eax + 0x54], ecx
-        mov     edx, dword ptr [g_x_0054206c]
-        mov     dword ptr [eax + 0x58], edx
-        mov     dword ptr [eax + 0x5c], 0xfff10000
-        mov     eax, 0x00000027
-        mov     dword ptr [g_x_0054206c], esi
-        mov     dword ptr [g_data_005380b0], eax
-        mov     dword ptr [g_data_005380b4], eax
-        mov     dword ptr [g_data_005380b8], eax
-        mov     dword ptr [g_data_005380a4], esi
-        mov     dword ptr [g_data_00541d6c], esi
-        mov     dword ptr [g_state_0053a278], esi
-        pop     esi
-        ret
-    }
+void SequencedInit3CallB_00458ae0(void) {
+    unsigned int v;
+    BootInitGuardedCallChain_004265d0();
+    if (g_pause_00541e6c != 0) return;
+    g_scaledInit_00542044 = (unsigned int)&g_data_0050b130 >> 2;
+    LoadGeoAsset_Default();
+    if (g_pause_00541e6c != 0) return;
+    g_x_0054206c = 0;
+    CopyGlobal_004ac1f0();
+    if (g_pause_00541e6c != 0) return;
+    v = g_load_0052ab10;
+    g_x_0054206c = 0;
+    g_scaledInit_00542044 = v;
+    v <<= 2;
+    *(unsigned int *)(v + 0x60) = 0;
+    *(unsigned int *)(v + 0x64) = g_x_0054206c;
+    *(unsigned int *)(v + 0x68) = g_x_0054206c;
+    *(unsigned int *)(v + 0x54) = g_x_0054206c;
+    *(unsigned int *)(v + 0x58) = g_x_0054206c;
+    *(unsigned int *)(v + 0x5c) = 0xfff10000;
+    g_x_0054206c = 0;
+    g_data_005380b0 = 0x27;
+    g_data_005380b4 = 0x27;
+    g_data_005380b8 = 0x27;
+    g_data_005380a4 = 0;
+    g_data_00541d6c = 0;
+    g_state_0053a278 = 0;
 }
