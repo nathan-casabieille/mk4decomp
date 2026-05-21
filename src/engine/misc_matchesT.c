@@ -154,22 +154,15 @@ __declspec(naked) void MStackPushSet6Jmp_00438470(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_004384a0
         jmp     func_0046f230
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     func_0042b1c0
     }
 }
 
-/* @addr 0x004384b0 (53b): same shape value=0 + diff target */
+/* @addr 0x004384a0 (5b) packed mstack-pop-callback tail-jmp wrapper. */
+void MStackCleanupFrom_004384a0(void) {
+    func_0042b1c0();
+}
+
+/* @addr 0x004384b0 (37b): same shape value=0 + diff target */
 extern void func_004384e0(void);
 extern void StageTransitionCluster_0046f250(void);
 extern void func_0042b200(void);
@@ -181,22 +174,15 @@ __declspec(naked) void MStackPushSet0Jmp_004384b0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_004384e0
         jmp     StageTransitionCluster_0046f250
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     func_0042b200
     }
 }
 
-/* @addr 0x004384f0 (53b): same shape value=4 */
+/* @addr 0x004384e0 (5b) packed mstack-pop-callback tail-jmp wrapper. */
+void MStackCleanupFrom_004384e0(void) {
+    func_0042b200();
+}
+
+/* @addr 0x004384f0 (37b): same shape value=4 */
 extern void func_00438520(void);
 extern void func_0046f230_c(void);
 extern void func_0042b240(void);
@@ -208,19 +194,12 @@ __declspec(naked) void MStackPushSet4Jmp_004384f0(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_00438520
         jmp     func_0046f230_c
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     func_0042b240
     }
+}
+
+/* @addr 0x00438520 (5b) packed mstack-pop-callback tail-jmp wrapper. */
+void MStackCleanupFrom_00438520(void) {
+    func_0042b240();
 }
 
 /* @addr 0x00439190 (20b): call F1; if pause, ret; else tail-jmp T1.

@@ -4237,19 +4237,37 @@ functions:
     file: src/engine/scaled_pop_save_jmp.c
   - addr: 0x00438470
     name: MStackPushSet6Jmp_00438470
-    size: 53
+    size: 37
+    group: game
+    status: matched
+    file: src/engine/misc_matchesT.c
+  - addr: 0x004384a0
+    name: MStackCleanupFrom_004384a0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x004384b0
     name: MStackPushSet0Jmp_004384b0
-    size: 53
+    size: 37
+    group: game
+    status: matched
+    file: src/engine/misc_matchesT.c
+  - addr: 0x004384e0
+    name: MStackCleanupFrom_004384e0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesT.c
   - addr: 0x004384f0
     name: MStackPushSet4Jmp_004384f0
-    size: 53
+    size: 37
+    group: game
+    status: matched
+    file: src/engine/misc_matchesT.c
+  - addr: 0x00438520
+    name: MStackCleanupFrom_00438520
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesT.c
