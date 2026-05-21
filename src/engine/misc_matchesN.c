@@ -163,26 +163,25 @@ void IterStepScaledStore24_00428730(int arg) {
  *   ret
  */
 extern unsigned int g_state_00537e94;
-__declspec(naked) void StoreLitRetSet2_0042c3b0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, 0x0042c3d0
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [ecx*4 + 0x44], eax
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        mov     eax, 2
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00537e94], eax
-        ret
-    }
+extern void func_0042c3d0(void);
+
+/* @addr 0x0042c3b0 (24b): store OFFSET func_0042c3d0 (entry B at +0x20)
+ * to g_scaledInit_00542044 and fightGroupHead chain[+0x44]. Entry A of
+ * the original 48-byte packed block; entry B at +0x20 lives in
+ * func_0042c3d0. The 8-byte nop gap is filled by 0x90-fill. */
+void StoreLitRetSet2_0042c3b0(void) {
+    unsigned int addr = (unsigned int)&func_0042c3d0;
+    g_scaledInit_00542044 = addr;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x44) = addr;
+}
+
+/* @addr 0x0042c3d0 (16b): set both walkCallback and g_state_00537e94 to 2.
+ * Installed via the OFFSET in entry A; reached via the scaledInit
+ * dispatch chain. */
+void func_0042c3d0(void) {
+    int v = 2;
+    g_walkCallback = (void (*)(void))v;
+    g_state_00537e94 = v;
 }
 
 /* @addr 0x004406e0 (47b)

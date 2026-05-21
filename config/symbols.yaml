@@ -3031,7 +3031,13 @@ functions:
     file: src/engine/misc_matchesD.c
   - addr: 0x0042c3b0
     name: StoreLitRetSet2_0042c3b0
-    size: 48
+    size: 24
+    group: game
+    status: matched
+    file: src/engine/misc_matchesN.c
+  - addr: 0x0042c3d0
+    name: func_0042c3d0
+    size: 16
     group: game
     status: matched
     file: src/engine/misc_matchesN.c
