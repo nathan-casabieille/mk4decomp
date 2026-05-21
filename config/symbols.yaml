@@ -340,7 +340,7 @@ functions:
     size: 90
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_pushpop_helpers.c
   - addr: 0x00405a00
     name: ScaledAndMaskInitJmp_00405a00
     size: 59
@@ -364,7 +364,7 @@ functions:
     size: 90
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_pushpop_helpers.c
   - addr: 0x00405b30
     name: MStackPushCallCallPop_00405b30
     size: 77
@@ -646,7 +646,7 @@ functions:
     size: 88
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/misc_boot_helpers.c
   - addr: 0x00407c60
     name: ThreeChan11BitPack_00407c60
     size: 152
@@ -688,13 +688,13 @@ functions:
     size: 81
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_init_helpers.c
   - addr: 0x00408510
     name: PushPopScaled1cDoubleCall_00408510
     size: 99
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_pushpop_helpers.c
   - addr: 0x00408580
     name: PushSetCallCleanup_00408580
     size: 120
@@ -916,7 +916,7 @@ functions:
     size: 69
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/misc_boot_helpers.c
   - addr: 0x0040a830
     name: MStackPushCallPop_0040a830
     size: 54
@@ -982,7 +982,7 @@ functions:
     size: 66
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/misc_boot_helpers.c
   - addr: 0x0040bf70
     name: BootMStackBracketedScaledStores_0040bf70
     size: 400
@@ -1300,7 +1300,7 @@ functions:
     size: 87
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_init_helpers.c
   - addr: 0x00414810
     name: BootCountdownPeriodicInstall_00414810
     size: 263
@@ -1444,7 +1444,7 @@ functions:
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesII.c
+    file: src/boot/scaled_init_helpers.c
   - addr: 0x00419720
     name: DualCallPauseAddrSetRecurse_00419720
     size: 95
