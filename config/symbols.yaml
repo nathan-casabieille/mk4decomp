@@ -7003,7 +7003,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x00461340
     name: Set1JmpSet2Jmp_00461340
-    size: 31
+    size: 15
+    group: game
+    status: matched
+    file: src/engine/misc_matchesH.c
+  - addr: 0x00461350
+    name: func_00461350
+    size: 15
     group: game
     status: matched
     file: src/engine/misc_matchesH.c

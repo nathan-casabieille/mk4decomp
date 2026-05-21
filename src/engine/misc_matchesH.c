@@ -246,23 +246,21 @@ void Const6Call_PauseDirty4_Jmp_00453510(void) {
     func_00455761_b();
 }
 
-/* @addr 0x00461340 (31b)
- *   mov     [g_walkCallback], 1
- *   jmp     T
- *   nop
- *   mov     [g_walkCallback], 2
- *   jmp     T2
- */
+/* @addr 0x00461340 (31b orig, split into 2x15b entries with 1-byte
+ * nop pad). Each entry is "set g_walkCallback = N; tail-jmp T". */
 extern void func_0048e4ab(void);
 extern void func_0048e4af(void);
-__declspec(naked) void Set1JmpSet2Jmp_00461340(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 1
-        jmp     func_0048e4ab
-        nop
-        mov     dword ptr [g_walkCallback], 2
-        jmp     func_0048e4af
-    }
+
+/* @addr 0x00461340 (15b) walk=1 entry */
+void Set1JmpSet2Jmp_00461340(void) {
+    g_walkCallback = (void (*)(void))1;
+    func_0048e4ab();
+}
+
+/* @addr 0x00461350 (15b) walk=2 entry */
+void func_00461350(void) {
+    g_walkCallback = (void (*)(void))2;
+    func_0048e4af();
 }
 
 /* @addr 0x00464320 (36b): same shape as 0x0042ee10 (Cmp7DirtyToggle) but cmp=9 */
