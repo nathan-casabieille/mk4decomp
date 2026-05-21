@@ -1798,7 +1798,7 @@ functions:
     size: 57
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/scaled_clear_triple_call_jmp.c
   - addr: 0x00420300
     name: PendingMatch_00420300
     size: 4216
@@ -2854,7 +2854,7 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/call_pause_scaled_dec_jmp.c
   - addr: 0x00429790
     name: ScaledLoadJmp_24_00429790
     size: 23
@@ -5452,13 +5452,13 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/const_4ec8f8_dirty_scaled_store.c
   - addr: 0x004465c0
     name: ScaledChainTripleStore_004465c0
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/scaled_chain_triple_store.c
   - addr: 0x00446600
     name: ScaledInitOrSet13b6_00446600
     size: 58
@@ -5506,7 +5506,7 @@ functions:
     size: 53
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/scaled_init_with_counter_and_type.c
   - addr: 0x00446980
     name: VecScaleMStackTripleCall_00446980
     size: 389
@@ -5902,7 +5902,7 @@ functions:
     size: 53
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/store_three_states_push_call.c
   - addr: 0x004506c0
     name: PendingMatch_004506c0
     size: 1810
@@ -6160,7 +6160,7 @@ functions:
     size: 53
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/set2_call_dirty_call_pause_jmp.c
   - addr: 0x00453620
     name: Bit2GatedChainInit_00453620
     size: 301
@@ -6238,7 +6238,7 @@ functions:
     size: 54
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/two_call_pause_set_jmp2.c
   - addr: 0x004561c0
     name: SetJmp_004561c0
     size: 15
@@ -6814,13 +6814,13 @@ functions:
     size: 50
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/cmp_p1_scaled_load.c
   - addr: 0x0045f610
     name: CmpP1ScaledLoad7c_0045f610
     size: 50
     group: game
     status: matched
-    file: src/engine/misc_matchesU.c
+    file: src/engine/cmp_p1_scaled_load.c
   - addr: 0x0045f650
     name: HitReactionDispatcher_0045f650
     size: 625
