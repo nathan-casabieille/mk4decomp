@@ -4393,7 +4393,19 @@ functions:
     file: src/engine/misc_matchesF.c
   - addr: 0x00438ea0
     name: TripleStubPushCall_00438ea0
-    size: 46
+    size: 14
+    group: game
+    status: matched
+    file: src/engine/misc_matchesO.c
+  - addr: 0x00438eb0
+    name: func_00438eb0
+    size: 14
+    group: game
+    status: matched
+    file: src/engine/misc_matchesO.c
+  - addr: 0x00438ec0
+    name: func_00438ec0
+    size: 14
     group: game
     status: matched
     file: src/engine/misc_matchesO.c

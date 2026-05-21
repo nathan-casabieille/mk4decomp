@@ -159,46 +159,28 @@ void DecJneSetCallSetJmp_004389b0(void) {
         }
 }
 
-/* @addr 0x00438ea0 (46b)
- *   push    0x004e4890
- *   call    F
- *   add     esp, 4
- *   ret
- *   nop * 2
- *   push    0x004e48d0
- *   call    F
- *   add     esp, 4
- *   ret
- *   nop * 2
- *   push    0x004e4910
- *   call    F
- *   add     esp, 4
- *   ret
- */
+/* @addr 0x00438ea0 (46b orig, split into 3x14b entries with 2-byte
+ * nop pads). Each entry: push arg; call F; add esp, 4; ret. */
 extern void *g_data_004e4890;
 extern void *g_data_004e48d0;
 extern void *g_data_004e4910;
 extern int func_004399be(void *);
 extern int func_004399be_b(void *);
 extern int func_004399be_c(void *);
+
+/* @addr 0x00438ea0 (14b) entry A */
 void TripleStubPushCall_00438ea0(void) {
-    __asm {
-        push    OFFSET g_data_004e4890
-        call    func_004399be
-        add     esp, 4
-        ret
-        nop
-        nop
-        push    OFFSET g_data_004e48d0
-        call    func_004399be_b
-        add     esp, 4
-        ret
-        nop
-        nop
-        push    OFFSET g_data_004e4910
-        call    func_004399be_c
-        add     esp, 4
-        }
+    func_004399be(&g_data_004e4890);
+}
+
+/* @addr 0x00438eb0 (14b) entry B */
+void func_00438eb0(void) {
+    func_004399be_b(&g_data_004e48d0);
+}
+
+/* @addr 0x00438ec0 (14b) entry C */
+void func_00438ec0(void) {
+    func_004399be_c(&g_data_004e4910);
 }
 
 /* @addr 0x00460910 (46b)
