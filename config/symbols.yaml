@@ -9493,7 +9493,97 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004821b0
     name: RoundFinishEventGroup_004821b0
-    size: 846
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482200
+    name: func_00482200
+    size: 32
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482220
+    name: func_00482220
+    size: 32
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482240
+    name: func_00482240
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482290
+    name: func_00482290
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004822c0
+    name: func_004822c0
+    size: 16
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004822d0
+    name: func_004822d0
+    size: 16
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004822e0
+    name: func_004822e0
+    size: 128
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482360
+    name: func_00482360
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004823b0
+    name: func_004823b0
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004823e0
+    name: func_004823e0
+    size: 64
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482420
+    name: func_00482420
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482470
+    name: func_00482470
+    size: 16
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x00482480
+    name: func_00482480
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004824b0
+    name: func_004824b0
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x004824e0
+    name: func_004824e0
+    size: 30
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
