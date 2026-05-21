@@ -9337,7 +9337,13 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x004826f0
     name: TwoEntryWrapperGuarded_004826f0
-    size: 72
+    size: 14
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x00482700
+    name: func_00482700
+    size: 56
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c

@@ -722,45 +722,29 @@ void PushPopWalkSet1006_00470ee0(void) {
     g_state_004d57ac--;
 }
 
-/* @addr 0x004826f0 (72b)
- *   Two-entry block: 9-byte mini-wrapper at 0x4826f0
- *   (push lit; call F; add esp, 4; ret) + 2 NOPs +
- *   the main 56-byte body at 0x482700: call F1, pause→ret,
- *   call F2, pause→ret, push lit, call F3, pause→jmp T.
- */
+/* @addr 0x004826f0 (14b): mini-wrapper - push lit + call + cleanup + ret.
+ * Entry A of the original 72-byte packed block; entry B (the main 56-byte
+ * body at +0x10) lives in func_00482700. The 2-byte nop gap is filled
+ * by 0x90-fill. */
 extern unsigned int g_data_004edf38;
 extern unsigned int g_data_004edf68;
 extern void GateDispatch6c_00494580(void);
 extern void ScaledChainCmp61_00482740(void);
 extern void LiteralPushCallEntZero_00488c00(void);
-__declspec(naked) void TwoEntryWrapperGuarded_004826f0(void) {
-    __asm {
-        push    OFFSET g_data_004edf38
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
-        nop
-        nop
-        call    GateDispatch6c_00494580
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   29h
-        call    ScaledChainCmp61_00482740
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   1bh
-        push    OFFSET g_data_004edf68
-        call    ArgSarStoreJmp_004594f0
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     LiteralPushCallEntZero_00488c00
-        ret
-    }
+void TwoEntryWrapperGuarded_004826f0(void) {
+    ArgSarStoreJmp_004594f0(&g_data_004edf38);
+}
+
+/* @addr 0x00482700 (56b): triple call chain with pause-gates; final
+ * push+call+pause gate then tail-jmp LiteralPushCallEntZero. */
+void func_00482700(void) {
+    GateDispatch6c_00494580();
+    if (g_framePauseFlag != 0) return;
+    ScaledChainCmp61_00482740();
+    if (g_framePauseFlag != 0) return;
+    ArgSarStoreJmp_004594f0(&g_data_004edf68);
+    if (g_framePauseFlag != 0) return;
+    LiteralPushCallEntZero_00488c00();
 }
 
 /* @addr 0x004a2270 (72b)
