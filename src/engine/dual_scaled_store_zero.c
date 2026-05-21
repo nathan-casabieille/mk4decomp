@@ -1,0 +1,26 @@
+/**
+ * Auto-split from misc_matchesK.c
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+
+/* @addr 0x00491080 (43b)
+ *   mov     eax, [g_fightGroupHead]
+ *   mov     ecx, [g_eventQueueIdx]
+ *   mov     [eax*4 + 0x24], ecx
+ *   mov     edx, [g_fightGroupHead]
+ *   xor     eax, eax
+ *   mov     [g_walkCallback], eax
+ *   mov     [edx*4 + 0x28], eax
+ *   jmp     T
+ */
+extern void func_004907fa(void);
+void DualScaledStoreZero_00491080(void) {
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x24) = g_eventQueueIdx;
+    g_walkCallback = (void (*)(void))0;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0;
+    func_004907fa();
+}

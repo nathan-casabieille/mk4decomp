@@ -11290,13 +11290,13 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/scaled_chain_3c_variants.c
   - addr: 0x0048f930
     name: ScaledChain3c7c_0048f930
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/scaled_chain_3c_variants.c
   - addr: 0x0048f950
     name: CondPlayerLookup_0048f950
     size: 38
@@ -11314,7 +11314,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/store_call_pause_call_pause_jmp.c
   - addr: 0x0048fa50
     name: Cascade3ChainInit_0048fa50
     size: 236
@@ -11428,43 +11428,43 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x00490170
     name: MStackPushSet0080_00490170
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x004901a0
     name: MStackPushSet0008_004901a0
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x004901d0
     name: MStackPushSet0020_004901d0
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x00490200
     name: MStackPushSet0040_00490200
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x00490230
     name: MStackPushSet0004_00490230
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x00490260
     name: MStackPushSet0001_00490260
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/mstack_push_set_bit_variants.c
   - addr: 0x00490290
     name: OrStoreDecStackPop_00490290
     size: 55
@@ -11608,13 +11608,13 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/iter_step_neg_store.c
   - addr: 0x00490b40
     name: IterStepDualStore_00490b40
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/iter_step_dual_store.c
   - addr: 0x00490b70
     name: ChainAccumMul10Pair_00490b70
     size: 191
@@ -11626,7 +11626,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/dual_call_pause_dirty_jmp.c
   - addr: 0x00490c60
     name: GuardedSeq_00490c60
     size: 20
@@ -11662,7 +11662,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/init_three_fields.c
   - addr: 0x00490ec0
     name: DualHelperMul10TailPair_00490ec0
     size: 247
@@ -11686,7 +11686,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/dual_scaled_store_zero.c
   - addr: 0x004910b0
     name: MStackNegAwareMul10Pair_004910b0
     size: 259
@@ -11698,7 +11698,7 @@ functions:
     size: 42
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/swap_two_globals.c
   - addr: 0x004911f0
     name: ScaledChainDouble_004911f0
     size: 57
@@ -11770,7 +11770,7 @@ functions:
     size: 34
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/inc_capped_3e7.c
   - addr: 0x00491950
     name: Set5CallPauseTestByteJmpCall_00491950
     size: 54
@@ -11782,7 +11782,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/two_call_state_pause_jmp.c
   - addr: 0x004919c0
     name: RoundStartCluster_004919c0
     size: 1155
@@ -12076,7 +12076,7 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/scaled_add_deref.c
   - addr: 0x00494830
     name: StreamInitCountdownBody_00494830
     size: 376
@@ -12160,7 +12160,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesK.c
+    file: src/engine/const_0303_init_jmp.c
   - addr: 0x00495d20
     name: TripleEntry03ChainArg_00495d20
     size: 124
