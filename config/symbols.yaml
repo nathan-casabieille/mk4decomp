@@ -7345,7 +7345,13 @@ functions:
     file: src/engine/scaled_dec_branch.c
   - addr: 0x004667a0
     name: StoreFightFieldCallTailJmp_004667a0
-    size: 69
+    size: 49
+    group: game
+    status: matched
+    file: src/engine/misc_matchesPP.c
+  - addr: 0x004667e0
+    name: func_004667e0
+    size: 5
     group: game
     status: matched
     file: src/engine/misc_matchesPP.c

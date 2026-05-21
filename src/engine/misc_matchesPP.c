@@ -423,43 +423,25 @@ void DispatchOrInitFightGroup_0042f850(void) {
     PhaseInstall2DInterpDispatch_0042f8a0();
 }
 
-/* @addr 0x004667a0 (69b)
+/* @addr 0x004667a0 (49b)
  *   load g_fightGroupHead, g_eventQueueEnd; push 0x4eaa58;
  *   eax = [fightGroup*4+0x64] - 0x4ccc; mov walk=eax;
  *   mov [eventQueueEnd*4+0x64]=eax; call F; add esp,4; ret.
- *   Then 15 NOPs and a tail-jmp (entry at +0x40).
  */
 extern unsigned int g_data_004eaa58;
 extern void CallSetPause_0041f830(void);
-__declspec(naked) void StoreFightFieldCallTailJmp_004667a0(void) {
-    __asm {
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_eventQueueEnd]
-        push    OFFSET g_data_004eaa58
-        mov     eax, dword ptr [eax*4 + 0x64]
-        sub     eax, 0x4ccc
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x64], eax
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        jmp     CallSetPause_0041f830
-    }
+void StoreFightFieldCallTailJmp_004667a0(void) {
+    unsigned int fg = (unsigned int)g_fightGroupHead;
+    unsigned int eq = g_eventQueueEnd;
+    unsigned int v = *(unsigned int *)(fg * 4 + 0x64) - 0x4ccc;
+    g_walkCallback = (void (*)(void))v;
+    *(unsigned int *)(eq * 4 + 0x64) = v;
+    ArgSarStoreJmp_004594f0(&g_data_004eaa58);
+}
+
+/* @addr 0x004667e0 (5b) tail-jmp wrapper. */
+void func_004667e0(void) {
+    CallSetPause_0041f830();
 }
 
 /* @addr 0x0048e400 (69b)
