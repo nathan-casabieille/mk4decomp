@@ -28,3 +28,53 @@ void func_004391b0(void) {
     if (g_framePauseFlag != 0) return;
     func_0046f680();
 }
+
+/* @addr 0x00497b30 (15b): set g_eventQueueChild = 1; tail-jmp PunchDispatcher. */
+void func_00497b30(void) {
+    g_eventQueueChild = 1;
+    PunchDispatcherCluster_00497b50();
+}
+
+/* @addr 0x00497b40 (15b): set g_eventQueueChild = 0; tail-jmp PunchDispatcher. */
+void func_00497b40(void) {
+    g_eventQueueChild = 0;
+    PunchDispatcherCluster_00497b50();
+}
+
+/* @addr 0x00436270 (47b): call func_00439890; if non-zero ret;
+ * else mstack-push HitReactionStateCluster_004335f0, set walkCallback=2,
+ * tail-jmp func_00471200. Orphan sub-entry. */
+void func_00436270(void) {
+    if (func_00439890() != 0) return;
+    g_walkCallback = (void (*)(void))2;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) =
+        (unsigned int)&HitReactionStateCluster_004335f0;
+    func_00471200();
+}
+
+/* @addr 0x004362a0 (5b): orphan tail-jmp into func_00436290. */
+void func_004362a0(void) {
+    func_00436290();
+}
+
+/* @addr 0x00437100 (52b): call LeaPlus22StoreSelf; if !pause set walk=3,
+ * mstack-push OFFSET DualCallPauseJmpDual_00439190, tail-jmp func_00471270.
+ * Orphan sub-entry of the original packed block. */
+void func_00437100(void) {
+    LeaPlus22StoreSelf_0048e4d0();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = (void (*)(void))3;
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) =
+        (unsigned int)&DualCallPauseJmpDual_00439190;
+    func_00471270();
+}
+
+/* @addr 0x0048e3c0 (20b): call func_004312e0; if !pause tail-jmp
+ * func_00431470. Orphan sub-entry of the original packed block. */
+void func_0048e3c0(void) {
+    func_004312e0();
+    if (g_framePauseFlag != 0) return;
+    func_00431470();
+}

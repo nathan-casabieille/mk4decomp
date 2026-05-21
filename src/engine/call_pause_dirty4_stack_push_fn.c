@@ -1,0 +1,39 @@
+/**
+ * Auto-split from misc_matchesLL.c
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+extern packed_ptr g_xformEntityIdx;
+extern unsigned int g_state_004d57ac;
+extern packed_ptr g_fightGroupHead;
+extern u32 g_eventQueueEnd;
+extern u32 g_eventQueueIdx;
+extern u32 g_eventQueueWorkType;
+extern u32 g_pendingNodeType;
+extern u32 g_eventQueueNotMask;
+
+/* @addr 0x004839d0 (70b)
+ *   call F1; pause-test → ret; call F2; pause → ret;
+ *   testb 4,[dirty]; jz +0x1b →ret; inc g_state_004d57ac;
+ *   push 0x00483a20 onto stack[idx*4]; jmp T.
+ */
+extern void func_0047f860(void);
+extern void func_00484342(void);
+extern void InstallSelfOrChainJmp_00483a20(void);
+extern void func_0042b988(void);
+void CallPauseDirty4StackPushFn_004839d0(void) {
+    func_0047f860();
+    if (g_framePauseFlag != 0) return;
+    func_00484342();
+    if (g_framePauseFlag != 0) return;
+    if ((g_xformDirtyFlags & 4) != 0) {
+        g_state_004d57ac++;
+        *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&InstallSelfOrChainJmp_00483a20;
+        func_0042b988();
+        return;
+    }
+    InstallSelfOrChainJmp_00483a20();
+}
