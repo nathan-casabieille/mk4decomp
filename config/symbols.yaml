@@ -5416,7 +5416,7 @@ functions:
     size: 42
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/call_pause_dirty_scaled_store.c
   - addr: 0x004463b0
     name: SlotFieldSwap3c_004463b0
     size: 75
@@ -6172,7 +6172,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/call_pause_scaled_store_x_jmp.c
   - addr: 0x00453780
     name: GuardedSeq_00453780
     size: 20
@@ -6790,7 +6790,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/not_mask_store_pair.c
   - addr: 0x0045f470
     name: CdeclArgScaledLookupAndStore_0045f470
     size: 251
@@ -7834,7 +7834,7 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/dirty_test_scaled_cmp_jmp.c
   - addr: 0x0046eaa0
     name: ScaledMove74to70_0046eaa0
     size: 26
@@ -8008,7 +8008,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_store_c_set58_jmp.c
   - addr: 0x004708c0
     name: DualGuardedTableSearch_004708c0
     size: 186
@@ -8074,7 +8074,7 @@ functions:
     size: 35
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_and_check_jmp.c
   - addr: 0x00470f90
     name: GuardedBitChainCmpJmp_00470f90
     size: 122
@@ -8188,13 +8188,13 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/set2_call_inc_jmp.c
   - addr: 0x00472890
     name: Set4CallAddJmp_00472890
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/set4_call_add_jmp.c
   - addr: 0x004728c0
     name: GuardedSetInitInstallChain_004728c0
     size: 460
@@ -8266,7 +8266,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_load_dirty_or_set_jmp.c
   - addr: 0x00473480
     name: SizeGateInstallSelfThenSubMul10_00473480
     size: 438
@@ -8542,7 +8542,7 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/dual_scaled_load_store_jmp.c
   - addr: 0x004757c0
     name: MStackBracket3PackedSlotInit_004757c0
     size: 462
@@ -8656,7 +8656,7 @@ functions:
     size: 32
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_bit_op_jmp.c
   - addr: 0x00476e20
     name: CondInstallDispatch_00476e20
     size: 58
@@ -8698,7 +8698,7 @@ functions:
     size: 32
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_bit_op_jmp.c
   - addr: 0x00477000
     name: CondInstallDispatch_00477000
     size: 58
@@ -9358,7 +9358,7 @@ functions:
     size: 40
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/set1d_call_set16_jmp.c
   - addr: 0x004809e0
     name: Install3WayChainCounter_004809e0
     size: 210
@@ -9388,7 +9388,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_chain_two_stores.c
   - addr: 0x00480d50
     name: TwoPhaseInstallScaledPackedPtr_00480d50
     size: 416
@@ -9742,7 +9742,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/set1f4_call_dirty_jmp.c
   - addr: 0x00483900
     name: Quad4SequencerInstall_00483900
     size: 205
@@ -9784,7 +9784,7 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_dec_or_zero.c
   - addr: 0x00483b80
     name: IncThunkPlusCjDispatch_00483b80
     size: 264
@@ -10066,7 +10066,7 @@ functions:
     size: 41
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/scaled_test_call_pause_jmp.c
   - addr: 0x004871b0
     name: GuardedSeq_004871b0
     size: 20
@@ -10162,7 +10162,7 @@ functions:
     size: 42
     group: game
     status: matched
-    file: src/engine/misc_matchesI.c
+    file: src/engine/two_calls_push_call.c
   - addr: 0x00488800
     name: DualEntryStateLoadCascade_00488800
     size: 142
