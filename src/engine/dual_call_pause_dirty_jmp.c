@@ -40,3 +40,24 @@ void DualCallPauseDirtyJmp_00435f20(void) {
         func_00435f4d();
     }
 }
+
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void ScaledXorStore_004903b0(void);
+extern void ChainSetupBitToggle_00491290(void);
+
+/* @addr 0x00490c30 (43b) */
+void DualCallPauseDirtyJmp_00490c30(void) {
+    GuardedDualAndFlagToggle_0048f020();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    if ((g_xformDirtyFlags & 1) != 0) {
+        ChainSetupBitToggle_00491290();
+        return;
+    }
+    ScaledXorStore_004903b0();
+    if (g_framePauseFlag != 0) {
+        return;
+    }
+    ChainSetupBitToggle_00491290();
+}

@@ -34,3 +34,11 @@ void StoreLitRetSet2_0042c3b0(void) {
 
 /* @addr 0x004bd5e0 (1b) one-byte ret stub packed after the wrapper. */
 void func_004bd5e0(void) {}
+
+extern void OrDualStore_0048e4b0(void);
+
+/* @addr 0x00461350 (15b) walk=2 entry */
+void func_00461350(void) {
+    g_walkCallback = (void (*)(void))2;
+    OrDualStore_0048e4b0();
+}

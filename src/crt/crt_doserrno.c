@@ -3,4 +3,9 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern void *CrtInitPerThreadData_004c9df0(void);
+
+/* @addr 0x004c8bb0 (9b) */
+void *Crt_doserrno_004c8bb0(void) {
+    return (char *)CrtInitPerThreadData_004c9df0() + 0xc;
+}
