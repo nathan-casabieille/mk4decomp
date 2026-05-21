@@ -90,3 +90,86 @@ void func_004bf080(void) {
 void func_004bf0a0(void) {
     func_004bf0a8();
 }
+
+/* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (func_004284c0)
+ * and tail-jmp into the indirect-call dispatcher. Entry A of the original
+ * 69-byte packed block; the 5-byte nop gap to entry B is filled by 0x90-fill. */
+extern void EsiInstallChainCallIndirect_00428680(void);
+extern void func_0041f780_pp(void);
+extern void func_004284c0(void);
+void GuardedLoopWithCallback_004284a0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&func_004284c0;
+    EsiInstallChainCallIndirect_00428680();
+}
+
+/* @addr 0x004667e0 (5b) tail-jmp wrapper. */
+void func_004667e0(void) {
+    CallSetPause_0041f830();
+}
+
+/* @addr 0x00482700 (56b): triple call chain with pause-gates; final
+ * push+call+pause gate then tail-jmp LiteralPushCallEntZero. */
+void func_00482700(void) {
+    GateDispatch6c_00494580();
+    if (g_framePauseFlag != 0) return;
+    ScaledChainCmp61_00482740();
+    if (g_framePauseFlag != 0) return;
+    ArgSarStoreJmp_004594f0(&g_data_004edf68);
+    if (g_framePauseFlag != 0) return;
+    LiteralPushCallEntZero_00488c00();
+}
+
+/* @addr 0x00459fc0 (27b): mstack-push func_00459fe0 onto stack[idx*4], tail-jmp
+ * Phase3IndirectInstallChain_0045a010. Entry A of the original 73-byte packed
+ * block; entry B (loop body) lives in func_00459fe0. */
+extern void Phase3IndirectInstallChain_0045a010(void);
+extern void PendingMatch_00459510(void);
+extern void func_00459fe0(void);
+void GuardedTwiceLoopback_00459fc0(void) {
+    g_state_004d57ac++;
+    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)&func_00459fe0;
+    Phase3IndirectInstallChain_0045a010();
+}
+
+/* @addr 0x0042c7c0 (31b): loop body - reload counter from baseSel[+0x5c],
+ * decrement, store as new walkCallback; if counter hit zero tail-jmp
+ * TripleEntryStateCascade_0042c7e0, else loop back to LoopGuardedDecJmp_0042c790
+ * (e9 b6 ff ff ff = rel32 -0x4a). The 2-byte nop gap before this entry is
+ * filled by 0x90-fill. */
+__declspec(naked) void func_0042c7c0(void) {
+    __asm {
+        mov     eax, dword ptr [g_baseSel_00542060]
+        mov     ecx, dword ptr [eax*4 + 0x5c]
+        dec     ecx
+        mov     dword ptr [g_walkCallback], ecx
+        je      short L_lgdj_done
+        jmp     LoopGuardedDecJmp_0042c790
+L_lgdj_done:
+        jmp     TripleEntryStateCascade_0042c7e0
+    }
+}
+
+/* @addr 0x00461370 (15b) walk=8 entry */
+void func_00461370(void) {
+    g_walkCallback = (void (*)(void))8;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x00461380 (15b) walk=0x10 entry */
+void func_00461380(void) {
+    g_walkCallback = (void (*)(void))0x10;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x00461390 (15b) walk=0x20 entry */
+void func_00461390(void) {
+    g_walkCallback = (void (*)(void))0x20;
+    OrDualStore_0048e4b0();
+}
+
+/* @addr 0x004613a0 (15b) walk=0x80 entry */
+void func_004613a0(void) {
+    g_walkCallback = (void (*)(void))0x80;
+    OrDualStore_0048e4b0();
+}
