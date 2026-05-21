@@ -78,3 +78,15 @@ void func_0048e3c0(void) {
     if (g_framePauseFlag != 0) return;
     func_00431470();
 }
+
+/* @addr 0x004bf080 (5b) tail-jmp wrapper to LoadStoreRetNopJmp_004bf090
+ * (resolved via the func_004bf088 alias in extras_map). */
+void func_004bf080(void) {
+    func_004bf088();
+}
+
+/* @addr 0x004bf0a0 (5b) tail-jmp wrapper to AddStore_004bf0b0
+ * (resolved via the func_004bf0a8 alias in extras_map). */
+void func_004bf0a0(void) {
+    func_004bf0a8();
+}

@@ -3310,7 +3310,7 @@ functions:
     size: 12
     group: game
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/store_byte_jmp.c
   - addr: 0x0042f850
     name: DispatchOrInitFightGroup_0042f850
     size: 69
@@ -6724,7 +6724,7 @@ functions:
     size: 11
     group: game
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/inc_jmp.c
   - addr: 0x0045e1e0
     name: InputCheckCluster_0045e1e0
     size: 942
@@ -10408,7 +10408,7 @@ functions:
     size: 11
     group: game
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/zero_state.c
   - addr: 0x0048a1c0
     name: DualBitGateInitCall_0048a1c0
     size: 89
@@ -10678,7 +10678,7 @@ functions:
     size: 11
     group: game
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/push_zero_call_ret.c
   - addr: 0x0048bae0
     name: PushBitFieldMergePop_0048bae0
     size: 96
@@ -13870,7 +13870,7 @@ functions:
     size: 40
     group: audio
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/audio/fpu_sqrt_mul.c
   - addr: 0x004ab380
     name: LinkedListBuilder_004ab380
     size: 191
@@ -14020,7 +14020,7 @@ functions:
     size: 11
     group: audio
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/audio/copy_global.c
   - addr: 0x004ac200
     name: ESF_DecodeADPCM
     size: 279
@@ -14638,7 +14638,7 @@ functions:
     size: 29
     group: engine.ecm
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/test_call_zero.c
   - addr: 0x004b1e00
     name: FSYS_fopen
     size: 177
@@ -14908,13 +14908,13 @@ functions:
     size: 30
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/min_of_three.c
   - addr: 0x004b3d90
     name: MaxOfThree_004b3d90
     size: 30
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/max_of_three.c
   - addr: 0x004b3db0
     name: Renderer_GetMode
     size: 6
@@ -15160,13 +15160,13 @@ functions:
     size: 29
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/set_hi6.c
   - addr: 0x004b5b00
     name: StoreAtMinus8_004b5b00
     size: 12
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/store_at_minus8.c
   - addr: 0x004b5b10
     name: Mem_Free_004b5b10
     size: 174
@@ -15532,7 +15532,7 @@ functions:
     size: 24
     group: engine.render
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/init16_bit_fields.c
   - addr: 0x004bcc70
     name: GamepadSeqRecord_004bcc70
     size: 750
@@ -15580,7 +15580,7 @@ functions:
     size: 30
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/test_call_push4_zero.c
   - addr: 0x004bd5b0
     name: LoadGeoAsset_Default
     size: 11
@@ -15598,13 +15598,13 @@ functions:
     size: 5
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/tail_jmp_ret_nops.c
   - addr: 0x004bd5e0
     name: func_004bd5e0
     size: 1
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/func.c
   - addr: 0x004bd5f0
     name: Tex_DecodeRLE16
     size: 211
@@ -15676,7 +15676,7 @@ functions:
     size: 22
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/push2_globals_call.c
   - addr: 0x004bdb00
     name: InitOrAllZeroLoopback_004bdb00
     size: 79
@@ -15808,7 +15808,7 @@ functions:
     size: 46
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/engine/table_search.c
   - addr: 0x004be790
     name: PushArgPushNeg1Call_004be790
     size: 16
@@ -15880,31 +15880,31 @@ functions:
     size: 16
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/mov_and_store_ret_jmp.c
   - addr: 0x004bf080
     name: func_004bf080
     size: 5
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/func_variants.c
   - addr: 0x004bf090
     name: LoadStoreRetNopJmp_004bf090
     size: 11
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/load_store_ret_nop_jmp.c
   - addr: 0x004bf0a0
     name: func_004bf0a0
     size: 5
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/func_variants.c
   - addr: 0x004bf0b0
     name: AddStore_004bf0b0
     size: 16
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/add_store.c
   - addr: 0x004bf0c0
     name: Helper_PaletteInit
     size: 454
@@ -16054,7 +16054,7 @@ functions:
     size: 43
     group: engine.render
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/engine/build_mask_from_array.c
   - addr: 0x004c3900
     name: FreeSlotFinder_004c3900
     size: 84
@@ -16114,7 +16114,7 @@ functions:
     size: 37
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/platform/win32/iterate_call_skip.c
   - addr: 0x004c4240
     name: AudioShutdownSequence_004c4240
     size: 168
@@ -16138,7 +16138,7 @@ functions:
     size: 22
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/platform/win32/loop16_init.c
   - addr: 0x004c4390
     name: Helper_AudioStart
     size: 133
@@ -16150,13 +16150,13 @@ functions:
     size: 41
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/platform/win32/table_set_bit.c
   - addr: 0x004c4450
     name: Loop1cBitMask_004c4450
     size: 24
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/platform/win32/loop1c_bit_mask.c
   - addr: 0x004c4470
     name: Timer_Init
     size: 118
@@ -16186,19 +16186,19 @@ functions:
     size: 31
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/platform/win32/call_two_sum_shl.c
   - addr: 0x004c45c0
     name: TailJmpTo_004c45d0
     size: 5
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/platform/win32/tail_jmp_to.c
   - addr: 0x004c45d0
     name: CallThreeSumLea_004c45d0
     size: 35
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/platform/win32/call_three_sum_lea.c
   - addr: 0x004c4600
     name: BmpScreenshotWriter_004c4600
     size: 617
@@ -16276,7 +16276,7 @@ functions:
     size: 20
     group: boot
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/boot/load_arg_push_call.c
   - addr: 0x004c54d0
     name: TryAllocWithHandler_004c54d0
     size: 68
@@ -16306,7 +16306,7 @@ functions:
     size: 48
     group: boot
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/boot/sar64.c
   - addr: 0x004c5690
     name: Alldiv_004c5690
     size: 176
@@ -16330,7 +16330,7 @@ functions:
     size: 48
     group: boot
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/boot/double_to_int64.c
   - addr: 0x004c5800
     name: Helper_FClose
     size: 61
@@ -16468,7 +16468,7 @@ functions:
     size: 18
     group: boot
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/boot/push_z2_arg_call.c
   - addr: 0x004c6840
     name: _exit_post
     size: 18
@@ -16498,7 +16498,7 @@ functions:
     size: 32
     group: boot
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/boot/iter_fn_ptrs.c
   - addr: 0x004c6960
     name: CallTestPushSubCall_004c6960
     size: 53
@@ -16552,7 +16552,7 @@ functions:
     size: 32
     group: boot
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/boot/indirect_call.c
   - addr: 0x004c6ee0
     name: CallIATIfThenCall_004c6ee0
     size: 55
@@ -16564,7 +16564,7 @@ functions:
     size: 43
     group: boot
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/boot/four_indirect_calls.c
   - addr: 0x004c6f50
     name: Lock_004c6f50
     size: 118
@@ -16678,13 +16678,13 @@ functions:
     size: 17
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/stream_read_dword.c
   - addr: 0x004c83a0
     name: StreamReadQword_004c83a0
     size: 18
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/stream_read_qword.c
   - addr: 0x004c83c0
     name: StreamReadWord_004c83c0
     size: 18
@@ -16696,7 +16696,7 @@ functions:
     size: 19
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/push3000010000_call.c
   - addr: 0x004c8400
     name: FPUPrecisionCheck_004c8400
     size: 80
@@ -16744,7 +16744,7 @@ functions:
     size: 41
     group: crt
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/crt/str_search_call.c
   - addr: 0x004c89e0
     name: CloseImpl_004c89e0
     size: 104
@@ -16774,13 +16774,13 @@ functions:
     size: 9
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/crt_errno.c
   - addr: 0x004c8bb0
     name: Crt_doserrno_004c8bb0
     size: 9
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/crt_doserrno.c
   - addr: 0x004c8bc0
     name: CrtIoInitFdTable_004c8bc0
     size: 524
@@ -16852,7 +16852,7 @@ functions:
     size: 50
     group: crt
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/crt/init_globals_and_zero.c
   - addr: 0x004c9840
     name: BuildCharacterCaseTables_004c9840
     size: 474
@@ -16864,7 +16864,7 @@ functions:
     size: 11
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/push_neg3_call_ret.c
   - addr: 0x004c9a30
     name: FgetsImpl_004c9a30
     size: 167
@@ -16894,7 +16894,7 @@ functions:
     size: 19
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/init_fields50and14.c
   - addr: 0x004c9df0
     name: CrtInitPerThreadData_004c9df0
     size: 656
@@ -17014,7 +17014,7 @@ functions:
     size: 43
     group: crt
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/crt/test_handle_bit.c
   - addr: 0x004cc2e0
     name: CritSecWrap350_004cc2e0
     size: 108
@@ -17050,7 +17050,7 @@ functions:
     size: 24
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/mask_call.c
   - addr: 0x004cc520
     name: DecodeModeFlags_004cc520
     size: 150
@@ -17104,19 +17104,19 @@ functions:
     size: 29
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/copy3_dwords.c
   - addr: 0x004cca20
     name: ZeroThreeFromArg_004cca20
     size: 15
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/zero_three_from_arg.c
   - addr: 0x004cca30
     name: LinearSearchArray_004cca30
     size: 29
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/linear_search_array.c
   - addr: 0x004cca50
     name: BitShiftMultiPrecision_004cca50
     size: 177
@@ -17272,7 +17272,7 @@ functions:
     size: 21
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/round_double.c
   - addr: 0x004ce010
     name: Fpclass_004ce010
     size: 155
@@ -17368,13 +17368,13 @@ functions:
     size: 16
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/get_fpu_sw.c
   - addr: 0x004cf720
     name: GetFpuSwClex_004cf720
     size: 17
     group: crt
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/get_fpu_sw_clex.c
   - addr: 0x004cf740
     name: FpuMaskMerge_004cf740
     size: 40
