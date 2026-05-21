@@ -140,46 +140,34 @@ void PushPopState70Mask_00490650(void) {
     g_state_004d57ac--;
 }
 
-/* @addr 0x0048e380 (84b)
- *   push lit; call F; pause → ret;
- *   set workType = 0x3c; call F2; pause → ret;
- *   set walk = 0xfff and g_state_00537e94; ret;
- *   nop nop; call F3; pause → ret; jmp T.
- */
+/* @addr 0x0048e380 (62b): push lit + call PackedAdvanceCallContinue;
+ * if !pause set workType=0x3c, call func_00489fd0; if !pause set walk
+ * and state_00537e94 to 0xfff. Entry A of the original 84-byte packed
+ * block; entry B (call+pause+tail-jmp) lives in func_0048e3c0. The
+ * 2-byte nop gap is filled by 0x90-fill. */
 extern void *g_data_004f12f8;
 extern int PackedAdvanceCallContinue_0048e630(void *);
 extern void func_00489fd0(void);
 extern void func_004312e0(void);
 extern void func_00431470(void);
-__declspec(naked) void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
-    __asm {
-        push    OFFSET g_data_004f12f8
-        call    PackedAdvanceCallContinue_0048e630
-        mov     eax, dword ptr [g_framePauseFlag]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   27h
-        mov     dword ptr [g_eventQueueWorkType], 0x3c
-        call    func_00489fd0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   0fh
-        mov     eax, 0xfff
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00537e94], eax
-        ret
-        nop
-        nop
-        call    func_004312e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     func_00431470
-        ret
-    }
+void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
+    int v;
+    PackedAdvanceCallContinue_0048e630(&g_data_004f12f8);
+    if (g_framePauseFlag != 0) return;
+    g_eventQueueWorkType = 0x3c;
+    func_00489fd0();
+    if (g_framePauseFlag != 0) return;
+    v = 0xfff;
+    g_walkCallback = (void (*)(void))v;
+    g_state_00537e94 = v;
+}
+
+/* @addr 0x0048e3c0 (20b): call func_004312e0; if !pause tail-jmp
+ * func_00431470. Orphan sub-entry of the original packed block. */
+void func_0048e3c0(void) {
+    func_004312e0();
+    if (g_framePauseFlag != 0) return;
+    func_00431470();
 }
 
 /* @addr 0x0048e4f0 (84b)

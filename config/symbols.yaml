@@ -10651,7 +10651,13 @@ functions:
     file: src/engine/misc_matchesLL.c
   - addr: 0x0048e380
     name: PushCallPauseSetMaxThenCallPauseJmp_0048e380
-    size: 84
+    size: 62
+    group: game
+    status: matched
+    file: src/engine/misc_matchesOO.c
+  - addr: 0x0048e3c0
+    name: func_0048e3c0
+    size: 20
     group: game
     status: matched
     file: src/engine/misc_matchesOO.c
