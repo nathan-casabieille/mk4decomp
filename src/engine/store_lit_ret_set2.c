@@ -7,21 +7,6 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
-/* @addr 0x0042c3b0 (48b)
- *   mov     ecx, [g_fightGroupHead]
- *   mov     eax, 0x0042c3d0
- *   mov     [g_scaledInit_00542044], eax
- *   mov     [ecx*4 + 0], eax
- *   ret
- *   nop * 8
- *   mov     eax, 2
- *   mov     [g_walkCallback], eax
- *   mov     [g_state_00537e94], eax
- *   ret
- */
-extern unsigned int g_state_00537e94;
-extern void func_0042c3d0(void);
-
 /* @addr 0x0042c3b0 (24b): store OFFSET func_0042c3d0 (entry B at +0x20)
  * to g_scaledInit_00542044 and fightGroupHead chain[+0x44]. Entry A of
  * the original 48-byte packed block; entry B at +0x20 lives in

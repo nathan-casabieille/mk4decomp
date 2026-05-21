@@ -138,11 +138,25 @@ def main():
                 parts.append('\n')
             parts.append('\n')
         full = ''.join(parts).rstrip() + '\n'
-        # Write the file
+        # Write the file - APPEND if exists, write fresh if not
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
-        with open(out_path, 'w') as f:
-            f.write(full)
-        print(f'  wrote {out_path} ({len(fns)} fns)')
+        if os.path.exists(out_path):
+            # Append only the function bodies (skip header)
+            append_parts = []
+            for span, fn in spans:
+                cs, fs, fe = span
+                block = ''.join(lines[cs:fe+1])
+                append_parts.append('\n')
+                append_parts.append(block)
+                if not block.endswith('\n'):
+                    append_parts.append('\n')
+            with open(out_path, 'a') as f:
+                f.write(''.join(append_parts))
+            print(f'  appended to {out_path} ({len(fns)} fns)')
+        else:
+            with open(out_path, 'w') as f:
+                f.write(full)
+            print(f'  wrote {out_path} ({len(fns)} fns)')
 
     # Update symbols.yaml
     print('updating symbols.yaml...')
