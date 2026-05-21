@@ -13264,7 +13264,7 @@ functions:
     size: 48
     group: audio
     status: matched
-    file: src/engine/misc_matchesBB.c
+    file: src/audio/helper_tick_frame_misc.c
   - addr: 0x004a1d80
     name: SixCallSeqPushImm_004a1d80
     size: 61
@@ -14056,7 +14056,7 @@ functions:
     size: 70
     group: audio
     status: matched
-    file: src/engine/misc_matchesLL.c
+    file: src/engine/helper_title_enter_state_c.c
   - addr: 0x004ac570
     name: Helper_TitleEnterStateB
     size: 116
@@ -14230,7 +14230,7 @@ functions:
     size: 57
     group: engine.install
     status: matched
-    file: src/engine/misc_matchesBB.c
+    file: src/engine/renderer2_present_frame.c
   - addr: 0x004ae990
     name: R2_Init3
     size: 170
@@ -14290,7 +14290,7 @@ functions:
     size: 43
     group: engine.install
     status: matched
-    file: src/engine/misc_matchesQ.c
+    file: src/engine/r2_init2.c
   - addr: 0x004aef30
     name: ComRelease_004aef30
     size: 26
@@ -14698,7 +14698,7 @@ functions:
     size: 8
     group: engine.app
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/engine/app_init_post_dsound.c
   - addr: 0x004b21c0
     name: Helper_AppStub_21C0
     size: 1
@@ -14728,7 +14728,7 @@ functions:
     size: 60
     group: engine.app
     status: matched
-    file: src/engine/misc_matchesCC.c
+    file: src/platform/win32/app_shutdown.c
   - addr: 0x004b26d0
     name: GameLogicStep
     size: 113
@@ -14782,7 +14782,7 @@ functions:
     size: 17
     group: engine.app
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/boot/app_init_misc3.c
   - addr: 0x004b2ae0
     name: Helper_AppStub_2AE0
     size: 1
@@ -14986,7 +14986,7 @@ functions:
     size: 51
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesCC.c
+    file: src/engine/helper_gfx_cleanup.c
   - addr: 0x004b4450
     name: DecodeTableAllocaCall_004b4450
     size: 146
@@ -15028,7 +15028,7 @@ functions:
     size: 27
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/renderer1_present_frame.c
   - addr: 0x004b46f0
     name: GlideTriColorFlush_004b46f0
     size: 681
@@ -15100,7 +15100,7 @@ functions:
     size: 18
     group: engine.geo
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/helper_joy_button_init.c
   - addr: 0x004b5470
     name: InputBitMaskDispatcher_004b5470
     size: 475
@@ -15118,7 +15118,7 @@ functions:
     size: 11
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/audio/helper_title_audio_reset.c
   - addr: 0x004b5850
     name: GameStateMachineMaybeRebuild
     size: 448
@@ -15142,7 +15142,7 @@ functions:
     size: 52
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesDD.c
+    file: src/engine/app_init_misc2.c
   - addr: 0x004b5ac0
     name: Thunk_004b5ac0
     size: 5
@@ -15574,7 +15574,7 @@ functions:
     size: 21
     group: engine.geo
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/helper_geo_load_pre.c
   - addr: 0x004bd590
     name: TestCallPush4Zero_004bd590
     size: 30
@@ -15652,7 +15652,7 @@ functions:
     size: 45
     group: engine.geo
     status: matched
-    file: src/engine/misc_matchesM.c
+    file: src/engine/app_init_misc4.c
   - addr: 0x004bd990
     name: XformChainAdvance
     size: 10
@@ -16096,7 +16096,7 @@ functions:
     size: 60
     group: engine.render
     status: matched
-    file: src/engine/misc_matchesFF.c
+    file: src/engine/helper_title_set_max_volume.c
   - addr: 0x004c3ef0
     name: DSound_Init
     size: 530
@@ -16132,7 +16132,7 @@ functions:
     size: 13
     group: platform.win32
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/audio/helper_audio_start_fresh.c
   - addr: 0x004c4370
     name: Loop16Init_004c4370
     size: 22
@@ -16336,7 +16336,7 @@ functions:
     size: 61
     group: boot
     status: matched
-    file: src/engine/misc_matchesHH.c
+    file: src/engine/helper_fclose.c
   - addr: 0x004c5840
     name: FCloseImpl_004c5840
     size: 101
@@ -16348,7 +16348,7 @@ functions:
     size: 40
     group: boot
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/engine/helper_ftell.c
   - addr: 0x004c58e0
     name: FileTellAdjusted_004c58e0
     size: 420
@@ -16360,7 +16360,7 @@ functions:
     size: 50
     group: boot
     status: matched
-    file: src/engine/misc_matchesDD.c
+    file: src/engine/helper_fseek.c
   - addr: 0x004c5ad0
     name: FSeekImpl_004c5ad0
     size: 151
@@ -16396,13 +16396,13 @@ functions:
     size: 21
     group: boot
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/engine/helper_fopen.c
   - addr: 0x004c5dd0
     name: Helper_ChkStk
     size: 48
     group: boot
     status: matched
-    file: src/engine/misc_matchesR.c
+    file: src/crt/helper_chkstk.c
   - addr: 0x004c5e00
     name: SplitPath_004c5e00
     size: 369
@@ -16438,13 +16438,13 @@ functions:
     size: 13
     group: boot
     status: matched
-    file: src/engine/misc_matchesB.c
+    file: src/crt/crt_srand.c
   - addr: 0x004c6510
     name: Crt_rand
     size: 45
     group: boot
     status: matched
-    file: src/engine/misc_matchesEE.c
+    file: src/crt/crt_rand.c
   - addr: 0x004c6540
     name: CrtPowCluster_004c6540
     size: 544
@@ -16462,7 +16462,7 @@ functions:
     size: 48
     group: boot
     status: matched
-    file: src/engine/misc_matchesEE.c
+    file: src/crt/init_premain.c
   - addr: 0x004c6820
     name: PushZ2ArgCall_004c6820
     size: 18
@@ -16474,7 +16474,7 @@ functions:
     size: 18
     group: boot
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/exit_post.c
   - addr: 0x004c6860
     name: BootFatalAbortHandler_004c6860
     size: 178
@@ -16690,7 +16690,7 @@ functions:
     size: 18
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/stream_read_word.c
   - addr: 0x004c83e0
     name: Push3000010000Call_004c83e0
     size: 19
@@ -16966,7 +16966,7 @@ functions:
     size: 18
     group: crt
     status: matched
-    file: src/engine/misc_matchesA.c
+    file: src/crt/isspace_crt.c
   - addr: 0x004cbaf0
     name: IndexedBitTest_004cbaf0
     size: 58
