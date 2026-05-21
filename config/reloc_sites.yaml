@@ -39,13 +39,9 @@ engine/ecm_play_thread.obj#2#0x131: 5195696
 engine/gfx_init.obj#2#0x5e: 5196604
 engine/iter_load.obj#2#0x20: 4836304
 engine/joystick_init.obj#2#0xb4: 8061256
-engine/misc_matches8.obj#24#0x1: 5513324
 engine/misc_matchesA.obj#56#0x1: 11227648
 engine/misc_matchesA.obj#56#0x15: 11227648
 engine/misc_matchesCC.obj#20#0x1c: 5513364
-engine/misc_matchesE.obj#2#0x11: 4358032
-engine/misc_matchesG.obj#11#0x12: 5513340
-engine/misc_matchesG.obj#15#0x21: 4785136
 engine/misc_matchesHH.obj#2#0x37: 4317380
 engine/misc_matchesHH.obj#2#0x3c: 4348873
 engine/misc_matchesKK.obj#20#0x3b: 4604752

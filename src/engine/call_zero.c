@@ -1,0 +1,20 @@
+/**
+ * Auto-split from misc_matches9.c
+ */
+#include "engine/scenegraph.h"
+#include "game/tick.h"
+
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_scaledInit_00542044;
+
+/* @addr 0x004bea30 (16b)
+ *   call    F
+ *   mov     [g_target], 0
+ *   ret
+ */
+extern void func_004bdcb0(void);
+extern unsigned int g_state_00ab5748;
+void CallZero_004bea30(void) {
+    func_004bdcb0();
+    g_state_00ab5748 = 0;
+}

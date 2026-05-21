@@ -16,19 +16,19 @@ functions:
     size: 33
     group: boot
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/boot/list_init_loop.c
   - addr: 0x00401340
     name: OnceCall_00401340
     size: 39
     group: boot
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/boot/once_call.c
   - addr: 0x00401370
     name: Init0AndMax_00401370
     size: 34
     group: boot
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/boot/init0_and_max.c
   - addr: 0x004013a0
     name: PendingMatch_004013a0
     size: 1989
@@ -166,7 +166,7 @@ functions:
     size: 38
     group: boot
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/boot/save_call_restore.c
   - addr: 0x00404a00
     name: SaveCallRestoreOrXor_00404a00
     size: 77
@@ -244,7 +244,7 @@ functions:
     size: 41
     group: boot
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/boot/init6_struct.c
   - addr: 0x00404e50
     name: ScaledChainOr8_00404e50
     size: 52
@@ -268,7 +268,7 @@ functions:
     size: 33
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/store_load_jmp.c
   - addr: 0x00404f20
     name: BootInitChainHeavy_00404f20
     size: 649
@@ -520,7 +520,7 @@ functions:
     size: 34
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/scaled_load_or_set_jmp.c
   - addr: 0x00406b50
     name: MStackCall_00406b50
     size: 75
@@ -784,7 +784,7 @@ functions:
     size: 32
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/scaled_store_three.c
   - addr: 0x00409280
     name: AndShlStore_00409280
     size: 22
@@ -802,13 +802,13 @@ functions:
     size: 40
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/scaled_or4_dirty_clear.c
   - addr: 0x00409350
     name: ScaledAnd4InvDirtyClear_00409350
     size: 35
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/scaled_and4_inv_dirty_clear.c
   - addr: 0x00409380
     name: LoadSetFpJmp_00409380
     size: 25
@@ -1204,7 +1204,7 @@ functions:
     size: 39
     group: boot
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/boot/m_stack_push_set9_jmp.c
   - addr: 0x00413070
     name: PushStackCallPauseSet0xa_00413070
     size: 68
@@ -1222,7 +1222,7 @@ functions:
     size: 19
     group: boot
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/boot/push8d_push413490.c
   - addr: 0x00413380
     name: BootPackedDispatchPair_00413380
     size: 472
@@ -1234,7 +1234,7 @@ functions:
     size: 19
     group: boot
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/boot/push8e_push413690.c
   - addr: 0x00413580
     name: BootPackedDispatchPair_00413580
     size: 472
@@ -1282,7 +1282,7 @@ functions:
     size: 37
     group: boot
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/boot/push_call_scaled_store.c
   - addr: 0x004143f0
     name: Phase4StateInitWithHelpers_004143f0
     size: 626
@@ -1330,7 +1330,7 @@ functions:
     size: 40
     group: boot
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/boot/set_call_set_jmp.c
   - addr: 0x00415010
     name: MStackPush8SlotInitPop8_00415010
     size: 356
@@ -1606,7 +1606,7 @@ functions:
     size: 16
     group: boot
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/boot/push0_push41d7d0.c
   - addr: 0x0041d560
     name: MStackBracket3_ChainSwapAdvance_0041d560
     size: 519
@@ -1702,7 +1702,7 @@ functions:
     size: 38
     group: boot
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/boot/scaled_neg1_set_pause.c
   - addr: 0x0041f870
     name: NodeChainMaskMatch_0041f870
     size: 121
@@ -1744,7 +1744,7 @@ functions:
     size: 37
     group: boot
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/boot/or_list_loop.c
   - addr: 0x0041fcf0
     name: Wrapper_0041fcf0
     size: 14
@@ -1852,7 +1852,7 @@ functions:
     size: 16
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/push71_push48caa0.c
   - addr: 0x00421c50
     name: CmpDualStateMatch_00421c50
     size: 68
@@ -1870,7 +1870,7 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/engine/init28f_dec_load.c
   - addr: 0x00421d50
     name: DualCounterPhaseGateInstall_00421d50
     size: 428
@@ -1900,7 +1900,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/two_push_call_set_dirty.c
   - addr: 0x00422080
     name: IncOrZero9_00422080
     size: 29
@@ -2080,7 +2080,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/engine/test_cmp_zero_four.c
   - addr: 0x004238e0
     name: EnduranceFsmCluster_004238e0
     size: 667
@@ -2188,7 +2188,7 @@ functions:
     size: 42
     group: game
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/engine/identity_matrix.c
   - addr: 0x00424ba0
     name: ScaledTestChainDispatch_00424ba0
     size: 65
@@ -2236,7 +2236,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/engine/negate_three.c
   - addr: 0x00425380
     name: QuadInterpolator_00425380
     size: 552
@@ -2344,7 +2344,7 @@ functions:
     size: 41
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/copy_byte_until_null.c
   - addr: 0x004265d0
     name: BootInitGuardedCallChain_004265d0
     size: 249
@@ -2500,7 +2500,7 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/scaled_store_idx_zero_jmp.c
   - addr: 0x00428330
     name: ScaledArrStore_00428330
     size: 23
@@ -2578,7 +2578,7 @@ functions:
     size: 41
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/call_pause_dec_scaled.c
   - addr: 0x00428680
     name: EsiInstallChainCallIndirect_00428680
     size: 174
@@ -2698,7 +2698,7 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/scaled_store_ent_zero_jmp.c
   - addr: 0x00428e70
     name: ScaledArrStore_00428e70
     size: 23
@@ -2836,7 +2836,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/scaled_store_cur_dirty_clear.c
   - addr: 0x00429710
     name: ScaledLoadDecJmp_00429710
     size: 24
@@ -2848,7 +2848,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/scaled_store_cur_dirty_or1.c
   - addr: 0x00429750
     name: CallPauseScaledDecJmp_00429750
     size: 56
@@ -2974,7 +2974,7 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesE.c
+    file: src/engine/init4_globals.c
   - addr: 0x0042ae40
     name: RangeClampThree_0042ae40
     size: 208
@@ -3040,7 +3040,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesD.c
+    file: src/engine/scaled_store501_set8_jmp.c
   - addr: 0x0042c3b0
     name: StoreLitRetSet2_0042c3b0
     size: 24
@@ -3748,7 +3748,7 @@ functions:
     size: 34
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/tri_branch_jmp.c
   - addr: 0x00434560
     name: FlagInitTableSelector_00434560
     size: 298
@@ -3880,7 +3880,7 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/call_pause_cmp_double_jmp.c
   - addr: 0x00435260
     name: InstallSelfDualPath_00435260
     size: 203
@@ -3958,7 +3958,7 @@ functions:
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/dual_call_pause_dirty_jmp.c
   - addr: 0x00435f50
     name: Mul10ThresholdQuad_00435f50
     size: 209
@@ -4342,7 +4342,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/cmp_jmp_const_store_jmp.c
   - addr: 0x00438a10
     name: InstallSelfCountdownDispatch_00438a10
     size: 134
@@ -4390,7 +4390,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/call_pause_dirty_const_jmp.c
   - addr: 0x00438cd0
     name: EntryThenDispatcherPair_00438cd0
     size: 408
@@ -4528,7 +4528,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/push_call_set2147_jmp.c
   - addr: 0x00439350
     name: Push80SetWalkDualCallPop_00439350
     size: 87
@@ -4612,7 +4612,7 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/scaled_cmp200e_call_bool.c
   - addr: 0x00439920
     name: WeightedSumClampHelper_00439920
     size: 129
@@ -4648,13 +4648,13 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/set258_call_pause_dirty_jmp.c
   - addr: 0x00439b80
     name: TwoConditionalJmp_00439b80
     size: 30
     group: game
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/two_conditional_jmp.c
   - addr: 0x00439ba0
     name: DualEntryBitGated_00439ba0
     size: 128
@@ -4786,7 +4786,7 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/m_stack_push5_func.c
   - addr: 0x0043aab0
     name: StateMachine4ArmCascade_0043aab0
     size: 313
@@ -4876,7 +4876,7 @@ functions:
     size: 27
     group: game
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/cmp200_jmp.c
   - addr: 0x0043bd50
     name: QuadStringStateGate_0043bd50
     size: 123
@@ -4948,13 +4948,13 @@ functions:
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/push_call_ret_nop_jmp.c
   - addr: 0x0043d590
     name: TailJmpTo_0043d5a0
     size: 5
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/tail_jmp_to.c
   - addr: 0x0043d5a0
     name: CountdownStoreCallChain_0043d5a0
     size: 123
@@ -5356,7 +5356,7 @@ functions:
     size: 44
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/triple_set_call_pause_dirty_jmp.c
   - addr: 0x00446180
     name: CopyJmp_00446180
     size: 15
@@ -5392,19 +5392,19 @@ functions:
     size: 38
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/scaled_chain_store.c
   - addr: 0x004462f0
     name: ScaledChainOrAh1_004462f0
     size: 41
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/scaled_chain_or_ah1.c
   - addr: 0x00446320
     name: ScaledStoreConst2_00446320
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesG.c
+    file: src/engine/scaled_store_const2.c
   - addr: 0x00446350
     name: CopyScaledTriple_00446350
     size: 46
@@ -5440,7 +5440,7 @@ functions:
     size: 33
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/scaled_load_zero_store.c
   - addr: 0x00446520
     name: InitSlotsWithTag_00446520
     size: 89
@@ -6094,7 +6094,7 @@ functions:
     size: 37
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/dual_scaled_store.c
   - addr: 0x00452770
     name: PendingMatch_00452770
     size: 2548
@@ -6142,13 +6142,13 @@ functions:
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/const5_call_pause_dirty4_jmp.c
   - addr: 0x00453510
     name: Const6Call_PauseDirty4_Jmp_00453510
     size: 39
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/const6_call_pause_dirty4_jmp.c
   - addr: 0x00453540
     name: FourStageChainedDispatch_00453540
     size: 159
@@ -7084,13 +7084,13 @@ functions:
     size: 15
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/set1_jmp_set2_jmp.c
   - addr: 0x00461350
     name: func_00461350
     size: 15
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/func.c
   - addr: 0x00461360
     name: FiveSetWalkJmp_00461360
     size: 15
@@ -7288,7 +7288,7 @@ functions:
     size: 20
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/push0_push463220_jmp.c
   - addr: 0x00463090
     name: PoseFnInstallDualCluster_00463090
     size: 763
@@ -7384,7 +7384,7 @@ functions:
     size: 36
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/cmp9_dirty_toggle.c
   - addr: 0x00464350
     name: StageParticleEmitterInit_00464350
     size: 781
@@ -8026,7 +8026,7 @@ functions:
     size: 31
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/cmp_p1_scaled_init.c
   - addr: 0x004709e0
     name: PhaseDispatchListAdvance_004709e0
     size: 425
@@ -8068,7 +8068,7 @@ functions:
     size: 34
     group: game
     status: matched
-    file: src/engine/misc_matchesH.c
+    file: src/engine/call_dirty4_dual_jmp.c
   - addr: 0x00470f60
     name: ScaledAndCheckJmp_00470f60
     size: 35
@@ -8788,7 +8788,7 @@ functions:
     size: 25
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/two_call_jmp.c
   - addr: 0x00478140
     name: SpawnLeftRightProps_00478140
     size: 515
@@ -9982,7 +9982,7 @@ functions:
     size: 25
     group: game
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/const20c_fae2_jmp.c
   - addr: 0x00486530
     name: ScaledLoadCmp1003JmpDispatch_00486530
     size: 68
@@ -10300,7 +10300,7 @@ functions:
     size: 23
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/push267_push44eb60_jmp.c
   - addr: 0x00489240
     name: Helper_PerPlayerTick
     size: 1535
@@ -11950,7 +11950,7 @@ functions:
     size: 30
     group: game
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/test_store_const_jmp.c
   - addr: 0x004933d0
     name: TradePlaceChain_004933d0
     size: 789
@@ -12010,7 +12010,7 @@ functions:
     size: 29
     group: game
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/load_cmp_addr_jmp.c
   - addr: 0x00493ef0
     name: AnimEventUpdateCluster_00493ef0
     size: 578
@@ -12622,7 +12622,7 @@ functions:
     size: 28
     group: game
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/store_two_call.c
   - addr: 0x0049cb60
     name: AllocNode
     size: 15
@@ -13252,7 +13252,7 @@ functions:
     size: 27
     group: audio
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/audio/is_nonzero_bool_flagged.c
   - addr: 0x004a1d20
     name: Test4StatesAny_004a1d20
     size: 45
@@ -13570,13 +13570,13 @@ functions:
     size: 28
     group: audio
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/audio/memcpy_byte_n.c
   - addr: 0x004a56a0
     name: Memset18Step_004a56a0
     size: 25
     group: audio
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/audio/memset18_step.c
   - addr: 0x004a56c0
     name: PendingMatch_004a56c0
     size: 2011
@@ -13906,7 +13906,7 @@ functions:
     size: 21
     group: audio
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/audio/call_pause_inc.c
   - addr: 0x004ab690
     name: AudioVolumeRescale_004ab690
     size: 110
@@ -13966,7 +13966,7 @@ functions:
     size: 27
     group: audio
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/audio/split_hi8_lo24.c
   - addr: 0x004abfe0
     name: ZeroThreeFields6c_004abfe0
     size: 38
@@ -15562,7 +15562,7 @@ functions:
     size: 22
     group: engine.geo
     status: matched
-    file: src/engine/misc_matches8.c
+    file: src/engine/lea_scaled_call.c
   - addr: 0x004bd530
     name: CleanupCallTwice_004bd530
     size: 56
@@ -15790,7 +15790,7 @@ functions:
     size: 18
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/call_zero2.c
   - addr: 0x004be630
     name: SixDoublePushCall_004be630
     size: 91
@@ -15814,7 +15814,7 @@ functions:
     size: 16
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/push_arg_push_neg1_call.c
   - addr: 0x004be7a0
     name: TableHitOrSchedule_004be7a0
     size: 85
@@ -15850,7 +15850,7 @@ functions:
     size: 16
     group: engine.scenegraph
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/engine/call_zero.c
   - addr: 0x004bea40
     name: Helper_TitleAudioCleanup
     size: 15
@@ -16168,7 +16168,7 @@ functions:
     size: 18
     group: platform.win32
     status: matched
-    file: src/engine/misc_matches9.c
+    file: src/platform/win32/test_call_iat.c
   - addr: 0x004c4510
     name: QueryMicroTimer
     size: 120
