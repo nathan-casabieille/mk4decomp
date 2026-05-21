@@ -8965,7 +8965,37 @@ functions:
     file: src/engine/misc_matchesQQ.c
   - addr: 0x0047c290
     name: AerialHitDispatcher_0047c290
-    size: 845
+    size: 304
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0047c3c0
+    name: func_0047c3c0
+    size: 48
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0047c3f0
+    name: func_0047c3f0
+    size: 288
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0047c510
+    name: func_0047c510
+    size: 32
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0047c530
+    name: func_0047c530
+    size: 80
+    group: game
+    status: matched
+    file: src/engine/misc_matchesQQ.c
+  - addr: 0x0047c580
+    name: func_0047c580
+    size: 93
     group: game
     status: matched
     file: src/engine/misc_matchesQQ.c
