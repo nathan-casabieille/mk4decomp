@@ -4474,7 +4474,7 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/cmp_cccc_call_pause_dirty_jmp.c
   - addr: 0x004390f0
     name: CallPauseTestByteJmpCalls_004390f0
     size: 62
@@ -4582,7 +4582,7 @@ functions:
     size: 51
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/store_call_pause_dirty_store_jmp.c
   - addr: 0x00439700
     name: WalkCj58Loop43Toggle_00439700
     size: 87
@@ -4606,7 +4606,7 @@ functions:
     size: 54
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/cmp2_call_dirty_call.c
   - addr: 0x004398f0
     name: ScaledCmp200eCallBool_004398f0
     size: 38
@@ -4762,7 +4762,7 @@ functions:
     size: 58
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/dirty_toggle_scaled_test.c
   - addr: 0x0043a670
     name: QuadFieldEarlyJmpThenInstall_0043a670
     size: 436
@@ -6862,7 +6862,7 @@ functions:
     size: 52
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x0045fd30
     name: SelfInstallPhaseDispatch_0045fd30
     size: 379
@@ -6880,7 +6880,7 @@ functions:
     size: 52
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x00460000
     name: SelfInstallPhaseDispatch_00460000
     size: 396
@@ -7012,13 +7012,13 @@ functions:
     size: 52
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x00460d40
     name: CallPauseMStackPushSet4Jmp_00460d40
     size: 52
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_mstack_push_set_variants.c
   - addr: 0x00460d80
     name: NotShrCmp1Store_00460d80
     size: 65
@@ -7372,7 +7372,7 @@ functions:
     size: 60
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/store_call_pause_cmp_dirty.c
   - addr: 0x00464280
     name: InstallSelfStateMachine_00464280
     size: 145
@@ -7696,13 +7696,13 @@ functions:
     size: 14
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/dual_entry_push_call.c
   - addr: 0x0046b640
     name: func_0046b640
     size: 43
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/dual_entry_push_call.c
   - addr: 0x0046b670
     name: PendingMatch_0046b670
     size: 2084
@@ -7726,7 +7726,7 @@ functions:
     size: 51
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_triple_scaled_jmp.c
   - addr: 0x0046c560
     name: QuadCmpBitGateJmp_0046c560
     size: 104
@@ -7816,7 +7816,7 @@ functions:
     size: 56
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/call_pause_dirty_mstack_push_fn.c
   - addr: 0x0046e2e0
     name: PendingMatch_0046e2e0
     size: 1723
@@ -8020,7 +8020,7 @@ functions:
     size: 55
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/cmp_p1_gt_setup.c
   - addr: 0x004709c0
     name: CmpP1ScaledInit_004709c0
     size: 31
@@ -9016,7 +9016,7 @@ functions:
     size: 57
     group: game
     status: matched
-    file: src/engine/misc_matchesV.c
+    file: src/engine/set_200d_call_pause_jmp.c
   - addr: 0x0047c620
     name: OneSetCmpJmpLoadCall_0047c620
     size: 92
