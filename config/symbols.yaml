@@ -1450,31 +1450,31 @@ functions:
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419780
     name: CallPauseDirty4ScaledSet_00419780
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/call_pause_dirty4_scaled_set.c
   - addr: 0x004197e0
     name: DualCallPauseAddrSetRecurse_004197e0
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419840
     name: CallPauseDirty4ScaledSet_00419840
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/call_pause_dirty4_scaled_set.c
   - addr: 0x004198a0
     name: DualCallPauseAddrSetRecurse_004198a0
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419900
     name: TripleChainTailJmp_00419900
     size: 118
@@ -1486,37 +1486,37 @@ functions:
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/call_pause_dirty4_scaled_set.c
   - addr: 0x004199e0
     name: DualCallPauseAddrSetRecurse_004199e0
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419a40
     name: CallPauseDirty4ScaledSet_00419a40
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/call_pause_dirty4_scaled_set.c
   - addr: 0x00419aa0
     name: DualCallPauseAddrSetRecurse_00419aa0
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419b00
     name: CallPauseDirty4ScaledSet_00419b00
     size: 83
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/call_pause_dirty4_scaled_set.c
   - addr: 0x00419b60
     name: DualCallPauseAddrSetRecurse_00419b60
     size: 95
     group: boot
     status: matched
-    file: src/engine/misc_matchesJJ.c
+    file: src/boot/dual_call_pause_addr_set_recurse.c
   - addr: 0x00419bc0
     name: BootInitTripleAddChain_00419bc0
     size: 203
