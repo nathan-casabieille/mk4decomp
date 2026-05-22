@@ -132,6 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   set: g_state_0054208c |= 1; ret.
  *   clear: g_state_0054208c &= 0xfe; ret.
  */
+
 void WalkCj58Loop43Toggle_00439700(void) {
     __asm {
         mov     eax, dword ptr [g_cj_00542058]
@@ -162,3 +163,4 @@ void WalkCj58Loop43Toggle_00439700(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

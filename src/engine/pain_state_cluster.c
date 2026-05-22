@@ -132,6 +132,7 @@ extern void ScaledChainJmp_004298e0(void);
  *   clear, install self with tag 0xa.
  */
 extern void InstallSelfHelper2_0047e8a0(void);
+extern unsigned int g_data_0054204c;
 void InstallSelfHelper2_0047e8a0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int prev = *(unsigned int *)(base + 0x84);

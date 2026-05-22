@@ -3,8 +3,9 @@
  */
 #include "engine/scenegraph.h"
 
+extern void *PendingMatch_004c9df0(void);
+
 void Crt_srand(int x) {
-    struct s_field14 *s = (struct s_field14 *)PendingMatch_004c9df0();
-    s->v = x;
+    *(int *)PendingMatch_004c9df0() = x;
 }
 

@@ -121,6 +121,19 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004ecea0;
+extern unsigned int g_data_004eceb0;
+extern unsigned int g_data_00535db0;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_0053a2d0;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
 
 void MStackBracket6_DualGate_004788e0(void) {
     unsigned int v;

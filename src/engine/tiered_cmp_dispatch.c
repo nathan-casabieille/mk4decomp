@@ -133,6 +133,10 @@ extern unsigned int g_data_00535e7c;
  *   push 0x4e49d0; call Scaled3StorePushCallJmp_00438220; pop esp; if pause: ret;
  *   jmp 0x439e30.
  */
+extern unsigned int g_data_0053a478;
+extern void IdCascadeBitSet_00439760(void);
+extern void Scaled3StorePushCallJmp_00438220(void);
+
 void TieredCmpDispatch_00439cb0(void) {
     __asm {
         call    IdCascadeBitSet_00439760
@@ -182,3 +186,4 @@ void TieredCmpDispatch_00439cb0(void) {
         _emit   00h
         }
 }
+

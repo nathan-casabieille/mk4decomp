@@ -129,6 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   non-null install self with walk=0x408b90 and call Helper_TickAlt;
  *   gate pause; set ecx |= 1 in state, then clear bit 0 if wt!=0.
  */
+
 void DirtyToggleInstall_00408b90(void) {
     __asm {
         mov     eax, dword ptr [g_state_0054208c]
@@ -163,3 +164,4 @@ tail:
 done:
         }
 }
+

@@ -138,6 +138,10 @@ extern unsigned int g_x_00541dc0;
  *   g_x_0054206c = 0; g_x_00541dc0 = 0; install self with chain[+0x84]=1, packed ptr store,
  *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm_0049dea0; g_framePauseFlag = 1.
  */
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

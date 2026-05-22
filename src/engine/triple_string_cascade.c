@@ -123,6 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004867b0 (174b game) - 3-block string-cascade. */
+extern unsigned int g_pause_00541e6c;
+extern void Alarm4EntryInstallChain_00481d40(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GateDispatch6c_00494580(void);
+
 __declspec(naked) void TripleStringCascade_004867b0(void) {
     __asm {
         call    GateDispatch6c_00494580

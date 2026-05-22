@@ -132,6 +132,16 @@ extern unsigned int g_data_00535e7c;
  *   Entry 0x004a76a0: same countdown helper but on g_x_004f3ae8.
  *   Entry 0x004a76c0: same countup helper but on g_x_004f3ae8.
  */
+extern unsigned int g_data_004f3aec;
+extern unsigned int g_data_004f3af0;
+extern unsigned int g_data_005433f4;
+extern unsigned int g_table_004f3af8;
+extern unsigned int g_x_004f3ae4;
+extern unsigned int g_x_004f3ae8;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00543590;
+extern void AudioStateMachineMulti_004a7930(void);
+
 __declspec(naked) void AudioMicroEntries_004a7600(void)
 {
     __asm

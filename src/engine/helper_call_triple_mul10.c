@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542074 = 0x20; call MStackDualDiffSequencer_00477040; if pause? final-ret.
  *   mstack-pop g_cj_0054205c; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void MStackDualDiffSequencer_00477040(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
+
 __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

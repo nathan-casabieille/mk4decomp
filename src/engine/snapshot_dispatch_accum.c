@@ -131,6 +131,14 @@ extern unsigned int g_data_00535e7c;
  *   chain[cj].slot54 = g_data_00542070; chain[cj].slot5c = walkCallback;
  *   g_state_00542088 += 0x4ccc; g_currentNodeFlags += 0x28f; if > 0x30000: = 0x50000.
  */
+extern unsigned int g_x_00537e94;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_0054207c;
+extern void BossSpinCluster_00487e80(void);
+
+extern unsigned int g_chain_arr_4348f0;
+
 void SnapshotDispatchAccum_00487dd0(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00542088]
@@ -168,3 +176,4 @@ void SnapshotDispatchAccum_00487dd0(void) {
         mov     dword ptr [g_currentNodeFlags], 0x50000
         }
 }
+

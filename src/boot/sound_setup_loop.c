@@ -130,6 +130,15 @@ extern unsigned int g_data_00535e7c;
  *   if (--g_x_00542050 >= 0): loop again.
  *   tail: call MStackPop8_004ab860; ret.
  */
+extern unsigned int g_data_00408000;
+extern unsigned int g_x_00542054;
+extern void CopyThreeFields_00404df0(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void PendingMatch_00413f40(void);
+extern void SetJmp_00405420(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 __declspec(naked) void SoundSetupLoop_00413ea0(void) {
     __asm {
         push    ebx

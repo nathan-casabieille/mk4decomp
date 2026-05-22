@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void BootChainBidirRecurseWalk_00405ca0(void);
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void GuardedChainPushSetCallPop_00406bb0(void);
+extern void MStackCall_00406340(void);
+extern void MStackInitCallToggle_00408ad0(void);
+extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void ScaledTestPauseStore_00408860(void);
+
 __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
 {
     __asm {

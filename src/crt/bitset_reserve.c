@@ -132,6 +132,9 @@ extern unsigned int g_data_00535e7c;
  *   Clear bit, zero remaining dwords (3 - esi entries with rep stosd).
  *   Return edx.
  */
+extern void BitsetIterClear_004cc8f0(void);
+extern void BitsetTrailZeroCheck_004cc880(void);
+
 __declspec(naked) void BitsetReserve_004cc960(void) {
     __asm {
         push    ecx

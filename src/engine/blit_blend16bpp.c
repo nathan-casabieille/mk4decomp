@@ -134,6 +134,39 @@ extern unsigned int g_data_00f70ff8;
 extern unsigned int g_data_00f71322;
 extern unsigned int g_data_00f85b40;
 
+extern unsigned int g_data_00f70f7c;
+extern unsigned int g_data_00f70f7d;
+extern unsigned int g_data_00f70f7e;
+extern unsigned int g_data_00f70f88;
+extern unsigned int g_data_00f70f8c;
+extern unsigned int g_data_00f70f90;
+extern unsigned int g_data_00f70f98;
+extern unsigned int g_data_00f70f9c;
+extern unsigned int g_data_00f70fa0;
+extern unsigned int g_data_00f70fa8;
+extern unsigned int g_data_00f70fac;
+extern unsigned int g_data_00f70fb0;
+extern unsigned int g_data_00f70fb8;
+extern unsigned int g_data_00f70fc0;
+extern unsigned int g_data_00f85b34;
+extern unsigned int g_data_00f85b4c;
+extern unsigned int g_data_00f85b50;
+extern unsigned int g_data_00f85b54;
+extern void DecodeTableAllocaCall_004b4450(void);
+extern void GlideTriBatchEmit_004adca0(void);
+extern void GlideTriColorFlush_004b46f0(void);
+extern void PadEnumDeviceRebind_004ad850(void);
+extern void ScanlineTexBlitAdditive_004c0e10(void);
+extern void ScanlineTexBlitAlpha_004c0b70(void);
+extern void ScanlineTexBlitInterlaced_004c1130(void);
+extern void ScanlineTexBlitPaletted_004c0360(void);
+extern void ScanlineTexBlit_004c0920(void);
+extern void TexturedTriRasterizeAlphaPal_004c1fe0(void);
+extern void TexturedTriRasterizeAlpha_004c19c0(void);
+extern void TexturedTriRasterizeDithered_004c2650(void);
+extern void TexturedTriRasterizeShaded_004c2cb0(void);
+extern void TexturedTriRasterize_004c13f0(void);
+
 __declspec(naked) void FlushDrawQueue(void)
 {
     __asm {

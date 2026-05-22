@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542078 = g_x_0054206c. mstack-pop; push (ecx, g_x_00542074) for cdecl call
  *     to Mul10Tail. After call: cdq; eax-=edx; eax>>=1; ecx-=eax. mstack-pop 2.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern void RangeMulMod_004ab2a0(void);
+
 void MStackPush3DualCallHalve_00477300(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -193,3 +200,4 @@ void MStackPush3DualCallHalve_00477300(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

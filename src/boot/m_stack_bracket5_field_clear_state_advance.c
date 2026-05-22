@@ -132,6 +132,10 @@ extern unsigned int g_x_0054206c;
  *   chain[g_scaledInit + 0x20] = (mstack-pop & 0xfffff) | 0x08000000;
  *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
+extern unsigned int g_x_00542048;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void FramePauseScaledStore_00406c10(void) {
     __asm {
         call    MStackBracket5_FieldClear_StateAdvance_00405630
@@ -188,3 +192,4 @@ void FramePauseScaledStore_00406c10(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

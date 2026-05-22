@@ -142,6 +142,21 @@ extern unsigned int g_data_00535e7c;
  *     If non-zero tail-jmp CallSetPause_0041f830; else set g_data_00535e48
  *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
  */
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00537ea8;
+extern unsigned int g_data_00541d88;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void IndirectStateDispatcher_0049f6a0(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void RoundWinTransition_0049e7e0(void);
+
 __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     __asm {
         mov     eax, dword ptr [g_data_00541fc0]

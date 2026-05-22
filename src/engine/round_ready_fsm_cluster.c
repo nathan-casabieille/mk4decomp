@@ -150,6 +150,16 @@ extern unsigned int g_data_004e49fc;
 extern unsigned int g_data_0053a3c0;
 extern unsigned int g_data_0053a478;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ScaledMove48to58_00490720(void);
+
 __declspec(naked) void HitReactionStateCluster_004335f0(void)
 {
     __asm {

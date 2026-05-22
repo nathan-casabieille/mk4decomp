@@ -126,9 +126,6 @@ extern void Helper_ECM_PostCleanup(void);
 extern void ECM_Cleanup(void);
 extern void EcmFrameDecode_004bec30(void);
 /* extern void DoubleToInt64_004c57d0(void); -- defined elsewhere with diff sig */
-extern void *g_iat_004d2240;
-extern void (*g_iat_004d2074)();
-extern void *g_iat_004d2084;
 extern unsigned int g_const_004d2998;
 extern unsigned int g_const_004d29a0;
 extern unsigned int g_const_004d29a8;
@@ -148,6 +145,11 @@ extern unsigned int g_data_007ab064;
 extern unsigned int g_data_007ab06c;
 extern unsigned int g_data_007ab070;
 extern unsigned int g_data_007ab074;
+
+extern unsigned int g_iat_004d2074;
+extern unsigned int g_iat_004d2084;
+extern unsigned int g_iat_004d2240;
+extern void DoubleToInt64_004c57d0(void);
 
 __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
 {

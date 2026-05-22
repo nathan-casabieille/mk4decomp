@@ -13,6 +13,19 @@
  *     Set flag 0x543904 on success. Tail-call timeGetTime via IAT[0x4d2240];
  *     save in 0x5438fc.
  */
+extern unsigned int g_data_005438ec;
+extern unsigned int g_data_005438f0;
+extern unsigned int g_data_005438f4;
+extern unsigned int g_data_005438f8;
+extern unsigned int g_data_005438fc;
+extern unsigned int g_data_00543904;
+extern unsigned int g_data_0054390c;
+extern unsigned int g_iat_004d2240;
+extern unsigned int g_iat_004d2244;
+extern unsigned int g_x_005438e8;
+extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Helper_AuxAudio_PostInit(void);
+
 __declspec(naked) void Audio_TimerSet(void) {
     __asm {
         sub     esp, 0x18

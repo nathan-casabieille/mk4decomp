@@ -137,6 +137,19 @@ extern unsigned int g_data_00535e7c;
  *              sentinel 0xffff at end+0, end-1 if intact, call CrtMemMove_004c61c0
  *              (likely WideCharToMultiByte). Free both bufs via FreeImpl.
  */
+extern unsigned int g_data_004d20b8;
+extern unsigned int g_data_004d20bc;
+extern unsigned int g_data_004d20e0;
+extern unsigned int g_data_004d2f20;
+extern unsigned int g_data_004d2f24;
+extern unsigned int g_data_00f9fc10;
+extern unsigned int g_data_00f9fc20;
+extern unsigned int g_data_00f9fc2c;
+extern void Calloc_004c6110(void);
+extern void CrtMemMove_004c61c0(void);
+extern void FreeImpl_004c55f0(void);
+extern void LoadArgPushCall_004c54b0(void);
+
 __declspec(naked) void MBToWCharCachedDispatch_004cd950(void) {
     __asm {
         push    ecx

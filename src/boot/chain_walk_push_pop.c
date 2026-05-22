@@ -128,6 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   the [+0x14] chain to the leaf, then loads leaf[+0x18] into walk
  *   AND cj, finally pops the stack entry into walk and decrements.
  */
+
 void ChainWalkPushPop_00405a40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -158,3 +159,4 @@ leaf:
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   ++g_x_00542048; if == g_data_00542050: reset to (g_data_0053a4b8 >> 2);
  *   loop. Then call DispatchEventQueue_Commit and ret.
  */
+extern unsigned int g_data_0053a4b8;
+extern unsigned int g_x_0053a2f0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_arr_slot_45c840;
+extern unsigned int g_arr_table_45c840;
+
 __declspec(naked) void EventQueueDrainLoop_0045c840(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0053a2f0]

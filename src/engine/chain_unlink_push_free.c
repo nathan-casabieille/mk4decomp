@@ -125,6 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049d150 (174b) - linked list unlink: walks g_scaledInit.chain[+0x2c]
  *   chain looking for g_xformEntityIdx; on hit unlink it and push to free list at
  *   g_state_00537f24. */
+extern unsigned int g_state_00537f24;
+
 void ChainUnlinkPushFree_0049d150(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -172,3 +174,4 @@ loop_top:
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

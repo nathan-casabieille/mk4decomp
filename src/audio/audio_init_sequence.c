@@ -132,6 +132,28 @@ extern unsigned int g_data_00535e7c;
  *   push 0x1000, 0x004202c0; call StoreTwoCall_0049cb40; add esp, 8.
  *   [0x543800] = -1; g_x_0054206c = 0; [0x52aac4] = 0.
  */
+extern unsigned int g_x_0052aac4;
+extern unsigned int g_x_00537ea0;
+extern unsigned int g_x_00537edc;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0053a178;
+extern unsigned int g_x_0053a1cc;
+extern unsigned int g_x_0053a250;
+extern unsigned int g_x_0053a51c;
+extern unsigned int g_x_0053a790;
+extern unsigned int g_x_00541ec4;
+extern unsigned int g_x_00541ec8;
+extern unsigned int g_x_00541ecc;
+extern unsigned int g_x_00541ed0;
+extern unsigned int g_x_00542040;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00543800;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void TablePushAccumTailJmp_00429e30(void);
+extern void TestCmpZeroFour_004238b0(void);
+
 void AudioInitSequence_004a41a0(void) {
     __asm {
         mov     byte ptr [g_x_00542040], 1
@@ -171,3 +193,4 @@ void AudioInitSequence_004a41a0(void) {
         mov     dword ptr [g_x_0052aac4], 0
         }
 }
+

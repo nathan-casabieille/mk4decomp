@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *     if pause: install-self at +8, set baseSel[*4+0x84]=1, store 0x1e to g_data_0054204c
  *     and 1 to g_pause; ret. Else jmp CallSetPause_0041f830.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern void BootMstackInit_0041fb10(void);
+extern void CallSetPause_0041f830(void);
+extern void Wrapper_0048a270(void);
+
 __declspec(naked) void InstallSelfDualEntry_00426ae0(void) {
     __asm {
         push    0x00000241

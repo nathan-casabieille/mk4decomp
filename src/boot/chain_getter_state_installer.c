@@ -132,6 +132,17 @@ extern unsigned int g_data_00535e7c;
  *   another field, call ChainListVecAdd_0049d200; on success, mark
  *   self-install at 0x00412170 and set g_data_00541e6c=1.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void ChainListVecAdd_0049d200(void);
+extern void GuardedSeq_00471670(void);
+
 __declspec(naked) void ChainGetterStateInstaller_00412140(void) {
     __asm {
         mov     eax, dword ptr [g_data_0054205c]

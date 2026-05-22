@@ -121,6 +121,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00537f94;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542074;
 
 /* @addr 0x004a3c50 (138b audio) - chained init pattern:
  *   g_walkCallback = 0x5b, call F; pause? ret;

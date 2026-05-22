@@ -12,6 +12,9 @@
  *       write to [0xf85b34 + offset]. Step both by 0x200 between rows.
  *   Else: bulk rep movsd/movsb copy [0xf4d050] → [0xf85b34], rows of 0x200 bytes.
  */
+extern unsigned int g_data_004ffd4c;
+extern unsigned int g_data_00f85b34;
+
 __declspec(naked) void Helper_TexUpload(void) {
     __asm {
         mov     ecx, [esp + 4]

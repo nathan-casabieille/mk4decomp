@@ -129,6 +129,12 @@ extern void ByteWordTableTaggedDispatch_0048a050(void);
 extern void GameModeAdvanceCluster_00482000(void);
 
 /* @addr 0x00483c90 (334b game) - 4-block: thunk + install-self body + 2 small thunks. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void DualBlockChainCallInstall_00483de0(void);
+
 __declspec(naked) void QuadBlockInstallChainThunks_00483c90(void) {
     __asm {
         call    CjTableThresholdDispatch_00488f00

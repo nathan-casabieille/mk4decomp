@@ -135,6 +135,10 @@ extern void StageRoundFlowCluster_0047fcc0(void);
  *     Else: install self, set chain[sel].slot84 = 1, g_x_0054204c = 1,
  *     g_framePauseFlag = 1; ret.
  */
+extern unsigned int g_x_0054204c;
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

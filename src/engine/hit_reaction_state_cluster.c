@@ -124,10 +124,213 @@ extern unsigned int g_data_00535e7c;
 
 extern void SlotPhaseResetInstallChain_0048e0e0(void);
 extern void CallPauseCmpStateJmp_0046a520(void);
-extern void HitReactionStateCluster_004335f0(void);
 extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+extern void ScaledMove48to58_00490720(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void Cmp3JmpOrPushCall_004338e0(void);
+extern void GuardedPushCall_004338c0(void);
+extern void GuardedPushCall_004338a0(void);
+extern void ScaledLoadInstallOrCall_00433990(void);
+extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void CallPauseInc_004ab670(void);
+extern void CmpJmpConstStoreJmp_004389e0(void);
+extern void InstallSelfCountdownCascade_00439fd0(void);
+extern void MultiBranchStateFilter_00439a40(void);
+extern void RoundReadyFsmCluster_0043a080(void);
+extern void GDispatch1_00439c40(void);
+extern void TieredCmpDispatch_00439cb0(void);
+extern void ThreeStageGateCascade_00438340(void);
 
-/*
- * @addr 0x00470480 (114b game) - cj-keyed install-self with 2 sub-
- *   helpers: call SlotPhaseResetInstallChain_0048e0e0; gate pause; if cj is in {538158,
- *   53815c} tail-call CallPauseCmpStateJmp; else pick wt = 53a408/4
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0053a3c0;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_0053a478;
+extern unsigned int g_data_004e49fc;
+extern unsigned int g_data_004e4460;
+
+__declspec(naked) void HitReactionStateCluster_004335f0(void)
+{
+    __asm {
+        /* === Helper 1 (0x4335f0): hit-launch dispatcher === */
+        call     LeaPlus22StoreSelf_0048e4d0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_3630
+        call     ScaledMove48to58_00490720
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_3630
+        call     DualGatedStateYield_0048fc80
+        test     eax, eax
+        jne      short L_3630
+        mov      eax, dword ptr [g_data_004d57ac]
+        inc      eax
+        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [eax*4], OFFSET L_3640
+        jmp      GameDispatchValidateState_004339c0
+    L_3630:
+        ret
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        /* === Helper 2 (0x433640): hit-reaction FSM === */
+    L_3640:
+        mov      eax, dword ptr [g_data_00542060]
+        push     esi
+        push     edi
+        xor      edi, edi
+        lea      esi, [eax*4]
+        mov      eax, dword ptr [eax*4 + 0x84]
+        mov      dword ptr [esi + 0x84], edi
+        sub      eax, edi
+        je       L_377d
+        dec      eax
+        jne      short L_3695
+        cmp      dword ptr [g_data_0053a3c0], 2
+        jg       short L_3695
+        mov      dword ptr [g_data_0054206c], 0x1f4
+        call     AudioVolumeRescale_004ab690
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_3897
+        test     byte ptr [g_data_0054208c], 1
+        jne      short L_36f2
+    L_3695:
+        mov      eax, dword ptr [g_data_00535ddc]
+        cmp      eax, 0x10000
+        mov      dword ptr [g_data_0054206c], eax
+        jge      short L_36ae
+        call     Cmp3JmpOrPushCall_004338e0
+        pop      edi
+        pop      esi
+        ret
+    L_36ae:
+        cmp      eax, 0x20000
+        jge      short L_36bd
+        call     GuardedPushCall_004338c0
+        pop      edi
+        pop      esi
+        ret
+    L_36bd:
+        cmp      eax, 0x30000
+        jge      short L_36cc
+        call     GuardedPushCall_004338a0
+        pop      edi
+        pop      esi
+        ret
+    L_36cc:
+        call     ScaledLoadInstallOrCall_00433990
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_3897
+        push     OFFSET g_data_004e4460
+        call     PackedAdvanceCallTailJmp_004392c0
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        pop      edi
+        pop      esi
+        ret
+    L_36f2:
+        mov      dword ptr [g_data_0054206c], 0xb4
+        call     CallPauseInc_004ab670
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_3897
+        mov      eax, dword ptr [g_data_0054206c]
+        mov      edx, OFFSET L_3640
+        add      eax, 0x3c
+        add      edx, 0x2000000
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [esi + 8], OFFSET L_3640
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      dword ptr [ecx*4 + 0x84], 2
+        mov      eax, dword ptr [esi + 4]
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], edx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      eax, dword ptr [g_data_00542060]
+        mov      dword ptr [eax*4 + 0x84], edi
+        call     CmpJmpConstStoreJmp_004389e0
+        mov      dword ptr [g_data_00541e6c], 1
+        pop      edi
+        pop      esi
+        ret
+    L_377d:
+        mov      ecx, dword ptr [g_data_00542060]
+        mov      dword ptr [g_data_0054206c], edi
+        push     OFFSET g_data_004e49fc
+        mov      dword ptr [ecx*4 + 0x74], edi
+        call     QuadBlockArgInstallChain_0043a950
+        mov      eax, dword ptr [g_data_00541e6c]
+        add      esp, 4
+        cmp      eax, edi
+        jne      L_3897
+        mov      dword ptr [g_data_0053a478], edi
+        call     InstallSelfCountdownCascade_00439fd0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_3897
+        cmp      dword ptr [g_data_0053a478], edi
+        jne      L_3897
+        mov      dword ptr [g_data_0053a478], edi
+        call     MultiBranchStateFilter_00439a40
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      L_3897
+        cmp      dword ptr [g_data_0053a478], edi
+        jne      L_3897
+        mov      dword ptr [g_data_0053a478], edi
+        call     RoundReadyFsmCluster_0043a080
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_3897
+        cmp      dword ptr [g_data_0053a478], edi
+        jne      short L_3897
+        call     GDispatch1_00439c40
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_3897
+        mov      dword ptr [g_data_0053a478], edi
+        call     TieredCmpDispatch_00439cb0
+        cmp      dword ptr [g_data_00541e6c], edi
+        jne      short L_3897
+        cmp      dword ptr [g_data_0053a478], edi
+        jne      short L_3897
+        mov      dword ptr [esi + 8], OFFSET L_3640
+        mov      edx, dword ptr [g_data_00542060]
+        mov      ecx, OFFSET L_3640
+        mov      dword ptr [edx*4 + 0x84], 1
+        mov      eax, dword ptr [esi + 4]
+        add      ecx, 0x1000000
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [eax*4], ecx
+        mov      eax, dword ptr [g_data_00542044]
+        inc      eax
+        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [esi + 4], eax
+        mov      edx, dword ptr [g_data_00542060]
+        mov      dword ptr [edx*4 + 0x84], edi
+        call     ThreeStageGateCascade_00438340
+        mov      dword ptr [g_data_00541e6c], 1
+    L_3897:
+        pop      edi
+        pop      esi
+        ret
+    }
+}

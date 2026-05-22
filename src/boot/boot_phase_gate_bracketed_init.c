@@ -122,6 +122,15 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541e80;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void MStackPushChainStepIndex_004ab510(void);
+
 __declspec(naked) void BootPhaseGateBracketedInit_004060c0(void)
 {
     __asm

@@ -131,6 +131,8 @@ extern unsigned int g_data_00535e7c;
  *   if pause: ret; jmp 0x491660;
  *   skip: ++g_state_004d57ac; [mstack*4]=0x491660; jmp GameDispatchValidateState_004339c0.
  */
+extern void GuardedScaledChainJmpIndirect_00460e40(void);
+
 __declspec(naked) void StoreGuardedBitInstallJmp_004915f0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]

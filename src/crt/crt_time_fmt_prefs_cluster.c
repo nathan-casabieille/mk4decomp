@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f5924;
+extern unsigned int g_data_00522bb4;
+extern unsigned int g_data_00522bb8;
+extern unsigned int g_data_005236b0;
+extern unsigned int g_data_005236e8;
+extern unsigned int g_data_00f9fc18;
+extern unsigned int g_data_00f9fc68;
+extern unsigned int g_data_00f9fc6c;
+extern unsigned int g_data_00f9fc70;
+extern unsigned int g_data_00f9fc9a;
+extern void CrtGetLocaleInfo_004d0bc0(void);
+extern void FreeImpl_004c55f0(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void StringStripSlotReplace_004d0140(void);
+
 __declspec(naked) void CrtTimeFmtPrefsCluster_004cfe40(void)
 {
     __asm {

@@ -129,6 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   pass through. Use that index to load word from scaled table at
  *   [walk*4 + idx*2]; if non-zero call TaggedSceneDispatch_004be690.
  */
+
 void DualBranchWordLookup_0048a290(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
@@ -161,3 +162,4 @@ after:
 done:
         }
 }
+

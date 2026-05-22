@@ -122,6 +122,25 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ed1b0;
+extern unsigned int g_data_004ed1b8;
+extern unsigned int g_data_00537f98;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void RoundStartCluster_0047b900(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadIncJmp_00429840(void);
+
 __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
 {
     __asm {

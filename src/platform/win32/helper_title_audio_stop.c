@@ -9,6 +9,12 @@
  *   For esi in 0xf9eb80..0xf9ebc0 (4-byte stride): if ax!=0xffff,
  *   lookup arr[type*7]; if non-null, call vtbl->method48(ax_obj).
  */
+extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_x_00f9efe0;
+extern void Audio_UpdateChannels(void);
+
+extern unsigned int g_arr_00f8fac8;
+
 __declspec(naked) void Helper_TitleAudioStop(void) {
     __asm {
         mov     eax, dword ptr [g_x_00f9efe0]

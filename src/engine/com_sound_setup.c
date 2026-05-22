@@ -42,14 +42,15 @@
  */
 
 extern unsigned int g_state_0058c874;
-extern void *g_iface_0058c870;
+extern unsigned int g_iface_0058c870;
 extern unsigned int g_retSlot_0058c878;
 
 extern unsigned int g_state_0058c8f4;
-extern void *g_iface_0058c8f0;
+extern unsigned int g_iface_0058c8f0;
 extern unsigned int g_retSlot_0058c8f8;
 
 /* @addr 0x004af6c0 */
+
 __declspec(naked) void ComSoundSetup_004af6c0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0058c874]

@@ -133,6 +133,11 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054206c=ebx=0x45; call MStackPush2LLWalkCompare_004069b0;
  *     if (pause == 0): loop;
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void MStackPush2LLWalkCompare_004069b0(void);
+extern void Thunk_0049cc00(void);
+
 __declspec(naked) void DoubleCallChainInit_0043d780(void) {
     __asm {
         push    ebx

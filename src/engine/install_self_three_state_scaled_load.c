@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   state 0: g_state_00542080=0x15. Install-self with chain[+0x84]=1,
  *     scaledInit-chain push 0x0047f2e0+0x01000000; call ScaledLoadJmp_00428d20; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void InstallSelfThreeStateScaledLoad_0047f2e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -6,6 +6,12 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_data_004e4890;
+extern unsigned int g_data_004e48d0;
+extern unsigned int g_data_004e4910;
+extern void func_004399be(unsigned int *);
+extern void func_004399be_b(unsigned int *);
+extern void func_004399be_c(unsigned int *);
 
 /* @addr 0x00438ea0 (14b) entry A */
 void TripleStubPushCall_00438ea0(void) {

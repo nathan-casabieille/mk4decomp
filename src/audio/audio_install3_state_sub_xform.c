@@ -134,6 +134,17 @@ extern unsigned int g_data_00535e7c;
  *     g_data_0054204c=0x1c; pause=1. pop+ret.
  *   installSelf: install-self at entry; chain->state=2; g_data_0054204c=1; pause=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void InstallSelfChainAddSigned_004a18d0(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void ScaledInitOrSelfPtrSetType14_004a1940(void);
+
 __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
 {
     __asm

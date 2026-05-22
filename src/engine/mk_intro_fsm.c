@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d56d8;
+extern unsigned int g_data_0052d724;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_00538160;
+extern unsigned int g_data_00538164;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void Cmp2DirtyToggle_00423870(void);
+extern void DualAddSar_004ab600(void);
+extern void SaveCallRestore_004049d0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void func_004214a0(void);
+
 __declspec(naked) void MkIntroFsm_004218b0(void)
 {
     __asm {

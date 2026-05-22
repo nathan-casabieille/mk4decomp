@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00537e98;
+extern unsigned int g_data_005380a4;
+extern unsigned int g_data_005380b0;
+extern unsigned int g_data_0053a278;
+extern unsigned int g_data_00541d6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void CallSetPause_0041f830(void);
+extern void MStackPush2ClampLookup_00459160(void);
+extern void SpawnTrioInitCluster_00458440(void);
+extern void TripleEntryDispatch_00458810(void);
+
 __declspec(naked) void GuardedStateChangePair_00458630(void)
 {
     __asm

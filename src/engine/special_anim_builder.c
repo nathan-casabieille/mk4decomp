@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0053a7b0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern void BootChainBidirRecurseWalk_00405ca0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void DualBitGateInitCall_0048a1c0(void);
+extern void MStackChainDecodeCall_004936f0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPushTableWalk_00493a20(void);
+extern void OrDualStore_0048a190(void);
+extern void PushSetCallCleanup_00408580(void);
+
 void SpecialAnimBuilder_004937b0(void) {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
@@ -256,3 +277,4 @@ void SpecialAnimBuilder_004937b0(void) {
     L_3a19:
         }
 }
+

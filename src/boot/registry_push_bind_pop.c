@@ -26,6 +26,7 @@ extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_state_00542080;
 extern u32 g_pendingNodeType;
+extern unsigned int g_x_00535e6c;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);

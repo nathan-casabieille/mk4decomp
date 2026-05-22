@@ -129,6 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   load saved_walk[reloc]; if non-null call Helper_TickAlt; on pause
  *   clear, clear bit 0 of g_state_0054208c.
  */
+
 void PushSetCallCleanup_00408580(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -162,3 +163,4 @@ clearBit:
 done:
         }
 }
+

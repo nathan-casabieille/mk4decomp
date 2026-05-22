@@ -133,6 +133,12 @@ extern unsigned int g_data_00535e7c;
  *   install-path: install self with [esi+0x84]=ebx, packed_ptr store, g_scaledInit++,
  *     chain[+0x84]=0, call Install3WayChainStateAdvance_00429130; pause = 1.
  */
+extern void Install3WayChainStateAdvance_00429130(void);
+extern void ScaledChainJmp_004298e0(void);
+extern void ScaledLoadJmp_24_00429790(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

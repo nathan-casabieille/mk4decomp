@@ -137,6 +137,15 @@ extern unsigned int g_state_0053a6e0;
  *       g_x_0054206c=1; g_data_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
  */
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541dc8;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537ea4;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void BootDualStateInstallSelf_00403070(void);
+
 __declspec(naked) void BootStateMachine4Way_00402f60(void)
 {
     __asm

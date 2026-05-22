@@ -19,6 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   walk → g_eventQueueWorkType; call F again; pause → ret;
  *   jmp T.
  */
+extern unsigned int g_data_0053a498;
 extern void ChainShiftRight8_0045d9b0(void);
 void DualSwapTwoCallsJmp_0045d960(void) {
     g_eventQueueTotal = g_xformEntityIdx;

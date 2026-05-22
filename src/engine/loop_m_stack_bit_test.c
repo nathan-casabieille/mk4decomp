@@ -131,6 +131,12 @@ extern unsigned int g_data_00535e7c;
  *     call F1; if (!pause) goto loop; pop esi; pop ebx; ret;
  *   Bit-set exit: mstack-pop -> g_scaledInit; pop esi; pop ebx; ret.
  */
+extern unsigned int g_x_0054206c;
+extern void DispatcherComplex138_004760f0(void);
+extern void ScaledAndFBJmp_00476fe0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

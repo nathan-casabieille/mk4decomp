@@ -140,6 +140,23 @@ extern unsigned int g_data_00535e7c;
  *       arms 0x541e6c=1.
  *   Entry 4 (offset 0x120, 96b): mirror of entry 1 with alarm 0x4ea9f8.
  */
+extern unsigned int g_data_004ea9c0;
+extern unsigned int g_data_004ea9d8;
+extern unsigned int g_data_004ea9e8;
+extern unsigned int g_data_004ea9f8;
+extern unsigned int g_data_00501838;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledDecBranch_00466460(void);
+extern void TripleStageRollback_00404a50(void);
+
 __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

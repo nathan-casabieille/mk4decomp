@@ -127,6 +127,11 @@ extern unsigned int g_data_00535e7c;
  *   Copy fields at offsets 0x54, 0x58, 0x5c, 0x60, 0x64, 0x68, 0x78, 0x7c,
  *   0x80 from src to dst (with g_walkCallback used as scratch).
  */
+extern unsigned int g_x_00542054;
+
+extern unsigned int g_arr_48f980_src;
+extern unsigned int g_chain_arr_4348f0;
+
 void NineFieldCopy_0048f980(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -164,3 +169,4 @@ void NineFieldCopy_0048f980(void) {
         mov     dword ptr [ecx + 0x80], eax
         }
 }
+

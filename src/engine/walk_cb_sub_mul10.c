@@ -17,6 +17,7 @@ extern packed_ptr g_fightGroupHead;
  *   pause → ret; g_acc_00542078 = walk; call F2; pause → ret;
  *   g_eventQueueWorkType = walk; ret.
  */
+extern unsigned int g_acc_00542078;
 extern void MStackMagicModMul10_00424410(void);
 extern void ModMagicMul10Index_00424350(void);
 void WalkCbSubMul10_00431d50(void) {

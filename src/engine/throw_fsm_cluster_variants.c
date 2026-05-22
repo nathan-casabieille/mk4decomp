@@ -147,6 +147,33 @@ extern void GuardedPackedSlotInit_00428760(void);
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
  *       at [eax*4], zeroes slot[+0x84], and arms 0x541e6c=1 via GuardedSeq.
  */
+extern unsigned int g_data_0054205c;
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void AudioMixerStep_004ab700(void);
+extern void DispatcherComplex138_004760f0(void);
+extern void MStackBracketed3StoreCall_00475990(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void Mul10Tail_00404af0(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void ThrowFsmCluster_0044eaf0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]
@@ -224,29 +251,6 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
     }
 }
 
-extern void Mul10Tail_00404af0(void);
-extern void StoreLoadJmp_00404ef0(void);
-extern void MStackPush2ChainLLInsert_00406790(void);
-extern void MStackPush1MagicMod2_004244d0(void);
-extern void ThrowFsmCluster_0044eaf0(void);
-extern void MStackBracketed3StoreCall_00475990(void);
-extern void DispatcherComplex138_004760f0(void);
-extern void Thunk_0049cbc0(void);
-extern void AudioMixerStep_004ab700(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
-extern void SetupVecFsmCluster_0043e3e0(void);
-extern unsigned int g_data_004d5324;
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void ThrowChargeCluster_0044e750(void)
 {

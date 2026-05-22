@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *   v = arr[key]; if v < 0x19: --v; g_x_00542074 = v.
  *   call Push16Call; pause? ret; pop into g_x_00542044, g_x_00542074.
  */
+extern unsigned int g_data_004e87c0;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_arr_459160_main;
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPush2ClampLookup_00459160(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -167,3 +173,4 @@ void MStackPush2ClampLookup_00459160(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

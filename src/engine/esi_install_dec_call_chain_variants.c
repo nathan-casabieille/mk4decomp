@@ -135,6 +135,11 @@ extern unsigned int g_data_00535e7c;
  *   install_self: [esi+8]=0x4293d0; [esi+0x84]=1;
  *                g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
+extern void CallPauseScaledDecJmp_00429750(void);
+extern void CopyJmp_00406ba0(void);
+extern void GuardedSeq_004297b0(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
 __declspec(naked) void EsiInstallDecCallChain_004293d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

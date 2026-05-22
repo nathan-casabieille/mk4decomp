@@ -129,6 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   if true zeros g_walkCallback; merges low bits back into base
  *   and stores into table[walkCallback].
  */
+extern unsigned int g_data_0053a6e4;
+extern unsigned int g_state_00542098;
+
 __declspec(naked) void ZBucketClampStore_004ba5d0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542084]

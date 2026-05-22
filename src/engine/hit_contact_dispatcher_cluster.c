@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ed818;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void Install3StateLongSeq_00480570(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void NotMaskStorePair_0045f440(void);
+extern void PunchAnimCluster_00496d80(void);
+extern void PushCallScaledStore_004143c0(void);
+extern void ScaledChainJmp_004298e0(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledZero44_00491500(void);
+extern void TripleEntryChainGate_00480790(void);
+
 __declspec(naked) void HitContactDispatcherCluster_00480240(void)
 {
     __asm {

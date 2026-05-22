@@ -121,6 +121,13 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00535d60;
+extern unsigned int g_data_00535d68;
+extern unsigned int g_data_0053a3cc;
+extern unsigned int g_data_00541fac;
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
  *   eax = g_x_0052ab10 (chain base); ecx = g_data_00541fac (table idx).

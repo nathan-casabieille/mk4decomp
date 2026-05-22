@@ -128,6 +128,10 @@ extern unsigned int g_data_00535e7c;
  *   set flag 0x80; else: errno=22, ret -1.
  *   Returns old mode (0x4000 if was-text, else 0x8000).
  */
+extern void Crt_errno_004c8ba0(void);
+
+extern unsigned int g_arr_00fa0de0;
+
 __declspec(naked) int Setmode_004d0b50(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00424200 (321b game) - 3-state install-self with chain pop + audio dispatch. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00543550;
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void PushPopScaledInit343c_004aa940(void);
+extern void SceneFrameStepWithInputs_004be250(void);
+
 __declspec(naked) void Install3StateAudioChain_00424200(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

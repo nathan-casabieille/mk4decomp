@@ -131,6 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   push 0x542b90; call IterLoad_00491050; pop esp;
  *   if pause: ret; jmp end. (end is a ret).
  */
+
 void OneSetCmpJmpLoadCall_0047c620(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]
@@ -165,3 +166,4 @@ void OneSetCmpJmpLoadCall_0047c620(void) {
         _emit   00h
         }
 }
+

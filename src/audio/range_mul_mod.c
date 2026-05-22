@@ -19,6 +19,7 @@ extern u32 g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent_mm2;
 extern void func_004c5740_mm(void);
 extern int Alldiv_004c5690(int, int, int, int);
+
 __declspec(naked) void RangeMulMod_004ab2a0(void) {
     __asm {
         push    esi

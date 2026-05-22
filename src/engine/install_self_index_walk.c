@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
  *   else: refetch [g_x_00542054*4+0x10]; if zero: add 5 to eax, jmp back to scaledInit
  *   walk. If non-zero: install-self at [esi+8]=0x00450de0, chain[+0x84]=1, pause=1; ret.
  */
+extern unsigned int g_data_004e7528;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void DualScaledStore_00452740(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

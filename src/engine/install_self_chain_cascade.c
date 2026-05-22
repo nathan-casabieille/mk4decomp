@@ -134,6 +134,15 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit-chain push 0x0045feb0+0x01000000;
  *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542058;
+extern void ArgScaledTestStore_00494140(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void IterStepScaledStore24_00428730(void);
+extern void ScaledStoreEntZeroJmp_00428e40(void);
+
 __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

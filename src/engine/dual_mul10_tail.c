@@ -128,6 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x70): call ScaledChainSignDirtyToggle; if !pause: if bit (al=1 vs cl) clear, OR bit-0 of state.
  *     Else clear bit-0 and ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void ScaledChainSignDirtyToggle_00439680(void);
+
 void DualMul10Tail_004395d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -180,3 +185,4 @@ void DualMul10Tail_004395d0(void) {
         or      dword ptr [g_state_0054208c], eax
         }
 }
+

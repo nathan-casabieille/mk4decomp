@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004eb1e0;
+extern unsigned int g_data_004eb240;
+extern unsigned int g_data_004eb258;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542094;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ComboScriptDispatchCluster_00470530(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedSeq_004297b0(void);
+extern void InstallSelfChainedDispatch_0046cb70(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void InstallSelfMStackPush_0046cc80(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void ScaledInit_0048d450(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledMove74to70_0046eaa0(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+
 __declspec(naked) void HitStateCluster_0046c7c0(void)
 {
     __asm {

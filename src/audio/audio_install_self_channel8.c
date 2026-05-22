@@ -132,6 +132,13 @@ extern void AudioInstallSelfChannel8_004a0520(void);
  *   tests ch instead of al for the 0x20 flag, and bit 0x40 instead
  *   of 0x04 in the second gate; tail-jmp AudioInstallSelfChannel8_004a0520.
  */
+extern unsigned int g_x_004d50a4;
+extern unsigned int g_x_004d50a8;
+extern unsigned int g_x_00543724;
+extern unsigned int g_x_00543728;
+extern unsigned int g_x_0054372c;
+extern unsigned int g_x_00543730;
+
 __declspec(naked) void AudioStateRemapB_004a04a0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0053a2e8]

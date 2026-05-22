@@ -11,6 +11,16 @@
  *   at 0x00f9eb70 (PCM, 2 channels, freq, 16-bit, 4-byte block) and
  *   call IDirectSound::CreateSoundBuffer (vt+0x38).
  */
+extern unsigned int g_word_00f9eb70;
+extern unsigned int g_word_00f9eb72;
+extern unsigned int g_word_00f9eb7c;
+extern unsigned int g_word_00f9eb7e;
+extern unsigned int g_x_00f9eb70;
+extern unsigned int g_x_00f9eb74;
+extern unsigned int g_x_00f9eb78;
+extern unsigned int g_x_00f9eb7c;
+extern unsigned int g_x_00f9efcc;
+
 __declspec(naked) void Helper_DSI_post2(void) {
     __asm {
         mov     eax, dword ptr [g_x_00f9efcc]

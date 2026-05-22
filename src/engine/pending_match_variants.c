@@ -26,6 +26,7 @@ extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
 extern unsigned int g_state_00542080;
 extern u32 g_pendingNodeType;
+extern unsigned int g_x_0052aac4;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -394,6 +395,488 @@ extern void Phase4FivePackedDispatch_0040fe40(void);
 extern void PendingMatch_00498eb0(void);
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_0052d750;
+extern unsigned int g_data_0052d754;
+extern unsigned int g_data_0052d758;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00537f04;
+extern unsigned int g_data_0053a514;
+extern unsigned int g_data_00542094;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00543550;
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void ChainListVecAdd_0049d200(void);
+extern void ChainUnlinkPushFree_0049d150(void);
+extern void ComboScriptDispatchCluster_00470530(void);
+extern void DirtyTestScaledCmpJmp_0046ea70(void);
+extern void DispatcherComplex197_0045be40(void);
+extern void DispatcherComplex197_0045bf10(void);
+extern void DualBlockInstallSelfWithSibling_00484c90(void);
+extern void DualEntryRecursiveInstall_00471710(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void Eleven404b90_404c00_004266d0(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void FiveThunkMStackDispatcher_0046eac0(void);
+extern void FourCallBitGateChain_004334d0(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void FsmPoseDualEntry_00472560(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void GuardedSeq_00471670(void);
+extern void InstallSelfBitGated_00428eb0(void);
+extern void InstallSelfDualCountdown_00429050(void);
+extern void InstallSelfIndexWalk_00450de0(void);
+extern void InstallSelfMidPush_0045bd80(void);
+extern void IterStepScaledStore_0048e600(void);
+extern void MStackBracketedStoreTwoCall_004714e0(void);
+extern void MStackCall_004062f0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void MoveListCursorCluster_0045b420(void);
+extern void PauseTestCmp2CallStore_0045bfe0(void);
+extern void PhaseDispatchListAdvance_004709e0(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void ScaledAddrInit_004677c0(void);
+extern void ScaledAddrInit_004677e0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void ScaledArrStore_00429960(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ScaledClearJmp_00428d40(void);
+extern void ScaledClearJmp_00428e90(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledMove74to70_0046eaa0(void);
+extern void ScaledOrStore_004677a0(void);
+extern void ScaledSaveCallRestoreJmp_00472f80(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+extern void SwapOrPassSet_0048fbf0(void);
+extern void Ten404c40_404bd0_00426780(void);
+extern void TripleCallBitJmp_00471690(void);
+extern void TripleCallPauseJmp_00470500(void);
+extern void ZeroAndDirty4_00405430(void);
+
+extern unsigned int g_const_0044d820;
+extern unsigned int g_data_004d5300;
+extern unsigned int g_data_004d5304;
+extern unsigned int g_data_004d5308;
+extern unsigned int g_data_004d530c;
+extern unsigned int g_data_004d531c;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e2868;
+extern unsigned int g_data_004e51f8;
+extern unsigned int g_data_004e6208;
+extern unsigned int g_data_004e6218;
+extern unsigned int g_data_004e6230;
+extern unsigned int g_data_004e6408;
+extern unsigned int g_data_004e6580;
+extern unsigned int g_data_004e6590;
+extern unsigned int g_data_004e65a0;
+extern unsigned int g_data_004e65b8;
+extern unsigned int g_data_004e65c8;
+extern unsigned int g_data_004e6f50;
+extern unsigned int g_data_004e6f60;
+extern unsigned int g_data_004e6f68;
+extern unsigned int g_data_004e6f80;
+extern unsigned int g_data_004e7e48;
+extern unsigned int g_data_004e7e58;
+extern unsigned int g_data_004e7e80;
+extern unsigned int g_data_004e7e90;
+extern unsigned int g_data_004e7f40;
+extern unsigned int g_data_004e7f50;
+extern unsigned int g_data_004e7f60;
+extern unsigned int g_data_004e7f70;
+extern unsigned int g_data_004e8190;
+extern unsigned int g_data_004eb1c8;
+extern unsigned int g_data_004eb938;
+extern unsigned int g_data_004eb958;
+extern unsigned int g_data_004eb998;
+extern unsigned int g_data_004eb9b0;
+extern unsigned int g_data_004eba10;
+extern unsigned int g_data_004ebbf8;
+extern unsigned int g_data_004ebc38;
+extern unsigned int g_data_004ec040;
+extern unsigned int g_data_004ec050;
+extern unsigned int g_data_004ec060;
+extern unsigned int g_data_004ec078;
+extern unsigned int g_data_004ec950;
+extern unsigned int g_data_004ecc38;
+extern unsigned int g_data_004ecf80;
+extern unsigned int g_data_004ed2c8;
+extern unsigned int g_data_004ed2f0;
+extern unsigned int g_data_004ed2f8;
+extern unsigned int g_data_004ed308;
+extern unsigned int g_data_004ed3d0;
+extern unsigned int g_data_004f29c0;
+extern unsigned int g_data_005007c4;
+extern unsigned int g_data_0050104c;
+extern unsigned int g_data_00501070;
+extern unsigned int g_data_00501088;
+extern unsigned int g_data_005010c4;
+extern unsigned int g_data_005010d0;
+extern unsigned int g_data_0050122c;
+extern unsigned int g_data_00501250;
+extern unsigned int g_data_0050b604;
+extern unsigned int g_data_005117c4;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_0052d724;
+extern unsigned int g_data_00535d58;
+extern unsigned int g_data_00535d60;
+extern unsigned int g_data_00535d68;
+extern unsigned int g_data_00535db0;
+extern unsigned int g_data_00535e44;
+extern unsigned int g_data_00535e4c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00537e94;
+extern unsigned int g_data_00537eec;
+extern unsigned int g_data_00537ef0;
+extern unsigned int g_data_00537f2c;
+extern unsigned int g_data_00537f30;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00538148;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00538160;
+extern unsigned int g_data_00538164;
+extern unsigned int g_data_0053a178;
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_0053a250;
+extern unsigned int g_data_0053a2d0;
+extern unsigned int g_data_0053a324;
+extern unsigned int g_data_0053a328;
+extern unsigned int g_data_0053a3c0;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_0053a464;
+extern unsigned int g_data_0053a468;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_0053a6dc;
+extern unsigned int g_data_0053a730;
+extern unsigned int g_data_0053a7a0;
+extern unsigned int g_data_0053a7a8;
+extern unsigned int g_data_0053a7b4;
+extern unsigned int g_data_0053e348;
+extern unsigned int g_data_00541d68;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00541fb0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542188;
+extern unsigned int g_data_00542a58;
+extern unsigned int g_data_00542b68;
+extern unsigned int g_data_005433e8;
+extern unsigned int g_data_005433ec;
+extern unsigned int g_data_0054356c;
+extern unsigned int g_data_00543590;
+extern unsigned int g_data_00543714;
+extern unsigned int g_data_0054371c;
+extern unsigned int g_data_00543728;
+extern unsigned int g_data_0054388c;
+extern unsigned int g_data_00543890;
+extern unsigned int g_state_004d57ac;
+extern void AiAngleDistComputation_00431920(void);
+extern void AmbientMonitorCluster_0049e3c0(void);
+extern void AndStorePushCallZero_0048a220(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void AudioMixerStep_004ab700(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void BootChainBidirRecurseWalk_00405ca0(void);
+extern void BootFrameSetup_00408190(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void BootMStackBracket3SubdispatchPair_00407920(void);
+extern void CallDirty4DualJmp_00470f30(void);
+extern void CallDualStoreXorBit_004285e0(void);
+extern void CallPauseClear3CallTriple_00428030(void);
+extern void CallPauseDirtyPushCall_00488ba0(void);
+extern void CallPauseScaledByteSet_0043c350(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void CallPauseTripleScaledJmp_0046c520(void);
+extern void CallSetPause_0041f830(void);
+extern void CameraAimSplineDriver_00430e60(void);
+extern void CameraZoomFsmCluster_00440aa0(void);
+extern void Cascade3ChainInit_0048fa50(void);
+extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
+extern void ChainDirtyBitWalker_00408c10(void);
+extern void ChainGatedNegAccum_0048b740(void);
+extern void ChainWalkPushPop_00405a40(void);
+extern void CjFieldCopyCascade_0044c430(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void ClearBit2x34_00490130(void);
+extern void Cmp9DirtyToggle_00464320(void);
+extern void ComboMoveSelectFsmCluster_0045a2c0(void);
+extern void CondPlayerLookup_004ac120(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void CopyJmp_00406ba0(void);
+extern void CopyJmp_00445ec0(void);
+extern void CopyJmp_0048ef90(void);
+extern void CopyLoadInstallJmp_00445ed0(void);
+extern void CopyScaledTriple_00446120(void);
+extern void CopyThreeFields_00404df0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void DirtyToggleByGate_0048f350(void);
+extern void DispatchOrInitFightGroup_0042f850(void);
+extern void DispatcherComplex138_00476060(void);
+extern void DispatcherComplex260_00407030(void);
+extern void DoubleCallChainInit_0043d780(void);
+extern void DoublePushScaledInitJmp_00444db0(void);
+extern void DoubleScaledCrossStore_00475750(void);
+extern void DualBitGateInitCall_0048a1c0(void);
+extern void DualBlockChainInitBody_0043cc10(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void DualEntryInitDispatch_00431360(void);
+extern void DualPushAddCallDualPopJmp_0044cc50(void);
+extern void DualPushSet7bCallPop_00474310(void);
+extern void DualScaledLoadStoreJmp_00475790(void);
+extern void DualScaledStore_00452740(void);
+extern void DualSlotCopyChain_004756f0(void);
+extern void DualSlotPropagateCall_004683e0(void);
+extern void DualTestDirtyToggle_00427ea0(void);
+extern void DualTestDirtyToggle_004282c0(void);
+extern void DualWalkRange_00468440(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void EsiInstallChainCmpDualCall_00429300(void);
+extern void EsiInstallSetCbChainExtend_0048a970(void);
+extern void FiveCallScaledChainTailJmp_0045f8d0(void);
+extern void FourConstCallLitCallJmp_0047ff20(void);
+extern void FourFieldCopyCallSet_00446040(void);
+extern void GDispatch4_004089c0(void);
+extern void GameInstall2BodyMul10ScaledInit_00475590(void);
+extern void GateDispatch6c_00494580(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedBitMaskFlagOrClear_0048c510(void);
+extern void GuardedChainCmpDualBitXor_004299a0(void);
+extern void GuardedCmpDualToggle_0049e360(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedDualConst2AndToggle_0048eba0(void);
+extern void GuardedDualScaledChainCopy_0044dd00(void);
+extern void GuardedScaled_00475000(void);
+extern void GuardedScaled_00475060(void);
+extern void GuardedScaled_00475090(void);
+extern void GuardedSeq_00472820(void);
+extern void GuardedSeq_00472840(void);
+extern void GuardedSeq_00473f10(void);
+extern void GuardedSeq_00473f50(void);
+extern void GuardedSeq_00476de0(void);
+extern void GuardedSeq_00476f10(void);
+extern void GuardedTripleSetTailJmp8_0044a500(void);
+extern void Helper_TickAlt(void);
+extern void HitReactionDispatcher_0045f650(void);
+extern void Init0AndMax_00401370(void);
+extern void Init6Struct_00404e20(void);
+extern void InitStateDualCall48ac70_0048ac70(void);
+extern void InitZeroSixFields_00445f40(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void InstallSelfAccumOverflow_00428b20(void);
+extern void InstallSelfBootInit_00462980(void);
+extern void InstallSelfChainAccumPath_004752b0(void);
+extern void InstallSelfCmpJlJmp_00480b20(void);
+extern void InstallSelfDispatch_00407620(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void InstallSelfMStackPush_0041aaf0(void);
+extern void InstallSelfMultiThunkDispatch_0046c3d0(void);
+extern void InstallSelfPackedTailJmp_004751f0(void);
+extern void IntroFsmCluster_0044d580(void);
+extern void IntroInitCluster_0044d280(void);
+extern void IntroSequencePipeline_0044cd50(void);
+extern void LoadSetFpJmp_004093a0(void);
+extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void MStackBracket6_DualGate_004788e0(void);
+extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
+extern void MStackCall_00406340(void);
+extern void MStackCall_00406390(void);
+extern void MStackCall_00406600(void);
+extern void MStackCall_00406740(void);
+extern void MStackDirtyArgsBit0_0049fa50(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush2BiasResolveChain_0048cca0(void);
+extern void MStackPush2BitLoop_00476670(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush2GlobalSwap_00477400(void);
+extern void MStackPush2RunCountdown_004089e0(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPush3SideStore_0044cb80(void);
+extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushSet0001_00490260(void);
+extern void MStackPushSet0004_00490230(void);
+extern void MStackPushSet0020_004901d0(void);
+extern void MStackPushSet0040_00490200(void);
+extern void MStackPushSet0200_00490140(void);
+extern void MStackPushZeroCallPop_00407d00(void);
+extern void MStackVecSetupScopedRun_004749a0(void);
+extern void ModuloMagic_0042afc0(void);
+extern void Mul10SumStoreNegCommit_00490970(void);
+extern void Mul10Tail_00404af0(void);
+extern void NetEntityScanAndPunish_00474b50(void);
+extern void PendingMatch_00420300(void);
+extern void PendingMatch_00429ef0(void);
+extern void PendingMatch_0042d240(void);
+extern void PendingMatch_00432110(void);
+extern void PendingMatch_004326a0(void);
+extern void PendingMatch_0043c400(void);
+extern void PendingMatch_0043d830(void);
+extern void PendingMatch_004411d0(void);
+extern void PendingMatch_00443320(void);
+extern void PendingMatch_00443d20(void);
+extern void PendingMatch_00444ef0(void);
+extern void PendingMatch_00447000(void);
+extern void PendingMatch_00447a90(void);
+extern void PendingMatch_004492f0(void);
+extern void PendingMatch_0044a7f0(void);
+extern void PendingMatch_0044c530(void);
+extern void PendingMatch_0044d7a0(void);
+extern void PendingMatch_0044dd80(void);
+extern void PendingMatch_0044f8d0(void);
+extern void PendingMatch_0044fe90(void);
+extern void PendingMatch_00452770(void);
+extern void PendingMatch_00453e70(void);
+extern void PendingMatch_00454510(void);
+extern void PendingMatch_00455bd0(void);
+extern void PendingMatch_004568b0(void);
+extern void PendingMatch_00459510(void);
+extern void PendingMatch_0045a5c0(void);
+extern void PendingMatch_0045c8e0(void);
+extern void PendingMatch_00461ca0(void);
+extern void PendingMatch_00462a90(void);
+extern void PendingMatch_004668b0(void);
+extern void PendingMatch_004685d0(void);
+extern void PendingMatch_004694b0(void);
+extern void PendingMatch_00469b40(void);
+extern void PendingMatch_0046a6e0(void);
+extern void PendingMatch_0046ad20(void);
+extern void PendingMatch_0046b670(void);
+extern void PendingMatch_00473640(void);
+extern void PendingMatch_00478da0(void);
+extern void PendingMatch_0047cf60(void);
+extern void PendingMatch_00484da0(void);
+extern void PendingMatch_0048c570(void);
+extern void PendingMatch_0048d7b0(void);
+extern void PendingMatch_0049a670(void);
+extern void Phase4TrampolineThreePacked_0040fa20(void);
+extern void PhaseClampInstallSlot_0049e1c0(void);
+extern void PoseChainAdvanceCluster_0044ef50(void);
+extern void PoseFsmTriHelpers_00431650(void);
+extern void Push16Call_00489f50(void);
+extern void PushBitFieldMergePop_0048bae0(void);
+extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
+extern void PushCallPopScaledJmpIndirect_0048ce00(void);
+extern void PushClampZeroOneCallPop_00478d00(void);
+extern void PushImmCallSetCallAdjustCall_00446bf0(void);
+extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void PushPopScaledInit343c_004aa940(void);
+extern void PushSetCallCleanup_00408580(void);
+extern void QuadCallPhase2_004be800(void);
+extern void QuadMul10TailFpuChain_00431120(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void RoundEndFsm_0042b2f0(void);
+extern void ScaledAndAh_004902d0(void);
+extern void ScaledAndAl7f_004902f0(void);
+extern void ScaledAndAlbf_00490350(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void ScaledChainAndF000DirtyToggle_0048e740(void);
+extern void ScaledChainCmpDispatch_0048e4f0(void);
+extern void ScaledChainTwoStores_00480d20(void);
+extern void ScaledClearJmp_00428d60(void);
+extern void ScaledDecBranch_00466770(void);
+extern void ScaledIdxLoadCallTailThunk_00472db0(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledInitPauseDirtyStore_00445f00(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void ScaledInit_0048d430(void);
+extern void ScaledInit_0048f720(void);
+extern void ScaledIterStep_0045c020(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLitLoadCall_00481020(void);
+extern void ScaledLoadCmp0fJmp_004930e0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledLoadJmp_00429390(void);
+extern void ScaledMove48to58_00490720(void);
+extern void ScaledOrAh8CallPauseJmp_0048d0c0(void);
+extern void ScaledShrAnd_0048bb40(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void ScaledStoreOrFlagXor_00428560(void);
+extern void ScaledStoreThree_00409260(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledXorStore_004903b0(void);
+extern void ScaledZero44_00491500(void);
+extern void ScaledZeroFour_00490740(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void Set2CallIncJmp_00472860(void);
+extern void SetJmp_00405420(void);
+extern void SetJmp_00429950(void);
+extern void SetJmp_004753a0(void);
+extern void SetWalk0xaCrossStore_00445fb0(void);
+extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void SevenThunks_0047cc50(void);
+extern void SlideAttackEventCluster_00498900(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+extern void SpecialInitDirtyJmp_00446000(void);
+extern void StackPopDispatchTagged_0041f780(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void TableHitOrSchedule_004be7a0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_0048a130(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TagDispatchPairedPacked_004667f0(void);
+extern void TaggedSceneDispatch_004be690(void);
+extern void ThreeCallChainCopy_004409e0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void ThrowAnimTriggerCluster_0049efa0(void);
+extern void Thunk_0049cbc0(void);
+extern void Thunk_0049cc00(void);
+extern void TriCmpOrFinal_0043c390(void);
+extern void TripleBranchInstall_004283b0(void);
+extern void TripleSetCallPauseDirtyJmp_00446150(void);
+extern void TripleSubVec3_004250f0(void);
+extern void TwinLoopSlotFinder_00429a40(void);
+extern void TwinMStackPushScaledChain_00422110(void);
+extern void TwoCallJmp_00478120(void);
+extern void TwoPhaseInstallScaledPackedPtr_00480d50(void);
+extern void Vec2ChainComputeStores_00480b80(void);
+extern void WorldCellSetupCluster_0042b000(void);
+extern void Wrapper_00484d90(void);
+
 __declspec(naked) void TripleEntry3Block_00498df0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00542084]
@@ -454,7 +937,6 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
     }
 }
 
-extern void PendingMatch_0048d7b0(void);
 
 /* @addr 0x0043a550 (194b game) - jump table with multi-entry chain for switch.
  *   A: eax = (arg0>>2 + g_x_0054206c); scaledInit = eax; eax = [eax*4 + 0];
@@ -564,7 +1046,6 @@ __declspec(naked) void JumpTableDispatch_0043a550(void) {
     }
 }
 
-extern void PendingMatch_00444ef0(void);
 
 /* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_x_00542074; 3-stage AudioVolumeRescale
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
@@ -633,7 +1114,6 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
     }
 }
 
-extern void PendingMatch_00432110(void);
 
 /* @addr 0x00462470 (230b game) - install-self with full chain init.
  *   chain[+0x84]!=0 path: call StackPopDispatchTagged; pop+ret.
@@ -698,15 +1178,6 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
     }
 }
 
-extern void PhaseClampInstallSlot_0049e1c0(void);
-extern void PendingMatch_0045c8e0(void);
-extern void Init0AndMax_00401370(void);
-extern void CopyGlobal_004ac1f0(void);
-extern void Init6Struct_00404e20(void);
-extern void ScenegraphWalk_0041f7d0(void);
-extern void CallPauseClear3CallTriple_00428030(void);
-extern void SlideAttackEventCluster_00498900(void);
-extern void AndStorePushCallZero_0048a220(void);
 
 /* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
  *   8 setup calls (PhaseClampInstallSlot_0049e1c0, PendingMatch_0045c8e0, Init0AndMax_00401370,
@@ -778,14 +1249,6 @@ void BootInitGuardedCallChain_004265d0(void) {
         }
 }
 
-extern void ScaledAndAl7f_004902f0(void);
-extern void BootFrameSetup_00408190(void);
-extern void GuardedChainCmpDualBitXor_004299a0(void);
-extern void ScaledXorStore_004903b0(void);
-extern void CallPauseDirtyPushCall_00488ba0(void);
-extern void CopyJmp_0048ef90(void);
-extern void PendingMatch_00484da0(void);
-extern void Wrapper_00484d90(void);
 
 /* @addr 0x00484b70 (284b game) - 5 adjacent dispatch blocks.
  *   B1 (0..0x24, +11 NOPs): mstack-push 0x00470480 with g_x_0054206c=2; tail-jmp
@@ -922,10 +1385,6 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
     }
 }
 
-extern void Cmp9DirtyToggle_00464320(void);
-extern void InstallSelfBootInit_00462980(void);
-extern void PendingMatch_00462a90(void);
-extern void StackPopDispatchTagged_0041f780(void);
 
 /* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
  *   Load idx=g_baseSel_00542060; entry=ecx=*idx*4; state=[idx*4+0x84]; clear state.
@@ -993,9 +1452,6 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
     }
 }
 
-extern void PendingMatch_0049a670(void);
-extern void ThreeChanPackClamp_00404cc0(void);
-extern void CopyThreeFields_00404df0(void);
 
 /* @addr 0x0049a4e0 (312b game) - dual-block: install-self entry + sibling-tail with Mul10 chain.
  *   Entry (0..0x96): load state; clear. state!=0: tail-jmp FiveCallGuardSetTail.
@@ -1098,10 +1554,6 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
     }
 }
 
-extern void ComboMoveSelectFsmCluster_0045a2c0(void);
-extern void ScaledStoreOrFlagXor_00428560(void);
-extern void PendingMatch_00459510(void);
-extern void MStackPushZeroCallPop_00407d00(void);
 
 /* @addr 0x0045a180 (313b game) - dual-entry: mstack-push prefix + state-machine body.
  *   Prefix (0..0x1f): mstack-push body addr (0x0045a1a0); tail-jmp ComboMoveSelectFsmCluster_0045a2c0.
@@ -1220,10 +1672,6 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
 }
 
 extern int  GuardedCallStoreSlotsCmp_00440990(void);
-extern void GDispatch4_004089c0(void);
-extern void ThreeCallChainCopy_004409e0(void);
-extern void CameraZoomFsmCluster_00440aa0(void);
-extern void PendingMatch_00443320(void);
 
 /* @addr 0x004431e0 (316b game) - mstack-push + 3-call chain + bit2-gate + nested mstack-push + last-call sequence.
  *   Push g_x_00542054 onto mstack. g_cj=g_x_00542054. Load chain[g_x_00542050*4]->g_x_0054206c.
@@ -1326,10 +1774,6 @@ void MStackPush3CallChainBit2_004431e0(void) {
         }
 }
 
-extern void ModuloMagic_0042afc0(void);
-extern void GuardedSeq_00472820(void);
-extern void Thunk_0049cc00(void);
-extern void PendingMatch_0043d830(void);
 
 /* @addr 0x0043d620 (338b game) - state-machine + dual ModuloMagic + 3-state install.
  *   state>=2: jne to second dual-call block.
@@ -1445,20 +1889,6 @@ __declspec(naked) void StateMachineDualModuloInstall_0043d620(void) {
     }
 }
 
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
-extern unsigned int g_data_0054388c;
-extern unsigned int g_data_00543890;
-extern unsigned int g_data_004ec040;
-extern unsigned int g_data_004ec050;
-extern unsigned int g_data_00542a58;
-extern unsigned int g_data_00542050;
-extern void ScaledIndexConditionalAdd_0048e400(void);
-extern void GuardedDualConst2AndToggle_0048eba0(void);
-extern void Mul10SumStoreNegCommit_00490970(void);
-extern void MStackPush3CmpCall_0048eec0(void);
-extern void PendingMatch_004694b0(void);
-extern void ScaledClearJmp_00428d60(void);
 
 /* @addr 0x00469340 (364b game) - cdecl chain with stream-flag swap +
  *   packed_ptr select. Sets g_data_0054206c=0x52, calls
@@ -1581,20 +2011,6 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     }
 }
 
-extern unsigned int g_data_00537f30;
-extern unsigned int g_data_0052d724;
-extern void PendingMatch_0042d240(void);
-extern void ScenegraphWalk_0041f7d0(void);
-extern void PendingMatch_00420300(void);
-extern void TwinMStackPushScaledChain_00422110(void);
-extern void RoundEndFsm_0042b2f0(void);
-extern void CallPauseClear3CallTriple_00428030(void);
-extern void ScaledInit_0048f720(void);
-extern void CopyJmp_00406ba0(void);
-extern void ScaledZero44_00491500(void);
-extern void MStackPushSet0001_00490260(void);
-extern void MStackPushSet0004_00490230(void);
-extern void ScaledInitWithCounterAndType_004314f0(void);
 
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
@@ -1724,158 +2140,8 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     }
 }
 
-extern unsigned int g_data_00537f30;
-extern unsigned int g_data_0052d724;
-extern void PendingMatch_0042d240(void);
-extern void ScenegraphWalk_0041f7d0(void);
-extern void PendingMatch_00420300(void);
-extern void TwinMStackPushScaledChain_00422110(void);
-extern void RoundEndFsm_0042b2f0(void);
-extern void CallPauseClear3CallTriple_00428030(void);
-extern void ScaledInit_0048f720(void);
-extern void CopyJmp_00406ba0(void);
-extern void ScaledZero44_00491500(void);
-extern void MStackPushSet0001_00490260(void);
-extern void MStackPushSet0004_00490230(void);
-extern void ScaledInitWithCounterAndType_004314f0(void);
 
-/* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
- *   Entry 1 (offset 0, 277b): phase-state install.
- *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
- *       g_data_0054206c with g_data_004f3608. If equal, tail-call
- *       PendingMatch_0042d240. Else bumps g_data_00537f30 by 1, calls
- *       CallPauseClear3CallTriple_00428030, then chains
- *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
- *     Phase 0: g_data_0052d724=1, reads g_data_0052ab40 and tests
- *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
- *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
- *       bumped scaled slot, calls RoundEndFsm_0042b2f0, arms 0x541e6c=1.
- *   11b NOP align pad.
- *   Entry 2 (offset 0x120, 90b): 6-call chain (ScaledInit_0048f720,
- *     CopyJmp_00406ba0, ScaledZero44_00491500, ScaledZeroFour_00490740,
- *     MStackPushSet0001_00490260, MStackPushSet0004_00490230), each
- *     gated by 0x541e6c. On full success, tail-jmps
- *     ScaledInitWithCounterAndType_004314f0.
- */
-__declspec(naked) void Phase3InstallSelfChain_00421380(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_00542060]
-        push    esi
-        lea     esi, [eax*4]
-        mov     eax, dword ptr [eax*4 + 0x84]
-        mov     dword ptr [esi + 0x84], 0
-        test    eax, eax
-        je      short L_pis2_phase0
-        call    SwapOrPassSet_0048fbf0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     L_pis2_done
-        mov     ecx, dword ptr [g_data_0054206c]
-        mov     eax, dword ptr [g_data_004f3608]
-        cmp     ecx, eax
-        jne     short L_pis2_advance
-        call    PendingMatch_0042d240
-        pop     esi
-        ret
-    L_pis2_advance:
-        mov     edx, dword ptr [g_data_00537f30]
-        lea     eax, [edx + 1]
-        mov     dword ptr [g_data_0054206c], eax
-        mov     dword ptr [g_data_00537f30], eax
-        call    CallPauseClear3CallTriple_00428030
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     L_pis2_done
-        call    ScenegraphWalk_0041f7d0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     L_pis2_done
-        call    PendingMatch_00420300
-        pop     esi
-        ret
-    L_pis2_phase0:
-        mov     eax, dword ptr [g_data_0052ab40]
-        mov     dword ptr [g_data_0052d724], 1
-        mov     dword ptr [g_data_0054206c], eax
-        and     eax, 8
-        mov     dword ptr [g_data_00542094], eax
-        jne     short L_pis2_skipCall
-        call    TwinMStackPushScaledChain_00422110
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_done
-    L_pis2_skipCall:
-        mov     dword ptr [esi + 8], offset Phase3InstallSelfChain_00421380
-        mov     eax, dword ptr [g_data_00542060]
-        mov     ecx, offset Phase3InstallSelfChain_00421380
-        mov     dword ptr [eax*4 + 0x84], 1
-        mov     eax, dword ptr [esi + 4]
-        add     ecx, 0x01000000
-        mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
-        inc     eax
-        mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [esi + 4], eax
-        mov     edx, dword ptr [g_data_00542060]
-        mov     dword ptr [edx*4 + 0x84], 0
-        call    RoundEndFsm_0042b2f0
-        mov     dword ptr [g_data_00541e6c], 1
-    L_pis2_done:
-        pop     esi
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        /* entry 2 (offset 0x120) */
-    L_pis2_entry2:
-        call    ScaledInit_0048f720
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        call    CopyJmp_00406ba0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        call    ScaledZero44_00491500
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        call    ScaledZeroFour_00490740
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        call    MStackPushSet0001_00490260
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        call    MStackPushSet0004_00490230
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_pis2_e2End
-        jmp     ScaledInitWithCounterAndType_004314f0
-    L_pis2_e2End:
-        ret
-    }
-}
 
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_00542078;
-extern unsigned int g_data_00541e6c;
-extern void PendingMatch_004685d0(void);
 
 void DualWalkRange_00468440(void) {
     __asm {
@@ -1968,20 +2234,6 @@ void DualWalkRange_00468440(void) {
         }
 }
 
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_004ecc38;
-extern unsigned int g_data_004ec950;
-extern unsigned int g_data_0054208c;
-extern void Mul10Tail_00404af0(void);
-extern void StoreDoubleNegPauseSubStore_004ab750(void);
-extern void AudioMixerStep_004ab700(void);
-extern void ScaledStoreThree_00409260(void);
-extern void Helper_TickAlt(void);
-extern void PendingMatch_00473640(void);
 
 __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
 {
@@ -2093,18 +2345,6 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
     }
 }
 
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_0054206c;
-extern void ScaledDecBranch_00466770(void);
-extern void TagDispatchPairedPacked_004667f0(void);
-extern void PendingMatch_004668b0(void);
-extern void GuardedSeq_00476f10(void);
 
 __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
 {
@@ -2230,13 +2470,6 @@ __declspec(naked) void FourPackedSubInitCmpDispatch_004665b0(void)
     }
 }
 
-extern void SetJmp_00429950(void);
-extern void CallPauseScaledStoreCopyJmp_00461220(void);
-extern void PendingMatch_0047cf60(void);
-extern void Vec2ChainComputeStores_00480b80(void);
-extern void ScaledChainTwoStores_00480d20(void);
-extern void TableLookupCall_00489ff0(void);
-extern unsigned int g_data_004ed3d0;
 
 __declspec(naked) void StageEventExitCluster_0047cd50(void)
 {
@@ -2366,16 +2599,6 @@ __declspec(naked) void StageEventExitCluster_0047cd50(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void PendingMatch_0044d7a0(void);
-extern void InstallSelfPackedTailJmp_004751f0(void);
-extern void SetJmp_004753a0(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void Thunk_0049cbc0(void);
-extern unsigned int g_data_004e65b8;
-extern unsigned int g_data_004e65c8;
-extern unsigned int g_data_00501088;
-extern unsigned int g_const_0044d820;
 
 __declspec(naked) void IntroFsmCluster_0044d580(void)
 {
@@ -2525,18 +2748,9 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
 /* ------------------------------------------------------------------ */
 /* Versus-screen FSM cluster (599b game, 4 packed helpers)             */
 /* ------------------------------------------------------------------ */
-extern void PendingMatch_0044f8d0(void);
-extern void PendingMatch_00452770(void);
-extern void ScaledIdxLoadCallTailThunk_00472db0(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
 extern void func_0044fa70(void);
 extern void func_00450520(void);
 extern void func_004505d0(void);
-extern unsigned int g_data_004e6f50;
-extern unsigned int g_data_004e6f60;
-extern unsigned int g_data_004e6f68;
-extern unsigned int g_data_004e6f80;
-extern unsigned int g_data_005007c4;
 
 __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
 {
@@ -2707,199 +2921,15 @@ __declspec(naked) void VersusScreenFsmCluster_0044f670(void)
 /* ------------------------------------------------------------------ */
 /* Versus-screen FSM cluster (599b game, 4 packed helpers)             */
 /* ------------------------------------------------------------------ */
-extern void PendingMatch_0044f8d0(void);
-extern void PendingMatch_00452770(void);
-extern void ScaledIdxLoadCallTailThunk_00472db0(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
 extern void func_0044fa70(void);
 extern void func_00450520(void);
 extern void func_004505d0(void);
-extern unsigned int g_data_004e6f50;
-extern unsigned int g_data_004e6f60;
-extern unsigned int g_data_004e6f68;
-extern unsigned int g_data_004e6f80;
-extern unsigned int g_data_005007c4;
 
-__declspec(naked) void VersusScreenFsmCluster_0044f670(void)
-{
-    __asm {
-        /* === Helper 1 (0x44f670): tiny event 004e6f50 forwarder === */
-    L_f670:
-        push     OFFSET g_data_004e6f50
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-        ret
-        nop
-        nop
-        /* === Helper 2 (0x44f680): counter-driven step + 0x44f680 self === */
-    L_f680:
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        test     eax, eax
-        je       short L_f6b6
-        push     OFFSET g_data_004e6f68
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        pop      esi
-        ret
-    L_f6b6:
-        mov      eax, dword ptr [g_data_00542054]
-        dec      eax
-        mov      dword ptr [g_data_00542054], eax
-        js       short L_f6ca
-        call     L_f670
-        pop      esi
-        ret
-    L_f6ca:
-        push     OFFSET g_data_004e6f60
-        call     ScaledIdxLoadCallTailThunk_00472db0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        test     eax, eax
-        jne      short L_f74e
-        mov      ecx, OFFSET g_data_005007c4
-        shr      ecx, 2
-        mov      dword ptr [g_data_00542054], ecx
-        mov      dword ptr [esi + 8], OFFSET L_f680
-        mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, OFFSET L_f680
-        add      ecx, 0x1000000
-        mov      dword ptr [edx*4 + 0x84], 1
-        mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
-    L_f74e:
-        pop      esi
-        ret
-        /* === Helper 3 (0x44f750): 3-state dispatch === */
-    L_f750:
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       short L_f828
-        dec      eax
-        je       short L_f7cb
-        push     OFFSET func_004505d0
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     PendingMatch_0044f8d0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_f864
-        call     PendingMatch_00452770
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_f864
-        push     OFFSET L_f870
-        call     StoreLoadJmp_00404ef0
-        mov      ecx, dword ptr [g_data_00542058]
-        add      esp, 4
-        mov      dword ptr [g_data_0054205c], ecx
-        call     Thunk_0049cbc0
-        pop      esi
-        ret
-    L_f7cb:
-        push     OFFSET func_00450520
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     PendingMatch_0044f8d0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      short L_f864
-        call     PendingMatch_00452770
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      short L_f864
-        push     OFFSET L_f870
-        call     StoreLoadJmp_00404ef0
-        mov      dword ptr [esi + 8], OFFSET L_f750
-        mov      dword ptr [esi + 0x84], 2
-        add      esp, 4
-        mov      dword ptr [g_data_0054204c], 0x2d
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret
-    L_f828:
-        call     PendingMatch_00452770
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      short L_f864
-        push     OFFSET L_f870
-        call     StoreLoadJmp_00404ef0
-        mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET L_f750
-        mov      dword ptr [esi + 0x84], eax
-        add      esp, 4
-        mov      dword ptr [g_data_0054204c], 0x28
-        mov      dword ptr [g_data_00541e6c], eax
-    L_f864:
-        pop      esi
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        /* === Helper 4 (0x44f870): event 0x29 + 004e6f80 tail === */
-    L_f870:
-        call     DualScaledStore_00452740
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      short L_f8c6
-        mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_0054206c], 0x29
-        mov      dword ptr [g_data_0054205c], eax
-        call     TableLookupCall_00489ff0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      short L_f8c6
-        push     OFFSET func_0044fa70
-        call     StoreLoadJmp_00404ef0
-        mov      ecx, dword ptr [g_data_00542058]
-        add      esp, 4
-        mov      dword ptr [g_data_0054205c], ecx
-        push     OFFSET g_data_004e6f80
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_f8c6:
-        ret
-    }
-}
 
 /* ------------------------------------------------------------------ */
 /* Round-cleanup cluster (687b game, 5 packed helpers + jmp table)     */
 /* ------------------------------------------------------------------ */
-extern void PendingMatch_00455bd0(void);
-extern void InstallSelfPackedTailJmp_004751f0(void);
-extern void SetJmp_004753a0(void);
-extern void MStackPush2GlobalSwap_00477400(void);
-extern void ChainGatedNegAccum_0048b740(void);
 extern void func_004569f0(void);
-extern unsigned int g_data_004e7f40;
-extern unsigned int g_data_004e7f50;
-extern unsigned int g_data_004e7f60;
-extern unsigned int g_data_004e7f70;
-extern unsigned int g_data_00501250;
 
 __declspec(naked) void RoundCleanupCluster_00455920(void)
 {
@@ -3114,24 +3144,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
 /* 11 sub-init calls (transient setup + scaleInit + 4 sub-flag dispatches  */
 /* + matrix + walker), each gated by g_pause_00541e6c.                */
 /* ------------------------------------------------------------------ */
-extern void MStackCall_00406390(void);
-extern void MStackPushDispatchBitGate_00407330(void);
-extern void InstallSelfDispatch_00407620(void);
-extern void MStackPush4LLWalkPop4_004090e0(void);
-extern void TwinLoopSlotFinder_00429a40(void);
-extern void PendingMatch_00429ef0(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
-extern void MStackPush8_004ab790(void);
-extern void MStackPop8_004ab860(void);
-extern void CopyGlobal_004ac1f0(void);
-extern unsigned int g_data_004d5300;
-extern unsigned int g_data_004d5304;
-extern unsigned int g_data_004d5308;
-extern unsigned int g_data_004d530c;
-extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_0053a7a8;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
 
 void ScenePostInitSequencer_00429b70(void) {
     __asm {
@@ -3284,15 +3297,6 @@ void ScenePostInitSequencer_00429b70(void) {
 /*  h3 (0x431710): 3-case pose dispatch (state 0: 31360 chain;        */
 /*                 state 1: 30e60 install; state 2: scaleInit copy).  */
 /* ------------------------------------------------------------------ */
-extern void DispatchOrInitFightGroup_0042f850(void);
-extern void CameraAimSplineDriver_00430e60(void);
-extern void DualEntryInitDispatch_00431360(void);
-extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void AiAngleDistComputation_00431920(void);
-extern void PendingMatch_00432110(void);
-extern void PendingMatch_004326a0(void);
-extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00542188;
 
 __declspec(naked) void PoseFsmTriHelpers_00431650(void)
 {
@@ -3487,15 +3491,6 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
 /*                 4b8fa0) → tail-jmp GuardedSeq_00473f50.                  */
 /*  h2 (0x4490a0): pose-fn FSM with 4-case dispatch at 0x4492dc.      */
 /* ------------------------------------------------------------------ */
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void PendingMatch_004492f0(void);
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
-extern void MStackPush3SideStore_0044cb80(void);
-extern void DualPushAddCallDualPopJmp_0044cc50(void);
-extern void GuardedSeq_00473f50(void);
-extern void Thunk_0049cbc0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 
 __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
 {
@@ -3682,12 +3677,6 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
 /*  h5 (0x45a530): byte-mask + 429980 → tail 459510.                  */
 /*  h6 (0x45a570): byte-mask + 45c020 → tail 45a5c0.                  */
 /* ------------------------------------------------------------------ */
-extern void TripleBranchInstall_004283b0(void);
-extern void CallDualStoreXorBit_004285e0(void);
-extern void ScaledArrStore_00429980(void);
-extern void PendingMatch_00459510(void);
-extern void PendingMatch_0045a5c0(void);
-extern void ScaledIterStep_0045c020(void);
 
 __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
 {
@@ -3927,22 +3916,6 @@ __declspec(naked) void ComboMoveSelectFsmCluster_0045a2c0(void)
 /*  h4 (0x44d540): event 004e65a0 forwarder w/ 0xfffffbc7 wait.       */
 /*  h5 (0x44d570): set state 9 → tail-jmp IntroFsmCluster_0044d580.   */
 /* ------------------------------------------------------------------ */
-extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void IntroFsmCluster_0044d580(void);
-extern void GuardedDualScaledChainCopy_0044dd00(void);
-extern void PendingMatch_0044dd80(void);
-extern void GuardedScaled_00475060(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void PoseChainAdvanceCluster_0044ef50(void);
-extern unsigned int g_data_004e6580;
-extern unsigned int g_data_004e6590;
-extern unsigned int g_data_004e65a0;
-extern unsigned int g_data_00501070;
-extern unsigned int g_data_005117c4;
 
 __declspec(naked) void IntroInitCluster_0044d280(void)
 {
@@ -4165,16 +4138,6 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
 /*  h3 (0x4567b0): counter walk loop w/ 476060 polling, install state-1*/
 /*    when bit-4 set in 0x0054208c.                                   */
 /* ------------------------------------------------------------------ */
-extern void MStackCall_00406600(void);
-extern void ScaledTestPauseStore_00408860(void);
-extern void ScaledStoreThree_00409260(void);
-extern void DualScaledStore_00452740(void);
-extern void PendingMatch_004568b0(void);
-extern void DispatcherComplex138_00476060(void);
-extern void Thunk_0049cbc0(void);
-extern void TableHitOrSchedule_004be7a0(void);
-extern unsigned int g_data_004e8190;
-extern unsigned int g_data_0050b604;
 
 __declspec(naked) void CharSelectSetupCluster_004565a0(void)
 {
@@ -4383,23 +4346,6 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
 /*    from 00542b68 table w/ 478d00 + 4788e0 + ratio mul; install     */
 /*    state 1; state 1: bit-2 audio.                                  */
 /* ------------------------------------------------------------------ */
-extern void MStackBracket6_DualGate_004788e0(void);
-extern void PushClampZeroOneCallPop_00478d00(void);
-extern void PendingMatch_00478da0(void);
-extern unsigned int g_data_004ecf80;
-extern unsigned int g_data_00535d58;
-extern unsigned int g_data_00535db0;
-extern unsigned int g_data_00535e4c;
-extern unsigned int g_data_00537ef0;
-extern unsigned int g_data_00537f2c;
-extern unsigned int g_data_0053a1ac;
-extern unsigned int g_data_0053a2d0;
-extern unsigned int g_data_0053a324;
-extern unsigned int g_data_0053a328;
-extern unsigned int g_data_0053a6dc;
-extern unsigned int g_data_0053e348;
-extern unsigned int g_data_00542b68;
-extern unsigned int g_data_00543714;
 
 __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
 {
@@ -4631,20 +4577,6 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
 /*  h6 (0x47c530): swap-side pose [+0x70] add 0x51e on both sides.    */
 /*  h7 (0x47c570): event 004ed308 via 4902d0+490c30+48e740 → tail 47cc50.*/
 /* ------------------------------------------------------------------ */
-extern void PendingMatch_0046ad20(void);
-extern void SevenThunks_0047cc50(void);
-extern void FourConstCallLitCallJmp_0047ff20(void);
-extern void InstallSelfCmpJlJmp_00480b20(void);
-extern void ScaledLitLoadCall_00481020(void);
-extern void ScaledChainAndF000DirtyToggle_0048e740(void);
-extern void InstallSelfIndirectJmp_0048f3f0(void);
-extern void Cascade3ChainInit_0048fa50(void);
-extern void ScaledAndAh_004902d0(void);
-extern unsigned int g_data_004ed2c8;
-extern unsigned int g_data_004ed2f0;
-extern unsigned int g_data_004ed2f8;
-extern unsigned int g_data_004ed308;
-extern unsigned int g_data_00537e94;
 
 __declspec(naked) void AerialHitDispatcher_0047c290(void)
 {
@@ -4744,48 +4676,6 @@ __declspec(naked) void AerialHitDispatcher_0047c290(void)
     }
 }
 
-extern void SetWalkCurCallPauseDirty_00404c70(void);
-extern void StackPopDispatchTagged_0041f780(void);
-extern void BootInitGuardedCallChain_004265d0(void);
-extern void DualTestDirtyToggle_00427ea0(void);
-extern void DualTestDirtyToggle_004282c0(void);
-extern void PendingMatch_00461ca0(void);
-extern void Push16Call_00489f50(void);
-extern void StoreTwoCall_0049cb40(void);
-extern void PhaseClampInstallSlot_0049e1c0(void);
-extern void GuardedCmpDualToggle_0049e360(void);
-extern void AmbientMonitorCluster_0049e3c0(void);
-extern void ThrowAnimTriggerCluster_0049efa0(void);
-extern void MStackDirtyArgsBit0_0049fa50(void);
-extern void TableWalkBoundedCmp_004bd890(int);
-extern void TaggedSceneDispatch_004be690(void);
-extern void QuadCallPhase2_004be800(void);
-extern void RoundCleanupCluster_00427690(void);
-extern unsigned int g_data_004e2868;
-extern unsigned int g_data_004f29c0;
-extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00535e44;
-extern unsigned int g_data_00537e88;
-extern unsigned int g_data_00537eec;
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_005380e0;
-extern unsigned int g_data_0053a3c0;
-extern unsigned int g_data_0053a408;
-extern unsigned int g_data_0053a468;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00541fb0;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
-extern unsigned int g_data_005433ec;
-extern unsigned int g_data_0054356c;
-extern unsigned int g_data_00543590;
-extern unsigned int g_data_00543714;
-extern unsigned int g_data_00543728;
 
 __declspec(naked) void SceneEvalFsm_0049dea0(void)
 {
@@ -4989,37 +4879,6 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void ChainWalkPushPop_00405a40(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void DoublePushScaledInitJmp_00444db0(void);
-extern void PushImmCallSetCallAdjustCall_00446bf0(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void GuardedScaled_00475000(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void AudioVolumeRescale_004ab690(void);
-extern void PendingMatch_00447000(void);
-extern void PendingMatch_00447a90(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_004e6208;
-extern unsigned int g_data_004e6218;
-extern unsigned int g_data_004e6230;
-extern unsigned int g_data_005010c4;
-extern unsigned int g_data_005010d0;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void BossPunchCluster_00446c50(void)
 {
@@ -5249,294 +5108,8 @@ __declspec(naked) void BossPunchCluster_00446c50(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void ChainWalkPushPop_00405a40(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void DoublePushScaledInitJmp_00444db0(void);
-extern void PushImmCallSetCallAdjustCall_00446bf0(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void GuardedScaled_00475000(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void AudioVolumeRescale_004ab690(void);
-extern void PendingMatch_00447000(void);
-extern void PendingMatch_00447a90(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_004e6208;
-extern unsigned int g_data_004e6218;
-extern unsigned int g_data_004e6230;
-extern unsigned int g_data_005010c4;
-extern unsigned int g_data_005010d0;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_0054208c;
 
-__declspec(naked) void BossPunchCluster_00446c50(void)
-{
-    __asm {
-        mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054205c]
-        inc      eax
-        push     esi
-        mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [eax*4], ecx
-        call     ChainWalkPushPop_00405a40
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6d5c
-        mov      dword ptr [g_data_0054206c], 0x12c
-        call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6d5c
-        test     byte ptr [g_data_0054208c], 1
-        je       L_6cb2
-        call     DoublePushScaledInitJmp_00444db0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6d5c
-    L_6cb2:
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [edx*4 + 0x6c]
-        lea      esi, [edx*4]
-        mov      dword ptr [g_data_00542070], eax
-        call     PushImmCallSetCallAdjustCall_00446bf0
-        mov      ecx, dword ptr [g_data_00542070]
-        mov      edx, dword ptr [esi + 0x70]
-        mov      dword ptr [esi + 0x6c], ecx
-        mov      dword ptr [g_data_00542070], edx
-        call     PushImmCallSetCallAdjustCall_00446bf0
-        mov      eax, dword ptr [g_data_00542070]
-        mov      ecx, dword ptr [esi + 0x74]
-        mov      dword ptr [esi + 0x70], eax
-        mov      dword ptr [g_data_00542070], ecx
-        call     PushImmCallSetCallAdjustCall_00446bf0
-        mov      edx, dword ptr [g_data_00542070]
-        mov      dword ptr [esi + 0x74], edx
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [ecx*4 + 0x58]
-        cmp      eax, 0xffffd99a
-        mov      dword ptr [g_data_0054206c], eax
-        jl       L_6d44
-        mov      dword ptr [ecx*4 + 0x58], 0xffffd99a
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054206c], 0
-        mov      dword ptr [eax*4 + 0x70], 0
-    L_6d44:
-        mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_data_0054205c], ecx
-        mov      dword ptr [g_data_004d57ac], eax
-    L_6d5c:
-        pop      esi
-        ret
-        nop
-        nop
-    L_6d60:
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        cmp      eax, 4
-        ja       L_6fac
-        jmp      dword ptr [eax*4 + L_jmptbl]
-    L_6d8e:
-        mov      dword ptr [g_data_0054206c], 0x2f
-        call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6fc5
-        call     PendingMatch_0043d830
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6fc5
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [ecx*4 + 0x64]
-        mov      dword ptr [g_data_00542054], edx
-        call     GuardedScaled_00475000
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6fc5
-        test     byte ptr [g_data_0054208c], 4
-        je       L_6ea9
-        mov      eax, OFFSET g_data_005010d0
-        mov      edx, OFFSET L_6d60
-        shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
-        mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      ecx, dword ptr [g_data_00542060]
-        add      edx, 0x2000000
-        mov      dword ptr [ecx*4 + 0x84], 2
-        mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret
-    L_6e5c:
-        mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret
-    L_6e83:
-        mov      ecx, dword ptr [g_data_00542058]
-        push     OFFSET g_data_004e6208
-        mov      dword ptr [g_data_0054205c], ecx
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        test     eax, eax
-        jne      L_6fc5
-    L_6ea9:
-        mov      edx, OFFSET g_data_005010c4
-        mov      ecx, OFFSET L_6d60
-        shr      edx, 2
-        mov      dword ptr [g_data_00542054], edx
-        mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      eax, dword ptr [g_data_00542060]
-        add      ecx, 0x4000000
-        mov      dword ptr [eax*4 + 0x84], 4
-        mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret
-    L_6f18:
-        mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      dword ptr [esi + 0x84], 5
-        mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret
-    L_6f3f:
-        push     OFFSET PendingMatch_00447a90 + 0x320
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     OFFSET PendingMatch_00447000 + 0x1b0
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     DoubleCallChainInit_0043d780
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6fc5
-        mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_00542084], 0x10000
-        mov      dword ptr [g_data_0054205c], eax
-        call     GameInstall2BodyMul10ScaledInit_00475590
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6fc5
-        mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET L_6d60
-        mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x10
-        mov      dword ptr [g_data_00541e6c], eax
-        pop      esi
-        ret      
-    L_6fac:
-        mov      ecx, dword ptr [g_data_00542058]
-        push     OFFSET g_data_004e6218
-        mov      dword ptr [g_data_0054205c], ecx
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_6fc5:
-        pop      esi
-        ret
-        nop
-    L_jmptbl:
-        _emit 0x3f
-        _emit 0x6f
-        _emit 0x44
-        _emit 0x00
-        _emit 0x8e
-        _emit 0x6d
-        _emit 0x44
-        _emit 0x00
-        _emit 0x5c
-        _emit 0x6e
-        _emit 0x44
-        _emit 0x00
-        _emit 0x83
-        _emit 0x6e
-        _emit 0x44
-        _emit 0x00
-        _emit 0x18
-        _emit 0x6f
-        _emit 0x44
-        _emit 0x00
-        nop
-        nop
-        nop
-        nop
-        call     PendingMatch_00447000
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_6ffb
-        push     OFFSET g_data_004e6230
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_6ffb:
-        ret
-    }
-}
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void TripleSubVec3_004250f0(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void PendingMatch_004411d0(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void DualPushSet7bCallPop_00474310(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void StoreTwoCall_0049cb40(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void PendingMatch_00443320(void);
-extern unsigned int g_data_004e51f8;
-extern unsigned int g_data_0050104c;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542084;
 
 __declspec(naked) void BackdashSetupCluster_00440dc0(void)
 {
@@ -5761,37 +5334,6 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void MStackCall_00406340(void);
-extern void PushPopScaled1cDoubleCall_00408510(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void DirtyDoubleDeref_00408cb0(void);
-extern void GuardedTripleSetTailJmp8_0044a500(void);
-extern void PendingMatch_0044a7f0(void);
-extern void IntroInitCluster_0044d280(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void GuardedSeq_00473f10(void);
-extern void GuardedScaled_00475090(void);
-extern void DualSlotCopyChain_004756f0(void);
-extern void DualScaledLoadStoreJmp_00475790(void);
-extern void GuardedSeq_00476de0(void);
-extern void GuardedSeq_00476f10(void);
-extern void Thunk_0049cbc0(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_004e6408;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
 {
@@ -6065,43 +5607,6 @@ __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void PendingMatch_00452770(void);
-extern void PendingMatch_00453e70(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void GuardedSeq_00472820(void);
-extern void GuardedSeq_00472840(void);
-extern void MStackVecSetupScopedRun_004749a0(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void MStackPush2GlobalSwap_00477400(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void EsiInstallSetCbChainExtend_0048a970(void);
-extern void Thunk_0049cbc0(void);
-extern void AudioVolumeRescale_004ab690(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void PendingMatch_00454510(void);
-extern void NetEntityScanAndPunish_00474b50(void);
-extern unsigned int g_data_004e7e48;
-extern unsigned int g_data_004e7e58;
-extern unsigned int g_data_004e7e80;
-extern unsigned int g_data_004e7e90;
-extern unsigned int g_data_0050122c;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void JuggleSetupCluster_004539d0(void)
 {
@@ -6419,380 +5924,8 @@ __declspec(naked) void JuggleSetupCluster_004539d0(void)
     }
 }
 
-extern void StoreLoadJmp_00404ef0(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void PendingMatch_0043d830(void);
-extern void PendingMatch_00452770(void);
-extern void PendingMatch_00453e70(void);
-extern void ArgSarStoreJmp_004594f0(void);
-extern void GuardedSeq_00472820(void);
-extern void GuardedSeq_00472840(void);
-extern void MStackVecSetupScopedRun_004749a0(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void MStackPush2GlobalSwap_00477400(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void EsiInstallSetCbChainExtend_0048a970(void);
-extern void Thunk_0049cbc0(void);
-extern void AudioVolumeRescale_004ab690(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void PendingMatch_00454510(void);
-extern void NetEntityScanAndPunish_00474b50(void);
-extern unsigned int g_data_004e7e48;
-extern unsigned int g_data_004e7e58;
-extern unsigned int g_data_004e7e80;
-extern unsigned int g_data_004e7e90;
-extern unsigned int g_data_0050122c;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_0054208c;
 
-__declspec(naked) void JuggleSetupCluster_004539d0(void)
-{
-    __asm {
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], edi
-        call     EsiInstallSetCbChainExtend_0048a970
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      edi
-        pop      esi
-        ret
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-    L_3a10:
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_3ad0
-        dec      eax
-        je       L_3a4e
-        push     OFFSET g_data_004e7e48
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        pop      esi
-        ret      
-    L_3a4e:
-        call     PendingMatch_0043d830
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3b3b
-        mov      ecx, OFFSET g_data_0050122c
-        shr      ecx, 2
-        mov      dword ptr [g_data_00542054], ecx
-        mov      dword ptr [esi + 8], OFFSET L_3a10
-        mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, OFFSET L_3a10
-        add      ecx, 0x2000000
-        mov      dword ptr [edx*4 + 0x84], 2
-        mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret      
-    L_3ad0:
-        push     OFFSET PendingMatch_00453e70 + 0x190
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     OFFSET PendingMatch_00454510 + 0x550
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     DoubleCallChainInit_0043d780
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3b3b
-        mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_00542084], 0x18000
-        mov      dword ptr [g_data_0054205c], eax
-        call     GameInstall2BodyMul10ScaledInit_00475590
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3b3b
-        mov      eax, 1
-        mov      dword ptr [esi + 8], OFFSET L_3a10
-        mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x1f
-        mov      dword ptr [g_data_00541e6c], eax
-    L_3b3b:
-        pop      esi
-        ret      
-        nop      
-        nop      
-        nop      
-        mov      dword ptr [g_data_0054206c], 4
-        call     GuardedSeq_00472820
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3b7c
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, 0xb
-        mov      dword ptr [g_data_0054206c], eax
-        push     OFFSET g_data_004e7e58
-        mov      dword ptr [ecx*4 + 0x28], eax
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_3b7c:
-        ret      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [eax*4 + 0x28], 0xa9
-        mov      dword ptr [g_data_0054206c], 4
-        call     GuardedSeq_00472820
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3bf6
-        mov      dword ptr [g_data_0054206c], 0xc
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3bf6
-        call     PendingMatch_00452770
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3bf6
-        push     OFFSET L_3c50
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     MStackPush2GlobalSwap_00477400
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3bf6
-        push     OFFSET g_data_004e7e80
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_3bf6:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, 0x126
-        mov      dword ptr [g_data_0054206c], eax
-        push     OFFSET g_data_004e7e90
-        mov      dword ptr [ecx*4 + 0x28], eax
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      dword ptr [g_data_0054206c], 0x48
-        call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3c4d
-        jmp      Thunk_0049cbc0
-    L_3c4d:
-        ret
-        nop
-        nop
-    L_3c50:
-        mov      eax, dword ptr [g_data_00542060]
-        push     ebx
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_3d7f
-        dec      eax
-        je       L_3d4a
-        dec      eax
-        je       L_3c95
-        mov      eax, dword ptr [g_data_00542054]
-        dec      eax
-        mov      dword ptr [g_data_00542054], eax
-        js       L_3da6
-        jmp      L_3c9f
-    L_3c95:
-        mov      dword ptr [g_data_00542054], 0x10
-    L_3c9f:
-        mov      dword ptr [g_data_0054206c], 0x2bc
-        call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      al, byte ptr [g_data_0054208c]
-        mov      ebx, 1
-        test     al, bl
-        je       L_3d2a
-        call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      dword ptr [g_data_0054206c], 0xa
-        call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      ecx, dword ptr [g_data_00542048]
-        add      ecx, 0xf
-        mov      dword ptr [g_data_00542058], ecx
-        call     MStackVecSetupScopedRun_004749a0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-    L_3d2a:
-        mov      dword ptr [esi + 8], OFFSET L_3c50
-        mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
-        pop      esi
-        pop      ebx
-        ret      
-    L_3d4a:
-        mov      eax, dword ptr [g_data_00542054]
-        dec      eax
-        mov      dword ptr [g_data_00542054], eax
-        jns      L_3dc5
-        mov      dword ptr [esi + 8], OFFSET L_3c50
-        mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0x14
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        pop      ebx
-        ret      
-    L_3d7f:
-        mov      edx, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_0054205c], edx
-        call     PendingMatch_00453e70
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        test     byte ptr [g_data_0054208c], 4
-        je       L_3dae
-    L_3da6:
-        call     Thunk_0049cbc0
-        pop      esi
-        pop      ebx
-        ret      
-    L_3dae:
-        push     OFFSET NetEntityScanAndPunish_00474b50
-        mov      dword ptr [g_data_00542054], 0x32
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-    L_3dc5:
-        mov      dword ptr [g_data_0054206c], 0xfa
-        call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      al, byte ptr [g_data_0054208c]
-        mov      ebx, 1
-        test     al, bl
-        je       L_3e54
-        call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [eax*4 + 0x1c]
-        mov      dword ptr [g_data_00542044], eax
-        mov      ecx, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054206c], ecx
-        call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-        mov      edx, dword ptr [g_data_00542048]
-        add      edx, 0xf
-        mov      dword ptr [g_data_00542058], edx
-        call     MStackVecSetupScopedRun_004749a0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_3e6d
-    L_3e54:
-        mov      dword ptr [esi + 8], OFFSET L_3c50
-        mov      dword ptr [esi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
-    L_3e6d:
-        pop      esi
-        pop      ebx
-        ret      
-    }
-}
 
-extern void LoadSetFpJmp_004093a0(void);
-extern void PendingMatch_0046b670(void);
-extern void GateDispatch6c_00494580(void);
-extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
-extern void StoreTwoCall_0049cb40(void);
-extern void InstallSelf3WayChainCmp_00428d80(void);
-extern void EsiInstallChainCmpDualCall_00429300(void);
-extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void MStackPush1MagicMod2_004244d0(void);
-extern void PoseFsmTriHelpers_00431650(void);
-extern void DualWalkRange_00468440(void);
-extern void DualSlotPropagateCall_004683e0(void);
-extern unsigned int g_data_004eb938;
-extern unsigned int g_data_004eb958;
-extern unsigned int g_data_00543590;
-extern unsigned int g_data_00537f94;
-extern unsigned int g_data_005433e8;
-extern unsigned int g_data_0053a430;
-extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00538148;
 
 __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
 {
@@ -7114,28 +6247,6 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
     }
 }
 
-extern void ScaledChainAndF000DirtyToggle_0048e740(void);
-extern void DirtyToggleByGate_0048f350(void);
-extern void PendingMatch_0046a6e0(void);
-extern void ScaledLoadJmp_00429390(void);
-extern void ScaledChain3c74_0048f910(void);
-extern void ScaledInit_0048d430(void);
-extern void TableLookupCall_00489ff0(void);
-extern void GuardedDirtyXformFromTable_0048f6d0(void);
-extern void MStackPushSet0200_00490140(void);
-extern void CallDirty4DualJmp_00470f30(void);
-extern void HitReactionDispatcher_0045f650(void);
-extern void ScaledMove48to58_00490720(void);
-extern void InstallSelfMultiThunkDispatch_0046c3d0(void);
-extern void CallPauseTripleScaledJmp_0046c520(void);
-extern unsigned int g_data_004ebbf8;
-extern unsigned int g_data_004ebc38;
-extern unsigned int g_data_004ec060;
-extern unsigned int g_data_004ec078;
-extern unsigned int g_data_004eb1c8;
-extern unsigned int g_data_004eb998;
-extern unsigned int g_data_004eb9b0;
-extern unsigned int g_data_004eba10;
 
 __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
 {
@@ -7502,47 +6613,6 @@ __declspec(naked) void IntroSettingsFsmCluster_0046bea0(void)
     }
 }
 
-extern void ArgSarStoreJmp_004594f0(void);
-extern void CallPauseScaledByteSet_0043c350(void);
-extern void CallPauseScaledStoreCopyJmp_00461220(void);
-extern void DualBlockChainInitBody_0043cc10(void);
-extern void DualCmpSwapStore_0049c5a0(void);
-extern void InstallSelfMStackPush_0041aaf0(void);
-extern void MStackCall_00406740(void);
-extern void Mul10Tail_00404af0(void);
-extern void QuadMul10TailFpuChain_00431120(void);
-extern void ScaledChainCmpDispatch_0048e4f0(void);
-extern void ScaledLitLoadCall_00480fe0(void);
-extern void ScaledStackCallPause_0049c360(void);
-extern void Thunk_0049cbc0(void);
-extern void TriCmpOrFinal_0043c390(void);
-extern void PendingMatch_0043c400(void);
-extern unsigned int g_data_0052aac4;
-extern unsigned int g_data_00535d60;
-extern unsigned int g_data_00535d68;
-extern unsigned int g_data_00537f94;
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
-extern unsigned int g_data_00538148;
-extern unsigned int g_data_0053a430;
-extern unsigned int g_data_0053a464;
-extern unsigned int g_data_0053a730;
-extern unsigned int g_data_0053a7b4;
-extern unsigned int g_data_00541d68;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
-extern unsigned int g_data_005433e8;
-extern unsigned int g_data_00543590;
 
 __declspec(naked) void PendingMatch_0043bdd0(void)
 {
@@ -7890,383 +6960,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
     }
 }
 
-__declspec(naked) void PendingMatch_0043bdd0(void)
-{
-    __asm {
-        mov      al, byte ptr [g_data_00543590]
-        mov      ecx, dword ptr [g_data_00537f94]
-        cmp      al, 1
-        jne      L_bdea
-        cmp      ecx, 1
-        jne      L_bdea
-        inc      dword ptr [g_data_005433e8]
-    L_bdea:
-        cmp      al, 2
-        jne      L_bdf9
-        cmp      ecx, 2
-        jne      L_bdf9
-        inc      dword ptr [g_data_005433e8]
-    L_bdf9:
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [ecx*4 + 0x34]
-        cmp      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
-        jne      L_be1a
-        mov      eax, 2
-        mov      dword ptr [g_data_0054206c], eax
-    L_be1a:
-        cmp      eax, 0x11
-        jne      L_be29
-        mov      eax, 7
-        mov      dword ptr [g_data_0054206c], eax
-    L_be29:
-        mov      dword ptr [ecx*4 + 0x34], eax
-        mov      eax, dword ptr [g_data_0054206c]
-        add      eax, 0x10
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [g_data_0053a430], eax
-        call     CallPauseScaledStoreCopyJmp_00461220
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_be8d
-        cmp      dword ptr [g_data_0052aac4], 2
-        jne      L_be60
-        mov      byte ptr [g_data_00538148], 1
-    L_be60:
-        mov      eax, dword ptr [g_data_0053803c]
-        mov      dword ptr [g_data_0053a464], eax
-        mov      eax, dword ptr [g_data_00537f94]
-        cmp      eax, 1
-        je       L_be80
-        mov      ecx, dword ptr [g_data_00538038]
-        mov      dword ptr [g_data_0053a464], ecx
-    L_be80:
-        push     0x4e4e78
-        call     ScaledChainCmpDispatch_0048e4f0
-        add      esp, 4
-    L_be8d:
-        ret      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [eax*4 + 0x3c]
-        mov      dword ptr [g_data_00542044], eax
-        mov      ecx, dword ptr [eax*4 + 0x34]
-        cmp      ecx, 0x10
-        mov      dword ptr [g_data_0054206c], ecx
-        jne      L_bebe
-        mov      ecx, 2
-        mov      dword ptr [g_data_0054206c], ecx
-    L_bebe:
-        cmp      ecx, 0x11
-        jne      L_bece
-        mov      ecx, 7
-        mov      dword ptr [g_data_0054206c], ecx
-    L_bece:
-        cmp      ecx, 8
-        jne      L_bed8
-        jmp      DualBlockChainInitBody_0043cc10
-    L_bed8:
-        mov      eax, 0x4e4e78
-        sar      eax, 2
-        add      eax, ecx
-        mov      dword ptr [g_data_00542048], eax
-        mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542048], eax
-        jmp      eax
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        shl      eax, 2
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], 0
-        test     ecx, ecx
-        je       L_bf3d
-        call     CallPauseScaledStoreCopyJmp_00461220
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf9f
-        push     0x4e4eb8
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        ret      
-    L_bf3d:
-        mov      dword ptr [eax + 8], 0x43bf00
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, 0x43bf00
-        mov      dword ptr [ecx*4 + 0x84], 1
-        mov      ecx, dword ptr [eax + 4]
-        add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfMStackPush_0041aaf0
-        mov      dword ptr [g_data_00541e6c], 1
-    L_bf9f:
-        ret      
-        mov      eax, dword ptr [g_data_00542060]
-        shl      eax, 2
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], 0
-        test     ecx, ecx
-        je       L_bfcf
-        push     0x4e4ef0
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        ret      
-    L_bfcf:
-        mov      dword ptr [eax + 8], 0x43bfa0
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, 0x43bfa0
-        mov      dword ptr [ecx*4 + 0x84], 1
-        mov      ecx, dword ptr [eax + 4]
-        add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfMStackPush_0041aaf0
-        mov      dword ptr [g_data_00541e6c], 1
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        shl      eax, 2
-        xor      esi, esi
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], esi
-        cmp      ecx, esi
-        je       L_c139
-        call     CallPauseScaledByteSet_0043c350
-        cmp      dword ptr [g_data_00541e6c], esi
-        jne      L_c197
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054206c], esi
-        mov      dword ptr [ecx*4 + 0x5c], esi
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      edx, dword ptr [g_data_0054206c]
-        mov      dword ptr [eax*4 + 0x5c], edx
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_0054206c]
-        mov      dword ptr [edx*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_00542054]
-        mov      ecx, dword ptr [g_data_00542080]
-        mov      dword ptr [eax*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_0054206c]
-        mov      dword ptr [g_data_0053a7b4], eax
-        mov      dword ptr [g_data_00535d68], eax
-        mov      eax, 0xffff0000
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [g_data_00541d68], eax
-        mov      dword ptr [g_data_00535d60], eax
-        call     PendingMatch_0043c400
-        cmp      dword ptr [g_data_00541e6c], esi
-        jne      L_c197
-        call     TriCmpOrFinal_0043c390
-        cmp      dword ptr [g_data_00541e6c], esi
-        jne      L_c197
-        mov      eax, dword ptr [g_data_00542080]
-        mov      edx, dword ptr [g_data_00542054]
-        push     0x4e4f70
-        lea      eax, [eax + eax*4]
-        mov      dword ptr [g_data_00542080], eax
-        mov      dword ptr [edx*4 + 0x54], eax
-        mov      dword ptr [g_data_0054206c], esi
-        mov      dword ptr [g_data_0053a730], esi
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        pop      esi
-        ret      
-    L_c139:
-        mov      dword ptr [eax + 8], 0x43c040
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, 0x43c040
-        mov      dword ptr [ecx*4 + 0x84], 1
-        mov      ecx, dword ptr [eax + 4]
-        add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], esi
-        call     InstallSelfMStackPush_0041aaf0
-        mov      dword ptr [g_data_00541e6c], 1
-    L_c197:
-        pop      esi
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_c25c
-        dec      eax
-        je       L_c1de
-        call     MStackCall_00406740
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        je       L_c291
-        pop      esi
-        ret      
-    L_c1de:
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [ecx*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], ecx
-        mov      eax, dword ptr [edx*4 + 0x54]
-        sub      eax, ecx
-        mov      dword ptr [g_data_00542070], eax
-        jns      L_c20e
-        neg      eax
-        mov      dword ptr [g_data_00542070], eax
-    L_c20e:
-        cmp      eax, 0x14ccc
-        jg       L_c329
-        mov      dword ptr [g_data_0054206c], 0xb2
-        call     ScaledLitLoadCall_00480fe0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c345
-        mov      dword ptr [esi + 8], 0x43c1a0
-        mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0xf
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret      
-    L_c25c:
-        call     DualCmpSwapStore_0049c5a0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c345
-        push     0x4e4fd0
-        call     ScaledStackCallPause_0049c360
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        test     eax, eax
-        jne      L_c345
-        test     byte ptr [g_data_0054208c], 4
-        je       L_c298
-    L_c291:
-        call     Thunk_0049cbc0
-        pop      esi
-        ret      
-    L_c298:
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, 0x5e147
-        mov      dword ptr [g_data_0054205c], eax
-        mov      dword ptr [g_data_0054206c], ecx
-        mov      dword ptr [eax*4 + 0x68], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [eax*4 + 0x38]
-        mov      dword ptr [g_data_00542054], eax
-        mov      ecx, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054207c], ecx
-        mov      edx, dword ptr [eax*4 + 0x5c]
-        mov      dword ptr [g_data_00542080], edx
-        call     QuadMul10TailFpuChain_00431120
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c345
-        mov      eax, dword ptr [g_data_0054207c]
-        push     eax
-        push     0x4ccc
-        call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_0054207c], eax
-        add      esp, 8
-        mov      dword ptr [ecx*4 + 0x6c], eax
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      eax, 0x147a
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [edx*4 + 0x70], eax
-    L_c329:
-        mov      eax, 1
-        mov      dword ptr [esi + 8], 0x43c1a0
-        mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
-    L_c345:
-        pop      esi
-        ret      
-    }
-}
 
-extern void ChainGatedNegAccum_0048b740(void);
-extern void DispatcherComplex138_00476060(void);
-extern void DispatcherComplex260_00407030(void);
-extern void DualScaledStore_00452740(void);
-extern void GuardedSeq_00472840(void);
-extern void MStackCall_00406600(void);
-extern void MStackCall_00406740(void);
-extern void MStackPush2BitLoop_00476670(void);
-extern void PushPopCurrentSetFFFFFFFF_00473070(void);
-extern void ScaledLoadCmp0fJmp_004930e0(void);
-extern void StoreTwoCall_0049cb40(void);
-extern void TableLookupCall_00489ff0(void);
-extern void Thunk_0049cbc0(void);
-extern void WorldCellSetupCluster_0042b000(void);
-extern void PendingMatch_0044fe90(void);
-extern void PendingMatch_00452770(void);
-extern unsigned int g_data_004d531c;
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void PendingMatch_0044f8d0(void)
 {
@@ -8999,60 +7693,6 @@ __declspec(naked) void PendingMatch_00432ed0(void)
     }
 }
 
-extern void ArgSarStoreJmp_004594f0(void);
-extern void AudioInstallSelfStatePush_004aa8a0(void);
-extern void CjInstallSelfRouter_00470480(void);
-extern void ClearBit2x34_00490130(void);
-extern void CopyThreeFields_00404df0(void);
-extern void DualBitGateInitCall_0048a1c0(void);
-extern void EntryThunkBodyStateMachine_00457bb0(void);
-extern void EsiEdiAliasDualMul10_004906b0(void);
-extern void FiveCallScaledChainTailJmp_0045f8d0(void);
-extern void InstallSelf3WayChainCmp_00428d80(void);
-extern void MStackPushSet0020_004901d0(void);
-extern void MStackPushSet0040_00490200(void);
-extern void Phase4TrampolineThreePacked_0040fa20(void);
-extern void Push16Call_00489f50(void);
-extern void PushPopScaledInit343c_004aa940(void);
-extern void QuadCallPhase2_004be800(void);
-extern void ScaledAndAlbf_00490350(void);
-extern void ScaledInitWithCounterAndType_004314f0(void);
-extern void ScaledLoadIncJmp_00428d00(void);
-extern void ScaledZeroFour_00490740(void);
-extern void SlotPhaseResetInstallChain_0048e0e0(void);
-extern void StoreTwoCall_0049cb40(void);
-extern void TableLookupCall_00489ff0(void);
-extern void TableLookupCall_0048a130(void);
-extern void ThreeChanPackClamp_00404cc0(void);
-extern void TwoCallJmp_00478120(void);
-extern void TwoPhaseInstallScaledPackedPtr_00480d50(void);
-extern void PendingMatch_00469b40(void);
-extern unsigned int g_data_00535db0;
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
-extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00538158;
-extern unsigned int g_data_0053815c;
-extern unsigned int g_data_00538160;
-extern unsigned int g_data_00538164;
-extern unsigned int g_data_0053a178;
-extern unsigned int g_data_0053a250;
-extern unsigned int g_data_0053a2d0;
-extern unsigned int g_data_0053a51c;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
 
 __declspec(naked) void PendingMatch_004694b0(void)
 {
@@ -9431,43 +8071,6 @@ __declspec(naked) void PendingMatch_004694b0(void)
     }
 }
 
-extern void AudioVolumeRescale_004ab690(void);
-extern void BootChainBidirRecurseWalk_00405ca0(void);
-extern void BootMStackBracket3SubdispatchPair_00407920(void);
-extern void CallSetPause_0041f830(void);
-extern void CondPlayerLookup_004ac120(void);
-extern void DirtyDoubleDeref_00408cb0(void);
-extern void GuardedBitMaskFlagOrClear_0048c510(void);
-extern void MStackCall_00406740(void);
-extern void MStackPush2BiasResolveChain_0048cca0(void);
-extern void MStackPush2ChainPrepend_00409970(void);
-extern void PushBitFieldMergePop_0048bae0(void);
-extern void PushCallPopScaledJmpIndirect_0048ce00(void);
-extern void PushSetCallCleanup_00408580(void);
-extern void ScaledOrAh8CallPauseJmp_0048d0c0(void);
-extern void ScaledShrAnd_0048bb40(void);
-extern void StackPopDispatchTagged_0041f780(void);
-extern void StorePauseImulShr16_004ab630(void);
-extern void TwoCallJmp_00478120(void);
-extern void PendingMatch_0048c570(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_00538158;
-extern unsigned int g_data_0053815c;
-extern unsigned int g_data_0053a430;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
-extern unsigned int g_data_0054371c;
 
 __declspec(naked) void PendingMatch_0048c570(void)
 {
@@ -11779,52 +10382,6 @@ __declspec(naked) void PendingMatch_00448750(void)
     }
 }
 
-extern void ArgSarStoreJmp_004594f0(void);
-extern void AudioVolumeRescale_004ab690(void);
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
-extern void ChainDirtyBitWalker_00408c10(void);
-extern void CjFieldCopyCascade_0044c430(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void DoubleScaledCrossStore_00475750(void);
-extern void DualSlotCopyChain_004756f0(void);
-extern void EntryThunkBodyStateMachine_00457bb0(void);
-extern void EsiInstallSetCbChainExtend_0048a970(void);
-extern void GameInstall2BodyMul10ScaledInit_00475590(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void GuardedSeq_00472840(void);
-extern void GuardedSeq_00476de0(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void InstallSelfPackedTailJmp_004751f0(void);
-extern void IntroSequencePipeline_0044cd50(void);
-extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
-extern void MStackCall_00406340(void);
-extern void MStackPush2RunCountdown_004089e0(void);
-extern void MStackPush3SideStore_0044cb80(void);
-extern void PendingMatch_0043d830(void);
-extern void Set2CallIncJmp_00472860(void);
-extern void SetJmp_00405420(void);
-extern void SetJmp_004753a0(void);
-extern void StoreLoadJmp_00404ef0(void);
-extern void Thunk_0049cbc0(void);
-extern void PendingMatch_0044c530(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_0053a7a0;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void PendingMatch_0044baa0(void)
 {
@@ -12436,657 +10993,7 @@ __declspec(naked) void PendingMatch_0044baa0(void)
     }
 }
 
-__declspec(naked) void PendingMatch_0044baa0(void)
-{
-    __asm {
-        mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_0054205c], ecx
-        call     MStackPush2RunCountdown_004089e0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bb27
-        mov      dword ptr [g_data_0054206c], 2
-        call     ChainDirtyBitWalker_00408c10
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bb27
-        mov      eax, dword ptr [g_data_00542048]
-        mov      ecx, dword ptr [eax*4]
-        or       ecx, 4
-        mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542048]
-        mov      eax, 0xa0000
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [edx*4 + 0x34], eax
-        call     MStackBracket7_DispatchAndChain_004b8fa0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bb27
-        mov      dword ptr [g_data_0054206c], 2
-        mov      dword ptr [g_data_00542078], 3
-    L_bb27:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_bbcc
-        dec      eax
-        je       L_bb6a
-        mov      eax, dword ptr [g_data_00542054]
-        dec      eax
-        mov      dword ptr [g_data_00542054], eax
-        jns      L_bb82
-        call     Thunk_0049cbc0
-        pop      esi
-        ret      
-    L_bb6a:
-        mov      ecx, dword ptr [g_data_0053a7a0]
-        mov      dword ptr [g_data_00542054], 0x23
-        mov      dword ptr [g_data_0054205c], ecx
-        jmp      L_bb88
-    L_bb82:
-        mov      ecx, dword ptr [g_data_0054205c]
-    L_bb88:
-        mov      eax, dword ptr [ecx*4 + 0x58]
-        mov      dword ptr [g_data_00542070], 0x1eb
-        add      eax, 0x1eb
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x58], eax
-        mov      eax, 1
-        mov      dword ptr [esi + 8], 0x44bb30
-        mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00541e6c], eax
-        pop      esi
-        ret      
-    L_bbcc:
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542054]
-        mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542058]
-        mov      dword ptr [eax*4 + 0x68], ecx
-        call     Chain2AxisDiffStoreTailJmp_0044cad0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bc42
-        mov      dword ptr [g_data_00542074], 0
-        mov      dword ptr [g_data_0054206c], 0xfffe8000
-        call     MStackPush3SideStore_0044cb80
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bc42
-        mov      eax, 1
-        mov      dword ptr [esi + 8], 0x44bb30
-        mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x118
-        mov      dword ptr [g_data_00541e6c], eax
-    L_bc42:
-        pop      esi
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        xor      edx, edx
-        shl      eax, 2
-        push     esi
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], edx
-        sub      ecx, edx
-        je       L_bd03
-        dec      ecx
-        je       L_bc79
-        call     Thunk_0049cbc0
-        pop      esi
-        ret      
-    L_bc79:
-        mov      ecx, 0x4e6998
-        mov      dword ptr [g_data_0054207c], edx
-        shr      ecx, 2
-        mov      dword ptr [g_data_00542058], ecx
-        mov      ecx, dword ptr [g_data_0053a7a0]
-        mov      dword ptr [g_data_00542054], ecx
-        mov      dword ptr [g_data_00542088], 0x7ae
-        mov      dword ptr [eax + 8], 0x44bc50
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      esi, 0x44bc50
-        mov      dword ptr [ecx*4 + 0x84], 2
-        mov      ecx, dword ptr [eax + 4]
-        add      esi, 0x2000000
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], esi
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], edx
-        call     EsiInstallSetCbChainExtend_0048a970
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret      
-    L_bd03:
-        mov      ecx, 1
-        mov      dword ptr [eax + 8], 0x44bc50
-        mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 0x1e
-        mov      dword ptr [g_data_00541e6c], ecx
-        pop      esi
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_bdfb
-        dec      eax
-        je       L_bd7a
-        mov      ecx, dword ptr [g_data_00542058]
-        push     0x4e64e0
-        mov      dword ptr [g_data_0054205c], ecx
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        pop      esi
-        ret      
-    L_bd7a:
-        call     PendingMatch_0043d830
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_be66
-        mov      edx, 0x50119c
-        mov      ecx, 0x44bd30
-        shr      edx, 2
-        mov      dword ptr [g_data_00542054], edx
-        mov      dword ptr [esi + 8], 0x44bd30
-        mov      eax, dword ptr [g_data_00542060]
-        add      ecx, 0x2000000
-        mov      dword ptr [eax*4 + 0x84], 2
-        mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        inc      eax
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [esi + 4], eax
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], 0
-        call     InstallSelfChainAccumPath_004752b0
-        mov      dword ptr [g_data_00541e6c], 1
-        pop      esi
-        ret      
-    L_bdfb:
-        push     0x44bfc0
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     0x44c760
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        call     DoubleCallChainInit_0043d780
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_be66
-        mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_00542084], 0x11999
-        mov      dword ptr [g_data_0054205c], eax
-        call     GameInstall2BodyMul10ScaledInit_00475590
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_be66
-        mov      eax, 1
-        mov      dword ptr [esi + 8], 0x44bd30
-        mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x10
-        mov      dword ptr [g_data_00541e6c], eax
-    L_be66:
-        pop      esi
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      dword ptr [g_data_0054206c], 5
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_be95
-        push     0x4e64f0
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_be95:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        push     0x44c150
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     0x4e6500
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf0b
-        mov      dword ptr [g_data_0054207c], 5
-        call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf0b
-        mov      dword ptr [g_data_0054206c], 3
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf0b
-        push     0x4e6510
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_bf0b:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf5b
-        mov      dword ptr [g_data_0054207c], 7
-        call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf5b
-        mov      dword ptr [g_data_0054206c], 3
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bf5b
-        push     0x4e6520
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_bf5b:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        push     0x4e6530
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-        ret      
-        nop      
-        nop      
-        call     Set2CallIncJmp_00472860
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bfbb
-        mov      dword ptr [g_data_0054207c], 7
-        call     EntryThunkBodyStateMachine_00457bb0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bfbb
-        mov      dword ptr [g_data_0054206c], 3
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_bfbb
-        push     0x4e6540
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_bfbb:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        shl      eax, 2
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], 0
-        sub      ecx, 0
-        je       L_c0fc
-        dec      ecx
-        je       L_c08d
-        dec      ecx
-        je       L_c01c
-        call     DoubleScaledCrossStore_00475750
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c144
-        mov      ecx, dword ptr [g_data_00542054]
-        push     0x4e6550
-        mov      dword ptr [g_data_0054205c], ecx
-        call     ArgSarStoreJmp_004594f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        add      esp, 4
-        ret      
-    L_c01c:
-        mov      edx, 0x5011cc
-        shr      edx, 2
-        mov      dword ptr [g_data_00542054], edx
-        mov      dword ptr [eax + 8], 0x44bfc0
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, 0x44bfc0
-        add      edx, 0x3000000
-        mov      dword ptr [ecx*4 + 0x84], 3
-        mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     SetJmp_004753a0
-        mov      dword ptr [g_data_00541e6c], 1
-        ret      
-    L_c08d:
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054205c], ecx
-        mov      dword ptr [eax + 8], 0x44bfc0
-        mov      edx, dword ptr [g_data_00542060]
-        mov      dword ptr [edx*4 + 0x84], 2
-        mov      ecx, dword ptr [eax + 4]
-        mov      edx, 0x44bfc0
-        mov      dword ptr [g_data_00542044], ecx
-        add      edx, 0x2000000
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfPackedTailJmp_004751f0
-        mov      dword ptr [g_data_00541e6c], 1
-        ret      
-    L_c0fc:
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542054]
-        mov      dword ptr [ecx*4 + 0x64], edx
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542058]
-        mov      dword ptr [ecx*4 + 0x68], edx
-        mov      ecx, 1
-        mov      dword ptr [eax + 8], 0x44bfc0
-        mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 0xb
-        mov      dword ptr [g_data_00541e6c], ecx
-    L_c144:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [g_data_00542058]
-        mov      dword ptr [edx*4 + 0x68], eax
-        mov      dword ptr [g_data_0054206c], 0
-        call     GatedWordPushCall_00489f90
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        mov      dword ptr [g_data_0054206c], 8
-        call     GuardedSeq_00472840
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054206c], 0xc
-        mov      dword ptr [g_data_0054205c], ecx
-        call     GuardedSeq_00476de0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        call     IntroSequencePipeline_0044cd50
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        mov      edx, dword ptr [g_data_00542058]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [edx*4 + 0x54]
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x54], eax
-        mov      edx, dword ptr [g_data_00542058]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [edx*4 + 0x58]
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x58], eax
-        mov      edx, dword ptr [g_data_00542058]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [edx*4 + 0x5c]
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542054]
-        inc      eax
-        mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_00542054], eax
-        call     DualSlotCopyChain_004756f0
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_data_00542054], ecx
-        mov      dword ptr [g_data_004d57ac], eax
-        call     MStackCall_00406340
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c2d1
-        mov      eax, dword ptr [g_data_00542060]
-        push     0x44c2e0
-        mov      edx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_00542054], edx
-        mov      eax, dword ptr [eax*4 + 0x68]
-        mov      dword ptr [g_data_00542058], eax
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     0x4e6568
-        call     ArgSarStoreJmp_004594f0
-        add      esp, 4
-    L_c2d1:
-        ret      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        nop      
-        mov      eax, dword ptr [g_data_00542060]
-        push     ebx
-        push     esi
-        lea      esi, [eax*4]
-        mov      eax, dword ptr [eax*4 + 0x84]
-        mov      dword ptr [esi + 0x84], 0
-        sub      eax, 0
-        je       L_c35d
-        dec      eax
-        jne      L_c3ae
-        call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-        test     byte ptr [g_data_0054208c], 4
-        je       L_c338
-        call     CjFieldCopyCascade_0044c430
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-    L_c338:
-        mov      ebx, 1
-        mov      dword ptr [esi + 8], 0x44c2e0
-        mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
-        pop      esi
-        pop      ebx
-        ret      
-    L_c35d:
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542054]
-        push     0x4745e0
-        mov      dword ptr [ecx*4 + 0x64], edx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542058]
-        mov      dword ptr [eax*4 + 0x68], ecx
-        mov      edx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [edx*4 + 0x4c], eax
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-        push     0x44c5b0
-        call     StoreLoadJmp_00404ef0
-        add      esp, 4
-    L_c3ae:
-        call     SetJmp_00405420
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-        mov      al, byte ptr [g_data_0054208c]
-        mov      ebx, 1
-        test     al, 4
-        jne      L_c3ea
-        mov      dword ptr [g_data_0054206c], 0x12c
-        call     AudioVolumeRescale_004ab690
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-        test     byte ptr [g_data_0054208c], bl
-        je       L_c406
-    L_c3ea:
-        call     CjFieldCopyCascade_0044c430
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-        call     PendingMatch_0044c530
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c41f
-    L_c406:
-        mov      dword ptr [esi + 8], 0x44c2e0
-        mov      dword ptr [esi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], ebx
-        mov      dword ptr [g_data_00541e6c], ebx
-    L_c41f:
-        pop      esi
-        pop      ebx
-        ret      
-    }
-}
 
-extern void ArgSarStoreJmp_004594f0(void);
-extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
-extern void CopyJmp_00445ec0(void);
-extern void CopyLoadInstallJmp_00445ed0(void);
-extern void CopyScaledTriple_00446120(void);
-extern void DoubleCallChainInit_0043d780(void);
-extern void EsiInstallSetCbChainExtend_0048a970(void);
-extern void FourFieldCopyCallSet_00446040(void);
-extern void GatedWordPushCall_00489f90(void);
-extern void InitStateDualCall48ac70_0048ac70(void);
-extern void InitZeroSixFields_00445f40(void);
-extern void InstallSelfAccumOverflow_00428b20(void);
-extern void InstallSelfChainAccumPath_004752b0(void);
-extern void MStackPush3SideStore_0044cb80(void);
-extern void PendingMatch_0043d830(void);
-extern void ScaledInitPauseDirtyStore_00445f00(void);
-extern void SetWalk0xaCrossStore_00445fb0(void);
-extern void SpecialInitDirtyJmp_00446000(void);
-extern void StoreLoadJmp_00404ef0(void);
-extern void Thunk_0049cbc0(void);
-extern void TripleSetCallPauseDirtyJmp_00446150(void);
-extern void PendingMatch_00443d20(void);
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_0053a7a0;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054206c;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
 
 __declspec(naked) void PendingMatch_00443320(void)
 {

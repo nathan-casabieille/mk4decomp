@@ -130,6 +130,18 @@ extern unsigned int g_data_00535e7c;
  *   Push (g_data_0054204c<<2, g_x_00542044<<2); call Mat3x3VecMul6Bit; restore.
  *   Add g_x_0054206c into target[0], g_data_00542070 into target[1], g_x_00542050 into target[2].
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_word_007af9a0;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_007af990;
+extern unsigned int g_x_007af994;
+extern unsigned int g_x_007af998;
+extern unsigned int g_x_007af99c;
+extern void Mat3x3VecMul6Bit_004b3590(void);
+
 void ChainStreamMatMulVecAdd_004bd9a0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542050]
@@ -174,3 +186,4 @@ void ChainStreamMatMulVecAdd_004bd9a0(void) {
         add     dword ptr [eax*4 + 8], ecx
         }
 }
+

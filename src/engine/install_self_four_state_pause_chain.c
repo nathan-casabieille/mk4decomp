@@ -130,6 +130,11 @@ extern unsigned int g_data_00535e7c;
  *   state >=3: g_scaledInit = g_cj_0054205c; call MStackPush2ChainLLInsert_00406790; if pause? ret;
  *     else tail-call Mul10SumSqrt_00425830.
  */
+extern unsigned int g_pause_00541e6c;
+extern void EsiInstallCounterDispatch_0049b120(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void Mul10SumSqrt_00425830(void);
+
 __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

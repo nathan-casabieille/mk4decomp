@@ -135,6 +135,12 @@ extern void CrouchCounterCluster_0043b1d0(void);
  *   Block D (+0x100): call MStackPush3CmpCall; if pause ret. If bit0(0054208c) jmp CrouchCounterCluster_0043b1d0;
  *     else jmp GuardedDispatch_0042b6c0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void PackedAdvanceCallTailJmp_004392c0(void);
+
 __declspec(naked) void QuadBlockArgInstallChain_0043a950(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

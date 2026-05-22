@@ -136,6 +136,16 @@ extern unsigned int g_data_00535e7c;
  *   Loop test: if esi > ecx: loop.
  *   Pop1 mstack into g_x_00542050; pop esi; ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00542098;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void ExtractBitsToVec3_00407c00(void);
+
 __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
 {
     __asm

@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x40): push 0x004ed838; [eax*4+0x68]=0x316; chain[*4+0x74]=0x407; call ArgSarStoreJmp; ret.
  *   Block C (+0x80): g_x_0054206c=0x1d; call TableLookupCall_00489ff0; if !pause: g_x_00542080=0xc; jmp CountdownInstallSelfMultiTail_00480840.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CountdownInstallSelfMultiTail_00480840(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void TripleEntryChainGate_00480790(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]

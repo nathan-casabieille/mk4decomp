@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   call MStackFrameCdeclDouble_004903f0; if !pause: g_x_00542048 = [g_cj_00542054*4 + 4],
  *   store to [g_x_0054205c*4 + 0x24], clear g_x_0054206c; jmp StoreGuardedBitInstallJmp_004915f0. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void GDispatch1_00488da0(void);
+extern void InstallSelfScaledChain_004916f0(void);
+extern void ScaledMove48to58_00490720(void);
+extern void StoreGuardedBitInstallJmp_004915f0(void);
+
 __declspec(naked) void Cascade5StageInit_00491520(void) {
     __asm {
         call    ScaledMove48to58_00490720

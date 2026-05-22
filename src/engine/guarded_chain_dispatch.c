@@ -121,6 +121,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
 
 /*
  * @addr 0x00421fe0 (108b) - guarded chained dispatcher: snapshot

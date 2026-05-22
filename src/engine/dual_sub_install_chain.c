@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00501094;
+extern unsigned int g_data_0053a7a0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054207c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DoubleCallChainInit_0043d780(void);
+extern void EsiInstallSetCbChainExtend_0048a970(void);
+extern void InstallSelfChainAccumPath_004752b0(void);
+extern void PendingMatch_0043d830(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void Thunk_0049cbc0(void);
+extern void VersusScreenFsmCluster_0044f670(void);
+
 __declspec(naked) void DualSubInstallChain_0044f4b0(void)
 {
     __asm

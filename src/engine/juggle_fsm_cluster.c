@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern void DualScaledStore_00452740(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedSeq_00472840(void);
+extern void GuardedSeq_00473f10(void);
+extern void MStackPush4ChainCopyPop4_00472e10(void);
+extern void ScaledLoadTwoCallLit_00451f70(void);
+extern void Set2CallIncJmp_00472860(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void JuggleFsmCluster_00451b90(void)
 {
     __asm {

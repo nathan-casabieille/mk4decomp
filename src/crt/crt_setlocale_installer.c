@@ -122,6 +122,30 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00522308;
+extern unsigned int g_data_00522310;
+extern unsigned int g_data_00522314;
+extern unsigned int g_data_00522318;
+extern unsigned int g_data_00522400;
+extern unsigned int g_data_00f9f8c0;
+extern unsigned int g_data_00f9f8c1;
+extern unsigned int g_data_00f9fac8;
+extern unsigned int g_data_00f9facc;
+extern unsigned int g_data_00f9fad0;
+extern unsigned int g_data_00f9fad4;
+extern unsigned int g_data_00f9fad8;
+extern unsigned int g_data_00f9fadc;
+extern unsigned int g_data_00fa0dc4;
+extern unsigned int g_iat_004d2114;
+extern void BuildCharacterCaseTables_004c9840(void);
+extern void CRTSignalDispatch_004c9750(void);
+extern void InitGlobalsAndZero_004c9800(void);
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void TranslateMsgId_004c97a0(void);
+
+extern unsigned int g_data_00522320;
+
 __declspec(naked) void CrtSetlocaleInstaller_004c9520(void)
 {
     __asm {

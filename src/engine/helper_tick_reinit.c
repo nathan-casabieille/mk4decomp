@@ -4,6 +4,60 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95a;
+extern unsigned int g_data_007af95c;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af960;
+extern unsigned int g_data_007af962;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af966;
+extern unsigned int g_data_007af968;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b6;
+extern unsigned int g_data_007af9b8;
+extern unsigned int g_data_007af9ba;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_007af9be;
+extern unsigned int g_data_00ab44f8;
+extern unsigned int g_data_00ab47f8;
+extern unsigned int g_data_00ab47fc;
+extern unsigned int g_data_00ab4878;
+extern unsigned int g_data_00ab487c;
+extern unsigned int g_data_00ab4880;
+extern unsigned int g_data_00ab4884;
+extern unsigned int g_data_00ab4888;
+extern unsigned int g_data_00ab4d58;
+extern unsigned int g_data_00ab4d5c;
+extern unsigned int g_data_00ab4d60;
+extern unsigned int g_data_00ab4d64;
+extern unsigned int g_data_00ab4d68;
+extern unsigned int g_data_00ab51f4;
+extern void AdvanceTriStripRing(void);
+extern void Helper_DrawCursor(void);
+extern void Init16BitFields_004bcc50(void);
+extern void Mat3x3VecMul_004b3630(void);
+extern void MaxOfThree_004b3d90(void);
+extern void ProjectTwoVertices(void);
+extern void ProjectVertex(void);
+
 __declspec(naked) void Helper_TickReinit(void)
 {
     __asm {

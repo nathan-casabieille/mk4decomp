@@ -135,6 +135,20 @@ extern unsigned int g_data_00535e7c;
  *   g_scaledInit = g_baseSel + 0xc; g_x_00542048 = g_x_0054204c;
  *   g_x_0054204c += 9; jmp QuadInterpolator_00425380.
  */
+extern unsigned int g_x_004d5320;
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_00541f94;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542094;
+extern void MStackPush2DualModMul10Pop2_00424860(void);
+extern void QuadInterpolator_00425380(void);
+
 __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]

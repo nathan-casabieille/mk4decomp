@@ -123,6 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00434f10 (128b) - install-self chain extension w/ MStackPushSet0Jmp. */
+extern void CallPauseConstStoreJmp_004350f0(void);
+extern void CallSetPause_0041f830(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GameModeAdvanceCluster_00482000(void);
+extern void InitZeroChainLookupJmp_00494210(void);
+extern void InstallSelfPair_00435110(void);
+extern void MStackPushSet0Jmp_004384b0(void);
+extern void MStackPushSet6Jmp_00438470(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void InstallSelfChainExtendCall_00434f10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

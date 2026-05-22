@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble_004903f0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542094;
+extern void DoublePushCallDoublePop_004905e0(void);
+extern void GuardedSeq_00490c60(void);
+
 __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]

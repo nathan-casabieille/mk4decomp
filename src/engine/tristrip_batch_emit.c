@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95a;
+extern unsigned int g_data_007af95c;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af960;
+extern unsigned int g_data_007af962;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af966;
+extern unsigned int g_data_007af968;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b6;
+extern unsigned int g_data_007af9b8;
+extern unsigned int g_data_007af9ba;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_007af9be;
+extern void AdvanceTriStripRing(void);
+extern void Helper_DrawCursor(void);
+extern void MaxOfThree_004b3d90(void);
+extern void MinOfThree_004b3d70(void);
+extern void ProjectTwoVertices(void);
+extern void ProjectVertex(void);
+extern void Vec3ColorShiftClamp_004b3490(void);
+
 __declspec(naked) void TristripBatchEmit_004bbb80(void)
 {
     __asm {

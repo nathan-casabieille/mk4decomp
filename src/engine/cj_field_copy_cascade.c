@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *     (first iteration also OR's al with 4).
  *   Then call MStackBracket7_DispatchAndChain_004b8fa0; if !pause: g_x_0054206c=3, g_x_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542078;
+extern void BootStateTriple_00408d30(void);
+extern void GuardedSeq_00473ef0(void);
+
 __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

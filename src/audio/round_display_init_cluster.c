@@ -129,6 +129,15 @@ extern void CopyGlobal_004ac1f0(void);
 extern unsigned int g_data_0053a430;
 extern unsigned int g_data_0054356c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void AudioInitInstallerPair_004a2140(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+
 __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
 {
     __asm {

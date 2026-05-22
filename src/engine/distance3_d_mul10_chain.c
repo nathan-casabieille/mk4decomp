@@ -132,6 +132,16 @@ extern unsigned int g_data_00535e7c;
  *   Sum: g_x_0054206c = g_data_0053a1a8 + g_x_00542074; g_data_00542070 = g_data_0053a1a4 + g_acc.
  *   Store both into [g_cj*4+0x54] and [+0x5c]. Tail-call DualCallPauseDirtyJmp; pop esi; ret.
  */
+extern unsigned int g_data_0053a1a4;
+extern unsigned int g_data_0053a1a8;
+extern unsigned int g_data_0053a3dc;
+extern unsigned int g_data_0053a41c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+extern void DualCallPauseDirtyJmp_00490c30(void);
+
 __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
     __asm {
         mov     eax, dword ptr [g_data_0053a1a8]

@@ -135,6 +135,9 @@ extern unsigned int g_data_00535e7c;
  *   add esp,8; g_data_00542084 = eax; add eax,ecx;
  *   g_state_0054207c = eax; pop esi; ret.
  */
+extern unsigned int g_load_0052ab04;
+extern unsigned int g_load_0052ab08;
+
 __declspec(naked) void DualMul10ChainAcc7C_00430020(void) {
     __asm {
         mov     ecx, dword ptr [g_load_0052ab04]

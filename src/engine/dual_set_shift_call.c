@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   wt/g_data_0054204c by +0xf, snapshot cj from g_x_00541f98, call
  *   TripleSubVec3; pop walk -> g_data_0054204c.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_x_00541f98;
+extern void TripleSubVec3_004250f0(void);
+
 void DualSetShiftCall_00473f90(void) {
     __asm {
         call    ChainDirtyBitWalker_00408c10
@@ -161,3 +165,4 @@ void DualSetShiftCall_00473f90(void) {
 done:
         }
 }
+

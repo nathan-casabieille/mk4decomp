@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   On pause: ret. install self; if arr_final[g_scaledInit] != 0: call F3;
  *   pause? ret. clear bit 0 of g_state_0054208c.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void ExtractBitsToVec3_00407c00(void);
+extern void ThreeChan11BitPack_00407c60(void);
+
+extern unsigned int g_arr_407620_disp_20;
+extern unsigned int g_arr_407620_final;
+extern unsigned int g_arr_407620_mstack;
+
 void InstallSelfDispatch_00407620(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -171,3 +180,4 @@ void InstallSelfDispatch_00407620(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

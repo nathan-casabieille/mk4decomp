@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *     ecx = chain[g_x_00542050 + (ofs - 4)]; g_x_00542070 = ecx; chain[+ofs] = ecx.
  *   chain[g_x_00542050 + 0] = g_x_00542074.
  */
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void ChainShiftRight8_0045d9b0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542050]
@@ -162,3 +168,4 @@ void ChainShiftRight8_0045d9b0(void) {
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         }
 }
+

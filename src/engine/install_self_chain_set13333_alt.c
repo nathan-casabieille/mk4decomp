@@ -124,6 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004377d0 (172b game) - same install-self pattern as 0x437880; SetJmp_00438f50 error path.
  */
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void StateGateMStackOverlap_00438690(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfChainSet13333Alt_004377d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

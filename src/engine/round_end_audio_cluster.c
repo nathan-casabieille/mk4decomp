@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0050d23c;
+extern unsigned int g_data_0050d258;
+extern unsigned int g_data_0052ab4c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00541de0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void ScaledChainInit2Phase_0042e800(void);
+
 void RoundEndAudioCluster_0042e8d0(void) {
     __asm {
         /* H1 */
@@ -265,3 +283,4 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [g_data_00541e6c], eax
         }
 }
+

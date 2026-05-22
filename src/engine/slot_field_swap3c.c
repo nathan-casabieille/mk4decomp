@@ -6,6 +6,7 @@
 
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_baseSel_00542060;
 extern u32 g_eventQueueWorkType;
 extern packed_ptr g_xformEntityIdx;
 extern u32 g_eventQueueEnd;

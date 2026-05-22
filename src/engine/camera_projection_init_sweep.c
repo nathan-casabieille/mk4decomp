@@ -122,6 +122,34 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e86d8;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00535e50;
+extern unsigned int g_data_00537eb4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542408;
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void Chain2CallMul10Accum_00426a30(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackCall_00406340(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void RangeMulMod_004ab2a0(void);
+extern void RegistryPushBindPop_00403c20(void);
+extern void Thunk_00427460(void);
+
 __declspec(naked) void CameraProjectionInitSweep_00458160(void)
 {
     __asm {

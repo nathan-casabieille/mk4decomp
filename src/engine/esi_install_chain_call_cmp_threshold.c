@@ -124,6 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042fad0 (163b) - install-self pattern w/ DualMul10ChainAcc7C +
  *   cmp threshold 0x300000 dispatch + chain[+0x6c/+0x74] clear + tail-call. */
+extern void DualMul10ChainAcc7C_00430020(void);
+extern void DualMulScaleStore_0042ffa0(void);
+extern void PhaseInstall2DInterpDispatch_0042f8a0(void);
+
 __declspec(naked) void EsiInstallChainCallCmpThreshold_0042fad0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

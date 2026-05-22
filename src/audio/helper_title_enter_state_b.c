@@ -3,6 +3,10 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "audio/sound.h"
+
+extern unsigned int g_iat_004d2244;
+extern unsigned int g_iat_004d2240;
 
 /*
  * @addr 0x004ac570 (116b audio) - audio re-entrant teardown:

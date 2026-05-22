@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void MoveSelectorCluster_0047d9a0(void);
+extern void ScaledChainNegStore_00470310(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+
 __declspec(naked) void PhaseDispatchPair_004799c0(void)
 {
     __asm

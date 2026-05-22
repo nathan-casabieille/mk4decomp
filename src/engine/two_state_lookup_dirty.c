@@ -132,6 +132,14 @@ extern unsigned int g_data_00535e7c;
  *   key2 = chain[scaledInit].slot4; chain[cj].slot5c = key2;
  *   chain[cj].slot64 = 0x4b5c2.
  */
+extern unsigned int g_data_004ded70;
+extern unsigned int g_data_004ded80;
+extern unsigned int g_x_00542048;
+extern void Cmp2DirtyToggle_00423870(void);
+
+extern unsigned int g_arr_4237d0;
+extern unsigned int g_chain_arr_4348f0;
+
 void TwoStateLookupDirty_004237d0(void) {
     __asm {
         mov     eax, offset g_data_004ded70
@@ -167,3 +175,4 @@ void TwoStateLookupDirty_004237d0(void) {
         mov     [eax*4 + g_chain_arr_4348f0 + 0x64], 0x4b5c2
         }
 }
+

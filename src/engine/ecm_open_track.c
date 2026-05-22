@@ -121,6 +121,13 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_004ffd40;
+extern unsigned int g_x_00ab5348;
+extern unsigned int g_x_00ab574c;
+extern unsigned int g_x_00ab5750;
+extern unsigned int g_x_00ab5754;
+extern unsigned int g_x_00ab5758;
+extern unsigned int g_titleAudioState;
 
 void ECM_OpenTrack_004be9c0(const char *name, unsigned int a, unsigned int b, void *c) {
     g_x_00ab5750 = 0;

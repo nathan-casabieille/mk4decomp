@@ -122,6 +122,50 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ed000;
+extern unsigned int g_data_004ed020;
+extern unsigned int g_data_004ed040;
+extern unsigned int g_data_004ed060;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00543550;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95a;
+extern unsigned int g_data_007af95c;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af960;
+extern unsigned int g_data_007af962;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af966;
+extern unsigned int g_data_007af968;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b6;
+extern unsigned int g_data_007af9b8;
+extern unsigned int g_data_007af9ba;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_007af9be;
+extern unsigned int g_data_00ab48b8;
+extern unsigned int g_data_00ab48bc;
+extern unsigned int g_data_00ab48c0;
+extern unsigned int g_data_00ab48c4;
+extern unsigned int g_data_00ab48c5;
+extern unsigned int g_data_00ab48c6;
+extern unsigned int g_data_00ab48c7;
+extern unsigned int g_data_00ab48c8;
+extern unsigned int g_data_00ab48c9;
+extern unsigned int g_data_00ab48ca;
+extern unsigned int g_data_00ab48cc;
+extern unsigned int g_data_00ab48d2;
+extern unsigned int g_data_00ab4e20;
+extern void GamepadSeqRecord_004bcc70(void);
+extern void Helper_DrawCursor(void);
+extern void ProjectTwoVertices(void);
+extern void SunbeamSpriteEmit_004bd270(void);
+
 __declspec(naked) void MovesPanelEmit_004bcf60(void)
 {
     __asm {

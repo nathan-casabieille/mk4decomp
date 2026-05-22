@@ -145,6 +145,13 @@ extern unsigned int g_x_00542094;
  *   g_scaledInit = g_baseSel + 0xc; g_x_00542048 = g_x_0054204c;
  *   g_x_0054204c += 9; jmp QuadInterpolator_00425380.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]

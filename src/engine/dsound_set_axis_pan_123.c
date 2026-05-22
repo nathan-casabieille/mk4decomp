@@ -55,65 +55,65 @@
  *   ret
  */
 
-extern void *g_iat_004d21a0;
-extern void *g_iat_004d21b0;
-extern void *g_iat_004d2190;
+extern unsigned int g_iat_004d2190;
+extern unsigned int g_iat_004d21a0;
+extern unsigned int g_iat_004d21b0;
 
 #define DS_BODY(STATE, IFACE)                                                  \
     extern unsigned int STATE;                                                  \
-    extern void *IFACE;                                                         \
+    extern unsigned int IFACE;                                                 \
     __asm {                                                                     \
         __asm mov     eax, dword ptr [STATE]                                    \
         __asm test    eax, eax                                                  \
         __asm _emit   74h                                                       \
         __asm _emit   71h                                                       \
         __asm mov     eax, dword ptr [IFACE]                                    \
-        __asm push    edi                                                       \
-        __asm push    esi                                                       \
+        __asm push    edi                                                        \
+        __asm push    esi                                                        \
         __asm mov     esi, dword ptr [g_iat_004d21a0]                           \
-        __asm push    8                                                         \
-        __asm push    -20                                                       \
-        __asm push    eax                                                       \
-        __asm call    esi                                                       \
+        __asm push    8                                                          \
+        __asm push    -20                                                        \
+        __asm push    eax                                                        \
+        __asm call    esi                                                        \
         __asm mov     ecx, dword ptr [IFACE]                                    \
-        __asm push    0x90000000                                                \
-        __asm push    -16                                                       \
-        __asm push    ecx                                                       \
-        __asm call    esi                                                       \
+        __asm push    0x90000000                                                 \
+        __asm push    -16                                                        \
+        __asm push    ecx                                                        \
+        __asm call    esi                                                        \
         __asm mov     esi, dword ptr [g_iat_004d21b0]                           \
-        __asm push    1                                                         \
-        __asm call    esi                                                       \
+        __asm push    1                                                          \
+        __asm call    esi                                                        \
         __asm cmp     eax, 0x1e0                                                \
         __asm _emit   7dh                                                       \
         __asm _emit   07h                                                       \
         __asm mov     edi, 0x1e0                                                \
         __asm _emit   0ebh                                                      \
         __asm _emit   06h                                                       \
-        __asm push    1                                                         \
-        __asm call    esi                                                       \
-        __asm mov     edi, eax                                                  \
-        __asm push    0                                                         \
-        __asm call    esi                                                       \
+        __asm push    1                                                          \
+        __asm call    esi                                                        \
+        __asm mov     edi, eax                                                   \
+        __asm push    0                                                          \
+        __asm call    esi                                                        \
         __asm cmp     eax, 0x280                                                \
         __asm _emit   7dh                                                       \
         __asm _emit   07h                                                       \
         __asm mov     eax, 0x280                                                \
         __asm _emit   0ebh                                                      \
         __asm _emit   04h                                                       \
-        __asm push    0                                                         \
-        __asm call    esi                                                       \
+        __asm push    0                                                          \
+        __asm call    esi                                                        \
         __asm mov     edx, dword ptr [IFACE]                                    \
-        __asm push    0x44                                                      \
-        __asm push    edi                                                       \
-        __asm push    eax                                                       \
-        __asm push    0                                                         \
-        __asm push    0                                                         \
-        __asm push    0                                                         \
-        __asm push    edx                                                       \
+        __asm push    0x44                                                       \
+        __asm push    edi                                                        \
+        __asm push    eax                                                        \
+        __asm push    0                                                          \
+        __asm push    0                                                          \
+        __asm push    0                                                          \
+        __asm push    edx                                                        \
         __asm call    dword ptr [g_iat_004d2190]                                \
-        __asm pop     esi                                                       \
-        __asm pop     edi                                                       \
-        __asm ret                                                               \
+        __asm pop     esi                                                        \
+        __asm pop     edi                                                        \
+        __asm ret                                                                \
     }
 
 /* @addr 0x004aec10 */

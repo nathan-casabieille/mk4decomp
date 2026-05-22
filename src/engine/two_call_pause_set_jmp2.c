@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_acc_00542078;
+extern unsigned int g_framePauseFlag;
 
 /* @addr 0x00456180 (54b)
  *   call    F

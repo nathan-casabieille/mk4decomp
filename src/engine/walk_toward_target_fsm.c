@@ -157,6 +157,14 @@ extern void GuardedSeq_0042fb80(void);
  *           g_data_00542044)
  *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
  */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+
 __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

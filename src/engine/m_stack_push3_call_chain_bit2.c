@@ -138,6 +138,13 @@ extern unsigned int g_data_004e5a00;
  *     +0x60=0x1e666, +0x78=0, +0x7c=0x51e, +0x80=0x28f.
  *   g_x_0054206c=0x28f. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+
 void ChainInitMul10BulkStore_00442740(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -219,3 +226,4 @@ void ChainInitMul10BulkStore_00442740(void) {
         mov     dword ptr [eax + 0x80], ecx
         }
 }
+

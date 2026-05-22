@@ -132,6 +132,17 @@ extern unsigned int g_data_00535e7c;
  *   chain[cj].slot24 = g_x_00542058;
  *   g_walkCallback = 0; chain[cj].slot28 = 0; jmp PushCallPauseIncStoreSelfRecurse_00460c00.
  */
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern void CopyJmp_00406ba0(void);
+extern void PushCallPauseIncStoreSelfRecurse_00460c00(void);
+
+extern unsigned int g_arr_460b60_main;
+extern unsigned int g_chain_disp_24_460b60;
+extern unsigned int g_chain_disp_28_460b60;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void StateSnapshotDispatch_00460b60(void) {
     __asm {
         call    CopyJmp_00406ba0

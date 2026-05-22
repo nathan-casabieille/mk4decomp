@@ -123,8 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_x_00fa0de0;
-extern void *g_iat_004d215c;
-extern void *g_iat_004d2140;
+extern unsigned int g_iat_004d215c;
+extern unsigned int g_iat_004d2140;
 extern void Lock_004c6f50(void);
 extern void TableLookupIatCall_004c6fd0(int);
 
@@ -135,6 +135,9 @@ extern void TableLookupIatCall_004c6fd0(int);
  *   InitializeCriticalSection(slot+0xc), bump slot[+8]; release lock
  *   0x11; EnterCriticalSection(*base + slot_off + 0xc).
  */
+extern unsigned int g_iat_004d2140;
+extern unsigned int g_iat_004d215c;
+
 __declspec(naked) void CritSecLazyEnter_004cd2b0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

@@ -126,6 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   scaledInit; key = (0x541d70 >> 2) + walkCallback; g_walkCallback=1;
  *   install[key] = 1; pop scaledInit, walkCallback.
  */
+extern unsigned int g_data_00541d70;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPushInstall_0048c260(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
@@ -159,3 +163,4 @@ void MStackPushInstall_0048c260(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

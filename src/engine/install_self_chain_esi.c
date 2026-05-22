@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_x_0054206c=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void SelfInstallPhaseDispatch_00428990(void);
+
 __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

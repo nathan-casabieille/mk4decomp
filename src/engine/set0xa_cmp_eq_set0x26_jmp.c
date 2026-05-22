@@ -16,6 +16,7 @@ extern u32 g_eventQueueEnd;
  *   set 0xa → walk; call F; pause → ret;
  *   load g_fightGroupHead, g_state_00538158; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
+extern unsigned int g_state_00538158;
 extern void SpecialAnimBuilder_004937b0(void);
 extern void func_00489ff0_aa(void);
 void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {

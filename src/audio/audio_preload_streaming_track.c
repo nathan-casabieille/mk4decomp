@@ -146,6 +146,12 @@ extern unsigned int g_data_005435a0;
 extern unsigned int g_data_005435b8;
 extern unsigned int g_data_00543830;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+
 __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
 {
     __asm {

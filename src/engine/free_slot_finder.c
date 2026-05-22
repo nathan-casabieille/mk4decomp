@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   If i == cur: no free slot, return prior cur in al.
  *   Else: i = (i+1) & 0xf; retry.
  */
+extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_byte_00f9efdc;
+
 __declspec(naked) char FreeSlotFinder_004c3900(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_00f9efdc]

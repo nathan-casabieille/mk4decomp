@@ -132,6 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   if zero: g_walkCallback = 1, ret;
  *   clear_and_ret: g_walkCallback = 0, ret.
  */
+
 void GuardedBitMaskFlagOrClear_0048c510(void) {
     __asm {
         mov     eax, dword ptr [g_state_00537f94]
@@ -160,3 +161,4 @@ void GuardedBitMaskFlagOrClear_0048c510(void) {
         mov     dword ptr [g_walkCallback], eax
         }
 }
+

@@ -135,6 +135,8 @@ extern unsigned int g_data_00535e7c;
  *   g_state_0054208c &= 0xfe; ret;
  *   set: g_state_0054208c |= 1; ret.
  */
+extern void MStackPush2ChainSwap_0048f090(void);
+
 void GuardedDualAndFlagToggle_0048f020(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -172,3 +174,4 @@ void GuardedDualAndFlagToggle_0048f020(void) {
         or      dword ptr [g_state_0054208c], eax
         }
 }
+

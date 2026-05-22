@@ -9,6 +9,7 @@ extern unsigned int g_scaledInit_00542044;
 extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern packed_ptr g_xformEntityIdx;
+extern void SelfInstallPhaseDispatch_0045fd30(void);
 
 /* @addr 0x0045fcf0 (52b)
  *   call    F

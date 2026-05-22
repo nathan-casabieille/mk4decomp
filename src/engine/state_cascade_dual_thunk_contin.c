@@ -132,6 +132,18 @@ extern unsigned int g_data_00535e7c;
  *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  *   Tail thunk_2 (+0x110): if g_state_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
+extern unsigned int g_data_00541d88;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537ea8;
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void RoundWinTransition_0049e7e0(void);
+
 __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
     __asm {
         cmp     eax, ebx

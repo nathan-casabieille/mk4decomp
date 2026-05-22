@@ -124,9 +124,97 @@ extern unsigned int g_data_00535e7c;
 
 extern void ScaledMaskByte_004774d0(void);
 extern void BitmapBlitRunLength_004592f0(void);
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_pause_00541e6c;
 
 /* @addr 0x00458f40 (238b game) - nested 3x15 loop with character-range dispatch.
  *   mstack-push g_x_00542074, g_x_0054204c. esi=3.
  *   g_x_0054204c=(0x0053a53c>>2); outer g_x_00542070=0xf; inner g_x_00542074=esi=3.
  *   LOOP_HEAD: call ScaledMaskByte_004774d0; if pause exit.
  *   compare g_x_0054206c to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
+ *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
+ *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
+ */
+__declspec(naked) void NestedLoopDispatch_00458f40(void) {
+    __asm {
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_x_00542074]
+        inc     eax
+        push    esi
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     esi, 3
+        mov     dword ptr [eax*4 + 0], ecx
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     edx, dword ptr [g_x_0054204c]
+        inc     eax
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [eax*4 + 0], edx
+        mov     eax, 0x0053a53c
+        shr     eax, 2
+        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_x_00542070], 0xf
+        mov     dword ptr [g_x_00542074], esi
+        call    ScaledMaskByte_004774d0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   0fh
+        _emit   85h
+        _emit   87h
+        _emit   00h
+        _emit   00h
+        _emit   00h
+        mov     eax, dword ptr [g_x_0054206c]
+        cmp     eax, 0x20
+        _emit   72h
+        _emit   44h
+        cmp     eax, 0x7b
+        _emit   74h
+        _emit   4dh
+        cmp     eax, 0x7c
+        _emit   74h
+        _emit   48h
+        cmp     eax, 0x7d
+        _emit   74h
+        _emit   05h
+        cmp     eax, 0x5f
+        _emit   77h
+        _emit   30h
+        mov     ecx, dword ptr [g_x_0054204c]
+        mov     eax, dword ptr [g_x_00542074]
+        inc     ecx
+        dec     eax
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_x_00542074], eax
+        _emit   75h
+        _emit   0b6h
+        mov     eax, dword ptr [g_x_00542070]
+        inc     ecx
+        dec     eax
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_x_00542070], eax
+        _emit   74h
+        _emit   10h
+        _emit   0ebh
+        _emit   9ah
+        call    BitmapBlitRunLength_004592f0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2bh
+        mov     eax, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_state_004d57ac], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        dec     eax
+        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_state_004d57ac], eax
+        pop     esi
+        ret
+    }
+}
+

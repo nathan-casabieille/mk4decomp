@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *     jmp HitReactionDispatcher_0045f650.
  *   Block C (+0x60): push 0x004f1a10; call ArgScaledChain; if !pause: jmp Const111ScaledStoreJmp_00495da0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void ArgScaledChain_004949b0(void);
+extern void Const111ScaledStoreJmp_00495da0(void);
+extern void HitReactionDispatcher_0045f650(void);
+
 __declspec(naked) void TripleEntry03ChainArg_00495d20(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]

@@ -18,6 +18,8 @@ extern packed_ptr g_fightGroupHead;
  *   Else: ecx = 1; [eax+8] = OFFSET self (0x48d070); [eax+0x84] = 1;
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
+extern unsigned int g_baseSel_00542060;
+extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {

@@ -130,6 +130,13 @@ extern unsigned int g_data_00535e7c;
  *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
  *   scaledInit to g_x_00537e9c; merge low bit of [+0x34]; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00537e9c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void MStackCall_00406340(void);
+
 void DispatchCopyFields_0043ec80(void) {
     __asm {
         mov     eax, 0x004ec8f8
@@ -197,3 +204,4 @@ void DispatchCopyFields_0043ec80(void) {
         mov     dword ptr [eax + 0x34], edx
         }
 }
+

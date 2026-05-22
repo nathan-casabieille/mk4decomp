@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void ComboSpecialEventCluster_0046df90(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void DualScaledInitCmp_0046df50(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void ScaledInit_0048d430(void);
+
 __declspec(naked) void TriCounterReinitChain_0046dd90(void)
 {
     __asm

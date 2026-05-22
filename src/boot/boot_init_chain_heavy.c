@@ -122,6 +122,43 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5140;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537e8c;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_0053a520;
+extern unsigned int g_data_00541de0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541e7c;
+extern unsigned int g_data_00541e80;
+extern unsigned int g_data_00541e84;
+extern unsigned int g_data_00541e88;
+extern unsigned int g_data_00541e8c;
+extern unsigned int g_data_00541e90;
+extern unsigned int g_data_00541e94;
+extern unsigned int g_data_00541e98;
+extern unsigned int g_data_00541e9c;
+extern unsigned int g_data_00541ea0;
+extern unsigned int g_data_00541ea4;
+extern unsigned int g_data_00541ea8;
+extern unsigned int g_data_00541eac;
+extern unsigned int g_data_00541eb0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054343c;
+extern void AndShlStore_00409280(void);
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void Helper_GeoLoadPre(void);
+extern void LinkedListBuilder_004ab380(void);
+extern void MStackCall_004063e0(void);
+extern void ScaledChainAccumLoop_0049cd40(void);
+extern void Thunk_004bd8d0(void);
+extern void VertexSlotInitFlagWalk_00409740(void);
+
 __declspec(naked) void BootInitChainHeavy_00404f20(void)
 {
     __asm {

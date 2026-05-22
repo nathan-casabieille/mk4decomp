@@ -4,6 +4,14 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004ffd4c;
+extern unsigned int g_data_00f4d028;
+extern unsigned int g_data_00f6e058;
+extern unsigned int g_data_00f6e05c;
+extern unsigned int g_data_00f6e060;
+extern unsigned int g_data_00f6e064;
+extern unsigned int g_data_00f85b34;
+
 __declspec(naked) void Helper_PaletteInit(void)
 {
     __asm {

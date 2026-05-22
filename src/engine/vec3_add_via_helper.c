@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   from wt/g_data_0054204c/g_walkCallback scaled arrays; sums each
  *   component into g_walkCallback and stores via the helper.
  */
+extern unsigned int g_data_0054204c;
+
 __declspec(naked) void Vec3AddViaHelper_00425170(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueWorkType]

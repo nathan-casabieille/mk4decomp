@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004d5888;
+extern unsigned int g_x_004f360c;
 
 /*
  * @addr 0x00412450 (111b boot) - guarded double-push setup + tail jmp.

@@ -9,6 +9,23 @@
  *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_x_0058c7e8:
  *   SetEvent via IAT@4d2210; clear g_x_0058c7e8; ret.
  */
+extern unsigned int g_iat_004d2210;
+extern unsigned int g_x_0058c7ac;
+extern unsigned int g_x_0058c7dc;
+extern unsigned int g_x_0058c7e0;
+extern unsigned int g_x_0058c7e8;
+extern void ComReleaseCapture_004aeee0(void);
+extern void ComReleasePair_004af440(void);
+extern void ComRelease_004aedc0(void);
+extern void ComRelease_004aef30(void);
+extern void ComRelease_004af000(void);
+extern void DSoundBufferInit146_004aea40(void);
+extern void DSoundDualEntryRelease_004af210(void);
+extern void DualVtable8Call_004af650(void);
+extern void ReleaseVtableSlots_004af130(void);
+extern void Renderer2_EndScene_D3D(void);
+extern void VtRelease_Modal_004ad590(void);
+
 __declspec(naked) void R2_Cleanup(void) {
     __asm {
         push    esi

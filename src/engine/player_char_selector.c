@@ -128,6 +128,21 @@ extern unsigned int g_data_00535e7c;
  *   Else: setup player2 (005380e0). g_x_00542054 = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
  *   Both arms normalize g_x_0054206c via cmp on 0xf/6/8 and write to g_data_00535d10.
  */
+extern unsigned int g_data_00535cfc_arr;
+extern unsigned int g_data_00535d10;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a178;
+extern unsigned int g_data_0053a1d0_arr;
+extern unsigned int g_data_0053a250;
+extern unsigned int g_data_00541ec4;
+extern unsigned int g_data_00541ec8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void BitShiftExtract_00464090(void);
+extern void DownloadPlayerChar(void);
+
 __declspec(naked) void PlayerCharSelector_004636d0(void) {
     __asm {
         push    esi

@@ -124,6 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004801a0 (146b) - mstack push g_baseSel + cmp p1==cj swap +
  *   call + clamp g_state_00535ddc to [0x40000, 0x40000+0x26666] absolute. */
+extern unsigned int g_dualA_0053815c;
+extern unsigned int g_dualB_00538038;
+extern unsigned int g_dualB_0053803c;
+extern void ScaledChainDouble_004911f0(void);
+
 void PushPlayerSwapCallClamp_004801a0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -172,3 +177,4 @@ void PushPlayerSwapCallClamp_004801a0(void) {
         _emit   00h
         }
 }
+

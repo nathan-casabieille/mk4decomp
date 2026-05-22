@@ -108,6 +108,7 @@ extern void Push70CallScaleArith2_00457b40(void);
     }
 
 /* @addr 0x00426310 */
+
 __declspec(naked) void DispatcherComplex181_00426310(void) { BODY(StreamChainStringInstall_00457900) }
 
 /* @addr 0x004263d0 */

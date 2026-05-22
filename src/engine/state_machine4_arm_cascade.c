@@ -135,6 +135,12 @@ extern void StateMachine4ArmCascade_0043aab0(void);
  *       [eax+8]=0x0043aef0; chain[+0x84]=1; scaledInit-chain push 0x0043aef0+0x01000000;
  *       call InstallSelfDoubleMStack_0043b9a0; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054207c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void InstallSelfDoubleMStack_0043b9a0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+
 __declspec(naked) void DualBlockThunkPlus3State_0043aed0(void) {
     __asm {
         call    FiveCallScaledChainTailJmp_0045f8d0

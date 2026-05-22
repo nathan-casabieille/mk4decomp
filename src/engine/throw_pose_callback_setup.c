@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f1300;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void ClampMulShiftStore_004ba0e0(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void ScaledOrStore_004903d0(void);
+
 __declspec(naked) void ThrowPoseCallbackSetup_00491f10(void)
 {
     __asm {

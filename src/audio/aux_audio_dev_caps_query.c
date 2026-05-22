@@ -134,6 +134,10 @@ extern unsigned int g_data_00535e7c;
  *     (eax | edx where edx = result*0x3c (= eax * 5 * 4 * 3? Actually lea+shl gives *60))
  *   Wait: eax_low *= 3; eax *= 5 ((eax + eax*4)); shl 2 → *60 total. So eax_low * 60 + (caps >> 8 & 0xff).
  */
+extern unsigned int g_x_004d2244;
+extern unsigned int g_x_005438e8;
+extern void Helper_AuxAudio_PostInit(void);
+
 __declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
     __asm {
         sub     esp, 0x1c

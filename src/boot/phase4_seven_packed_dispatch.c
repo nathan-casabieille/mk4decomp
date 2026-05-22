@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0049db40;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00543800;
+extern void AudioMixerStep_004ab700(void);
+extern void BootStateTriple_00408d30(void);
+extern void CallSetPause_0041f830(void);
+extern void SetJmp_00408d20(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void Phase4SevenPackedDispatch_00417e40(void)
 {
     __asm {

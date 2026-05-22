@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   Final aggregator: combine low nibble of g_byte_004d50d4 into a 4-bit value, shl 16; if nonzero,
  *   push (combined, &table) and call again. Ret.
  */
+extern unsigned int g_byte_004d50d4;
+extern unsigned int g_byte_004d50d8;
+extern unsigned int g_data_00543398;
+extern void ShiftDownThreeAndAppend_004aa3f0(void);
+
 void AudioFlagDispatchAggregator_004aa430(void) {
     __asm {
         test    byte ptr [g_byte_004d50d4], 0x10
@@ -201,3 +206,4 @@ void AudioFlagDispatchAggregator_004aa430(void) {
     L_done:
         }
 }
+

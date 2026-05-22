@@ -131,6 +131,11 @@ extern unsigned int g_data_00535e7c;
  *   target count [esp+0x14]; if region fully empty (all -1), call
  *   HeapRegionTeardown_004c7240(region).
  */
+extern unsigned int g_data_00520134;
+extern unsigned int g_data_00f9f8b8;
+extern unsigned int g_iat_004d2168;
+extern void HeapRegionTeardown_004c7240(void);
+
 __declspec(naked) void HeapShrinkDecommit_004c72a0(void) {
     __asm {
         push    ebx

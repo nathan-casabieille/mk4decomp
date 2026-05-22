@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgScaledChain_004949b0(void);
+extern void DirtyGuardLitOrJmp_00496940(void);
+extern void InstallSelfMStackPush_004968a0(void);
+extern void ScaledInit_0048d490(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void StreamInitCountdownBody_00494830(void);
+extern void ThresholdSetMatchDispatch_0046dc10(void);
+
 __declspec(naked) void FivePackedSubChainBigEntry_004966d0(void)
 {
     __asm

@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *   add corresponding word at 0xab4e44/48/4c, clamp each to <=0xfe00, store back.
  *   Clear 3 dword globals.
  */
+extern unsigned int g_word_00ab4e44;
+extern unsigned int g_word_00ab4e48;
+extern unsigned int g_word_00ab4e4c;
+extern unsigned int g_x_00ab4e50;
+extern unsigned int g_x_00ab4e54;
+extern unsigned int g_x_00ab4e58;
+
 __declspec(naked) void ScaledThreeChanPack_00404d50(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

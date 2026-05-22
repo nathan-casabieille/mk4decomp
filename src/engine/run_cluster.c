@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00537e94;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void CallDualStoreXorBit_004285e0(void);
+extern void DualHelperCallStoreCjFields_0048ff40(void);
+extern void DualMul10AccCj_00491230(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedSeq_0047d980(void);
+extern void MoveSelectorCluster_0047d9a0(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledZero44_00491500(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TwoPhaseInstallScaledPackedPtr_00480d50(void);
+
 __declspec(naked) void RunCluster_0047d6e0(void)
 {
     __asm {

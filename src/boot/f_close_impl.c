@@ -128,6 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   call _close_flag, then _close on its fd; if rc<0 clears state
  *   and returns -1; else also frees buf at +0x1c via free helper.
  */
+extern void BitTestFreeClear_004c8ae0(void);
+extern void CloseImpl_004c89e0(void);
+extern void FFlushImpl_004c69a0(void);
+extern void FreeImpl_004c55f0(void);
+
 __declspec(naked) void FCloseImpl_004c5840(void) {
     __asm {
         push    esi

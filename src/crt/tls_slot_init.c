@@ -121,6 +121,10 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_iat_004d20fc;
+extern unsigned int g_iat_004d2104;
+extern unsigned int g_iat_004d210c;
+extern unsigned int g_x_00522400;
 
 /* @addr 0x004c9d70 (92b crt) - TLS slot init: call init helper;
  *   TlsAlloc into g_x_00522400; if -1 fail. Else: alloc 0x74 bytes via

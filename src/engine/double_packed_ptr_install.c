@@ -130,6 +130,10 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x54] = 0x00810000; chain[+0x30] = 0x1f;
  *   call PushSetCallPop; pause? ret; call RegistryPushBindPop;
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void RegistryPushBindPop_00403c20(void);
+
 __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
     __asm {
         mov     eax, 0x0050f1f4

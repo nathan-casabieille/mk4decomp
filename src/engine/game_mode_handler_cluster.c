@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004f1408;
+extern unsigned int g_data_004f1420;
+extern unsigned int g_data_004f1430;
+extern unsigned int g_data_004f1440;
+extern unsigned int g_data_004f1458;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ArgScaledChain_004949b0(void);
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void HitReactionDispatcher_0045f650(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void SevenThunkDispatcher_00495770(void);
+extern void StreamInitCountdownBody_00494830(void);
+extern void ThresholdSetMatchDispatch_0046dc10(void);
+
 __declspec(naked) void GameModeHandlerCluster_004955d0(void)
 {
     __asm {

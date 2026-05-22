@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_state_00535ddc<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State_00438f80; ret.
  *   D (+0x60): gate g_state_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State_00438f80.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void GuardedSeq_00433bb0(void);
+extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+
 __declspec(naked) void QuadStringStateGate_0043bd50(void) {
     __asm {
         push    0x004e4c58

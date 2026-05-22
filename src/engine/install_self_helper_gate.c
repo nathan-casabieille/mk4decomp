@@ -130,6 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   on pause clear, install self with walk=1 and 0x486490.
  */
 extern void InstallSelfHelperGate_00486490(void);
+extern unsigned int g_data_0054204c;
 void InstallSelfHelperGate_00486490(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int prev = *(unsigned int *)(base + 0x84);

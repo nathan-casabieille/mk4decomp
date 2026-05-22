@@ -13,6 +13,10 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_state_007b41a0;
 extern unsigned int g_state_007b41a8;
+extern unsigned int g_data_00ab5034;
+extern unsigned int g_table_004ab4e78;
+extern void LoadGeoAsset_Default(void);
+
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
@@ -36,9 +40,6 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   each entry's high bit triggers a call after clearing it
  *   into g_scaledInit_00542044; pause-test breaks the loop.
  */
-extern unsigned int g_table_004ab4e78[];
-extern void LoadGeoAsset_Default(void);
-extern unsigned int g_data_00ab5034;
 void TableWalkPause_004bd850(void) {
     unsigned int *p = g_table_004ab4e78;
     do {

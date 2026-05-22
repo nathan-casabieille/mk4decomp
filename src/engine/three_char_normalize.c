@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *     call LinearSearchByEsi(); if (g_framePauseFlag) break;
  *     arr[g_x_00542054 + i] = g_walkCallback; }
  */
+extern unsigned int g_data_005380b0;
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00542054;
+extern void LinearSearchByEsi_00459290(void);
+
+extern unsigned int g_arr_459200;
+
 __declspec(naked) void ThreeCharNormalize_00459200(void) {
     __asm {
         mov     ecx, offset g_data_005380b0

@@ -129,6 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   install self with tag 0x1e and raise framePause.
  */
 extern void InstallSelfPause2_00423630(void);
+extern unsigned int g_data_0054204c;
 void InstallSelfPause2_00423630(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int prev = *(unsigned int *)(base + 0x84);

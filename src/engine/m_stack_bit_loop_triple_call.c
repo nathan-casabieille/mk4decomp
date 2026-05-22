@@ -123,6 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void AndStoreJmp_0049cc10(void);
+extern void Thunk_0049cb80(void);
+
 __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

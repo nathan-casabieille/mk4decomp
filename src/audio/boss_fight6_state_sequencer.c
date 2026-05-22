@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d2320;
+extern unsigned int g_data_004d2330;
+extern unsigned int g_data_004d2340;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern void AudioInitInstallerPair_004a2140(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void TwoCallsTwoBranchTail_004a3c50(void);
+
 __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
 {
     __asm {

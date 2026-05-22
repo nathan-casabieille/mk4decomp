@@ -138,6 +138,14 @@ extern unsigned int g_data_004f2980;
  *   Tail thunks (+0xc0..): call DualTestDirtyToggle; if pause ret. Bit-test gates + chained data lookups.
  *   Multiple 16-byte aligned blocks all set/clear bit0 of g_state_0054208c.
  */
+extern unsigned int g_data_0053a1bc;
+extern unsigned int g_data_0053a354;
+extern unsigned int g_data_00542004;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
     __asm {
         push    esi

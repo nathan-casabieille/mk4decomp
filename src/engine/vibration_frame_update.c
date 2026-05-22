@@ -133,6 +133,19 @@ extern unsigned int g_data_00535e7c;
  *   Convert via DoubleToInt64, write to g_data_0054206c, shift right by 4,
  *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_state_0054208c.
  */
+extern unsigned int g_data_004d2a00;
+extern unsigned int g_data_004d2a10;
+extern unsigned int g_data_004f6508;
+extern unsigned int g_data_004f6570;
+extern unsigned int g_data_004f6574;
+extern unsigned int g_data_004f6578;
+extern unsigned int g_data_004f657c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern void DoubleToInt64_004c57d0(void);
+extern void Transform9Words_004b3a90(void);
+
 __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
     __asm {
         mov     eax, dword ptr [g_data_0054205c]

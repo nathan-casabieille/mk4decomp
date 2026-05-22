@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   g_walkCallback=1; g_scaledInit = g_cj; GDispatch4; pause? ret;
  *   if (g_state_0054208c & 4) ret; call PoseCopyIdleCluster_004537a0; pause? jmp Bit2GatedChainInit_00453620.
  */
+extern unsigned int g_x_00542048;
+extern void Bit2GatedChainInit_00453620(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void GDispatch4_004089c0(void);
+extern void PoseCopyIdleCluster_004537a0(void);
+
+extern unsigned int g_chain_arr_4348f0;
+
 __declspec(naked) void FourStageChainedDispatch_00453540(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 3

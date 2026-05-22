@@ -121,6 +121,12 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00535cfc;
+extern unsigned int g_data_0053a1d0;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054371c;
 
 /* @addr 0x00402ed0 (141b boot) - 2-stage selector init:
  *   TableWalkBoundedCmp(6); TripleCallCountdown_00428080; pause? ret.

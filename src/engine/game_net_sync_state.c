@@ -122,6 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004a0060;
+extern unsigned int g_const_004a0b00;
+extern unsigned int g_const_004a0dc0;
+extern unsigned int g_const_004a10d0;
+extern unsigned int g_data_004e2860;
+extern unsigned int g_data_00537e90;
+extern unsigned int g_data_00537f88;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541d88;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542094;
+extern void AudioMStackPushHandlerPair_0049ff30(void);
+extern void BitSetByIndex_004a07a0(void);
+extern void Cmp3DirtyToggle_0049fa20(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void MStackDualPushSaveRestore_004a09c0(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void TripleStageRollback_00404a50(void);
+
 __declspec(naked) void GameNetSyncState_0049fb70(void)
 {
     __asm {

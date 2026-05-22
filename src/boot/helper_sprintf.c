@@ -11,6 +11,9 @@
  *   on negative residual length calls overflow helper, else writes
  *   trailing NUL.
  */
+extern void Flsbuf_004c77f0(void);
+extern void PendingMatch_004c7920(void);
+
 __declspec(naked) void Helper_Sprintf(void) {
     __asm {
         sub     esp, 0x20

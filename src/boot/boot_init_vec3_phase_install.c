@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00506d7c;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void BootMultiAssetLoadStateInit_00403b10(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void MStackCall_00406340(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
 {
     __asm

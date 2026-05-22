@@ -121,6 +121,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
 
 /*
  * MStackPushChainStepIndex_004ab510 - 240b audio chain-step with mstack push2.

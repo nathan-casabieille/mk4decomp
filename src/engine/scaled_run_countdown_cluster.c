@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e6408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void DualScaledLoadStoreJmp_00475790(void);
+extern void DualSlotCopyChain_004756f0(void);
+extern void GuardedScaled_00475090(void);
+extern void GuardedSeq_00473f10(void);
+extern void GuardedSeq_00476de0(void);
+extern void GuardedSeq_00476f10(void);
+extern void GuardedTripleSetTailJmp8_0044a500(void);
+extern void IntroInitCluster_0044d280(void);
+extern void MStackCall_00406340(void);
+extern void PendingMatch_0044a7f0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void ScaledRunCountdownCluster_0044a090(void)
 {
     __asm {

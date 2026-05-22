@@ -131,6 +131,16 @@ extern unsigned int g_data_00535e7c;
  *     pause? ret.
  *   Then: set bit 2 of g_state_0054208c; if (scaledInit != 0): xor that bit off.
  */
+extern unsigned int g_data_00542a08;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0053a408;
+extern unsigned int g_x_00542048;
+extern void MStackCall_00406340(void);
+
+extern unsigned int g_arr_463390;
+extern unsigned int g_chain_disp_30_463390;
+
 void DirtyBitToggleDispatch_00463390(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a408]
@@ -175,3 +185,4 @@ void DirtyBitToggleDispatch_00463390(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

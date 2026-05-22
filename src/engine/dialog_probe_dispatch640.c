@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_iat_004d2190;
+extern unsigned int g_iat_004d21a0;
+extern unsigned int g_iat_004d21b0;
+extern unsigned int g_x_0058c8fc;
+extern unsigned int g_x_0058c908;
 
 /*
  * @addr 0x004b0670 (123b engine.ecm) - twin of DialogProbeDispatch

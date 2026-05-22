@@ -41,6 +41,8 @@ void _init_premain(void) {
  *   loop: read sbyte at esi, increment esi; call 0x4c82b0(byte, arg2, arg3);
  *   break if [arg3] == -1 or count == 0.
  */
+extern void WriteCharBuffered_004c82b0(void);
+
 __declspec(naked) void PaddedLoopByteFunc_004c8340(void) {
     __asm {
         push    ebx

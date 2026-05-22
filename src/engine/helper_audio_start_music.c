@@ -20,6 +20,17 @@
  *   ([g_f9efd4] == 0), calls vtable +0x30 with (slot, 0, 0, flag). Marks
  *   the cursor byte at [cursor + +0x17] = 1, advances cursor (mod 4).
  */
+extern unsigned int g_data_00f85b60;
+extern unsigned int g_data_00f85b62;
+extern unsigned int g_data_00f8fac8;
+extern unsigned int g_data_00f8fadc;
+extern unsigned int g_data_00f8fade;
+extern unsigned int g_data_00f8fadf;
+extern unsigned int g_data_00f9eb80;
+extern unsigned int g_data_00f9eb82;
+extern unsigned int g_data_00f9efd4;
+extern void FreeSlotFinder_004c3900(void);
+
 __declspec(naked) void Helper_AudioStartMusic(void) {
     __asm {
         push    ebx

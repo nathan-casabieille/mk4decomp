@@ -122,6 +122,9 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void DualGatedStateYield_0048fc80(void);
+extern void DualScaledInitCmp_0046dbd0(void);
+
 /* @addr 0x0046db60 (102b)
  *   call DualGatedStateYield_0048fc80; if eax != 0: ret;
  *   call DualScaledInitCmp_0046dbd0; if pause: ret;

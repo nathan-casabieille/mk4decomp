@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   chain[base].slot84 = 1; mstack-push (self + 0x01000000); ++chain[sel].slot4;
  *   chain[base].slot84 = 0; ScaledArrStore_00428e70; g_framePauseFlag = 1; ret.
  */
+extern void CjInstallSelfRouter_00470480(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledArrStore_00428e70(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void Wrapper_0048a300(void);
+
+extern unsigned int g_arr_41aaf0_mstack;
+
 __declspec(naked) void InstallSelfMStackPush_0046cc80(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

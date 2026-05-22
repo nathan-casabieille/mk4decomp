@@ -130,6 +130,8 @@ extern unsigned int g_data_00535e7c;
  *     chain[i*4 + n] = val;
  *   where mod = g_state_004d5324.
  */
+extern unsigned int g_state_004d5324;
+
 void TripleVecModClamp_0042af10(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -194,3 +196,4 @@ add_a0:
         mov     dword ptr [edx*4 + 8], eax
         }
 }
+

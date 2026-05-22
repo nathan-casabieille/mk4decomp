@@ -159,6 +159,18 @@ extern void MStackCall_00406740(void);
  *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper_0040c260 + BootCallChainDoubleMul10_0040b890;
  *     on no-error tail-jmps Triple3PathDispatch_0049bf90.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallSetPause_0041f830(void);
+extern void Phase1ChainSetupCallScale6_0040ca70(void);
+
 __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     __asm {
         call    MStackCall_00406740

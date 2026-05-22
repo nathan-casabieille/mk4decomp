@@ -9,6 +9,17 @@
  *   0058c860 (DSound), 0058c87c (window). Sets 320x240 (0x140 x 0xf0) instead of 640x480.
  *   Calls DialogProbeDispatch_004afe40 (sister helper).
  */
+extern unsigned int g_data_004f47a8;
+extern unsigned int g_data_0058c858;
+extern unsigned int g_data_0058c85c;
+extern unsigned int g_data_0058c860;
+extern unsigned int g_data_0058c878;
+extern unsigned int g_data_0058c87c;
+extern unsigned int g_iat_004d219c;
+extern unsigned int g_iat_004d21a4;
+extern unsigned int g_iat_004d21ac;
+extern void DialogProbeDispatch_004afe40(void);
+
 __declspec(naked) void DDraw3_CreateSurface(void) {
     __asm {
         mov     ecx, dword ptr [g_data_004f47a8]

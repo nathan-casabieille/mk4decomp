@@ -122,6 +122,12 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void BitShiftMultiPrecision_004cca50(void);
+extern void BitsetReserve_004cc960(void);
+extern void Copy3Dwords_004cca00(void);
+extern void LinearSearchArray_004cca30(void);
+extern void ZeroThreeFromArg_004cca20(void);
+
 __declspec(naked) void FpExtendedToFloat_004ccb10(void)
 {
     __asm {

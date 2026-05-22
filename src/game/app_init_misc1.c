@@ -8,6 +8,22 @@
  *   opens font file, fread'd page-by-page into a backbuffer, then issues two
  *   matched draw passes via PaletteFillLineHybrid_004b5ce0 with float positions for each glyph.
  */
+extern unsigned int g_data_004d29f8;
+extern unsigned int g_data_004d29fc;
+extern unsigned int g_data_004d505c;
+extern unsigned int g_data_004f5398;
+extern unsigned int g_data_004f5798;
+extern unsigned int g_data_004f613c;
+extern unsigned int g_data_00f4d050;
+extern unsigned int g_data_00f6ce50;
+extern unsigned int g_iat_004d21c4;
+extern void FSYS_fclose(void);
+extern void FSYS_fopen(void);
+extern void FSYS_fread(void);
+extern void FSYS_fseek(void);
+extern void Helper_TexUpload(void);
+extern void PaletteFillLineHybrid_004b5ce0(void);
+
 __declspec(naked) void AppInit_Misc1(void) {
     __asm {
         sub     esp, 8

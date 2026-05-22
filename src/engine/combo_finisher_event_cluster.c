@@ -122,6 +122,38 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f1610;
+extern unsigned int g_data_004f1628;
+extern unsigned int g_data_004f163c;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_005431b8;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void IterStepNegStore_00490b10(void);
+extern void NotMaskStorePair_0045f440(void);
+extern void PunchAnimCluster_00496d80(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledChain3c7c_0048f930(void);
+extern void ScaledClearJmp_00428d40(void);
+extern void ScaledInit_0048d490(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledLoadJmp_24_00429790(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TournamentMenuFsmCluster_004960e0(void);
+
 __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
 {
     __asm {

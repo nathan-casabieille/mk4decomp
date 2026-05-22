@@ -17,6 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], ecx
  *   ret
  */
+
 void ScaledSubStore_0048ee90(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -28,3 +29,4 @@ void ScaledSubStore_0048ee90(void) {
         mov     dword ptr [g_walkCallback], ecx
         }
 }
+

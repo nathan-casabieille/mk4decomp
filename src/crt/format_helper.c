@@ -128,6 +128,10 @@ extern unsigned int g_data_00535e7c;
  *   adjusts for '-' sign, calls FpFormatRound_004ccda0 to format, then
  *   FcvtFormatDecimal_004c87c0 to emit; returns the chosen length.
  */
+extern void CrtDoubleToStringImpl_004cce40(void);
+extern void FcvtFormatDecimal_004c87c0(void);
+extern void FpFormatRound_004ccda0(void);
+
 __declspec(naked) void FormatHelper_004c8750(void) {
     __asm {
         sub     esp, 0x28

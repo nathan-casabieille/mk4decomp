@@ -133,6 +133,51 @@ extern void RoundCleanupCluster_00427690(void);
  *   g_x_00542078=0, g_x_0054207c=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e7f40;
+extern unsigned int g_data_004e7f50;
+extern unsigned int g_data_004e7f60;
+extern unsigned int g_data_004e7f70;
+extern unsigned int g_data_00501250;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_x_0053a718;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_0054207c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ChainGatedNegAccum_0048b740(void);
+extern void DualScaledStore_00452740(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelfPackedTailJmp_004751f0(void);
+extern void MStackPush2GlobalSwap_00477400(void);
+extern void PendingMatch_00455bd0(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void SaveCallRestore_004049d0(void);
+extern void SetJmp_004753a0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void func_004569f0(void);
+
+extern unsigned int g_data_004eef18;
+extern unsigned int g_data_004eef20;
+extern void DualEntryBitFlagDispatch_0048e820(void);
+extern void GameLoaderHandlerCluster_004876f0(void);
+extern void IterStepDualStore_00490b40(void);
+extern void MStackPush3CallCascade_00486d90(void);
+extern void MStackPush3CmpCall_0048eec0(void);
+extern void MStackPushSet0004_00490230(void);
+extern void RoundCleanupCluster_00487510(void);
+extern void TableLookupCall_00489f60(void);
+
 __declspec(naked) void PollThenInit_00477920(void) {
     __asm {
         push    ebx
@@ -188,16 +233,6 @@ loopPoll:
     }
 }
 
-extern void RoundCleanupCluster_00487510(void);
-extern void MStackPush3CallCascade_00486d90(void);
-extern void GameLoaderHandlerCluster_004876f0(void);
-extern void TableLookupCall_00489f60(void);
-extern void DualEntryBitFlagDispatch_0048e820(void);
-extern void MStackPush3CmpCall_0048eec0(void);
-extern void MStackPushSet0004_00490230(void);
-extern void IterStepDualStore_00490b40(void);
-extern unsigned int g_data_004eef18;
-extern unsigned int g_data_004eef20;
 
 __declspec(naked) void RoundCleanupCluster_00487510(void)
 {

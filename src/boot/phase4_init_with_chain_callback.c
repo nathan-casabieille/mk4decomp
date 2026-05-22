@@ -122,6 +122,32 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0049db40;
+extern unsigned int g_data_004d62a8;
+extern unsigned int g_data_004d62e8;
+extern unsigned int g_data_0053813c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void CallSetPause_0041f830(void);
+extern void LinkedListFieldAdd_0049d450(void);
+extern void MStackCall_00406600(void);
+extern void MStackCall_00406740(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushNegMul10Var_0040a730(void);
+extern void MStackPushZeroCallPop_004066f0(void);
+extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void Phase4InitWithChainCallback_0040e860(void)
 {
     __asm {

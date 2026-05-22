@@ -122,9 +122,145 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_data_004f2980;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_0053a1bc;
+extern unsigned int g_data_0053a354;
+extern void SaveStateSnapshot_004aba40(void);
+extern void MStackRestore27_004abd50(void);
 
-/* @addr 0x0049f6a0 (259b game) - indirect-call state dispatcher with retry loop.
- *   Init: table = (g_x_00541fc0 + g_x_00535e48); load [table*4 + 4]; call eax indirect.
- *   If pause: ret. If !bit0(0054208c): jmp tail-CallSetPause.
- *   Load state = [g_x_00542048*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
+/* @addr 0x0049f7b0 (333b game) - dual-block: linked-list walk with indirect callback + dirty-toggle thunk.
+ *   Block A (0..0x82): call SaveStateSnapshot_004aba40. Init scaledInit = (0x004f2980>>2); read pair (ecx, edx).
+ *     If ecx<0 (sign): jmp to bit0-toggle path via 0x49f848.
+ *     esi=g_x_0054206c. Loop: if ecx==esi: call edx (indirect); set bit gate from pause.
+ *     Else advance pair; if ecx<0: terminate. Loop until match.
+ *     On no match: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
+ *     On match-indirect: if pause skip; if bit0(0054208c): call MStackRestore27_004abd50; or bit0; pop+ret.
+ *       Else: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
+ *   Tail thunks (+0xc0..): call DualTestDirtyToggle; if pause ret. Bit-test gates + chained data lookups.
+ *   Multiple 16-byte aligned blocks all set/clear bit0 of g_state_0054208c.
+ */
+__declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
+    __asm {
+        push    esi
+        call    SaveStateSnapshot_004aba40
+        mov     eax, offset g_data_004f2980
+        shr     eax, 2
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   7ch
+        _emit   5bh
+        mov     esi, dword ptr [g_x_0054206c]
+    loop_iter:
+        cmp     ecx, esi
+        _emit   74h
+        _emit   3dh
+        mov     ecx, dword ptr [eax*4 + 0]
+        inc     eax
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     edx, dword ptr [eax*4 + 0]
+        inc     eax
+        test    ecx, ecx
+        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        _emit   7dh
+        _emit   0d2h
+        call    MStackRestore27_004abd50
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+        call    edx
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   2dh
+        test    byte ptr [g_state_0054208c], 1
+        _emit   74h
+        _emit   13h
+        call    MStackRestore27_004abd50
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+        call    MStackRestore27_004abd50
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        pop     esi
+        ret
+        _emit   90h
+        _emit   90h
+        call    DualTestDirtyToggle_004282c0
+        mov     eax, dword ptr [g_pause_00541e6c]
+        test    eax, eax
+        _emit   75h
+        _emit   4bh
+        mov     al, byte ptr [g_state_0054208c]
+        mov     ecx, 1
+        test    al, cl
+        _emit   74h
+        _emit   31h
+        mov     eax, dword ptr [g_data_00542004]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   74h
+        _emit   1ch
+        mov     eax, dword ptr [g_x_00535e48]
+        test    eax, eax
+        mov     eax, dword ptr [g_data_0053a1bc]
+        _emit   74h
+        _emit   05h
+        mov     eax, dword ptr [g_data_0053a354]
+        test    eax, eax
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   75h
+        _emit   07h
+        or      dword ptr [g_state_0054208c], ecx
+        ret
+        mov     eax, dword ptr [g_state_0054208c]
+        and     al, 0xfe
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        mov     eax, dword ptr [g_state_0054208c]
+        or      al, 1
+        mov     dword ptr [g_state_0054208c], eax
+        ret
+    }
+}

@@ -126,6 +126,11 @@ extern unsigned int g_data_00535e7c;
  *   Same structure but adds `shl ecx,2; cmp [ecx+g_data_00f8fac8], 0; je;
  *   test [ecx+g_data_00f8fade], 1; je` before the vtbl calls (extra "in-use" filter).
  */
+extern unsigned int g_data_00f8fac8;
+extern unsigned int g_data_00f8fade;
+extern unsigned int g_data_00f8fadf;
+extern unsigned int g_data_00f9eb80;
+
 __declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
     __asm {
         mov     ax, word ptr [esp + 4]

@@ -126,6 +126,8 @@ extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern void DualLinkedBlockCopyBracketed_00476320(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
  *   set chain[+0x30] = 0x74, call MStackCall_00406340, tail-jmp MStackPushTwoEntryChainCall_004058c0.

@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+extern void AudioMixerStep_004ab700(void);
+extern void EsiTripleMul10Vec_00440660(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void ScaledAddStore_004406e0(void);
+extern void SetJmp_00440720(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void CameraBounceUpdate_00440430(void)
 {
     __asm {

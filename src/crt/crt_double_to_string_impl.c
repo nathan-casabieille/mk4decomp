@@ -8,6 +8,9 @@
  *   Calls DoubleToLongDouble_004cced0(esp, esp+0x2c); reads 3 fields, calls CrtFloatConvert_004ceb80;
  *   fills output struct (offsets 0,4,8,c) with values; strcpy-style memcpy.
  */
+extern void CrtFloatConvert_004ceb80(void);
+extern void DoubleToLongDouble_004cced0(void);
+
 __declspec(naked) void* CrtDoubleToStringImpl_004cce40(void) {
     __asm {
         sub     esp, 0x28

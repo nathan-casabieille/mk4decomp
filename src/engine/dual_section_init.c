@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   Section B (+0x70): g_x_00542048=0x0050f3ec>>2; same pattern with chain[+0x54]=0x00630000.
  *   ret with pop esi.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void RegistryPushBindPop_00403c20(void);
+
 __declspec(naked) void DualSectionInit_00492140(void) {
     __asm {
         mov     eax, 0x0050f3d0

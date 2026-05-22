@@ -137,6 +137,22 @@ extern unsigned int g_data_00535e7c;
  *   MStackCall_004065b0. Tail-jmp MStackPop8_004ab860 on success;
  *   bit-2-set branch also tail-jmps to MStackPop8 directly.
  */
+extern unsigned int g_data_004ba0e0;
+extern unsigned int g_data_004d78a8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void MStackCall_004065b0(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushNegMul10_0040a690(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+
 __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
     __asm {
         call    MStackPush8_004ab790

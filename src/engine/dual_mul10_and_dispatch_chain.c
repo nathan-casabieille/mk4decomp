@@ -132,6 +132,17 @@ extern unsigned int g_data_00535e7c;
  *   B3 (0xf0..0x111): call BootOneShotSetup_0040bde0; if !pause: call PendingMatch_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541dc4;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+extern void BootOneShotSetup_0040bde0(void);
+extern void GuardedSeq_0049c340(void);
+extern void PendingMatch_0040a8d0(void);
+extern void Phase1ChainExtendedInitLoop_0040c460(void);
+extern void ScaledIndirectJmp_0049c850(void);
+
 __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
     __asm {
         mov     edx, dword ptr [g_x_00542084]

@@ -141,6 +141,25 @@ extern unsigned int g_data_00535e7c;
  *       [g_data_0054205c*4 + 0x28], g_data_00542080=1, installs Self
  *       at body, arms 0x541e6c=1.
  */
+extern unsigned int g_data_004e9f78;
+extern unsigned int g_data_004e9f80;
+extern unsigned int g_data_00500c50;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void DispatchThroughBaseSel6c_00460f20(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void GatedScaledSubSat_0048fb40(void);
+extern void GuardedScaledChainJmpIndirect_00460e40(void);
+extern void NineEntryFlagDispatch_00461260(void);
+extern void StateSnapshotDispatch_00460b60(void);
+extern void ZeroScaledZeroCallPauseJmp_0045fa90(void);
+
 __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]

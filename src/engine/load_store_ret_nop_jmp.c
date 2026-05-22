@@ -12,6 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_state_00f85b34;
+extern unsigned int g_state_00f85b38;
 extern void func_004bf0a8(void);
 void LoadStoreRetNopJmp_004bf090(void) {
     g_state_00f85b34 = g_state_00f85b38;

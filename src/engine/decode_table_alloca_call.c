@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Reads 0x10000 words from arg2, rotates each (al<<1 | (al & 0x3f-bits)),
  *   stores into local stack buffer. Then calls IAT[007b0060](0, fn, 3, str_7affd0).
  */
+extern unsigned int g_data_007affd0;
+extern unsigned int g_iat_indirect_007b0060;
+extern unsigned int g_x_007affe0;
+extern unsigned int g_x_007affe4;
+extern void Helper_ChkStk(void);
+
+extern unsigned int g_arr_007afa28;
+
 __declspec(naked) int DecodeTableAllocaCall_004b4450(void) {
     __asm {
         mov     eax, 0x20000

@@ -135,6 +135,18 @@ extern unsigned int g_data_00535e7c;
  *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
  *   sets g_data_0054206c=1 on success.
  */
+extern unsigned int g_data_0051204c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void AudioMixerStep_004ab700(void);
+extern void MStackCall_00406340(void);
+
 void MStackVecSetupScopedRun_004749a0(void) {
     __asm {
         mov     eax, offset g_data_0051204c
@@ -207,3 +219,4 @@ void MStackVecSetupScopedRun_004749a0(void) {
     L_mvss_done:
         }
 }
+

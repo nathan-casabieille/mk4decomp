@@ -25,6 +25,7 @@ extern unsigned int g_state_00537f48_ll;
 extern unsigned int g_state_005380e0_ll;
 extern unsigned char g_byte_0054372c;
 extern unsigned char g_byte_00543724;
+
 void StateCmpAndStoreByte_004a98f0(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00537f94]
@@ -52,3 +53,4 @@ void StateCmpAndStoreByte_004a98f0(void) {
         mov     byte ptr [g_byte_00543724], dl
         }
 }
+

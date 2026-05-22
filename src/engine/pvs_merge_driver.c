@@ -141,6 +141,14 @@ extern void LinkedListInsert_004ab440(void);
  *   into g_data_00542048 and calls LinkedListInsert_004ab440. Pops the 2
  *   mstack entries back and clears bit 0 of g_data_0054208c via and 0xfe.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+
 __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
     __asm {
         mov     edx, dword ptr [g_data_0054208c]

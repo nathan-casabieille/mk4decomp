@@ -131,6 +131,13 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit-chain push 0x00475490+0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; ret.
  *   B2 (224..249): cj[+0x58] = cj[+0x48] (sibling at 0x00475570).
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void SelfInstallPhaseDispatch_00428990(void);
+
 __declspec(naked) void InstallSelfWithSibling_00475490(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

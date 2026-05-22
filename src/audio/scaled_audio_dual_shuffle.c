@@ -127,6 +127,8 @@ extern unsigned int g_data_00535e7c;
  *   parallel slots through a *7 LUT byte table at 0x4f3088, then
  *   adjusts dual fields at +0x58 and +0x5c offsets.
  */
+extern unsigned int g_byteTab_004f3088;
+
 void ScaledAudioDualShuffle_004a2970(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]
@@ -148,3 +150,4 @@ void ScaledAudioDualShuffle_004a2970(void) {
         mov     dword ptr [edx*4 + 0x5c], ecx
         }
 }
+

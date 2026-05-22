@@ -19,6 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   xformEntityIdx = eax; edx = g_scaledInit_00542044;
  *   [eax*4+0] = edx; ret.
  */
+extern unsigned int g_data_00538158;
 extern unsigned int g_data_00542038;
 extern unsigned int g_data_0054203c;
 extern void DirtyToggleByGate_0048f350(void);

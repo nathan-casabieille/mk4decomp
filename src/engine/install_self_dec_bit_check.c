@@ -125,6 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004391d0 (124b) - install-self pattern w/ dec g_state_00542080
  *   guard + chain[+0x74] & 0xf00 check before install.
  */
+
 __declspec(naked) void InstallSelfDecBitCheck_004391d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

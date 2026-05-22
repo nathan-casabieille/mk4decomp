@@ -122,6 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ed518;
+extern unsigned int g_data_004ed550;
+extern unsigned int g_data_004ed560;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542ba0;
+extern void Alarm3EntryPhaseChain_0047e1a0(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void Cascade3ChainInit_0048fa50(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledZero44_00491500(void);
+extern void SetJmp_00483b40(void);
+extern void StoreLitRetSet2_0042c3b0(void);
+extern void StreamInitCountdownBody_00494830(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_0048a130(void);
+
 __declspec(naked) void AggressorModeCluster_0047df30(void)
 {
     __asm {

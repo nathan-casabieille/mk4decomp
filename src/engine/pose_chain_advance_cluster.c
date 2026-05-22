@@ -149,6 +149,21 @@ extern unsigned int g_data_004e65a0;
 extern unsigned int g_data_00501070;
 extern unsigned int g_data_005117c4;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void StoreLoadJmp_00404ef0(void);
+
 __declspec(naked) void IntroInitCluster_0044d280(void)
 {
     __asm {

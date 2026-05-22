@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   eax >>= 2; ecx >>= 2; add; sub edx; add 0x10000; Mul10Tail; -> g_x_0054206c.
  *   mstack-pop 3.
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+
 void MStackPush3TripleMul10WithAbs_0048b500(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -200,3 +203,4 @@ void MStackPush3TripleMul10WithAbs_0048b500(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

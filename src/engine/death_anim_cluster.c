@@ -122,6 +122,34 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ffe4c;
+extern unsigned int g_data_00501970;
+extern unsigned int g_data_0052aafc;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a318;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a510;
+extern unsigned int g_data_00541de8;
+extern unsigned int g_data_00541dec;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00543564;
+extern unsigned int g_data_00543594;
+extern void CallSetPause_0041f830(void);
+extern void Cmp7CondStateUpdate_0042ed90(void);
+extern void GameMusicState4Way_00426d90(void);
+extern void GuardedDualPushTailJmp_004231f0(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
+
 __declspec(naked) void DeathAnimCluster_0042eaf0(void)
 {
     __asm {

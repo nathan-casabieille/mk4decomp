@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *     C: value=0x403, string=0x004eac38.
  *     D: value=0x1015, string=0x004eac08.
  */
+extern unsigned int g_x_0052d724;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseCmpStateJmp_0046a520(void);
+extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
+
 __declspec(naked) void QuadEntryGateChain_0046a630(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052d724]

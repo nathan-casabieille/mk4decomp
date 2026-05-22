@@ -133,6 +133,12 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004dedf8;
 extern unsigned int g_data_004dfb50;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
 void ChainInit3CallTailJmp_00423b80(void) {
     BootInitGuardedCallChain_004265d0();
     if (g_framePauseFlag != 0) return;

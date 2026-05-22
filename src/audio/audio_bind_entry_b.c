@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   walk[+0x58] = 0x730000/esi (esi passed in by caller); call
  *   MStackPushComplexCallPop; on pause clear, walk[+0x5c] = 0x14ccc.
  */
+extern void MStackPushComplexCallPop_004064b0(void);
+
 void AudioBindEntryB_004a6230(void) {
     __asm {
         mov     eax, 0x00511e1c
@@ -156,3 +158,4 @@ void AudioBindEntryB_004a6230(void) {
 done:
         }
 }
+

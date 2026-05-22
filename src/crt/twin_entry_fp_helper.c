@@ -129,6 +129,8 @@ extern unsigned int g_data_00535e7c;
  *   working frame, calls helper, restores fp control word, returns.
  *   Trails 12 0xcc int3 bytes.
  */
+extern void func_004cc6e0(void);
+
 __declspec(naked) void TwinEntryFpHelper_004ca250(void) {
     __asm {
         push    ebp

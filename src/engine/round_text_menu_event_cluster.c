@@ -135,6 +135,12 @@ extern void GuardedSeq_00488890(void);
  *     if !pause: g_x_0054206c=0x6666; call CmpP1DualInitStore_00482ab0; if !pause: jmp RoundTextMenuEventCluster_004888b0.
  *   Block B (+0x70): g_x_0054206c=0; call FlagThunk4EntryDispatcher_0040a470; if !pause: jmp GuardedSeq_00488890.
  */
+extern unsigned int g_load_0052ab10;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void CmpP1DualInitStore_00482ab0(void);
+
 __declspec(naked) void DualEntryStateLoadCascade_00488800(void) {
     __asm {
         mov     eax, dword ptr [g_load_0052ab10]

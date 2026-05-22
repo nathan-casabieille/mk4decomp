@@ -126,6 +126,16 @@ extern unsigned int g_data_00535e7c;
  *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
  *   of 0x10042 to g_x_0054207c and installs self at 0x00434990.
  */
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00ab51f8;
+extern void CallPauseConstStoreJmp_00438170(void);
+extern void HitReactionDispatcher_0045f650(void);
+extern void InstallSelf3StateDualBody_00434a30(void);
+extern void Wrapper_00438ee0(void);
+
+extern unsigned int g_chain_arr_4348f0;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfStatePush_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

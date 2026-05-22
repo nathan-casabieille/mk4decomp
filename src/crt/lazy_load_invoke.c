@@ -134,6 +134,12 @@ extern unsigned int g_data_00535e7c;
  *   Call main FP with (ebx, arg1, arg2, arg3).
  *   Tail block 3 (+0x8f-+0x92): NOP + xor eax, eax + ret (unreachable dead code).
  */
+extern unsigned int g_GetModuleHandleA;
+extern unsigned int g_GetProcAddress;
+extern unsigned int g_x_00f9fc34;
+extern unsigned int g_x_00f9fc38;
+extern unsigned int g_x_00f9fc3c;
+
 __declspec(naked) void LazyLoadInvoke_004ce150(void) {
     __asm {
         mov     eax, dword ptr [g_x_00f9fc34]

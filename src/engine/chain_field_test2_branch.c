@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   call MStackSignedMod_0042fee0; on pause clear, walk=0x4ccc; if walk <= old
  *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp_0042fa10.
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00542074;
+extern void MStackSignedMod_0042fee0(void);
+extern void Mul10Triple0xd999Interp_0042fa10(void);
+extern void SubCmpCallPauseJmp_0042fc40(void);
+
 __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]

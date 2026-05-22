@@ -122,6 +122,9 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00520050;
+extern void func_004d12de(void);
+
 __declspec(naked) void SehUnwindCluster_004c6ae0(void)
 {
     __asm {

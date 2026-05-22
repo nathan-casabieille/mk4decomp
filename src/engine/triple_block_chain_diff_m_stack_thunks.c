@@ -132,6 +132,20 @@ extern unsigned int g_data_00535e7c;
  *     If bit2(0054208c): jmp CallSetPause. Else call DualMul10AndDispatchChain; if pause ret.
  *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set1_Jmp_0049c6d0(void);
+extern void Atan2QuadrantLookup_004245b0(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void DualMul10AndDispatchChain_0049c220(void);
+extern void ScaledStackCallPause_0049c360(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

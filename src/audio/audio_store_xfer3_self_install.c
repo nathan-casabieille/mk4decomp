@@ -134,6 +134,10 @@ extern unsigned int g_x_00535e6c;
  *   push 0x4f3030, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  */
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+
 void ChainInitDoublePushCall_004a47c0(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -174,3 +178,4 @@ void ChainInitDoublePushCall_004a47c0(void) {
         add     esp, 8
         }
 }
+

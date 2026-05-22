@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *     copy from g_data_005236e8 into new slot, free old, swap pointers.
  *     Path differs based on flag g_data_00f9fc14.
  */
+extern unsigned int g_data_005236b8;
+extern unsigned int g_data_005236e8;
+extern unsigned int g_data_00f9fc14;
+extern unsigned int g_data_00f9fc74;
+extern void Calloc_004c6110(void);
+extern void CrtFreeLocaleInfo_004d0400(void);
+extern void FreeImpl_004c55f0(void);
+extern void LocaleInfoFill_004d0270(void);
+
 __declspec(naked) void StringStripSlotReplace_004d0140(void) {
     __asm {
         /* sub-1 (in-place string strip) */

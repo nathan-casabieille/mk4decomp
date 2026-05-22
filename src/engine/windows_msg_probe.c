@@ -132,6 +132,10 @@ extern unsigned int g_data_00535e7c;
  *   write result to *arg1, *arg2, *arg3=1; update [0x7affe0]; return 1.
  *   On any fail, return 0.
  */
+extern unsigned int g_PeekMessageA_007b003c;
+extern unsigned int g_x_007affe0;
+extern unsigned int g_x_007affe4;
+
 __declspec(naked) void WindowsMsgProbe_004b4530(void) {
     __asm {
         sub     esp, 0x14

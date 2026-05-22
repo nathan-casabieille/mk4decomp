@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   state==1: install-self+0x02000000; call ScaledLoadJmp; set pause=1.
  *   state>=2: tail-call FiveCallGuardSetTail.
  */
+extern unsigned int g_data_004ed0dc;
+extern unsigned int g_pause_00541e6c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void ScaledAndAldf_00490330(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void InstallSelf3StateDualChain_0047a1c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

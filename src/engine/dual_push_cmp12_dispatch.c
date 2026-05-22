@@ -125,6 +125,9 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00474d40 (157b) - double mstack push + chain[+0x64] lookup +
  *   cmp 1/2 dispatch to g_state_00537f48 vs g_state_005380e0 +
  *   double pop. */
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+
 void DualPushCmp12Dispatch_00474d40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -165,3 +168,4 @@ void DualPushCmp12Dispatch_00474d40(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

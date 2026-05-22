@@ -133,6 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   [ecx*4+0x34] = eax; eax = g_eventQueueEnd; edx = g_data_00542070;
  *   [eax*4+0x34] = edx; ret.
  */
+
 void TriCmpOrFinal_0043c390(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00542080]
@@ -161,3 +162,4 @@ void TriCmpOrFinal_0043c390(void) {
         mov     dword ptr [eax*4 + 0x34], edx
         }
 }
+

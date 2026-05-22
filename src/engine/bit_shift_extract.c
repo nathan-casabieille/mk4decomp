@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
  *   store eax to g_x_00542070 / g_x_0054206c.
  *   mstack-pop pair.
  */
+extern unsigned int g_data_00535d10;
+extern unsigned int g_data_00535d5c;
+extern unsigned int g_data_00541fb4;
+extern unsigned int g_data_00541fb8;
+extern unsigned int g_x_0053a3c0;
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
 __declspec(naked) void BitShiftExtract_00464090(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

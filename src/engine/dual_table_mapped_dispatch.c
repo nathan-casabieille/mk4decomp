@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0050b13c;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543088;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void ZeroThreeFields_00404ed0(void);
+
 __declspec(naked) void DualTableMappedDispatch_00492e60(void)
 {
     __asm

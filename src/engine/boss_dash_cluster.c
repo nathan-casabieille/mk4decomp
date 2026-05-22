@@ -134,6 +134,13 @@ extern void BossDashCluster_004879e0(void);
  *   if (eax == 0): call BossDashCluster_004879e0; pop esi; ret.
  *   install-path: install self with [esi+0x84]=1, g_x_0054204c=1, pause=1.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfMStackIndirect_00487920(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

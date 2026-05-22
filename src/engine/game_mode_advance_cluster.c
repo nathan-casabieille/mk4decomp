@@ -130,6 +130,8 @@ extern void InitZeroChainLookupJmp_00494210(void);
 
 /* @addr 0x0047de60 (128b) - install-self chain extension variant
  *   w/ FiveCallGuardSetTail_0046f6b0 bypass + ScaledChainJmp tail. */
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfChainExtendCall_0047de60(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

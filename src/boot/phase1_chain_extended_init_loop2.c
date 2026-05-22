@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5fa0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void AudioMixerStep_004ab700(void);
+extern void CmpDivJmp_0049d080(void);
+extern void CopyThreeFields_00404df0(void);
+extern void MStackCall_00406600(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushNegMul10_0040a690(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void SetJmp_00405420(void);
+extern void SetJmp_00408d20(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 __declspec(naked) void Phase1ChainExtendedInitLoop2_0040c760(void)
 {
     __asm {

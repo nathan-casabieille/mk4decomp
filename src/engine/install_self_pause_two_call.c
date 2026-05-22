@@ -130,6 +130,10 @@ extern unsigned int g_data_00535e7c;
  *   chain[sel].slot74 = 0x100e; g_walkCallback=0x100e;
  *   row[0x08]=&self; row[0x84]=1; g_x_0054204c=0x28; g_framePauseFlag=1.
  */
+extern unsigned int g_x_0054204c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void MStackPushSet0008_004901a0(void);
+
 __declspec(naked) void InstallSelfPauseTwoCall_0047af70(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

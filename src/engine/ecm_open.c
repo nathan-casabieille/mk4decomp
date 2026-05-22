@@ -18,12 +18,16 @@ extern const char $SG_rb[];   /* "rb" - shared with ValidateInstall */
 /*
  * @addr 0x004b06f0
  *
+extern unsigned int g_ecmDSBuffer;
+extern void ECM_PlayThread(void);
+
  * Naked + __asm: SEH-style stack-built struct setup, FP volume
  * curve (fldlg2 + fyl2x + fmul + fcom + clamp), COM vtable calls
  * via [edx + 0x0c/0x34/0x44/0x40/0x3c], magic-divide-by-8 frame-
  * offset computation, and IAT-style indirect calls to CreateThread
  * and Sleep. None of this composes naturally as pure C.
  */
+
 __declspec(naked) u32 ECM_Open(const char *filename, void *dsound_iface,
                                 u32 unused, u32 frame_skip)
 {

@@ -125,6 +125,16 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004ab900 (169b audio) - mstack-push 7 globals:
  *   g_x_00542070, 74, 78, 7c, 80, 84, 88.
  */
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPush7_004ab900(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -164,3 +174,4 @@ void MStackPush7_004ab900(void) {
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         }
 }
+

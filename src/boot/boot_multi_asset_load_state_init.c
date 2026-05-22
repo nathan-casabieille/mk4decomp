@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *   call DispatcherComplex260; if paused: ret. chain[g_x_00542044*4 + 0x54] = 0x8bff9b80;
  *   g_x_0054206c=0x1f; chain[+0x30]=0x1f; call PushSetCallPop; if paused: ret. Tail-call RegistryPushBindPop.
  */
+extern unsigned int g_data_00506c14;
+extern unsigned int g_data_005080bc;
+extern unsigned int g_data_005080d8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void RegistryPushBindPop_00403c20(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
 {
     __asm

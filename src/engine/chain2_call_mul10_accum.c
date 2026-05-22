@@ -126,6 +126,18 @@ extern unsigned int g_data_00535e7c;
  *   then two Mul10Tail double-pushes accumulating into g_x_0054206c (via g_x_00542078) and
  *   g_x_00542070 (via g_x_0054207c), with pause-aborts after each callee. mstack-pop g_x_00542074.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void MStackMagicModMul10_00424410(void);
+extern void ModMagicMul10Index_00424350(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void Chain2CallMul10Accum_00426a30(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -176,3 +188,4 @@ void Chain2CallMul10Accum_00426a30(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

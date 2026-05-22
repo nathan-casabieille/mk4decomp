@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *     g_x_00542070=0xb; g_x_0054206c=g_x_00542070; jmp StateDispatchYield_00471190.
  *   Block B (+0x70): g_x_0054206c=0x8; jmp StateDispatchYield_00471190.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void ScaledChainAndF000DirtyToggle_0048e740(void);
+extern void StateDispatchYield_00471190(void);
+
 __declspec(naked) void DualEntryStateGated_00460fa0(void) {
     __asm {
         mov     dword ptr [g_x_00542070], 0x0b

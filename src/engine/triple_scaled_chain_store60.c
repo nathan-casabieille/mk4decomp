@@ -121,6 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_load_0052ab10;
 
 /* @addr 0x00431450 (124b) - twin of 0x004313d0 with chain offsets 0x60/0x64/0x68. */
 void TripleScaledChainStore60_00431450(int arg) {

@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *   call AudioMixerStep_004ab700; if pause? ret. Compute eax = g_x_0054206c + g_x_00542070;
  *   Mul10Tail(eax, scaledInit[idx]); store result to scaledInit[idx]. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void AudioMixerStep_004ab700(void);
+
 void TripleMul10TailIndexed_00425970(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542074]
@@ -201,3 +207,4 @@ void TripleMul10TailIndexed_00425970(void) {
         mov     dword ptr [ecx*4 + 8], eax
         }
 }
+

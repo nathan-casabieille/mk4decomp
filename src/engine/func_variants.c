@@ -10,6 +10,119 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00428390 (19b naked): Block B - reached only via external
  * jmp from a different call site. Uses _emit jne for the back-jump
  * into Block A and a forward tail-jmp. */
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e3ac8;
+extern unsigned int g_data_004f2240;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00535ddc;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_state_0054208c;
+extern unsigned int g_data_004edf68;
+extern unsigned int g_data_004f21d0;
+extern unsigned int g_data_004f2250;
+extern unsigned int g_data_004f2298;
+extern unsigned int g_data_004ed2f0;
+extern unsigned int g_data_004ed2f8;
+extern unsigned int g_data_004ed308;
+extern unsigned int g_data_004edb98;
+extern unsigned int g_data_004edba8;
+extern unsigned int g_data_004edbf0;
+extern unsigned int g_data_004edc18;
+extern unsigned int g_data_004edc60;
+extern unsigned int g_data_004edc80;
+extern unsigned int g_data_004edca8;
+extern unsigned int g_data_004edcf0;
+extern unsigned int g_data_004edd20;
+extern unsigned int g_data_004edd58;
+extern unsigned int g_data_004edd90;
+extern unsigned int g_data_004eddb8;
+extern unsigned int g_data_004ede00;
+extern unsigned int g_data_004e6cd8;
+extern unsigned int g_data_004e6d30;
+extern unsigned int g_data_004e6d88;
+extern unsigned int g_data_004e6de0;
+extern unsigned int g_data_004e6e38;
+extern unsigned int g_data_004e6e90;
+extern unsigned int g_data_004e6ee8;
+extern void HitReactionStateCluster_004335f0(void);
+extern void DualCallPauseJmpDual_00439190(void);
+extern void AllocSlotPushTripleGlobals_00427470(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void AudioVolumeRescale_004ab690(void);
+extern void CallSetPause_0041f830(void);
+extern void ConstStoreCallJmp_00448fa0(void);
+extern void DirtyOrFlagDispatch_00476e60(void);
+extern void DispatcherComplex181_00426310(void);
+extern void DispatcherComplex181_00426490(void);
+extern void DispatcherComplex260_00407030(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedDispatch4_00489080(void);
+extern void GuardedSeq_00472840(void);
+extern void GuardedSeq_00476de0(void);
+extern void GuardedSeq_00476f10(void);
+extern void InitZeroChainLookupJmp_00494210(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void InstallSelfCmpJlJmp_00480b20(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void InstallSelfWithDispatch_00428f70(void);
+extern void LoadStoreDoubleCallSet_00448fc0(void);
+extern void LoopGuardedDecJmp_0042c790(void);
+extern void MStackCall_00406340(void);
+extern void MStackCall_00406740(void);
+extern void MStackChainSwapTraversal_00493d00(void);
+extern void MStackPop4Rewrite_004274f0(void);
+extern void MatchEndFadeFsmCluster_00449010(void);
+extern void Mul10Tail_00404af0(void);
+extern void PendingMatch_00432ed0(void);
+extern void Phase3DispatchScaleInstallSelf_004125e0(void);
+extern void Push70CallScaleArith2_00457b40(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void ScaledZero44_00491500(void);
+extern void Set2CallIncJmp_00472860(void);
+extern void SlideAttackEventCluster_00498900(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void StoreTwoCall_0049cb40(void);
+extern void StreamChainStringInstall_00457900(void);
+extern void TableLookupCall_00489ff0(void);
+extern void Thunk_0049cbc0(void);
+extern void TripleEntryStateCascade_0042c7e0(void);
+extern void TripleMStackPushChainStores_00476180(void);
+extern void func_004283b3(void);
+extern void func_0042976e(void);
+
+extern unsigned int g_data_0054207c;
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void EsiInstallChainCallIndirect_00428680(void);
+extern void IterStepDualStore_00490b40(void);
+extern void PendingMatch_00459510(void);
+extern void Phase3IndirectInstallChain_0045a010(void);
+extern void PushChainAddCallPop_00493c80(void);
+
 __declspec(naked) void func_00428390(void) {
     __asm {
         test    byte ptr [g_xformDirtyFlags], 4
@@ -94,7 +207,6 @@ void func_004bf0a0(void) {
 /* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (func_004284c0)
  * and tail-jmp into the indirect-call dispatcher. Entry A of the original
  * 69-byte packed block; the 5-byte nop gap to entry B is filled by 0x90-fill. */
-extern void EsiInstallChainCallIndirect_00428680(void);
 extern void func_0041f780_pp(void);
 extern void func_004284c0(void);
 void GuardedLoopWithCallback_004284a0(void) {
@@ -123,8 +235,6 @@ void func_00482700(void) {
 /* @addr 0x00459fc0 (27b): mstack-push func_00459fe0 onto stack[idx*4], tail-jmp
  * Phase3IndirectInstallChain_0045a010. Entry A of the original 73-byte packed
  * block; entry B (loop body) lives in func_00459fe0. */
-extern void Phase3IndirectInstallChain_0045a010(void);
-extern void PendingMatch_00459510(void);
 extern void func_00459fe0(void);
 void GuardedTwiceLoopback_00459fc0(void) {
     g_state_004d57ac++;
@@ -207,7 +317,6 @@ void func_00439fa0(void) {
 
 /* h2 @ 0x00498730 (64b): threshold check + tail-jmp
  * ScaledIndirectJmp_0049c850. */
-extern void PushChainAddCallPop_00493c80(void);
 void func_00498730(void) {
     PushChainAddCallPop_00493c80();
     if (g_data_00541e6c) return;
@@ -504,7 +613,6 @@ void func_00498c10(void) {
 }
 
 /* h3 @ 0x0047c3c0 (48b): chained event 004ed2f0 -> 004ed2f8 forwarder. */
-extern void IterStepDualStore_00490b40(void);
 void func_0047c3c0(void) {
     ((void (*)(void *))IterStepDualStore_00490b40)(&g_data_004ed2f0);
     if (g_data_00541e6c) return;
@@ -574,68 +682,6 @@ __declspec(naked) void func_0047c3f0(void)
     }
 }
 
-/* h4 @ 0x0047c3f0 (288b naked): pose-fn 2-state. Keep naked: self-ref
- * via OFFSET L_c3f0 + cross-ref to func_0047c510 via OFFSET. */
-extern void func_0047c510(void);
-__declspec(naked) void func_0047c3f0(void)
-{
-    __asm {
-        /* === h4 (0x47c3f0): pose-fn 2-state w/ 0xfffc0000 + 48f3f0 === */
-    L_c3f0:
-        mov      eax, dword ptr [g_data_00542060]
-        shl      eax, 2
-        mov      ecx, dword ptr [eax + 0x84]
-        mov      dword ptr [eax + 0x84], 0
-        test     ecx, ecx
-        je       L_c4a2
-        call     ScaledZero44_00491500
-        mov      eax, dword ptr [g_data_00541e6c]
-        test     eax, eax
-        jne      L_c50e
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      eax, 0xfffc0000
-        mov      edx, dword ptr [ecx*4 + 0x38]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_00542044], edx
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x58], eax
-        mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054206c]
-        mov      dword ptr [eax*4 + 0x58], edx
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      eax, 0x51e
-        mov      dword ptr [g_data_0054206c], eax
-        mov      dword ptr [ecx*4 + 0x4c], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054206c]
-        mov      dword ptr [edx*4 + 0x4c], eax
-        mov      eax, dword ptr [g_data_004d57ac]
-        inc      eax
-        mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [eax*4], OFFSET func_0047c510
-        jmp      InstallSelfIndirectJmp_0048f3f0
-    L_c4a2:
-        mov      dword ptr [g_data_0054207c], 0x30000
-        mov      dword ptr [eax + 8], OFFSET L_c3f0
-        mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, OFFSET L_c3f0
-        add      edx, 0x1000000
-        mov      dword ptr [ecx*4 + 0x84], 1
-        mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [eax + 4], ecx
-        mov      eax, dword ptr [g_data_00542060]
-        mov      dword ptr [eax*4 + 0x84], 0
-        call     InstallSelfCmpJlJmp_00480b20
-        mov      dword ptr [g_data_00541e6c], 1
-    L_c50e:
-        ret
-    }
-}
 
 /* h6 @ 0x0047c530 (64b naked): swap-side pose [+0x70] add 0x51e on
  * both sides. Keep naked: redundant `mov [g_data_0054206c], reg`
@@ -666,7 +712,6 @@ __declspec(naked) void func_0047c530(void)
 /* h7 @ 0x0047c580 (93b): event 004ed308 via 3-call chain w/ 0x200d
  * store + bit-1 fail-first dispatch to SevenThunks_0047cc50.
  * (Source comment had stale "0x47c570" address - real is 0x47c580.) */
-extern void DualCallPauseDirtyJmp_00490c30(void);
 void func_0047c580(void) {
     unsigned int v;
     ScaledAndAh_004902d0();
@@ -843,7 +888,6 @@ void func_004824b0(void) {
 
 /* h15 @ 0x004824e0 (30b): wait 6 + EntryThunkBodyStateMachine -> tail
  * EightEntryAlarmDispatch. */
-extern unsigned int g_data_0054207c;
 void func_004824e0(void) {
     g_data_0054207c = 6;
     EntryThunkBodyStateMachine_00457bb0();

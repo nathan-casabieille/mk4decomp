@@ -133,6 +133,10 @@ extern void TripleBlockInstallSelfMidBody_00482f60(void);
  *   [g_baseSel_00542060*4 + 0x74]; push 0x004ee370; call ArgSarStoreJmp; ret.
  *   Second block (+0x60): tail-jmp TripleBlockInstallSelfMidBody_00482f60.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+
 __declspec(naked) void Chain3CallGuarded_00482ef0(void) {
     __asm {
         mov     dword ptr [g_x_0054206c], 0x00008000

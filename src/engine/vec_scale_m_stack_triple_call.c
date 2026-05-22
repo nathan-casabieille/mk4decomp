@@ -142,6 +142,18 @@ extern unsigned int g_data_00535e7c;
  *     zeroes +0x70 when clamped. Sets g_data_00542048-pointed slot's
  *     +0x10=0, +0x14=&g_data_004e6070>>2. Pops mstack and returns.
  */
+extern unsigned int g_data_004e6070;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void AudioVolumeRescale_004ab690(void);
+extern void ChainWalkPushPop_00405a40(void);
+extern void MStackPush2VolumeCascade_00444e00(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542070]

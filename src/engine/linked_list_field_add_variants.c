@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_x_0054206c. Walk: esi=[esi]; eax=esi;
  *     scaledInit=eax; loop if nonzero. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542098;
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]

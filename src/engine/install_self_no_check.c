@@ -130,6 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   value 0x439250) and raise framePause.
  */
 extern void InstallSelfNoCheck_00439250(void);
+extern unsigned int g_data_0054204c;
 void InstallSelfNoCheck_00439250(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     *(unsigned int *)(base + 0x84) = 0;

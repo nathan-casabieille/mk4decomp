@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004eee3c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern void GatedChainClamp_00486e80(void);
+extern void MStackPush3CallCascade_00486d90(void);
+extern void Phase2InitDispatchInstallSelf_0040ba70(void);
+extern void ScaledChainDouble_004911f0(void);
+
 __declspec(naked) void RoundResultSlotInitTable_00486860(void)
 {
     __asm {

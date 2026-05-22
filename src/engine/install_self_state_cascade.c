@@ -131,6 +131,7 @@ extern void InstallSelfStateCascade_004382a0(void);
  *   slots, stores last into base[+4]; increments walk; tail-call into
  *   Push80SetWalkNegDualCallPop_004393b0 then jmp InstallSelfStateCascade_004382a0.
  */
+
 __declspec(naked) void Scaled3StorePushCallJmp_00438220(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

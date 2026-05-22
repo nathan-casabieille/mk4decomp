@@ -127,6 +127,32 @@ extern unsigned int g_data_00535e7c;
 /* Cousin of SkelAnimUpdaterCluster_0049d940 - uses [g_data_00542080] instead of         */
 /* [g_data_00542050+8] for the segment-count.                          */
 /* ------------------------------------------------------------------ */
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void CmpDivJmp_0049d080(void);
+extern void LinkedListFieldAdd_0049d380(void);
+extern void MStackCall_00406340(void);
+extern void MStackCall_00406740(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void PoseTreeBlendWalker_0049d680(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void SetJmp_00405420(void);
+extern void SixCrossStores_0049d8e0(void);
+extern void Thunk_0049cbb0(void);
+
 __declspec(naked) void SkelAnimUpdaterClusterV2_0049dbf0(void)
 {
     __asm {

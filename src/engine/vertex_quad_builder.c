@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
  *   byte, masking into output.
  */
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00ab4e34;
+extern void LeaScaledCall_004bd510(void);
+extern void Mem_Malloc(void);
+
 __declspec(naked) void VertexQuadBuilder_004bc470(void) {
     __asm {
         push    ecx

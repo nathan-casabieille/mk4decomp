@@ -21,6 +21,7 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_data_0052aafc;
 extern unsigned int g_data_0053a510;
+extern unsigned int g_data_00538158;
 void DispatchSetDirtyToggle_004ac150(void) {
     unsigned int v = g_data_0053a510;
     g_walkCallback = (void (*)(void))v;

@@ -132,6 +132,9 @@ extern void IterStepNegStore_00490b10(void);
  *     call TournamentMenuFsmCluster_004960e0; pause=1; pop+ret.
  *   chain[+0x84]!=0 path: g_x_00542080=8; jmp InstallSelfCountdown2Stage_0047c8f0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542080;
+
 __declspec(naked) void InstallSelfCountdownStr_0047cb90(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

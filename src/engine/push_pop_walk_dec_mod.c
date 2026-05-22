@@ -18,6 +18,7 @@ extern u32 g_pendingNodeType;
  */
 extern unsigned int g_eventQueueCurrent_mm;
 extern unsigned int g_state_0053a470;
+
 __declspec(naked) void PushPopWalkDecMod_004923f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

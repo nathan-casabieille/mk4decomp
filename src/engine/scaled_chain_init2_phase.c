@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *   second chain at g_data_0054204c[+0x54/0x58/0x5c]=0/0xfffc0000/0;
  *   g_scaledInit[+0x3c] = g_data_0054204c. pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00535e6c;
+extern unsigned int g_x_0054206c;
+extern void MStackCall_00406340(void);
+
 __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]

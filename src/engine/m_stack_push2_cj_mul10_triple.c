@@ -128,6 +128,10 @@ extern unsigned int g_data_00535e7c;
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
  *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void PreFightInstallCluster_00474390(void);
+
 void MStackPush2CjMul10Triple_00474170(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -198,3 +202,4 @@ void MStackPush2CjMul10Triple_00474170(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

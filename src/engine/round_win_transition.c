@@ -137,6 +137,11 @@ extern void TaggedSceneDispatch_004be690(void);
  *     push (word)[0x4e2864]; call TaggedSceneDispatch_004be690; add esp,4;
  *     jmp CallSetPause_0041f830.
  */
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void AudioInitChainTag_004a1000(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

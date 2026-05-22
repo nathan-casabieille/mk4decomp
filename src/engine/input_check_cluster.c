@@ -135,6 +135,16 @@ extern void InputCheckCluster_0045e1e0(void);
 extern unsigned int g_data_004d50a4;
 extern unsigned int g_data_0053a498;
 
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542094;
+
 __declspec(naked) void EventPacketDecoder_0045de60(void)
 {
     __asm {

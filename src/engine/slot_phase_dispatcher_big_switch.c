@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00538094;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542094;
+extern void CallPauseCallTestStackPushJmp_00460c60(void);
+extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallPauseTriCmpJmp_00460910(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void GuardedDispatch_00460ca0(void);
+extern void GuardedDispatch_00460cd0(void);
+extern void GuardedDoubleCallSetJmp_00460260(void);
+extern void NotShrCmp1Store_00460d80(void);
+extern void PerSlotPhaseRouter_004605d0(void);
+extern void PerSlotPhaseRouter_00460770(void);
+extern void UnlinkChainInstall_00460dd0(void);
+
 __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
 {
     __asm

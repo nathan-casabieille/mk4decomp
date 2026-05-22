@@ -132,6 +132,10 @@ extern void MStackPush1MagicMod2_004244d0(void);
  *   Mul10Tail(neg, walkCallback) -> g_walkCallback;
  *   Mul10Tail(walkCallback, g_data_00542070) -> g_data_00542070; mstack-pop scaledInit.
  */
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPushNegMul10_0040a690(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -172,3 +176,4 @@ void MStackPushNegMul10_0040a690(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

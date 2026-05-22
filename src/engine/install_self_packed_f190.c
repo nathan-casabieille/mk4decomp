@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   if (flag == 1): install-path with packed_ptr store, call ScaledLoadIncJmp, pause = 1.
  *   else: call FiveCallGuardSetTail; pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfPackedF190_0046f190(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

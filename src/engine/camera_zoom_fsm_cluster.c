@@ -137,6 +137,11 @@ extern void MStackPushVec3Mul10_004767e0(void);
  *   g_x_00542074=0x3333; call MStackPushVec3Mul10_004767e0; if pause? final-ret.
  *   Else: scaledInit-=0x1b. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
 void GuardedCascadeCjSetMul10_00440880(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -221,3 +226,4 @@ void GuardedCascadeCjSetMul10_00440880(void) {
         sub     dword ptr [g_scaledInit_00542044], 0x1b
         }
 }
+

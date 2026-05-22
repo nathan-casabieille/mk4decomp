@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   +0/+4/+8/+0xc/+0x10 → 0x004f3d80..0x004f3d90), iterates 5 times instead of 8, and uses
  *   strings 0x004f44c4/a8/94 (case 4) and 0x004f447c/60/4c (case 3) in the printf.
  */
+extern unsigned int g_byteTab_004f3d80;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_005433c4;
+extern unsigned int g_x_00543440;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void Helper_Sprintf(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void AudioByteTable5Loop_004a8970(void)
 {
     __asm

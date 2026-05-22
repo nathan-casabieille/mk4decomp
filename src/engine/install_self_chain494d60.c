@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00494d60 (178b game) - install-self chain. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542080;
+extern void CjInstallSelfRouter_00470480(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void InstallSelfChain494d60_00494d60(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

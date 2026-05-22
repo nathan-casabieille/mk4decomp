@@ -24,6 +24,8 @@ extern packed_ptr g_fightGroupHead;
  *       eventQueueCurrent = 1.
  *   walk = N (literal); jmp T.
  */
+extern unsigned int g_data_0054356c;
+extern unsigned int g_data_0053a404;
 extern void MStackPush3MaskBit_00492920(void);
 void DispatchSetWalk6_004926e0(void) {
     unsigned int v;

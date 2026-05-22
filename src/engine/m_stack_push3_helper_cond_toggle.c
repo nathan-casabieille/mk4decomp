@@ -132,6 +132,11 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop triple. g_state_0054208c |= 4; if scaledInit==0 ret;
  *   else g_state_0054208c ^= 4 (clear bit2); ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void MStackPush3LinkedListZeroWalk_0049ce00(void);
+
 void MStackPush3HelperCondToggle_0049cf70(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -199,3 +204,4 @@ void MStackPush3HelperCondToggle_0049cf70(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

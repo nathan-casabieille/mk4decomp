@@ -4,6 +4,23 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004ffd50;
+extern unsigned int g_data_00f8fac8;
+extern unsigned int g_data_00f8fad8;
+extern unsigned int g_data_00f8fadc;
+extern unsigned int g_data_00f8fade;
+extern unsigned int g_data_00f9efc8;
+extern unsigned int g_data_00f9efd8;
+extern unsigned int g_data_00f9efe4;
+extern unsigned int g_data_00f9efe8;
+extern void ESF_Close(void);
+extern void ESF_Open(void);
+extern void ESF_ReadData(void);
+extern void Helper_AudioStop(void);
+extern void Helper_Sprintf(void);
+
+extern unsigned int g_data_00f8facc;
+
 __declspec(naked) void Helper_AudioRelease(void)
 {
     __asm {

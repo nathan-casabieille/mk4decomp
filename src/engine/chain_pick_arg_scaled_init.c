@@ -130,6 +130,17 @@ extern unsigned int g_data_00535e7c;
  *   Store g_data_00542050 to [baseSel*4+0x64]; eax = arg0>>2; g_data_00542054 store at [baseSel*4+0x68];
  *   g_data_0054204c=eax+0xf; scaledInit=eax+g_x_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_state_0053a730;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_00542080;
+extern void EventPacketDecoder_0045de60(void);
+extern void Thunk_0045e0f0(void);
+
 __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054205c]

@@ -123,6 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00446470 (117b) - 3-field copy + bit-merge into chain[+0x34]. */
+
 void TripleFieldCopyBitMerge_00446470(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -152,3 +153,4 @@ void TripleFieldCopyBitMerge_00446470(void) {
         mov     dword ptr [edx*4 + 0x34], eax
         }
 }
+

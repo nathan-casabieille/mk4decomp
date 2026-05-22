@@ -133,6 +133,8 @@ extern unsigned int g_data_00535e7c;
  *         cmp ecx, [edx*4+0x60]; if ne: ret;
  *         else: jmp 0x49b730.
  */
+extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
+
 void ChainWalkCallCmp_0049b6d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -166,3 +168,4 @@ void ChainWalkCallCmp_0049b6d0(void) {
         _emit   00h
         }
 }
+

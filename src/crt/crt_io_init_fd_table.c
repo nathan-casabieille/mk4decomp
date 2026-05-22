@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00fa0de0;
+extern unsigned int g_data_00fa0de4;
+extern unsigned int g_data_00fa0ee0;
+extern unsigned int g_iat_004d2120;
+extern unsigned int g_iat_004d2128;
+extern unsigned int g_iat_004d2138;
+extern unsigned int g_iat_004d2148;
+extern void CmpCallPushIATCall_004c6e60(void);
+extern void LoadArgPushCall_004c54b0(void);
+
 __declspec(naked) void CrtIoInitFdTable_004c8bc0(void)
 {
     __asm {

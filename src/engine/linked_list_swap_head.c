@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   At tail: arr[ecx] = g_x_00537f24; g_x_00537f24 = chain[scaledInit].slot2c;
  *   mstack-pop g_x_00542048.
  */
+extern unsigned int g_x_00537f24;
+extern unsigned int g_x_00542048;
+
+extern unsigned int g_arr_chain_4348f0_2c;
+extern unsigned int g_arr_chain_4348f0_main;
+extern unsigned int g_data_004d57ac_arr;
+
 void LinkedListSwapHead_0049d0a0(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -175,3 +182,4 @@ loopWalk:
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

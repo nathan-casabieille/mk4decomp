@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *     finally call Cmp2OrSet0b; if !pause: g_x_0054206c = g_state_00537e94 = 0x0fff; ret.
  *   Block B (+0x60): call GateDispatch6c; if !pause: jmp ScaledInitWithCounterAndType_00446940; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537e94;
+extern unsigned int g_x_0054206c;
+extern void Cmp2OrSet0b_0048e3e0(void);
+extern void GateDispatch6c_00494580(void);
+extern void PackedAdvanceCallContinue_0048e630(void);
+extern void ScaledInitWithCounterAndType_00446940(void);
+
 __declspec(naked) void TripleStringPauseChain_004468c0(void) {
     __asm {
         push    0x004e5468

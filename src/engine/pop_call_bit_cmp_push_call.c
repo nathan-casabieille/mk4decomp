@@ -126,6 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   + chain[+0x4c] AND 0xf00 == 0x200 check, push or chain set
  *   + jmp set 0x542080=8 on success.
  */
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void TableLookupCall_00489ff0(void);
+
 void PopCallBitCmpPushCall_0047cb00(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -163,3 +167,4 @@ void PopCallBitCmpPushCall_0047cb00(void) {
         mov     dword ptr [g_state_00542080], 8
         }
 }
+

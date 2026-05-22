@@ -130,6 +130,11 @@ extern unsigned int g_data_00535e7c;
  *     else: clear scaledInit fields; tail-call StackPopDispatchTagged_0041f780.
  *   install: state=1; [ecx+8]=self; g_x_0054204c=1; g_pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

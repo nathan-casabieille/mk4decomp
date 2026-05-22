@@ -12,6 +12,8 @@ extern u32 g_eventQueueEnd;
 extern u32 g_tickW1;
 extern packed_ptr g_fightGroupHead;
 
+extern unsigned int g_data_00538158;
+
 /* @addr 0x00439c60 (79b)
  *   if g_fightGroupHead == [0x538158]: walk = 0x46; else walk = 0x45.
  *   call F; pause → ret;

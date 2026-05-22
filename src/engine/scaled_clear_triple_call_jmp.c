@@ -8,6 +8,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel_00542060;
+extern unsigned int g_framePauseFlag;
 
 /* @addr 0x004202c0 (57b)
  *   mov     eax, [g_baseSel_00542060]

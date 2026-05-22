@@ -122,6 +122,41 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f20c0;
+extern unsigned int g_data_004f20f0;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void AiComboDispatcherCluster_00497470(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void BootInstallPeriodicAudio_00413aa0(void);
+extern void CmpDivJmp_0049d080(void);
+extern void CondPickDualStore_0049c670(void);
+extern void CopyThreeFields_00404df0(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void GuardedSeq_00497450(void);
+extern void MStackPush8CallbackInit_00413b70(void);
+extern void PushCallScaledClearJmp_0040bf20(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void ScaledTripleCopy4_0049d2d0(void);
+extern void SoundSetupLoop_00413ea0(void);
+extern void TableLookupCall_00489ff0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+
 __declspec(naked) void SweepKickDispatcher_004970f0(void)
 {
     __asm {

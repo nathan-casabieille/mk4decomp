@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004d2b88;
+extern unsigned int g_data_004d2b60;
+extern unsigned int g_data_004d2b7c;
+extern unsigned int g_data_00522998;
+extern unsigned int g_data_00522bb0;
+extern unsigned int g_data_00522bb4;
+extern unsigned int g_iat_004d2058;
+extern unsigned int g_iat_004d212c;
+extern void FPUPrecisionCheck_004c8400(void);
+extern void IsCType_004cc650(void);
+extern void SevenArgThenTwoArg_004ccd20(void);
+extern void SevenArgThenTwoArg_004ccd60(void);
+extern void TolowerLocale_004cc6f0(void);
+
 __declspec(naked) void LocaleNumericHelpers_004c8450(void)
 {
     __asm {

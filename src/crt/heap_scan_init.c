@@ -137,6 +137,16 @@ extern unsigned int g_data_00535e7c;
  *   Finalize: if edi != 0, init fields at edi (+0,+4,+8,+0xc,+0x1c = 0; +0x10 = -1).
  *   Unlock(2) via TableLookupIatCall_004c6fd0; return edi.
  */
+extern unsigned int g_data_00f9fdb4;
+extern unsigned int g_data_00fa0dc0;
+extern unsigned int g_iat_004d2140;
+extern unsigned int g_iat_004d215c;
+extern void LoadArgPushCall_004c54b0(void);
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void TwoPathIATDispatch_004c7030(void);
+extern void TwoPathIATDispatch_004c70a0(void);
+
 __declspec(naked) void HeapScanInit_004c9440(void) {
     __asm {
         push    ebx

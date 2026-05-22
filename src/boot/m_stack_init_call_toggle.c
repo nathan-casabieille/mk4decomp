@@ -130,6 +130,7 @@ extern void MStackInitCallToggle_00408ad0(void);
  *   of walk array. Repeat with walk = -0x15; same gates; final zero
  *   at +0x3c then ret.
  */
+
 void TwinTagClear_00416db0(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0xffffffec
@@ -155,3 +156,4 @@ stage2:
 done:
         }
 }
+

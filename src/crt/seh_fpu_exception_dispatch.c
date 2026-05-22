@@ -122,6 +122,12 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_005228f8;
+extern unsigned int g_data_005228fc;
+extern unsigned int g_iat_004d20f8;
+extern void ArraySearch_004cba90(void);
+extern void CrtInitPerThreadData_004c9df0(void);
+
 __declspec(naked) void SehFpuExceptionDispatch_004cb880(void)
 {
     __asm {

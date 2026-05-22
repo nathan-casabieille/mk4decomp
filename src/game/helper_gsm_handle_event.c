@@ -4,6 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f5128;
+extern unsigned int g_data_004f512c;
+extern unsigned int g_data_00ab41c4;
+extern unsigned int g_data_00ab42f4;
+extern unsigned int g_data_00ab4360;
+extern void DrawMenu(void);
+extern void MenuInputPoll_004b7020(void);
+extern void TableSearchAsc_004b6300(void);
+extern void TableSearchDesc_004b62c0(void);
+
 __declspec(naked) void Helper_GSM_HandleEvent(void)
 {
     __asm {

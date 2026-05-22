@@ -124,6 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048a710 (168b) - install-self chain extension variant w/
  *   g_state_00542080=0x48af40 callback + multiple state inits. */
+extern void SetJmp_0048acc0(void);
+
 __declspec(naked) void InstallSelfChainCallStateInits_0048a710(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

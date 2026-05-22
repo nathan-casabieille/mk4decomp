@@ -135,6 +135,20 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void PunchAnimCluster_00496d80(void);
 extern unsigned int g_data_004ffe28;
 
+extern unsigned int g_data_0052d74c;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00538068;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+
 __declspec(naked) void StageEventComplexFsm_0047c680(void)
 {
     __asm {

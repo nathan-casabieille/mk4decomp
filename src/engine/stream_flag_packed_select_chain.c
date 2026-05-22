@@ -142,6 +142,28 @@ extern unsigned int g_data_00535e7c;
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_00428d60 depending on g_data_00542080.
  */
+extern unsigned int g_data_004ec040;
+extern unsigned int g_data_004ec050;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542a58;
+extern unsigned int g_data_0054388c;
+extern unsigned int g_data_00543890;
+extern void GuardedPackedSlotInit_00428760(void);
+extern void Mul10SumStoreNegCommit_00490970(void);
+extern void PendingMatch_004694b0(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ScaledClearJmp_00428d60(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     __asm {
         mov     dword ptr [g_data_0054206c], 0x52

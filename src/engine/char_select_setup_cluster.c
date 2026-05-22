@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e8190;
+extern unsigned int g_data_0050b604;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void DispatcherComplex138_00476060(void);
+extern void DualScaledStore_00452740(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackCall_00406600(void);
+extern void PendingMatch_004568b0(void);
+extern void ScaledStoreThree_00409260(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void TableHitOrSchedule_004be7a0(void);
+extern void Thunk_0049cbc0(void);
+extern void WorldCellSetupCluster_0042b000(void);
+
 __declspec(naked) void CharSelectSetupCluster_004565a0(void)
 {
     __asm {

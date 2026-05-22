@@ -11,6 +11,12 @@
  *   if the device was created, calls CreateDevice via the 0x4d28f0
  *   GUID; returns 1 on full success, 0 otherwise.
  */
+extern unsigned int g_x_00544298;
+extern unsigned int g_x_0058c7ac;
+extern unsigned int g_x_0058c7c8;
+extern unsigned int g_x_0058c7cc;
+extern unsigned int g_x_0058c7dc;
+
 __declspec(naked) void R2_Init9(void) {
     __asm {
         sub     esp, 0x6c

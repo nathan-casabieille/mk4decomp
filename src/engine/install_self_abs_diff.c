@@ -131,6 +131,15 @@ extern unsigned int g_data_00535e7c;
  *   install-path: g_x_00542080 = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
  *     pause = 1.
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void ChainDecCondStoreCallJmp_00434880(void);
+extern void CmpDispatchPushCallPop_00438530(void);
+extern void InstallSelfChainSet80Call_004347f0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

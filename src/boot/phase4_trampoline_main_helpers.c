@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d77b0;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void CallPauseInc_004ab670(void);
+extern void CallSetPause_0041f830(void);
+extern void ChainNodeAdvanceCallback_00408e70(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void FramePauseScaledStore_00406c10(void);
+extern void GuardedSelfRefSet_0048d070(void);
+extern void MStackPushCallCallPop_00405e20(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void ScaledStoreThree_00409260(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void SetJmp_00405420(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void Wrapper_0048a260(void);
+
 __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
 {
     __asm {

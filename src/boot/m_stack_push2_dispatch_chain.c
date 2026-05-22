@@ -127,6 +127,15 @@ extern unsigned int g_data_00535e7c;
  *   call F2; pause? ret; if (g_state_0054208c & 4) ret; call F3; pause? ret;
  *   if (g_state_0054208c & 4) ret; jmp F4.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void BootStateTriple_00408d30(void);
+extern void GDispatch4_004089c0(void);
+extern void MStackBracket2_StateAdvance6_004094d0(void);
+
+extern unsigned int g_chain_disp_24_4096b0;
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

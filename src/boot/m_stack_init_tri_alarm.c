@@ -140,6 +140,24 @@ extern unsigned int g_data_00535e7c;
  *   Entry 3 (offset 0x120, 81b): mirror of entry 2 with 0x3333 / 0x7ae
  *     constants; no negation before final store; tail-jmps PendingMatch_0040e310.
  */
+extern unsigned int g_data_004d61d8;
+extern unsigned int g_data_004d62e8;
+extern unsigned int g_data_0053813c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void PendingMatch_0040e310(void);
+extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
     __asm {
         call    MStackPush8_004ab790

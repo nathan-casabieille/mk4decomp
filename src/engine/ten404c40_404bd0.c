@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   Targets in order: 0x535e50, 0x535e48, 0x542050, 0x54204c, 0x542048
  *                     0x542080, 0x54207c, 0x542078, 0x542074, 0x54206c.
  */
+extern void ScaledDecPop_00404c40(void);
+extern void ScaledDecPop_00404bd0(void);
 extern unsigned int g_data_00535e50;
 extern unsigned int g_data_00535e48;
 void Ten404c40_404bd0_00426780(void) {

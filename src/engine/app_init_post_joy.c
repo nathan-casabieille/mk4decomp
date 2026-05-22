@@ -8,6 +8,14 @@
  *   DoubleToInt64(cos(i*const3)*const2 - const4) per slot. Two FP consts
  *   loaded once before loop; one call to CrtPowCluster_004c6540 in prologue.
  */
+extern unsigned int g_buf_007b01a0;
+extern unsigned int g_fp_004d29d0;
+extern unsigned int g_fp_004d29d8;
+extern unsigned int g_fp_004d29e0;
+extern unsigned int g_fp_004d29e8;
+extern void CrtPowCluster_004c6540(void);
+extern void DoubleToInt64_004c57d0(void);
+
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
         push    ecx

@@ -127,6 +127,9 @@ extern unsigned int g_data_00535e7c;
  *   if state==1: jmp StackPopDispatchTagged;
  *   else: call TripleFieldCopyJmpLo + chain[+0x58]=0x320000 + install w/ walk=3.
  */
+extern void TripleFieldCopyJmpLo_0048f810(void);
+extern void TripleFieldCopyLo_0048f880(void);
+
 __declspec(naked) void EsiInstallCounterDispatch_0049b120(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

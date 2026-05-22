@@ -122,6 +122,37 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f6238;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95a;
+extern unsigned int g_data_007af95c;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af960;
+extern unsigned int g_data_007af962;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af966;
+extern unsigned int g_data_007af968;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b8;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_00ab4398;
+extern unsigned int g_data_00ab439c;
+extern unsigned int g_data_00ab43a0;
+extern unsigned int g_data_00ab4e60;
+extern void Helper_DrawCursor(void);
+extern void ProjectTwoVertices(void);
+
 __declspec(naked) void BillboardChainRender_004bb030(void)
 {
     __asm {

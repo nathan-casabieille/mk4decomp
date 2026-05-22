@@ -16,6 +16,7 @@ extern packed_ptr g_fightGroupHead;
  */
 extern signed char g_table_004f3260[];
 extern void MStackPush2ChainLLInsert_00406790(void);
+
 void TableWalkChainCall_004a30f0(void) {
     __asm {
         mov     esi, OFFSET g_table_004f3260
@@ -32,3 +33,4 @@ loop_start2:
         _emit   0d8h
         }
 }
+

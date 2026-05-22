@@ -123,6 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048ede0 (105b) - twin of 0x0048ed70 with 4/0x400 constants. */
+extern void PushPopState70Mask_00490650(void);
+
 void DualConstMaskFlagToggle4_0048ede0(void) {
     __asm {
         mov     dword ptr [g_data_00542070], 4
@@ -155,3 +157,4 @@ void DualConstMaskFlagToggle4_0048ede0(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

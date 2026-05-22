@@ -19,8 +19,9 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_data_00f9fadc;
 extern unsigned int g_data_00f9fc20;
-extern void *g_iat_004d2118;
-extern void *g_iat_004d2110;
+extern unsigned int g_iat_004d2110;
+extern unsigned int g_iat_004d2118;
+
 __declspec(naked) void CRTSignalDispatch_004c9750(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

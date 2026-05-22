@@ -121,6 +121,15 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_iat_004d2030;
+extern unsigned int g_iat_004d21a8;
+extern unsigned int g_iat_004d2210;
+extern unsigned int g_x_007af934;
+extern unsigned int g_x_007af938;
+extern unsigned int g_x_007af93c;
+extern unsigned int g_x_007af940;
+extern unsigned int g_x_007af944;
+extern unsigned int g_x_007af950;
 
 /*
  * @addr 0x004b2a40 (115b engine.app) - SW renderer teardown:

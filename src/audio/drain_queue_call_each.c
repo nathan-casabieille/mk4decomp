@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   "current" pointer (0x5437f0) into g_walkCallback, call again,
  *   and zero both heads.
  */
+extern unsigned int g_x_00543748;
+extern unsigned int g_x_00543750;
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void DrainQueueCallEach_004a1ec0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00543748]

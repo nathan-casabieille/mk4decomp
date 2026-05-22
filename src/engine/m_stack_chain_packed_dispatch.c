@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0050c97c;
+extern unsigned int g_data_005108d0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void InstallSelfDispatch_00407620(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackCall_00406390(void);
+
 void MStackChainPackedDispatch_00463c80(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -212,3 +226,4 @@ void MStackChainPackedDispatch_00463c80(void) {
     L_mscpd_ret:
         }
 }
+

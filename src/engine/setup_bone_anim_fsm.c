@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void DualPackedStoreCallSubBack_0043e270(void);
+extern void EsiTripleMul10Vec_00440660(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedCascadeCjLink70Mul10_0043e850(void);
+extern void HelperCallTripleMul10_0043e2d0(void);
+extern void MStackBracketedScaledStores_00475b30(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPush2LLWalkCompare_004069b0(void);
+extern void PreFightInstallCluster_00474390(void);
+extern void ScaledSaveCallRestoreJmp_00472f40(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void Thunk_0049cbc0(void);
+extern void Vec3PackedTripleCallBracket_004764d0(void);
+
 __declspec(naked) void SetupBoneAnimFsm_0043dea0(void)
 {
     __asm {

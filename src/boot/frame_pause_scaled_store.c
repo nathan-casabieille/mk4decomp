@@ -140,6 +140,8 @@ extern void MStackPush2ChainPrepend_00409970(void);
  *   if (ecx == 4): eax = 0xffff6667; g_x_00542070 = eax;
  *   chain[g_scaledInit].slot38 = eax; jmp F2.
  */
+extern unsigned int g_x_00542048;
+
 __declspec(naked) void ChainWalkInstall_0049b7c0(void) {
     __asm {
         mov     eax, offset g_data_0050b4b4

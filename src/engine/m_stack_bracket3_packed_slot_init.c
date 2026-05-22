@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004ec898;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void AudioMixerStep_004ab700(void);
+extern void MStackCall_00406340(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+
 __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
 {
     __asm

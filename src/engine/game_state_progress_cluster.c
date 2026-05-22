@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e4b48;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpDispatchPushCallPop_00438530(void);
+extern void CrouchCounterCluster_0043b1d0(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void InstallSelfDoubleMStack_0043b9a0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void StateMachine4ArmCascade_0043aab0(void);
+
 __declspec(naked) void GameStateProgressCluster_0043aff0(void)
 {
     __asm {

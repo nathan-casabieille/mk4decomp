@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042cec0 (322b game) - sibling of Distance3DMul10Chain with chain-field setup + dot-product. */
+extern unsigned int g_data_0053a3dc;
+extern unsigned int g_data_0053a41c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void DualMul10ChainAcc_0042d010(void);
+
 void ChainMul10DotProd_0042cec0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -208,3 +215,4 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     dword ptr [ecx*4 + 0x74], edx
         }
 }
+

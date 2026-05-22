@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *   Insert: g_x_0054206c=3; call StorePauseImulShr16; if pause ret.
  *     eax = g_x_0054206c*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_x_00542048*4 +0/4/8]; pop esi; ret.
  */
+extern unsigned int g_data_004e8860;
+extern unsigned int g_data_004e8948;
+extern unsigned int g_data_005380b0;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void StorePauseImulShr16_004ab630(void);
+
 __declspec(naked) void TableWalkMatchInsert_00459030(void) {
     __asm {
         mov     eax, offset g_data_004e8860

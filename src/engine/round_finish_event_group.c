@@ -141,6 +141,13 @@ extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_data_0053a774;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void GateDispatch6c_00494580(void);
+
 __declspec(naked) void GameModeAdvanceCluster_00482000(void)
 {
     __asm {

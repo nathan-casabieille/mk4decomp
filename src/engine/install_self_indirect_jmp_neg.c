@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_state_00542054;
 
 /*
  * @addr 0x0048f4f0 (114b game) - twin of InstallSelfIndirectJmp:

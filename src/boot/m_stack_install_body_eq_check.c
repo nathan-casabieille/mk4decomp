@@ -122,6 +122,13 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_004d5134;
+extern unsigned int g_x_00541e84;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 void MStackInstallBodyEqCheck_00406910(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -176,3 +183,4 @@ void MStackInstallBodyEqCheck_00406910(void) {
     L_body_end:
         }
 }
+

@@ -130,6 +130,11 @@ extern unsigned int g_data_00535e7c;
  *     default: walkCallback=1; clear bit 2; mstack-pop into g_data_00542070; ret.
  *   }
  */
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_00542098;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void StateSwitchMStackPop_00474f20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542098]
@@ -176,3 +181,4 @@ void StateSwitchMStackPop_00474f20(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -9,6 +9,8 @@
  *   Two code blocks (640x480 vs 320x240) selected via a 5-entry jump
  *   table; out-of-range and null-arg cases fall through to early ret.
  */
+extern unsigned int g_state_004f4b3c;
+
 __declspec(naked) void Helper_GetMenuExtents(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]

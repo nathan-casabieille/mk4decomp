@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e5808;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void MStackPush3CallChainBit2_004431e0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
 {
     __asm {

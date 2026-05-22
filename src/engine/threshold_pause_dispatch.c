@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   call DualGuardedTableSearch; if nonzero ret.
  *   g_x_0054206c = (g_state_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch_0046fd70.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CopyJmp_0048ee80(void);
+extern void DualGuardedTableSearch_004708c0(void);
+extern void TimerWindowThreshDispatch_0046fd70(void);
+
 __declspec(naked) void ThresholdPauseDispatch_0046fd10(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a3c0]

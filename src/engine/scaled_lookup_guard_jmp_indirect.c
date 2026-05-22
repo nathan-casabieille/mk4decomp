@@ -131,6 +131,9 @@ extern unsigned int g_data_00535e7c;
  *   if (bit0 of g_state_0054208c) != 0: jmp dword ptr [g_data_00542050];
  *   end: jmp MoveDispatch4StateFsm_00494a60.
  */
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void MoveDispatch4StateFsm_00494a60(void);
+
 __declspec(naked) void ScaledLookupGuardJmpIndirect_004949f0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

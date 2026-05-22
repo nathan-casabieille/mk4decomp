@@ -130,6 +130,17 @@ extern void BulletVolleySpawner_00478350(void);
 extern void EnduranceStateInitWalk_004785a0(void);
 extern void ScaledOrStore_004903d0(void);
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void MStackPushComplexCallPop_00406430(void);
+
 __declspec(naked) void SpawnListBatchLoader_00477710(void)
 {
     __asm {

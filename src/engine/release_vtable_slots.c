@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   and stash its return into g_x_0058c7dc. Clear both slots and a
  *   parallel slot at 0x58c768.
  */
+extern unsigned int g_x_00544258;
+extern unsigned int g_x_0058c720;
+extern unsigned int g_x_0058c768;
+extern unsigned int g_x_0058c7dc;
+
 __declspec(naked) void ReleaseVtableSlots_004af130(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

@@ -130,6 +130,10 @@ extern unsigned int g_data_00535e7c;
  *   round again; returns 2 for integer-after-division, 1 for
  *   integer, 0 otherwise.
  */
+extern unsigned int g_dbl_004d2bf8;
+extern void Fpclass_004ce010(void);
+extern void RoundDouble_004cdff0(void);
+
 __declspec(naked) void FPIntegerTest_004ca670(void) {
     __asm {
         sub     esp, 8

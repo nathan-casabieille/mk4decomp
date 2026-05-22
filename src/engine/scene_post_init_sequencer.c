@@ -131,8 +131,170 @@ extern unsigned int g_x_0053a46c;
 extern unsigned int g_x_0053a180;
 extern unsigned char g_data_004dfd48;
 extern void TablePushAccumTailJmp_00429e30(void);
-extern void Mul10Tail_00404af0(int, int);
-extern void ScenePostInitSequencer_00429b70(void);
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_004d5308;
+extern unsigned int g_data_004d530c;
+extern unsigned int g_data_004d5300;
+extern unsigned int g_data_004d5304;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_0053a7a8;
+extern unsigned int g_data_00542048;
+extern void MStackPush8_004ab790(void);
+extern void TwinLoopSlotFinder_00429a40(void);
+extern void *AllocNode(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void PendingMatch_00429ef0(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void InstallSelfDispatch_00407620(void);
+extern void MStackCall_00406390(void);
+extern void MStackPop8_004ab860(void);
 
-/* @addr 0x004236a0 (125b) - if any of {g_x_00537f48, g_x_005380e0,
- *   g_x_0053a178, g_x_0053a250} == 0xf: clear g_x_0053a51c & g_walkCallback,
+/* @addr 0x00429b70 (691b game) */
+void ScenePostInitSequencer_00429b70(void) {
+    __asm {
+        call     MStackPush8_004ab790
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        call     TwinLoopSlotFinder_00429a40
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        mov      eax, dword ptr [g_cj_00542058]
+        mov      eax, dword ptr [eax*4 + 0x3c]
+        test     eax, eax
+        mov      dword ptr [g_data_0054204c], eax
+        je       short L_9bf5
+        mov      dword ptr [g_data_0054207c], 1
+        mov      dword ptr [g_data_00542074], 0x10
+        call     AllocNode
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_data_00542074], 0x10
+        call     AllocNode
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+    L_9bf5:
+        mov      ecx, dword ptr [g_cj_00542058]
+        mov      edx, dword ptr [ecx*4 + 0x18]
+        mov      dword ptr [g_data_0054206c], edx
+        call     CopyGlobal_004ac1f0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        mov      eax, dword ptr [g_cj_00542058]
+        mov      ecx, dword ptr [eax*4 + 0x1c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_004d5308], ecx
+        mov      ecx, dword ptr [eax*4 + 0x20]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_004d530c], ecx
+        mov      ecx, dword ptr [eax*4 + 0x24]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [g_data_004d5300], ecx
+        mov      eax, dword ptr [eax*4 + 0x28]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [g_data_004d5304], eax
+        call     PendingMatch_00429ef0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        mov      eax, dword ptr [g_data_00535e6c]
+        mov      ecx, dword ptr [g_cj_00542058]
+        mov      dword ptr [g_scaledInit_00542044], eax
+        mov      ecx, dword ptr [ecx*4 + 0x2c]
+        mov      dword ptr [g_data_0054206c], ecx
+        mov      dword ptr [eax*4 + 0x54], ecx
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      ecx, dword ptr [g_scaledInit_00542044]
+        mov      eax, dword ptr [edx*4 + 0x30]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x58], eax
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      ecx, dword ptr [g_scaledInit_00542044]
+        mov      eax, dword ptr [edx*4 + 0x34]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x5c], eax
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      ecx, dword ptr [g_scaledInit_00542044]
+        mov      eax, dword ptr [edx*4 + 0x38]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x3c], eax
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      eax, dword ptr [edx*4 + 0xc]
+        mov      dword ptr [g_data_00542048], eax
+        call     MStackPushDispatchBitGate_00407330
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+        mov      eax, dword ptr [g_cj_0054205c]
+        mov      dword ptr [g_data_0053a7a8], eax
+        mov      dword ptr [eax*4 + 0x30], 0xb
+        mov      eax, dword ptr [g_data_00535e6c]
+        mov      ecx, dword ptr [g_cj_0054205c]
+        mov      dword ptr [g_data_0054206c], eax
+        mov      dword ptr [ecx*4 + 0x3c], eax
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      eax, dword ptr [edx*4 + 0x14]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_9d79
+        mov      dword ptr [g_data_00542048], eax
+        call     MStackPush4LLWalkPop4_004090e0
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      L_9e22
+    L_9d79:
+        mov      eax, dword ptr [g_cj_00542058]
+        mov      eax, dword ptr [eax*4 + 0x10]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_9dc3
+        mov      edx, dword ptr [g_cj_0054205c]
+        mov      dword ptr [g_data_00542048], eax
+        mov      ecx, dword ptr [eax*4]
+        sar      ecx, 2
+        mov      dword ptr [g_data_00542048], ecx
+        mov      eax, dword ptr [edx*4 + 0x18]
+        mov      dword ptr [g_scaledInit_00542044], eax
+        call     InstallSelfDispatch_00407620
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_9e22
+    L_9dc3:
+        mov      ecx, dword ptr [g_cj_0054205c]
+        mov      dword ptr [g_scaledInit_00542044], ecx
+        call     MStackCall_00406390
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_9e22
+        mov      edx, dword ptr [g_cj_00542058]
+        mov      eax, dword ptr [edx*4 + 8]
+        test     eax, eax
+        mov      dword ptr [g_data_0054206c], eax
+        je       short L_9df5
+        call     eax
+    L_9df5:
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_9e22
+        mov      eax, dword ptr [g_cj_0054205c]
+        mov      dword ptr [g_data_0054206c], eax
+        call     MStackPop8_004ab860
+        mov      eax, dword ptr [g_data_00541e6c]
+        test     eax, eax
+        jne      short L_9e22
+        mov      ecx, dword ptr [g_data_0054206c]
+        mov      dword ptr [g_cj_0054205c], ecx
+    L_9e22:
+        }
+}

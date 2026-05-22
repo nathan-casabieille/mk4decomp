@@ -132,6 +132,17 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054206c = 0x1999; chain[+0x80] = 0x1999;
  *     install self; g_x_0054204c = 0x2d; pause = 1.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+extern void CallSetPause_0041f830(void);
+extern void MStackCall_00406740(void);
+extern void Wrapper_0048a250(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfMul10_00481c70(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -122,6 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004d7878;
+extern unsigned int g_data_004d78b8;
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00543800;
+extern void AudioMixerStep_004ab700(void);
+extern void CallSetPause_0041f830(void);
+extern void ChainListVecAdd_0049d200(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+extern void CmpDivJmp_0049d080(void);
+extern void LoopUnrolledTripleMul10_0049d550(void);
+extern void MStackCall_004065b0(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy10_0049d340(void);
+extern void SetJmp_00405420(void);
+extern void SetJmp_00408d20(void);
+
 __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
 {
     __asm {

@@ -129,6 +129,8 @@ extern unsigned int g_data_00535e7c;
  *   indirect-chain to walk[+0] and tail-recurse; else install self,
  *   call Helper_TickAlt, then return value of g_framePauseFlag.
  */
+extern void CleanupCallTwice_004bd530(void);
+
 __declspec(naked) void ChainWalkCleanup_004bd4a0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]

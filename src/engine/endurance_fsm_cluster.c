@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004df6f0;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void BootMultiAssetLoadStateInit_00403b10(void);
+extern void CallSetPause_0041f830(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void MStackCall_00406740(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void EnduranceFsmCluster_004238e0(void)
 {
     __asm {

@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern void MStackMagicModMul10_00424410(void);
+extern void ModMagicMul10Index_00424350(void);
+
 void SaveRestore7CameraTransform_004267f0(void) {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
@@ -246,3 +259,4 @@ void SaveRestore7CameraTransform_004267f0(void) {
     L_6a22:
         }
 }
+

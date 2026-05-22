@@ -122,6 +122,29 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f360c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005420d8;
+extern void AudioMixerStep_004ab700(void);
+extern void ChainGetterStateInstaller_00412140(void);
+extern void ChainListVecAdd_0049d200(void);
+extern void GuardedSeq_00471670(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushCallPop_0040a830(void);
+extern void ZeroAndDirty4_00405430(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void BootGatedInitInstallPair_00412280(void)
 {
     __asm

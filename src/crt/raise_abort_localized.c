@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004d2ebc;
+extern unsigned int g_const_004d2ee4;
+extern unsigned int g_const_004d2ee8;
+extern unsigned int g_const_004d2f04;
+extern unsigned int g_const_004d2f08;
+extern unsigned int g_data_00520064;
+extern unsigned int g_data_00522908;
+extern unsigned int g_data_0052290c;
+extern unsigned int g_data_00522998;
+extern unsigned int g_data_00f9f84c;
+extern unsigned int g_data_00fa0de0;
+extern unsigned int g_iat_004d20a0;
+extern unsigned int g_iat_004d2108;
+extern unsigned int g_iat_004d2148;
+extern void LazyLoadInvoke_004ce150(void);
+extern void Strncpy_004cdc20(void);
+
 __declspec(naked) void RaiseAbortLocalized_004cc070(void)
 {
     __asm {

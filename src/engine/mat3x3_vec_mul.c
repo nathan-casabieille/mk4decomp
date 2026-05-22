@@ -127,6 +127,16 @@ extern unsigned int g_data_00535e7c;
  *   out[1] = (mat[3]*v.x + mat[4]*v.y + mat[5]*v.z) >> 12
  *   out[2] = (mat[6]*v.x + mat[7]*v.y + mat[8]*v.z) >> 12
  */
+extern unsigned int g_mat3x3_007af990;
+extern unsigned int g_mat3x3_007af992;
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af996;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99a;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af99e;
+extern unsigned int g_mat3x3_007af9a0;
+
 __declspec(naked) void Mat3x3VecMul_004b3630(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]

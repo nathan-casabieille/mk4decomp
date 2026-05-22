@@ -140,6 +140,20 @@ extern unsigned int g_data_004d57c8;
 extern unsigned int g_data_004d5814;
 extern unsigned int g_data_004d6990;
 extern unsigned int g_data_004107b8;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void MStackCall_004062f0(void);
+extern void TableLookupCall_00489ff0(void);
 
 __declspec(naked) void BossRoomInitCluster_00410340(void)
 {

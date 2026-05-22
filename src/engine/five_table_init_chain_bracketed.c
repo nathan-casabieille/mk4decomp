@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0053a52c;
+extern unsigned int g_data_0053a530;
+extern unsigned int g_data_0053a654;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542ab8;
+extern unsigned int g_data_00542b00;
+extern void ScaledDerefStore_004774b0(void);
+
 void FiveTableInitChainBracketed_004774f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -225,3 +236,4 @@ void FiveTableInitChainBracketed_004774f0(void) {
     L_ftic_abort:
         }
 }
+

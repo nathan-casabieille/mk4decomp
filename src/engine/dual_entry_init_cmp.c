@@ -128,6 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   B (+0x80): eax = ++[scaledInit*4 + 0xc]; if eax > g_x_00542070: set bit-0 in 0054208c;
  *     else clear it. ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00541e70;
+extern unsigned int g_state_00541e74;
+extern unsigned int g_state_00541e78;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void VertexSlotInitFlagWalk_00409740(void);
+
 __declspec(naked) void DualEntryInitCmp_00425b20(void) {
     __asm {
         mov     eax, dword ptr [g_state_00541e70]

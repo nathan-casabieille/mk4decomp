@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a318;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00543564;
+extern unsigned int g_data_00543594;
+extern void Helper_Sprintf(void);
+extern void PushPopPendingTwoCalls_0042f4f0(void);
+extern void ScaledStoreCallEpilogue_0042f4d0(void);
+
 __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
 {
     __asm {

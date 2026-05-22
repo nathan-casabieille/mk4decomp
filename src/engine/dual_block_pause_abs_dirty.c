@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *     toggle bit 0 of g_state_0054208c based on al=1: if (al & state):
  *     clear bit, else: set bit; ret.
  */
+extern unsigned int g_x_0053a180;
+extern void CondPlayerLookup_0048f270(void);
+
 void DualBlockPauseAbsDirty_00439560(void) {
     __asm {
         call    CondPlayerLookup_0048f270
@@ -165,3 +168,4 @@ void DualBlockPauseAbsDirty_00439560(void) {
         or      dword ptr [g_state_0054208c], eax
         }
 }
+

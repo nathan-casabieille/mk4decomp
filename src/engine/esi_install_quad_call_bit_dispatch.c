@@ -125,6 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049a050 (145b) - install-self pattern w/ 4-call chain
  *   (ClampNegPair_0049a170 + Vec2SumMul10ChainCompute_0049bc60 + GuardedSeq_0049a650/AtanDualDeltaThreshold_0049c870)
  *   + bit-test dispatch to Set43DualCallJmp on success. */
+extern void AtanDualDeltaThreshold_0049c870(void);
+extern void ClampNegPair_0049a170(void);
+extern void GuardedSeq_0049a650(void);
+extern void Set43DualCallJmp_0049a620(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+
 __declspec(naked) void EsiInstallQuadCallBitDispatch_0049a050(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

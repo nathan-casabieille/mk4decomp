@@ -126,6 +126,16 @@ extern unsigned int g_data_00535e7c;
  *   Same matrix as Mat3x3VecMul_004b3630 (at 0x7af990) but pre-shifts inputs
  *   by 6 before imul, then sar 6 after sum.
  */
+extern unsigned int g_mat3x3_007af990;
+extern unsigned int g_mat3x3_007af992;
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af996;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99a;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af99e;
+extern unsigned int g_mat3x3_007af9a0;
+
 __declspec(naked) void Mat3x3VecMul6Bit_004b3590(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]

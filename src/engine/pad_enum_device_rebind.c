@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f478c;
+extern unsigned int g_data_00544258;
+extern unsigned int g_data_0058c720;
+extern unsigned int g_data_0058c768;
+extern unsigned int g_data_0058c7c8;
+extern unsigned int g_data_0058c7cc;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_data_0058c7e0;
+extern void R2_Init11(void);
+
 __declspec(naked) void PadEnumDeviceRebind_004ad850(void)
 {
     __asm {

@@ -134,6 +134,20 @@ extern unsigned int g_data_00535e7c;
  *     Else: ecx=g_x_00538090; g_x_0054206c=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
  *     Else: install-self at body; chain->state=1; g_data_0054204c=2; g_pause_00541e6c=1; ret.
  */
+extern unsigned int g_data_0053a354;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537e90;
+extern unsigned int g_x_00537ea8;
+extern unsigned int g_x_00538090;
+extern unsigned int g_x_0053a2e8;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void InstallSelfStride5_004a06f0(void);
+extern void RoundWinTransition_0049e7e0(void);
+
 __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
 {
     __asm

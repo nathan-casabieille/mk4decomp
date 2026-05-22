@@ -139,6 +139,13 @@ extern void MStackPushZeroCallPop_00407d00(void);
  *     Else: g_x_00542054=[g_cj*4+0x24]; g_x_0054206c=0x8000; call MStackPushZeroCallPop;
  *       if pause ret. Install-self at body; state=1; g_x_0054204c=1; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void DualEntryStateMachine_0045a180(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

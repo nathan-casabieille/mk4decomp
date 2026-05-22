@@ -123,6 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00440660 (120b) - 3x Mul10Tail vec mul with esi alias. */
+
 __declspec(naked) void EsiTripleMul10Vec_00440660(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]

@@ -135,6 +135,18 @@ extern void InstallSelfCountdown2Stage_0047e910(void);
  *     if (g_state_0054208c & 1): call InstallSelfCountdown2Stage_0047e910; ret.
  *     else: install self, set slot84=1, g_x_0054204c=1, pause flag.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void TableLookupCall_00489ff0(void);
+
+extern void InstallSelfCountdown2Stage_0047c8f0(void);
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -187,7 +199,6 @@ __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
     }
 }
 
-extern void InstallSelfCountdown2Stage_0047c8f0(void);
 
 /* @addr 0x0047c880 (111b game) - triple-entry dispatcher.
  *   Block A: set g_x_0054206c=0x37; call TableLookupCall; if !pause set =0x07; ret.

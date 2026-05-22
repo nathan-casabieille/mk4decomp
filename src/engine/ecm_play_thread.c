@@ -19,6 +19,8 @@ extern void *g_iat_SuspendThread;   /* 0x004d2090 */
 /*
  * @addr 0x004b0a50
  *
+extern unsigned int g_ecmDSBuffer;
+
  * Naked + __asm: thread infinite-loop with a "yield" suspend at
  * the bottom (cannot exit normally), magic-divide-by-8 frame
  * offset lookup with cdq+xor+sub idiom for unsigned mod-4, plus
@@ -26,6 +28,7 @@ extern void *g_iat_SuspendThread;   /* 0x004d2090 */
  * a rep-stosd zero-clear on the locked buffer when restoring a
  * lost surface. Pure C wouldn't compose identically.
  */
+
 __declspec(naked) DWORD __stdcall ECM_PlayThread(LPVOID param)
 {
     __asm {

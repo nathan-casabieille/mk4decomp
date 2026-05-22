@@ -48,14 +48,14 @@
  *   ret
  */
 
-extern void *g_iat_004d2178;   /* IAT slot #1 */
-extern void *g_iat_004d21a0;   /* IAT slot #2 (loaded into esi) */
-extern void *g_iat_004d2190;   /* IAT slot #3 */
+extern unsigned int g_iat_004d2178;
+extern unsigned int g_iat_004d21a0;
+extern unsigned int g_iat_004d2190;
 
 #define DSOUND_BODY(STATE, IFACE, SECONDARY, CONFIG, DATA, E1, E2, E3, E4)    \
     extern unsigned int STATE;                                                 \
-    extern void *IFACE;                                                        \
-    extern void *SECONDARY;                                                    \
+    extern unsigned int IFACE;                                                 \
+    extern unsigned int SECONDARY;                                             \
     extern unsigned int CONFIG;                                                \
     extern unsigned int DATA;                                                  \
     extern int E1;                                                             \
@@ -115,6 +115,7 @@ extern void *g_iat_004d2190;   /* IAT slot #3 */
     }
 
 /* @addr 0x004aea40 */
+
 __declspec(naked) void DSoundBufferInit146_004aea40(void) {
     DSOUND_BODY(g_a40_state, g_a40_iface, g_a40_secondary, g_a40_config,
                 g_a40_data, g_a40_e1, g_a40_e2, g_a40_e3, g_a40_e4)

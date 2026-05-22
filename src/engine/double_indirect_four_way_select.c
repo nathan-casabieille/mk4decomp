@@ -135,6 +135,12 @@ extern unsigned int g_data_00535e7c;
  *   Merge: edx += g_x_00542070; eax += edx; g_data_00535e48=edx; eax=[eax*4];
  *   g_x_00542048=eax. mstack-pop pair.
  */
+extern unsigned int g_data_00535e48;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
 void DoubleIndirectFourWaySelect_0049ec00(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -200,3 +206,4 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

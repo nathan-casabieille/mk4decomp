@@ -124,6 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043ba90 (136b) - install-self pattern w/ mstack push +
  *   GuardedSeq_004297b0 + dec popped value to install or dispatch. */
+extern void GuardedSeq_004297b0(void);
+
 __declspec(naked) void EsiInstallPushDecPopJmp_0043ba90(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

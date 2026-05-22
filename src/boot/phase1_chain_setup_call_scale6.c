@@ -135,6 +135,11 @@ extern void InstallSelfCountdown2Stage_0047e910(void);
  *     if (g_state_0054208c & 1): call InstallSelfCountdown2Stage_0047e910; ret.
  *     else: install self, set slot84=1, g_x_0054204c=1, pause flag.
  */
+extern unsigned int g_x_0054204c;
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -132,6 +132,18 @@ extern unsigned int g_data_00535e7c;
  *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_004c6930.
  *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_data_00f9f840 = 1; ![0x4d2154]; pop+ret.
  */
+extern unsigned int g_byte_00f9f838;
+extern unsigned int g_data_00f9f83c;
+extern unsigned int g_data_00f9f840;
+extern unsigned int g_data_00fa0eec;
+extern unsigned int g_data_00fa0ef0;
+extern unsigned int g_iat_004d2060;
+extern unsigned int g_iat_004d20a4;
+extern unsigned int g_iat_004d2154;
+extern void IterFnPtrs_004c6940(void);
+extern void PushConstCall_004c6920(void);
+extern void PushConstCall_004c6930(void);
+
 __declspec(naked) void BootFatalAbortHandler_004c6860(void) {
     __asm {
         push    ebx

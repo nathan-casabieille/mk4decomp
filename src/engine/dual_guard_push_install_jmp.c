@@ -131,6 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   inc mstack; [esp*4] = 0x428950; jmp GameDispatchValidateState_004339c0.
  */
 extern void ScaledInitOrSelfPtr_00429680(void);
+extern void GuardedScaledChainJmpIndirect_00460e40(void);
 void DualGuardPushInstallJmp_004288e0(void) {
     unsigned int top;
     GuardedSeq_004297b0();

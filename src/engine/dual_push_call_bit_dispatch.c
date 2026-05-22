@@ -124,6 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00427ee0 (164b) - double mstack push + call MStackPush2LLWalkCompare_004069b0 +
  *   set bit2 + cond xor + dec mstack twice. */
+extern void MStackPush2LLWalkCompare_004069b0(void);
+extern void ScaledLoadGuardedJmp_004066d0(void);
+
 void DualPushCallBitDispatch_00427ee0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -171,3 +174,4 @@ void DualPushCallBitDispatch_00427ee0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

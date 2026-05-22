@@ -122,6 +122,36 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004d7b88;
+extern unsigned int g_data_004ec8f8;
+extern unsigned int g_data_004f00d0;
+extern unsigned int g_data_0052ab04;
+extern unsigned int g_data_0052ab08;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_0053a7a0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542ce8;
+extern void AudioMixerStep_004ab700(void);
+extern void CallSetPause_0041f830(void);
+extern void EsiInstallSetCbChainExtend_0048a810(void);
+extern void MStackCall_00406600(void);
+extern void MStackPushZeroCallPop_004066f0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
 {
     __asm {

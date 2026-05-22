@@ -13,33 +13,12 @@ extern unsigned int g_data_007af940;
 extern unsigned int g_data_007af934;
 extern unsigned int g_data_007af94c;
 extern unsigned int g_data_007af938;
-extern void *g_iat_004d2034;
-extern void *g_iat_004d2040;
+extern void (__stdcall *g_iat_004d2034)(unsigned int, int, int, int, int, int, int, int, int, unsigned int, unsigned int, int);
+extern void (__stdcall *g_iat_004d2040)(void);
 extern void Renderer4_EndScene_SW_Win(void);
-__declspec(naked) void Renderer4_PresentFrame(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_007af940]
-        test    eax, eax
-        _emit   74h
-        _emit   40h
-        call    Renderer4_EndScene_SW_Win
-        mov     eax, dword ptr [g_data_007af934]
-        mov     ecx, dword ptr [g_data_007af94c]
-        push    0
-        push    eax
-        mov     edx, dword ptr [g_data_007af938]
-        push    ecx
-        push    0xf0
-        push    0
-        push    0
-        push    0
-        push    0xf0
-        push    0x140
-        push    0
-        push    0
-        push    edx
-        call    dword ptr [g_iat_004d2034]
-        jmp     dword ptr [g_iat_004d2040]
-        ret
-    }
+void Renderer4_PresentFrame(void) {
+    if (!g_data_007af940) return;
+    Renderer4_EndScene_SW_Win();
+    g_iat_004d2034(g_data_007af938, 0, 0, 0x140, 0xf0, 0, 0, 0, 0xf0, g_data_007af94c, g_data_007af934, 0);
+    g_iat_004d2040();
 }

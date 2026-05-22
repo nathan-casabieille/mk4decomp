@@ -134,6 +134,14 @@ extern unsigned int g_data_00535e7c;
  *   Else: eax = chain[+0x18]; g_x_0054206c = eax; if 0: pop+ret. Else g_x_0054206c = 0;
  *     chain[+0x18] = 0; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void BootChainTreeRecurseWalk_00405b80(void);
+extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+
 void BootChainBidirRecurseWalk_00405ca0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -206,3 +214,4 @@ void BootChainBidirRecurseWalk_00405ca0(void) {
     L_ca0_justRet:
         }
 }
+

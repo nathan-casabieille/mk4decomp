@@ -146,6 +146,14 @@ extern void Wrapper_00484d90(void);
  *     tail-jmp Wrapper_00484d90; else g_state_00542080=0xd and tail-jmp
  *     DualBlockInstallSelfWithSibling_00484c90.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualBlockInstallSelfWithSibling_00484c90(void);
+extern void GateDispatch6c_00494580(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+
 __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

@@ -142,6 +142,27 @@ extern unsigned int g_data_004e7f28;
 extern unsigned int g_data_004e8158;
 extern unsigned int g_data_0050d434;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void AudioMixerStep_004ab700(void);
+extern void DualScaledStore_00452740(void);
+extern void MStackCall_00406340(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
 {
     __asm {

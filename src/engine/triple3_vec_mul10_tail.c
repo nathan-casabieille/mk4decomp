@@ -133,6 +133,9 @@ extern unsigned int g_data_00535e7c;
  *   edx = g_walkCallback; eax = [esi+8]; push edx; push eax;
  *   call Mul10Tail; pop esp; [esi+8] = eax; pop esi; ret.
  */
+extern void DivLongPushCall_004ab320(void);
+extern void TripleMul10VecJmpFpu_00424990(void);
+
 __declspec(naked) void Triple3VecMul10Tail_00424a20(void) {
     __asm {
         call    TripleMul10VecJmpFpu_00424990

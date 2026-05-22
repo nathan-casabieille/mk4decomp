@@ -140,6 +140,15 @@ extern void GuardedSeq_00476f10(void);
 extern void GuardedSeq_00476fc0(void);
 extern unsigned int g_data_004e51c8;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+
 __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
 {
     __asm {

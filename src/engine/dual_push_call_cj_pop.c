@@ -121,6 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0053815c;
 
 /*
  * @addr 0x0048c400 (116b game) - dual-push-call-cj-update-pop:

@@ -140,6 +140,16 @@ extern void PoseStateInitNode_0043cd60(void);
  *     g_x_0054206c=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
  *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0052aac4;
+extern unsigned int g_x_00538148;
+extern unsigned int g_x_0053a430;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+
 __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

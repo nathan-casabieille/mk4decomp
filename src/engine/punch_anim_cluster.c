@@ -148,6 +148,18 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *     re-reading phase and jumping back if non-zero. Install tail:
  *     [eax+8]=Self, slot[+0x84]=1, g_data_0054204c=1, 0x541e6c=1.
  */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern void EsiEdiAliasDualMul10_004906b0(void);
+
 __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

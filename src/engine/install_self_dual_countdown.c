@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00429050 (216b game) - install-self with countdown. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542080;
+extern void Install3WayChainStateAdvance_00429130(void);
+extern void ScaledLoadJmp_24_00429790(void);
+extern void Thunk_004296e0(void);
+
 __declspec(naked) void InstallSelfDualCountdown_00429050(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -18,6 +18,7 @@ extern packed_ptr g_fightGroupHead;
  *   store walk → [baseSel*4 + 0xc]; ret.
  */
 extern unsigned int g_data_00541dc0;
+extern unsigned int g_baseSel_00542060;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void ZeroMultiGlobalsCmp_00404680(void);
 void ClearTwoCallSetStore_004a2270(void) {

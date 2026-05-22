@@ -9,6 +9,16 @@
  *   Uses (g_byte_00ab4300, g_data_00ab4320, g_data_00ab4368) instead of (00ab42d4, 00ab41a0, 00ab4364).
  *   Pushed table addresses are 0x004f5018 / 0x004f501c.
  */
+extern unsigned int g_byte_00ab4300;
+extern unsigned int g_data_004f5018;
+extern unsigned int g_data_004f501c;
+extern unsigned int g_data_00ab4320;
+extern unsigned int g_data_00ab4368;
+extern void DrawMenu(void);
+extern void MenuInputPoll_004b7020(void);
+extern void TableSearchAsc_004b6300(void);
+extern void TableSearchDesc_004b62c0(void);
+
 __declspec(naked) void Helper_GSM_Sub19(void)
 {
     __asm

@@ -132,6 +132,9 @@ extern unsigned int g_data_00541e6c;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
 
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+
 __declspec(naked) void GameStateDispatch4Way_00436e50(void)
 {
     __asm {

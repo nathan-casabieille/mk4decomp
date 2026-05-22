@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Else: mstack-push g_currentNodeFlags; sar g_currentNodeFlags by 1 after adding 0xffff0000;
  *   g_x_00542048 = g_x_00535cf8; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
  */
+extern unsigned int g_x_00535cf8;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void MStackAngleRatioSubchain_00476af0(void);
+extern void PushStackAllocCall_00425900(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]

@@ -121,6 +121,16 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_iat_004d2244;
+extern unsigned int g_audioState00;
+extern unsigned int g_timerActive;
+extern unsigned int g_timerEndSec;
+extern unsigned int g_timerLastNow;
+extern unsigned int g_timerStartSec;
+extern unsigned int g_timerFlag;
+extern unsigned int g_timerHandle;
+extern unsigned int g_audioPreState;
+extern void Helper_AuxAudio_PostInit(void);
 
 /*
  * @addr 0x004ac5f0 (85b) - audio teardown: if g_timerFlag set,

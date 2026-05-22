@@ -128,6 +128,36 @@ extern void PendingMatch_00403d60(void);
 extern unsigned int g_data_0053a19c;
 extern unsigned int g_data_00541dc0;
 
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a3e8;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541de8;
+extern unsigned int g_data_00541dec;
+extern unsigned int g_data_00541df0;
+extern unsigned int g_data_00541df4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void AudioVolumeRescale_004ab690(void);
+extern void BootInitVec3PhaseInstall_00402c10(void);
+extern void BootStateInitWithRecurseInstall_00402de0(void);
+extern void BootStateMachine4Way_00402f60(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void InstallSelfCounter_00404920(void);
+extern void PendingMatch_00402540(void);
+extern void PendingMatch_00403670(void);
+extern void PendingMatch_004a2a80(void);
+extern void PhaseInstallSelf3Step_00402350(void);
+extern void QuadCallPhase2_004be800(void);
+extern void SceneFrameStepWithInputs_004be250(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void PendingMatch_00401b70(void)
 {
     __asm {

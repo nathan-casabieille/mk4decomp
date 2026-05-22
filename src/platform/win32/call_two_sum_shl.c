@@ -24,9 +24,10 @@ extern unsigned int g_scaledInit_00542044;
  *   nop
  *   jmp     +0x0b
  */
-extern void *g_iat_004d21b0;
 extern unsigned int g_state_00f9f7b8;
 extern void func_004c45c1(void);
+extern unsigned int g_iat_004d21b0;
+
 __declspec(naked) void CallTwoSumShl_004c45a0(void) {
     __asm {
         push    esi

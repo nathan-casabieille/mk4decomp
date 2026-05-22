@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void EntryThenDispatcherPair_00438cd0(void);
+extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void GuardedSeq_00433bb0(void);
+extern void InstallSelfBitGate_00438aa0(void);
+extern void JumpTableDispatch_0043a550(void);
+extern void MStackPushPtr1Jmp_00438e70(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void ProneFsmCluster_004355f0(void);
+extern void TriPhaseGateInstallSelfBig_00437140(void);
+
 __declspec(naked) void TriEntryGateMain_00435440(void)
 {
     __asm

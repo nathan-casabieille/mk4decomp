@@ -133,6 +133,11 @@ extern unsigned int g_data_00535e7c;
  *   Return ((eax+1 != 0) ? 0 : -1) - 1 (encoded via neg/sbb/neg/dec).
  *   Fail: call CallAdd8; *eax = EINVAL (0x16); return -1.
  */
+extern void Crt_errno_004c8ba0(void);
+extern void FFlushImpl_004c69a0(void);
+extern void FileTellAdjusted_004c58e0(void);
+extern void IOWrapper_004c8dd0(void);
+
 __declspec(naked) void FSeekImpl_004c5ad0(void) {
     __asm {
         push    esi

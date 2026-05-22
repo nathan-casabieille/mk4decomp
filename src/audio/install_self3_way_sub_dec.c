@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *     call GuardedCallDirtyJmpInit, pause = 1.
  *   else: call CallSetPause_0041f830; pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern void CallSetPause_0041f830(void);
+extern void GuardedCallDirtyJmpInit_004a19c0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

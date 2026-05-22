@@ -122,6 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f2fc0;
+extern unsigned int g_data_004f31a0;
+extern unsigned int g_data_004f31cc;
+extern unsigned int g_data_004f31d0;
+extern unsigned int g_data_004f31d8;
+extern unsigned int g_data_004f3220;
+extern unsigned int g_data_004f3234;
+extern unsigned int g_data_004f3238;
+extern unsigned int g_data_004f3240;
+extern unsigned int g_data_004f3264;
+extern unsigned int g_data_004f33cc;
+extern unsigned int g_data_004f42e0;
+extern unsigned int g_data_004f42f4;
+extern unsigned int g_data_004f4304;
+extern unsigned int g_data_004f4310;
+extern unsigned int g_data_004f4320;
+extern unsigned int g_data_004f432c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543450;
+extern unsigned int g_data_005437f8;
+extern unsigned int g_data_005437fc;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void Helper_Sprintf(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
 {
     __asm {

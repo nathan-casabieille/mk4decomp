@@ -10,6 +10,19 @@
  *   0xfe alpha / z=0x7fff / mode=0x22f) and dispatches via
  *   Helper_DrawCursor.
  */
+extern unsigned int g_word_00ab41a8;
+extern unsigned int g_word_00ab41aa;
+extern unsigned int g_word_00ab41b0;
+extern unsigned int g_word_00ab41b2;
+extern unsigned int g_word_00ab41ba;
+extern unsigned int g_word_00ab41bc;
+extern unsigned int g_word_00ab41c2;
+extern unsigned int g_x_00ab41b4;
+extern unsigned int g_x_00ab41b5;
+extern unsigned int g_x_00ab41b8;
+extern unsigned int g_x_00ab41b9;
+extern void Helper_DrawCursor(void);
+
 void Helper_DrawMenu_PostRender(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
@@ -37,4 +50,5 @@ void Helper_DrawMenu_PostRender(void) {
         add     esp, 4
         }
 }
+
 

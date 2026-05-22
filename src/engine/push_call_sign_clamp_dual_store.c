@@ -126,6 +126,8 @@ extern unsigned int g_data_00535e7c;
  *   sign-clamp to 0x2009 / 0x200a + chain[+0x74] set + push call IterStepDualStore +
  *   set g_state_00542088=0x4ccc + jmp 0x46ff80.
  */
+extern void ScaledAndAlfe_00490390(void);
+
 void PushCallSignClampDualStore_0046fc60(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -174,3 +176,4 @@ void PushCallSignClampDualStore_0046fc60(void) {
         _emit   00h
         }
 }
+

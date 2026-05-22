@@ -13,6 +13,18 @@
  *   Zero struct (rep stosd 0x10b). Fill fields and call IAT[0x4d202c] (CreateWindow).
  *   Set g_data_007af940 = 1; return 1.
  */
+extern unsigned int g_data_007af934;
+extern unsigned int g_data_007af938;
+extern unsigned int g_data_007af93c;
+extern unsigned int g_data_007af940;
+extern unsigned int g_data_007af944;
+extern unsigned int g_data_007af948;
+extern unsigned int g_data_007af94c;
+extern unsigned int g_iat_004d202c;
+extern unsigned int g_iat_004d21b8;
+extern void LoadArgPushCall_004c54b0(void);
+extern void RendererTeardownSW_004b2a40(void);
+
 __declspec(naked) void Helper_GfxInit2(void) {
     __asm {
         mov     eax, dword ptr [g_data_007af940]

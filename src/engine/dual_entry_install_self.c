@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *     [g_x_0054205c*4+0x70]=0xccc, install-self @+0x08 with 0x00488760, chain[+0x84]=1,
  *     g_data_0054204c=0x28, g_pause=1; ret. Else: call ScaledMove48to58; if !pause jmp CjInstallSelfRouter.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void ScaledMove48to58_00490720(void);
+extern void Wrapper_0048a280(void);
+
 __declspec(naked) void DualEntryInstallSelf_00488740(void) {
     __asm {
         call    Wrapper_0048a280

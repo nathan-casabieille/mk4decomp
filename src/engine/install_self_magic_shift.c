@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *     else push 0x00808080, call ThreeChanPackClamp, install-self at chain[+0x08]=0x00473010,
  *     chain[+0x84]=1, g_data_0054204c=3, g_pause=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void InstallSelfMagicShift_00472fe0(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]

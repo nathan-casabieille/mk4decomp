@@ -126,6 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   g_state_00542080 cmp gate; on bypass: CopyJmp_00406ba0 +
  *   CallPauseScaledDecJmp_00429750 + bit-test of g_state_0054208c.
  */
+extern void CallPauseScaledDecJmp_00429750(void);
+extern void CopyJmp_00406ba0(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
 __declspec(naked) void EsiInstallChainCmpDualCall_00429300(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

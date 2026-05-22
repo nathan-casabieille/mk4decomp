@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x00439f70 (83b game) - dual block.
  *   Block1 (0..43): store 500 at g_x_0054206c; call audio rescale; if pause? ret;

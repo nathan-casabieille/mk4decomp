@@ -133,6 +133,7 @@ extern void SaveCallRestore_004049d0(int);
  *   0x24a, 0x23b); else repeat call MStackPush2DirtyCall_00427f90 + gate until
  *   pause set.
  */
+
 __declspec(naked) void SequenceLoopFalloutCalls_0042e150(void) {
     __asm {
         push    ebx

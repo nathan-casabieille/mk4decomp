@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void AudioVolumeRescale_004ab690(void);
+extern void DualScaledLoadStoreJmp_00475790(void);
+extern void GuardedSeq_00467c10(void);
+extern void GuardedSeq_00467c80(void);
+extern void MStackCall_00406340(void);
+extern void PreFightInstallCluster_00474390(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void SetJmp_00405420(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void IntroComboFsmCluster_00467800(void)
 {
     __asm {

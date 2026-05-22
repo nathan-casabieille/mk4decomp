@@ -132,6 +132,9 @@ extern void MStackPush3CallChain_0045db70(void);
  *   deref scaled), call MStackPush3CallChain_0045db70 at each step, tail-recurse on
  *   self.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void ChainWalkSelfRecursive_0045daf0(void) {
     __asm {
         mov     eax, dword ptr [g_data_0054204c]

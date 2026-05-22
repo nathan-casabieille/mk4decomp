@@ -133,6 +133,11 @@ extern void ScaledChain3c7c_0048f930(void);
  *     when ==0 call PopCallBitCmpPushCall; pause-check then 2-way jmp dispatch on g_state_00542088
  *     and g_x_0054206c; otherwise call ScaledChain3c7c then 3-way dispatch on g_x_0054206c.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+
 __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

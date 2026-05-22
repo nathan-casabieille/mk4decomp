@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049cd40 (178b game) - init scaledInit chain with -7 offset and table accumulator loop. */
+extern unsigned int g_data_00535e48;
+extern unsigned int g_x_00537f24;
+extern unsigned int g_x_0053a1ac;
+extern unsigned int g_x_00541f98;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void ScaledChainAccumLoop_0049cd40(void) {
     __asm {
         mov     eax, 0x0052d718
@@ -162,3 +169,4 @@ void ScaledChainAccumLoop_0049cd40(void) {
         mov     dword ptr [g_x_00537f24], eax
         }
 }
+

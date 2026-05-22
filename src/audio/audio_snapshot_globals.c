@@ -126,9 +126,7 @@ extern unsigned int g_x_00543f78;
 extern unsigned int g_x_00543928;
 extern unsigned char g_data_004f4710;
 extern unsigned char g_data_004f4740;
-extern void (*g_iat_004d2000)();
-extern void (*g_iat_004d2010)();
-extern void (*g_iat_004d2004)();
+/* g_iat_004d2000/2010/2004 declared as unsigned int below */
 extern void AudioSnapshotGlobals_004ace60(void);
 extern s32 ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
@@ -137,6 +135,10 @@ extern void DeobfuscateConfig(void);
  *   open key (IAT@4d2000); if success: query (IAT@4d2010), close (IAT@4d2004);
  *   clear g_x_00543f78; ret.
  */
+extern unsigned int g_iat_004d2000;
+extern unsigned int g_iat_004d2004;
+extern unsigned int g_iat_004d2010;
+
 void RegistryInstallEntry_004ad410(void) {
     __asm {
         sub     esp, 8
@@ -195,3 +197,4 @@ void RegistryInstallEntry_004ad410(void) {
         add     esp, 8
         }
 }
+

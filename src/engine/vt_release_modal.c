@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0058c7b0;
+extern unsigned int g_x_0058c7b4;
+extern unsigned int g_x_0058c7dc;
+extern unsigned int g_x_0058c7e0;
+extern unsigned int g_x_0058c7ec;
 
 /*
  * @addr 0x004ad590 (95b engine.install) - mode-2 vs default vtable

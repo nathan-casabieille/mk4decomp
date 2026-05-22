@@ -131,6 +131,11 @@ extern unsigned int g_data_00535e7c;
  *   ebx clamp at 60. Loop 256 entries (ecx=0..0xff): byte = ((ebx*esi*0x51eb851f) sar 36) signed-fixup,
  *     clamp to 0xff, store at [ecx + 0x544158]. esi += ebx; ecx++.
  */
+extern unsigned int g_palette_00544158;
+extern unsigned int g_x_0058c7b8;
+extern unsigned int g_x_0058c7dc;
+extern unsigned int g_x_0058c7e0;
+
 __declspec(naked) void PaletteRampInit_004ad5f0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0058c7e0]

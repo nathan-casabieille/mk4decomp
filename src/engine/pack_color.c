@@ -128,6 +128,10 @@ extern unsigned int g_data_00535e7c;
  *   then stores (r>>3, g>>3, b>>3) into three byte tables keyed by
  *   idx (raw offset, not scaled).
  */
+extern unsigned int g_x_007af9f2;
+extern unsigned int g_x_007af9f4;
+extern unsigned int g_x_007af9f6;
+
 __declspec(naked) void PackColor_004b30c0(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]

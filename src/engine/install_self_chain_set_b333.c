@@ -127,6 +127,7 @@ extern void Thunk_004344a0(void);
 extern void FlagInitTableSelector_00434560(void);
 extern void InstallSelfChainSetB333_00437b60(void);
 extern void TriBranchJmp_00434530(void);
+extern unsigned int g_x_0052aac4;
 
 /*
  * @addr 0x004344b0 (114b game) - 3-stage gated chain with two

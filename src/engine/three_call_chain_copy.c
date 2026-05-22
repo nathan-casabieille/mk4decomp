@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x004409e0 (184b game) - 3-call pause-gated, then chain[+0x3c/+0x40/+0x44] -> chain[+0x54/+0x58/+0x5c],
  *   set chain[+0x30] = 0x74, call MStackCall_00406340, tail-jmp MStackPushTwoEntryChainCall_004058c0.

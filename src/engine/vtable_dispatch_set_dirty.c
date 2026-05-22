@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   call via eax. On pause: ret. If low bit of (g_currentNodeFlags|g_cj):
  *   call ScaledNegThreeWords; pause? ret. Set bits 0x30 of g_state_0054208c.
  */
+extern unsigned int g_data_004f7868;
+extern unsigned int g_data_00ab4838;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void ScaledNegThreeWords_004be210(void);
+
+extern unsigned int g_arr_4ba040;
+
 void VtableDispatchSetDirty_004ba040(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
@@ -173,3 +181,4 @@ void VtableDispatchSetDirty_004ba040(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

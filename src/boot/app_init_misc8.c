@@ -13,6 +13,11 @@
  *   Loop esi=1..14: rv=AuxAudioDevCapsQuery(esi); abs(rv - buf[esi-1]) must be <= 5.
  *   If all pass, set g_x_004ffd7c = 1.
  */
+extern unsigned int g_x_004ffd7c;
+extern void AuxAudioDevCapsQuery_004ac3f0(void);
+extern void DSoundQueryProperty_004ac3a0(void);
+extern void Helper_AuxAudio_PostInit(void);
+
 __declspec(naked) void AppInit_Misc8(void) {
     __asm {
         sub     esp, 0x3c

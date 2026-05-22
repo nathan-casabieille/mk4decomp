@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f4b4c;
+extern unsigned int g_data_007afa28;
+extern unsigned int g_data_007afaa8;
+extern unsigned int g_data_007aff50;
+extern unsigned int g_data_007affd0;
+extern unsigned int g_data_007affe4;
+extern unsigned int g_data_007affe8;
+extern unsigned int g_data_007afff0;
+extern unsigned int g_data_007afff4;
+extern unsigned int g_data_007b0004;
+extern unsigned int g_data_007b0074;
+extern unsigned int g_data_007b0078;
+
 __declspec(naked) void GlideTriColorFlush_004b46f0(void)
 {
     __asm {

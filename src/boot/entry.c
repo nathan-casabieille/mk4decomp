@@ -9,6 +9,8 @@
 /*
  * @addr 0x004c6cb0
  *
+extern void WinMain(void);
+
  * Naked + __asm: the SEH frame layout (push -1 / push scope_table /
  * push handler / push fs:[0] / mov fs:[0], esp), the
  * `add esp, -0x58` (rather than `sub esp, 0x58`) form MSVC's CRT
@@ -17,6 +19,7 @@
  * loop) all come straight from MSVC's stock CRT - any C body would
  * differ.
  */
+
 __declspec(naked) void entry(void)
 {
     __asm {

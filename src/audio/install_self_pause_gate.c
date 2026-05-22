@@ -128,6 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   tag 0x26 and set framePause=1; else tail-jmp StackPopDispatchTagged.
  */
 extern void InstallSelfPauseGate_004a1a50(void);
+extern unsigned int g_data_0054204c;
 void InstallSelfPauseGate_004a1a50(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int v = *(unsigned int *)(base + 0x84);

@@ -135,6 +135,17 @@ extern unsigned int g_data_00535e7c;
  *   Final: call LinkSiblingsAndInstallSelf_00414670; if paused: pop+ret. install-self; chain->state=1;
  *     g_data_0054204c=1; g_pause_00541e6c=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054205c;
+extern void CallSetPause_0041f830(void);
+extern void LinkSiblingsAndInstallSelf_00414670(void);
+extern void MStackCall_00406740(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void SetDirty4XorScaledLoad_004147b0(void);
+extern void TableHitOrSchedule_004be7a0(void);
+
 __declspec(naked) void BootCountdownPeriodicInstall_00414810(void)
 {
     __asm

@@ -135,6 +135,16 @@ extern unsigned int g_data_00535e7c;
  *   found: g_x_0054206c = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour_00490740; return 1.
  */
+extern unsigned int g_x_00535ddc;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void CmpP1GTSetup_00470980(void);
+extern void SnapshotDispatchMStack_00491350(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
     __asm {
         push    esi

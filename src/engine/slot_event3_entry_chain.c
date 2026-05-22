@@ -133,6 +133,9 @@ extern void SlotEvent3EntryChain_0046fdf0(void);
  *     push 0x4eb6f4; call IterStepScaledStore_0048e600; add esp,4; pause? ret.
  *     install self with packed_ptr store; call SlotEvent3EntryChain_0046fdf0; pause = 1.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

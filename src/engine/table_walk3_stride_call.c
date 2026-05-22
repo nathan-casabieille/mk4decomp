@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   call StoreTwoCall(0x461980, 0x30); ++idx (in 3-stride scaled form).
  *   Returns g_walkCallback = 8 = (count*3); g_x_0053a748 = 8.
  */
+extern unsigned int g_data_004ea070;
+extern unsigned int g_str_00461980;
+extern unsigned int g_x_0053a748;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054207c;
+
+extern unsigned int g_arr_461640;
+
 __declspec(naked) void TableWalk3StrideCall_00461640(void) {
     __asm {
         push    esi

@@ -127,6 +127,11 @@ extern unsigned int g_data_00535e7c;
  *   Thunks 0..8 (offsets 0x20+i*0x20): g_x_0054206c=0x11+i; g_data_00542070=1+i; jmp DualSave; 7-NOP pad.
  *   Thunk 9 (+0x140): g_x_0054206c=0x1b (skips 0x1a); g_data_00542070=0xa; jmp DualSave (no NOP pad).
  */
+extern unsigned int g_data_0053a748;
+extern unsigned int g_state_0053a51c;
+extern unsigned int g_x_0054206c;
+extern void DualSave_00461840(void);
+
 __declspec(naked) void TenThunkDualSave_004616e0(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a51c]

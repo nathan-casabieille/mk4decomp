@@ -123,6 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00520130;
+extern unsigned int g_iat_004d214c;
+extern unsigned int g_iat_004d2168;
+extern unsigned int g_x_00520140;
+extern unsigned int g_x_00522150;
+extern unsigned int g_x_00fa0ee4;
+
+struct HeapRegion {
+    struct HeapRegion *prev;
+    struct HeapRegion *next;
+    int unused[2];
+    void *memory_ptr;
+};
+
 void HeapRegionTeardown_004c7240(struct HeapRegion *region) {
     ((void (__stdcall *)(void *, unsigned int, unsigned int))g_iat_004d2168)(region->memory_ptr, 0, 0x8000);
     if ((struct HeapRegion *)g_x_00522150 == region) {

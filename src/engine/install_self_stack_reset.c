@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   walkCallback = max(eax-1, 0); key = (0x4dfc98>>2) + edx; g_scaledInit=key;
  *   g_x_0054204c = arr[key]; install self; g_framePauseFlag=1; ret.
  */
+extern unsigned int g_data_004dfc98;
+extern unsigned int g_x_00537f98;
+extern unsigned int g_x_0053a430;
+extern unsigned int g_x_0054204c;
+
+extern unsigned int g_arr_421f40;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfStackReset_00421f40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

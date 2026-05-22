@@ -133,6 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   store: [eax+0x68] = ecx; ecx = g_data_00542070;
  *          [eax+0x6c] = ecx; pop esi; ret.
  */
+
 __declspec(naked) void CondPickDualStore_0049c670(void) {
     __asm {
         mov     edx, dword ptr [g_data_00535e7c]

@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5d38;
+extern unsigned int g_data_004d6748;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543800;
+extern void AudioMixerStep_004ab700(void);
+extern void CallSetPause_0041f830(void);
+extern void ChainListVecAdd_0049d200(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+extern void CmpDivJmp_0049d080(void);
+extern void MStackPushSet9Jmp_00413040(void);
+extern void PoseTreeBlendWalker_0049d680(void);
+extern void PushStackCallPauseSet0xa_00413070(void);
+extern void ScaledStoreThree_00409260(void);
+extern void ZeroAndDirty4_00405430(void);
+
 __declspec(naked) void Phase4FivePackedHelpers_00412cb0(void)
 {
     __asm {

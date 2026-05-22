@@ -138,6 +138,14 @@ extern unsigned int g_data_00535e7c;
  *     esi += edi + ebp; g_x_00542048 = chain[esi*4 + 8];
  *     restore: g_x_00542070 = saved; g_scaledInit = [g_scaledInit] (no-op).
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void ScaledSearchSum_00457830(void) {
     __asm {
         push    ecx

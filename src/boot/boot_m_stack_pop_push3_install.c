@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+extern void Eleven404b90_404c00_004266d0(void);
+extern void InstallSelfCountedAccum_0042e1d0(void);
+extern void Ten404c40_404bd0_00426780(void);
+
 __declspec(naked) void BootMStackPopPush3Install_004046d0(void)
 {
     __asm

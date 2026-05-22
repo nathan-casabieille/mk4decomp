@@ -129,6 +129,23 @@ extern unsigned int g_data_00535e7c;
  *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1, g_x_0054356c=1;
  *     g_x_005433a8=0, g_x_005433e8=0; jmp entry1.
  */
+extern unsigned int g_data_00542004;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_005433a8;
+extern unsigned int g_x_005433e8;
+extern unsigned int g_x_005433ec;
+extern unsigned int g_x_0054356c;
+extern unsigned int g_x_00543590;
+extern unsigned int g_x_00543714;
+extern void ClearTwoCallSetStore_004a2270(void);
+extern void DualScaledStoreConst_004a22c0(void);
+extern void InstallSelfTableWalk_004200d0(void);
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
 {
     __asm

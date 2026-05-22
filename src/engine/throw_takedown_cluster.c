@@ -141,6 +141,13 @@ extern unsigned int g_data_004ed490;
 extern unsigned int g_data_004ed4a0;
 extern unsigned int g_data_00537e94;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+
 __declspec(naked) void MoveSelectorCluster_0047d9a0(void)
 {
     __asm {

@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0049db40;
+extern unsigned int g_data_004d6590;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542094;
+extern void ChainListVecAdd_0049d200(void);
+extern void GuardedSeq_00471670(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushCallPop_0040a830(void);
+extern void MStackScopedSlotSetupPair_0040a520(void);
+extern void SetJmp_00405420(void);
+
 __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
 {
     __asm {

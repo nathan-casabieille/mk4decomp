@@ -123,6 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00433d80 (205b game) - dual-entry chained install-self. */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void AddDerefJmp_00433e70(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void PoseFsm4StateInstall_00437c10(void);
+extern void WeightedSumClampHelper_00439920(void);
+
 __declspec(naked) void InstallSelfDualChain_00433d80(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]

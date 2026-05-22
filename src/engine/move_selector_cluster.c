@@ -135,6 +135,11 @@ extern void HopBackFsmCluster_0047a2e0(void);
  *   state>=2: g_x_0054206c=0x51e; call ScaledLitLoadCall; if pause ret.
  *     [cj*4+0x4c]=0x51e; tail-call InstallSelf3StateDualChain_0047a1c0; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void InstallSelf3StateDualChain_0047a1c0(void);
+extern void ScaledAndAldf_00490330(void);
+
 __declspec(naked) void InstallSelf3StateFieldSet_0047a090(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

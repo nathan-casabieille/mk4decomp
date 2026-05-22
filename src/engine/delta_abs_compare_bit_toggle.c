@@ -126,6 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   and arr[cj2].slot54 + arr[cj].slot6c; compute abs(delta1)/abs(delta2);
  *   set/clear bit 0 of g_state_0054208c based on |eax| vs |ecx|.
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_arr_chain_54_48ea90;
+extern unsigned int g_arr_chain_6c_48ea90;
+
 void DeltaAbsCompareBitToggle_0048ea90(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00538158]
@@ -167,3 +174,4 @@ void DeltaAbsCompareBitToggle_0048ea90(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

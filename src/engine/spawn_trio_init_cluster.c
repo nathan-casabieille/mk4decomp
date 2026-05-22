@@ -130,6 +130,15 @@ extern void SpawnTrioInitCluster_00458440(void);
 extern void MStackPush2ClampLookup_00459160(void);
 extern void TripleEntryDispatch_00458810(void);
 
+extern unsigned int g_data_005380b0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void CallSetPause_0041f830(void);
+
 __declspec(naked) void GuardedStateChangePair_00458630(void)
 {
     __asm

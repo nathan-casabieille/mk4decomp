@@ -134,6 +134,11 @@ extern void SetJmp_00439c30(void);
  *   Block B (+0x50): call LinkedListDistanceWalker_0045f950; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
  *     call Set0xaCmpEqSet0x26Jmp; if !pause jmp SetJmp_00439c30; ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0053a478;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void DualEntryBitGated_00439ba0(void) {
     __asm {
         call    LinkedListDistanceWalker_0045f950

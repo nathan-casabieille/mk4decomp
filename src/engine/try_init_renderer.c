@@ -20,11 +20,16 @@ const u32 TryInit_JumpTable[5] = {0, 0, 0, 0, 0};
 /*
  * @addr 0x004b3ed0
  *
+extern unsigned int g_pumpFlagD8;
+extern unsigned int g_pumpFlagDC;
+extern unsigned int g_pumpFlagE0;
+
  * Naked + __asm: 5-arm jump table on (mode - 1), each per-renderer
  * arm captures the success-mode in esi while clearing the
  * "tried" flag for that renderer. Tail does a forced fallback
  * to mode 4 if no renderer succeeded.
  */
+
 __declspec(naked) s32 TryInitRenderer(void)
 {
     __asm {

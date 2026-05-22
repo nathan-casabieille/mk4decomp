@@ -132,6 +132,18 @@ extern unsigned int g_data_00535e7c;
  *       Install-self at entry+0x02000000; state=2; call Init3333Jmp; pause=ebx=1; ret.
  *   state>=2 (fall): tail-call CjInstallSelfRouter_00470480; pop esi/ebx; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallPauseTriCmpJmp_00460910(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void Init3333Jmp_00460400(void);
+extern void PushCallStoreClearJmp_00460420(void);
+extern void ScaledInit_0048f720(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+
 __declspec(naked) void Install3StateDualArmQuad_004602b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

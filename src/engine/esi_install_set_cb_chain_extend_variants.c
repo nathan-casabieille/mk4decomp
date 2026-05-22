@@ -126,6 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   chain[+4] extension; on existing-slot tail-jmp StackPopDispatchTagged.
  *   Sets g_state_00542080 = 0x48aad0 (callback). */
 extern void EsiInstallSetCbChainExtend_0048a810(void);
+extern unsigned int g_load_0052ab10;
 void EsiInstallSetCbChainExtend_0048a810(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int prev = *(unsigned int *)(base + 0x84);

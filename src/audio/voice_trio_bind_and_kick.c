@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f3220;
+extern unsigned int g_data_004f3a30;
+extern unsigned int g_data_004f3a38;
+extern unsigned int g_data_0050a0f0;
+extern unsigned int g_data_0050c618;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054208c;
+extern void GuardedSetupCallTailJmp3_004a2000(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void ScaledOr4DirtyClear_00409320(void);
+
 __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
 {
     __asm {

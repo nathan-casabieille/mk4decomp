@@ -121,6 +121,13 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00538160;
+extern unsigned int g_x_00538164;
+extern unsigned int g_x_0053a6dc;
 
 /*
  * @addr 0x00421ca0 (113b game) - dirty-bit-keyed state copy:

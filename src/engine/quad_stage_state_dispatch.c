@@ -130,6 +130,15 @@ extern unsigned int g_data_00535e7c;
  *     if not equal: g_x_0054206c=g_x_00537f2c. If still zero: clear bit-0; ret.
  *     Else: jmp WeightedSumClampHelper_00439920.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00537f2c;
+extern unsigned int g_x_0053a6dc;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void DirtyToggleByBaseSel_0048f2e0(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void WeightedSumClampHelper_00439920(void);
+
 __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
     __asm {
         call    ScaledChain3c74_0048f910

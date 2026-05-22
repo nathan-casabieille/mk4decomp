@@ -137,6 +137,22 @@ extern unsigned int g_data_00535e7c;
  *   Tail unconditionally installs Self with slot[+0x84]=1,
  *   g_data_0054204c=2, arms 0x541e6c=1.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541f8c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void QuadInterpolatorV2_004255b0(void);
+extern void ThreeClampLoop_00425a80(void);
+extern void ThreeMul10Stores_004252c0(void);
+extern void TripleAddVec3_00425130(void);
+extern void TripleSubVec3_004250f0(void);
+
 __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

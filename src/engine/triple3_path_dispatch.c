@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   C (+0x60): call CondPickDualStore; if !pause call CopyJmp_0048ef90; if !pause and bit-0 set
  *     jmp FivePackedSubdispatchInstallSelf_0049c040; else chain[*4+0x74]=0x30c; push 0x004f26a8; call ArgSarStoreJmp; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void FivePackedSubdispatchInstallSelf_0049c040(void);
+extern void MStackCall_00406740(void);
+
 __declspec(naked) void Triple3PathDispatch_0049bf90(void) {
     __asm {
         call    MStackCall_00406740

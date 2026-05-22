@@ -4,6 +4,74 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f7888;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542050;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542098;
+extern unsigned int g_data_00543550;
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_00ab4398;
+extern unsigned int g_data_00ab439c;
+extern unsigned int g_data_00ab43a0;
+extern unsigned int g_data_00ab4838;
+extern unsigned int g_data_00ab483c;
+extern unsigned int g_data_00ab4840;
+extern unsigned int g_data_00ab4844;
+extern unsigned int g_data_00ab4848;
+extern unsigned int g_data_00ab4d58;
+extern unsigned int g_data_00ab4d5c;
+extern unsigned int g_data_00ab4d60;
+extern unsigned int g_data_00ab4d64;
+extern unsigned int g_data_00ab4d68;
+extern unsigned int g_data_00ab4d98;
+extern unsigned int g_data_00ab4d9c;
+extern unsigned int g_data_00ab4e28;
+extern unsigned int g_data_00ab4e34;
+extern unsigned int g_data_00ab4e38;
+extern unsigned int g_data_00ab4e40;
+extern unsigned int g_data_00ab4e5c;
+extern unsigned int g_data_00ab4e60;
+extern unsigned int g_data_00ab4e64;
+extern unsigned int g_data_00ab4e6c;
+extern unsigned int g_data_00f00004;
+extern void BboxProjectAndStash_004bc5a0(void);
+extern void BillboardChainRender_004bb030(void);
+extern void BillboardSheetDualEmit_004bbda0(void);
+extern void DirtyBitTripleWriteOrCall_004ba630(void);
+extern void DirtyTestScaledCopy_004ba6c0(void);
+extern void DrawMeshBlock(void);
+extern void LeaScaledCall_004bd510(void);
+extern void MStackPushCallCallPop_00405dd0(void);
+extern void MatrixTransform3x3Q12_004b3b80(void);
+extern void MovesPanelEmit_004bcf60(void);
+extern void TransformAccumulate_004bddf0(void);
+extern void TristripBatchEmit2_004bb930(void);
+extern void TristripBatchEmit3Cap_004bb680(void);
+extern void TristripBatchEmit_004bbb80(void);
+extern void VertexQuadBuilder_004bc470(void);
+extern void VibrationFrameUpdate_004b9640(void);
+extern void VtableDispatchSetDirty_004ba040(void);
+extern void WtSnapshotPushCall_004bda70(void);
+extern void ZBucketClampStore_004ba5d0(void);
+
 __declspec(naked) void RenderSceneNode(void)
 {
     __asm {

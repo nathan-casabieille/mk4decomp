@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Call DualCallPauseDirtyJmp; if pause ret. Push 0x004e3698; call IterLoad; pop; if pause ret.
  *   Swap [0x00535e70/74/78/7c] with globals (using esi); mstack pop g_x_0054206c; pop esi; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void IterLoad_0048fd30(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

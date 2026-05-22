@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void DualConstJmp_00453480(void);
+extern void DualConstJmp_004534a0(void);
+extern void DualConstJmp_004534c0(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedSetCallOrJmp_00453420(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
 {
     __asm {

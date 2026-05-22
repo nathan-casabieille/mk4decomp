@@ -133,6 +133,17 @@ extern unsigned int g_data_00535e7c;
  *   H (+0xb0): g_x_0054206c=0x40; jmp OrDualStore.
  *   I (+0xc0): g_x_0054206c=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
  */
+extern unsigned int g_data_0053a7d8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00543730;
+extern void FiveSetWalkJmp_00461360(void);
+extern void OrDualStore_0048e4b0(void);
+extern void Set1JmpSet2Jmp_00461340(void);
+extern void Wrapper_0048a300(void);
+
 __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
     __asm {
         call    Wrapper_0048a300

@@ -10,6 +10,10 @@
  *   if (arg1 && g_x_007af94c): memset(g_x_007af94c, 0x10001, *arg3 * 60 / 4).
  *   Return 1.
  */
+extern unsigned int g_x_007af940;
+extern unsigned int g_x_007af948;
+extern unsigned int g_x_007af94c;
+
 __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
     __asm {
         push    ebp

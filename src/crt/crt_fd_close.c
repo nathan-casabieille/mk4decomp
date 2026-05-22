@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   If g_x_00520064 == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
  *   Mark slot as -1; return 0.
  */
+extern unsigned int g_iat_004d20d4;
+extern unsigned int g_x_00520064;
+extern unsigned int g_x_00f9efe0;
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+
+extern unsigned int g_arr_00fa0de0;
+
 __declspec(naked) int CrtFdClose_004cd1c0(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]

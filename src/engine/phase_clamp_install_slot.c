@@ -141,6 +141,12 @@ extern void AndStorePushCallZero_0048a220(void);
  *   mstack-pop 3 into g_x_00542074, g_x_00542070, g_x_0054206c.
  *   set g_x_00543550 = 0x100; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00543550;
+
 void BootInitGuardedCallChain_004265d0(void) {
     __asm {
         call    PhaseClampInstallSlot_0049e1c0
@@ -201,3 +207,4 @@ void BootInitGuardedCallChain_004265d0(void) {
         mov     dword ptr [g_x_00543550], 0x100
         }
 }
+

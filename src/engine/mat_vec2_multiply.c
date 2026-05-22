@@ -130,6 +130,21 @@ extern unsigned int g_data_00535e7c;
  *   (where v0 is words at +0x18, v1 at +0x1c). Matrix is in
  *   g_data_007af9c0..d4. Results stored to g_data_007af9d8..ec.
  */
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af9c0;
+extern unsigned int g_data_007af9c4;
+extern unsigned int g_data_007af9c8;
+extern unsigned int g_data_007af9cc;
+extern unsigned int g_data_007af9d0;
+extern unsigned int g_data_007af9d4;
+extern unsigned int g_data_007af9d8;
+extern unsigned int g_data_007af9dc;
+extern unsigned int g_data_007af9e0;
+extern unsigned int g_data_007af9e4;
+extern unsigned int g_data_007af9e8;
+extern unsigned int g_data_007af9ec;
+extern void Word9Reorder_004b3b30(void);
+
 __declspec(naked) void MatVec2Multiply_004b31e0(void) {
     __asm {
         sub     esp, 0x20

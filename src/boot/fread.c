@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   use Filbuf byte-by-byte. EOF sets flag 0x10, error sets 0x20. Returns
  *   bytes_read/element_size.
  */
+extern void Filbuf_004c8ed0(void);
+extern void IOWrapper_004c8fc0(void);
+
 __declspec(naked) void Fread_004c5bb0(void) {
     __asm {
         push    ecx

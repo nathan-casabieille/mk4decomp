@@ -130,6 +130,42 @@ extern void SelfInstallPhaseDispatch_00428990(void);
  *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_x_0054206c=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
+extern unsigned int g_data_004ea058;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void CallPauseMStackPushSet9Jmp_0045ffc0(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void CjMaskedFlagProbe_0048ecf0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+extern void InstallSelfChainCascade_0045feb0(void);
+extern void MStackPushSet0001_00490260(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void MultiThunkDispatcher_00460470(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void TableLookupCall_00489ff0(void);
+
+extern unsigned int g_data_004f1a20;
+extern void ArgScaledTestStore_00494140(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ScaledClearJmp_00428d60(void);
+extern void ScaledZeroFour_00490740(void);
+extern void SelfInstallPhaseDispatch_00460000(void);
+extern void SelfInstallPhaseDispatch_004943f0(void);
+
 __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -177,11 +213,6 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
     }
 }
 
-extern void ScaledZeroFour_00490740(void);
-extern void SelfInstallPhaseDispatch_00460000(void);
-extern void ScaledChainJmp_00429470(void);
-extern void ArgScaledTestStore_00494140(void);
-extern void ScaledClearJmp_00428d60(void);
 
 /* @addr 0x00486ff0 (298b game) - 3-state install-self with dual entry-point.
  *   state==0: push 0x00542bc8; call ArgScaledTestStore; pop. If pause ret.
@@ -266,8 +297,6 @@ __declspec(naked) void InstallSelf3StateDualEntry_00486ff0(void) {
     }
 }
 
-extern void SelfInstallPhaseDispatch_004943f0(void);
-extern unsigned int g_data_004f1a20;
 
 /* @addr 0x00494290 (343b game) - install-self with cmd-stream interpreter.
  *   state!=0: load eax = (0x004f1a20>>2) + ([cj*4+0x30] - 0x60); call indirect via TableLookupCall.

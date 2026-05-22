@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *     IAT[0x4d2134] + IAT[0x4d20e4] (MultiByteToWideChar). Uses g_data_00f9fc20
  *     as default codepage when arg is 0.
  */
+extern unsigned int g_data_00f9fc20;
+extern unsigned int g_data_00f9fd9c;
+extern unsigned int g_iat_004d20e4;
+extern unsigned int g_iat_004d2130;
+extern unsigned int g_iat_004d2134;
+extern void FreeImpl_004c55f0(void);
+extern void LoadArgPushCall_004c54b0(void);
+
 __declspec(naked) void MbToWcsDispatcher_004d0f50(void) {
     __asm {
         mov     eax, dword ptr [g_data_00f9fd9c]

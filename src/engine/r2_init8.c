@@ -12,6 +12,15 @@
  *   Sub-2 (162b, "L_psn_cb"): per-format probe; checks mask bits 0xf800 / 0x7c00
  *     and 0x1f matching expected layout, copies caller's struct into our buffer.
  */
+extern unsigned int g_data_004f478c;
+extern unsigned int g_data_00544298;
+extern unsigned int g_data_0054429c;
+extern unsigned int g_data_005442a0;
+extern unsigned int g_data_005442a4;
+extern unsigned int g_data_005442e0;
+extern unsigned int g_data_00544300;
+extern unsigned int g_data_0058c7c0;
+
 __declspec(naked) void R2_Init8(void) {
     __asm {
         push    edi

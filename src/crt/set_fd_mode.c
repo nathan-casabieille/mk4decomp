@@ -133,6 +133,14 @@ extern unsigned int g_data_00535e7c;
  *   Cleanup: *[table] [slot] = arg2; return 0.
  *   Fail: __errno() = 9; clear another errno-like ptr; return -1.
  */
+extern unsigned int g_SetStdHandle_004d20d4;
+extern unsigned int g_x_00520064;
+extern unsigned int g_x_00fa0ee0;
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+
+extern unsigned int g_x_00fa0de0;
+
 __declspec(naked) void SetFdMode_004cd110(void) {
     __asm {
         mov     ecx, [esp + 4]

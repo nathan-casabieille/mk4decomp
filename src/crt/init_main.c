@@ -11,6 +11,12 @@
  *   via rep movsd/movsb, stores ptr in next slot.
  *   Frees the env source string; writes NULL terminator at end of array.
  */
+extern unsigned int g_data_00f9f820;
+extern unsigned int g_data_00f9f844;
+extern void CmpCallPushIATCall_004c6e60(void);
+extern void FreeImpl_004c55f0(void);
+extern void LoadArgPushCall_004c54b0(void);
+
 __declspec(naked) void _init_main(void) {
     __asm {
         push    ecx

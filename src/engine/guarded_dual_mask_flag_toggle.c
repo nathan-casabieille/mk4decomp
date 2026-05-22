@@ -130,6 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   if zero: clear bit0 of g_state_0054208c, ret;
  *   else: set bit0 of g_state_0054208c, ret.
  */
+
 void GuardedDualMaskFlagToggle_004261d0(void) {
     __asm {
         call    MStackPush2TableNot_00426230
@@ -157,3 +158,4 @@ void GuardedDualMaskFlagToggle_004261d0(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

@@ -129,6 +129,16 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop g_x_00542080, mstack-pop g_x_0054207c; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_data_0054204c=1, pause=1; pop+ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void EsiInstallPushDecPopJmp_0043ba90(void);
+extern void GuardedSeq_004297b0(void);
+
 __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

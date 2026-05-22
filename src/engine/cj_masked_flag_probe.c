@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   mask based on cj == 0x538158; AND with walk; set bit 0 of
  *   state if result non-zero, else clear bit 0.
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_00542074;
+extern void PushPopState70Mask_00490650(void);
+
 void CjMaskedFlagProbe_0048ecf0(void) {
     __asm {
         call    DirtyToggleByGate_0048f350
@@ -167,3 +171,4 @@ clearBit:
 done:
         }
 }
+

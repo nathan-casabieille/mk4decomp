@@ -154,6 +154,15 @@ extern void MatchInitMonsterChain_004228b0(void);
  *       g_data_0054206c=3, call AndShlStore_00409280, call
  *       StackPopDispatchTagged_0041f780, return.
  */
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00541dc8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

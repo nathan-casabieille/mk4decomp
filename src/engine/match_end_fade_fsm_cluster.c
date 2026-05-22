@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542088;
+extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
+extern void DualPushAddCallDualPopJmp_0044cc50(void);
+extern void GuardedSeq_00473f50(void);
+extern void MStackPush3SideStore_0044cb80(void);
+extern void PendingMatch_004492f0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
 {
     __asm {

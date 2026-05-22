@@ -132,6 +132,14 @@ extern unsigned int g_data_00535e7c;
  *   if (popped == 0): ret.
  *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542094;
+extern void IterLoad_0048fd30(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackBitFlagDispatch_00494750(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -178,3 +186,4 @@ void MStackBitFlagDispatch_00494750(void) {
         add     esp, 4
         }
 }
+

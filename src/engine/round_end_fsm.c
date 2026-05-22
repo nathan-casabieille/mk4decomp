@@ -155,6 +155,15 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
  */
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern void SwapOrPassSet_0048fbf0(void);
+
 __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

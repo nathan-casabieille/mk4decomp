@@ -151,6 +151,14 @@ extern void InstallSelfThresholdDispatch_0047e310(void);
  *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+
 __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]

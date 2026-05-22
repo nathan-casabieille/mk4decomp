@@ -135,6 +135,17 @@ extern unsigned int g_data_00535e7c;
  *   state==0 (je from cmp): g_state_00542080=0x14; install-self at body+0x01000000.
  *     state=1; call EsiInstallDecCallChain; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void GateDispatch6c_00494580(void);
+extern void ScaledMove48to58_00490720(void);
+extern void SetJmp_00483f20(void);
+extern void TwoCallTail_00481380(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

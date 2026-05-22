@@ -138,6 +138,12 @@ extern void ScaledArrStore_00429450(void);
  *   state 0 path (or threshold/sign fall-through): install-self at [esi+8]=0x0047e310;
  *     chain[+0x84]=1; g_x_0054204c=1; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfThresholdDispatch_0047e310(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -122,6 +122,25 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00537f98;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542094;
+extern void DirtyFlagsManip_0048de00(void);
+extern void DualEntryBitFlagDispatch_0048e820(void);
+extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void PendingMatch_0048d7b0(void);
+extern void PushCjWalkDispatchPop_00490810(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void SfxAttenuateAndApply_0048dee0(void);
+
 __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
 {
     __asm {

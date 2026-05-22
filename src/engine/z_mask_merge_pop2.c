@@ -129,6 +129,8 @@ extern unsigned int g_data_00535e7c;
  *   set g_data_00542070=0x0f000000; pop two state-stack entries into
  *   g_data_00542070 and g_x_00542074.
  */
+extern unsigned int g_x_00542074;
+
 void ZMaskMergePop2_0044cfe0(void) {
     unsigned int top;
     unsigned int walk;
@@ -155,3 +157,4 @@ void ZMaskMergePop2_0044cfe0(void) {
         mov     dword ptr [g_state_004d57ac], eax
     }
 }
+

@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *      install self with [esi+0x84]=2; g_x_0054204c=0x28; g_framePauseFlag=1.
  *   else: call F1 (CjInstallSelfRouter); pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void GameModeAdvanceCluster_00482000(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelf3WayState_00481f30(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

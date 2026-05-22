@@ -135,6 +135,16 @@ extern void QuadInterpolatorV2_004255b0(void);
  *   advancing cj by 0x15 and calls QuadInterpolatorV2_004255b0. Finally pops the 4
  *   originals back to 0054204c/50/54/48 in reverse order.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern unsigned int g_table_004d57b0;
+
 __declspec(naked) void MStackBootPush4Init_00408350(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

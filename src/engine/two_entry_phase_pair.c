@@ -122,6 +122,18 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void CjInstallSelfRouter_00470480(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void StateDispatchTable_00490fc0(void);
+
 __declspec(naked) void TwoEntryPhasePair_004952e0(void)
 {
     __asm

@@ -131,6 +131,16 @@ extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 extern unsigned int g_data_004e2670;
 extern unsigned int g_data_00542058;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void SetJmp_00405420(void);
+
 __declspec(naked) void GameMusicState4Way_00426d90(void)
 {
     __asm {

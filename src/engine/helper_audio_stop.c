@@ -16,6 +16,17 @@
  *   pop edi/esi/ebx; ret.
  *   Alt path: g_flags |= 2; pop and ret.
  */
+extern unsigned int g_flags_00f8fade;
+extern unsigned int g_flags_00f8fadf;
+extern unsigned int g_x_00f9efd8;
+extern unsigned int g_x_00f9efe4;
+extern unsigned int g_x_00f9efe8;
+extern unsigned int g_x_00f9eff0;
+
+extern unsigned int g_obj_size_00f8fad8;
+extern unsigned int g_obj_table_00f8fac8;
+extern unsigned int g_obj_used_00f8fad4;
+
 __declspec(naked) void Helper_AudioStop(void) {
     __asm {
         mov     ax, word ptr [esp + 4]

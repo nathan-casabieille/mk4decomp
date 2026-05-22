@@ -124,6 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048c480 (134b) - 5-call chain + chain[+0x58]→chain[+0x48] copy
  *   + chain[+0x64] = 0x4b6db + final flag clear. */
+extern void MStackCall_00406340(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void PushDualDerefClearPop_004092a0(void);
+extern void PushPopScaled18_004059a0(void);
+
 void GuardedChainCopySetFlag_0048c480(void) {
     __asm {
         call    MStackPushDispatchBitGate_00407330
@@ -166,3 +172,4 @@ void GuardedChainCopySetFlag_0048c480(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

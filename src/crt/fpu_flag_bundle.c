@@ -127,6 +127,17 @@ extern unsigned int g_data_00535e7c;
  *     flag bits 1, 8, 0x10, 4, 0x20. Sub-2 (174b): per-thread slot management.
  *   For consolidation, both bundled into one 270-byte symbol entry.
  */
+extern unsigned int g_data_00522e58;
+extern unsigned int g_data_00522e68;
+extern unsigned int g_data_00523600;
+extern unsigned int g_data_005236ac;
+extern unsigned int g_data_00f9fc1c;
+extern unsigned int g_data_00f9fc64;
+extern void Calloc_004c6110(void);
+extern void CrtInitLocaleInfo_004cf880(void);
+extern void CrtLocaleInfoFreeAll_004cfc00(void);
+extern void FreeImpl_004c55f0(void);
+
 __declspec(naked) void FpuFlagBundle_004cf770(void) {
     __asm {
         /* sub-1: FPU flag-driven constant loader (0x4cf770..0x4cf7c8) */

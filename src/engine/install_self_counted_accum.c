@@ -134,6 +134,14 @@ extern unsigned int g_data_00535e7c;
  *     chain[esi+0x5c] = ecx. install self: [eax+8]=0x42e1d0, [eax+0x84]=1.
  *     g_x_0054204c = 2; pause = 1.
  */
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
 __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5320;
+extern unsigned int g_data_004d59e8;
+extern unsigned int g_data_00512538;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_0053e35c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void FramePauseScaledStore_00406c10(void);
+extern void MStackCall_00406250(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledChainOr8_00404e50(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void Thunk_00405ac0(void);
+
 __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
 {
     __asm {

@@ -10,6 +10,20 @@
  *   Builds quad descriptor at g_data_007af4e8..g_data_007af508, calls Helper_DrawCursor.
  *   Advances screen_x by 9 per char; clears g_data_007af508 at end.
  */
+extern unsigned int g_data_007af4e8;
+extern unsigned int g_data_007af4ea;
+extern unsigned int g_data_007af4f0;
+extern unsigned int g_data_007af4f2;
+extern unsigned int g_data_007af4f4;
+extern unsigned int g_data_007af4f5;
+extern unsigned int g_data_007af4f8;
+extern unsigned int g_data_007af4f9;
+extern unsigned int g_data_007af4fa;
+extern unsigned int g_data_007af4fc;
+extern unsigned int g_data_007af502;
+extern unsigned int g_data_007af508;
+extern void Helper_DrawCursor(void);
+
 __declspec(naked) void Helper_DrawMenuText(void) {
     __asm {
         mov     eax, [esp + 0xc]

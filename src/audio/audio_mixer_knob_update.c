@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d50b4;
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_005433c4;
+extern unsigned int g_data_005433c8;
+extern unsigned int g_data_00543440;
+extern unsigned int g_data_0054359c;
+extern unsigned int g_data_005435a0;
+extern void ScaledChainStore24_004a7d40(void);
+extern void SetJmp_004a1ad0(void);
+
 __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
 {
     __asm {

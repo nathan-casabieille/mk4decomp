@@ -21,6 +21,7 @@ extern unsigned int g_data_004d5100;
 extern unsigned int g_data_004d5104;
 extern unsigned int g_data_0053814c;
 extern void Mul10Tail_00404af0(int, int);
+
 __declspec(naked) void AudioMixerStep_004ab700(void) {
     __asm {
         mov     eax, dword ptr [g_data_004d5100]

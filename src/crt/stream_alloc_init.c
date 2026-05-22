@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   success populates a 28-byte stream struct (buffer 0x1000 bytes,
  *   flags |= 8); on failure inits to small inline buffer at +0x14.
  */
+extern unsigned int g_x_00f9fae0;
+extern void LoadArgPushCall_004c54b0(void);
+
 void StreamAllocInit_004cc250(void) {
     __asm {
         mov     eax, dword ptr [g_x_00f9fae0]
@@ -159,3 +162,4 @@ smallBuf:
         mov     dword ptr [ecx + 4], 0
         }
 }
+

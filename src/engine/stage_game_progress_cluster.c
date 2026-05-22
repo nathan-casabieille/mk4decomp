@@ -122,6 +122,29 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004edfd0;
+extern unsigned int g_data_004ee030;
+extern unsigned int g_data_004ee098;
+extern unsigned int g_data_004ee0c8;
+extern unsigned int g_data_004ee0f8;
+extern unsigned int g_data_004ee118;
+extern unsigned int g_data_004ee138;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseScaledStoreJmp_00428820(void);
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void GateDispatch6c_00494580(void);
+extern void GuardedPushCall_00482990(void);
+extern void ScaledMove48to58_00490720(void);
+extern void SixBlockCjCascade_004829b0(void);
+extern void TableLookupCall_0048a160(void);
+extern void Wrapper_0048a370(void);
+
 __declspec(naked) void StageGameProgressCluster_00482780(void)
 {
     __asm {

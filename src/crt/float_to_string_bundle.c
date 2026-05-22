@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   sub-2 (~101b at 0x4c8940): format dispatch on 'e'/'E'/'f'/'g' char.
  *   Bundled into one 293-byte entry (with 10-byte nop pad between subs).
  */
+extern void CfltcvtFormat_004c8650(void);
+extern void FcvtFormatDecimal_004c87c0(void);
+extern void FormatHelper_004c8750(void);
+extern void FpFormatRound_004ccda0(void);
+extern void PrintfStubSigned_004c85d0(void);
+
 __declspec(naked) void FloatToStringBundle_004c8880(void) {
     __asm {
         /* sub-1: digit conversion + format dispatch */

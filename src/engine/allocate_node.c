@@ -17,11 +17,13 @@
 /*
  * @addr 0x0041f290
  *
+
  * Naked + __asm: the long chain of `mov edx, [g_currentNodeIdx];
  * mov [edx*4+N], reg` repeats reload + indexed store ~30 times in a
  * row. MSVC SP3 will not produce that exact reload pattern from a
  * natural C body (it would CSE the load into a register).
  */
+
 __declspec(naked) void *AllocateNode(u32 type)
 {
     __asm {

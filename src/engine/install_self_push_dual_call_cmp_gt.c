@@ -122,6 +122,9 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void CopyThreeFields_00404df0(void);
+
 /* @addr 0x0048f650 (127b) - twin of 0x0048f5d0 with `jg` instead of `jl`. */
 extern void InstallSelfPushDualCallCmpGt_0048f650(void);
 void InstallSelfPushDualCallCmpGt_0048f650(void) {

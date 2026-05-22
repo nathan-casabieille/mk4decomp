@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00514d78;
+extern unsigned int g_data_00514de8;
+extern unsigned int g_data_0052ab48;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void BootMstackInit_0041fb10(void);
+extern void DispatcherComplex181_00426310(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void SaveCallRestore_004049d0(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+
 void DualSeqBranchInit_00477a20(void) {
     __asm {
         mov     eax, dword ptr [g_data_0053a408]
@@ -205,3 +225,4 @@ void DualSeqBranchInit_00477a20(void) {
     L_dsbi_ret:
         }
 }
+

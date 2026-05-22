@@ -127,6 +127,92 @@ extern void PoseFsm4StateInstall_00437c10(void);
 extern void Wrapper_00438ee0(void);
 extern void SetJmp_00438f70(void);
 extern void ThresholdedTailJmps_00436390(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
  *   threshold-dispatch on g_state_00535ddc to {0x00437c10, Wrapper_00438ee0, PrefixThunkInstallSelf3State_00438f80}.
+ *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_00438f70, PrefixThunkInstallSelf3State_00438f80}.
+ *   D (+0x90): jmp ThresholdedTailJmps_00436390.
+ */
+__declspec(naked) void TripleThresholdDispatch_004362f0(void) {
+    __asm {
+        jmp     InstallSelfSetTagJmp_00439e40
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00014ccc
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7dh
+        _emit   05h
+        jmp     PoseFsm4StateInstall_00437c10
+        cmp     eax, 0x00020000
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        jmp     PrefixThunkInstallSelf3State_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        call    Cmp2CallDirtyCall_004398b0
+        test    eax, eax
+        _emit   75h
+        _emit   27h
+        mov     eax, dword ptr [g_state_00535ddc]
+        cmp     eax, 0x00020000
+        mov     dword ptr [g_x_0054206c], eax
+        _emit   7eh
+        _emit   05h
+        jmp     Wrapper_00438ee0
+        cmp     eax, 0x00019999
+        _emit   7dh
+        _emit   05h
+        jmp     SetJmp_00438f70
+        jmp     PrefixThunkInstallSelf3State_00438f80
+        ret
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        _emit   90h
+        jmp     ThresholdedTailJmps_00436390
+    }
+}
+
+/* @addr 0x004362f0 (149b game) - DUMMY COMMENT to avoid C1071 */

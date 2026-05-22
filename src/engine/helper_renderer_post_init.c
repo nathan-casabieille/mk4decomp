@@ -10,6 +10,13 @@
  *   Jump table at +0x58 swaps entries 4/5 (the mode-3 slot routes to
  *   the last code block).
  */
+extern unsigned int g_state_004f4b3c;
+extern void func_004a2870(void);
+extern void func_004ad5d0(void);
+extern void func_004af6a0(void);
+extern void func_004afed0(void);
+extern void func_004b44d0(void);
+
 __declspec(naked) void Helper_RendererPostInit(void) {
     __asm {
         mov     eax, dword ptr [g_state_004f4b3c]

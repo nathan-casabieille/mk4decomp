@@ -123,6 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048eb20 (118b) - 4-call guard cascade with dual-const path */
+extern void PushPopState70Mask_00490650(void);
+
 void GuardedDualConst1AndToggle_0048eb20(void) {
     __asm {
         call    DirtyToggleByGate_0048f350
@@ -161,3 +163,4 @@ void GuardedDualConst1AndToggle_0048eb20(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

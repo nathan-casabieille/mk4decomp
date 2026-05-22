@@ -142,6 +142,9 @@ extern void Thunk_0049cbd0(void);
 extern void CallSetPause_0041f830(void);
 extern void StageEntityInitCluster_004216a0(void);
 
+extern unsigned int g_data_00537ea4;
+extern unsigned int g_data_0053a6e0;
+
 __declspec(naked) void TriDispatchSetupChain_00421500(void)
 {
     __asm

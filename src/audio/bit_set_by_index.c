@@ -133,6 +133,15 @@ extern unsigned int g_data_00535e7c;
  *     g_x_00542070 = (1 << g_x_00542078) | esi; chain[edx] = same.
  *   mstack-pop into g_x_00542048, g_x_00542078.
  */
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void BitSetByIndex_004a07a0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

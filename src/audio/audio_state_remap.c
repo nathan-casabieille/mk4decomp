@@ -121,6 +121,14 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_004d50a4;
+extern unsigned int g_x_004d50a8;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_00541dd4;
+extern unsigned int g_x_00543724;
+extern unsigned int g_x_00543728;
+extern unsigned int g_x_0054372c;
+extern unsigned int g_x_00543730;
 
 /*
  * @addr 0x004a0190 (120b audio) - audio state remap-then-tail-jmp:

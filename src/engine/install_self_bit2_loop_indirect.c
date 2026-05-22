@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *     If eax!=0: toggle bit2 off; call eax; if pause ret.
  *     Install-self at entry; state=1; g_x_0054204c=1; pause=1; pop esi/ebx; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void AtanDualDeltaThreshold_0049c870(void);
+extern void ScaledChain3c74_0048f910(void);
+extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

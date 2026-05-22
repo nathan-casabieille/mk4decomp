@@ -131,6 +131,17 @@ extern unsigned int g_data_00535e7c;
  *     baseSel[+0x30]=2, baseSel[+0x34]=g_scaledInit, baseSel[+0x38]=g_x_00542058,
  *     baseSel[+0x3c]=g_cj_0054205c. Tail-jmp FourPackedSubInitCmpDispatch_004665b0; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void FourPackedSubInitCmpDispatch_004665b0(void);
+extern void MStackCall_00406340(void);
+extern void StoreFightFieldCallTailJmp_004667a0(void);
+extern void TripleMStackPushChainStores_00476180(void);
+
 __declspec(naked) void ThunkPlus4FieldCjCopy_00466490(void) {
     __asm {
         push    0x004eaa08

@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   g_state_0054208c = eax.
  *   mstack-pop into g_x_00542074, g_x_00542070, g_x_0054206c.
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542094;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPush3MaskBit0_004929e0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -177,3 +184,4 @@ void MStackPush3MaskBit0_004929e0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

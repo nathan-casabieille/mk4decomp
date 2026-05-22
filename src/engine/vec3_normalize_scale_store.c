@@ -129,6 +129,16 @@ extern unsigned int g_data_00535e7c;
  *   Store esi/edi/ecx (each int result) to 6 slots at 0x7af9c0/c4/c8/d8/dc/e0
  *   indexed by 12*idx0.
  */
+extern unsigned int g_arr_007af9c0;
+extern unsigned int g_arr_007af9c4;
+extern unsigned int g_arr_007af9c8;
+extern unsigned int g_arr_007af9d8;
+extern unsigned int g_arr_007af9dc;
+extern unsigned int g_arr_007af9e0;
+extern unsigned int g_fp_004d29b8;
+extern unsigned int g_fp_004d29c0;
+extern void DoubleToInt64_004c57d0(void);
+
 __declspec(naked) void Vec3NormalizeScaleStore_004b3130(void) {
     __asm {
         push    ecx

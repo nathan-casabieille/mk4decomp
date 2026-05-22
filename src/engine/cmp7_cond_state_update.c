@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   update slot[walk]=2 and 0x537f8c=g_x_0053a318; then tail-call
  *   CallSetPause.
  */
+extern unsigned int g_x_00537f8c;
+extern unsigned int g_x_0053a318;
+extern void CallSetPause_0041f830(void);
+extern void Cmp7DirtyToggle_0042ee10(void);
+
 __declspec(naked) void Cmp7CondStateUpdate_0042ed90(void) {
     __asm {
         call    Cmp7DirtyToggle_0042ee10

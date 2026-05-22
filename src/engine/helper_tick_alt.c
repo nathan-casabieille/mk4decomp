@@ -4,6 +4,19 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543550;
+extern unsigned int g_data_00ab4db8;
+extern unsigned int g_data_00ab4e5c;
+extern unsigned int g_data_00ab4e60;
+extern unsigned int g_data_00ab4e64;
+extern void ZeroEightFields_004b8f20(void);
+
 __declspec(naked) void Helper_TickAlt(void)
 {
     __asm

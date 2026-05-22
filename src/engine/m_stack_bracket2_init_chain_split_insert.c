@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541e74;
+extern unsigned int g_data_00541e78;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+extern void MStackPush2ChainInsert_00409870(void);
+
 __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
 {
     __asm

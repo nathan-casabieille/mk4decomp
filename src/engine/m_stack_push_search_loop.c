@@ -125,6 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00463ed0 (209b game) - mstack-push 2 (g_x_00542070, g_scaledInit), set scaledInit and chain,
  *   loop scanning chain[*4+disp] for zero terminator, mstack-pop 2.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_00541fb8;
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
 void MStackPushSearchLoop_00463ed0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -175,3 +181,4 @@ void MStackPushSearchLoop_00463ed0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

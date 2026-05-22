@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop into g_x_0054205c; if (g_state_0054208c & 4) ret;
  *   jmp MStackBracket2_StateAdvance6_004094d0.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054205c;
+extern void BootStateTriple_00408d30(void);
+extern void MStackBracket2_StateAdvance6_004094d0(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+
+extern unsigned int g_chain_disp_24_409420;
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void MStackPush2GatedTail_00409420(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

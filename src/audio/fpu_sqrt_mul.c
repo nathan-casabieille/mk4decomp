@@ -22,6 +22,7 @@ extern u32 g_eventQueueWorkType;
 extern double g_const_004d27b0;
 extern double g_const_004d27b8;
 extern int func_004cb7b0(void);
+
 void FpuSqrtMul_004ab350(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -36,3 +37,4 @@ void FpuSqrtMul_004ab350(void) {
         mov     dword ptr [g_walkCallback], eax
         }
 }
+

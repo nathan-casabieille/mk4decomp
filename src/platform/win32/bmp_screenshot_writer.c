@@ -122,6 +122,11 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f47bc;
+extern void Helper_FClose(void);
+extern void Helper_FOpen(void);
+extern void WrapThreeDispatch_004c5f80(void);
+
 __declspec(naked) void BmpScreenshotWriter_004c4600(void)
 {
     __asm {

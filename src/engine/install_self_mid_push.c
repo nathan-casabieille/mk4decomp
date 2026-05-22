@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *     install self: [eax+8]=0x45bd80, push edi for packed_ptr store,
  *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow_00428b20; pause=1.
  */
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+extern void InstallSelfAccumOverflow_00428b20(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -4,6 +4,51 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_0052ab04;
+extern unsigned int g_data_0052ab08;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_0052ab50;
+extern unsigned int g_data_0052d720;
+extern unsigned int g_data_0052d738;
+extern unsigned int g_data_0052d74c;
+extern unsigned int g_data_00535d60;
+extern unsigned int g_data_00535d68;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00535de8;
+extern unsigned int g_data_00535e70;
+extern unsigned int g_data_00535e74;
+extern unsigned int g_data_00535e78;
+extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00537e94;
+extern unsigned int g_data_00537ef4;
+extern unsigned int g_data_00538068;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_0053a42c;
+extern unsigned int g_data_0053a730;
+extern unsigned int g_data_0053a7b4;
+extern unsigned int g_data_00541d68;
+extern unsigned int g_data_00541dc4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542084;
+extern unsigned int g_data_00542094;
+extern void DualInstallCallSwap_00489cd0(void);
+extern void DualInstallCallSwap_00490c80(void);
+extern void FpuSqrtMul_004ab350(void);
+extern void GeoTransformDispatchAndApply_00489840(void);
+extern void Mul10Tail_00404af0(void);
+extern void RangeMulMod_004ab2a0(void);
+extern void ScaledStateNegCallPauseLoad_00489e90(void);
+
 __declspec(naked) void Helper_PerPlayerTick(void)
 {
     __asm {

@@ -126,6 +126,9 @@ extern unsigned int g_data_00535e7c;
  *   If ch < 0xff: return mask & pctype[ch]. Else if hi-byte is leadbyte:
  *   convert via MultiByteToWideChar; if ok: return mask & low16 of arg1.
  */
+extern unsigned int g_x_00522998;
+extern void WcToMbDispatcher_004cdae0(void);
+
 __declspec(naked) int IsCType_004cc650(void) {
     __asm {
         push    ecx

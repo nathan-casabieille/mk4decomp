@@ -124,6 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004577a0 (140b) - linear search through 0x4e83d0 chain
  *   for g_walkCallback; set/clear bit0 of g_state_0054208c. */
+
 void PushSearchToggleBit0_004577a0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -166,3 +167,4 @@ void PushSearchToggleBit0_004577a0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

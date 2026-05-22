@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   pause clear and bit0 set tail-jmp StackPopDispatchTagged; else
  *   install self with tag 0xa0 and raise framePause.
  */
+extern unsigned int g_data_0054204c;
+extern void PushPop84TripleCall_00438b90(void);
+extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+
 __declspec(naked) void InstallSelfBitGate_00438aa0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

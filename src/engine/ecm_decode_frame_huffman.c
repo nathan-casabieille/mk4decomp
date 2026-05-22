@@ -4,6 +4,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f48af;
+extern unsigned int g_data_004f48cf;
+extern unsigned int g_data_004f49f0;
+extern unsigned int g_data_004f4a30;
+extern void Helper_ChkStk(void);
+
 __declspec(naked) void ECM_DecodeFrame_Huffman(void)
 {
     __asm {

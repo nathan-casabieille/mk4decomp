@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543724;
+extern unsigned int g_data_0054372c;
+extern unsigned int g_data_00543730;
+extern unsigned int g_data_005437f4;
+extern void AudioBindEntry_004a1e40(void);
+extern void AudioInitArgs3_004a1f20(void);
+extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void PendingMatch_004a2a80(void);
+extern void RetZero_004a1c40(void);
+extern void ScaledByteIdxDualCopy_004a3260(void);
+extern void TripleCallByteCheck_004a1bf0(void);
+extern void TripleCallSetCopy_004a4880(void);
+extern void VoicePoolTickDispatch_004a4c10(void);
+
 __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
 {
     __asm

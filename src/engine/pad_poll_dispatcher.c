@@ -152,6 +152,10 @@ extern unsigned int g_data_0054336c;
 extern unsigned int g_data_00543370;
 extern unsigned int g_data_0054357c;
 
+extern unsigned int g_data_004ffd7c;
+extern void Helper_JoyButtonInit(void);
+extern void InputBitMaskDispatcher_004b5470(void);
+
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
     __asm {

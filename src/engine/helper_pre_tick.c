@@ -13,6 +13,18 @@
  *   ecx = [0x52ab10] + 0x15 (packed_ptr ofs); g_x_00542048 = ecx;
  *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
  */
+extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00ab4d18;
+extern unsigned int g_x_00ab4d1c;
+extern unsigned int g_x_00ab4d20;
+extern unsigned int g_x_00ab4e24;
+extern void DispatchScaledLEA_004b8f50(void);
+extern void Word9Reorder_004b3b30(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void Helper_PreTick(void) {
     __asm {
         call    DispatchScaledLEA_004b8f50
@@ -68,4 +80,5 @@ void Helper_PreTick(void) {
         mov     dword ptr [g_x_00ab4e24], ecx
         }
 }
+
 

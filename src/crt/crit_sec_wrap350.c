@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   _lock(0x13) when init flag set), calls inner, then unlocks /
  *   leaves critsec; returns the inner's result.
  */
+extern unsigned int g_iat_004d20cc;
+extern unsigned int g_iat_004d20d0;
+extern unsigned int g_x_00f9fdac;
+extern unsigned int g_x_00f9fdb0;
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void Wctomb_004cc350(void);
+
 __declspec(naked) void CritSecWrap350_004cc2e0(void) {
     __asm {
         push    ebx

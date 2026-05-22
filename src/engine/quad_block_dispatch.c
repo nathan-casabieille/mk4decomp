@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   C (+0x60): push 0x004ee480, call ArgSarStoreJmp; ret.
  *   D (+0x70): call DirtyToggleByGate; if !pause, bit-4 selects RoundCutsceneCluster_004831c0 vs InstallSelfReenterSelfJmp_00483130.
  */
+extern unsigned int g_pause_00541e6c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseDirtyLit_00488c70(void);
+extern void GateDispatch6c_00494580(void);
+extern void InstallSelfReenterSelfJmp_00483130(void);
+extern void RoundCutsceneCluster_004831c0(void);
+extern void ScaledMove48to58_00490720(void);
+extern void Wrapper_0048a380(void);
+
 __declspec(naked) void QuadBlockDispatch_00483090(void) {
     __asm {
         push    0x004ee418

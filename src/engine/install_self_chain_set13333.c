@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542084 = 0x13333; g_x_00542080 = 0x1e; install self;
  *   packed_ptr store; g_scaledInit++; chain[base+0x84]=0; call StateGateMStackOverlap_00438690; pause = 1.
  */
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void StateGateMStackOverlap_00438690(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfChainSet13333_00437880(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -132,6 +132,9 @@ extern void TowerStageInitCluster_00430560(void);
  *   TowerStageInitCluster_00430560; else build scaled chain (++cj, walk, [eax*4+r]
  *   = idx) and tail-jmp through g_eventQueueWorkType.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_x_00541dc4;
+
 __declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
     __asm {
         call    Cmp2DirtyToggle_00423870

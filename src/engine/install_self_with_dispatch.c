@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
  *     call Install3WayChainStateAdvance; pause=1. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542080;
+extern void Install3WayChainStateAdvance_00429130(void);
+extern void ScaledLoadJmp_24_00429790(void);
+extern void Thunk_004296e0(void);
+
 __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

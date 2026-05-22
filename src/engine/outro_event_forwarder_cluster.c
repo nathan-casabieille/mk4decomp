@@ -122,6 +122,32 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004eec10;
+extern unsigned int g_data_004eec28;
+extern unsigned int g_data_004eec40;
+extern unsigned int g_data_004eec68;
+extern unsigned int g_data_004eec90;
+extern unsigned int g_data_004eecc0;
+extern unsigned int g_data_004eece8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GateDispatch6c_00494580(void);
+extern void Phase3Packed3EntryDispatch_00486130(void);
+extern void QuadBlockDispatch_00483090(void);
+extern void QuadBlockInstallChainThunks_00483c90(void);
+extern void ScaledAndAlf7_00490310(void);
+extern void ScaledCmpJlJmp_00488ed0(void);
+extern void ScaledDecOrZero_00483b50(void);
+extern void ScaledMove48to58_00490720(void);
+
 __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
 {
     __asm {

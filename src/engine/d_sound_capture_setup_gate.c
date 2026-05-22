@@ -133,6 +133,13 @@ extern unsigned int g_data_00535e7c;
  *     *arg1 = blob; *arg2 = field; *arg3 = [0x004f4788]; g_data_0058c7ec = (esi?2:1).
  *     Return 1. Else return 0.
  */
+extern unsigned int g_data_004f4788;
+extern unsigned int g_data_0058c7b0;
+extern unsigned int g_data_0058c7b4;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_data_0058c7e0;
+extern unsigned int g_data_0058c7ec;
+
 __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
     __asm {
         mov     eax, dword ptr [g_data_0058c7e0]

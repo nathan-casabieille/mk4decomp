@@ -132,6 +132,13 @@ extern unsigned int g_data_00535e7c;
  *     If equal: cmp g_acc with ecx. If equal: set bit. Else clear bit. Ret.
  *     If first not equal: clear bit, ret.
  */
+extern unsigned int g_data_005424c0;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void NotMaskStorePair_0045f440(void);
+
 void ArgIndexedBitmaskInit_0045f310(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -211,3 +218,4 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

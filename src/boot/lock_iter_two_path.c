@@ -137,6 +137,14 @@ extern unsigned int g_data_00535e7c;
  *   if (edi != 1): eax = ebp.
  *   pop all regs.
  */
+extern unsigned int g_x_00f9fdb4;
+extern unsigned int g_x_00fa0dc0;
+extern void CallTestPushSubCall_004c6960(void);
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void TwoPathIATDispatch_004c7030(void);
+extern void TwoPathIATDispatch_004c70a0(void);
+
 __declspec(naked) void LockIterTwoPath_004c6a20(void) {
     __asm {
         push    ecx

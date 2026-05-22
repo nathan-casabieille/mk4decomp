@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   pop g_data_00535e48; ret.
  *   Hmm let me re-read.
  */
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00535e50;
+
 void Push48PreSetTwoStores_00427ad0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -159,3 +162,4 @@ void Push48PreSetTwoStores_00427ad0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

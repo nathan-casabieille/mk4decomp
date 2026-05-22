@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   Block B (chain[+0x84]==0): g_data_00542088=0x3243f; g_x_00542078=0x7cccc; call DualMul10AccumState88_00431dd0;
  *     if !pause: install-self at +0x08=0x00431f40, chain[+0x84]=1, g_data_0054204c=1, pause=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern void DualMul10AccumState88_00431dd0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void InstallSelfState88_00431f40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

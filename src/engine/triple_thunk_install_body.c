@@ -123,6 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004551f0 (330b game) - 3-thunk dispatcher + install-self body. */
+extern unsigned int g_data_005012b0;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void InstallSelfWithSibling_00475490(void);
+extern void StoreLoadJmp_00404ef0(void);
+
 void TripleThunkInstallBody_004551f0(void) {
     __asm {
         push    0x00455530
@@ -199,3 +208,4 @@ void TripleThunkInstallBody_004551f0(void) {
         mov     dword ptr [g_pause_00541e6c], 1
         }
 }
+

@@ -14,12 +14,14 @@
 /*
  * @addr 0x0045c6c0
  *
+
  * Naked + __asm: scaled-base addressing pattern (`[reg*4 + disp]`
  * with the table address kept as `addr >> 2` in the register) makes
  * the natural C form unrepresentable; the asymmetric epilogue
  * (early-out as bare `ret` versus `pop esi; mov; pop edi; ret`)
  * also requires a hand-rolled tail.
  */
+
 __declspec(naked) void FightFrameStep_Inner(void)
 {
     __asm {

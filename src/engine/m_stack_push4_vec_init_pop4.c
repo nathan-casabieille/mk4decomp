@@ -121,6 +121,14 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
 
 /* @addr 0x00471350 (385b game) - mstack-push-4 + scoped slot vec-init + pop-4.
  *   Pushes g_data_0054207c/00542058/00542054/00542044 onto mstack, then

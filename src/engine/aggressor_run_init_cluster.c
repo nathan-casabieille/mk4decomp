@@ -122,6 +122,38 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ed988;
+extern unsigned int g_data_004ef228;
+extern unsigned int g_data_004ef258;
+extern unsigned int g_data_004ef278;
+extern unsigned int g_data_004ef2b8;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00537ef4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542be8;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void BlockedCounterCluster_004816d0(void);
+extern void BossArrivalSequence_00481950(void);
+extern void CjDispatchCommit_004818e0(void);
+extern void DualScaledStore_00452740(void);
+extern void MStackDualDiffSequencer_00477040(void);
+extern void PendingMatch_00455bd0(void);
+extern void Push267_Push44eb60_Jmp_00489220(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void ScaledXorStore_004903b0(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void TripleEntryCountdownInstall_0046a230(void);
+
 __declspec(naked) void AggressorRunInitCluster_004813b0(void)
 {
     __asm {

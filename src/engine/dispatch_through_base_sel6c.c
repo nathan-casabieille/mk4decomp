@@ -129,6 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   walk=DualConstMaskFlagToggle8 (default) and wt=...Toggle4; if
  *   baseSel[+0x6c] set replace walk with that; tail-jmp through walk.
  */
+extern unsigned int g_data_0054204c;
+extern void ArgScaledLoadCmpP1_0048e550(void);
+
 __declspec(naked) void DispatchThroughBaseSel6c_00460f20(void) {
     __asm {
         push    0x00542990

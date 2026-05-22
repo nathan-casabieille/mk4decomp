@@ -50,6 +50,7 @@ extern unsigned int g_state_0053a2c0;
 extern unsigned int g_state_00535df0;
 
 /* @addr 0x00476060 */
+
 __declspec(naked) void DispatcherComplex138_00476060(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]

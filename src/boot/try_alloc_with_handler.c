@@ -20,6 +20,7 @@ extern packed_ptr g_fightGroupHead;
  */
 extern void *SmallMalloc_004c5520(unsigned int n);
 extern int IndirectCall_004c6ec0(unsigned int n);
+
 __declspec(naked) void TryAllocWithHandler_004c54d0(void) {
     __asm {
         push    esi

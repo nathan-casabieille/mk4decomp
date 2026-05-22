@@ -133,6 +133,19 @@ extern unsigned int g_data_00535e7c;
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
  *     if [0x005433f4] == 2: tail-call PendingMatch_004a8ca0 else AudioInstallSelfStateMachine2_004a85c0.
  */
+extern unsigned int g_data_0050f114;
+extern unsigned int g_data_005433f4;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542074;
+extern void AudioInstallSelfStateMachine2_004a85c0(void);
+extern void DrainQueueCallEach_004a1ec0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void PendingMatch_004a8ca0(void);
+extern void SnapshotDirtyMark_004a1dc0(void);
+
 __declspec(naked) void AudioInitLoopTriple_004a7840(void)
 {
     __asm

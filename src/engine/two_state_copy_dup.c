@@ -127,6 +127,20 @@ extern unsigned int g_data_00535e7c;
  *     -> {0x537f48, 0x5380e0, 0x53a178, 0x541ec4, 0x541ec8, walkCallback/0x53a250}.
  *   if odd: same source set but with different mapping (swap a/c, etc).
  */
+extern unsigned int g_x_00537ea0;
+extern unsigned int g_x_00537edc;
+extern unsigned int g_x_00537f30;
+extern unsigned int g_x_00537f48_v2;
+extern unsigned int g_x_005380e0_v2;
+extern unsigned int g_x_0053a178_v2;
+extern unsigned int g_x_0053a1cc;
+extern unsigned int g_x_0053a250_v2;
+extern unsigned int g_x_0053a790;
+extern unsigned int g_x_00541ec4;
+extern unsigned int g_x_00541ec8;
+extern unsigned int g_x_00541ecc;
+extern unsigned int g_x_00541ed0;
+
 void TwoStateCopyDup_004225f0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00537f30]
@@ -163,3 +177,4 @@ void TwoStateCopyDup_004225f0(void) {
         mov     dword ptr [g_x_00541ec8], ecx
         }
 }
+

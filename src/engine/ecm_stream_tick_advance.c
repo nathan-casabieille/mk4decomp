@@ -122,6 +122,33 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004d2998;
+extern unsigned int g_const_004d29a0;
+extern unsigned int g_const_004d29a8;
+extern unsigned int g_const_004d29b0;
+extern unsigned int g_data_004f47b4;
+extern unsigned int g_data_004f47b8;
+extern unsigned int g_data_0058f428;
+extern unsigned int g_data_007aa224;
+extern unsigned int g_data_007aa228;
+extern unsigned int g_data_007aa234;
+extern unsigned int g_data_007ab048;
+extern unsigned int g_data_007ab04c;
+extern unsigned int g_data_007ab050;
+extern unsigned int g_data_007ab05c;
+extern unsigned int g_data_007ab060;
+extern unsigned int g_data_007ab064;
+extern unsigned int g_data_007ab06c;
+extern unsigned int g_data_007ab070;
+extern unsigned int g_data_007ab074;
+extern unsigned int g_iat_004d2074;
+extern unsigned int g_iat_004d2084;
+extern unsigned int g_iat_004d2240;
+extern void DoubleToInt64_004c57d0(void);
+extern void ECM_Cleanup(void);
+extern void EcmFrameDecode_004bec30(void);
+extern void Helper_ECM_PostCleanup(void);
+
 __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
 {
     __asm {

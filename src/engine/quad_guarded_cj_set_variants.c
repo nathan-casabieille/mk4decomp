@@ -129,6 +129,23 @@ extern unsigned int g_data_00535e7c;
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
  *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_data_00537f78; ret.
  */
+extern unsigned int g_data_00541e34;
+extern unsigned int g_data_00541e38;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00537f78;
+extern unsigned int g_x_00538160;
+extern unsigned int g_x_00538164;
+extern unsigned int g_x_0053a178;
+extern unsigned int g_x_0053a250;
+extern unsigned int g_x_00541de0;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void DownloadPlayerChar(void);
+extern void GuardedDualPushTailJmp_004231f0(void);
+extern void ScaledOr4DirtyClear_00409320(void);
+extern void TwoStateLookupDirty_004237d0(void);
+
 void QuadGuardedCjSet_00422fc0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a178]
@@ -267,3 +284,4 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     dword ptr [edx*4 + 0x3c], eax
         }
 }
+

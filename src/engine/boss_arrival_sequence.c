@@ -132,6 +132,18 @@ extern unsigned int g_data_00538124;
 extern unsigned int g_const_00481a10;
 extern unsigned int g_const_00481a80;
 
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542088;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void BlockedCounterCluster_004816d0(void)
 {
     __asm {

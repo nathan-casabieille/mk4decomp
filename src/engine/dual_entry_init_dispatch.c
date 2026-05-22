@@ -128,6 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   12 NOPs alignment pad.
  *   entry +0x50 (= 0x004313b0): self-call to +0x00 init, then if !g_pause: tail-jmp ScaledInitWithCounterAndType.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void DualEntryInitDispatch_00431360(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054205c]

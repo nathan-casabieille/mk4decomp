@@ -68,6 +68,7 @@ extern int  CrtReadCrlfDecode_004c9040(int handle, int a, int b);
 extern int  FileWriteWithLfToCrlf_004c9b60(int handle, int a, int b);
 
 /* @addr 0x004c8dd0 */
+
 __declspec(naked) void IOWrapper_004c8dd0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]

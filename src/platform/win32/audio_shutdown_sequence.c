@@ -131,6 +131,19 @@ extern unsigned int g_data_00535e7c;
  *   Helper_DSI_post1(0); g_x_00f9eff0 = 0;
  *   if g_x_00f9efcc: vtbl[+8](.); clear. Same for g_x_00f9efc8.
  */
+extern unsigned int g_byte_00f9efec;
+extern unsigned int g_iat_004d2074;
+extern unsigned int g_iat_004d2240;
+extern unsigned int g_x_00f9efc8;
+extern unsigned int g_x_00f9efcc;
+extern unsigned int g_x_00f9eff0;
+extern void Audio_UpdateChannels(void);
+extern void BuildMaskFromArray_004c38d0(void);
+extern void Helper_DSI_post1(void);
+extern void Helper_TitleSetMaxVolume(void);
+extern void IterateCallSkip_004c4210(void);
+extern void Loop1cBitMask_004c4450(void);
+
 __declspec(naked) void AudioShutdownSequence_004c4240(void) {
     __asm {
         push    ebx

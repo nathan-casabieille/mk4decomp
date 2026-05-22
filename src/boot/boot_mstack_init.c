@@ -124,6 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 extern void BootMstackInit_0041fb10(void);
 extern void Wrapper_0048a270(void);
+extern void CallSetPause_0041f830(void);
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
 
 /* @addr 0x00426ae0 (114b game) - dual-entry stub + install-self.
  *   Block A: push 0x241; push 0x00426b00; call BootMstackInit_0041fb10; ret. Stack arg dispatch.

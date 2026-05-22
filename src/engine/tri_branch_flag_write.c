@@ -130,6 +130,17 @@ extern unsigned int g_data_00535e7c;
  *     else: write 0x10000 to walkCallback/0x537f2c/0x53e348; ret.
  *   Else: clear g_x_005433ec; write 0x10000 to all 5 globals; ret.
  */
+extern unsigned int g_x_00537e88;
+extern unsigned int g_x_00537f2c;
+extern unsigned int g_x_0053a328;
+extern unsigned int g_x_0053a408;
+extern unsigned int g_x_0053a6dc;
+extern unsigned int g_x_0053e348;
+extern unsigned int g_x_005433ec;
+extern unsigned int g_x_00543714;
+extern void ClampTwoToMax_004226a0(void);
+extern void ClampTwoToMax_004226e0(void);
+
 __declspec(naked) void TriBranchFlagWrite_00422720(void) {
     __asm {
         mov     eax, dword ptr [g_x_00543714]

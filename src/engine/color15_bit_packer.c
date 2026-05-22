@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   prior alpha/MSB preserved at 0x007af9f0; final XOR-blends B
  *   with the previously-stored value's low byte.
  */
+extern unsigned int g_word_007af9f0;
+extern unsigned int g_x_007af9f0;
+
 void Color15BitPacker_004b3030(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -176,3 +179,4 @@ bDone:
         mov     word ptr [g_word_007af9f0], ax
         }
 }
+

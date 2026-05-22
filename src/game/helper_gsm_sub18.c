@@ -15,6 +15,17 @@
  *     If 0x45 → set 0x00ab4364=0.
  *     Final epilogue: push (eax, &g_data_004f5090); DrawMenu; pop ret.
  */
+extern unsigned int g_byte_00ab42d4;
+extern unsigned int g_data_004f5090;
+extern unsigned int g_data_00ab41a0;
+extern unsigned int g_data_00ab4364;
+extern void DrawMenu(void);
+extern void MenuInputPoll_004b7020(void);
+extern void TableSearchAsc_004b6300(void);
+extern void TableSearchDesc_004b62c0(void);
+
+extern unsigned int g_data_004f5094;
+
 __declspec(naked) void Helper_GSM_Sub18(void)
 {
     __asm

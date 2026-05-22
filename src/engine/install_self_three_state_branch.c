@@ -132,6 +132,12 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit push 0x00439d20+0x01000000.
  *   Common tail: call StateGateMStackOverlap_00438690; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542084;
+extern void CallPauseDirtyConstJmp_00438ca0(void);
+extern void StateGateMStackOverlap_00438690(void);
+extern void StoreCallPauseTestByte_DualCmpStoreClear_00439f70(void);
+
 __declspec(naked) void InstallSelfThreeStateBranch_00439d20(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

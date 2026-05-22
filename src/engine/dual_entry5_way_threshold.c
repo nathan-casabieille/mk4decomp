@@ -128,6 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
  *     else cascade 3 state-threshold gates jumping to Wrapper_00436760/70/80 or GuardedSeq.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CallPauseMStackPushSet2Jmp_00437930(void);
+extern void GuardedSeq_00433bb0(void);
+extern void MultiThunkDispatcher9_00436780(void);
+extern void PackedAdvanceCallTailJmp_004392c0(void);
+extern void ScaledChainSignDirtyToggle_00439680(void);
+extern void Wrapper_00436760(void);
+extern void Wrapper_00436770(void);
+
 __declspec(naked) void DualEntry5WayThreshold_004366d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]

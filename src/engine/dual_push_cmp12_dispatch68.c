@@ -123,6 +123,9 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00474de0 (157b) - twin of 0x00474d40 with chain offset 0x68. */
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+
 void DualPushCmp12Dispatch68_00474de0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -163,3 +166,4 @@ void DualPushCmp12Dispatch68_00474de0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

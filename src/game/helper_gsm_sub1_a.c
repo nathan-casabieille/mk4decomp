@@ -5,6 +5,16 @@
 #include "game/tick.h"
 
 /* Helper_GSM_Sub1A - sister of 0x4b8630 for 0x004f5050 menu. */
+extern unsigned int g_byte_00ab42ec;
+extern unsigned int g_data_004f5050;
+extern unsigned int g_data_004f5054;
+extern unsigned int g_data_00ab4304;
+extern unsigned int g_data_00ab436c;
+extern void DrawMenu(void);
+extern void MenuInputPoll_004b7020(void);
+extern void TableSearchAsc_004b6300(void);
+extern void TableSearchDesc_004b62c0(void);
+
 __declspec(naked) void Helper_GSM_Sub1A(void)
 {
     __asm

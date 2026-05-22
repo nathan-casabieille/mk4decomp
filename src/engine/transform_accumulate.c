@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   add g_walkCallback to arr_b[+0], g_x_00542070 to arr_b[+4],
  *   g_x_00542048 to arr_b[+8].
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542050;
+extern void Mat3x3VecMul6Bit_004b3590(void);
+
+extern unsigned int g_arr_4bddf0_a;
+extern unsigned int g_arr_4bddf0_b;
+extern unsigned int g_arr_4bddf0_src;
+
 void TransformAccumulate_004bddf0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542050]
@@ -161,3 +170,4 @@ void TransformAccumulate_004bddf0(void) {
         add     [eax*4 + g_arr_4bddf0_a + 0x08], edx
         }
 }
+

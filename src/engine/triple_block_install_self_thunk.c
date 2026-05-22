@@ -134,6 +134,14 @@ extern unsigned int g_data_00535e7c;
  *     call StorePauseImulShr16; if pause: skip; else tail-jmp InstallSelfTableDispatch.
  *   state==0: install-self at tail+0; state=1; g_x_0054204c=0x78; pause=1; ret.
  */
+extern unsigned int g_data_0053a748;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void CallPauseInc_004ab670(void);
+extern void InstallSelfTableDispatch_00461a60(void);
+extern void StorePauseImulShr16_004ab630(void);
+
 __declspec(naked) void TripleBlockInstallSelfThunk_00461930(void) {
     __asm {
         push    0x30

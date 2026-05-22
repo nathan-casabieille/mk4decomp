@@ -121,6 +121,12 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_state_00542054;
+extern unsigned int g_x_0052aac4;
+extern unsigned int g_x_00537f94;
+extern unsigned int g_x_00538148;
+extern unsigned int g_x_005433e8;
+extern unsigned int g_x_00543590;
 
 /*
  * @addr 0x00467e60 (111b game) - paired-mode tick: if both byte

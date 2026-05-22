@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   Stack-frame: sub esp, 0x58. Holds 11 const ptrs (0x004d24bc..0x004d2578) and 11 const vals
  *   (0xff9c0000..0x00930000 step 0x190000-ish).
  */
+extern unsigned int g_table_00543404;
+extern unsigned int g_table_00543408;
+extern unsigned int g_x_00542044;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+
 __declspec(naked) void Audio11SlotInitLoop_004a5540(void)
 {
     __asm

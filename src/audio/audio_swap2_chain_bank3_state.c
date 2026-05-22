@@ -132,6 +132,13 @@ extern unsigned int g_data_00535e7c;
  *   copy chain3[+0x54/+0x58/+0x5c] → g_x_0054206c/g_data_00542070/g_x_00542074 → chain2[+0x54/+0x58/+0x5c].
  *   Pop+ret.
  */
+extern unsigned int g_byte_0053a498;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_005433c8;
+extern unsigned int g_x_0054359c;
+
 __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
 {
     __asm

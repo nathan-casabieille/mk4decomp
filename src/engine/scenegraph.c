@@ -23,6 +23,9 @@ void *AllocNode(void)
  *
  * @addr 0x004be050
  */
+extern void InitOrAllZeroLoopback_004bdb00(void);
+
+
 void NodeApplyMatrix(void) {
     __asm {
         mov     eax, [g_matrixStackTop]
@@ -313,7 +316,6 @@ void NodeApplyTransform_C_Direct(void)
     g_xformDirtyFlags |= 0x30;
 }
 
-extern void InitOrAllZeroLoopback_004bdb00(void);
 
 /* @addr 0x004bdc70 (48b game) - dispatch on 3-entry probe at (g_xformEntityIdx*4)+{0,4,8}.
  * If any of the 3 entries is non-zero, tail-jmp NodeApplyTransform_B (the immediately

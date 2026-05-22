@@ -133,6 +133,13 @@ extern unsigned int g_data_00535e7c;
  *   saturation_low: cmp ecx with 0xfffe3334; if < 0: eax=0; mov [cj*4+0x70]=eax; pop+ret.
  *     Else: eax stays -0x7ae, mov to g_x_0054206c, store at cj[+0x70]=-0x7ae; pop+ret.
  */
+extern unsigned int g_load_0052ab04;
+extern unsigned int g_load_0052ab08;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
     __asm {
         mov     ecx, dword ptr [g_load_0052ab04]

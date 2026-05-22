@@ -18,6 +18,8 @@ extern packed_ptr g_fightGroupHead;
  *   [0x538158], also overrides g_scaledInit with the second value.
  *   Then clears g_walkCallback and the indexed slot.
  */
+extern unsigned int g_data_00538158;
+
 __declspec(naked) void DualScaledInitClear_00433c10(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]

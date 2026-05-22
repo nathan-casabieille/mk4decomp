@@ -133,6 +133,17 @@ extern unsigned int g_data_00535e7c;
  *   Always: pops the 2 mstack entries back, sets bit 2 of 0x54208c then
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541eb0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void MStackPushChainStepIndex_004ab510(void);
+
 __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

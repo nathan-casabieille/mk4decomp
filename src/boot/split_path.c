@@ -138,6 +138,9 @@ extern unsigned int g_data_00535e7c;
  *      similarly. Null-terminates each output as needed.
  *   Returns nothing (void).
  */
+extern unsigned int g_data_00f9f8c1;
+extern void FgetsImpl_004c9a30(void);
+
 __declspec(naked) void SplitPath_004c5e00(void) {
     __asm {
         push    ecx

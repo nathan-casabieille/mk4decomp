@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5320;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542094;
+extern void RandSarMod0xFFFSub400_0041f1f0(void);
+extern void RandSarMod0xFFF_0041f230(void);
+extern void WorldCellSetupCluster_0042b000(void);
+
 void RandPushTrigPair_0043f120(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542058]
@@ -217,3 +228,4 @@ void RandPushTrigPair_0043f120(void) {
     L_rptp_ret:
         }
 }
+

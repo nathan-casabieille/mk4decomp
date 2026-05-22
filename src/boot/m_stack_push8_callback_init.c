@@ -136,6 +136,26 @@ extern unsigned int g_data_00535e7c;
  *   into +0x0, 0xff at +0x14, and 0x00413e60 (callback addr) at +0x10.
  *   Calls MStackCall_004065b0, tail-jmp MStackPop8_004ab860.
  */
+extern unsigned int g_data_004d67b8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void AudioMixerStep_004ab700(void);
+extern void CopyThreeFields_00404df0(void);
+extern void MStackCall_004065b0(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushNegMul10_0040a690(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void ZeroAndDirty4_00405430(void);
+extern void func_00413e60(void);
+
 __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
     __asm {
         push    0x1000

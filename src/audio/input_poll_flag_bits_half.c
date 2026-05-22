@@ -18,6 +18,9 @@ extern packed_ptr g_fightGroupHead;
  *   [0x4d50b4] AS a dword (uses ah for 0x40, 0x10, 0x20 high-byte
  *   tests), then cl bit 0x10. Final fallback: (cl & 0x40) >> 6.
  */
+extern unsigned int g_byte_004d50b4;
+extern unsigned int g_byte_004d50b8;
+
 void InputPollFlagBitsHalf_004a1b50(void) {
     __asm {
         mov     cl, byte ptr [g_byte_004d50b8]
@@ -52,3 +55,4 @@ void InputPollFlagBitsHalf_004a1b50(void) {
         shr     eax, 6
         }
 }
+

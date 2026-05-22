@@ -129,6 +129,7 @@ extern void TripleFieldCopyJmpLo_0048f810(void);
 
 /* @addr 0x00431e90 (170b) - sub-from-const + 2x guarded calls + neg-sub +
  *   shl 3 mul + chain[+0x54,+0x5c,+0x64] stores. */
+
 void GuardedArithDualCallChain_00431e90(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00542088]
@@ -176,3 +177,4 @@ void GuardedArithDualCallChain_00431e90(void) {
         mov     dword ptr [edx*4 + 0x64], ecx
         }
 }
+

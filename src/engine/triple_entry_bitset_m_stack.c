@@ -126,6 +126,14 @@ extern unsigned int g_data_00535e7c;
  *   set scaledidx[ecx*4+0x28]=4. Second (+0x30): set 0x0054207c=0x501, clear g_cj_00542054,
  *   jmp InstallSelfMStackIndirect_00487920. Third (+0x50): load chain[*4+0x3c]/0x74, jmp SetJmp_00487910.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void GuardedSeq_004297b0(void);
+extern void InstallSelfMStackIndirect_00487920(void);
+extern void SetJmp_00487910(void);
+
 __declspec(naked) void TripleEntryBitsetMStack_00487890(void) {
     __asm {
         call    GuardedSeq_004297b0

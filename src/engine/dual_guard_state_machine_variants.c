@@ -123,6 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
+extern unsigned int g_data_0053a1bc;
+extern unsigned int g_data_0053a354;
+extern unsigned int g_data_00542004;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void MStackCall_004062a0(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void SaveCallRestore_004049d0(void);
+extern void ThrowFlowSetupCluster_0049ed00(void);
+extern void Wrapper_0049eb10(void);
+
 void DualGuardStateMachine_0049ea30(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542004]
@@ -189,6 +202,7 @@ void DualGuardStateMachine_0049ea30(void) {
 /* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine_0049ea30, uses 0x267 tag and
  *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_0049eb10.
  */
+
 __declspec(naked) void DualGuardStateMachine_0049eb20(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542004]

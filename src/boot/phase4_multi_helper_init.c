@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_byte_004d5714;
+extern unsigned int g_data_004d74d8;
+extern unsigned int g_data_004d75a0;
+extern unsigned int g_data_004d7610;
+extern unsigned int g_data_0053a29c;
+extern unsigned int g_data_0053a400;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00543800;
+extern void BootSetupWithMStackBody_00418e00(void);
+extern void CallSetPause_0041f830(void);
+extern void ClampMulShiftStore_004ba0e0(void);
+extern void Helper_MenuStub_8EB0(void);
+extern void MStackCall_004062f0(void);
+extern void MStackCall_00406600(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void SetJmp_00408d20(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
 {
     __asm {

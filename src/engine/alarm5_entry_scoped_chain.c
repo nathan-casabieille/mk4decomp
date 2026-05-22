@@ -145,6 +145,31 @@ extern unsigned int g_data_00535e7c;
  *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper_0040c260 + BootCallChainDoubleMul10_0040b890;
  *     on no-error tail-jmps Triple3PathDispatch_0049bf90.
  */
+extern unsigned int g_data_004f25d8;
+extern unsigned int g_data_004f2640;
+extern unsigned int g_data_004f2650;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void BootCallChainDoubleMul10_0040b890(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void MStackCall_00406740(void);
+extern void Phase1ChainSetupCallScale6_0040ca70(void);
+extern void Phase1ContextSetupHelper_0040c260(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void Triple3PathDispatch_0049bf90(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+
 __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
     __asm {
         call    MStackCall_00406740

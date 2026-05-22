@@ -17,6 +17,7 @@ extern packed_ptr g_fightGroupHead;
  *   0x2002, 0x106, 0x107}, set bit 0 of g_xformDirtyFlags; else
  *   clear bit 0. Two distinct return paths.
  */
+
 void WalkCallbackSetClearDirty_0048e7d0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -44,3 +45,4 @@ void WalkCallbackSetClearDirty_0048e7d0(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
+

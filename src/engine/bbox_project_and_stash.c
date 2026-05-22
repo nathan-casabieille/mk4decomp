@@ -122,6 +122,40 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f6264;
+extern unsigned int g_data_004f63e8;
+extern unsigned int g_data_004f63ea;
+extern unsigned int g_data_004f63ec;
+extern unsigned int g_data_004f63ee;
+extern unsigned int g_data_004f63f0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af96c;
+extern unsigned int g_data_007af978;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af992;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99a;
+extern unsigned int g_data_007af99e;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_00ab44f8;
+extern unsigned int g_data_00ab44fa;
+extern unsigned int g_data_00ab44fc;
+extern unsigned int g_data_00ab44fe;
+extern unsigned int g_data_00ab4500;
+extern unsigned int g_data_00ab4502;
+extern unsigned int g_data_00ab4e2c;
+extern unsigned int g_data_00ab51f4;
+extern unsigned int g_data_00ab51f8;
+
 __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
 {
     __asm {

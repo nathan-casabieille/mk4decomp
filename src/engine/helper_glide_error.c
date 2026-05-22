@@ -4,6 +4,13 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern void Helper_GlidePostInit(void);
+extern unsigned int g_x_007b0000;
+extern unsigned int g_x_007affff8;
+extern unsigned int g_x_007b0038;
+extern unsigned int g_iat_004d205c;
+extern unsigned int g_x_007affff4;
+
 /*
  * @addr 0x004b5120 (97b engine.geo) - DirectDraw release helper:
  *   close glide scene, dual-push IAT store, query state, free

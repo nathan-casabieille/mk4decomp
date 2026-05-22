@@ -122,6 +122,14 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00f9f8c1;
+extern unsigned int g_data_00f9f9c8;
+extern unsigned int g_data_00f9fac8;
+extern unsigned int g_data_00f9facc;
+extern unsigned int g_iat_004d2114;
+extern void CrtCodepageDispatcher_004cd6f0(void);
+extern void WcToMbDispatcher_004cdae0(void);
+
 __declspec(naked) void BuildCharacterCaseTables_004c9840(void)
 {
     __asm {

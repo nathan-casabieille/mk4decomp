@@ -137,6 +137,15 @@ extern void PushPopXformEntityCall_0044d1e0(void);
 extern void MStackCall_0044d230(void);
 extern void IntroInitCluster_0044d280(void);
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+
 __declspec(naked) void PreFight4StageSequencer_0044a590(void)
 {
     __asm {

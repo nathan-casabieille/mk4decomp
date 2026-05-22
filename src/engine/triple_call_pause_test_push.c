@@ -23,7 +23,8 @@ extern void CjTableThresholdDispatch_00488f00(void);
 extern void func_00484572(void);
 extern void func_004ae794(void);
 extern int LoadSetFpJmp_00409400(void *);
-extern void *g_data_004ee2f0;
+extern unsigned int g_data_004ee2f0;
+
 void TripleCallPauseTestPush_00482e60(void) {
     __asm {
         call    CjTableThresholdDispatch_00488f00
@@ -54,3 +55,4 @@ void TripleCallPauseTestPush_00482e60(void) {
         add     esp, 4
         }
 }
+

@@ -132,6 +132,14 @@ extern unsigned int g_data_00535e7c;
  *     chain->state=2; mstack-push (entry+0x02000000); g_x_00542044++; clear g_baseSel*4+0x84;
  *     call InstallSelfPackedF80_00426000; g_pause_00541e6c=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542074;
+extern void FiveTableWalkInit_00403c90(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void TwinMStackPushScaledChain_00422110(void);
+
 __declspec(naked) void BootDualStateInstallSelf_00403070(void)
 {
     __asm

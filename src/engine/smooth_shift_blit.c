@@ -154,6 +154,8 @@ extern void CallZero_004bea30(void);
  *   based action. On finish-condition (ebx != 0) restores state and
  *   returns either 0 or 0xa (bit-pattern via `neg/sbb/and 0xa`).
  */
+extern void Audio_TimerTeardown_004ac5f0(void);
+
 __declspec(naked) void SceneFrameStepWithInputs_004be250(void) {
     __asm {
         sub     esp, 0x10

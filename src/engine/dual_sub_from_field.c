@@ -131,6 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   edx = [eax*4 + 0x74]; ecx -= edx; g_data_00542070 = edx;
  *   g_walkCallback = ecx; [eax*4 + 0x5c] = ecx; ret.
  */
+
 void DualSubFromField_00489c70(void) {
     __asm {
         mov     eax, dword ptr [g_pendingNodeType]
@@ -151,3 +152,4 @@ void DualSubFromField_00489c70(void) {
         mov     dword ptr [eax*4 + 0x5c], ecx
         }
 }
+

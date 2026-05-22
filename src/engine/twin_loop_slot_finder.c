@@ -130,6 +130,8 @@ extern unsigned int g_data_00535e7c;
  *   >= 0 wrap cursor to 0 and retry, else commit (cj += ecx),
  *   pop state stack back.
  */
+extern unsigned int g_x_00535e48;
+
 void TwinLoopSlotFinder_00429a40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -167,3 +169,4 @@ commit:
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

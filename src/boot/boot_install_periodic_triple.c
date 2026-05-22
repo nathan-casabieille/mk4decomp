@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *       install-self at body; chain->state=1; g_data_0054204c=1; g_pause_00541e6c=1.
  *     Pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void BootSlotInstallChainTail_00414a00(void);
+extern void CallSetPause_0041f830(void);
+extern void TableHitOrSchedule_004be7a0(void);
+
 __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
 {
     __asm

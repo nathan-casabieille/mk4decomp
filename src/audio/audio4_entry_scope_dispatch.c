@@ -140,6 +140,21 @@ extern unsigned int g_data_00535e7c;
  *     stride 0x24, then g_data_004f3ae8 records at +0x48 stride 0x24, and
  *     finally calls CallSetMultiGlobalsJmp_004a9230.
  */
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_00541dc4;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005433c8;
+extern void CallSetMultiGlobalsJmp_004a9230(void);
+extern void DecOrDirty_004a7d90(void);
+extern void DecOrDirty_004a7de0(void);
+extern void DrainQueueCallEach_004a1ec0(void);
+extern void IncBoundedDirty_004a7db0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void SetJmp_004a1ac0(void);
+
 __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     __asm {
         /* entry 1 (offset 0) */

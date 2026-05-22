@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   if state-bit 0 set tail-call ScaledInitOrSelfPtr; else install
  *   self with tag 0x4894b0... actually 0x004890b0.
  */
+extern unsigned int g_data_0054204c;
+extern void GuardedSeq_004297b0(void);
+extern void ScaledInitOrSelfPtr_00489130(void);
+
 __declspec(naked) void InstallSelfReentry_004890b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

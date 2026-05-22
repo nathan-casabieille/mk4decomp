@@ -122,6 +122,25 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void GDispatch4_004089c0(void);
+extern void IntroInitCluster_0044d280(void);
+extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void MStackCall_0044d230(void);
+extern void MStackPush2GuardedFieldClear_0044d0c0(void);
+extern void MStackPushTyped_0044cf50(void);
+extern void MStackPushTyped_0044cf80(void);
+extern void MStackPushTyped_0044cfb0(void);
+extern void PushPopXformEntityCall_0044d1e0(void);
+extern void PushSetXfmCallStoreCopy_0044d060(void);
+
 __declspec(naked) void PreFight4StageSequencer_0044a590(void)
 {
     __asm {

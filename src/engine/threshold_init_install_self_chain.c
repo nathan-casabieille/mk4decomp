@@ -135,6 +135,8 @@ extern void MStackPushSet0Jmp_004384b0(void);
  *     pause=1; ret.
  *   state >=2: tail-call ThresholdInitInstallSelfChain_00436120; ret.
  */
+extern unsigned int g_pause_00541e6c;
+
 __declspec(naked) void InstallSelfThreeStateDispatch_00436030(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

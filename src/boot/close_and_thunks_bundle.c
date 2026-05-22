@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   sub-3 (10b @ 0x4c67bb): another similar mov+jmp pair.
  *   sub-4 (~30b @ 0x4c67c5): floating-point modulus via fprem (or compat helper).
  */
+extern unsigned int g_data_00f9f7fc;
+extern unsigned int g_iat_004d2150;
+extern unsigned int g_iat_004d219c;
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+extern void DosMapErr_004c8b20(void);
+extern void FmodHelper_004ccb7d(void);
+extern void Thunk_004ca701_helper(void);
+extern void Thunk_004ca77b_helper(void);
+
 __declspec(naked) void CloseAndThunksBundle_004c6760(void) {
     __asm {
         /* sub-1: _close */

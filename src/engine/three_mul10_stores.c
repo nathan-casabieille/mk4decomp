@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *   arr_dst[+i] = r.
  *   g_x_00542070, g_x_00542074, g_walkCallback updated as scratch.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_arr_4252c0_0;
+extern unsigned int g_arr_4252c0_4_dst;
+
 void ThreeMul10Stores_004252c0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542048]
@@ -163,3 +169,4 @@ void ThreeMul10Stores_004252c0(void) {
         mov     [ecx*4 + g_arr_4252c0_4_dst + 0x08], eax
         }
 }
+

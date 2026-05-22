@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
  *     Call InstallSelfPackedF80_00426000; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537f74;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void InstallSelfTableWalk_004200d0(void);
+extern void ScenegraphWalk_0041f7d0(void);
+
 __declspec(naked) void InstallSelfBootInit_00462980(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

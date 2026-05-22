@@ -132,6 +132,9 @@ extern void State208cBit0Flag_0048f160(void);
  *   0x538158, swap walk. Call State208cBit0Flag_0048f160; if pause clear and
  *   _74 >= g_data_00542084 then clear state-bit 0, else set bit 0.
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void CjPairCallCmp_0042d1c0(void) {
     __asm {
         mov     edx, dword ptr [g_cj_0054205c]

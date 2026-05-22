@@ -127,6 +127,22 @@ extern unsigned int g_data_00535e7c;
  *   four state slots into their mirror locations, zeros two scratch
  *   words, and sets two "active" flags to 1.
  */
+extern unsigned int g_x_00537ea0;
+extern unsigned int g_x_00537edc;
+extern unsigned int g_x_00537f30;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0053a178;
+extern unsigned int g_x_0053a1cc;
+extern unsigned int g_x_0053a250;
+extern unsigned int g_x_0053a790;
+extern unsigned int g_x_00541ec4;
+extern unsigned int g_x_00541ec8;
+extern unsigned int g_x_00541ecc;
+extern unsigned int g_x_00541ed0;
+extern unsigned int g_x_00543894;
+extern unsigned int g_x_00543898;
+
 void StateInitShuffle_00422380(void) {
     __asm {
         mov     ecx, dword ptr [g_x_005380e0]
@@ -149,3 +165,4 @@ void StateInitShuffle_00422380(void) {
         mov     dword ptr [g_x_00537f30], eax
         }
 }
+

@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f6398;
+extern unsigned int g_data_004f6580;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00543550;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_007af9be;
+extern unsigned int g_data_00ab4398;
+extern unsigned int g_data_00ab439c;
+extern unsigned int g_data_00ab43a0;
+extern unsigned int g_data_00ab51fc;
+extern void AdvanceTriStripRing(void);
+extern void Helper_DrawCursor(void);
+extern void ProjectVertex(void);
+
 __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
 {
     __asm {

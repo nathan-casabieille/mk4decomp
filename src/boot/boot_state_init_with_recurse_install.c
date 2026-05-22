@@ -133,6 +133,17 @@ extern unsigned int g_data_00535e7c;
  *     mstack-push (entry + 0x01000000); g_x_00542044++; chain[+4] = new cursor;
  *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_pause_00541e6c=1; pop+ret.
  */
+extern unsigned int g_data_00535de4;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void StorePauseImulShr16_004ab630(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TripleCallCountdown_00428080(void);
+extern void TwoCallStatePauseJmp_00491990(void);
+extern void TwoStageSelectorInit_00402ed0(void);
+
 __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
 {
     __asm

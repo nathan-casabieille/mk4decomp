@@ -133,6 +133,13 @@ extern unsigned int g_data_00535e7c;
  *     Else: g_state_00542080=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
  *     pause=1; pop edi/esi/ebx; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void AerialPunchCluster_0047bc30(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+
 __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

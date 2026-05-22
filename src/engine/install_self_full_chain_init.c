@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   g_load_0052ab10 fields (+0x60, 0, +0x68); install-self at +0x08=0x00462470 with scaledInit-chain push;
  *   call PendingMatch_00432110; g_pause=1; pop+ret.
  */
+extern unsigned int g_load_0052ab10;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void PendingMatch_00432110(void);
+
 __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -13,6 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_state_007b41a0;
 extern unsigned int g_state_007b41a8;
+extern unsigned int g_data_00ab5204;
+extern unsigned int g_state_00ab5200;
+extern void SetHi6_004b5ae0(void);
+extern void StoreAtMinus8_004b5b00(void);
+
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
@@ -37,10 +42,6 @@ __declspec(naked) void AppInit_Misc2(void) {
  *     g_state_00ab5200 = 1; *arg = 0;
  *   }
  */
-extern void SetHi6_004b5ae0(int, int);
-extern void StoreAtMinus8_004b5b00(int, int);
-extern unsigned int g_state_00ab5200;
-extern int g_data_00ab5204;
 void CleanupCallTwice_004bd530(int *arg) {
     if (*arg != 0) {
         SetHi6_004b5ae0(*arg, 4);

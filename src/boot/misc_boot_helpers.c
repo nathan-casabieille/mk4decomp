@@ -55,6 +55,7 @@ void PushCallScaledClearJmp_0040bf20(void) {
  *   triple bit-extract from g_walkCallback: low 11 bits, mid 11 bits, high 10 bits;
  *   store each into a 3-vec at g_pendingNodeType*4 with stride 4.
  */
+
 void ExtractBitsToVec3_00407c00(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -77,3 +78,4 @@ void ExtractBitsToVec3_00407c00(void) {
         mov     dword ptr [ecx*4 + 8], eax
         }
 }
+

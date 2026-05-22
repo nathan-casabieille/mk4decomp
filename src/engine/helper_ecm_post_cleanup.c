@@ -13,6 +13,17 @@
  *   arg2 ([esp+0x14] al): if zero AND [0x7ab084]!=0:
  *     ebp(edi([0x7ab080]), ebx(esi([0x7ab07c]))); [0x7ab084] = 0.
  */
+extern unsigned int g_iat_004d2060;
+extern unsigned int g_iat_004d2064;
+extern unsigned int g_iat_004d2068;
+extern unsigned int g_iat_004d206c;
+extern unsigned int g_iat_004d208c;
+extern unsigned int g_iat_004d2094;
+extern unsigned int g_x_007ab06c;
+extern unsigned int g_x_007ab07c;
+extern unsigned int g_x_007ab080;
+extern unsigned int g_x_007ab084;
+
 __declspec(naked) void Helper_ECM_PostCleanup(void) {
     __asm {
         mov     al, byte ptr [esp + 4]

@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e51c8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ComboLoopCluster_00440070(void);
+extern void EntitySetupCountdownFsm_0043fcf0(void);
+extern void GuardedSeq_00476de0(void);
+extern void GuardedSeq_00476f10(void);
+extern void GuardedSeq_00476fc0(void);
+extern void MStackPush2BitLoop_00476670(void);
+extern void PushPopCurrentSetFFFFFFFF_00473070(void);
+extern void TwoCallScaledOr1600_0043f8f0(void);
+
 __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
 {
     __asm {

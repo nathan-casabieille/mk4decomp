@@ -132,6 +132,14 @@ extern unsigned int g_data_00535e7c;
  *   if g_x_00542074 == g_x_0054206c then: if g_x_00542078 == g_x_00542070:
  *     bit0 of g_state_0054208c set, else clear; else clear bit0; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern void NotMaskStorePair_0045f440(void);
+
 void CdeclArgScaledLookupAndStore_0045f470(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -194,3 +202,4 @@ void CdeclArgScaledLookupAndStore_0045f470(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

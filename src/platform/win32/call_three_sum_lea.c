@@ -25,6 +25,8 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_state_00f9f7bc;
+extern unsigned int g_iat_004d21b0;
+
 __declspec(naked) void CallThreeSumLea_004c45d0(void) {
     __asm {
         push    esi

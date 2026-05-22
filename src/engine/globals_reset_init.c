@@ -126,6 +126,35 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542074=0x1000, call AllocNode; if !pause: clears more globals and stores eax=0xc
  *   to g_x_0054206c/0x0053a3e8; call ResetSceneCallbacks_00420090; if !pause: clears 6 more globals; ret.
  */
+extern unsigned int g_data_0052aab4;
+extern unsigned int g_data_0052ab44;
+extern unsigned int g_data_00535e68;
+extern unsigned int g_data_00535e80;
+extern unsigned int g_data_00537ef4;
+extern unsigned int g_data_00538128;
+extern unsigned int g_data_0053a280;
+extern unsigned int g_data_0053a2d8;
+extern unsigned int g_data_0053a2dc;
+extern unsigned int g_data_0053a358;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_0053a3e8;
+extern unsigned int g_data_0053a6d8;
+extern unsigned int g_data_0053a6e0;
+extern unsigned int g_data_0053a700;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_dualA_0053815c;
+extern unsigned int g_load_0052ab04;
+extern unsigned int g_load_0052ab08;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537e94;
+extern unsigned int g_state_00537ea4;
+extern unsigned int g_state_0053a51c;
+extern unsigned int g_x_00541dc0;
+extern unsigned int g_x_00541e4c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void ResetSceneCallbacks_00420090(void);
+
 __declspec(naked) void GlobalsResetInit_004222a0(void) {
     __asm {
         push    esi

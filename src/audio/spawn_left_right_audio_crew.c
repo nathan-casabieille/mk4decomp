@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f3ae4;
+extern unsigned int g_data_004f3ae8;
+extern unsigned int g_data_00541d8c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_005435a2;
+extern unsigned int g_data_0054361a;
+extern unsigned int g_data_00600000;
+extern unsigned int g_data_007b0000;
+extern unsigned int g_data_00c00000;
+extern void AudioChainInit_004a77c0(void);
+extern void AudioInitLoopTriple_004a7840(void);
+extern void ScaledChainStore24_004a7d40(void);
+
 __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
 {
     __asm {

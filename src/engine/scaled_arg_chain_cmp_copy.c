@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   if ne: ecx = g_data_00542050; edx = [ecx*4+4]; g_xformEntityIdx=edx; ret.
  *   else: edx = g_data_00542050; eax = [edx*4+8]; g_xformEntityIdx=eax; ret.
  */
+extern unsigned int g_data_00541e68;
+extern void ScaledAddDeref_00494800(void);
+
 void ScaledArgChainCmpCopy_00494180(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -164,3 +167,4 @@ void ScaledArgChainCmpCopy_00494180(void) {
         mov     dword ptr [g_xformEntityIdx], edx
         }
 }
+

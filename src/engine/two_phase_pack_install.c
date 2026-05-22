@@ -133,6 +133,15 @@ extern void DirtyGuardLitOrJmp_0047ef40(void);
  *     g_x_0054206c=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
  *     else install-self at +0x08=0x0047ee90.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+
 __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

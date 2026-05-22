@@ -126,6 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   "ecx=arr[--g_state_004d57ac]; g_x_005420XX=ecx" sequences.
  *   Pops into 0x88, 0x84, 0x80, 0x7c, 0x78, 0x74, 0x70 (descending).
  */
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPop7_004ab9b0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -159,3 +163,4 @@ void MStackPop7_004ab9b0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

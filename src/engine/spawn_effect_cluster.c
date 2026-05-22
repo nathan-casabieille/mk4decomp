@@ -122,6 +122,34 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e5798;
+extern unsigned int g_data_004e57d0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void AudioMixerStep_004ab700(void);
+extern void ChainInitMul10BulkStore_00442740(void);
+extern void CopyThreeFields_00404df0(void);
+extern void DispatcherComplex138_004760f0(void);
+extern void FourSegmentPoseWalk_00442880(void);
+extern void MStackCall_00406600(void);
+extern void PendingMatch_004411d0(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledOr4Jmp_00476e00(void);
+extern void SpawnFreezeProjectileChain_00442530(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void SpawnEffectCluster_004420a0(void)
 {
     __asm {

@@ -133,6 +133,14 @@ extern unsigned int g_data_00535e7c;
  *     tab[+8] = chain[+0x54]; ecx = movsx tab[+0]; g_data_00542070 = ecx;
  *     chain[(baseSel + index)*4] = g_x_00542044. inc edi; if <6: loop.
  */
+extern unsigned int g_data_004f3aec;
+extern unsigned int g_data_004f3af0;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void Helper_Sprintf(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void AudioByteTableLoop_004a76e0(void)
 {
     __asm

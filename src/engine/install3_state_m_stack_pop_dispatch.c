@@ -123,6 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046f560 (325b game) - 3-state install-self with state-1 mstack-pop dispatch. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

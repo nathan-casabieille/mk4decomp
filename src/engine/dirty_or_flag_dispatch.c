@@ -127,6 +127,11 @@ extern unsigned int g_data_00535e7c;
  *   Second entry (+0x30): check scaledInit[ecx*4+0x1c]; if <= 0: clear bit 0 of g_state_0054208c, ret;
  *   else set bit 2 of scaledInit[ecx*4+0x20], jmp CondInstallDispatch.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CondInstallDispatch_00476ed0(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+
 __declspec(naked) void DirtyOrFlagDispatch_00476e60(void) {
     __asm {
         call    DirtyDoubleDeref_00408cb0

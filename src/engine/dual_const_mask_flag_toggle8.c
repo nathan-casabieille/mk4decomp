@@ -131,6 +131,8 @@ extern unsigned int g_data_00535e7c;
  *   eax &= g_walkCallback; g_state_00542094 = eax;
  *   eax = g_state_0054208c; if je: clear-bit0; else: set-bit0; ret.
  */
+extern void PushPopState70Mask_00490650(void);
+
 void DualConstMaskFlagToggle8_0048ed70(void) {
     __asm {
         mov     dword ptr [g_data_00542070], 8
@@ -163,3 +165,4 @@ void DualConstMaskFlagToggle8_0048ed70(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

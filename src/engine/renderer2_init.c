@@ -13,6 +13,10 @@
 /*
  * @addr 0x004ad6a0
  *
+extern unsigned int g_renderer2_lutStep;
+extern unsigned int g_renderer2_lutTable;
+extern unsigned int g_renderer2_obj;
+
  * Naked + __asm: the 11-helper chain has a specific layout where
  * each test eax/jz redirects to the same R2_Cleanup tail; the FPU
  * loop fills the LUT table without spilling to memory between
@@ -20,6 +24,7 @@
  * esi as the index. Pure C wouldn't reproduce the chain's exact
  * register threading.
  */
+
 __declspec(naked) int Renderer2_Init_D3D(HWND hwnd)
 {
     __asm {

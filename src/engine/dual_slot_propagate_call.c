@@ -131,6 +131,8 @@ extern unsigned int g_data_00535e7c;
  *   [eax*4+0x38] = ecx; eax = g_baseSel; ecx = g_state_00542088;
  *   [eax*4+0x3c] = ecx; call DualWalkRange_00468440; pop esi; ret.
  */
+extern void DualWalkRange_00468440(void);
+
 __declspec(naked) void DualSlotPropagateCall_004683e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

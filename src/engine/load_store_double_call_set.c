@@ -17,6 +17,7 @@ extern packed_ptr g_fightGroupHead;
  *   call F1; pause → ret; call F2; pause → ret;
  *   walk = 2; g_acc_00542078 = 4; jmp T.
  */
+extern unsigned int g_baseSel_00542060;
 extern unsigned int g_acc_00542078;
 extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);

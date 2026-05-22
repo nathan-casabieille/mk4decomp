@@ -128,6 +128,10 @@ extern unsigned int g_data_00535e7c;
  *   accounting for sign, calls FpFormatRound_004ccda0 for the digits, then
  *   CfltcvtFormat_004c8650 to write out.
  */
+extern void CfltcvtFormat_004c8650(void);
+extern void CrtDoubleToStringImpl_004cce40(void);
+extern void FpFormatRound_004ccda0(void);
+
 __declspec(naked) void PrintfStubSigned_004c85d0(void) {
     __asm {
         sub     esp, 0x28

@@ -131,6 +131,18 @@ extern unsigned int g_data_00535e7c;
  *     if paused: ret. Three iterations: g_x_0054206c = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
  *     g_x_00542050++. Tail-jmp MStackPop8.
  */
+extern unsigned int g_data_005420e8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushCallPop_0040a830(void);
+extern void SetJmp_00405420(void);
+
 __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
 {
     __asm

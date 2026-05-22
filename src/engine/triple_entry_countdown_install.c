@@ -144,6 +144,23 @@ extern unsigned int g_data_00535e7c;
  *     Phase 2: increments [g_data_0054205c*4 + 0x4c] by 0x41, sets
  *     g_data_00542070 = 0x41, then continues into the phase-1 countdown.
  */
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_0054380c;
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void ClearBit2x34_00490130(void);
+extern void HitReactionDispatcher_0045f650(void);
+extern void MStackInstallBodyChain_0046a3a0(void);
+extern void State6Latch_0048e240(void);
+extern void Wrapper_00471340(void);
+
 __declspec(naked) void TripleEntryCountdownInstall_0046a230(void) {
     __asm {
         mov     dword ptr [g_data_0054207c], 0x20012

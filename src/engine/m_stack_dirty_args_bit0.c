@@ -134,6 +134,12 @@ extern unsigned int g_data_00535e7c;
  *   store: g_state_0054208c = result.
  *   mstack-pop into g_scaledInit.
  */
+extern void Cmp2DirtySetOrClear_0049fb10(void);
+extern void Cmp2DirtySetOrClear_0049fb40(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

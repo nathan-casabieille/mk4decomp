@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   compute scaled load [node>>2 + 0x0c] & mask; if matches stash
  *   path, set bit 0 of state and exit; else clear bit 0 and exit.
  */
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void NodeChainMaskMatch_0041f870(void) {
     __asm {
         mov     edx, dword ptr [g_walkCallback]

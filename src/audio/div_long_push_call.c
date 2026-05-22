@@ -6,6 +6,9 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
+typedef unsigned int (*DivLongFn)(int, int, __int64);
+extern void func_004cb680(void);
+
 void DivLongPushCall_004ab320(void) {
     int v = (int)g_walkCallback;
     if (v == 0) {

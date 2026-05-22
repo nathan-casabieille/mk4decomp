@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *     else countdown g_x_00542080; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
  *     g_data_0054204c=0x58, g_pause=1; otherwise self-jmp.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void MStackPushWaitChain_00486410(void);
+extern void NegInstallNegSelfTrigPair_00486610(void);
+
 __declspec(naked) void MStackInstallCountdown_00486370(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

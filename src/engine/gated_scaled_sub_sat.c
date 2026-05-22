@@ -130,6 +130,15 @@ extern unsigned int g_data_00535e7c;
  *   if (diff < 0) { diff=0; g_x_00542070=0; }
  *   arr2[sel] = diff.
  */
+extern unsigned int g_str_00542fa0;
+extern unsigned int g_str_00542fa8;
+extern unsigned int g_x_0052ab40;
+extern unsigned int g_x_00542074;
+extern void ArgScaledLoadCmpP1_0048e550(void);
+
+extern unsigned int g_arr_005d8208;
+extern unsigned int g_arr_005d83a4;
+
 void GatedScaledSubSat_0048fb40(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052ab40]
@@ -167,3 +176,4 @@ void GatedScaledSubSat_0048fb40(void) {
         mov     [ecx*4 + g_arr_005d8208], eax
         }
 }
+

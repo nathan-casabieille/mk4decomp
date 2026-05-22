@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *     call MStackPushSet0008; pause-check; cmp ebx vs g_state_00542088; if eq: install-self at +0x08=0x0047a560,
  *     g_data_0054204c=5, g_pause=1; else call ScaledInitOrSelfPtrSetType. pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledInitOrSelfPtrSetType_0047a620(void);
+
 __declspec(naked) void InstallSelf4Cascade_0047a560(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void func_0049f336(void);
+extern void func_0049f33b(void);
+
 __declspec(naked) void GameStateTick_0049f1f0(void)
 {
     __asm {

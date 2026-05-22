@@ -128,6 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_x_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_00541fb8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern void MStackPushSearchLoop_00463ed0(void);
+
 __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

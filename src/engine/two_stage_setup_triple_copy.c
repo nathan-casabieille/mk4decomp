@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *   chain[scaledInit].slot30 = 0x91 (walkCallback=it); MStackCall_00406340; pause? ret.
  *   Then triple copy: chain[scaledInit].slot54/58/5c = chain[g_x_00542048].slot3c/40/44.
  */
+extern unsigned int g_x_00542048;
+extern void MStackCall_00406340(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+
+extern unsigned int g_chain_arr_4348f0;
+
 void TwoStageSetupTripleCopy_00441e50(void) {
     __asm {
         call    PushSetXfmMaskCallPop_00407140
@@ -171,3 +177,4 @@ void TwoStageSetupTripleCopy_00441e50(void) {
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x5c], eax
         }
 }
+

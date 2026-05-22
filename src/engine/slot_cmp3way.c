@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   _74=0; less-or-equal-but-not-equal -> clear bit 0, walk=1, _74=0;
  *   greater -> set bit 0, _74 = |diff|, walk=0.
  */
+extern unsigned int g_x_00542074;
+
 void SlotCmp3way_0048efa0(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -164,3 +166,4 @@ zeroAll:
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

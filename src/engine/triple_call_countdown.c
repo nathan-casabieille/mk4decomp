@@ -130,6 +130,8 @@ extern void TableWalkBoundedCmp_004bd890(int);
 extern void TripleCallCountdown_00428080(void);
 extern void DownloadPlayerChar(void);
 extern void TableWalkPause_004bd850(void);
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
 
 /* @addr 0x00402ed0 (141b boot) - 2-stage selector init:
  *   TableWalkBoundedCmp(6); TripleCallCountdown_00428080; pause? ret.

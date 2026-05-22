@@ -10,6 +10,8 @@
  *   g_data_00542070=0x40; g_scaledInit=0x53e348>>2; g_xformEntityIdx=0x53e34c>>2;
  *   jmp CountdownClampWalk_00422810.
  */
+extern unsigned int g_data_00542070;
+extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_data_0053a328;
 extern unsigned int g_data_0053a788;
 extern unsigned int g_data_0053e348;

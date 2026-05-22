@@ -122,6 +122,32 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e9068;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054355c;
+extern unsigned int g_data_00543568;
+extern unsigned int g_data_00543590;
+extern unsigned int g_data_00543714;
+extern void ArgSarAddDerefJmp_0048e710(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CallSetPause_0041f830(void);
+extern void DispatcherComplex115_0049f900(void);
+extern void DispatcherComplex115_0049f980(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void InstallSelfTableWalk_004200d0(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void TripleStageRollback_00404a50(void);
+
 __declspec(naked) void RoundEndFsmCluster_0045d680(void)
 {
     __asm {

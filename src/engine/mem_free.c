@@ -137,6 +137,7 @@ extern unsigned int g_x_00ab5038;
  *   tables; calls Mem_Free_004b5b10 with the entry pointer and
  *   Helper_GeoLoadPost.
  */
+
 __declspec(naked) void GeoLoadFixupLoop_004bd8e0(void) {
     __asm {
         push    esi

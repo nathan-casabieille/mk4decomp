@@ -129,6 +129,17 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_data_0054204c=1, pause=1; pop+ret.
  *   Block B (+0xa0): cmp g_state_00535ddc vs g_x_00542084; if le jmp self; else jmp GuardedSeq_00438630.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void DecJneSetCallSetJmp_004389b0(void);
+extern void DecOrZeroDirty4_00438650(void);
+extern void GuardedSeq_00438630(void);
+extern void Push84CallTestInstallJmp_00460940(void);
+
 __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

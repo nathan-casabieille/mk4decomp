@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542a54;
+extern void CjInstallSelfRouter_00470480(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void InstallSelfPair3Branch_00429240(void);
+extern void Phase4DualHelperTrampoline_00412900(void);
+extern void Phase4FivePackedHelpers_00412cb0(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledLoadJmp_00429390(void);
+extern void SfxAttenuateAndApply_0048dee0(void);
+extern void StreamFlagPackedSelectChain_00469340(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
 {
     __asm {

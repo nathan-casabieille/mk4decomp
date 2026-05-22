@@ -126,6 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
  *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_x_0054206c).
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void AudioVolumeRescale_004ab690(void);
+extern void PendingMatch_00444ef0(void);
+
 __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

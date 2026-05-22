@@ -137,6 +137,21 @@ extern unsigned int g_data_00535e7c;
  *       installs Self at [esi+8], sets slot[+0x84]=1, packs (Self + 0x01000000)
  *       at [eax*4], zeroes slot[+0x84], and arms 0x541e6c=1 via GuardedSeq.
  */
+extern unsigned int g_data_004ec0c0;
+extern unsigned int g_data_00500c08;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542aac;
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void GuardedSeq_00428480(void);
+extern void ThrowFsmCluster_004700e0(void);
+
 __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

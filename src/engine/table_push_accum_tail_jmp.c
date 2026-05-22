@@ -136,3 +136,46 @@ extern void ScenePostInitSequencer_00429b70(void);
 
 /* @addr 0x004236a0 (125b) - if any of {g_x_00537f48, g_x_005380e0,
  *   g_x_0053a178, g_x_0053a250} == 0xf: clear g_x_0053a51c & g_walkCallback,
+ *   call F1. Then v3 = (data_4dfd48 >> 2) + g_x_0053a51c;
+ *   g_scaledInit_00542044 = v3; arg = arr[v3];
+ *   push arg twice; g_x_0053a46c = arg; call Mul10Tail; g_x_0053a180 = res; jmp F3.
+ */
+__declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
+    __asm {
+        mov     ecx, dword ptr [g_x_00537f48]
+        mov     eax, 0xf
+        cmp     ecx, eax
+        _emit   74h
+        _emit   18h
+        cmp     dword ptr [g_x_005380e0], eax
+        _emit   74h
+        _emit   10h
+        cmp     dword ptr [g_x_0053a178], eax
+        _emit   74h
+        _emit   08h
+        cmp     dword ptr [g_x_0053a250], eax
+        _emit   75h
+        _emit   11h
+        xor     eax, eax
+        mov     dword ptr [g_x_0053a51c], eax
+        mov     dword ptr [g_walkCallback], eax
+        call    TablePushAccumTailJmp_00429e30
+        mov     ecx, dword ptr [g_x_0053a51c]
+        mov     eax, offset g_data_004dfd48
+        shr     eax, 2
+        add     eax, ecx
+        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     eax, [eax*4 + FourGlobalsEqualFInitTail_004236a0]
+        push    eax
+        push    eax
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_x_0053a46c], eax
+        call    Mul10Tail_00404af0
+        add     esp, 8
+        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_x_0053a180], eax
+        jmp     ScenePostInitSequencer_00429b70
+    }
+}
+

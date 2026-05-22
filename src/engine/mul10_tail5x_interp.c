@@ -121,6 +121,16 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_0053a3dc;
+extern unsigned int g_data_0053a41c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
 
 /* @addr 0x00485d90 (214b game) - 5x Mul10Tail interpolation accumulator. */
 void Mul10Tail5xInterp_00485d90(void) {

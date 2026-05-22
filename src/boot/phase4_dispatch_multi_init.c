@@ -134,6 +134,10 @@ extern void Phase4DispatchMultiInit_0041b610(void);
  *     install (&L_body + 0x01000000) packed into mstack slot[g_x_00542044]; inc cursor;
  *     clear g_baseSel_00542060*4 + 0x84; call Phase4DispatchMultiInit_0041b610; g_pause_00541e6c = 1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern void ArgSarStoreJmp_004594f0(void);
+
 void EntryBodyInstallSelfMidRef_0041b550(void) {
     __asm {
         call    ScaledZeroFour_00490740
@@ -180,3 +184,4 @@ void EntryBodyInstallSelfMidRef_0041b550(void) {
         mov     dword ptr [g_pause_00541e6c], 1
         }
 }
+

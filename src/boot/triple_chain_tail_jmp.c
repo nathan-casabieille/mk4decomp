@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *   gate; if state-bit 2 clear, set walk=0x11999 into wt[+0x48] and
  *   bump g_state_00542054 by 0x15, then tail-jmp BootFlagChainAudioPause_00412080.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_state_00542054;
+extern unsigned int g_x_00542074;
+extern void BootFlagChainAudioPause_00412080(void);
+extern void SlotInitAndChainLink_004191b0(void);
+
 __declspec(naked) void TripleChainTailJmp_00419900(void) {
     __asm {
         call    MStackPush2RunCountdown_004089e0

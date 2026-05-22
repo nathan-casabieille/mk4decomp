@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   0xfe2c0000; then for i in 0..g_x_004f3ae8: chain[baseSel+i]
  *   [+0x48][+0x58] = 0x01ec0000.
  */
+extern unsigned int g_x_004f3ae4;
+extern unsigned int g_x_004f3ae8;
+
 void DualListInit_004a8290(void) {
     __asm {
         mov     ecx, dword ptr [g_x_004f3ae4]
@@ -164,3 +167,4 @@ inB:
 done:
         }
 }
+

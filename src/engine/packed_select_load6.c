@@ -131,6 +131,19 @@ extern unsigned int g_data_00535e7c;
  *   Then: g_scaledInit = chain[g_baseSel + 0x3c];
  *   g_x_0054206c = chain[g_scaledInit + 0x74].
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void PackedSelectLoad6_00433c60(void) {
     __asm {
         mov     edx, dword ptr [g_x_0054205c]

@@ -126,7 +126,7 @@ extern void CrtInitPerThreadData_004c9df0(void);
 extern void ArraySearch_004cba90(void);
 extern unsigned int g_data_005228f8;
 extern unsigned int g_data_005228fc;
-extern void *g_iat_004d20f8;
+extern unsigned int g_iat_004d20f8;
 
 __declspec(naked) void SehFpuExceptionDispatch_004cb880(void)
 {

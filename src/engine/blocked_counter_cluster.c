@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_00481a10;
+extern unsigned int g_const_00481a80;
+extern unsigned int g_data_004ef290;
+extern unsigned int g_data_004ef2c0;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00538124;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542088;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void BossArrivalSequence_00481950(void);
+extern void CjDispatchCommit_004818e0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void SwapTwoGlobals_004911c0(void);
+extern void TableHitOrSchedule_004be7a0(void);
+
 __declspec(naked) void BlockedCounterCluster_004816d0(void)
 {
     __asm {

@@ -6,6 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_state_0054207c;
 
 /* @addr 0x00495cf0 (38b)
  *   mov     ecx, [g_baseSel_00542060]

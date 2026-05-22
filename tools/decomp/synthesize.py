@@ -248,8 +248,12 @@ def main():
             if len(sec['content']) - value < target_size:
                 continue
 
-            # Extract bytes
-            fn_bytes = bytearray(sec['content'][value:value+target_size])
+            # Extract bytes into a working buffer padded 4 bytes beyond target_size so
+            # relocations that straddle the function boundary can be applied safely.
+            # fn_bytes will be trimmed back to target_size before comparison/write.
+            raw = sec['content'][value:value+target_size+4]
+            work_bytes = bytearray(raw) + bytearray(target_size + 4 - len(raw))
+            fn_bytes = work_bytes  # alias; will be trimmed after reloc loop
 
             # Track all reloc offsets within this function - we'll restore them from orig at the end
             all_reloc_offsets = []
@@ -328,6 +332,9 @@ def main():
                             new_val = ref_va - (target_va + offset_in_fn + 4) + existing
                             struct.pack_into('<I', fn_bytes, offset_in_fn, new_val & 0xffffffff)
 
+            # Trim working buffer back to exact target_size for comparison/write
+            fn_bytes = fn_bytes[:target_size]
+
             # If any reloc couldn't be resolved, skip synthesizing this function: leave
             # the scaffold bytes in place rather than writing zero-target bytes that would
             # diverge from orig. This keeps the build byte-identical while honestly tracking
@@ -355,14 +362,16 @@ def main():
                     continue
                 target_size = text_limit - file_off
                 fn_bytes = fn_bytes[:target_size]
-            # Compare to orig
+            # Compare to orig; only overwrite when bytes match (scaffold = original binary,
+            # so mismatching functions leave correct bytes in place).
             orig_bytes = scaffold[file_off:file_off+target_size]
             if bytes(orig_bytes) != bytes(fn_bytes):
                 mismatches.append((clean, target_va, target_size,
                                    sum(1 for a,b in zip(orig_bytes, fn_bytes) if a != b)))
-            # Overwrite
-            for i in range(target_size):
-                scaffold[file_off + i] = fn_bytes[i]
+            else:
+                # Overwrite only matching functions
+                for i in range(target_size):
+                    scaffold[file_off + i] = fn_bytes[i]
             placed += 1
             # Mark synthesized range (offset relative to .text raddr).
             text_off = file_off - text_sec['raddr']

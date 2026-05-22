@@ -127,6 +127,15 @@ extern unsigned int g_data_00535e7c;
  *   init 5 fields of struct[*4+0x54..0x68]; call CopyGlobal_004ac1f0; pause-check;
  *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
  */
+extern unsigned int g_load_0052ab10;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_0053a350;
+extern unsigned int g_state_0053a734;
+extern unsigned int g_x_0054206c;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void Init4Globals_0042ae10(void);
+
 __declspec(naked) void SequencedInit3Call_00464190(void) {
     __asm {
         push    esi

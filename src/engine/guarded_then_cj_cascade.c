@@ -130,6 +130,18 @@ extern unsigned int g_data_00535e7c;
  *     [0053803c] based on edx == g_state_00538158; copy [+0x5c]/[+0x60]; clear
  *     cj[+0x58] = 0xfffc0000; set cj[+0x4c] = 0xa3d; tail-jmp ScaledZero44.
  */
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_0054207c;
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledDualPropagateJmp_004287b0(void);
+extern void ScaledZero44_00491500(void);
+extern void TableLookupCall_00489f60(void);
+
 __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
     __asm {
         mov     dword ptr [g_x_0054207c], 0

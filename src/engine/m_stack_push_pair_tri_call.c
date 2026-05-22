@@ -132,6 +132,16 @@ extern void MStackPushPairTriCall_0048ce60(void);
  *   call MStackPushPairTriCall_0048ce60; pause-check; g_x_0054207c=0; call CopyJmp_0048ef90; pause-check;
  *   if bit-0 set g_x_0054207c=1; g_x_00542080=6; jmp MStackInstallCountdown_00486370.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void MStackInstallCountdown_00486370(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void ChainDispatcher4Call_00486290(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

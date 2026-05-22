@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x60): call Push84CallTestInstallJmp; if !pause: countdown g_x_00542080; if zero jmp CmpJmpConstStoreJmp_004389e0; else self-jmp.
  *   Final tail-jmp StackPopDispatchTagged_0041f780.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542080;
+extern void CmpJmpConstStoreJmp_004389e0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void Push84CallTestInstallJmp_00460940(void);
+
 __declspec(naked) void InstallSelfCountdownDispatch_00438a10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

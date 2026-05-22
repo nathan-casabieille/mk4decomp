@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
 
 /* @addr 0x00441f00 (197b game) - 6 pause-gated calls with different tag values, then chain bit-clear and tail-jmp.
  *   For tag in [0x93, 0x7e, 0x7b, 0x94, 0x77, 0x7f]: g_x_0054206c = tag; call F; pause? ret.

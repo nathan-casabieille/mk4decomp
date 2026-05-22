@@ -137,6 +137,21 @@ extern unsigned int g_data_00535e7c;
  *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_x_005433c8.
  *     call PendingMatch_004a93c0; pop+ret.
  */
+extern unsigned int g_byte_005435a1;
+extern unsigned int g_byte_005435a2;
+extern unsigned int g_byte_00543619;
+extern unsigned int g_byte_0054361a;
+extern unsigned int g_data_00535de4;
+extern unsigned int g_data_005433c0;
+extern unsigned int g_data_0054359c;
+extern unsigned int g_x_004f3ae4;
+extern unsigned int g_x_004f3ae8;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_005433c8;
+extern void CopyGlobal_004ac1f0(void);
+extern void PendingMatch_004a93c0(void);
+extern void func_004a2080(void);
+
 __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
 {
     __asm

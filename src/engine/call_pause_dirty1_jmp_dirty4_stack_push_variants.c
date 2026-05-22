@@ -21,6 +21,8 @@ extern void func_00436670(void);
 extern void func_0048f330(void);
 extern void func_00428950_oo(void);
 extern void func_004939a0(void);
+extern void InstallSelfCallBitGate_00483ae0(void);
+
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
     __asm {
         call    ScaledLoadJmp_24_00429790
@@ -58,7 +60,6 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
 extern void func_0047d860(void);
 extern void func_00488bf0(void);
 extern void func_0048f330_oo(void);
-extern void InstallSelfCallBitGate_00483ae0(void);
 extern void func_0042b988_oo(void);
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
     __asm {

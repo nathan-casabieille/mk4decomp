@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_0049db40;
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ec220;
+extern unsigned int g_data_004ec270;
+extern unsigned int g_data_004ec2c0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void ZeroAndDirty4_00405430(void);
+
 __declspec(naked) void SpawnImpactExplosion_00471be0(void)
 {
     __asm {

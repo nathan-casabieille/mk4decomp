@@ -13,6 +13,7 @@
  *   mov     [g_walkCallback], 1
  *   jmp     T
  */
+extern u32 g_framePauseFlag;
 extern int func_00440950(void *p);
 extern void *g_data_004e4a1c;
 extern void func_0046f370(void);

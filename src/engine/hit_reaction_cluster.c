@@ -122,6 +122,37 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e27cc;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00537f30;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void DispatcherComplex181_00426310(void);
+extern void DualAddSar_004ab600(void);
+extern void GuardedRangeCmpFpuJmp_0042b8d0(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void PendingMatch_00459510(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void SaveCallRestore_004049d0(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+extern void TableLookupCall_0048a130(void);
+
 __declspec(naked) void HitReactionCluster_0045c080(void)
 {
     __asm {

@@ -131,6 +131,12 @@ extern unsigned int g_data_00535e7c;
  *     if (g_x_00542058 != 0) call g_x_00542058; pause? ret;
  *     install self, slot84=1, g_x_0054204c=1, framePauseFlag=1.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542058;
+extern void GuardedClampStoreJmp_00428bd0(void);
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

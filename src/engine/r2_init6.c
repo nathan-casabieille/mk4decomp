@@ -12,6 +12,11 @@
  *   If still != 0: vtable call [ecx+0x20] (this+pinst+g_x_0058c7b4+&g_iface_0058c7c0); stash HRESULT.
  *   Return: (g_iface_0058c7c0 != 0) as 0/1.
  */
+extern unsigned int g_iface_0058c7bc;
+extern unsigned int g_iface_0058c7c0;
+extern unsigned int g_x_0058c7b4;
+extern unsigned int g_x_0058c7dc;
+
 __declspec(naked) void R2_Init6(void)
 {
     __asm

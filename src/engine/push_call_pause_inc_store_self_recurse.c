@@ -140,6 +140,10 @@ extern void PushCallPauseIncStoreSelfRecurse_00460c00(void);
  *   chain[cj].slot24 = g_x_00542058;
  *   g_walkCallback = 0; chain[cj].slot28 = 0; jmp PushCallPauseIncStoreSelfRecurse_00460c00.
  */
+extern unsigned int g_x_00542054;
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void StateSnapshotDispatch_00460b60(void) {
     __asm {
         call    CopyJmp_00406ba0

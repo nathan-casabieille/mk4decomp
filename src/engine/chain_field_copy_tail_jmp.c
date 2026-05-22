@@ -131,6 +131,16 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x34] ^= 1; copy chain[+0x3c]. Load chain[+0x18] into g_scaledInit.
  *   Zero chain[scaledInit*4 + 0x30/+0x34/+0x38]. Tail-jmp SetupVecFsmCluster_0043e3e0. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void MStackCall_004062f0(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
+
 __declspec(naked) void ChainFieldCopyTailJmp_00466e70(void) {
     __asm {
         mov     dword ptr [g_x_0054206c], 2

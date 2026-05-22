@@ -123,6 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042c9f0 (205b game) - dual-entry install-self. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542084;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+extern void StateDispatchTable_00490fc0(void);
+
 __declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
     __asm {
         push    0x004e3550

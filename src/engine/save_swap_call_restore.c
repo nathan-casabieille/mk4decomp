@@ -18,6 +18,7 @@ extern packed_ptr g_fightGroupHead;
  *   eventQueueCurrent = 0x3c; call F; if !pause: restore
  *   fightGroupHead from g_pendingNodeType; ret.
  */
+extern unsigned int g_baseSel_00542060;
 extern void GatedScaledSubSat_0048fb40(void);
 void SaveSwapCallRestore_00489030(void) {
     g_pendingNodeType = g_fightGroupHead;

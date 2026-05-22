@@ -134,6 +134,22 @@ extern unsigned int g_data_00535e7c;
  *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
  *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain_0046ee00; else jmp MStackJmpInstallSelf.
  */
+extern unsigned int g_data_004eb6c8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void FiveEntryAlarmInstallChain_0046ee00(void);
+extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void MStackJmpInstallSelf_0046ed40(void);
+extern void PhaseDispatchListAdvance_004709e0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void TripleCallPauseJmp_00470500(void);
+extern void Wrapper_0048a3c0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
     __asm {
         call    ScaledAndAlfe_00490390

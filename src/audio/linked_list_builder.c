@@ -136,6 +136,13 @@ extern unsigned int g_data_00535e7c;
  *   [ebx + edx] *= 0; [(ebx + edx + 1)*4] = esi.
  *   pop edi/esi/ebx.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_x_0053a1ac;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542054;
+
 __declspec(naked) void LinkedListBuilder_004ab380(void) {
     __asm {
         push    ebx

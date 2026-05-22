@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ed0b8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelf3StateDualChain_0047a1c0(void);
+extern void InstallSelf3StateFieldSet_0047a090(void);
+extern void MStackPushSet0020_004901d0(void);
+extern void Push8e_Push413690_00413560(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledChainJmp_00429470(void);
+extern void ScoreAiStatusFsmCluster_00479b50(void);
+
 __declspec(naked) void ThrowTakedownStepCluster_00479e40(void)
 {
     __asm {

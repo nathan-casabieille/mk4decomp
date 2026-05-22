@@ -122,6 +122,29 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f3808;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543550;
+extern unsigned int g_data_00543734;
+extern unsigned int g_data_00543738;
+extern unsigned int g_data_0054373c;
+extern unsigned int g_data_00543740;
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void PushPopScaledInit343c_004aa940(void);
+extern void SceneFrameStepWithInputs_004be250(void);
+
 __declspec(naked) void InstallSelfStateMachine6_004a48e0(void)
 {
     __asm {

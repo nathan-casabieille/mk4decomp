@@ -134,6 +134,8 @@ extern unsigned int g_data_0053a408_avm;
 extern unsigned int g_data_0053a3e0_avm;
 extern unsigned int g_data_00537e88_avm;
 extern unsigned int g_data_0053a700_avm;
+extern unsigned int g_data_00542004;
+extern unsigned int g_x_00542074;
 void AudioModeInitVariant_004a2690(void) {
     g_state_0054208c &= 0xfffffffeu;
     g_walkCallback = (void (*)(void))((unsigned int)&g_data_0053a408_avm >> 2);

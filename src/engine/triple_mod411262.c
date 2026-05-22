@@ -129,6 +129,8 @@ extern unsigned int g_data_00535e7c;
  *   Store result back to scaledInit[index] and g_x_0054206c.
  *   pop esi; ret.
  */
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void TripleMod411262_00424740(void) {
     __asm {
         push    esi

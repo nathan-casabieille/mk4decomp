@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00500c74;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CallDualStoreXorBit_004285e0(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void TwoPhaseInstallScaledPackedPtr_00480d50(void)
 {
     __asm

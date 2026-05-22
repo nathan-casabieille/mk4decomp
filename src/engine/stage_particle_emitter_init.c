@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537f78;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00541de0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void InstallSelf5CallVecChain_00464660(void);
+extern void MStackCall_004063e0(void);
+
 __declspec(naked) void StageParticleEmitterInit_00464350(void)
 {
     __asm {

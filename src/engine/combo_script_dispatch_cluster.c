@@ -159,6 +159,17 @@ extern void IterStepScaledStore_0048e600(void);
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp_004594f0.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledAndAlfe_00490390(void);
+
 __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

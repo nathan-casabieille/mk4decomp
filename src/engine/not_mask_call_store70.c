@@ -19,6 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   add esp 8; restore [head*4+0x70] = eax; ret.
  */
 extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void Mul10Tail_00404af0(void);
 void NotMaskCallStore70_0047e640(void) {
     unsigned int v;
     unsigned int r;

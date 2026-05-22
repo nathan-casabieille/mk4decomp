@@ -132,6 +132,19 @@ extern unsigned int g_data_00535e7c;
  *     extracted and tail-call eax; ret.
  *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void InstallSelfPlusTrampoline_0046c5d0(void);
+extern void MStackBitFlagDispatch_00494750(void);
+extern void PushFourCallPopBitJmp_00461020(void);
+extern void QuadEntryChainPush_0046dd00(void);
+extern void ScaledMove48to58_00490720(void);
+extern void SixEntryYieldThunks_00461090(void);
+extern void StageTransitionCluster_0046f250(void);
+extern void StateDispatchYield_00471190(void);
+
 __declspec(naked) void QuadStateHandler_0046c6e0(void) {
     __asm {
         call    ScaledMove48to58_00490720

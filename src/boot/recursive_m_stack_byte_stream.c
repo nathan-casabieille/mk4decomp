@@ -135,6 +135,12 @@ extern void RecursiveMStackByteStream_00406d00(void);
  *   if bit2 of g_state_0054208c clear: load scaledInit[+0x18] -> g_x_00542048.
  *   call RecursiveMStackByteStream_00406d00; if pause? ret. pop pair: g_x_00542048, g_scaledInit_00542044; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void MStackPushPairTriCall_0048ce60(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -194,3 +200,4 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

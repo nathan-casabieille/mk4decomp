@@ -121,6 +121,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
 
 /* @addr 0x0048af60 (292b game) - mstack-push 6 + middle-op + mstack-pop 6.
  *   Push 6 globals onto mstack: 70, 74, 78, 80, 4c, 7c.

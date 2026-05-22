@@ -134,6 +134,9 @@ extern unsigned int g_data_00535e7c;
  *   ecx = g_walkCallback; eax = 0x1921f - ecx;
  *   g_walkCallback = eax; skip: pop esi; ret.
  */
+extern unsigned int g_load_0052ab10;
+extern void Atan2QuadrantLookup_004245b0(void);
+
 __declspec(naked) void DualChainSubCallSubLoad_00431c80(void) {
     __asm {
         mov     eax, dword ptr [g_load_0052ab10]

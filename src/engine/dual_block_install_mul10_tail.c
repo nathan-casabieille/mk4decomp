@@ -132,6 +132,16 @@ extern unsigned int g_data_00535e7c;
  *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
  *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void CopyThreeFields_00404df0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void PendingMatch_0049a670(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

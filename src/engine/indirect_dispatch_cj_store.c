@@ -131,6 +131,16 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop g_x_00542088, g_x_00542084. g_x_0054206c = 1; tail-jmp [g_state_00542080].
  *   ret. Followed by small tail block: if g_x_0054206c == 0, g_data_00542050 = 0x00537ec0>>2; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+extern void AerialKickComboCluster_0048b090(void);
+
 __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
     __asm {
         mov     ecx, dword ptr [g_state_004d57ac]

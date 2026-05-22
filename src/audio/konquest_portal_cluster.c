@@ -122,6 +122,43 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f3930;
+extern unsigned int g_data_004f393c;
+extern unsigned int g_data_004f394c;
+extern unsigned int g_data_004f39dc;
+extern unsigned int g_data_004f3a48;
+extern unsigned int g_data_004f6338;
+extern unsigned int g_data_0050b118;
+extern unsigned int g_data_0050f130;
+extern unsigned int g_data_0050f14c;
+extern unsigned int g_data_0051599c;
+extern unsigned int g_data_00535de4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005433b8;
+extern unsigned int g_data_005437f4;
+extern void AudioBindEntry_004a1e40(void);
+extern void AudioByteTable7LoopChainPick_004a5160(void);
+extern void AudioInitArgs3_004a1f20(void);
+extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void PendingMatch_004a2a80(void);
+extern void RetZero_004a1c40(void);
+extern void ScaledByteIdxDualCopy_004a3260(void);
+extern void SetJmp_004a1ac0(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TripleCallByteCheck_004a1bf0(void);
+extern void TripleCallSetCopy_004a4880(void);
+
 __declspec(naked) void KonquestPortalCluster_004a5290(void)
 {
     __asm {

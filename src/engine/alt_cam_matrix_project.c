@@ -140,6 +140,26 @@ extern unsigned int g_data_00535e7c;
  *   then computes `(eax * 15) << 13 >> 16 + 0xf0` and clamps to
  *   (0, 0x1e0) before storing into g_data_004f623c as a u16.
  */
+extern unsigned int g_data_004f623c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_00ab4878;
+extern unsigned int g_data_00ab487c;
+extern unsigned int g_data_00ab4880;
+extern unsigned int g_data_00ab4884;
+extern unsigned int g_data_00ab4888;
+extern unsigned int g_data_00ab4d58;
+extern unsigned int g_data_00ab4d5c;
+extern unsigned int g_data_00ab4d60;
+extern unsigned int g_data_00ab4d64;
+extern unsigned int g_data_00ab4d68;
+extern unsigned int g_data_00ab4e24;
+extern void Mat3x3VecMul6Bit_004b3590(void);
+
 __declspec(naked) void AltCamMatrixProject_004b9840(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]

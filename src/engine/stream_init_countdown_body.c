@@ -131,6 +131,9 @@ extern void Event112Cluster_00496ad0(void);
 extern void ProneAnimFsmCluster_004958c0(void);
 
 /* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void SevenThunkDispatcher_00495770(void) {
     __asm {
         push    0x004f1468

@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d6948;
+extern unsigned int g_data_0050bbb4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542088;
+extern void CallSetPause_0041f830(void);
+extern void MStackCall_004062f0(void);
+extern void MStackCall_00406740(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void ScaledChainOr8_00404e50(void);
+extern void SetJmp_00405420(void);
+extern void SkelAnimUpdaterCluster_0049d940(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
 {
     __asm {

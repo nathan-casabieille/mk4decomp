@@ -129,6 +129,17 @@ extern unsigned int g_data_00535e7c;
  *     [+0x58]=0xfffffd71. Set g_x_0054206c=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
  *   call MStackCall_004062f0; if !pause jmp MStackPop8_004ab860; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_004f360c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern void MStackCall_004062f0(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+
 __declspec(naked) void GatedScaledChainSetup_00427390(void) {
     __asm {
         mov     al, byte ptr [g_x_004f360c]

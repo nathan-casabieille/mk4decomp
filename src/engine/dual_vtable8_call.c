@@ -18,6 +18,7 @@ extern packed_ptr g_fightGroupHead;
  */
 extern unsigned int g_state_0058c7d4;
 extern unsigned int g_state_0058c7c4;
+extern unsigned int g_state_0058c7dc;
 void DualVtable8Call_004af650(void) {
     void *p1 = g_state_0058c7d4;
     void *p2;

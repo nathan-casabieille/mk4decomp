@@ -139,6 +139,23 @@ extern unsigned int g_data_00535e7c;
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
  *     mstack entries back.
  */
+extern unsigned int g_data_004d75e0;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void ChainWalkPushPop_00405a40(void);
+extern void MStackCall_004062f0(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledTripleCopy54_004ac040(void);
+extern void SetJmp_00408d20(void);
+
 __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
     __asm {
         mov     eax, offset g_data_004d75e0

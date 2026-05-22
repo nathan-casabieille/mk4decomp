@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *     g_state_00542080 = 0x708; call Helper_AudioStub_2960.
  *   Branch 1 (al bit 1 OR ah bit 1): same with g_byteTab_004f3080+1 and push 0xffea0000.
  */
+extern unsigned int g_byteTab_004f3080;
+extern unsigned int g_state_004d50b4;
+extern unsigned int g_x_0054206c;
+extern void Helper_AudioStub_2960(void);
+extern void SetJmp_004a1ad0(void);
+
 void DualBitFlagAudioChain_004a29d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d50b4]
@@ -180,3 +186,4 @@ void DualBitFlagAudioChain_004a29d0(void) {
     L_ret:
         }
 }
+

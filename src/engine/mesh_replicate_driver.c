@@ -122,6 +122,25 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ecb58;
+extern unsigned int g_data_00514950;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054208c;
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void ScaledLoadDirtyOrSetJmp_00473450(void);
+extern void StoreLoadJmp_00404ef0(void);
+
 __declspec(naked) void MeshReplicateDriver_00473220(void)
 {
     __asm {

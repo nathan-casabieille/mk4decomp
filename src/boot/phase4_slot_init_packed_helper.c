@@ -122,6 +122,30 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00511fa4;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_0053e35c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543800;
+extern void AudioMixerStep_004ab700(void);
+extern void BootSetJmpStoreThenChainTriple_0040b970(void);
+extern void ChainWalkPushPop_00405a40(void);
+extern void MStackCall_004062f0(void);
+extern void MStackCall_00406740(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void SetJmp_00405420(void);
+extern void SetJmp_00408d20(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
 {
     __asm {

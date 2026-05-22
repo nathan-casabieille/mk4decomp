@@ -131,6 +131,10 @@ extern unsigned int g_data_00535e7c;
  */
 extern void ScaledMove48to58_00490720(void);
 extern void StateDispatchTable_00490fc0(void);
+extern void DualGatedStateYield_0048fc80(void);
+extern void DualScaledInitClear_00433c10(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+
 void FiveCallGuardSetTail_0046f6b0(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]
@@ -179,3 +183,4 @@ void FiveCallGuardSetTail_0046f6b0(void) {
         _emit   00h
         }
 }
+

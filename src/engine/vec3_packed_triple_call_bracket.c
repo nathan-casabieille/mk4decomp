@@ -122,6 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00538098;
+extern unsigned int g_data_005380a0;
+extern unsigned int g_data_0053a420;
+extern unsigned int g_data_0053a424;
+extern unsigned int g_data_0053a428;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541f88;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern void QuadInterpolator_00425380(void);
+
 __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
 {
     __asm

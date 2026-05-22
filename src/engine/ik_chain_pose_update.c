@@ -136,6 +136,20 @@ extern unsigned int g_data_0053a24c;
 extern unsigned int g_data_0053a35c;
 extern unsigned int g_data_00542088;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void AudioVolumeRescale_004ab690(void);
+
 __declspec(naked) void EndingScreenFsmCluster_00444390(void)
 {
     __asm {

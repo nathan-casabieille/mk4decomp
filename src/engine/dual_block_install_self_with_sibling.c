@@ -132,6 +132,11 @@ extern unsigned int g_data_00535e7c;
  *     chain[+0x84]=1; scaledInit-chain push 0x00484cf0+0x01000000;
  *     call ScaledLoadIncJmp_00428d00; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+
 __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

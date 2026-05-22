@@ -133,6 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   edx = g_walkCallback; eax = g_acc_00542078;
  *   cmp edx,eax; if le: ret; else: jmp 0x42b930.
  */
+
 __declspec(naked) void GuardedRangeCmpFpuJmp_0042b8d0(void) {
     __asm {
         call    ScaledLoadCmpStoreXfm_0048f2a0

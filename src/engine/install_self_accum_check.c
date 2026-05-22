@@ -134,6 +134,20 @@ extern unsigned int g_data_00535e7c;
  *   if (g_x_00542058 != 0): call eax = g_x_00542058. pause? -> end.
  *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_x_0054204c=1; pause=1.
  */
+extern unsigned int g_x_00541dc4;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+extern void CallPauseDirty4ScaledSet_00419780(void);
+extern void GuardedClampStoreJmp_00428bd0(void);
+extern void StateDispatchTable_00490fc0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

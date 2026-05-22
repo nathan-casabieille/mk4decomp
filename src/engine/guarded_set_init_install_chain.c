@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ec710;
+extern unsigned int g_data_0053a498;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543384;
+extern unsigned int g_data_00543570;
+extern void GatedWordPushCall_00489f90(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
 {
     __asm

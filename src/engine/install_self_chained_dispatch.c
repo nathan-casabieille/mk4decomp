@@ -135,6 +135,18 @@ extern unsigned int g_data_00535e7c;
  *     scaledInit = 0x004ec0a8 >> 2; call GuardedDirtyXformFromTable_0048f6d0; if pause? ret.
  *     else: install-self at [esi+8]=0x0046cb70; chain[+0x84]=1; g_x_0054204c=0xc; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CopyJmp_0048ee80(void);
+extern void DirtyTestScaledCmpJmp_0046ea70(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void MStackPushSet0200_00490140(void);
+extern void ScaledMove48to58_00490720(void);
+extern void TripleFieldCopyJmpHi_0048f740(void);
+
 __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

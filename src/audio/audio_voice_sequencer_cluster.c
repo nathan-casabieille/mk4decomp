@@ -122,6 +122,32 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004f2dc0;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00535e50;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_00541fc4;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543320;
+extern void AudioInitChainTag_004a1000(void);
+extern void Eleven404b90_404c00_004266d0(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void StorePauseImulShr16_004ab630(void);
+extern void Ten404c40_404bd0_00426780(void);
+
 __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
 {
     __asm {

@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *     install self with [esi+0x84]=2; pause = ebx (=1).
  *   install-second-state: install self with [esi+0x84]=ebx (=1).
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfPair3Branch_00429240(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

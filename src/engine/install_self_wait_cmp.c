@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x60): if g_state_00535ddc > g_x_00542084 jmp GuardedSeq_00438630; else countdown
  *     g_x_00542080; if not zero, self-jmp; else jmp StackPopDispatchTagged.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void GuardedSeq_00438630(void);
+
 __declspec(naked) void InstallSelfWaitCmp_00438190(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

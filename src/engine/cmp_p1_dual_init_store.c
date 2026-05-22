@@ -32,6 +32,7 @@ extern unsigned int g_data_0053a3e4;
 extern unsigned int g_data_0053a474;
 
 /* @addr 0x00433d30 */
+
 __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]

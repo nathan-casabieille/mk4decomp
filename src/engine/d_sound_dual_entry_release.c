@@ -144,6 +144,8 @@ extern void DSoundBufferInit146_004aea40_alt(void);
  *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_x_0058c7e8:
  *   SetEvent via IAT@4d2210; clear g_x_0058c7e8; ret.
  */
+extern unsigned int g_iat_004d2210;
+
 __declspec(naked) void R2_Cleanup(void) {
     __asm {
         push    esi

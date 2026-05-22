@@ -134,6 +134,8 @@ extern unsigned int g_data_00535e7c;
  *   eax |= 4; g_state_0054208c = eax; ret;
  *   clear: eax &= 0xfb; g_state_0054208c = eax; ret.
  */
+extern unsigned int g_state_004d50a8;
+
 void DualCmpSetFlagBitToggle_00460eb0(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00538158]
@@ -164,3 +166,4 @@ void DualCmpSetFlagBitToggle_00460eb0(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

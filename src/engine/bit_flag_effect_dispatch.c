@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern void Helper_SetState_02(void);
+extern void Helper_SetState_03(void);
+extern void Helper_SetState_04(void);
+extern void Helper_SetState_05(void);
+extern void Helper_SetState_06(void);
+extern void Helper_SetState_07(void);
+extern void Helper_SetState_09(void);
+extern void Helper_SetState_0B(void);
+extern void Helper_SetState_0C(void);
+extern void Helper_SetState_0E(void);
+extern void Helper_SetState_0F(void);
+extern void Helper_SetState_10(void);
+extern void Helper_SetState_1A(void);
+extern void TableWalk3StrideCall_00461640(void);
+extern void TenThunkDualSave_004616e0(void);
+extern void TripleBlockInstallSelfThunk_00461930(void);
+
 __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
 {
     __asm {

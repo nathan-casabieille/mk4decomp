@@ -20,8 +20,9 @@ extern packed_ptr g_fightGroupHead;
  *   (eax=0) else 0.
  */
 extern void Helper_AuxAudio_PostInit(void);
-extern void *g_dsoundDevice_005438e8;
-extern void *g_iat_004d2244;
+extern unsigned int g_dsoundDevice_005438e8;
+extern unsigned int g_iat_004d2244;
+
 void DSoundQueryProperty_004ac3a0(void) {
     __asm {
         sub     esp, 0x10
@@ -50,3 +51,4 @@ void DSoundQueryProperty_004ac3a0(void) {
         add     esp, 0x10
         }
 }
+

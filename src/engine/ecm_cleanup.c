@@ -9,6 +9,8 @@
 /*
  * @addr 0x004b0cb0
  *
+extern unsigned int g_ecmDSBuffer;
+
  * Naked + __asm: the function is a chain of side-effecting Win32 /
  * COM calls with very specific scheduling (push esi/edi early so
  * `Sleep` cached in edi is reused both before and after the wait
@@ -16,6 +18,7 @@
  * pop edi between the fclose-cleanup and the final g_ecmFile = 0
  * store). Pure C re-orders enough that we never hit byte equality.
  */
+
 __declspec(naked) void ECM_Cleanup(void)
 {
     __asm {

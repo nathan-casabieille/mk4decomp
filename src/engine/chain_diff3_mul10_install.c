@@ -122,6 +122,13 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void DivLongPushCall_004ab320(void);
+
 __declspec(naked) void ChainDiff3Mul10Install_004730c0(void)
 {
     __asm

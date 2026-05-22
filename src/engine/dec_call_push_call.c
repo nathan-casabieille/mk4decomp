@@ -19,7 +19,8 @@ extern unsigned int g_state_0053a238;
 extern void TripleBlockInstallSelf_00465ef0(void);
 extern void AndShlStore_00409280(void);
 extern int ArgSarStoreJmp_004594f0(void *);
-extern void *g_data_004ea990;
+extern unsigned int g_data_004ea990;
+
 __declspec(naked) void DecCallPushCall_00466090(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]

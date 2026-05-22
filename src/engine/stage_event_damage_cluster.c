@@ -134,6 +134,10 @@ extern void StageEventDamageCluster_0042c5a0(void);
  *     g_data_0054204c=1, g_pause=1; pop+ret.
  *   Block B (+0x60): call FiveCallScaledChainTailJmp; if !pause: jmp StageEventDamageCluster_0042c5a0; else ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+
 __declspec(naked) void InstallSelfDualEsi_0042c4f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

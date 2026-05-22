@@ -133,6 +133,16 @@ extern unsigned int g_data_00542094;
 extern unsigned int g_const_004985b0;
 extern unsigned int g_data_005432f0;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+
 __declspec(naked) void StageEventState4Way_004982f0(void)
 {
     __asm {

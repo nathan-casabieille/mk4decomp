@@ -129,6 +129,16 @@ extern unsigned int g_data_00535e7c;
  *     Else load chain at [g_baseSel*4+0x38]; copy fields +0x54/+0x58/+0x5c → g_x_0054206c/70/74;
  *     store back to chain+0x5c/+0x60/+0x64; call TripleBlockCjCopy_0042c8c0; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void Cascade3ChainInit_0048fa50(void);
+extern void GameSectionSwitcher_0042cac0(void);
+extern void InstallSelfDualStateDispatch_0042c9f0(void);
+extern void TripleBlockCjCopy_0042c8c0(void);
+
 __declspec(naked) void TripleEntryStateCascade_0042c7e0(void) {
     __asm {
         call    Cascade3ChainInit_0048fa50

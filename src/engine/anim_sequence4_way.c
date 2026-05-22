@@ -136,6 +136,12 @@ extern void SetJmp_00451b60(void);
 extern void SetJmp_00451b70(void);
 extern void SetJmp_00451b80(void);
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054208c;
+extern void SetJmp_00405420(void);
+
 __declspec(naked) void AnimSequence4Way_004515c0(void)
 {
     __asm {

@@ -133,6 +133,8 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00535cfc_pdc;
 extern unsigned int g_data_0053a1d0_pdc;
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
 int DualPathDownloadChar_00463810(void) {
     if (g_state_0053a408 != 0) {
         g_walkCallback = (void (*)(void))g_state_00537f48;

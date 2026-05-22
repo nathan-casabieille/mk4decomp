@@ -7,6 +7,14 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern packed_ptr g_xformEntityIdx;
+extern void FreeImpl_004c55f0(void *);
+
+struct BitTestS {
+    unsigned int field0;
+    unsigned int field4;
+    unsigned int field8;
+    unsigned int field_c;
+};
 
 void BitTestFreeClear_004c8ae0(struct BitTestS *p) {
     if ((p->field_c & 0x83) != 0 && (p->field_c & 8) != 0) {

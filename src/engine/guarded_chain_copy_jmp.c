@@ -132,6 +132,9 @@ extern unsigned int g_data_00535e7c;
  *   [ecx*4+0x6c] = edx; lea eax,[ecx*4]; ecx = g_state_0054207c;
  *   [eax+0x74] = ecx; jmp 0x41f830.
  */
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void ScaledLitAddJmp_00480fb0(void);
+
 void GuardedChainCopyJmp_0049b730(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -167,3 +170,4 @@ void GuardedChainCopyJmp_0049b730(void) {
         _emit   0ffh
         }
 }
+

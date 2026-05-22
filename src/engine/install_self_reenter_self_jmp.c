@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *     if bit set jmp FiveCallGuardSetTail; else mstack-push 0x00483180, jmp GameDispatchValidateState_004339c0.
  *   Block B (+0x50): standard install-self with self-jmp on chain[+0x84]!=0; install-self addr 0x00483180.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern void DualScaledInitClear_00433c10(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedSeq_004297b0(void);
+
 __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
     __asm {
         call    DualScaledInitClear_00433c10

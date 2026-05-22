@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_data_004d57ac_arr;
 
 /* @addr 0x00490b70 (191b game) - chain[+0x58] accumulate, then 2 Mul10 calls + chain[+0x54,+0x5c] accumulate.
  *   chain[g_x_0054205c + 0x58] += g_x_0054206c; g_x_00542074 = result.

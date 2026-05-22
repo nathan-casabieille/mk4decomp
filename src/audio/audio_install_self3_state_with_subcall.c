@@ -137,6 +137,13 @@ extern unsigned int g_x_00537eec;
  *     mstack-push (entry+0x01000000) packed; g_x_00542044++; clear g_baseSel*4+0x84;
  *     call AudioInstallSelf3StateWithSubcall_004a0870; g_pause_00541e6c=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541dd4;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void AudioInstallSelfShiftedChainInit_004a0210(void)
 {
     __asm

@@ -18,6 +18,8 @@ extern unsigned int g_scaledInit_00542044;
  * `movsx eax, m8` + `and eax, 4` + `shr eax, 2` (13b). Different
  * bytes, different upper-eax semantics - left as naked.
  */
+extern unsigned int g_byte_004d50c0;
+
 void MovsxAnd20Shr5_004a1cf0(void) {
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
@@ -25,3 +27,4 @@ void MovsxAnd20Shr5_004a1cf0(void) {
         shr     eax, 5
         }
 }
+

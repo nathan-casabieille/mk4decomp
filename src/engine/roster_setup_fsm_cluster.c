@@ -129,6 +129,14 @@ extern void ScaledInit_00450ef0(void);
 extern void RosterSetupFsmCluster_00451060(void);
 
 /* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void MStackCall_00406600(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+
 __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
     __asm {
         call    PushSetXfmMaskCallPop_00407140

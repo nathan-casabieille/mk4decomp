@@ -127,6 +127,10 @@ extern unsigned int g_data_00535e7c;
  *   4 separate push literals at 0x004ef3c8, 0x004ee640, 0x004ee678, 0x004ee6b0.
  *   Last block omits the pause-check.
  */
+extern unsigned int g_pause_00541e6c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GateDispatch6c_00494580(void);
+
 void Quad4EntryPushArg_004835e0(void) {
     __asm {
         call    GateDispatch6c_00494580
@@ -173,3 +177,4 @@ void Quad4EntryPushArg_004835e0(void) {
         add     esp, 4
         }
 }
+

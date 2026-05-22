@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054206c=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
  *   Block B (+0x80): g_x_0054206c=1; g_state_00537e94=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537e94;
+extern unsigned int g_state_00541dc4;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void CallPauseDirtyScaledSet7_00480ef0(void);
+extern void CmpP1GTSetup_00470980(void);
+extern void TableLookupCall_00489f60(void);
+
 __declspec(naked) void DualEntryDecLoop_00480f20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542048]

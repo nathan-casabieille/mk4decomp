@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5040;
+extern unsigned int g_data_004d504c;
+extern unsigned int g_data_004d505c;
+extern unsigned int g_data_004d5060;
+extern unsigned int g_data_004d506c;
+extern unsigned int g_data_00524158;
+extern unsigned int g_data_00524358;
+extern void FSYS_fclose(void);
+extern void FSYS_fopen(void);
+extern void FSYS_fread(void);
+extern void FSYS_fseek(void);
+extern void FSYS_ftell(void);
+extern void Helper_Sprintf(void);
+extern void ListInitLoop_00401310(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void MemcpyByteN_004a5680(void);
+extern void ShowErrorMessage(void);
+
 __declspec(naked) void FileLoaderTwoStage_00401120(void)
 {
     __asm {

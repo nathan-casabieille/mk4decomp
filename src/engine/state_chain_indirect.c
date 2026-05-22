@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
  *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void MStackBitFlagDispatch_00494750(void);
+extern void ScaledLoadCmp0fJmp_004930e0(void);
+
 __declspec(naked) void StateChainIndirect_00494670(void) {
     __asm {
         call    ScaledLoadCmp0fJmp_004930e0

@@ -132,6 +132,12 @@ extern unsigned int g_data_00535e7c;
  *   First iter has different field reg ordering (compiler quirk).
  *   Pop g_x_00542048.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00543800;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void ChainListVecAdd_0049d200(void) {
     __asm {
         mov     eax, dword ptr [g_x_00543800]
@@ -203,3 +209,4 @@ void ChainListVecAdd_0049d200(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

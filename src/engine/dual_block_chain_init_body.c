@@ -138,6 +138,15 @@ extern void CallPauseScaledStoreCopyJmp_00461220(void);
  *     ending with install-self at [esi+8]=0x00467d40, chain[+0x84]=1,
  *     g_x_0054204c=8, pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_005433e8;
+extern unsigned int g_x_00543590;
+extern void CopyJmp_00406ba0(void);
+extern void GateDispatch6c_00494580(void);
+extern void ScaledMove48to58_00490720(void);
+
 __declspec(naked) void InstallSelfStateCounter_00467d40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

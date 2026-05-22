@@ -129,6 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   cj[+0x6c] and cj[+0x74]; call ThreeChanPackClamp_00404cc0(0x23fb23) then
  *   CopyThreeFields(cj).
  */
+extern void CopyThreeFields_00404df0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 __declspec(naked) void DualAxisScalePair_0049a0f0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]

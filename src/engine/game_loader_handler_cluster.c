@@ -122,6 +122,29 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541dc4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542bd4;
+extern void CjInstallSelfRouter_00470480(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void FlagThunk4EntryDispatcher_0040a470(void);
+extern void GateDispatch6c_00494580(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void InstallSelfMStackIndirect_00487920(void);
+extern void ScaledAndAlfb_00490370(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
+extern void StateDispatchTable_00490fc0(void);
+extern void TableLookupCall_0048a160(void);
+extern void TripleEntryBitsetMStack_00487890(void);
+
 __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
 {
     __asm {

@@ -129,6 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   snapshot the current pair. If walk >= 0, push word[walk*2 +
  *   0x4ec7a0] and call TaggedSceneDispatch_004be690.
  */
+extern unsigned int g_word_004ec7a0;
+extern unsigned int g_x_0053a498;
+extern unsigned int g_x_0054358c;
+extern unsigned int g_x_00543598;
+
 void GatedWordPushCall_00489f90(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -163,3 +168,4 @@ after:
 done:
         }
 }
+

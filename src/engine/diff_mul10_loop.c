@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *     Mul10Tail([g_x_00542048*4], g_x_0054206c), store to scaledInit++, ++g_x_00542048, --g_data_0053a1ac.
  *   At end: scaledInit -= 3, g_x_00542048 -= 4 (rewind to start), pop esi, ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0053a1ac;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void DivLongPushCall_004ab320(void);
+
 __declspec(naked) void DiffMul10Loop_00432000(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054204c]

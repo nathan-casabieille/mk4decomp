@@ -4,6 +4,72 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f4b54;
+extern unsigned int g_data_004f4b70;
+extern unsigned int g_data_004f4b80;
+extern unsigned int g_data_004f4b94;
+extern unsigned int g_data_004f4ba8;
+extern unsigned int g_data_004f4bbc;
+extern unsigned int g_data_004f4bd0;
+extern unsigned int g_data_004f4be8;
+extern unsigned int g_data_004f4bfc;
+extern unsigned int g_data_004f4c18;
+extern unsigned int g_data_004f4c2c;
+extern unsigned int g_data_004f4c40;
+extern unsigned int g_data_004f4c50;
+extern unsigned int g_data_004f4c68;
+extern unsigned int g_data_004f4c7c;
+extern unsigned int g_data_004f4c8c;
+extern unsigned int g_data_004f4c9c;
+extern unsigned int g_data_004f4cb0;
+extern unsigned int g_data_004f4cc0;
+extern unsigned int g_data_004f4cdc;
+extern unsigned int g_data_004f4cec;
+extern unsigned int g_data_004f4d04;
+extern unsigned int g_data_004f4d14;
+extern unsigned int g_data_004f4d28;
+extern unsigned int g_data_004f4d3c;
+extern unsigned int g_data_004f4d50;
+extern unsigned int g_data_004f4d64;
+extern unsigned int g_data_004f4d74;
+extern unsigned int g_data_004f4d88;
+extern unsigned int g_data_004f4d9c;
+extern unsigned int g_data_004f4db8;
+extern unsigned int g_data_007affe4;
+extern unsigned int g_data_007b0000;
+extern unsigned int g_data_007b0004;
+extern unsigned int g_data_007b0008;
+extern unsigned int g_data_007b000c;
+extern unsigned int g_data_007b0010;
+extern unsigned int g_data_007b0014;
+extern unsigned int g_data_007b0018;
+extern unsigned int g_data_007b001c;
+extern unsigned int g_data_007b0020;
+extern unsigned int g_data_007b0024;
+extern unsigned int g_data_007b0028;
+extern unsigned int g_data_007b002c;
+extern unsigned int g_data_007b0030;
+extern unsigned int g_data_007b0034;
+extern unsigned int g_data_007b0038;
+extern unsigned int g_data_007b003c;
+extern unsigned int g_data_007b0040;
+extern unsigned int g_data_007b0044;
+extern unsigned int g_data_007b0048;
+extern unsigned int g_data_007b004c;
+extern unsigned int g_data_007b0050;
+extern unsigned int g_data_007b0054;
+extern unsigned int g_data_007b0058;
+extern unsigned int g_data_007b005c;
+extern unsigned int g_data_007b0060;
+extern unsigned int g_data_007b0064;
+extern unsigned int g_data_007b0068;
+extern unsigned int g_data_007b006c;
+extern unsigned int g_data_007b0070;
+extern unsigned int g_data_007b0074;
+extern unsigned int g_data_007b0078;
+extern unsigned int g_iat_004d2050;
+extern unsigned int g_iat_004d2058;
+
 __declspec(naked) void Helper_GlideOpen(void)
 {
     __asm {

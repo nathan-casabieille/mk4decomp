@@ -124,6 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00431e90 (170b) - sub-from-const + 2x guarded calls + neg-sub +
  *   shl 3 mul + chain[+0x54,+0x5c,+0x64] stores. */
+extern void MStackMagicModMul10_00424410(void);
+extern void ModMagicMul10Index_00424350(void);
+
 void GuardedArithDualCallChain_00431e90(void) {
     __asm {
         mov     ecx, dword ptr [g_state_00542088]
@@ -171,3 +174,4 @@ void GuardedArithDualCallChain_00431e90(void) {
         mov     dword ptr [edx*4 + 0x64], ecx
         }
 }
+

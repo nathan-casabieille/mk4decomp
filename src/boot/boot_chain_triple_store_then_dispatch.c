@@ -132,6 +132,11 @@ extern void BootChainTripleStoreThenDispatch_004076b0(void);
  *   g_x_00542048 = ecx; mstack-pop into g_scaledInit; call BootChainTripleStoreThenDispatch_004076b0; pause? -> pop+ret.
  *   mstack-pop into g_x_00542048.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackChainDecodeCall_004936f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -177,3 +182,4 @@ void MStackChainDecodeCall_004936f0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -121,6 +121,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_dualB_00538038;
+extern unsigned int g_dualB_0053803c;
+extern unsigned int g_state_00541dc4;
 
 /* @addr 0x00470840 (96b)
  *   eax = g_state_00538158; edx = g_cj_0054205c;

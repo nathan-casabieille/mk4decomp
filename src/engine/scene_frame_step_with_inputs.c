@@ -136,6 +136,12 @@ extern unsigned int g_x_00541d90;
  *   if (eax == 0xa): install self: [esi+8]=0x404920, [esi+0x84]=1, g_x_0054204c=1, pause=1.
  *   else: call ScenegraphWalk; call BootInitGuardedCallChain_004265d0; call AudioInitInstallerPair_004a2140; ret.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void BootInitGuardedCallChain_004265d0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfCounter_00404920(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

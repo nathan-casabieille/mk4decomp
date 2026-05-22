@@ -127,6 +127,15 @@ extern unsigned int g_data_00535e7c;
  *     push 0x004eef08; call ArgSarStoreJmp; ret.
  *   B (+0x50): standard install-self via chain[+0x84]==0 path: 0x00487480 self-addr.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void ScaledMove48to58_00490720(void);
+
 __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
     __asm {
         call    MStackPushSet0008_004901a0

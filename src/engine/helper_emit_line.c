@@ -12,6 +12,28 @@
  *   scale*0x19999a (offset 0x140 = 320 center); Y via scale * 15 * 8192/65536
  *   (offset 0xf0 = 240 center). Stores screen XY (word) at 0x7af9b4/b6.
  */
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af96c;
+extern unsigned int g_data_007af978;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af990;
+extern unsigned int g_data_007af992;
+extern unsigned int g_data_007af994;
+extern unsigned int g_data_007af996;
+extern unsigned int g_data_007af998;
+extern unsigned int g_data_007af99a;
+extern unsigned int g_data_007af99c;
+extern unsigned int g_data_007af99e;
+extern unsigned int g_data_007af9a0;
+extern unsigned int g_data_007af9a4;
+extern unsigned int g_data_007af9a8;
+extern unsigned int g_data_007af9ac;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b6;
+
 __declspec(naked) void Helper_EmitLine(void) {
     __asm {
         mov     ecx, [esp + 4]

@@ -138,6 +138,8 @@ extern void StateMachineDualModuloInstall_0043d620(void);
  *   then push (g_x_0053a3a0 + 0x44ccc), store in g_currentNodeFlags,
  *   call F(arg), restore g_currentNodeFlags = result, tail-jmp to 0x43d620.
  */
+extern unsigned int g_x_0053a3a0;
+
 __declspec(naked) void CountdownStoreCallChain_0043d5a0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a2d4]

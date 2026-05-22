@@ -133,6 +133,19 @@ extern void ScaledInit_0048d490(void);
 extern void InstallSelfChain494d60_00494d60(void);
 extern void DispatchDoubleScaledCluster_00494e20(void);
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern void ScaledLoadIncJmp_00429840(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void MoveDispatch4StateFsm_00494a60(void)
 {
     __asm {

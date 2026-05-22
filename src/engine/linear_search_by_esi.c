@@ -133,6 +133,7 @@ extern unsigned int g_data_00535e7c;
  *         g_scaledInit = eax; if ne: jmp loop;
  *   out: g_walkCallback = edx; pop esi; ret.
  */
+
 __declspec(naked) void LinearSearchByEsi_00459290(void) {
     __asm {
         mov     eax, 0x004e8720

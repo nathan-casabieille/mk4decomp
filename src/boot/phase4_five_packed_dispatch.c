@@ -129,6 +129,14 @@ extern void Phase4FivePackedDispatch_0040fe40(void);
 extern void PendingMatch_00498eb0(void);
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
+extern unsigned int g_data_0053a498;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+
 __declspec(naked) void TripleEntry3Block_00498df0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00542084]

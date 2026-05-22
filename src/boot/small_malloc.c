@@ -8,6 +8,13 @@
  *   esi = (size+0xf) & ~0xf; if (esi > g_x_00522154): HeapAlloc(g_x_00fa0ee4,0,size).
  *   Else: Lock(9); ptr = func_004c7430(esi >> 4); Unlock(9); return ptr (or 0).
  */
+extern unsigned int g_iat_004d20b4;
+extern unsigned int g_x_00522154;
+extern unsigned int g_x_00fa0ee4;
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+extern void func_004c7430(void);
+
 __declspec(naked) void* SmallMalloc_004c5520(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

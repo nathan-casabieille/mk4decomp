@@ -136,6 +136,9 @@ extern void EsiInstallDecCallChain_004294a0(void);
  *     packed_ptr[scaledInit] = 0x00483f30 + 0x01000000; g_scaledInit++; [eax+4] = scaledInit;
  *     chain[base+0x84] = 0; call EsiInstallDecCallChain; g_framePauseFlag = 1.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_x_00542080;
+
 __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

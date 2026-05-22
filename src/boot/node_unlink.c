@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   Then clear node->prev (+0xd8) and node->next (+0xe4), decrement
  *   the alloc counter.
  */
+extern unsigned int g_nodeSlotsHdr;
+extern unsigned int g_x_00541e4c;
+
 void NodeUnlink_0041f710(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -165,3 +168,4 @@ clear:
         mov     dword ptr [g_nodeAllocCounter], eax
         }
 }
+

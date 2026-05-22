@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   Mul10Tail(eax, eax) twice; sum results into g_x_00542074; call FpuSqrtMul.
  *   if !pause: mstack-pop into g_x_00542078, g_x_00542074. pop esi; ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+
 __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

@@ -130,6 +130,13 @@ extern unsigned int g_data_00535e7c;
  *     install self with [eax+8]=0x004751f0, chain[+0x84]=1, packed_ptr store, g_scaledInit++,
  *     chain[+0x84]=0; call InstallSelfChainAccumPath_004752b0; pause = 1.
  */
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern void DualSlotCopyChain_004756f0(void);
+extern void InstallSelfChainAccumPath_004752b0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfPackedTailJmp_004751f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -123,6 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00535e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+extern void MStackCall_004062f0(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushTableWalk_00493a20(void);
+extern void PushSetCallTailJmp_00493e40(void);
+
 void StateMachineInit_00493000(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]
@@ -190,3 +203,4 @@ void StateMachineInit_00493000(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

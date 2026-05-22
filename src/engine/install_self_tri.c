@@ -130,6 +130,8 @@ extern unsigned int g_data_00535e7c;
  *   _00484b00; else install self with tag.
  */
 extern void InstallSelfTri_00484a90(void);
+extern unsigned int g_data_0054204c;
+extern unsigned int g_x_00537f94;
 void InstallSelfTri_00484a90(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     unsigned int v = *(unsigned int *)(base + 0x84);

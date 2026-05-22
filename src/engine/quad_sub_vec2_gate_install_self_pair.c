@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004f21c0;
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
 
 /* h1 @ 0x00498720 (16b): bare event 004f21c0 forwarder. */
 void QuadSubVec2GateInstallSelfPair_00498720(void) {

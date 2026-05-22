@@ -127,6 +127,10 @@ extern unsigned int g_data_00535e7c;
  *   On miss + (short)arg <= 100: call Snd3DSourceCleanup_004c3ad0(arg+0x7d0, 0).
  *   On miss + > 100: call Snd3DSourceCleanup_004c3ad0(arg/10, 0) using 0x66666667 magic.
  */
+extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Snd3DSourceCleanup_004c3ad0(void);
+extern void TableSearch_004be760(void);
+
 __declspec(naked) void TableHitOrSchedule_004be7a0(void) {
     __asm {
         push    esi

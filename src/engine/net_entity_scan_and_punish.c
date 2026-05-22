@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ecac8;
+extern unsigned int g_data_00535df0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void MStackCall_00406340(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledInitOrSelfPtr_00474b10(void);
+
 __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
 {
     __asm {

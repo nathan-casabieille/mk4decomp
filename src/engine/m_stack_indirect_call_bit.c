@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   mstack-pop into g_x_0054207c, g_x_00542084, g_x_00542048.
  *   if (g_state_0054208c & 1): g_x_00542084 = 0x10000.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542084;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackIndirectCallBit_00470e20(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -172,3 +179,4 @@ void MStackIndirectCallBit_00470e20(void) {
         mov     dword ptr [g_x_00542084], 0x00010000
         }
 }
+

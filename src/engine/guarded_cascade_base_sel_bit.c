@@ -133,6 +133,15 @@ extern unsigned int g_data_00535e7c;
  *   Call SetupVecFsmCluster_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542058;
+extern void DispatchSetDirtyToggle_004ac150(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+extern void SetupVecFsmCluster_0043e3e0(void);
+
 __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

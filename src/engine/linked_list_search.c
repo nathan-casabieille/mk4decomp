@@ -131,6 +131,13 @@ extern unsigned int g_data_00535e7c;
  *   bit_clear: g_state_0054208c |= 4; g_x_0054204c = -1; g_state_0054208c ^= 4;
  *   store_ret: mstack-pop into g_x_0054204c, g_x_00542048.
  */
+extern unsigned int g_x_00541dc4;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542070;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void LinkedListSearch_004750f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -184,3 +191,4 @@ void LinkedListSearch_004750f0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

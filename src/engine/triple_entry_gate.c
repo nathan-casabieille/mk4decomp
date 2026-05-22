@@ -127,6 +127,10 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x30): if g_state_0053a51c == 8: ret (no flag clear); else clear bit 0, ret.
  *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_0045e640 at end.
  */
+extern unsigned int g_state_0053a51c;
+extern unsigned int g_x_0054206c;
+extern void PendingMatch_0045e640(void);
+
 __declspec(naked) void TripleEntryGate_0045e5d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]

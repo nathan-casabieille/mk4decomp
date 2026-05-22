@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void PendingMatch_00459510(void);
+extern void ScaledIterStep_0045c020(void);
+
 __declspec(naked) void MoveListCursorCluster_0045b420(void)
 {
     __asm {

@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   ecx = 0x004e4de0>>2 + masked byte; g_x_00542048 = [ecx*4+0]; g_cj_00542058 = same;
  *   call IncStoreCallIATDec_00439520; if !pause: mstack-pop g_baseSel, g_x_0054205c. ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void IncStoreCallIATDec_00439520(void);
+
 void MStackChainExtractCall_004397d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -180,3 +188,4 @@ void MStackChainExtractCall_004397d0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

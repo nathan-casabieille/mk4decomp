@@ -29,6 +29,7 @@ extern packed_ptr g_xformEntityIdx;
  *   ret
  */
 extern unsigned int g_state_00537f98;
+
 void CmpEax1OrSetDirty_00488e90(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -51,3 +52,4 @@ void CmpEax1OrSetDirty_00488e90(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
+

@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   Normal: pack 64-bit mantissa via PackDoubleFromInts, extract biased exp,
  *     store *exp = biased_exp - 0x3fe, return mantissa as double.
  */
+extern unsigned int g_data_004d2f28;
+extern void PackDoubleFromInts_004cde40(void);
+
 __declspec(naked) void Frexp_004cdee0(void) {
     __asm {
         fld     qword ptr [esp + 4]

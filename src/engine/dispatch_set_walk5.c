@@ -11,6 +11,8 @@ extern packed_ptr g_xformEntityIdx;
 extern u32 g_eventQueueEnd;
 extern u32 g_tickW1;
 extern packed_ptr g_fightGroupHead;
+extern unsigned int g_data_0054356c;
+extern unsigned int g_data_0053a404;
 
 void DispatchSetWalk5_00492730(void) {
     unsigned int v;

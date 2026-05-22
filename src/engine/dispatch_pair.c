@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   scaledInit = chain[g_x_00542058].slot4; LoadGeoAsset_Default; pause? jmp MStackPop8.
  *   mstack-pop into walkCallback; jmp MStackPop8.
  */
+extern unsigned int g_x_00542058;
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TwinLoopSlotFinder_00429a40(void);
+
+extern unsigned int g_chain_arr_4348f0;
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void DispatchPair_00429ac0(void) {
     __asm {
         push    7

@@ -134,6 +134,16 @@ extern unsigned int g_data_00541f94;
 extern unsigned int g_data_00541f98;
 extern unsigned int g_data_00541f9c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054206c;
+extern void QuadInterpolator_00425380(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
 {
     __asm {

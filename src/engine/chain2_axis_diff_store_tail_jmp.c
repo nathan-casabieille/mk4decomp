@@ -121,6 +121,10 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
 
 /* @addr 0x0044cad0 (169b game) - 2-axis chain diff (+0x54, +0x5c) store + Mul10 + tail-jmp.
  *   eax = chain[g_x_00542054 + 0x54]; g_x_0054206c = eax;

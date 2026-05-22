@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
  *   scaledInit-chain push 0x00438060+0x01000000;
  *   call StateGateMStackOverlap_00438690; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void IndirectJmp_00438160(void);
+extern void StateGateMStackOverlap_00438690(void);
+extern void StorePauseImulShr16_004ab630(void);
+
 __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

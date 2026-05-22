@@ -139,6 +139,10 @@ extern void InstallSelfStoreTwoCall_0049a410(void);
  *     calls CondPickDualStore; if !pause: RunBlockFsmCluster_00499c80; if !pause:
  *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall_0049a410; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+
 __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

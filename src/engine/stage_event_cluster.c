@@ -142,6 +142,26 @@ extern unsigned int g_data_004f2178;
 extern unsigned int g_data_004f2190;
 extern unsigned int g_data_004f21a0;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void CondPickDualStore_0049c670(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+
 __declspec(naked) void PunchDispatcherCluster_00497b50(void)
 {
     __asm {

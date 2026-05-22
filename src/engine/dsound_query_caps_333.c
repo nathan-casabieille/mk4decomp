@@ -113,8 +113,8 @@
 #define DSQC_BODY(STATE874, STATE880, IFACE, IFACE_ARG, RET, FLAG)              \
     extern unsigned int STATE874;                                                \
     extern unsigned int STATE880;                                                \
-    extern void *IFACE;                                                          \
-    extern void *IFACE_ARG;                                                      \
+    extern unsigned int IFACE;                                                   \
+    extern unsigned int IFACE_ARG;                                               \
     extern unsigned int RET;                                                     \
     extern unsigned int FLAG;                                                    \
     __asm {                                                                      \
@@ -302,6 +302,7 @@
     }
 
 /* @addr 0x004af730 */
+
 __declspec(naked) void Renderer3_BeginFrame_SW_FS(void) {
     DSQC_BODY(g_dsqc_730_state874, g_dsqc_730_state880,
               g_dsqc_730_iface, g_dsqc_730_iface_arg,

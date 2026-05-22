@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542378;
+extern void FlagThunk4EntryDispatcher_0040a470(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void PendingMatch_0041afd0(void);
+extern void BootStateTriple_00408d30(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void Thunk_00405ac0(void);
+
 __declspec(naked) void Phase2InitSlotTreeWalk_0041ad60(void)
 {
     __asm {

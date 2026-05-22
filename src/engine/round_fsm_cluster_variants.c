@@ -139,6 +139,30 @@ extern unsigned int g_data_0053803c;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_00541dc4;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004e39c0;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void Atan2QuadrantLookup_004245b0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedArithDualCallChain_00431e90(void);
+extern void ScaledZero44_00491500(void);
+extern void TripleScaledChainStore54_004313d0(void);
+extern void Wrapper_0048a300(void);
+
 __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
 {
     __asm {

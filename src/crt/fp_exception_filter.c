@@ -122,6 +122,10 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00522470;
+extern unsigned int g_data_00522484;
+extern unsigned int g_data_0052248c;
+
 __declspec(naked) void FpExceptionFilter_004ca080(void)
 {
     __asm {

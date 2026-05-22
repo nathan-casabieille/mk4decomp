@@ -137,6 +137,17 @@ extern unsigned int g_data_004eefd8;
 extern unsigned int g_data_004ef010;
 extern unsigned int g_data_00500710;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void BossRoarCluster_00488210(void)
 {
     __asm {

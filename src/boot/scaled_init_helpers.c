@@ -19,6 +19,9 @@ extern u32 g_eventQueueEnd;
  *   clear dirty bit 1; ret.
  */
 extern void Helper_TickAlt(void);
+extern void BootGatedInitInstallPair_00412280(void);
+extern void SlotInitAndChainLink_004191b0(void);
+
 void ScaledLoadCallSet1c_004084b0(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -82,8 +85,6 @@ void SetDirty4XorScaledLoad_004147b0(void) {
  *   set walk = 0x14ccc + store at [ecx*4 + 0x48]; eventQueueEnd+0x15 → g_scaledInit;
  *   jmp T.
  */
-extern void SlotInitAndChainLink_004191b0(void);
-extern void BootGatedInitInstallPair_00412280(void);
 void CallPauseDirty4ScaledSet_004196c0(void) {
     SlotInitAndChainLink_004191b0();
     if (g_framePauseFlag) return;
@@ -94,3 +95,4 @@ void CallPauseDirty4ScaledSet_004196c0(void) {
     g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair_00412280();
 }
+

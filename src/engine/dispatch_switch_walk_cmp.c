@@ -18,6 +18,7 @@ extern packed_ptr g_fightGroupHead;
  *   if eax == 5 or 6: jmp T1; else jmp T2.
  *   The `if==X then walk=N` arms keep eax intact for next cmp.
  */
+extern unsigned int g_baseSel_00542060;
 extern void Wrapper_00438c40(void);
 extern void Wrapper_00438ee0(void);
 void DispatchSwitchWalkCmp_00438bf0(void) {

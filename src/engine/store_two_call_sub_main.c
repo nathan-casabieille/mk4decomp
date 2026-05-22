@@ -137,6 +137,9 @@ extern unsigned int g_chain_arr_485cc0;
  *   StoreTwoCallSubMain_00426b60 -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
  */
+extern unsigned int g_x_0054207c;
+extern void GateDispatch6c_00494580(void);
+
 void FiveStageSetupChain_00485cc0(void) {
     __asm {
         call    GateDispatch6c_00494580
@@ -181,3 +184,4 @@ void FiveStageSetupChain_00485cc0(void) {
         mov     [eax*4 + g_chain_arr_485cc0 + 0x58], ecx
         }
 }
+

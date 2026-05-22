@@ -134,6 +134,15 @@ extern unsigned int g_data_00508324;
 extern unsigned int g_data_004a2180;
 void PhaseInstallSelf3Step_00402350(void);
 
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void BootInitGuardedCallChain_004265d0(void);
+
 __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
 {
     __asm {

@@ -125,6 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0045e100 (201b game) - mstack-push 3 values, indirect call from table at 0x004e9ea8>>2,
  *   pause-check, mstack-pop 3 in reverse, bit-0 test, jmp IncJmp_0045e1d0 or ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void IncJmp_0045e1d0(void);
+
 __declspec(naked) void MStackPush3IndirectCall_0045e100(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

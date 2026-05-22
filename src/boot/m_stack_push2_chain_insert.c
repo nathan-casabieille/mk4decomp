@@ -131,6 +131,12 @@ extern unsigned int g_data_00535e7c;
  *     chain[g_data_0054204c*4 + 8] = g_x_00542044. base[0] = g_x_00542044. base[+0xc]++.
  *   Pop2 mstack into g_data_0054204c and g_x_0053a168; ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_x_0053a168;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void MStackPush2ChainInsert_00409870(void)
 {
     __asm

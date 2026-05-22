@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_004d5320;
+extern unsigned int g_x_00537e9c;
+extern unsigned int g_x_0053a3a0;
+extern void WorldCellSetupCluster_0042b000(void);
+extern void ThrowEventCluster_0043e960(void);
 
 /*
  * @addr 0x0043ed70 (112b game) - push-call-pop dispatcher:

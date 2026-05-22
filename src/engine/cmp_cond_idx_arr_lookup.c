@@ -132,6 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   g_data_00542070 = eax; g_walkCallback = ecx; ret.
  */
 extern unsigned int g_data_00541ee8;
+extern unsigned int g_data_0053a498;
 void CmpCondIdxArrLookup_0048e450(void) {
     unsigned int idx;
     unsigned int adj;

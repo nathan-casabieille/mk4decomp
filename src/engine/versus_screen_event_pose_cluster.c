@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e4c20;
+extern unsigned int g_data_004e4c38;
+extern unsigned int g_data_00501a24;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005422fc;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CopyJmp_0043a620(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+extern void EsiInstallDecCallChain_004294a0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void GuardedPushCall_0043b980(void);
+extern void InstallSelfDoubleMStack_0043b9a0(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void SfxAttenuateAndApply_0048dee0(void);
+extern void StateMachine4ArmCascade_0043aab0(void);
+
 __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
 {
     __asm {

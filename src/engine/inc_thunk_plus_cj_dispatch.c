@@ -128,6 +128,17 @@ extern unsigned int g_data_00535e7c;
  *     baseSel[+0x80] vs g_state_00542080 (set per state bits): if less, jmp QuadBlockInstallChainThunks_00483c90.
  *     Else if baseSel[+0x34] != 0xf: jmp QuadBlockInstallChainThunks_00483c90. Else: push 0x004ee780, tail-call ArgSarStoreJmp.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualPushCallPause_00482eb0(void);
+extern void FlagCascadeStateSet_0048ec30(void);
+extern void QuadBlockInstallChainThunks_00483c90(void);
+extern void ScaledAndAlf7_00490310(void);
+extern void ScaledDecOrZero_00483b50(void);
+extern void SixBlockCjCascade_004829b0(void);
+extern void Wrapper_0048a380(void);
+
 __declspec(naked) void IncThunkPlusCjDispatch_00483b80(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel_00542060]

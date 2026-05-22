@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *   0xb2d008; if jg back to 0x4c073b (inside another function); else
  *   pop edi/esi/ebp/ebx and ret.
  */
+extern unsigned int g_x_00b2d008;
+extern unsigned int g_x_00b2d00c;
+extern unsigned int g_x_00f4d044;
+extern unsigned int g_x_00f70f50;
+extern unsigned int g_x_00f70f98;
+extern unsigned int g_x_00f85b54;
+
 __declspec(naked) void ColdLoopTail_004c08d0(void) {
     __asm {
         mov     edi, dword ptr [g_x_00b2d00c]

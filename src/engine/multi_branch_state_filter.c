@@ -121,6 +121,12 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_005380d8;
+extern unsigned int g_x_0053a3c0;
+extern unsigned int g_x_0053a498;
+extern unsigned int g_x_00542074;
+extern unsigned int g_chain_disp_30_439a40;
+extern unsigned int g_chain_disp_40_439a40;
 
 /* @addr 0x00439a40 (152b game) - multi-branch state filter:
  *   if g_x_0053a3c0 == 1: ret.

@@ -132,6 +132,18 @@ extern unsigned int g_data_00535e7c;
  *   Pad-aligned bare-ret entry (0x004a27a0).
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
+extern unsigned int g_data_00542004;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00543590;
+extern void ClearTwoCallSetStore_004a2270(void);
+extern void DualScaledStoreConst_004a22c0(void);
+extern void PendingMatch_004a3400(void);
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void Thunk_004c48b0(void);
+
 __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
 {
     __asm

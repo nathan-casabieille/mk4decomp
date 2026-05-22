@@ -133,6 +133,11 @@ extern unsigned int g_data_00535e7c;
  *   If buf-size == 0x200 and flag-bit 8 set and flag-bit 0x400 clear: bump size to 0x1000.
  *   Decrement count, return first byte.
  */
+extern unsigned int g_data_005222e0;
+extern unsigned int g_data_00fa0de0;
+extern void IOWrapper_004c8fc0(void);
+extern void StreamAllocInit_004cc250(void);
+
 __declspec(naked) void Filbuf_004c8ed0(void) {
     __asm {
         push    esi

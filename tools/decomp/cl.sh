@@ -13,7 +13,17 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
     exit 1
 }
 
-eval "$(whisky shellenv "$MSVC50_BOTTLE" 2>/dev/null)"
+# Use the WINEPREFIX from the bottle path directly (bypasses bottle-name lookup).
+# Fall back to whisky shellenv if the path-based approach doesn't set wine64 in PATH.
+WHISKY_WINE_BIN="$HOME/Library/Application Support/com.isaacmarovitz.Whisky/Libraries/Wine/bin"
+if [ -x "$WHISKY_WINE_BIN/wine64" ]; then
+    export PATH="$WHISKY_WINE_BIN:$PATH"
+    export WINE="wine64"
+else
+    eval "$(whisky shellenv "$MSVC50_BOTTLE" 2>/dev/null)" || true
+fi
+export WINEPREFIX="$MSVC50_PREFIX"
+export WINEMSYNC=1
 
 # Set MSVC env vars (CL.EXE reads these natively).
 export WINEDEBUG=-all

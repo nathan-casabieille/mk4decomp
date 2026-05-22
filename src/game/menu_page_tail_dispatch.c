@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f42d8;
+extern unsigned int g_data_004f42dc;
+extern unsigned int g_data_004f5328;
+extern unsigned int g_data_004f6164;
+extern unsigned int g_data_004f6190;
+extern unsigned int g_data_004f61a0;
+extern unsigned int g_data_004f61b0;
+extern unsigned int g_data_004f61bc;
+extern unsigned int g_data_004f61c8;
+extern unsigned int g_data_004f61d0;
+extern unsigned int g_data_004f61d8;
+extern unsigned int g_data_004f61e0;
+extern unsigned int g_data_00543a98;
+extern unsigned int g_data_00543a9c;
+extern unsigned int g_data_00543aa0;
+extern unsigned int g_data_00543aac;
+extern unsigned int g_data_00543ab0;
+extern unsigned int g_data_00543ab4;
+extern unsigned int g_data_00ab41c8;
+extern unsigned int g_data_00ab4328;
+extern unsigned int g_data_00ab4358;
+extern void DrawMenu(void);
+extern void Helper_Sprintf(void);
+extern void StringSubstituteAfterColon_004b7160(void);
+
 __declspec(naked) void MenuPageTailDispatch_004b8080(void)
 {
     __asm {

@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   Mstack-pop: g_x_00542048, g_data_00542070, g_x_00542074. If g_x_00542074!=0: [g_cj*4+0x58]=g_x_00542074.
  *   Re-read next field from g_x_00542058 stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+extern void StateMachineInit_00493000(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void RecordListIterMStack_00422ce0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00542058]

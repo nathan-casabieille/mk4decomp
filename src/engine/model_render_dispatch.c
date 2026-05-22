@@ -127,6 +127,13 @@ extern void TripleMul10TailIndexed_00425970(void);
 extern void TripleAddVec3_00425130(void);
 extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
 extern unsigned int g_data_004d78d8;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541f98;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542074;
 
 /*
  * BootInitTripleAddChain_00419bc0 - 203b boot pause-gated init.

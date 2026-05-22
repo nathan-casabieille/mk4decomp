@@ -141,6 +141,16 @@ extern void SixSubdispatchSpan_0045ec10(void);
  *     compares to 0xfffe3334: if greater clears bit 0 of g_data_0054208c
  *     and returns; else sets g_data_00542070=4 and tail-jmp SixSubdispatchSpan_0045ec10.
  */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053815c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+
 __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
     __asm {
         mov     eax, dword ptr [g_data_00538158]

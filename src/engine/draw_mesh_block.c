@@ -4,6 +4,48 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f623c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00543aa8;
+extern unsigned int g_data_007af92c;
+extern unsigned int g_data_007af958;
+extern unsigned int g_data_007af95a;
+extern unsigned int g_data_007af95c;
+extern unsigned int g_data_007af95e;
+extern unsigned int g_data_007af960;
+extern unsigned int g_data_007af962;
+extern unsigned int g_data_007af964;
+extern unsigned int g_data_007af966;
+extern unsigned int g_data_007af968;
+extern unsigned int g_data_007af984;
+extern unsigned int g_data_007af988;
+extern unsigned int g_data_007af98c;
+extern unsigned int g_data_007af9b0;
+extern unsigned int g_data_007af9b4;
+extern unsigned int g_data_007af9b6;
+extern unsigned int g_data_007af9b8;
+extern unsigned int g_data_007af9ba;
+extern unsigned int g_data_007af9bc;
+extern unsigned int g_data_007af9be;
+extern unsigned int g_data_007af9f8;
+extern unsigned int g_data_007af9fa;
+extern unsigned int g_data_007af9fc;
+extern unsigned int g_data_00ab4398;
+extern unsigned int g_data_00ab4d9c;
+extern unsigned int g_data_00ab4e28;
+extern unsigned int g_data_00ab4e3c;
+extern unsigned int g_data_00ab4e60;
+extern void AdvanceTriStripRing(void);
+extern void AltCamMatrixProject_004b9840(void);
+extern void Helper_DrawCursor(void);
+extern void MatVec2Multiply_004b31e0(void);
+extern void MaxOfThree_004b3d90(void);
+extern void MinOfThree_004b3d70(void);
+extern void ProjectTwoVertices(void);
+extern void ProjectVertex(void);
+extern void TransformVertex(void);
+extern void TristripBatchEmit3Cap_004bb680(void);
+
 __declspec(naked) void DrawMeshBlock(void)
 {
     __asm {

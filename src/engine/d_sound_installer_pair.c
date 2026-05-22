@@ -130,6 +130,11 @@ extern unsigned int g_data_00535e7c;
  *     on success: stores object pointer; ret 0 success / 1 fail.
  *   Both are bundled as a single symbols.yaml entry (size 241 includes 2 nop pad).
  */
+extern unsigned int g_data_0058c7ac;
+extern unsigned int g_data_0058c7dc;
+extern void DSCreateThunk_004d12d2(void);
+extern void DSEnumeratorThunk_004d12cc(void);
+
 __declspec(naked) void DSoundInstallerPair_004aede0(void) {
     __asm {
         /* sub-function 1 (0x4aede0 .. 0x4aee1d, plus 90h padding) */

@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f308c;
+extern unsigned int g_data_004f3094;
+extern unsigned int g_data_004f313c;
+extern unsigned int g_data_004f31a4;
+extern unsigned int g_data_004f31ac;
+extern unsigned int g_data_004f62f8;
+extern unsigned int g_data_00515964;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00f00000;
+extern void AudioBindEntry_004a1e40(void);
+extern void AudioInitArgs3_004a1f20(void);
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+
 __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
 {
     __asm {

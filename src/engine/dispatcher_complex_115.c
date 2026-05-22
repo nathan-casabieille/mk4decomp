@@ -52,6 +52,7 @@ extern void StateAdd5Capped_0049fa00(void);
 extern int  TaggedSceneDispatch_004be690(int);
 
 /* @addr 0x0049f900 */
+
 __declspec(naked) void DispatcherComplex115_0049f900(void) {
     __asm {
         call    Cmp3DirtyToggle_0049fa20

@@ -129,6 +129,19 @@ extern unsigned int g_data_00535e7c;
  *   pick of multiplier (0x5433f0 if baseSel==0x538038, else 0x543444);
  *   call func_004ab620.
  */
+extern unsigned int g_data_00538038;
+extern unsigned int g_x_004f3814;
+extern unsigned int g_x_004f3818;
+extern unsigned int g_x_004f381c;
+extern unsigned int g_x_004f3820;
+extern unsigned int g_x_0053a1f0;
+extern unsigned int g_x_0053a3c0;
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_005433f0;
+extern unsigned int g_x_00543444;
+extern unsigned int g_x_0054355c;
+extern void func_004ab620(void);
+
 __declspec(naked) void WeightedSumClampHelper_00439920(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a3c0]

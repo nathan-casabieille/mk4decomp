@@ -127,6 +127,15 @@ extern unsigned int g_data_00535e7c;
  *   eax=0xa -> g_walkCallback, g_x_00537e94; call F3; pause? ret;
  *   if (g_state_0054208c & 1): push 0x4ed428, call F4, ret; else: jmp Wrapper_47d6d0.
  */
+extern unsigned int g_str_004ed428;
+extern unsigned int g_x_00537e94;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void TripleFieldCopyJmpHi_0048f740(void);
+extern void Wrapper_0047d6d0(void);
+
+extern unsigned int g_arr_chain_68_47d650;
+extern unsigned int g_arr_chain_74_47d650;
+
 __declspec(naked) void ChainSetCallPauseDispatch_0047d650(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

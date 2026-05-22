@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *   call F3 (cdecl, ate 0xfb43fb); push g_x_0054205c; call F4 (cdecl);
  *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void CopyThreeFields_00404df0(void);
+extern void MStackCall_00406340(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 void TwoCallScaledOr1600_0043f8f0(void) {
     __asm {
         mov     eax, 0x004e5650
@@ -192,3 +200,4 @@ void TwoCallScaledOr1600_0043f8f0(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

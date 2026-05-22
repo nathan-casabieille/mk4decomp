@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004d5dd8;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
 
 /*
  * MStackPush3InitCallChain_0040bcf0 - 239b boot 3-arg mstack-push + xfm chain.

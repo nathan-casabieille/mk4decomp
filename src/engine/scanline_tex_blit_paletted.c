@@ -122,6 +122,34 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ffd44;
+extern unsigned int g_data_004ffd48;
+extern unsigned int g_data_00b2d008;
+extern unsigned int g_data_00b2d00c;
+extern unsigned int g_data_00f4d028;
+extern unsigned int g_data_00f4d040;
+extern unsigned int g_data_00f4d044;
+extern unsigned int g_data_00f70f4c;
+extern unsigned int g_data_00f70f50;
+extern unsigned int g_data_00f70f70;
+extern unsigned int g_data_00f70f7c;
+extern unsigned int g_data_00f70f88;
+extern unsigned int g_data_00f70f90;
+extern unsigned int g_data_00f70f98;
+extern unsigned int g_data_00f70f9a;
+extern unsigned int g_data_00f70fa0;
+extern unsigned int g_data_00f70fa8;
+extern unsigned int g_data_00f70fb0;
+extern unsigned int g_data_00f70fb8;
+extern unsigned int g_data_00f70fc0;
+extern unsigned int g_data_00f70fd8;
+extern unsigned int g_data_00f70fda;
+extern unsigned int g_data_00f85b34;
+extern unsigned int g_data_00f85b4c;
+extern unsigned int g_data_00f85b50;
+extern unsigned int g_data_00f85b54;
+extern unsigned int g_data_00f85b58;
+
 __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
 {
     __asm {

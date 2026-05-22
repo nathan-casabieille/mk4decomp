@@ -121,6 +121,11 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_data_004d6478;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
 
 /*
  * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.

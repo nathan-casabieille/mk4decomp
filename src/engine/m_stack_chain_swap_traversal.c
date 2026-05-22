@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   If [+0x1c]!=-10: skip. Else scaledInit=[*4]; g_x_00542048=4; call MStackBracket5_LinkedListUnlink_00409aa0.
  *   Adjust chain, swap pointers, call MStackBracket2_TreeWalkRecursive_00405e70. Mstack-pop 2; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
+extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackChainSwapTraversal_00493d00(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -200,3 +208,4 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

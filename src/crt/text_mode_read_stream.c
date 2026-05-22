@@ -135,6 +135,16 @@ extern unsigned int g_data_00535e7c;
  *   [0x4d20b0] and [0x4d209c] (likely SetFilePointer / GetLastError or
  *   similar) to fall back to the OS handle. Returns ebp (success/-1).
  */
+extern unsigned int g_data_004d209c;
+extern unsigned int g_data_004d20b0;
+extern void CRTHandleLookup_004cd260(void);
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+extern void FileWriteWithLfToCrlf_004c9b60(void);
+extern void Helper_ChkStk(void);
+extern void LseekImpl_004c8e50(void);
+extern void Setmode_004d0b50(void);
+
 __declspec(naked) void TextModeReadStream_004cef10(void) {
     __asm {
         mov     eax, 0x1004

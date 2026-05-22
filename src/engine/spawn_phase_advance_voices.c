@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535de0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fbc;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_005a0000;
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushTableMatch_0042e720(void);
+
 __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
 {
     __asm {

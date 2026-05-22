@@ -58,6 +58,7 @@ int FSYS_ftell(int fh)
  */
 static const char k_partial_filename[] = "Partial filename";
 
+
 __declspec(naked) char *FSYS_NormalizePath(const char *path)
 {
     __asm {

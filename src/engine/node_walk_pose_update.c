@@ -134,6 +134,23 @@ extern void DoublePushAddCallDoublePop_00476930(void);
 extern unsigned int g_data_004eca50;
 extern unsigned int g_data_0050b268;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void AudioMixerStep_004ab700(void);
+extern void MStackCall_00406340(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void func_004745e0(void);
+
 __declspec(naked) void PreFightInstallCluster_00474390(void)
 {
     __asm {

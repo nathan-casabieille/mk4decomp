@@ -126,6 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   for g_walkCallback; toggle bit2 of g_state_0054208c on found/not-found.
  *   Wraps in mstack push/pop of g_pendingNodeType (0x54204c).
  */
+
 void PushSearchToggleBit_00476750(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -166,3 +167,4 @@ void PushSearchToggleBit_00476750(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -136,6 +136,13 @@ extern void BootMStackBracketChain_00413ce0(void);
  *     call BootMStackBracketChain_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
  *     g_x_0054204c=1; g_pause_00541e6c=1; pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void AudioMixerStep_004ab700(void);
+extern void CallSetPause_0041f830(void);
+extern void ZeroAndDirty4_00405430(void);
+
 __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
 {
     __asm

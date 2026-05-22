@@ -142,6 +142,25 @@ extern void PushFourCallPopBitJmp_00461020(void);
  *     extracted and tail-call eax; ret.
  *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
  */
+extern unsigned int g_data_004e7fb0;
+extern unsigned int g_data_004e7fc0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void GatedWordPushCall_00489f90(void);
+extern void PendingMatch_00452770(void);
+extern void StoreLoadJmp_00404ef0(void);
+extern void ThrowInitLinkCluster_004555f0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void QuadStateHandler_0046c6e0(void) {
     __asm {
         call    ScaledMove48to58_00490720

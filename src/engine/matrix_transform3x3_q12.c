@@ -135,6 +135,7 @@ extern void MatrixTransform3x3Q12_004b3b80(int, int);
  *   at 0x7af990 then push (walk_arr, eq_end_arr) and call
  *   MatrixTransform3x3Q12_004b3b80.
  */
+
 void WtSnapshotPushCall_004bda70(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -159,3 +160,4 @@ void WtSnapshotPushCall_004bda70(void) {
         add     esp, 8
         }
 }
+

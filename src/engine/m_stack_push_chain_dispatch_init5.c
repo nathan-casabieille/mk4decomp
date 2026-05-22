@@ -133,6 +133,20 @@ extern unsigned int g_data_00535e7c;
  *   call DispatcherComplex181_004263d0; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
+extern unsigned int g_data_00535de4;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542084;
+extern void DispatcherComplex181_004263d0(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+
 void MStackPushChainDispatchInit5_004925d0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -201,3 +215,4 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

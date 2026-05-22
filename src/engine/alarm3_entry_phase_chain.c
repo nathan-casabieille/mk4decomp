@@ -140,6 +140,24 @@ extern unsigned int g_data_00535e7c;
  *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
+extern unsigned int g_data_004ed590;
+extern unsigned int g_data_004ed5a8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CmpEqInitCallElseJmp_0048d4b0(void);
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void InstallSelfThresholdDispatch_0047e310(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void MStackPushSet0020_004901d0(void);
+extern void ScaledAndAldf_00490330(void);
+extern void TailJmpInstallSelfPair_0047e690(void);
+extern void TriPhaseDualPathInstallChain_0047e420(void);
+
 __declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]

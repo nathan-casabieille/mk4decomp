@@ -122,6 +122,16 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004d2ba0;
+extern unsigned int g_const_004d2bb4;
+extern unsigned int g_const_004d2bbc;
+extern unsigned int g_const_004d2bc4;
+extern unsigned int g_const_004d2bcc;
+extern unsigned int g_const_004d2bd4;
+extern unsigned int g_const_004d2bdc;
+extern void TwinEntryFpHelper_004ca250(void);
+extern void func_004ca267(void);
+
 __declspec(naked) void FloatTransientHelpers_004ca2b0(void)
 {
     __asm {

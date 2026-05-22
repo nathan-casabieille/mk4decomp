@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5324;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern void AudioMixerStep_004ab700(void);
+extern void MStackCall_00406340(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+
 __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
 {
     __asm

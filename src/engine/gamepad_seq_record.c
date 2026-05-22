@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ed000;
+extern unsigned int g_data_004ed020;
+extern unsigned int g_data_004ed040;
+extern unsigned int g_data_004ed060;
+extern unsigned int g_data_00ab48b8;
+extern unsigned int g_data_00ab48ba;
+extern unsigned int g_data_00ab48bc;
+extern unsigned int g_data_00ab48be;
+extern unsigned int g_data_00ab48c0;
+extern unsigned int g_data_00ab48c2;
+
 __declspec(naked) void GamepadSeqRecord_004bcc70(void)
 {
     __asm {

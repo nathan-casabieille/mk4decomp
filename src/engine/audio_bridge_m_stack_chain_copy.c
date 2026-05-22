@@ -123,6 +123,21 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00440730 (324b game) - audio bridge: rescale + bit0 gate + mstack-push 3 + scaledInit copy. */
+extern unsigned int g_data_0052d718;
+extern unsigned int g_data_0052d71c;
+extern unsigned int g_data_0052d720;
+extern unsigned int g_data_0052d740;
+extern unsigned int g_data_0052d744;
+extern unsigned int g_data_0052d748;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void AudioVolumeRescale_004ab690(void);
+extern void DoubleStackPushAndJmp7d_00474050(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void AudioBridgeMStackChainCopy_00440730(void) {
     __asm {
         call    AudioVolumeRescale_004ab690
@@ -201,3 +216,4 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

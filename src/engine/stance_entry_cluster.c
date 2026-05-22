@@ -136,6 +136,12 @@ extern void StanceEntryCluster_00433f50(void);
  *   C (+0x80): threshold-dispatch g_state_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster_00433f50.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void GuardedSeq_00433bb0(void);
+extern void Wrapper_00438ee0(void);
+
 __declspec(naked) void FiveBlockDispatch_00433e90(void) {
     __asm {
         call    ScaledCmp200eCallBool_004398f0

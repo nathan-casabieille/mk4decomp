@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   if eax < 0 and g_x_0054207c < 0: neg both; else: signs unchanged.
  *   Then 2x Mul10Tail (cdecl) feeding cj[+0x6c] and cj[+0x74].
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_0053a730;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_0054207c;
+extern void ScaledChainDouble_004911f0(void);
+
 void MStackNegAwareMul10Pair_004910b0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -202,3 +209,4 @@ void MStackNegAwareMul10Pair_004910b0(void) {
         mov     dword ptr [edx*4 + 0x74], ecx
         }
 }
+

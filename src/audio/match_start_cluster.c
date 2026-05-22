@@ -122,6 +122,39 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00535cfc;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_0053a700;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005433ec;
+extern unsigned int g_data_00543568;
+extern unsigned int g_data_00543714;
+extern unsigned int g_data_0054371c;
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void ClearTwoCallSetStore_004a2270(void);
+extern void DownloadPlayerChar(void);
+extern void DualScaledStoreConst_004a22c0(void);
+extern void IncOrZero9_00422080(void);
+extern void InstallSelfTableWalk_004200d0(void);
+extern void ScaledClearTripleCallJmp_004202c0(void);
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void TablePushAccumTailJmp_00429e30(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TestCmpZeroFour_004238b0(void);
+
 __declspec(naked) void MatchStartCluster_004a23c0(void)
 {
     __asm {

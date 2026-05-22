@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542084=0x32666, install-self at +0x08=0x0043f2c0, scaledInit-chain push,
  *   call QuadPackedInstallSelfChain_0048aa20, g_pause=1. pop edi; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00537e9c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542084;
+extern void QuadPackedInstallSelfChain_0048aa20(void);
+
 __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

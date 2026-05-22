@@ -131,6 +131,17 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x34] |= 0x001c0000; chain[+0x54] = 0xfffeb334; chain[+0x5c] = 0;
  *   chain[+0x3c] = [0x537f78]; g_x_0054206c = same.
  */
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_00537f78;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053a510;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void DownloadPlayerChar(void);
+extern void GuardedDualPushTailJmp_004231f0(void);
+
 void DownloadDualPush_00422e20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00537f48]
@@ -174,3 +185,4 @@ void DownloadDualPush_00422e20(void) {
         mov     [edx*4 + 0x3c], eax
         }
 }
+

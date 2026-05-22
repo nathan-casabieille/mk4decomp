@@ -145,6 +145,14 @@ extern unsigned int g_data_004e4a14;
 extern unsigned int g_data_00535ddc;
 extern unsigned int g_data_00542054;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+
 __declspec(naked) void MoveFsmCluster_004364a0(void)
 {
     __asm {

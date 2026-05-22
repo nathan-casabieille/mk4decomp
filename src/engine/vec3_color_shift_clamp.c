@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   channel bits at word [esi + 0x14/0x16/0x18], packs the resulting 5-bit field into bits [0:5],
  *   [5:10] (shl 5), and [10:15] (shl 10) of the destination word.
  */
+extern unsigned int g_x_007af984;
+extern unsigned int g_x_007af988;
+extern unsigned int g_x_007af98c;
+
 __declspec(naked) void Vec3ColorShiftClamp_004b3490(void)
 {
     __asm

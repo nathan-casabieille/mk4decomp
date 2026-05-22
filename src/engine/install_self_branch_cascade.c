@@ -135,6 +135,12 @@ extern void TripleCallBitJmp_00471690(void);
  *   chain[+0x84]==0 path: install-self at +0x08=0x00471940, scaledInit-chain push 0x00471940|0x01000000,
  *   call TripleCallBitJmp_00471690; g_pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
 __declspec(naked) void DualEntryInstall00471920_00471920(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054205c]

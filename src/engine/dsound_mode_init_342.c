@@ -113,12 +113,12 @@
  */
 
 #define DSMI_BODY(MAIN, SEC, RET, EXTRA, FLAG, SEC3)                            \
-    extern void *MAIN;                                                          \
-    extern void *SEC;                                                           \
+    extern unsigned int MAIN;                                                   \
+    extern unsigned int SEC;                                                    \
     extern unsigned int RET;                                                    \
-    extern void *EXTRA;                                                         \
+    extern unsigned int EXTRA;                                                  \
     extern unsigned int FLAG;                                                   \
-    extern void *SEC3;                                                          \
+    extern unsigned int SEC3;                                                   \
     __asm {                                                                     \
         __asm sub     esp, 0x90                                                 \
         __asm push    esi                                                       \
@@ -233,6 +233,7 @@
     }
 
 /* @addr 0x004afb70 */
+
 __declspec(naked) void DDraw3_SetCooperativeLevel(void) {
     DSMI_BODY(g_dsmi_b70_main, g_dsmi_b70_sec, g_dsmi_b70_ret,
               g_dsmi_b70_extra, g_dsmi_b70_flag, g_dsmi_b70_sec3)

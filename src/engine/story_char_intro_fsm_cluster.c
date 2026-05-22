@@ -122,6 +122,41 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004eb938;
+extern unsigned int g_data_004eb958;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00538148;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_005433e8;
+extern unsigned int g_data_00543590;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void DualSlotPropagateCall_004683e0(void);
+extern void DualWalkRange_00468440(void);
+extern void EsiInstallChainCmpDualCall_00429300(void);
+extern void GateDispatch6c_00494580(void);
+extern void InstallSelf3WayChainCmp_00428d80(void);
+extern void LoadSetFpJmp_004093a0(void);
+extern void MStackPush1MagicMod2_004244d0(void);
+extern void PendingMatch_0046b670(void);
+extern void PoseFsmTriHelpers_00431650(void);
+extern void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void ScaledLoadJmp_00428d20(void);
+
 __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
 {
     __asm {

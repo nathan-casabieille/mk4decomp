@@ -143,6 +143,28 @@ extern unsigned int g_data_00535e7c;
  *   clears 0x54371c, calls LoadGeoAsset_Default; on no-error reloads
  *   &g_data_0050b214>>2 and calls LoadGeoAsset_Default a second time.
  */
+extern unsigned int g_data_0050b214;
+extern unsigned int g_data_0052aabc;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535de0;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a170;
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_00541dd8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fbc;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054371c;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void DownloadPlayerChar(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void ZeroThreeFields_00404ed0(void);
+
 __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
     __asm {
         push    ebx

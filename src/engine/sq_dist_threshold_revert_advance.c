@@ -137,6 +137,20 @@ extern unsigned int g_data_00535e7c;
  *   the save-slot (revert advance) and conditionally clears velocity
  *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
  */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_00543554;
+extern unsigned int g_data_00543558;
+extern unsigned int g_data_00543560;
+extern unsigned int g_data_00543580;
+extern unsigned int g_data_00543584;
+extern unsigned int g_data_00543588;
+
 __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
     __asm {
         mov     eax, dword ptr [g_data_0054204c]

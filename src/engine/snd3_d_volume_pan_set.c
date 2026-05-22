@@ -135,6 +135,9 @@ extern unsigned char g_table_004f7dc0[];
  *   DoubleToInt64 → byte clamp stored at [esp+8]; recompute scaled idx;
  *   apply effect via Snd3DVolumePanSet_004c3d00(idx, -1, byte, byte).
  */
+extern void DoubleToInt64_004c57d0(void);
+extern void TableSearch_004be760(void);
+
 __declspec(naked) void EffectTableWalker_004be870(void) {
     __asm {
         push    ecx

@@ -128,6 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   For each slot (0..8): if (slot[ecx_idx] == edx) { slot[ecx_idx] = eax; eax = 0; }
  *   *esi = edx. pop esi; ret.
  */
+extern unsigned int g_x_00543b20;
+extern unsigned int g_x_00543b28;
+extern unsigned int g_x_00543b30;
+extern unsigned int g_x_00543b38;
+extern unsigned int g_x_00543b40;
+extern unsigned int g_x_00543b48;
+extern unsigned int g_x_00543b50;
+extern unsigned int g_x_00543b58;
+extern unsigned int g_x_00543b60;
+
 __declspec(naked) void NineSlotReplace_004b7a40(void) {
     __asm {
         mov     edx, [esp + 8]

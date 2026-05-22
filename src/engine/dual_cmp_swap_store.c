@@ -135,6 +135,24 @@ extern unsigned int g_data_00535e7c;
  *   chain[eax + 0x3c] = g_x_0054204c (=ecx-or-edi);
  *   chain[eax + 0x40] = g_x_00542050; chain[eax + 0x44] = g_x_00542054.
  */
+extern unsigned int g_x_00538038;
+extern unsigned int g_x_0053803c;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00542010;
+extern unsigned int g_x_00542014;
+extern unsigned int g_x_00542018;
+extern unsigned int g_x_0054201c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
     __asm {
         mov     edx, dword ptr [g_x_0054205c]

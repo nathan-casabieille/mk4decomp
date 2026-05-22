@@ -141,6 +141,12 @@ extern void EntryThenDispatcherPair_00438cd0(void);
  *     Compare g_data_00535ddc to 0x34f5c then 0x2cccc; pick one of three jumps:
  *     TwoEntryStateScalar_00435ba0 / InstallSelfStatePush_00435b00 / EntryThenDispatcherPair_00438cd0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void PushCallPauseSet1Jmp_00438f20(void);
+extern void StateGateMStackOverlap_00438690(void);
+
 __declspec(naked) void InstallSelfPlusThresholdJmpChain_004359f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

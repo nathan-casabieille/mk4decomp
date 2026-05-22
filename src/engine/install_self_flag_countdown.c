@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x60): cmp g_state_00535ddc, g_x_00542084; set g_data_00ab51f8=1 either way;
  *     if le: countdown g_x_00542080, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00ab51f8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void ChainDecCondStoreCallJmp_00434880(void);
+
 __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -128,6 +128,16 @@ extern void RegionFlushChain_004b9250(void);
 extern unsigned int g_data_00ab48d8;
 extern unsigned int g_data_004f7888;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+
 __declspec(naked) void MStackBracket7_DispatchAndChain_004b8fa0(void)
 {
     __asm {

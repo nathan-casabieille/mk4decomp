@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0050b3d4;
+extern unsigned int g_data_0050b3f0;
+extern unsigned int g_data_0050b40c;
+extern unsigned int g_data_0050b428;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void SetJmp_00405420(void);
+extern void Vec3SetupQuadrupleMul10Sub_00442bc0(void);
+
 __declspec(naked) void FourSegmentPoseWalk_00442880(void)
 {
     __asm {

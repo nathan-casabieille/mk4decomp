@@ -131,6 +131,13 @@ extern unsigned int g_data_00535e7c;
  *   Call StoreTwoCallSubMain_00426b60; if pause ret.
  *   Mstack-pop 4: g_cj_0054205c, g_x_00542048, g_state_0054207c, g_acc_00542078; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void StoreTwoCallSubMain_00426b60(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void MStackPush4ChainCopyPop4_00472e10(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -209,3 +216,4 @@ void MStackPush4ChainCopyPop4_00472e10(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

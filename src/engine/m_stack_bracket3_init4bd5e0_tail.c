@@ -131,6 +131,13 @@ extern unsigned int g_x_0052ab10;
  *   After: g_x_0054205c = [0x52ab10]; g_x_0054206c = chain[+0x74] = 0xffffaaab;
  *   mstack-pop into g_x_00542074, g_x_00542070.
  */
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void CountedLoopMStack_0042e480(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -180,3 +187,4 @@ void CountedLoopMStack_0042e480(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

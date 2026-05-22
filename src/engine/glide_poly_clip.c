@@ -183,6 +183,11 @@ extern unsigned int g_data_00544768;
 extern unsigned int g_data_00544770;
 extern unsigned int g_data_00544774;
 
+extern unsigned int g_data_0058c768;
+extern unsigned int g_data_0058c7c0;
+extern unsigned int g_data_0058c7dc;
+extern void DoubleToInt64_004c57d0(void);
+
 __declspec(naked) void GlideTriBatchEmit_004adca0(void)
 {
     __asm {

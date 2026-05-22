@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
  *     push 0x00542bac; call IterLoad; add esp,4; pause? ret;
  *     install self: [esi+8] = 0x004806c0; [esi+0x84] = 1; g_x_0054204c = 0x3c; pause = 1.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void MStackPushSet0008_004901a0(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

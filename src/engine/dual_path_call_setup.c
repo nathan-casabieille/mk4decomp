@@ -135,6 +135,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned char g_data_0050cd34;
 extern unsigned char g_data_0050cd50;
+extern unsigned int g_state_00537e98;
 void DualPathCallSetup_00458030(void) {
     unsigned int v = g_state_00537e98;
     g_walkCallback = (void (*)(void))v;

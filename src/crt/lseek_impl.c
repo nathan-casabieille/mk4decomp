@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   maps WinErr->errno via DosMapErr; on success clears bit 1
  *   of the fd entry and returns new position.
  */
+extern unsigned int g_iat_004d209c;
+extern unsigned int g_iat_004d211c;
+extern unsigned int g_x_00fa0de0;
+extern void CRTHandleLookup_004cd260(void);
+extern void Crt_errno_004c8ba0(void);
+extern void DosMapErr_004c8b20(void);
+
 __declspec(naked) void LseekImpl_004c8e50(void) {
     __asm {
         push    esi

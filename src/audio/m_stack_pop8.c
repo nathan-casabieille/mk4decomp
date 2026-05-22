@@ -138,6 +138,8 @@ extern void MStackPop8_004ab860(void);
  *   if (--g_x_00542050 >= 0): loop again.
  *   tail: call MStackPop8_004ab860; ret.
  */
+extern unsigned int g_x_00542054;
+
 __declspec(naked) void SoundSetupLoop_00413ea0(void) {
     __asm {
         push    ebx

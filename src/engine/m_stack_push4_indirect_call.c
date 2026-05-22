@@ -126,6 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   Push g_cj_00542054, g_cj_00542058, g_x_0054205c, g_baseSel; eax=baseSel[*4+0x38] → g_x_0054205c,
  *   baseSel[*4+0x3c] → g_baseSel; call [g_scaledInit]; pause-check; mstack-pop in reverse.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+
 void MStackPush4IndirectCall_0048fd60(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -177,3 +181,4 @@ void MStackPush4IndirectCall_0048fd60(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

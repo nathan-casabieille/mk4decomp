@@ -140,6 +140,29 @@ extern unsigned int g_data_00535e7c;
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
  */
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_0052d724;
+extern unsigned int g_data_00537f30;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern void CallPauseClear3CallTriple_00428030(void);
+extern void CopyJmp_00406ba0(void);
+extern void MStackPushSet0001_00490260(void);
+extern void MStackPushSet0004_00490230(void);
+extern void PendingMatch_00420300(void);
+extern void PendingMatch_0042d240(void);
+extern void RoundEndFsm_0042b2f0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void ScaledInit_0048f720(void);
+extern void ScaledZero44_00491500(void);
+extern void ScenegraphWalk_0041f7d0(void);
+extern void SwapOrPassSet_0048fbf0(void);
+extern void TwinMStackPushScaledChain_00422110(void);
+
 __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

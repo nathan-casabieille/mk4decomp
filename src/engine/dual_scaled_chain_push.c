@@ -128,6 +128,12 @@ extern unsigned int g_data_00535e7c;
  *     call ArgSarStoreJmp; ret.
  *   Block B (+0x60): scaledInit=--baseSel[*4+4]; g_x_0054206c=[scaledInit*4+0]; jmp DecCallPushCall_00466090.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DecCallPushCall_00466090(void);
+extern void MoveStackPipeline_004660d0(void);
+
 __declspec(naked) void DualScaledChainPush_00466000(void) {
     __asm {
         call    MoveStackPipeline_004660d0

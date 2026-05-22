@@ -134,6 +134,18 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054206c=0x3e; call TableLookupCall_00489ff0; if pause ret.
  *     Install-self at entry; state=1; g_x_0054204c=0x33; pause=1; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void DispatcherComplex131_00431530(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelfCascadingCalls_004806c0(void);
+extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+extern void SfxAttenuateAndApply_0048dee0(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void Install3StateLongSeq_00480570(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

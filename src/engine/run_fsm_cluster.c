@@ -126,6 +126,10 @@ extern void GameStateLinearAdvance4Way_00484480(void);
 extern void EsiAliasInstallSelf_00484650(void);
 extern void RunFsmCluster_004846b0(void);
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542060;
+
 __declspec(naked) void GameStateLinearAdvance4Way_00484480(void)
 {
     __asm {

@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void GameStateDispatch4Way_00436e50(void);
+extern void InstallSelfPlusTailThunk_00436a10(void);
+extern void MStackChainBit2Cascade_0048e8f0(void);
+extern void MstackPopScaledChainPlusThunks_00471250(void);
+extern void ScaledInit_00495590(void);
+extern void ScaledInit_004955b0(void);
+extern void StateGateMStackOverlap_00438690(void);
+
 __declspec(naked) void ThrowGrabInitCluster_00436b30(void)
 {
     __asm {

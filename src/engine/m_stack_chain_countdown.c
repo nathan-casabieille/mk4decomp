@@ -130,6 +130,7 @@ extern void InstallSelf3StateDualEntry_00486ff0(void);
 extern void Wrapper_00487140(void);
 extern void MStackChainCountdown_00486f20(void);
 extern unsigned int g_chain_disp_30_486e80;
+extern unsigned int g_x_0054207c;
 
 /* @addr 0x00486e80 (150b game) - 5-stage gated chain w/ count-bracket + clamp:
  *   walkCallback=0; call F1; pause? ret.

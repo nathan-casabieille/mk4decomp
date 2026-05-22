@@ -141,6 +141,20 @@ extern unsigned int g_data_00535e7c;
  *     tail-jmp BattleEndCluster_00483650; else fall through to the next adjacent
  *     function ChainDispatcher4Call_00486290 via jmp.
  */
+extern unsigned int g_data_004eed08;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void BattleEndCluster_00483650(void);
+extern void ChainDispatcher4Call_00486290(void);
+extern void ScaledTestCallPauseJmpFar_00487150(void);
+extern void TwoCallTail_00481380(void);
+
 __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

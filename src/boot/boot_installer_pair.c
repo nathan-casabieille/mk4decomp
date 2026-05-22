@@ -131,6 +131,20 @@ extern unsigned int g_data_00535e7c;
  *     Else: setup pipeline with DispatcherComplex260_00407400, MStackCall_00406340,
  *     install self at [esi+8] = 0x00410210, set state flags.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void BossRoomInitCluster_00410340(void);
+extern void GuardedSeq_00471670(void);
+extern void MStackCall_00406340(void);
+extern void func_0047f830(void);
+
 __declspec(naked) void BootInstallerPair_004101f0(void) {
     __asm {
         /* sub-1: trampoline */

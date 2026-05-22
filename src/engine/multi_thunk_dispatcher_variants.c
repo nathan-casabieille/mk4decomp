@@ -133,6 +133,28 @@ extern unsigned int g_data_00535e7c;
  *   Block D (+0xd0): g_x_0054206c=0x312; jmp +0x11. (1-NOP)
  *   Block E (+0xe5): g_x_0054206c=0x311; jmp +1 (to next fn at 0x004970f0).
  */
+extern unsigned int g_data_004ea000;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void CallPauseCallTestStackPushJmp_00460c60(void);
+extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void DualScaledStoreZero_00491080(void);
+extern void GuardedDispatch_00460ca0(void);
+extern void GuardedDispatch_00460cd0(void);
+extern void MStackCall_00406740(void);
+extern void NotShrCmp1Store_00460d80(void);
+extern void PerSlotPhaseRouter_004605d0(void);
+extern void PerSlotPhaseRouter_00460770(void);
+extern void ScaledStackCallPause_0049c360(void);
+
 __declspec(naked) void MultiThunkDispatcher_00496fc0(void) {
     __asm {
         call    MStackCall_00406740

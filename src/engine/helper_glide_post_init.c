@@ -10,6 +10,16 @@
  *   Store arg1; if arg1 == 0: tail-call clean-up (set window mode); ret 1.
  *   Else: call setup; if user mode == 1: re-call setup; return 1; else return 0.
  */
+extern unsigned int g_iat_004d219c;
+extern unsigned int g_iat_004d21a4;
+extern unsigned int g_iat_004d21ac;
+extern unsigned int g_iat_indirect_007b0050;
+extern unsigned int g_iat_indirect_007b0054;
+extern unsigned int g_x_004f4b50;
+extern unsigned int g_x_007aff48;
+extern unsigned int g_x_007aff4c;
+extern void DSoundSetAxisPan123_004b50a0(void);
+
 int Helper_GlidePostInit(void) {
     __asm {
         mov     ecx, dword ptr [g_x_004f4b50]
@@ -59,4 +69,5 @@ int Helper_GlidePostInit(void) {
         mov     eax, 1
         }
 }
+
 

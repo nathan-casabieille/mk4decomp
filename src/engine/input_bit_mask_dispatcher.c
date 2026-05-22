@@ -122,6 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void AuxCapsBitFlagAggregate_004b5380(void);
+
 __declspec(naked) void InputBitMaskDispatcher_004b5470(void)
 {
     __asm {

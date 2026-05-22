@@ -131,6 +131,12 @@ extern unsigned int g_data_00535e7c;
  *     call 0x004a1ac0 (sister). Then g_state_00542080 = edi.
  *   Pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_004d50b4;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void SetJmp_004a1ad0(void);
+
 __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
 {
     __asm

@@ -14,6 +14,17 @@
  *   If new == 0 (release): release vtbl+0x4c, set cooperative back (vtbl+0x50, 0xc),
  *     restore cursor position via SetCursorPos, ShowCursor(1).
  */
+extern unsigned int g_data_004f47a0;
+extern unsigned int g_data_0058c760;
+extern unsigned int g_data_0058c764;
+extern unsigned int g_data_0058c7ac;
+extern unsigned int g_data_0058c7d8;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_iat_004d219c;
+extern unsigned int g_iat_004d21a4;
+extern unsigned int g_iat_004d21ac;
+extern void DSoundSetAxisPan123_004aec10(void);
+
 __declspec(naked) void R2_Init4(void) {
     __asm {
         mov     ecx, dword ptr [g_data_004f47a0]

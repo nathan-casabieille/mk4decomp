@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d5364;
+extern unsigned int g_data_00507118;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00543800;
+extern void AudioVolumeRescale_004ab690(void);
+extern void ChainWalkPushPop_00405a40(void);
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void MStackCall_00406740(void);
+extern void PushPopScaled1cDoubleCall_00408510(void);
+
 __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
 {
     __asm {

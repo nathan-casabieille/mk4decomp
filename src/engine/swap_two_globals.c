@@ -24,6 +24,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_0054207c;
 extern unsigned int g_state_00542080;
 extern u32 g_eventQueueWorkType;
+extern unsigned int g_acc_00542078;
 extern void func_004245d4(void);
 extern void func_00404060(void);
 void SwapTwoGlobals_004911c0(void) {

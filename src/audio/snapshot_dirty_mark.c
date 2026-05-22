@@ -129,6 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   set wt[reloc][+0] bit 3 (or al,8); store esp[8] into wt[+0x48];
  *   restore walk = esi.
  */
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+
 __declspec(naked) void SnapshotDirtyMark_004a1dc0(void) {
     __asm {
         push    esi

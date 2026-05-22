@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *     arr_dst[g_scaledInit++] = v.
  *   Then: g_x_0053a1ac = 2 (the iter sentinel), rollback g_scaledInit/g_x_00542048 by 3.
  */
+extern unsigned int g_x_0053a1ac;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_arr_425a80_dst;
+extern unsigned int g_arr_425a80_src;
+
 __declspec(naked) void ThreeClampLoop_00425a80(void) {
     __asm {
         push    ebx

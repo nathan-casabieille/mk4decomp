@@ -125,6 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0048fe40 (158b) - install-self pattern w/ g_state_00542088 +=
  *   g_data_00542084 clamped to 0x10000 + MStackPushZeroCallPop tail.
  */
+
 __declspec(naked) void EsiInstallClampAddCall_0048fe40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -128,6 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   if any hit returns 1. Else returns boolean of: (AuxCapsBitFlagAggregate_004b5380(
  *   g_x_00543b68) | AuxCapsBitFlagAggregate_004b5380(g_x_00543b6c)) & 0x0fffffff != 0.
  */
+extern unsigned int g_x_00543b68;
+extern unsigned int g_x_00543b6c;
+extern void AuxCapsBitFlagAggregate_004b5380(void);
+extern void Helper_JoyButtonInit(void);
+
 __declspec(naked) void InputKeysetProbe_004be3c0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

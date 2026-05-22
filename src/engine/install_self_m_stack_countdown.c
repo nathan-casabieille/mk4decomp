@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x84]==0 path: install-self at +0x08=0x00437020, g_data_0054204c=1, pause=1, ret.
  *   Block B (+0xa0): countdown g_x_00542080; if zero jmp self(0x00437020); else jmp StackPopDispatchTagged.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542080;
+extern void CallPauseJmpStateInit_004370e0(void);
+extern void GuardedDualAndFlagToggle_0048f020(void);
+
 __declspec(naked) void InstallSelfMStackCountdown_00437020(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

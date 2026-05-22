@@ -122,6 +122,17 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00537f98;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern void InstallSelfStackReset_00421f40(void);
+extern void ScaledInitOrSelfPtr_00421f00(void);
+
 __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
 {
     __asm

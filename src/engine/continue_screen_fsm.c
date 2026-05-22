@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004dee18;
+extern unsigned int g_data_004df9a0;
+extern unsigned int g_data_00506c14;
+extern unsigned int g_data_005080f4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void OpcodeStreamDispatch_00423ea0(void);
+extern void RegistryPushBindPop_00403c20(void);
+
 __declspec(naked) void ContinueScreenFsm_00423c20(void)
 {
     __asm {

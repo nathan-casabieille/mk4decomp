@@ -131,6 +131,9 @@ extern unsigned int g_data_00535e7c;
  *   16-bit exponent at [esi+0xa]. exp = 0x404e (starting) decremented by 0x10
  *   each rough normalize step.
  */
+extern void Shl96By1_004ce290(void);
+extern void TimeValAdd3_004ce220(void);
+
 __declspec(naked) void StrToLongDouble_004ce2f0(void) {
     __asm {
         mov     eax, [esp + 8]

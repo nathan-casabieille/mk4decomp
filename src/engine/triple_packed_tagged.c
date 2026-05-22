@@ -134,6 +134,12 @@ extern unsigned int g_data_004d55e8;
 extern unsigned int g_data_004d55f8;
 extern unsigned int g_data_004d55c0;
 extern unsigned int g_data_004d55d8;
+extern unsigned int g_x_00537e98;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
 void TriplePackedTagged_004580a0(void) {
     if (g_x_00537e98 == 0) {
         g_x_00542048 = (unsigned int)&g_data_004d55e8 >> 2;

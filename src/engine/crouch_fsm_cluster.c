@@ -132,6 +132,11 @@ extern void CallPauseFourSet_00482be0(void);
  *     set g_x_0054206c=0x9999; call CmpP1DualInitStore; if pause ret; jmp CrouchFsmCluster_00482c30.
  *   Block B (+0x60): set baseSel[*4+0x74]=0x4005; jmp CallPauseFourSet_00482be0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CmpDualPatchCallJmp_00482b00(void);
+extern void CmpP1DualInitStore_00482ab0(void);
+
 __declspec(naked) void DualEntry4002Chain_00482b60(void) {
     __asm {
         mov     dword ptr [g_x_0054206c], 1

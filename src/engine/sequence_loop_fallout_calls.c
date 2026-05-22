@@ -129,6 +129,10 @@ extern unsigned int g_data_00535e7c;
  *   0x24a, 0x23b); else repeat call MStackPush2DirtyCall_00427f90 + gate until
  *   pause set.
  */
+extern void MStackPush2DirtyCall_00427f90(void);
+extern void MStackPush2LLWalkCompare_004069b0(void);
+extern void SaveCallRestore_004049d0(void);
+
 __declspec(naked) void SequenceLoopFalloutCalls_0042e150(void) {
     __asm {
         push    ebx

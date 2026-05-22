@@ -15,6 +15,10 @@
 /*
  * @addr 0x004b49a0
  *
+extern unsigned int g_glideTable1;
+extern unsigned int g_glideTable2;
+extern unsigned int g_glideTable3;
+
  * Naked + __asm: long sequence of indirect-thru-IAT-style calls
  * via [g_glideFnTable + N] plus the 256-element fill loop's
  * conversion-via-stack ([esp+0xc] used as a 4-byte fild/fstp
@@ -31,6 +35,7 @@
  * hints, separate locals, explicit constant expressions) coaxed
  * MSVC into a caller-saved register for the zero. Kept as naked.
  */
+
 __declspec(naked) int Renderer1_Init_Glide(HWND hwnd)
 {
     __asm {

@@ -127,6 +127,14 @@ extern unsigned int g_data_00535e7c;
  *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_00438f70, PrefixThunkInstallSelf3State_00438f80}.
  *   D (+0x90): jmp ThresholdedTailJmps_00436390.
  */
+extern unsigned int g_x_0054206c;
+extern void InstallSelfSetTagJmp_00439e40(void);
+extern void PoseFsm4StateInstall_00437c10(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void SetJmp_00438f70(void);
+extern void ThresholdedTailJmps_00436390(void);
+extern void Wrapper_00438ee0(void);
+
 __declspec(naked) void TripleThresholdDispatch_004362f0(void) {
     __asm {
         jmp     InstallSelfSetTagJmp_00439e40

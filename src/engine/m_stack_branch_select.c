@@ -131,6 +131,20 @@ extern unsigned int g_data_00535e7c;
  *   g_x_0054207c = 0; call EntryThunkBodyStateMachine_00457bb0; pause? ret.
  *   g_x_0054206c = 0x13; jmp TableLookupCall.
  */
+extern unsigned int g_x_00538038;
+extern unsigned int g_x_0053803c;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern void DualBranchWordLookup_0048a290(void);
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void StoreTwoCallSubMain_00426b60(void);
+extern void TableLookupCall_00489f60(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void MStackBranchSelect_00457d10(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

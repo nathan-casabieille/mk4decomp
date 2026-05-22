@@ -122,6 +122,18 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_const_004d2c00;
+extern unsigned int g_const_004d2c08;
+extern unsigned int g_const_004d2c10;
+extern unsigned int g_const_004d2c18;
+extern unsigned int g_const_004d2c20;
+extern unsigned int g_const_004d2c28;
+extern unsigned int g_data_00522e50;
+extern unsigned int g_data_00f9f7f8;
+extern void Crt_fpieee_flt_004cdd20(void);
+extern void FpExceptionFilter_004ca080(void);
+extern void func_004ca0e7(void);
+
 __declspec(naked) void CrtFtolMatherrCluster_004ca700(void)
 {
     __asm {

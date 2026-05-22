@@ -132,6 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   edx=g_walkCallback; [eax+0x40]=edx;
  *   ecx=g_walkCallback; [eax+0x44]=ecx; ret.
  */
+
 void InitZeroSixFields_00445f40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -155,3 +156,4 @@ void InitZeroSixFields_00445f40(void) {
         mov     dword ptr [eax + 0x44], ecx
         }
 }
+

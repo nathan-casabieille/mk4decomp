@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern void CallPauseJmpThenSetChild_00497b10(void);
+extern void CallSetPause_0041f830(void);
+extern void FlagThunk4EntryDispatcher_0040a470(void);
+extern void MStackCall_00406740(void);
+extern void Phase2InitDispatchInstallSelf_0040ba70(void);
+extern void StoreDoubleNegPauseSubStore_004ab750(void);
+extern void TableLookupCall_00489ff0(void);
+extern void Wrapper_0048a340(void);
+
 __declspec(naked) void PostStepDispatcher_00497790(void)
 {
     __asm {

@@ -134,6 +134,21 @@ extern unsigned int g_data_00535e7c;
  *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
  *     call AudioMode2BankSetup_004a6080; call TwoStageAudioInit.
  */
+extern unsigned int g_byte_005435a0;
+extern unsigned int g_byte_005435b8;
+extern unsigned int g_byte_0054383c;
+extern unsigned int g_byte_00543840;
+extern unsigned int g_data_0054355c;
+extern unsigned int g_data_00543838;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537f48;
+extern unsigned int g_state_005380e0;
+extern unsigned int g_table_00543848;
+extern void AudioMode2BankSetup_004a6080(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void TwoStageAudioInit_004a6180(void);
+
 __declspec(naked) void AudioByteCounterChain_004a9820(void)
 {
     __asm

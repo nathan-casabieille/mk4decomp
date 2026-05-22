@@ -130,6 +130,9 @@ extern unsigned int g_data_00535e7c;
  *   Unrolled to 2 iterations: 2nd block loops back to 1st on continue.
  *   Pop edi/esi; ret.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void LoopUnrolledTripleMul10_0049d550(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]

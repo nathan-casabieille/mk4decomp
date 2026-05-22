@@ -136,6 +136,21 @@ extern unsigned int g_data_00535e7c;
  *       Else: g_state_0054207c=0x10028; jmp HitReactionDispatcher_0045f650.
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
+extern unsigned int g_data_0053a478;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void AudioVolumeRescale_004ab690(void);
+extern void EsiInstallTwoCallCmpInstall_00438b10(void);
+extern void GuardedSeq_00433bb0(void);
+extern void HitReactionDispatcher_0045f650(void);
+extern void InstallSelfChainSetB333v2_00437f00(void);
+extern void InstallSelfChainSetB333v3_00437fb0(void);
+extern void InstallSelfCountdownCascade_00439fd0(void);
+extern void InstallSelfThreeStateLeaPlus22_00437970(void);
+extern void MStackPushPtr1Jmp_00438e70(void);
+extern void StoreCallPauseDirtyStoreJmp_004396c0(void);
+
 __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

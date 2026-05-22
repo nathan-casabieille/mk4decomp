@@ -124,6 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern void SnapshotDispatchMStack_00491350(void);
 extern void CmpP1ScaledInit_004709c0(void);
+extern unsigned int g_x_00542074;
 
 /*
  * @addr 0x0046fd70 (127b game) - timer-window threshold dispatch:

@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f24a8;
+extern unsigned int g_data_004f2540;
+extern unsigned int g_data_004f2550;
+extern unsigned int g_data_004f2560;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542098;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void CopyThreeFields_00404df0(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
+extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void Phase1ContextSetup3Helpers_0040d990(void);
+extern void QuadBlockSoundInit_0049bb90(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void TableLookupCall_00489ff0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+
 __declspec(naked) void RoundFinalizeCluster_0049b8b0(void)
 {
     __asm {

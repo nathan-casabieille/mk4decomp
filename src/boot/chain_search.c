@@ -129,6 +129,12 @@ extern unsigned int g_data_00535e7c;
  *     curr = curr[0xe4]; }
  *   g_scaledInit = 0; clear bit 0, set bit 2 of g_state_0054208c.
  */
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_chain_arr_41f9c0;
+extern unsigned int g_chain_disp_0c_41f9c0;
+extern unsigned int g_chain_disp_2c_41f9c0;
+
 __declspec(naked) void ChainSearch_0041f9c0(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]

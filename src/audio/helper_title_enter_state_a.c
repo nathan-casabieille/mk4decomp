@@ -19,6 +19,18 @@
  *   like), subtracts saved start time, accumulates into 0x5438fc and
  *   zeroes 0x543900.
  */
+extern unsigned int g_data_004d2240;
+extern unsigned int g_data_004d2244;
+extern unsigned int g_data_005438e8;
+extern unsigned int g_data_005438ec;
+extern unsigned int g_data_005438f0;
+extern unsigned int g_data_005438f4;
+extern unsigned int g_data_005438fc;
+extern unsigned int g_data_00543900;
+extern unsigned int g_data_00543904;
+extern unsigned int g_data_0054390c;
+extern void Helper_AuxAudio_PostInit(void);
+
 __declspec(naked) void Helper_TitleEnterStateA(void) {
     __asm {
         mov     eax, dword ptr [g_data_00543904]

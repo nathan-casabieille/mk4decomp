@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   if chain[.slot0c] != 0: install self, call Helper_TickAlt; pause? ret;
  *   clear bit 0 of g_state_0054208c.
  */
+
+extern unsigned int g_arr_476f30_disp_0c;
+extern unsigned int g_arr_476f30_disp_20;
+extern unsigned int g_arr_476f30_disp_30;
+extern unsigned int g_arr_476f30_disp_34;
+extern unsigned int g_arr_476f30_disp_38;
+
 void ChainSlotSetupInstallSelf_00476f30(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -160,3 +167,4 @@ void ChainSlotSetupInstallSelf_00476f30(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

@@ -122,6 +122,10 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00f9fae0;
+extern unsigned int g_data_00f9fc00;
+extern void CrtFileOpenImpl_004cd350(void);
+
 __declspec(naked) void FopenMode_004c9270(void)
 {
     __asm {

@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *   call func_4b3a90(arr_main[g_x_0054204c], esp). Else: write ecx to
  *   arr_main[g_x_0054204c]+0,+8,+10 and zero +4,+0xc. Always set state |= 0x30.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern void Transform9Words_004b3a90(void);
+
+extern unsigned int g_arr_ba630_disp_48;
+extern unsigned int g_arr_ba630_main;
+
 void DirtyBitTripleWriteOrCall_004ba630(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542048]
@@ -172,3 +179,4 @@ void DirtyBitTripleWriteOrCall_004ba630(void) {
         add     esp, 0x0c
         }
 }
+

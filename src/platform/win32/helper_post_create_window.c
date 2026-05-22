@@ -9,9 +9,10 @@
  *   if so query (handle, 0xe) == 1; if so call IAT[0x4d21a8](0,handle).
  *   Returns either 1 or 0 in eax.
  */
-extern void *g_iat_004d21b8;
-extern void *g_iat_004d203c;
-extern void *g_iat_004d21a8;
+extern unsigned int g_iat_004d203c;
+extern unsigned int g_iat_004d21a8;
+extern unsigned int g_iat_004d21b8;
+
 __declspec(naked) void Helper_PostCreateWindow(void) {
     __asm {
         push    esi

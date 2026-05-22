@@ -122,6 +122,36 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004d6788;
+extern unsigned int g_data_004f2100;
+extern unsigned int g_data_004f2158;
+extern unsigned int g_data_004f2168;
+extern unsigned int g_data_004f27f0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00800000;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSar_Set0_Jmp_0049c6f0(void);
+extern void CallSetPause_0041f830(void);
+extern void CondPickDualStore_0049c670(void);
+extern void CopyThreeFields_00404df0(void);
+extern void DualCmpSwapStore_0049c5a0(void);
+extern void MStackPush8SlotInitPop8_00415010(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void ScaledStackCallPause_0049c360(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void TripleEntry3Block_00498df0(void);
+extern void Vec3AccMul10ChainBlend_0049c3d0(void);
+
 __declspec(naked) void AiComboDispatcherCluster_00497470(void)
 {
     __asm {

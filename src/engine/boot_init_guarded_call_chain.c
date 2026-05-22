@@ -134,6 +134,13 @@ extern void BootInitGuardedCallChain_004265d0(void);
  *     g_x_0054207c = (g_x_0054204c == g_x_00538158) ? g_x_00537f48 : g_x_005380e0.
  *   Then call StackPopDispatchTagged; ret.
  */
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0054204c;
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfStateMachine_00464280(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

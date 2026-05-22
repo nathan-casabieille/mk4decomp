@@ -4,6 +4,38 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004d50a4;
+extern unsigned int g_data_004d50a8;
+extern unsigned int g_data_004d50ac;
+extern unsigned int g_data_004d50b0;
+extern unsigned int g_data_004f4dc8;
+extern unsigned int g_data_004f4dcc;
+extern unsigned int g_data_004f4dd0;
+extern unsigned int g_data_004f4dd4;
+extern unsigned int g_data_004f4dd8;
+extern unsigned int g_data_004f4ddc;
+extern unsigned int g_data_004f4de0;
+extern unsigned int g_data_004f4de4;
+extern unsigned int g_data_004f4de8;
+extern unsigned int g_data_004f4dec;
+extern unsigned int g_data_004f4df0;
+extern unsigned int g_data_004f4df4;
+extern unsigned int g_data_004f4df8;
+extern unsigned int g_data_004f4dfc;
+extern unsigned int g_data_004f4e00;
+extern unsigned int g_data_004f4e04;
+extern unsigned int g_data_004f4e98;
+extern unsigned int g_data_004ffd7c;
+extern unsigned int g_data_00543368;
+extern unsigned int g_data_0054336c;
+extern unsigned int g_data_00543370;
+extern unsigned int g_data_0054357c;
+extern unsigned int g_data_007af918;
+extern unsigned int g_data_007af920;
+extern void Helper_JoyButtonInit(void);
+extern void InputBitMaskDispatcher_004b5470(void);
+extern void PadPollDispatcher_004b5650(void);
+
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
     __asm {

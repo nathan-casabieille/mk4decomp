@@ -131,6 +131,7 @@ extern void MStackPush2ChainPrepend_00409970(void);
  *   load g_x_00541e98 into wt and call MStackPush2ChainPrepend_00409970; on pause clear
  *   pop wt back from state stack.
  */
+
 void PushSetCallPop_00406530(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -160,3 +161,4 @@ void PushSetCallPop_00406530(void) {
 done:
         }
 }
+

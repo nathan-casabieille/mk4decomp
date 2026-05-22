@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   0x522178 looking for a match -> picks the paired ANSI errno;
  *   otherwise maps ranges 0x13-0x24->0xd, 0xbc-0xca->0x8, else 0x16.
  */
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+
 __declspec(naked) void DosMapErr_004c8b20(void) {
     __asm {
         push    esi

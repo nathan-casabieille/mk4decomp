@@ -17,6 +17,19 @@
  *   g_data_004ffd7c non-zero transition to state 0x45. Tail-calls
  *   DrawMenu(0x4f4fd0, g_data_00ab42d0) and returns the current state.
  */
+extern unsigned int g_data_004f4fd0;
+extern unsigned int g_data_004f4fd4;
+extern unsigned int g_data_004ffd7c;
+extern unsigned int g_data_00ab42d0;
+extern unsigned int g_data_00ab431c;
+extern unsigned int g_data_00ab4388;
+extern void AppInit_Misc8(void);
+extern void DrawMenu(void);
+extern void MenuInputPoll_004b7020(void);
+extern void TableSearchAsc_004b6300(void);
+extern void TableSearchDesc_004b62c0(void);
+extern void Thunk_004c48b0(void);
+
 __declspec(naked) void Helper_GSM_Sub_Other2(void) {
     __asm {
         mov     al, byte ptr [g_data_00ab431c]

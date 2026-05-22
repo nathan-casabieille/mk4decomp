@@ -129,6 +129,15 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542078=0, g_x_0054207c=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
+extern unsigned int g_x_0053a718;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_0054207c;
+extern void DispatcherComplex181_004263d0(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void SaveCallRestore_004049d0(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+
 __declspec(naked) void PollThenInit_00477920(void) {
     __asm {
         push    ebx

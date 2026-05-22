@@ -133,6 +133,18 @@ extern unsigned int g_data_00535e7c;
  *       in 0x54206c, calls ScaledStoreThree_00409260.
  *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void MStackInitCallToggle_00408ad0(void);
+extern void ScaledStoreThree_00409260(void);
+extern void SplitHi8Lo24_004abfc0(void);
+
 __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

@@ -130,6 +130,13 @@ extern unsigned int g_data_00535e7c;
  *   install-path: g_x_00542080 = 4; install self; packed_ptr store;
  *     g_scaledInit++; chain[+0x84] = 0; call ScaledClearJmp; g_framePauseFlag = 1.
  */
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledClearJmp_00428d40(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void InstallSelfStoreTwoCall_0049a410(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -171,3 +178,4 @@ void InstallSelfStoreTwoCall_0049a410(void) {
         mov     dword ptr [g_framePauseFlag], 1
         }
 }
+

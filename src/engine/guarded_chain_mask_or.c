@@ -131,6 +131,12 @@ extern unsigned int g_data_00535e7c;
  *   with 0xf0ffffff, then OR with 0x0b000000; set bit2 of g_state_0054208c;
  *   if scaledInit was 0 clear bit2 again (xor 4); ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+
 void GuardedChainMaskOr_00446790(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -206,3 +212,4 @@ void GuardedChainMaskOr_00446790(void) {
         mov     dword ptr [g_state_0054208c], eax
         }
 }
+

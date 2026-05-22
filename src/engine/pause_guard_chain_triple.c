@@ -122,6 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern void ArgSarStoreJmp_004594f0(void);
+
 /* @addr 0x0042ce60 (14b): cdecl wrapper - push 0x004e36a0 + call
  * ArgSarStoreJmp + cleanup + ret. Entry A of the original 82-byte triple-
  * helper block; entries B and C live in func_0042ce70 / func_0042ce90.

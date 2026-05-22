@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *     install with [esi+0x84]=2 (eax), g_x_0054204c=2, pause=1.
  *   else: call StackPopDispatchTagged; pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542084;
+extern void CinematicFsmCluster_0047aaf0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfNegOrSet_0047aa40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

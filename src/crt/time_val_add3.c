@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   etc.), via AddOverflowCheck_004ce1f0 with bumps to acc[+8] on
  *   overflow.
  */
+extern void AddOverflowCheck_004ce1f0(void);
+
 __declspec(naked) void TimeValAdd3_004ce220(void) {
     __asm {
         push    esi

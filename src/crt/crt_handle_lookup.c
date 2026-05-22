@@ -18,9 +18,10 @@ extern packed_ptr g_fightGroupHead;
  *   table at +4 records FOPEN bit (0x01).
  */
 extern unsigned int g_data_00fa0ee0;
-extern void *g_data_00fa0de0;
-extern int *Crt_errno_004c8ba0(void);
-extern int *Crt_doserrno_004c8bb0(void);
+extern unsigned int g_data_00fa0de0;
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+
 void CRTHandleLookup_004cd260(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -47,3 +48,4 @@ void CRTHandleLookup_004cd260(void) {
         or      eax, 0xffffffff
         }
 }
+

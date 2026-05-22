@@ -128,6 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   magic-divide (val/10 if >100, else +0x7d0), call Snd3DSourceCleanup_004c3ad0.
  *   loop2: for di 0x157c..0x158f (20 entries), same convert+call.
  */
+extern void Audio_TimerTeardown_004ac5f0(void);
+extern void Snd3DSourceCleanup_004c3ad0(void);
+
 __declspec(naked) void TwinRecordIter_004be590(void) {
     __asm {
         push    esi

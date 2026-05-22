@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004f3608;
+extern unsigned int g_data_0052ab48;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053a3e0;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a700;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void MultiGateDispatchCallJmp_004779d0(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void ScaledLoadGuardedJmp_004066d0(void);
+extern void SwapOrPassSet_0048fbf0(void);
+
 __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
 {
     __asm {

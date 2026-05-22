@@ -133,6 +133,14 @@ extern unsigned int g_data_00535e7c;
  *     pause? ret.
  *   mstack-pop into g_scaledInit.
  */
+extern unsigned int g_x_00537f9c;
+extern unsigned int g_x_0054206c;
+extern void GatedWordPushCall_00489f90(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void PushSearchToggleBit0_004577a0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void TagDispatchPairedPacked_004667f0(void) {
     __asm {
         mov     dword ptr [g_x_0054206c], 0
@@ -193,3 +201,4 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

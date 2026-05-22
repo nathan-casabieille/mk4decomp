@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0049db40;
+extern unsigned int g_data_004d6c50;
+extern unsigned int g_data_004d6c58;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void CallSetPause_0041f830(void);
+extern void CopyThreeFields_00404df0(void);
+extern void MStackPop8_004ab860(void);
+extern void MStackPush8_004ab790(void);
+extern void SetJmp_00405420(void);
+extern void StackPushAdd15CallPop_0040a7e0(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void ZeroThreeFields_0040a8b0(void);
+
 __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
 {
     __asm {

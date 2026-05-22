@@ -121,6 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0052ab10;
 
 /*
  * @addr 0x004ac080 (126b audio) - audio swap and negate:

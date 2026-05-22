@@ -132,6 +132,19 @@ extern unsigned int g_data_00535e7c;
  *     Else: g_x_0054206c=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
  *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
  */
+extern unsigned int g_data_00541dc8;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0052aac4;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseScaledStoreCopyJmp_00461220(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void EsiInstallClampAddCall_0048fe40(void);
+extern void StateDispatchTable_00490fc0(void);
+
 __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

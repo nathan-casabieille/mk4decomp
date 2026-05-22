@@ -121,6 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00542074;
 
 /*
  * @addr 0x0046fd70 (127b game) - timer-window threshold dispatch:

@@ -126,6 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   g_walkCallback &= g_data_00542070; for each struct: if struct[0xd8] != 0
  *   AND (arr[key+3] & g_data_00542070) != g_walkCallback: call NodeUnlink(esi).
  */
+extern unsigned int g_data_0053e368;
+extern unsigned int g_x_00542074;
+extern void NodeUnlink_0041f710(void);
+
+extern unsigned int g_arr_41fc50_disp_0c;
+
 __declspec(naked) void StructArrayWalkCondCall_0041fc50(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542070]

@@ -11,6 +11,16 @@
  *   If arg0 == 0 (release path): for each owned flag, calls release vtbl +0x38,
  *     +0x44, +0x40, +0x3c; clear all four flags.
  */
+extern unsigned int g_data_00f8fac4;
+extern unsigned int g_data_00f9eb68;
+extern unsigned int g_data_00f9ebc0;
+extern unsigned int g_data_00f9ebc8;
+extern unsigned int g_data_00f9efcc;
+extern unsigned int g_data_00f9eff4;
+extern unsigned int g_data_00f9eff8;
+extern unsigned int g_data_00f9effc;
+extern unsigned int g_data_00f9f000;
+
 __declspec(naked) void Helper_DSI_post1(void) {
     __asm {
         mov     eax, dword ptr [g_data_00f9efcc]

@@ -145,6 +145,22 @@ extern void ScaledAndAlfe_00490390(void);
 extern unsigned int g_data_0052ab40;
 extern unsigned int g_data_00543888;
 
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542094;
+extern void CallSetPause_0041f830(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void GateDispatch6c_00494580(void);
+extern void ScaledAndAlf7_00490310(void);
+extern void ScaledLitLoadCall_00480fe0(void);
+
 __declspec(naked) void MainTickChain_00481070(void)
 {
     __asm {

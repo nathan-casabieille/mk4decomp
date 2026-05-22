@@ -133,6 +133,14 @@ extern void DualEntryInstallScaledChain_00486580(void);
  *   Block B (+0x30): countdown wait on g_x_00542080; on zero call MStackPush2TripleCallChain_0048cf50; pause-check then
  *     two more sub-calls and tail-jmps. Self-jmp at +0x3d when timer not yet expired.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+
 __declspec(naked) void MStackPushWaitChain_00486410(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

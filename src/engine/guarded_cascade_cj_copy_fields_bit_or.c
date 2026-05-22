@@ -131,6 +131,20 @@ extern unsigned int g_data_00535e7c;
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_x_00542058[+0x34] & 1) | 0x81000.
  *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_x_00542054[+0x54].
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00535e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern void MStackCall_00406340(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
     __asm {
         mov     eax, 0x0050d434

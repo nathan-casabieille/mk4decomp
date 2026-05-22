@@ -137,6 +137,17 @@ extern void ThrowAnimSetupCluster_00484150(void);
  *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster_00484150.
  *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ByteWordTableTaggedDispatch_0048a050(void);
+extern void CallPauseScaledStoreJmp_00428820(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void SlotPhaseResetInstallChain_0048e0e0(void);
+
 __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

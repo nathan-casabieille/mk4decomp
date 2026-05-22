@@ -134,6 +134,15 @@ extern unsigned int g_data_00535e7c;
  *   g_data_00542070 = ecx; chain[ecx*4]=g_x_00542044; chain[ecx*4+0x54] = esi-table[+0x8];
  *   chain[+0x58] = esi-table[+0xc]. inc edi; if < 8: loop.
  */
+extern unsigned int g_byteTab_004f3c20;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_005433c4;
+extern unsigned int g_x_00543440;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void Helper_Sprintf(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void AudioByteTable8Loop_004a7f50(void)
 {
     __asm

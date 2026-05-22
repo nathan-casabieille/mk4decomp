@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   g_x_00542054 + ret. If bit2 of g_state_0054208c set? clear-bit0-ret.
  *   Save scaledInit to side regs (g_x_00542048/0x4c/g_data_00542050) between calls.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void MStackPush2LLWalkCompare_004069b0(void);
+
 __declspec(naked) void FourCallBitGateChain_004334d0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00542058]

@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *   pause? -> end.
  *   install self with packed_ptr store and call ScaledArrStore_00429450; pause = 1.
  */
+extern unsigned int g_x_0054206c;
+extern void ArgScaledTestStore_00494140(void);
+extern void ScaledArrStore_00429450(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfPushArg_00460190(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

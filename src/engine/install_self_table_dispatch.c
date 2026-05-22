@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
  *     call InitZeroChainLookupJmp_00494210; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void InitZeroChainLookupJmp_00494210(void);
+extern void StateMachineInit_00493000(void);
+
 __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

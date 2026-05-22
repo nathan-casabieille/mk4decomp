@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fb0;
+extern unsigned int g_data_00541fb4;
+extern unsigned int g_data_00541fb8;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void MStackChainOrBitLoop_004635a0(void);
+extern void MStackPush2LLWalkCompare_004069b0(void);
+extern void MStackPush2ScaledChainLoop_00463430(void);
+extern void Thunk_00427460(void);
+extern void TripleEntryWordPushChain_004627c0(void);
+extern void func_00462ac0(void);
+
 __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
 {
     __asm {

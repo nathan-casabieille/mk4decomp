@@ -133,6 +133,10 @@ extern unsigned int g_data_00535e7c;
  *   install: [esi+8]=0x429530; [esi+0x84]=1;
  *            g_pendingNodeType=1; g_framePauseFlag=1; pop esi; ret.
  */
+extern void CopyJmp_00406ba0(void);
+extern void GuardedSeq_004297b0(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
 __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

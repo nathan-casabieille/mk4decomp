@@ -126,6 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   range based on g_x_0054206c sign; call FpuSqrtMul; pause-check; Mul10Tail(g_x_0054206c, g_x_0054207c);
  *   store result; mstack-pop both. ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_0054207c;
+
 void MStackClampMul10_0048de20(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -173,3 +179,4 @@ void MStackClampMul10_0048de20(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void MStackChainCountdownLoop_00463fb0(void);
+extern void PendingMatch_00432110(void);
+extern void RangeMulMod_004ab2a0(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+
 __declspec(naked) void PoseFnInstallDualCluster_00463090(void)
 {
     __asm {

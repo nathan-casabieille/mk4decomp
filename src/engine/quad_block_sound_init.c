@@ -130,6 +130,18 @@ extern unsigned int g_data_00535e7c;
  *     call CondPickDualStore; same comparison + jmp.
  *   D (+0xa0): call CondPickDualStore; pause-check; same comparison + jmp ScaledIndirectJmp.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void CallSetPause_0041f830(void);
+extern void CopyThreeFields_00404df0(void);
+extern void MStackCall_00406740(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void ScaledThreeChanPack_00404d50(void);
+extern void ThreeChanPackClamp_00404cc0(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+
 __declspec(naked) void QuadBlockSoundInit_0049bb90(void) {
     __asm {
         call    MStackCall_00406740

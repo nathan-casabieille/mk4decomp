@@ -31,6 +31,7 @@ extern void GuardedRangeCmpToggle_0048f210(void);
 extern void MStackCjChainSwapDualCall_0042cd30(void);
 
 /* @addr 0x0042cc90 */
+
 __declspec(naked) void MStackPushCallPopDirtyJmp_0042cc90(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]

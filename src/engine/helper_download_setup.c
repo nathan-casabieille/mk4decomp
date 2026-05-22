@@ -5,6 +5,12 @@
 #include "game/tick.h"
 
 /* @addr 0x0048bc40 (174b game) - mstack-push 2, table-search nonzero, mstack-pop 2. */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_state_004d57ac;
+extern unsigned int g_x_0054206c;
+
 void Helper_DownloadSetup(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -52,4 +58,5 @@ void Helper_DownloadSetup(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+
 

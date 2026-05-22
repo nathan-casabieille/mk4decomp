@@ -129,6 +129,16 @@ extern unsigned int g_data_00535e7c;
  *   advance indices, write diff to scaledInit[k]*4, k++.
  *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
  */
+extern unsigned int g_data_004d5328;
+extern unsigned int g_state_004d5324;
+extern unsigned int g_x_004d5320;
+extern unsigned int g_x_0053a1ac;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542098;
+
 __declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
     __asm {
         push    ebx

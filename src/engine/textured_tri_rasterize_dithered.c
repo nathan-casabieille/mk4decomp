@@ -122,6 +122,57 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ffd44;
+extern unsigned int g_data_004ffd48;
+extern unsigned int g_data_00f4d018;
+extern unsigned int g_data_00f4d01c;
+extern unsigned int g_data_00f4d020;
+extern unsigned int g_data_00f4d024;
+extern unsigned int g_data_00f4d030;
+extern unsigned int g_data_00f4d034;
+extern unsigned int g_data_00f4d038;
+extern unsigned int g_data_00f4d040;
+extern unsigned int g_data_00f4d044;
+extern unsigned int g_data_00f4d048;
+extern unsigned int g_data_00f6e054;
+extern unsigned int g_data_00f70f54;
+extern unsigned int g_data_00f70f5c;
+extern unsigned int g_data_00f70f60;
+extern unsigned int g_data_00f70f64;
+extern unsigned int g_data_00f70f68;
+extern unsigned int g_data_00f70f6c;
+extern unsigned int g_data_00f70f70;
+extern unsigned int g_data_00f70f74;
+extern unsigned int g_data_00f70f78;
+extern unsigned int g_data_00f70f84;
+extern unsigned int g_data_00f70f88;
+extern unsigned int g_data_00f70f8c;
+extern unsigned int g_data_00f70f90;
+extern unsigned int g_data_00f70f98;
+extern unsigned int g_data_00f70f9c;
+extern unsigned int g_data_00f70fa0;
+extern unsigned int g_data_00f70fa8;
+extern unsigned int g_data_00f70fac;
+extern unsigned int g_data_00f70fb0;
+extern unsigned int g_data_00f70fb8;
+extern unsigned int g_data_00f70fbc;
+extern unsigned int g_data_00f70fc0;
+extern unsigned int g_data_00f70fc8;
+extern unsigned int g_data_00f70fcc;
+extern unsigned int g_data_00f70fd8;
+extern unsigned int g_data_00f70fdc;
+extern unsigned int g_data_00f70fec;
+extern unsigned int g_data_00f70ff0;
+extern unsigned int g_data_00f712f8;
+extern unsigned int g_data_00f712fc;
+extern unsigned int g_data_00f71308;
+extern unsigned int g_data_00f85b30;
+extern unsigned int g_data_00f85b34;
+extern unsigned int g_data_00f85b4c;
+extern unsigned int g_data_00f85b50;
+extern unsigned int g_data_00f85b54;
+extern unsigned int g_data_00f85b58;
+
 __declspec(naked) void TexturedTriRasterizeDithered_004c2650(void)
 {
     __asm {

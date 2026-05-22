@@ -24,6 +24,8 @@ extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
+extern unsigned int g_x_00537f94;
+extern unsigned int g_data_0054204c;
 extern unsigned int g_state_00542080;
 extern u32 g_pendingNodeType;
 
@@ -174,6 +176,20 @@ void InstallSelfTri_00484a90(void) {
  *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
  *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void InstallSelfMStackOverwrite_0046e9a0(void);
+extern void MStackJmpInstallSelf_0046ed40(void);
+extern void MatchOverCluster_0046ef70(void);
+extern void PhaseDispatchListAdvance_004709e0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void TripleCallPauseJmp_00470500(void);
+extern void Wrapper_0048a3c0(void);
+
 __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
     __asm {
         call    ScaledAndAlfe_00490390

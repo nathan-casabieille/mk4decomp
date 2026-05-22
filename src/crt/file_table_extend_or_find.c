@@ -135,6 +135,16 @@ extern unsigned int g_data_00535e7c;
  *   LoadArgPushCall_004c54b0(0x480), seeds entries with type=0xa, then
  *   calls CritSecLazyEnter_004cd2b0(idx*0x20). Exits crit-sec 0x12.
  */
+extern unsigned int g_data_004d213c;
+extern unsigned int g_data_004d2140;
+extern unsigned int g_data_004d215c;
+extern unsigned int g_data_00fa0de0;
+extern unsigned int g_data_00fa0ee0;
+extern void CritSecLazyEnter_004cd2b0(void);
+extern void LoadArgPushCall_004c54b0(void);
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+
 __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
     __asm {
         sub     esp, 8

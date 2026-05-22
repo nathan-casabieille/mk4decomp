@@ -133,6 +133,13 @@ extern unsigned int g_data_00535e7c;
  *   B6 (208..239): g_x_00542054 = 0x004ed3a0>>2; tail-jmp InstallSelfMStackBranchIndirect_00470b90.
  *   B7 (240..253): push 0x004ed3c0; tail-call ArgSarStoreJmp.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void InstallSelfMStackBranchIndirect_00470b90(void);
+extern void MStackBitFlagDispatch_00494750(void);
+
 __declspec(naked) void SevenThunks_0047cc50(void) {
     __asm {
         call    MStackBitFlagDispatch_00494750

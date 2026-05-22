@@ -126,6 +126,11 @@ extern unsigned int g_data_00535e7c;
  *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
  *   load 2 chain values via scaledInit, shift, store; mstack-pop g_x_0054206c. ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void MStackPush1ChainPair_00424080(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -190,3 +195,4 @@ void MStackPush1ChainPair_00424080(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

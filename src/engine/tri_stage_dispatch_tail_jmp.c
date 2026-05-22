@@ -135,6 +135,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004ec960;
 extern unsigned int g_data_004ec990;
 extern unsigned int g_data_004ec9c0;
+extern unsigned int g_x_0054206c;
 void TriStageDispatchTailJmp_00473c90(void) {
     SetJmp_00405420();
     if (g_framePauseFlag != 0) return;

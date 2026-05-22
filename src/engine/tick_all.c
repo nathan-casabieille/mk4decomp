@@ -15,12 +15,14 @@
 /*
  * @addr 0x004b9e50
  *
+
  * Naked + __asm: the 5-pass sequence reuses bx (low 16 of ebx=0) as
  * a literal zero plus a setne-into-byte mask + dec idiom that pure
  * C wouldn't reproduce identically. The "fall through to main"
  * structure (long-form jne over the whole first-frame block) is
  * also fail-first/success-second.
  */
+
 __declspec(naked) void TickAllEntities(void)
 {
     __asm {

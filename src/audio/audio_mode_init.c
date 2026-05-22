@@ -133,6 +133,9 @@ extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a700;
+extern unsigned int g_data_00542004;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00543590;
 void AudioModeInit_004a2610(void) {
     if (g_x_00543590 == 1) {
         g_walkCallback = (void (*)(void))((unsigned int)&g_data_0053a408 >> 2);

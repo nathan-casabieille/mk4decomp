@@ -135,6 +135,7 @@ extern unsigned int g_data_00535e7c;
  *   [esi] = ecx; edx = g_eventQueueWorkType; add esp,8;
  *   [edi] = edx; pop edi; pop esi; ret.
  */
+
 __declspec(naked) void EsiEdiAliasDualMul10_004906b0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]

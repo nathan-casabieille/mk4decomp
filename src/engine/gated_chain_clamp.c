@@ -121,6 +121,8 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_chain_disp_30_486e80;
 
 /* @addr 0x00486e80 (150b game) - 5-stage gated chain w/ count-bracket + clamp:
  *   walkCallback=0; call F1; pause? ret.

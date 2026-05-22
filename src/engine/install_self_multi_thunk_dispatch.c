@@ -134,6 +134,16 @@ extern unsigned int g_data_00535e7c;
  *   Thunk D (+0x110, 2-NOP pad): call ScaledMove48to58; if pause ret. Call QuadCmpBitGateJmp; if pause ret.
  *     Same state_0054207c gate; jmp CallPauseTripleScaledJmp or DualEntryStateGated; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CallPauseTripleScaledJmp_0046c520(void);
+extern void DualEntryStateGated_00460fa0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void IntroSettingsFsmCluster_0046bea0(void);
+extern void QuadCmpBitGateJmp_0046c560(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void ScaledMove48to58_00490720(void);
+
 __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

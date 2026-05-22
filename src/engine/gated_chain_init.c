@@ -123,6 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042f760 (221b game) - gated chain init. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_004f360c;
+extern unsigned int g_x_0054206c;
+extern void MStackCall_00406340(void);
+extern void PushSetXfmMaskCallPop_00407140(void);
+
 __declspec(naked) void GatedChainInit_0042f760(void) {
     __asm {
         mov     al, byte ptr [g_x_004f360c]

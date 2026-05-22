@@ -126,6 +126,11 @@ extern unsigned int g_data_00535e7c;
  *   searching for matching ecx==edx; on miss, advance and continue. Final state: write-back accumulated
  *   chain. mstack-pop 2. ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_00541fbc;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void MStackPushTableMatch_0042e720(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -186,3 +191,4 @@ void MStackPushTableMatch_0042e720(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

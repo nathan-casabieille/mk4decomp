@@ -129,6 +129,8 @@ extern void SwitchErrorCode_004cf6d0(void);
 extern void FpuMaskMerge_004cf740(void);
 extern unsigned int g_data_00522e50;
 
+extern void RetZero_004cf700(void);
+
 __declspec(naked) void Crt_fpieee_flt_004cdd20(void)
 {
     __asm {

@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *     g_x_0054204c=0xb4; pause=1; ret.
  *   Tail (+0x120): set g_data_00543720=1; ret.
  */
+extern unsigned int g_data_0053a748;
+extern unsigned int g_data_00542998;
+extern unsigned int g_data_00543720;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void MStackCall_00406740(void);
+
 __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
     __asm {
         mov     eax, dword ptr [g_data_0053a748]

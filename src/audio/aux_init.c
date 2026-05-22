@@ -9,12 +9,15 @@
 /*
  * @addr 0x004ac8f0
  *
+extern unsigned int g_auxChannels;
+
  * Naked + __asm: the prologue zeros 10 globals via xor edi + 89 3d
  * (5 bytes / store) instead of c7 imm32 (10 bytes / store) - MSVC
  * SP3 won't reuse a single zeroed register that aggressively from C.
  * Loop body uses cached IAT pointers in edi (auxGetDevCapsA) and
  * ebp (auxGetVolume) to avoid reloading the IAT each iteration.
  */
+
 __declspec(naked) s32 AuxAudio_Init(HWND hwnd)
 {
     __asm {

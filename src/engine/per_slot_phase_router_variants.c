@@ -140,173 +140,22 @@ extern unsigned int g_data_004ea000;
  *     ecx = g_x_00542050 + (g_x_0054206c & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
-__declspec(naked) void MultiThunkDispatcher_00460470(void) {
-    __asm {
-        push    0x00542980
-        call    ArgScaledTestStore_00494140
-        mov     eax, dword ptr [g_pause_00541e6c]
-        add     esp, 4
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     DualScaledStoreZero_00491080
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    DirtyToggleByGate_0048f350
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   4eh
-        test    byte ptr [g_state_0054208c], 4
-        _emit   75h
-        _emit   45h
-        mov     eax, offset g_data_004ea000
-        shr     eax, 2
-        mov     dword ptr [g_x_00542050], eax
-        call    NotShrCmp1Store_00460d80
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   2ah
-        mov     eax, dword ptr [g_x_0054206c]
-        mov     ecx, dword ptr [g_x_00542050]
-        and     eax, 0xf
-        add     ecx, eax
-        mov     dword ptr [g_x_0054206c], eax
-        mov     dword ptr [g_x_00542050], ecx
-        mov     ecx, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_x_00542050], ecx
-        jmp     ecx
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     CallPauseCallTestStackPushJmp_00460c60
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     CallPauseMStackPushSet0Jmp_0045fcf0
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     PerSlotPhaseRouter_00460770
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     GuardedDispatch_00460cd0
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     PerSlotPhaseRouter_004605d0
-        ret
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        _emit   90h
-        call    LeaPlus22StoreSelf_0048e4d0
-        mov     eax, dword ptr [g_pause_00541e6c]
-        test    eax, eax
-        _emit   75h
-        _emit   05h
-        jmp     GuardedDispatch_00460ca0
-        ret
-    }
-}
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054206c;
+extern void ArgScaledTestStore_00494140(void);
 
-extern void DualScaledStoreZero_00491080(void);
-extern void DirtyToggleByGate_0048f350(void);
-extern void NotShrCmp1Store_00460d80(void);
+extern unsigned int g_data_004ea000;
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
-extern void PerSlotPhaseRouter_00460770(void);
-extern void GuardedDispatch_00460cd0(void);
-extern void PerSlotPhaseRouter_004605d0(void);
+extern void DirtyToggleByGate_0048f350(void);
+extern void DualScaledStoreZero_00491080(void);
 extern void GuardedDispatch_00460ca0(void);
-extern unsigned int g_data_004ea000;
+extern void GuardedDispatch_00460cd0(void);
+extern void NotShrCmp1Store_00460d80(void);
+extern void PerSlotPhaseRouter_004605d0(void);
+extern void PerSlotPhaseRouter_00460770(void);
 
-/* @addr 0x00460470 (308b game) - multi-thunk: push-call entry + state dispatcher + 6 LeaPlus22 thunks.
- *   Block A (0..0x1c): push 0x00542980; call ArgScaledTestStore; pop; if !pause tail-jmp DualScaledStoreZero; ret.
- *   Block B (0x20..0xbc): call DirtyToggleByGate; if pause ret. If bit2(0054208c) ret.
- *     g_x_00542050 = (0x004ea000>>2); call NotShrCmp1Store; if pause ret.
- *     ecx = g_x_00542050 + (g_x_0054206c & 0xf); jmp [ecx*4].
- *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
- */
 __declspec(naked) void MultiThunkDispatcher_00460470(void) {
     __asm {
         push    0x00542980
@@ -455,3 +304,5 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         ret
     }
 }
+
+

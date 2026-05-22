@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_data_0054204c=8.
  *   Value 2+: call FiveCallGuardSetTail_0046f6b0, pop+ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void CopyJmp_00406ba0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void IterStepNegStore_00490b10(void);
+extern void MStackPushSet0008_004901a0(void);
+
 __declspec(naked) void Install3WayChainCounter_004809e0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -136,6 +136,20 @@ extern void InstallSelfChainStateInit_0043f2c0(void);
 extern void ComboMenuFsmCluster_0043f3a0(void);
 extern unsigned int g_data_0053a7a8;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void MStackAngleRatioSubchain_00476af0(void);
+extern void Thunk_0049cbc0(void);
+
 __declspec(naked) void ThrowEventCluster_0043e960(void)
 {
     __asm {

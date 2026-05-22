@@ -139,6 +139,22 @@ extern unsigned int g_data_00535e7c;
  *     != 0xf, tail-call Install3StateRouterTail_0046b4e0; else pushes
  *     0x4eaee0 → ArgSarStoreJmp_004594f0.
  */
+extern unsigned int g_data_004eaee0;
+extern unsigned int g_data_005019d0;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542a70;
+extern unsigned int g_data_00542a78;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgScaledTestStore_00494140(void);
+extern void Install3StateRouterTail_0046b4e0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void ScaledClearJmp_00428d60(void);
+
 __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00542060]

@@ -135,6 +135,11 @@ extern unsigned int g_x_0053a3a8;
  *   g_x_0054206c = 9; call DirtyDoubleDeref; pause? -> end;
  *   g_x_00542048 = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
     __asm {
         mov     eax, 0x0050d418

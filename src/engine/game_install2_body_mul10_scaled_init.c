@@ -138,6 +138,17 @@ extern unsigned int g_data_00535e7c;
  *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_data_0054204c=1;
  *       pause=1; ret.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void IterLoad_0048e680(void);
+extern void MStackPushMul10TailSqrt_00424a90(void);
+extern void Wrapper_0048ff30(void);
+
 __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
 {
     __asm

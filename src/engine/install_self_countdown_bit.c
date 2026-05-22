@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   if !pause: mstack-pop g_x_00542080 (no dec for first), then dec; g_x_0054207c gets next; bit-0 test;
  *   if set: call RoundOverFsmCluster_0049b1d0; ret. Else dec g_x_0054207c; if not zero call StackPopDispatchTagged; ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void AtanDualDeltaThreshold_0049c870(void);
+extern void RoundOverFsmCluster_0049b1d0(void);
+
 __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

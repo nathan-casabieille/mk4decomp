@@ -11,6 +11,16 @@
  *   for GUID g_iid_004d28f0 via vtbl[0]; if global init succeeded and slot
  *   has valid pointers, register via [+0x0c]. Return 1 if all slots valid, 0 else.
  */
+extern unsigned int g_data_00544298;
+extern unsigned int g_data_0058c768;
+extern unsigned int g_data_0058c7ac;
+extern unsigned int g_data_0058c7c0;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_iid_004d28f0;
+
+extern unsigned int g_data_00544258;
+extern unsigned int g_data_0058c720;
+
 __declspec(naked) void R2_Init11(void) {
     __asm {
         mov     eax, [esp + 4]

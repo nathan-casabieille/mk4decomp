@@ -157,6 +157,17 @@ extern void ScaledClearJmp_00428d60(void);
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_00428d60 depending on g_data_00542080.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledChainJmp_00429470(void);
+extern void TableLookupCall_00489ff0(void);
+
 __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
     __asm {
         mov     dword ptr [g_data_0054206c], 0x52

@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
  *   B2 (208..255): call ScaledLoadOrSetJmp; if !pause: call GateDispatch6c; if !pause:
  *     call ClearBit2x34; if !pause: tail-jmp ScaledInitWithCounterAndType.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ClearBit2x34_00490130(void);
+extern void GateDispatch6c_00494580(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+extern void ScaledLoadJmp_00428d20(void);
+extern void ScaledLoadOrSetJmp_00406b20(void);
+
 __declspec(naked) void InstallSelfChainPlusGuardedTail_00488ca0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

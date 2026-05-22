@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "audio/sound.h"
 
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
@@ -121,6 +122,9 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_iat_004d2230;
+extern unsigned int g_iat_004d2244;
+extern unsigned int g_audioState08;
 
 void AuxAudio_Teardown_004ac9b0(void) {
     int i;
@@ -135,7 +139,7 @@ void AuxAudio_Teardown_004ac9b0(void) {
         cb = (void (__stdcall *)(unsigned int, unsigned int))g_iat_004d2230;
         p = (struct AuxChannel *)&g_auxChannels;
         do {
-            cb(p->dev_id, p->pad);
+            cb(p->deviceId, p->_pad);
             i++;
             p++;
         } while (i < g_auxCount);

@@ -41,6 +41,7 @@ void AppShutdown(void) {
  *     else:        push 0, push 0, call IAT, clear g_state_007afff0;
  *   ret.
  */
+extern unsigned int g_state_007affe4;
 extern unsigned int g_state_007afff0;
 extern void (__stdcall *g_iat_007b0040)(int, int);
 void EarlyOutDualPushIATStore_004b4600(void) {

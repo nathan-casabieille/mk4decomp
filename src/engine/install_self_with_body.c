@@ -127,6 +127,15 @@ extern void GuardedPackedSlotInit_00428760(void);
 extern void InstallSelfWithBody_00438780(void);
 
 /* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+
 __declspec(naked) void StateGateMStackOverlap_00438690(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]

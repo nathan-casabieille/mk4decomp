@@ -122,6 +122,24 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054208c;
+extern void CallPauseTestByte4ZeroCB_00451a60(void);
+extern void SetJmp_00451aa0(void);
+extern void SetJmp_00451ab0(void);
+extern void SetJmp_00451ac0(void);
+extern void SetJmp_00451ae0(void);
+extern void SetJmp_00451af0(void);
+extern void SetJmp_00451b00(void);
+extern void SetJmp_00451b20(void);
+extern void SetJmp_00451b30(void);
+extern void SetJmp_00451b40(void);
+extern void SetJmp_00451b60(void);
+extern void SetJmp_00451b70(void);
+extern void SetJmp_00451b80(void);
+
 __declspec(naked) void State6CycleFsm_004517e0(void)
 {
     __asm {

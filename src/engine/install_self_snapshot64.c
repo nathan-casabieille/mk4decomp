@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   Else: mstack-push g_x_0054207c; call BackdashSetupCluster_00440dc0; pause? ret;
  *     pop into g_x_0054207c; install self; set state.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054207c;
+extern void BackdashSetupCluster_00440dc0(void);
+
+extern unsigned int g_chain_disp_64_440d20;
+extern unsigned int g_data_004d57ac_arr;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -143,6 +143,21 @@ extern void ScaledChainJmp_00429470(void);
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern unsigned int g_table_004d57b0;
+extern void EsiEdiAliasDualMul10_004906b0(void);
+extern void NotMaskStorePair_0045f440(void);
+extern void PunchAnimCluster_00496d80(void);
+
 __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

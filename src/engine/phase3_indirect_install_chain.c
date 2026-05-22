@@ -141,6 +141,21 @@ extern unsigned int g_data_00535e7c;
  *   Entry 4 (offset 0x140, 40b): same shape as entry 3 but tail-jmp
  *     DualEntryStateMachine_0045a180.
  */
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void CallDualStoreXorBit_004285e0(void);
+extern void DualEntryStateMachine_0045a180(void);
+extern void PendingMatch_00459510(void);
+extern void ScaledArrStore_004285c0(void);
+extern void ScaledIterStep_0045c020(void);
+
 __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

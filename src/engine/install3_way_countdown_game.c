@@ -123,6 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00421b00 (214b game) - 3-way install-self with countdown. */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00543438;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_007af91c;
+extern void DecBoundCheckCallJmp_00421be0(void);
+extern void ScaledStoreE0_0041f550(void);
+
 __declspec(naked) void Install3WayCountdownGame_00421b00(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

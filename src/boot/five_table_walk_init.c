@@ -131,6 +131,13 @@ extern unsigned int g_data_00535e7c;
  *   g_scaledInit = [0x52ab10]; g_x_0054206c = 0xfff88000;
  *   chain[g_scaledInit*4 + 0x54/0x58/0x5c/0x60/0x64/0x68] = 0 (or 0xfff88000 for +0x5c).
  */
+extern unsigned int g_x_0052ab10;
+extern unsigned int g_x_0054206c;
+extern void AudioStateClearAndChainStep_004a10b0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+
 __declspec(naked) void FiveTableWalkInit_00403c90(void) {
     __asm {
         push    esi

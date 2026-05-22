@@ -4,6 +4,12 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_0058c7bc;
+extern unsigned int g_data_0058c7c0;
+extern unsigned int g_data_0058c7c4;
+extern unsigned int g_data_0058c7d4;
+extern unsigned int g_data_0058c7dc;
+
 __declspec(naked) void R2_Init7(void)
 {
     __asm {

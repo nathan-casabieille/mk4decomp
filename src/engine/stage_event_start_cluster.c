@@ -122,6 +122,31 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_004ed800;
+extern unsigned int g_data_00535d04;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00538158;
+extern unsigned int g_data_0053a774;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void DualSetCallPair_0047dbc0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedSeq_004297b0(void);
+extern void InstallSelfCmpJmpIndirect_0048f470(void);
+extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
+extern void MStackSignedMod_0042fee0(void);
+extern void PushPlayerSwapCallClamp_004801a0(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+extern void ZeroSixStores6080_00490e40(void);
+extern void ZeroThreeSlots_00490780(void);
+
 __declspec(naked) void StageEventStartCluster_0047ff80(void)
 {
     __asm {

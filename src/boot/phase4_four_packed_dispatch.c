@@ -136,6 +136,17 @@ extern void GuardedScaled_0040cd20(void);
 extern void BootOneShotMStackPush3_0040c100(void);
 extern void Phase4FourPackedDispatch_0041b900(void);
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern void CallSetPause_0041f830(void);
+extern void FlagThunk4EntryDispatcher_0040a470(void);
+
 __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
 {
     __asm {

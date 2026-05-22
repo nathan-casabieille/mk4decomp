@@ -138,6 +138,11 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
  *   B2 ([+0x84]==2+): set g_state_00542080=0x11; call ScaledArrStore_00429980;
  *     if !pause: tail-call StackPopDispatchTagged_0041f780; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
 __declspec(naked) void InstallSelfStateMachine_0047f3f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

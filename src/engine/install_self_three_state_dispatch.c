@@ -134,6 +134,14 @@ extern void InstallSelfThreeStateDispatch_00436030(void);
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_00438ee0,
  *     >0x14ccc jmp PoseFsm4StateInstall_00437c10, else jmp InstallSelfThreeStateDispatch_00436030. ret.
  */
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void GuardedSeq_00433bb0(void);
+extern void PoseFsm4StateInstall_00437c10(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void Wrapper_00438ee0(void);
+
 __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054205c]

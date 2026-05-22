@@ -132,6 +132,39 @@ extern void MStackPushSet0008_004901a0(void);
 extern void ScaledZeroFour_00490740(void);
 extern unsigned int g_data_004ed1d8;
 
+extern unsigned int g_data_0050f22c;
+extern unsigned int g_data_0053a404;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543100;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CallSetPause_0041f830(void);
+extern void CjInstallSelfRouter_00470480(void);
+extern void DualSectionInit_00492140(void);
+extern void Eleven404b90_404c00_004266d0(void);
+extern void GuardedSetupTailMStackJmp_00492210(void);
+extern void MStackPushChainDispatchInit5_004925d0(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void RemapWalkAndJmp_00491e70(void);
+extern void RemapWalkAndJmp_00491ec0(void);
+extern void ScaledLoadIncJmp_00428d00(void);
+extern void StateDispatchTable_00490fc0(void);
+extern void Ten404c40_404bd0_00426780(void);
+extern void UpperBodyComboFsmCluster_00492aa0(void);
+extern void ZeroTripleJmp_00491e50(void);
+
 __declspec(naked) void RoundStartCluster_0047b900(void)
 {
     __asm {

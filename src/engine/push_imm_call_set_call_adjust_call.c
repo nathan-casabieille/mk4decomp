@@ -20,6 +20,7 @@ extern u32 g_eventQueueCurrent;
 extern int func_00404ae0(int, int);
 extern int func_00404ad0(int, int);
 extern void func_004ab730(void);
+
 void PushImmCallSetCallAdjustCall_00446bf0(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
@@ -45,3 +46,4 @@ void PushImmCallSetCallAdjustCall_00446bf0(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         }
 }
+

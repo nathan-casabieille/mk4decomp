@@ -129,6 +129,10 @@ extern void BossPunchCluster_00446c50(void);
  *   B-G (+0x20..+0xc0): call self; eax = const>>2; chain[*4+0x14]=eax. Constants: 0x004e6080, 0x004e6090,
  *     0x004e60a0, 0x004e60b0, 0x004e60c0, 0x004e60d0.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void SevenEntrySelfCallTable_00446b10(void) {
     __asm {
         call    BossPunchCluster_00446c50
@@ -183,3 +187,4 @@ void SevenEntrySelfCallTable_00446b10(void) {
         mov     dword ptr [ecx*4 + 0x14], eax
         }
 }
+

@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *     If (i >= 0x14): call IAT(stream+0x20); free(stream); slot = 0.
  *   _unlock(2); return ebp.
  */
+extern unsigned int g_iat_004d2170;
+extern unsigned int g_x_00f9fdb4;
+extern unsigned int g_x_00fa0dc0;
+extern void FreeImpl_004c55f0(void);
+extern void Helper_FClose(void);
+extern void Lock_004c6f50(void);
+extern void TableLookupIatCall_004c6fd0(void);
+
 __declspec(naked) int StreamCleanupLoop_004ce0b0(void) {
     __asm {
         push    ebp

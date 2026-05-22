@@ -130,6 +130,15 @@ extern unsigned int g_data_00535e7c;
  *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_x_0054206c; install-self at +0x08=0x0046e9a0;
  *     g_data_0054204c=1; g_pause=1. pop+ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_0054207c;
+extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
+extern void ScaledArrStore_00429980(void);
+extern void ScaledInit_0048d430(void);
+
 __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

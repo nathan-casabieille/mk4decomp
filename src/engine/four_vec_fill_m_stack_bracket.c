@@ -122,6 +122,14 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0053a1ac;
+extern unsigned int g_data_00541fec;
+extern unsigned int g_data_00541ff0;
+extern unsigned int g_data_00541ff4;
+extern unsigned int g_data_00541ff8;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054206c;
+
 __declspec(naked) void FourVecFillMStackBracket_00428130(void)
 {
     __asm

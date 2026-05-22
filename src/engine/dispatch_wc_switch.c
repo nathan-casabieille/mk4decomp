@@ -121,6 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_x_00535ddc;
 
 /* @addr 0x00434b60 (147b game) - 8-way dispatch on g_walkCallback:
  *   call ScaledChain3c74; pause? ret.

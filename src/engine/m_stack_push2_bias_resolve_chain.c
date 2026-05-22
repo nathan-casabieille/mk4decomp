@@ -125,6 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern void MStackPush2BiasResolveChain_0048cca0(void);
 extern void PushBitFieldMergePop_0048bae0(void);
 extern void PushCallPopScaledJmpIndirect_0048ce00(void);
+extern unsigned int g_x_00542074;
 
 /*
  * @addr 0x0048cc40 (95b game) - 3-stage walk swap pause-gated:

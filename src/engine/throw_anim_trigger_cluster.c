@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0050a0f0;
+extern unsigned int g_data_0050c0bc;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537ea8;
+extern unsigned int g_data_00541d88;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void CallSetPause_0041f830(void);
+extern void GameStateTick_0049f1f0(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackCall_00406340(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void MStackPush4LLWalkPop4_004090e0(void);
+extern void RoundWinTransition_0049e7e0(void);
+
 __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
 {
     __asm {

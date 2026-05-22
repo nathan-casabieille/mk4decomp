@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   at 0x7af990 then push (walk_arr, eq_end_arr) and call
  *   MatrixTransform3x3Q12_004b3b80.
  */
+extern unsigned int g_word_007af9a0;
+extern unsigned int g_x_007af990;
+extern unsigned int g_x_007af994;
+extern unsigned int g_x_007af998;
+extern unsigned int g_x_007af99c;
+extern void MatrixTransform3x3Q12_004b3b80(void);
+
 void WtSnapshotPushCall_004bda70(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -152,3 +159,4 @@ void WtSnapshotPushCall_004bda70(void) {
         add     esp, 8
         }
 }
+

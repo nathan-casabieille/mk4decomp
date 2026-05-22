@@ -133,6 +133,11 @@ extern void DualCallTestPauseRange_004353f0(void);
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
  *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange_004353f0.
  */
+extern unsigned int g_x_0054206c;
+extern void GuardedSeq_00433bb0(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void Wrapper_00438ee0(void);
+
 __declspec(naked) void FiveBlockDispatch_00435340(void) {
     __asm {
         mov     eax, dword ptr [g_state_00535ddc]

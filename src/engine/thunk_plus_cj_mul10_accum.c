@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *     If g_x_00542070 > g_x_0054206c: ret. Else: call ScaledZero44_00491500;
  *     if pause? ret. Else: cj[+0x6c]/cj[+0x74] = g_x_0054206c << 16. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern void IterStepNoSecond_0048e5e0(void);
+extern void ScaledZero44_00491500(void);
+
 void ThunkPlusCjMul10Accum_004913f0(void) {
     __asm {
         push    0x004f12b0
@@ -201,3 +207,4 @@ void ThunkPlusCjMul10Accum_004913f0(void) {
         mov     dword ptr [eax*4 + 0x74], edx
         }
 }
+

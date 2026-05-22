@@ -128,6 +128,13 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x30): g_x_0054206c=g_state_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
  *   Block C (+0x50): g_x_0054206c=g_state_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  */
+extern unsigned int g_state_00537e98;
+extern unsigned int g_state_0053a278;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void CinematicStageCluster_004588b0(void);
+extern void IncCmp28StoreOrJmp_00458880(void);
+
 __declspec(naked) void TripleEntryDispatch_00458810(void) {
     __asm {
         mov     eax, dword ptr [g_state_0053a278]

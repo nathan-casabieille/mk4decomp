@@ -123,6 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
+extern unsigned int g_data_0053a498;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_00542084;
+extern void PendingMatch_00498eb0(void);
+extern void Phase4FivePackedDispatch_0040fe40(void);
+extern void Phase4FourHelperChain_00413760(void);
+extern void ScaledIndirectJmp_0049c850(void);
+extern void Vec2SumMul10ChainCompute_0049bc60(void);
+
 __declspec(naked) void TripleEntry3Block_00498df0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00542084]

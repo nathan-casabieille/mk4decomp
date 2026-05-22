@@ -122,6 +122,14 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00fa0de0;
+extern unsigned int g_iat_004d209c;
+extern unsigned int g_iat_004d2124;
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+extern void DosMapErr_004c8b20(void);
+extern void LseekImpl_004c8e50(void);
+
 __declspec(naked) void CrtReadCrlfDecode_004c9040(void)
 {
     __asm {

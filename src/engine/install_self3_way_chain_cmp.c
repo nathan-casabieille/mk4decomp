@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   if (flag == 1): alt path with GuardedSeq + bit test + ScaledInitOrSelfPtr.
  *   else: call StackPopDispatchTagged; pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542080;
+extern void GuardedSeq_004297b0(void);
+extern void ScaledInitOrSelfPtr_00429680(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelf3WayChainCmp_00428d80(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

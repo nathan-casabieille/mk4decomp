@@ -128,6 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   Zero out chain entries 0x6c/0x70/0x74/0x78/0x7c/0x80/0x4c; sync. Select 538038/53803c.
  *   Call ScaledLoadJmpIfNonzero; pop edi/esi; ret.
  */
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053803c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern void ScaledLoadJmpIfNonzero_00490e00(void);
+
 __declspec(naked) void CjChainResetThreshold_00490cc0(void) {
     __asm {
         mov     ecx, dword ptr [g_cj_0054205c]

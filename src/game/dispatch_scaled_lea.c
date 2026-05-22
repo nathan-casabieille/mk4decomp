@@ -22,6 +22,8 @@ extern packed_ptr g_fightGroupHead;
 extern unsigned int g_data_00ab4e2c;
 extern unsigned int g_data_00ab4e30;
 extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_0052aac4;
+
 void DispatchScaledLEA_004b8f50(void) {
     __asm {
         mov     ecx, dword ptr [g_data_00ab4e2c]
@@ -44,3 +46,4 @@ void DispatchScaledLEA_004b8f50(void) {
         mov     dword ptr [g_data_00ab4e2c], eax
         }
 }
+

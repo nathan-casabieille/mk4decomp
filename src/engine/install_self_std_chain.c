@@ -128,6 +128,8 @@ extern void CmpDispatchPushCallPop_00438530(void);
 
 /* @addr 0x00434f90 (148b) - install-self chain extend w/ g_data_00542084=0x18000
  *   + g_state_00542080=0x1e init + StateGateMStackOverlap_00438690 call. */
+extern void StateGateMStackOverlap_00438690(void);
+
 __declspec(naked) void InstallSelfChainSet84_80Call_00434f90(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

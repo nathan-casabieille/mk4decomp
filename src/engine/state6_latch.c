@@ -121,6 +121,14 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+extern unsigned int g_byte_0054389c;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_00537f94;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
 
 /* @addr 0x0048e240 (162b game) - state-6 latch with arr-lookup + tail-jmp.
  *   eax = ([0x537f48] if g_x_0054205c == [0x538158] else [0x5380e0]); g_x_0054206c = eax.

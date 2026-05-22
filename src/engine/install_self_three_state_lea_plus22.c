@@ -133,6 +133,11 @@ extern void InstallSelfChainSet13333_00437880(void);
  *     scaledInit-chain push 0x00435260|0x01000000; call StateGateMStackOverlap_00438690; g_pause=1; ret.
  *   Block B (+0xb0): cmp g_state_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22_00437970 : jmp InstallSelfChainSet13333_00437880.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern unsigned int g_x_00542084;
+
 __declspec(naked) void InstallSelfDualPath_00435260(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

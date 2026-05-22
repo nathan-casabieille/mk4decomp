@@ -191,6 +191,11 @@ extern unsigned int g_data_00543904;
  *     Set flag 0x543904 on success. Tail-call timeGetTime via IAT[0x4d2240];
  *     save in 0x5438fc.
  */
+extern unsigned int g_iat_004d2240;
+extern unsigned int g_iat_004d2244;
+extern unsigned int g_x_005438e8;
+extern void Helper_AuxAudio_PostInit(void);
+
 __declspec(naked) void Audio_TimerSet(void) {
     __asm {
         sub     esp, 0x18

@@ -135,6 +135,10 @@ extern void InstallSelfStateMachine_0047f3f0(void);
  *   Merge: [scaledInit*4]=edx; inc scaledInit; chain[esi+4]=scaledInit;
  *     [baseSel*4+0x84]=0; call InstallSelfStateMachine; pause=1; pop edi/esi; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ScaledLitLoadCall_00480fe0(void);
+
 __declspec(naked) void Install4StateMerge_0047f1a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

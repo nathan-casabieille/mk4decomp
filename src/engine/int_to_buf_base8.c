@@ -130,6 +130,8 @@ extern unsigned int g_data_00535e7c;
  *     dec count; push (&stack, dst); call Crt80BitFloatMul_004d0800 (probably emit to dst);
  *     edi += 0x54 each iter.
  */
+extern void Crt80BitFloatMul_004d0800(void);
+
 __declspec(naked) void IntToBufBase8_004d0ac0(void) {
     __asm {
         sub     esp, 0x0c

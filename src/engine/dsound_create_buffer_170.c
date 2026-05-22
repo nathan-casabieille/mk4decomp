@@ -51,20 +51,20 @@
  *   ret
  */
 
-extern void *g_iat_004d2198;   /* CreateSoundBuffer */
-extern void *g_iat_004d2194;   /* SetFormat (or similar) */
-extern void *g_iat_004d218c;   /* pan setup */
-extern void *g_iat_004d2188;   /* method4 */
-extern void *g_iat_004d2178;   /* method5 (release-and-null elsewhere) */
-extern void *g_iat_004d217c;   /* method6 */
+extern unsigned int g_iat_004d2178;
+extern unsigned int g_iat_004d217c;
+extern unsigned int g_iat_004d2188;
+extern unsigned int g_iat_004d218c;
+extern unsigned int g_iat_004d2194;
+extern unsigned int g_iat_004d2198;
 
 #define DSBI_BODY(STATE, IFACE, BUFDESC, QUALITY, PAN, SEC, D1, D2)            \
     extern unsigned int STATE;                                                  \
-    extern void *IFACE;                                                         \
+    extern unsigned int IFACE;                                                  \
     extern unsigned int BUFDESC;                                                \
     extern unsigned int QUALITY;                                                \
     extern unsigned int PAN;                                                    \
-    extern void *SEC;                                                           \
+    extern unsigned int SEC;                                                    \
     extern unsigned int D1;                                                     \
     extern unsigned int D2;                                                     \
     __asm {                                                                     \
@@ -77,48 +77,48 @@ extern void *g_iat_004d217c;   /* method6 */
         __asm _emit   00h                                                       \
         __asm _emit   00h                                                       \
         __asm mov     eax, dword ptr [IFACE]                                    \
-        __asm push    esi                                                       \
-        __asm push    OFFSET BUFDESC                                            \
-        __asm push    eax                                                       \
-        __asm mov     dword ptr [STATE], 1                                      \
-        __asm mov     dword ptr [BUFDESC], 0x2c                                 \
-        __asm call    dword ptr [g_iat_004d2198]                                \
-        __asm mov     eax, dword ptr [QUALITY]                                  \
-        __asm cmp     eax, 3                                                    \
-        __asm _emit   74h                                                       \
-        __asm _emit   05h                                                       \
-        __asm cmp     eax, 2                                                    \
-        __asm _emit   75h                                                       \
-        __asm _emit   0fh                                                       \
-        __asm mov     ecx, dword ptr [IFACE]                                    \
-        __asm push    9                                                         \
-        __asm push    ecx                                                       \
-        __asm call    dword ptr [g_iat_004d2194]                                \
-        __asm mov     edx, dword ptr [IFACE]                                    \
-        __asm push    OFFSET PAN                                                \
-        __asm push    edx                                                       \
-        __asm call    dword ptr [g_iat_004d218c]                                \
-        __asm mov     eax, dword ptr [IFACE]                                    \
-        __asm push    eax                                                       \
-        __asm call    dword ptr [g_iat_004d2188]                                \
-        __asm mov     ecx, dword ptr [IFACE]                                    \
-        __asm push    0                                                         \
-        __asm push    ecx                                                       \
-        __asm mov     dword ptr [SEC], eax                                      \
-        __asm call    dword ptr [g_iat_004d2178]                                \
-        __asm mov     edx, dword ptr [IFACE]                                    \
-        __asm mov     esi, dword ptr [g_iat_004d217c]                           \
-        __asm push    -20                                                       \
-        __asm push    edx                                                       \
-        __asm call    esi                                                       \
-        __asm mov     dword ptr [D1], eax                                       \
-        __asm mov     eax, dword ptr [IFACE]                                    \
-        __asm push    -16                                                       \
-        __asm push    eax                                                       \
-        __asm call    esi                                                       \
-        __asm mov     dword ptr [D2], eax                                       \
-        __asm pop     esi                                                       \
-        __asm ret                                                               \
+        __asm push    esi                                                        \
+        __asm push    OFFSET BUFDESC                                             \
+        __asm push    eax                                                        \
+        __asm mov     dword ptr [STATE], 1                                       \
+        __asm mov     dword ptr [BUFDESC], 0x2c                                  \
+        __asm call    dword ptr [g_iat_004d2198]                                 \
+        __asm mov     eax, dword ptr [QUALITY]                                   \
+        __asm cmp     eax, 3                                                     \
+        __asm _emit   74h                                                        \
+        __asm _emit   05h                                                        \
+        __asm cmp     eax, 2                                                     \
+        __asm _emit   75h                                                        \
+        __asm _emit   0fh                                                        \
+        __asm mov     ecx, dword ptr [IFACE]                                     \
+        __asm push    9                                                           \
+        __asm push    ecx                                                         \
+        __asm call    dword ptr [g_iat_004d2194]                                 \
+        __asm mov     edx, dword ptr [IFACE]                                     \
+        __asm push    OFFSET PAN                                                  \
+        __asm push    edx                                                         \
+        __asm call    dword ptr [g_iat_004d218c]                                 \
+        __asm mov     eax, dword ptr [IFACE]                                     \
+        __asm push    eax                                                         \
+        __asm call    dword ptr [g_iat_004d2188]                                 \
+        __asm mov     ecx, dword ptr [IFACE]                                     \
+        __asm push    0                                                           \
+        __asm push    ecx                                                         \
+        __asm mov     dword ptr [SEC], eax                                        \
+        __asm call    dword ptr [g_iat_004d2178]                                 \
+        __asm mov     edx, dword ptr [IFACE]                                     \
+        __asm mov     esi, dword ptr [g_iat_004d217c]                            \
+        __asm push    -20                                                         \
+        __asm push    edx                                                         \
+        __asm call    esi                                                         \
+        __asm mov     dword ptr [D1], eax                                         \
+        __asm mov     eax, dword ptr [IFACE]                                      \
+        __asm push    -16                                                          \
+        __asm push    eax                                                          \
+        __asm call    esi                                                          \
+        __asm mov     dword ptr [D2], eax                                          \
+        __asm pop     esi                                                          \
+        __asm ret                                                                  \
     }
 
 /* @addr 0x004ae990 */

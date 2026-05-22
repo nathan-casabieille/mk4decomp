@@ -128,6 +128,16 @@ extern unsigned int g_data_00535e7c;
  *   Else: call PushPopScaledInit343c; call GuardedSetupCallTailJmp(0x4d2250, 0x64000000);
  *   install self at chain[sel]+8, set state.
  */
+extern unsigned int g_data_004d2250;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054343c;
+extern unsigned int g_x_00543550;
+extern unsigned int g_x_00543800;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void PushPopScaledInit343c_004aa940(void);
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void AudioInstallSelfStatePush_004aa8a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

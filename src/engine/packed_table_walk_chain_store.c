@@ -133,6 +133,16 @@ extern unsigned int g_data_00535e7c;
  *   pause? -> end; (208c&4)? -> end.
  *   chain[g_scaledInit + 0x5c] = 0x14000; g_x_0054206c = 0x14000.
  */
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern void SaveCallRestore_004049d0(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 void PackedTableWalkChainStore_00463e20(void) {
     __asm {
         push    0x26f
@@ -173,3 +183,4 @@ void PackedTableWalkChainStore_00463e20(void) {
         mov     [edx*4 + 0x5c], eax
         }
 }
+

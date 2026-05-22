@@ -143,6 +143,13 @@ extern unsigned int g_data_00541e20;
  *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
  *     state=1; g_x_0054204c=5; pause=1; pop+ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void PackedAdvanceCallTailJmp_004392c0(void);
+
 __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

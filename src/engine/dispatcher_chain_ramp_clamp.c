@@ -140,6 +140,13 @@ extern unsigned int g_x_00543550;
  *         [esi+8] = 0x00426000; [esi+0x84] = 1; pause = 1.
  *   install-self-zero: g_x_00543550 = 0; call StackPopDispatchTagged; ret.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfPackedF80_00426000(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

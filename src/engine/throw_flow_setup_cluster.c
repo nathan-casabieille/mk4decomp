@@ -130,6 +130,12 @@ extern void ThrowFlowSetupCluster_0049ed00(void);
 extern unsigned int g_data_0053a1bc;
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
+extern unsigned int g_data_00542004;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
 void DualGuardStateMachine_0049ea30(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542004]
@@ -192,3 +198,4 @@ void DualGuardStateMachine_0049ea30(void) {
         mov     dword ptr [ecx*4 + 0x5c], eax
         }
 }
+

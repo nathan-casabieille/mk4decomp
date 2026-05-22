@@ -131,6 +131,15 @@ extern unsigned int g_data_00535e7c;
  *     push (word)[0x4e2864]; call TaggedSceneDispatch_004be690; add esp,4;
  *     jmp CallSetPause_0041f830.
  */
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void Push15PushDataCallWordCallJmp_004a1080(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void TripleStageRollback_00404a50(void);
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void AudioInitChainTag_004a1000(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

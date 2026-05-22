@@ -131,6 +131,15 @@ extern unsigned int g_data_00535e7c;
  *     eax = Mul10Tail(0x27333, g_x_00542080); g_x_00542080=eax;
  *   accumulate: g_x_0054206c += g_x_0054207c, g_x_00542070 += eax; store back to chain[+8/+0xc]. ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void ScaledChainDouble_004911f0(void);
+
 __declspec(naked) void Mul10TailPairChain_00470390(void) {
     __asm {
         mov     edx, dword ptr [g_x_0054205c]

@@ -125,6 +125,9 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004347f0 (138b) - install-self chain-extension variant w/ extra
  *   g_state_00542080 = 0x3c init and StateGateMStackOverlap_00438690 helper.
  */
+extern void ChainDecCondStoreCallJmp_00434880(void);
+extern void StateGateMStackOverlap_00438690(void);
+
 __declspec(naked) void InstallSelfChainSet80Call_004347f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

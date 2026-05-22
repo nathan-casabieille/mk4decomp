@@ -135,6 +135,156 @@ extern void Thunk_004c48b0(void);
  *   Pad-aligned bare-ret entry (0x004a27a0).
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
+extern unsigned int g_data_004d50a4;
+extern unsigned int g_data_004d50a8;
+extern unsigned int g_data_004d50b4;
+extern unsigned int g_data_004f31cc;
+extern unsigned int g_data_004f31d0;
+extern unsigned int g_data_004f3220;
+extern unsigned int g_data_004f3234;
+extern unsigned int g_data_004f3a30;
+extern unsigned int g_data_004f3a38;
+extern unsigned int g_data_004f3ac8;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535de4;
+extern unsigned int g_data_00535e6c;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_00538088;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a3c0;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_0053a498;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_0053a7a8;
+extern unsigned int g_data_00541d8c;
+extern unsigned int g_data_00541f98;
+extern unsigned int g_data_00541fb0;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00543438;
+extern unsigned int g_data_0054355c;
+extern unsigned int g_data_00543590;
+extern unsigned int g_data_0054371c;
+extern unsigned int g_data_005437f8;
+extern unsigned int g_data_005437fc;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_004f3ae4;
+extern unsigned int g_x_004f3ae8;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_005433c8;
+extern unsigned int g_x_00543590;
+extern void Audio11SlotInitLoop_004a5540(void);
+extern void AudioStoreXfer3SelfInstall_004a2060(void);
+extern void CallDualStoreXorBit_004285e0(void);
+extern void ChainInitDoublePushCall_004a47c0(void);
+extern void ClearTwoCallSetStore_004a2270(void);
+extern void CopyGlobal_004ac1f0(void);
+extern void DoublePushCallDualPopJmp_00423270(void);
+extern void DownloadPlayerChar(void);
+extern void DualAddSar_004ab600(void);
+extern void DualScaledStoreConst_004a22c0(void);
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void InstallChainInitTailJmp_004a7030(void);
+extern void KonquestPortalCluster_004a5290(void);
+extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+extern void MStackPushComplexCallPop_004064b0(void);
+extern void PendingMatch_00401b70(void);
+extern void Phase1ChainAdvanceCallScale_00418f80(void);
+extern void ScaledAnd4InvDirtyClear_00409350(void);
+extern void ScaledArrStore_004285c0(void);
+extern void ScaledClearTripleCallJmp_004202c0(void);
+extern void ScaledOr4DirtyClear_00409320(void);
+extern void ScaledSet1OnNonZero_0048c190(void);
+extern void SetJmp_004a1ac0(void);
+extern void SetJmp_004a1ad0(void);
+extern void SixCallSeqPushImm_004a1d80(void);
+extern void TablePushAccumTailJmp_00429e30(void);
+extern void TestCmpZeroFour_004238b0(void);
+extern void VoiceBankTickDispatch_004a3120(void);
+
+extern unsigned int g_byte_005435a1;
+extern unsigned int g_byte_005435a2;
+extern unsigned int g_byte_00543619;
+extern unsigned int g_byte_0054361a;
+extern unsigned int g_data_004f3a58;
+extern unsigned int g_data_004f3a70;
+extern unsigned int g_data_004f3a98;
+extern unsigned int g_data_004f3aa8;
+extern unsigned int g_data_0050b118;
+extern unsigned int g_data_0050f114;
+extern unsigned int g_data_00537f94;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_00542070;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_005433b8;
+extern unsigned int g_data_005433bc;
+extern unsigned int g_data_005433c0;
+extern unsigned int g_data_005433cc;
+extern unsigned int g_data_005433f4;
+extern unsigned int g_data_005433f8;
+extern unsigned int g_data_0054359c;
+extern unsigned int g_data_005435a0;
+extern unsigned int g_data_005435a3;
+extern unsigned int g_data_005435a4;
+extern unsigned int g_data_005435b8;
+extern unsigned int g_data_00543724;
+extern unsigned int g_data_0054372c;
+extern unsigned int g_data_00543730;
+extern unsigned int g_data_005437f4;
+extern unsigned int g_data_00543830;
+extern void AudioBindEntry_004a1e40(void);
+extern void AudioInitArgs3_004a1f20(void);
+extern void AudioInstallSelfStateMachine2_004a85c0(void);
+extern void AudioInstallSelfStatePush_004aa8a0(void);
+extern void AudioPreloadStreamingTrack_004a6e70(void);
+extern void AudioState50b4BitDispatcher_004a32c0(void);
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CallSetPause_0041f830(void);
+extern void CmpByteJmp_004a4180(void);
+extern void DispatcherComplex260_00407400(void);
+extern void DrainQueueCallEach_004a1ec0(void);
+extern void DualCallSetByte_004a1cb0(void);
+extern void FiveTableWalkInit_00403c90(void);
+extern void IncCapped3e7_00491920(void);
+extern void InstallSelfPackedF80_00426000(void);
+extern void IsNonzeroBoolFlagged_004a1d00(void);
+extern void LoadGeoAsset_Default(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void MemcpyByteN_004a5680(void);
+extern void Memset18Step_004a56a0(void);
+extern void PendingMatch_004a2a80(void);
+extern void PendingMatch_004a56c0(void);
+extern void PendingMatch_004a62b0(void);
+extern void PendingMatch_004a8ca0(void);
+extern void PendingMatch_004a93c0(void);
+extern void PendingMatch_004aa9f0(void);
+extern void Push16Call_00489f50(void);
+extern void QuadCallPhase2_004be800(void);
+extern void ScaledByteIdxDualCopy_004a3260(void);
+extern void SnapshotDirtyMark_004a1dc0(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TableWalkChainCall_004a30f0(void);
+extern void TestByteOrAndCheck_004a1ae0(void);
+extern void TripleCallByteCheck_004a1bf0(void);
+extern void TripleCallSetCopy_004a4880(void);
+extern void VoicePoolTickDispatch_004a4c10(void);
+
 __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
 {
     __asm
@@ -196,14 +346,6 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
     }
 }
 
-extern void DispatcherComplex260_00407400(void);
-extern void SnapshotDirtyMark_004a1dc0(void);
-extern void MStackPushComplexCallPop_00406430(void);
-extern void DrainQueueCallEach_004a1ec0(void);
-extern void PendingMatch_004a8ca0(void);
-extern void AudioInstallSelfStateMachine2_004a85c0(void);
-extern unsigned int g_data_0050f114;
-extern unsigned int g_data_005433f4;
 
 /*
  * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
@@ -294,13 +436,6 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
 }
 
 extern void func_004a2080(void);
-extern void PendingMatch_004a93c0(void);
-extern unsigned int g_data_0054359c;
-extern unsigned char g_byte_005435a1;
-extern unsigned char g_byte_005435a2;
-extern unsigned char g_byte_00543619;
-extern unsigned char g_byte_0054361a;
-extern unsigned int g_data_005433c0;
 
 /*
  * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
@@ -433,29 +568,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
     }
 }
 
-extern unsigned int g_data_00542060;
-extern unsigned int g_data_005437f4;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00541e6c;
-extern unsigned int g_data_0054208c;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00543724;
-extern unsigned int g_data_0054372c;
-extern unsigned int g_data_00543730;
-extern unsigned int g_data_0054204c;
-extern void PendingMatch_004a2a80(void);
-extern void VoicePoolTickDispatch_004a4c10(void);
-extern void ScaledByteIdxDualCopy_004a3260(void);
-extern void AudioState50b4BitDispatcher_004a32c0(void);
-extern void TripleCallByteCheck_004a1bf0(void);
 extern int RetZero_004a1c40(void);
-extern void Push16Call_00489f50(void);
-extern void InstallSelfPackedF80_00426000(void);
-extern void FiveTableWalkInit_00403c90(void);
-extern void TripleCallSetCopy_004a4880(void);
-extern void AudioInitArgs3_004a1f20(void);
-extern void AudioBindEntry_004a1e40(void);
 
 __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
 {
@@ -579,29 +692,7 @@ __declspec(naked) void AudioStateInitMultiInstall_004a4d20(void)
     }
 }
 
-extern void PendingMatch_004a62b0(void);
-extern void AudioPreloadStreamingTrack_004a6e70(void);
-extern void FiveTableWalkInit_00403c90(void);
-extern void CallSetPause_0041f830(void);
-extern void BootInitGuardedCallChain_004265d0(void);
-extern void IncCapped3e7_00491920(void);
 /* extern void AllocNode(void); -- defined elsewhere with diff sig */
-extern void TripleCallSetCopy_004a4880(void);
-extern void MemcpyByteN_004a5680(void);
-extern void AudioInstallSelfStatePush_004aa8a0(void);
-extern void LoadGeoAsset_Default(void);
-extern void TableWalkBoundedCmp_004bd890(int);
-extern void QuadCallPhase2_004be800(void);
-extern unsigned int g_data_004f3a58;
-extern unsigned int g_data_004f3a70;
-extern unsigned int g_data_004f3a98;
-extern unsigned int g_data_004f3aa8;
-extern unsigned int g_data_0050b118;
-extern unsigned int g_data_00537f94;
-extern unsigned int g_data_005433b8;
-extern unsigned int g_data_005435a0;
-extern unsigned int g_data_005435b8;
-extern unsigned int g_data_00543830;
 
 __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
 {
@@ -976,11 +1067,6 @@ __declspec(naked) void PendingMatch_004a70f0(void)
     }
 }
 
-extern void CmpByteJmp_004a4180(void);
-extern void TableWalkChainCall_004a30f0(void);
-extern void PendingMatch_004aa9f0(void);
-extern unsigned int g_data_005433bc;
-extern unsigned int g_data_005433f8;
 
 __declspec(naked) void PendingMatch_004a3400(void)
 {
@@ -1297,14 +1383,6 @@ __declspec(naked) void PendingMatch_004a3400(void)
     }
 }
 
-extern void DualCallSetByte_004a1cb0(void);
-extern void IsNonzeroBoolFlagged_004a1d00(void);
-extern void Memset18Step_004a56a0(void);
-extern void TestByteOrAndCheck_004a1ae0(void);
-extern void PendingMatch_004a56c0(void);
-extern unsigned int g_data_005433cc;
-extern unsigned int g_data_005435a3;
-extern unsigned int g_data_005435a4;
 
 __declspec(naked) void PendingMatch_004a56c0(void)
 {

@@ -135,6 +135,16 @@ extern unsigned int g_data_00535e7c;
  *     install self; [esi+0x84]=1; g_x_0054204c=2; pause=1.
  *   } else: call StackPopDispatchTagged; pop esi; ret.
  */
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_00542058;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 __declspec(naked) void InstallSelfSearchAccum_00402b40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

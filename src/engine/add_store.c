@@ -12,6 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00f4d028], eax
  *   ret
  */
+extern unsigned int g_state_00f85b38;
 extern unsigned int g_state_00f4d028;
 void AddStore_004bf0b0(void) {
     g_state_00f4d028 = g_state_00f85b38 + 0x00200000;

@@ -127,6 +127,13 @@ extern unsigned int g_data_00535e7c;
  *   then more side-stores to chain[+0x54] (g_x_00542070) and chain[+0x5c] (g_x_00542074);
  *   mstack-pop g_x_00542070, g_x_00542074. ret.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void Add0fJmp_0044ccd0(void);
+
 void MStackPush3SideStore_0044cb80(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -173,3 +180,4 @@ void MStackPush3SideStore_0044cb80(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

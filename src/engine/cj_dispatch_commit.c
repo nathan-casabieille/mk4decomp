@@ -129,6 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   or 0x53815c>>2 depending on whether _58 still matches [0x538158];
  *   store [cj*4 + reloc] = walk.
  */
+extern unsigned int g_x_00538158;
+extern void PendingMatch_0041d770(void);
+
 __declspec(naked) void CjDispatchCommit_004818e0(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]

@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
  *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern void BitmapBlitRunLength_004592f0(void);
+extern void ScaledMaskByte_004774d0(void);
+
 __declspec(naked) void NestedLoopDispatch_00458f40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]

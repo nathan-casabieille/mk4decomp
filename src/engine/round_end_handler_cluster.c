@@ -122,6 +122,32 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e8698;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537e98;
+extern unsigned int g_data_00537f48;
+extern unsigned int g_data_005380e0;
+extern unsigned int g_data_0053a51c;
+extern unsigned int g_data_00541d6c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054208c;
+extern void BootInitGuardedCallChain_004265d0(void);
+extern void CallSetPause_0041f830(void);
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void HealthBarTickDriver_00458cc0(void);
+extern void QuadCallPauseJmp_00457ff0(void);
+extern void QuadCallPhase2_004be800(void);
+extern void SequencedInit3CallB_00458ae0(void);
+extern void SpawnTrioInitCluster_00458440(void);
+extern void TableWalkBoundedCmp_004bd890(void);
+extern void TripleStageRollback_00404a50(void);
+extern void func_00427780(void);
+
 __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
 {
     __asm {

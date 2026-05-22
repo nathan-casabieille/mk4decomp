@@ -132,6 +132,15 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00538068;
 extern unsigned int g_data_0054200c;
 
+extern unsigned int g_data_00535d04;
+extern unsigned int g_data_0053a774;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542080;
+
 __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
 {
     __asm {

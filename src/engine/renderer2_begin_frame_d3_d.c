@@ -4,6 +4,22 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+extern unsigned int g_data_004f4790;
+extern unsigned int g_data_004f4794;
+extern unsigned int g_data_004f4798;
+extern unsigned int g_data_004f479c;
+extern unsigned int g_data_0058c720;
+extern unsigned int g_data_0058c760;
+extern unsigned int g_data_0058c7b0;
+extern unsigned int g_data_0058c7b4;
+extern unsigned int g_data_0058c7c0;
+extern unsigned int g_data_0058c7c4;
+extern unsigned int g_data_0058c7d0;
+extern unsigned int g_data_0058c7dc;
+extern unsigned int g_data_0058c7e0;
+extern unsigned int g_data_0058c7e4;
+extern unsigned int g_data_0058c7ec;
+
 __declspec(naked) void Renderer2_BeginFrame_D3D(void)
 {
     __asm {

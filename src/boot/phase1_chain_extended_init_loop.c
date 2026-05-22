@@ -138,6 +138,12 @@ extern void GuardedSeq_0049c340(void);
  *   B3 (0xf0..0x111): call BootOneShotSetup_0040bde0; if !pause: call PendingMatch_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00541dc4;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern unsigned int g_x_00542088;
+
 __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
     __asm {
         mov     edx, dword ptr [g_x_00542084]

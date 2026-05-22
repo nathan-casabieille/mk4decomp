@@ -27,7 +27,9 @@ extern unsigned int g_state_00537f94;
 extern unsigned int g_state_00542080;
 extern u32 g_pendingNodeType;
 
+extern void func_00477ee0(void);
 extern void StoreTwoCall_0049cb40(int, int);
+
 extern void SetJmp_0049cb90(void);
 extern void Thunk_0049cbd0(void);
 extern void ScaledZeroFour_00490740(void);
@@ -121,6 +123,27 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
+
+extern unsigned int g_data_00514d78;
+extern unsigned int g_data_00514de8;
+extern unsigned int g_data_0052ab48;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a700;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void BootMstackInit_0041fb10(void);
+extern void DispatcherComplex181_00426310(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void SaveCallRestoreOrXor_00404a00(void);
+extern void SaveCallRestore_004049d0(void);
+extern void StoreIncrMStackPush6_004275c0(void);
 
 void YRiseSpawnerCluster_00477bd0(void) {
     __asm {
@@ -233,3 +256,5 @@ void YRiseSpawnerCluster_00477bd0(void) {
     L_7e12:
         }
 }
+extern void func_00477ee0(void);
+

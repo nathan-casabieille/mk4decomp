@@ -124,6 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048bb60 (139b) - mstack push + sar-div + ScaledShrAnd
  *   + chain[+walk] + bit OR/XOR toggle + pop. */
+extern void ScaledShrAnd_0048bb40(void);
+
 void PushSarCallBitToggle_0048bb60(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -162,3 +164,4 @@ void PushSarCallBitToggle_0048bb60(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

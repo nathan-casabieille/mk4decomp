@@ -19,6 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   eventQueueWorkType = 0; jmp T.
  */
 extern unsigned int g_data_00543800;
+extern unsigned int g_data_0052aac4;
 extern void *AllocNode(void);
 extern void Push16Call_00489f50(void);
 void InitDispatchersJmp_004a4260(void) {

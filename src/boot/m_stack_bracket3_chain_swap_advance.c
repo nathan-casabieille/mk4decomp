@@ -122,6 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_005114b4;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_0054206c;
+extern void MStackCall_00406340(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void PushDualDerefClearPop_004092a0(void);
+extern void PushPopScaled18_004059a0(void);
+extern void ScaledTripleCopy54_004ac040(void);
+
 void MStackBracket3_ChainSwapAdvance_0041d560(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -229,3 +243,4 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
     L_msb3csa_abort:
         }
 }
+

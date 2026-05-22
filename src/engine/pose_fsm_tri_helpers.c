@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_00542088;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_00542188;
+extern void AiAngleDistComputation_00431920(void);
+extern void CameraAimSplineDriver_00430e60(void);
+extern void DispatchOrInitFightGroup_0042f850(void);
+extern void DualEntryInitDispatch_00431360(void);
+extern void PendingMatch_00432110(void);
+extern void PendingMatch_004326a0(void);
+extern void ScaledInitWithCounterAndType_004314f0(void);
+
 __declspec(naked) void PoseFsmTriHelpers_00431650(void)
 {
     __asm {

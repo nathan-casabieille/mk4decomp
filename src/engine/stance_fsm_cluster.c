@@ -133,6 +133,14 @@ extern void CjTableThresholdDispatch_00488f00(void);
  *   pause-check. mstack-pop g_x_00542074 (with test); if zero skip call; else call CjTableThresholdDispatch_00488f00;
  *   pause-check. mstack-pop g_x_00542080, g_x_0054207c. jmp GatedChainClamp_00486e80.
  */
+extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+
 __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
     __asm {
         mov     eax, dword ptr [g_x_0054206c]

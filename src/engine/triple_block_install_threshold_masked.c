@@ -133,6 +133,17 @@ extern unsigned int g_data_00535e7c;
  *     and 0x200 -> g_state_00542094. If nonzero jmp PrefixThunkInstallSelf3State_00438f80.
  *     Else: g_x_0054206c &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void CallPauseConstStoreJmp_00438170(void);
+extern void EntryThenDispatcherPair_00438cd0(void);
+extern void InstallSelfPacked0x2005_00437a90(void);
+extern void JumpTableDispatch_0043a550(void);
+extern void PrefixThunkInstallSelf3State_00438f80(void);
+extern void ProneFsmCluster_004355f0(void);
+extern void Wrapper_00438ee0(void);
+
 __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

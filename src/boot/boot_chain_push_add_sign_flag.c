@@ -136,6 +136,11 @@ extern unsigned int g_data_00535e7c;
  *     commit g_state_004d57ac. If sign result = 0: g_x_0054206c = 0; g_state_0054208c |= 1.
  *     pop+ret.
  */
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+
 __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
 {
     __asm

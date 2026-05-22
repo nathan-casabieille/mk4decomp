@@ -134,6 +134,10 @@ extern unsigned int g_data_00535e7c;
  *   On error sets the FILE error flag (or 0x20) and returns count of bytes
  *   transferred via div by 'size'.
  */
+extern void FFlushImpl_004c69a0(void);
+extern void Flsbuf_004c77f0(void);
+extern void IOWrapper_004c9ae0(void);
+
 __declspec(naked) void FWriteNoLock_004c5fc0(void) {
     __asm {
         push    ecx

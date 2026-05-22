@@ -122,6 +122,21 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e2670;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void GuardedSelfRefSet_0048d070(void);
+extern void MStackBitLoopTripleCall_0049cc30(void);
+extern void SetJmp_00405420(void);
+extern void SetupHelperCluster_00426fa0(void);
+
 __declspec(naked) void GameMusicState4Way_00426d90(void)
 {
     __asm {

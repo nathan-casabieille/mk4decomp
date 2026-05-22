@@ -135,6 +135,13 @@ extern unsigned int g_data_00535e7c;
  *   bit_clear_exit: mstack-pop g_x_00542074;
  *     g_state_0054208c = (orig & ~4) | 1; ret.
  */
+extern unsigned int g_x_0052ab3c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542070;
+extern unsigned int g_x_00542074;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void LinkedListBitMaskSearch_0041f8f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -187,3 +194,4 @@ void LinkedListBitMaskSearch_0041f8f0(void) {
         mov     dword ptr [g_state_0054208c], edx
         }
 }
+

@@ -128,6 +128,8 @@ extern unsigned int g_data_00535e7c;
  *   0x3fffff -> wt; call dispatch+stack helpers; on pause clear init
  *   walk[+0x64]=0x32443f, walk[+0x5c]=0x100000.
  */
+extern void MStackPushComplexCallPop_00406430(void);
+
 void AudioChainInit_004a77c0(void) {
     __asm {
         mov     ecx, dword ptr [g_walkCallback]
@@ -157,3 +159,4 @@ void AudioChainInit_004a77c0(void) {
 done:
         }
 }
+

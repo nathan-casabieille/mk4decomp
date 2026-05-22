@@ -148,6 +148,25 @@ extern unsigned int g_data_00535e7c;
  *   Entry 8 (offset 0x160, 30b): 0x54206c=8 → TableLookupCall_00489ff0
  *     → tail-jmp TripleGuardSetTailJmp_00482680.
  */
+extern unsigned int g_data_004ede38;
+extern unsigned int g_data_004ede68;
+extern unsigned int g_data_004ede90;
+extern unsigned int g_data_004edec4;
+extern unsigned int g_data_004edec8;
+extern unsigned int g_data_004edef8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void DualScaledInitClear_00433c10(void);
+extern void GateDispatch6c_00494580(void);
+extern void SaveSwapCallRestore_00489030(void);
+extern void TableLookupCall_00489ff0(void);
+extern void TableLookupCall_0048a160(void);
+extern void TripleGuardSetTailJmp_00482680(void);
+
 __declspec(naked) void EightEntryAlarmDispatch_00482500(void) {
     __asm {
         mov     dword ptr [g_data_0054206c], 0x6666

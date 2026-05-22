@@ -21,6 +21,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_004385f4(void);
+
 void DecJneSetCallSetJmp_004389b0(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueChild]
@@ -37,3 +38,4 @@ void DecJneSetCallSetJmp_004389b0(void) {
         mov     dword ptr [g_eventQueueChild], 0x0d
         }
 }
+

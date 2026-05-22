@@ -10,6 +10,11 @@
  *   arr[type*7].slot0 != 0 and g_byte_00f9efd4 == 0:
  *   key2 = (subtype)+type*7; call arr[key2].method30(arr[type*7].byte_16 & 1, 0, 0).
  */
+extern unsigned int g_arr_00f8fac8;
+extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_byte_00f9efd4;
+extern unsigned int g_x_00f9efe0;
+
 __declspec(naked) void Helper_AudioStart(void) {
     __asm {
         mov     eax, dword ptr [g_x_00f9efe0]

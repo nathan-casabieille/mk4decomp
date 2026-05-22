@@ -130,6 +130,17 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x70): g_x_0054206c=g_state_0053a408; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  *   Block C (+0x90): g_x_0054206c=g_state_00537e88; if zero jmp CallSetPause; else jmp TripleEntryWordChainInc5_00462870.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_state_00537f74;
+extern unsigned int g_x_00541fb0;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void CallSetPause_0041f830(void);
+extern void MStackChainOrBitLoop_004635a0(void);
+extern void MStackPush2ScaledChainLoop_00463430(void);
+extern void PackedTableWalkChainStore_00463e20(void);
+extern void TripleEntryWordChainInc5_00462870(void);
+
 __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
     __asm {
         mov     eax, dword ptr [g_state_00537f74]

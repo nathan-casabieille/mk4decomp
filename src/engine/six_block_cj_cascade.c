@@ -133,6 +133,13 @@ extern unsigned int g_data_00535e7c;
  *     push 0x004ee1e8; call CrouchFsmCluster_00482c30+0x1c0 (0x00482df0); pop;
  *     if !pause: push 0x004ee1f0, tail-call ArgSarStoreJmp; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void GateDispatch6c_00494580(void);
+
 void SixBlockCjCascade_004829b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -234,3 +241,4 @@ void SixBlockCjCascade_004829b0(void) {
         add     esp, 4
         }
 }
+

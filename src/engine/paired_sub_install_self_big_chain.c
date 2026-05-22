@@ -122,6 +122,23 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004ed8d8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542088;
+extern void AerialHitDispatcher_0047c290(void);
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DualCallPauseDirtyJmp_00490c30(void);
+extern void GuardedDirtyXformFromTable_0048f6d0(void);
+extern void InstallSelfCmpJgJmp_00480ac0(void);
+extern void ScaledChainTwoStores_00480d20(void);
+extern void Vec2ChainComputeStores_00480b80(void);
+
 __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
 {
     __asm

@@ -122,6 +122,27 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004f3ee0;
+extern unsigned int g_data_005157a4;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543398;
+extern unsigned int g_data_005433d8;
+extern void AudioFlagDispatchAggregatorAH_004aa520(void);
+extern void AudioFlagDispatchAggregator_004aa430(void);
+extern void BootPhaseGateBracketedInit_004060c0(void);
+extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
+extern void MStackPush3HelperCondToggle_0049cf70(void);
+extern void MStackPushComplexCallPop_00406430(void);
+extern void SplitInt32_004aa410(void);
+
 __declspec(naked) void SpawnListGlyphRender_004aa610(void)
 {
     __asm {

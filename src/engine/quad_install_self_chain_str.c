@@ -129,6 +129,14 @@ extern unsigned int g_data_00535e7c;
  *   C (+0x90): push 0x004ed690, chain[*4+0x68]=0x40c, chain[*4+0x74]=0x207; call ArgSarStoreJmp; ret.
  *   D (+0xd0): g_x_00542080=6; jmp InstallSelfCountdownLong_0047ee70.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void InstallSelfCountdownLong_0047ee70(void);
+extern void SlotEvent3EntryChain_0046fdf0(void);
+
 __declspec(naked) void QuadInstallSelfChainStr_0047ed90(void) {
     __asm {
         push    0x004ed670

@@ -122,7 +122,6 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern void (*g_GetModuleFileNameA_004d20a0)(void);
 extern void CrtParseCommandLine_004cbcc0(void);
 extern void LoadArgPushCall_004c54b0(void);
 extern void CmpCallPushIATCall_004c6e60(void);
@@ -143,6 +142,8 @@ extern unsigned int g_x_00f9f814;
  *   Call CrtParseCommandLine_004cbcc0 again (this time storing args). [0xf9f818] = esi (argv array).
  *   [0xf9f814] = argc - 1.
  */
+extern unsigned int g_GetModuleFileNameA_004d20a0;
+
 __declspec(naked) void SetupArgv_004cbc20(void) {
     __asm {
         sub     esp, 8

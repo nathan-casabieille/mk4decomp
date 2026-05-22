@@ -126,6 +126,8 @@ extern unsigned int g_data_00535e7c;
  *   On existing slot: chain cmp + bit OR/XOR + call through [g_eventQueueEnd].
  *   On install: pop g_eventQueueEnd from mstack + call ScaledArrStore.
  */
+extern void ScaledArrStore_004285c0(void);
+
 __declspec(naked) void EsiInstallChainCallIndirect_00428680(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

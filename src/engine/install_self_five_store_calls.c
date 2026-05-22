@@ -127,6 +127,15 @@ extern unsigned int g_data_00535e7c;
  *   Else: 5 calls to StoreTwoCall_0049cb40(str_x, 0x267) for different str_x,
  *   then install self at +8, slot84=1, g_x_0054204c=0xa0, pause flag=1.
  */
+extern unsigned int g_data_0044dec0;
+extern unsigned int g_data_0044e0f0;
+extern unsigned int g_data_0044e1c0;
+extern unsigned int g_data_0044e280;
+extern unsigned int g_data_0044ea20;
+extern unsigned int g_x_0054204c;
+
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

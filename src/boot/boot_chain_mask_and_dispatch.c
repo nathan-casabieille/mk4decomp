@@ -134,6 +134,13 @@ extern unsigned int g_data_00535e7c;
  *     MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
  *       chain[+0x3c] = -0x16666 = g_x_0054206c; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
+extern void MStackInitCallToggle_00408ad0(void);
+
 __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
 {
     __asm

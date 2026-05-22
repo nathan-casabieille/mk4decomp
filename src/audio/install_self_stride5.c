@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   walkCallback = chain[eax].slot4; call GuardedScaledCall; pause? ret;
  *   install self at +8; chain[sel].slot84 = 1; g_x_0054204c = 0x32; pause=1.
  */
+extern unsigned int g_x_00538090;
+extern unsigned int g_x_00541fc4;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern void CallSetPause_0041f830(void);
+extern void GuardedScaledCall_0048a020(void);
+
+extern unsigned int g_chain_arr_4348f0;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfStride5_004a06f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

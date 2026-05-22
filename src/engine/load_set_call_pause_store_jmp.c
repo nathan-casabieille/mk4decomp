@@ -13,6 +13,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_state_007b41a0;
 extern unsigned int g_state_007b41a8;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_state_00538158_dd;
+extern unsigned int g_state_0053815c;
+extern void MStackSignedMod_0042fee0(void);
+
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
@@ -37,10 +42,6 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   load g_walkCallback, g_state_00538158;
  *   store both into g_eventQueueCurrent and g_scaledInit; jmp T.
  */
-extern unsigned int g_state_0053815c;
-extern unsigned int g_state_00538158_dd;
-extern u32 g_eventQueueWorkType;
-extern void MStackSignedMod_0042fee0(void);
 void LoadSetCallPauseStoreJmp_0042fea0(void) {
     g_eventQueueWorkType = 0x4ccc;
     g_scaledInit_00542044 = g_state_0053815c;

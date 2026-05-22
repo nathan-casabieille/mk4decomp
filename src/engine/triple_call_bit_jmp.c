@@ -123,6 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00471690 (118b) - 3-call chain w/ bit-test for tail-jmp loop. */
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void MStackScopedSlotSetupPair_0040a520(void);
+
 __declspec(naked) void TripleCallBitJmp_00471690(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]

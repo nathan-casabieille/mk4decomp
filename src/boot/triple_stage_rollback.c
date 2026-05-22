@@ -131,6 +131,10 @@ extern unsigned int g_data_00535e7c;
  *     if !pause: loop back to step.
  *   On rollback path: restore saved values.
  */
+extern unsigned int g_x_0054204c;
+extern void Thunk_0049cb70(void);
+extern void Thunk_0049cb80(void);
+
 __declspec(naked) void TripleStageRollback_00404a50(void) {
     __asm {
         push    ecx

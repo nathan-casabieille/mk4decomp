@@ -137,6 +137,18 @@ extern void StageGateFsmCluster_0047b2c0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern unsigned int g_data_004ed160;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void RoundFsmCluster_0047aff0(void)
 {
     __asm {

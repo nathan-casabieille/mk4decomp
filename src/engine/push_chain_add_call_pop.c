@@ -123,6 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00493c80 (125b) - mstack push + chain access + add + call + pop. */
+
 void PushChainAddCallPop_00493c80(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -153,3 +154,4 @@ void PushChainAddCallPop_00493c80(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

@@ -130,6 +130,16 @@ extern unsigned int g_data_00535e7c;
  *   if bit0 cleared: store, call RoundWinTransition_0049e7e0; if pause ret; load [+8], call GuardedScaledCall;
  *   else fall to tail-CallSetPause; pop ebx; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00535e48;
+extern unsigned int g_x_00541fc0;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+extern void CallSetPause_0041f830(void);
+extern void GuardedScaledCall_0048a020(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void RoundWinTransition_0049e7e0(void);
+
 __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00541fc0]

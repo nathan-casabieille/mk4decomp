@@ -137,6 +137,20 @@ extern unsigned int g_data_00535e7c;
  *   chain[g_x_00542048*4 + 0x14] = 0x80; chain[+0x10] = g_x_0054206c = 0x004ba0e0;
  *   tail-jmp TestEqJmpInitFightGroup_004a1740.
  */
+extern unsigned int g_data_0050f1bc;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_00542050;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void FramePauseScaledStore_00406c10(void);
+extern void MStackBracket4_ListInsertZeroFill_00408600(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPush3LinkedListWalk_004088b0(void);
+extern void TestEqJmpInitFightGroup_004a1740(void);
+
 __declspec(naked) void AudioChainStateInitSequence_004a1610(void)
 {
     __asm

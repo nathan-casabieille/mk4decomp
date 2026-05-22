@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *     else: push 0x004ea968, tail-call ArgSarStoreJmp.
  *   B3: install-self pattern.
  */
+extern unsigned int g_data_0053a238;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void DecCallPushCall_00466090(void);
+extern void DualScaledChainPush_00466000(void);
+extern void MoveStackPipeline_004660d0(void);
+
 __declspec(naked) void TripleBlockInstallSelf_00465ef0(void) {
     __asm {
         push    0x004ea948

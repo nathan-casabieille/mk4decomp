@@ -122,6 +122,34 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_0052aabc;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_00537e88;
+extern unsigned int g_data_0053a318;
+extern unsigned int g_data_0053a408;
+extern unsigned int g_data_00541dd8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00543564;
+extern unsigned int g_data_00543594;
+extern unsigned int g_data_00550000;
+extern unsigned int g_data_008c0000;
+extern void CallSetPause_0041f830(void);
+extern void Cmp7DirtyToggle_0042ee10(void);
+extern void DispatcherComplex181_00426310(void);
+extern void GuardedDualMaskFlagToggle_004261d0(void);
+extern void RoundCleanupCluster_00427690(void);
+extern void SaveCallRestore_004049d0(void);
+extern void SetWalkCurCallPauseDirty_00404c70(void);
+extern void StoreIncrMStackPush6_004275c0(void);
+
 __declspec(naked) void Event23bMusicCluster_0042f540(void)
 {
     __asm {

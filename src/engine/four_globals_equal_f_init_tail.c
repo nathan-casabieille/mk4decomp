@@ -128,6 +128,17 @@ extern unsigned int g_data_00535e7c;
  *   g_scaledInit_00542044 = v3; arg = arr[v3];
  *   push arg twice; g_x_0053a46c = arg; call Mul10Tail; g_x_0053a180 = res; jmp F3.
  */
+extern unsigned int g_data_004dfd48;
+extern unsigned int g_x_00537f48;
+extern unsigned int g_x_005380e0;
+extern unsigned int g_x_0053a178;
+extern unsigned int g_x_0053a180;
+extern unsigned int g_x_0053a250;
+extern unsigned int g_x_0053a46c;
+extern unsigned int g_x_0053a51c;
+extern void ScenePostInitSequencer_00429b70(void);
+extern void TablePushAccumTailJmp_00429e30(void);
+
 __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
     __asm {
         mov     ecx, dword ptr [g_x_00537f48]

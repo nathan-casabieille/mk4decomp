@@ -126,6 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   For each of g_walkCallback bits [0..10], [11..21], [22..31]:
  *     v = (bits) << 16; r = Mul10Tail(g_x_004d510c or 4d5108, v); dst[+i] = r.
  */
+extern unsigned int g_x_004d5108;
+extern unsigned int g_x_004d510c;
+extern unsigned int g_x_0054204c;
+
+extern unsigned int g_arr_407c60;
+
 void ThreeChan11BitPack_00407c60(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -166,3 +172,4 @@ void ThreeChan11BitPack_00407c60(void) {
         mov     [ecx*4 + g_arr_407c60 + 0x08], eax
         }
 }
+

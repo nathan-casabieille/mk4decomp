@@ -138,6 +138,18 @@ extern unsigned int g_data_00535e7c;
  *     IndirectDispatchCjStore_0048ae50, then StackPopDispatchTagged_0041f780.
  *     Else tail-call IndirectDispatchCjStore directly.
  */
+extern unsigned int g_data_00538148;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern void CallSetPause_0041f830(void);
+extern void IndirectDispatchCjStore_0048ae50(void);
+extern void MStackPush6OpPop6_0048af60(void);
+
 __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

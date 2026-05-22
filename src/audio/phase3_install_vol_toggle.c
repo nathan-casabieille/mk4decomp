@@ -137,6 +137,28 @@ extern unsigned int g_data_00535e7c;
  *     g_data_00542054 into 0x542044, vol byte into 0x54206c, calls
  *     ScaledChainStore24_004a7d40 and falls through to install tail.
  */
+extern unsigned int g_data_004d50b4;
+extern unsigned int g_data_0052aac4;
+extern unsigned int g_data_0053a50c;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_005433c8;
+extern unsigned int g_data_00543590;
+extern unsigned int g_data_0054359c;
+extern unsigned int g_data_005435a0;
+extern void AudioMicroEntries_004a7600(void);
+extern void AudioSwap2ChainBank3State_004a8490(void);
+extern void DebugStub_NoOp_A(void);
+extern void DebugStub_NoOp_B(void);
+extern void DualListInit_004a8290(void);
+extern void ScaledChainStore24_004a7d40(void);
+extern void SetJmp_004a1ad0(void);
+extern void TripleCallByteCheck_004a1bf0(void);
+
 __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]

@@ -122,6 +122,28 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004e2860;
+extern unsigned int g_data_004e2864;
+extern unsigned int g_data_00535e48;
+extern unsigned int g_data_00537e90;
+extern unsigned int g_data_00537f88;
+extern unsigned int g_data_0053a1bc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541fc0;
+extern unsigned int g_data_00542004;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void DualPushSetCallDualPop_00404b10(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void SetOnePairJmp_004a0110(void);
+extern void TripleStageRollback_00404a50(void);
+extern void TripleTestInstallJmp_004a0130(void);
+
 __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
 {
     __asm

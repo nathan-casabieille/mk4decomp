@@ -141,6 +141,25 @@ extern unsigned int g_data_00535e7c;
  *   Entry 4 (offset 0x140, 37b): sets [scaled+0x74]=0x112, pushes
  *     0x4f17f8 → ScaledLookupGuardJmpIndirect_004949f0.
  */
+extern unsigned int g_data_004f17c0;
+extern unsigned int g_data_004f17c8;
+extern unsigned int g_data_004f17d8;
+extern unsigned int g_data_004f17f8;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542080;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_table_004d57b0;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void InstallSelfMStackPush_004968a0(void);
+extern void PushPopWalkSet1006_00470ee0(void);
+extern void ScaledInit_0048d490(void);
+extern void ScaledLoadIncJmp_00429840(void);
+extern void ScaledLookupGuardJmpIndirect_004949f0(void);
+extern void StreamInitCountdownBody_00494830(void);
+
 __declspec(naked) void Alarm4EntryInstallCountdown_00496960(void) {
     __asm {
         call    PushPopWalkSet1006_00470ee0

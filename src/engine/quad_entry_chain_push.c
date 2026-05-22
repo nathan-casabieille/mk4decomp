@@ -127,6 +127,12 @@ extern unsigned int g_data_00535e7c;
  *     chain[*4+0x68]=0x101 via baseSel*4 indirection, push 0x004eb2d8 call ArgSarStoreJmp; ret.
  *   Blocks B,C,D (+0x60/+0x70/+0x80): push 0x004eb318/0x004eb348/0x004eb398; call ArgSarStoreJmp; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054206c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void ScaledAndAlfe_00490390(void);
+extern void ThresholdSetMatchDispatch_0046dc10(void);
+
 void QuadEntryChainPush_0046dd00(void) {
     __asm {
         call    ScaledAndAlfe_00490390
@@ -181,3 +187,4 @@ void QuadEntryChainPush_0046dd00(void) {
         add     esp, 4
         }
 }
+

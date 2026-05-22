@@ -134,6 +134,9 @@ extern void Crt_doserrno_004c8bb0(void);
  *   critsec, call CloseFd_004c8a50, exit critsec; else set errno=9 and
  *   _doserrno=0; return -1.
  */
+extern unsigned int g_x_00fa0de0;
+extern void CritSecLazyEnter_004cd2b0(void);
+
 __declspec(naked) void CloseImpl_004c89e0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00fa0ee0]

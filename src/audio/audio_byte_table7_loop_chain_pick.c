@@ -132,6 +132,13 @@ extern unsigned int g_data_00535e7c;
  *   chain[+0x54] → esi-table[+0x8]; movsx ecx = byte tab; chain[+(baseSel+ecx)*4] = chain.
  *   inc edi; if < 7: loop.
  */
+extern unsigned int g_byteTab_004f3940;
+extern unsigned int g_data_004f3928;
+extern unsigned int g_x_00542044;
+extern unsigned int g_x_0054206c;
+extern void GuardedSetupCallTailJmp_004a1fa0(void);
+extern void MStackPush2ChainLLInsert_00406790(void);
+
 __declspec(naked) void AudioByteTable7LoopChainPick_004a5160(void)
 {
     __asm

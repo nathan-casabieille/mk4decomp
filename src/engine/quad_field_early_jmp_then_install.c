@@ -122,6 +122,19 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_00542078;
+extern void AudioMixerStep_004ab700(void);
+extern void CallSetPause_0041f830(void);
+extern void DirtyToggleScaledTest_0043a630(void);
+extern void InstallSelfScaledAdv3d7Cmp_0043a830(void);
+
 __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
 {
     __asm

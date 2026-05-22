@@ -130,6 +130,12 @@ extern unsigned int g_data_00535e7c;
  *   ++chain[sel].slot4; clear chain[base].slot84;
  *   call KnockbackPositionReset_00472a90; g_framePauseFlag = 1; ret.
  */
+extern void BootStateInitLongChain_0041ab90(void);
+extern void KnockbackPositionReset_00472a90(void);
+
+extern unsigned int g_arr_41aaf0_mstack;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

@@ -122,6 +122,35 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0052ab40;
+extern unsigned int g_data_00538038;
+extern unsigned int g_data_0053a430;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00541ec4;
+extern unsigned int g_data_00541ec8;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern unsigned int g_data_00542094;
+extern unsigned int g_data_00543200;
+extern unsigned int g_data_00543250;
+extern unsigned int g_data_005432a0;
+extern void DirtyDoubleDeref_00408cb0(void);
+extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
+extern void MStackChainDecodeCall_004936f0(void);
+extern void MStackPush2ChainPrepend_00409970(void);
+extern void MStackPushCallCallPop_00405e20(void);
+extern void PushSetCallCleanup_00408580(void);
+extern void ScaledAddDeref_00494800(void);
+extern void ScaledLoadJmp30_00493eb0(void);
+extern void ScaledTestPauseStore_00408860(void);
+extern void TestStoreConstJmp_004933b0(void);
+
 void StrikeAnim4Picker_00493100(void) {
     __asm {
         mov      eax, dword ptr [g_data_0052ab40]
@@ -283,3 +312,4 @@ void StrikeAnim4Picker_00493100(void) {
     L_33a1:
         }
 }
+

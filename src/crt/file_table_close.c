@@ -123,6 +123,23 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
+extern unsigned int g_data_004d209c;
+extern unsigned int g_data_004d20f0;
+extern unsigned int g_data_00f9f838;
+extern unsigned int g_data_00f9fdb4;
+extern unsigned int g_data_00fa0dc0;
+extern unsigned int g_data_00fa0de0;
+extern unsigned int g_data_00fa0ee0;
+extern void CRTHandleLookup_004cd260(void);
+extern void Calloc_004c6110(void);
+extern void CmpCallPushIATCall_004c6e60(void);
+extern void CritSecLazyEnter_004cd2b0(void);
+extern void Crt_doserrno_004c8bb0(void);
+extern void Crt_errno_004c8ba0(void);
+extern void DivMod32IAT_004cd320(void);
+extern void PushConstCall_004c6a10(void);
+extern void StreamCleanupLoop_004ce0b0(void);
+
 __declspec(naked) void FileTableClose_004cb700(void) {
     __asm {
         mov     eax, dword ptr [g_data_00fa0ee0]

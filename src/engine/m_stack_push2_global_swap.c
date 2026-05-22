@@ -129,6 +129,13 @@ extern unsigned int g_data_00535e7c;
  *   else: g_x_00542048 = g_x_0053815c; if (g_x_0053815c == eax): g_scaledInit = g_x_0053815c = 0.
  *   Then pop 2 into g_x_00542048, g_scaledInit.
  */
+extern unsigned int g_x_00538158;
+extern unsigned int g_x_0053815c;
+extern unsigned int g_x_00542048;
+
+extern unsigned int g_data_004d57ac_arr;
+extern void FiveCallGuardSetTail_0046f6b0(void);
+
 void MStackPush2GlobalSwap_00477400(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
@@ -173,3 +180,4 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

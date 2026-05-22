@@ -123,6 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00484950 (316b game) - 3-state install-self with tail sibling. */
+extern unsigned int g_pause_00541e6c;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CallPauseScaledStoreJmp_00428820(void);
+extern void FiveCallGuardSetTail_0046f6b0(void);
+extern void GuardedPackedSlotInit_00428760(void);
+extern void ScaledAndAl7f_004902f0(void);
+
 __declspec(naked) void Install3StateSiblingTail_00484950(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

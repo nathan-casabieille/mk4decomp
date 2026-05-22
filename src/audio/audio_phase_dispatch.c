@@ -122,6 +122,26 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004a0370;
+extern unsigned int g_data_004e2864;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_00542058;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_0054208c;
+extern void Eleven404b90_404c00_004266d0(void);
+extern void IncWrap0fJmp_004a1120(void);
+extern void InstallSelf3WaySubDec_004a1320(void);
+extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
+extern void PoseGridGenerator_004a13d0(void);
+extern void PushCallPauseStorePushDispatch_004a12e0(void);
+extern void RoundWinTransition_0049e7e0(void);
+extern void Ten404c40_404bd0_00426780(void);
+extern void TripleStageRollback_00404a50(void);
+
 __declspec(naked) void AudioPhaseDispatch_004a1150(void)
 {
     __asm

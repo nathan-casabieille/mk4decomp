@@ -124,6 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern void TradePlaceChain_004933d0(void);
 extern unsigned int g_x_0052ab40;
+extern unsigned int g_state_00542054;
 
 /*
  * @addr 0x00494580 (107b game) - gate-then-dispatch:

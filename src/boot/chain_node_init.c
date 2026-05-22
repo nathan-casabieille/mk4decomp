@@ -130,6 +130,11 @@ extern unsigned int g_data_00535e7c;
  *   ecx = g_scaledInit + 0x22; g_x_0054206c = ecx; chain[+4] = ecx;
  *   mstack-pop into g_x_00542048.
  */
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054206c;
+
+extern unsigned int g_data_004d57ac_arr;
+
 void ChainNodeInit_0041fa50(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
@@ -171,3 +176,4 @@ void ChainNodeInit_0041fa50(void) {
         mov     dword ptr [g_state_004d57ac], eax
         }
 }
+

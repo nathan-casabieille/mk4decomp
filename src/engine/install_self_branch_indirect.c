@@ -130,6 +130,15 @@ extern unsigned int g_data_00535e7c;
  *   Else: call MStackIndirectCallBit_00470e20; if pause? ret.
  *   Install-self via baseSel[+4] chain push; pause=1; ret.
  */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054204c;
+extern unsigned int g_x_00542054;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542084;
+extern void MStackIndirectCallBit_00470e20(void);
+extern void ScaledArrStore_00429980(void);
+
 __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]

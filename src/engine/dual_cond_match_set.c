@@ -128,6 +128,15 @@ extern unsigned int g_data_00535e7c;
  *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
+extern unsigned int g_data_0054204c;
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0052aac4;
+extern unsigned int g_x_00542048;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern void CmpEax1OrSetDirty_00488e90(void);
+extern void SwapOrPassSet_0048fbf0(void);
+
 __declspec(naked) void DualCondMatchSet_00488dc0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052aac4]

@@ -123,6 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00483900 (205b game) - 4-entry-point sequencer. */
+extern unsigned int g_pause_00541e6c;
+extern unsigned int g_x_0054205c;
+extern unsigned int g_x_0054206c;
+extern unsigned int g_x_00542078;
+extern unsigned int g_x_0054207c;
+extern unsigned int g_x_00542080;
+extern void ArgSarStoreJmp_004594f0(void);
+extern void CjTableThresholdDispatch_00488f00(void);
+extern void CmpP1DualInitStore_00482ab0(void);
+extern void GateDispatch6c_00494580(void);
+extern void GatedScaledChainSetup_00427390(void);
+extern void InstallSelfDualEntry_00426ae0(void);
+
 __declspec(naked) void Quad4SequencerInstall_00483900(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0054205c]

@@ -134,6 +134,26 @@ extern void func_0047fa30(void);
 extern unsigned int g_data_004ed778;
 extern unsigned int g_data_0050b8dc;
 
+extern unsigned int g_data_004d57ac;
+extern unsigned int g_data_0052ab10;
+extern unsigned int g_data_00535ddc;
+extern unsigned int g_data_00541e6c;
+extern unsigned int g_data_00542044;
+extern unsigned int g_data_00542048;
+extern unsigned int g_data_0054204c;
+extern unsigned int g_data_00542054;
+extern unsigned int g_data_0054205c;
+extern unsigned int g_data_00542060;
+extern unsigned int g_data_0054206c;
+extern unsigned int g_data_00542074;
+extern unsigned int g_data_0054207c;
+extern unsigned int g_data_0054208c;
+extern void EntryThunkBodyStateMachine_00457bb0(void);
+extern void InstallSelfIndirectJmp_0048f3f0(void);
+extern void MStackPushDispatchBitGate_00407330(void);
+extern void ScaledIndexConditionalAdd_0048e400(void);
+extern void TripleScaledChainStore_004908f0(void);
+
 __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
 {
     __asm {

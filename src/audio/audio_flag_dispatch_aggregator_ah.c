@@ -128,6 +128,11 @@ extern unsigned int g_data_00535e7c;
  *   (blocks 0/1/5) and CH bits in the aggregator (bits 8-11 instead of 0-3).
  *   Middle blocks test byte at 0x004d50d8 bits 0x10/0x20/0x40, push to g_data_005433d8 table.
  */
+extern unsigned int g_byte_004d50d8;
+extern unsigned int g_data_004d50d4;
+extern unsigned int g_data_005433d8;
+extern void ShiftDownThreeAndAppend_004aa3f0(void);
+
 void AudioFlagDispatchAggregatorAH_004aa520(void) {
     __asm {
         mov     eax, dword ptr [g_data_004d50d4]
@@ -203,3 +208,4 @@ void AudioFlagDispatchAggregatorAH_004aa520(void) {
     L_a_done:
         }
 }
+
