@@ -134,24 +134,24 @@ void AudioBindEntryB_004a6230(void) {
     __asm {
         mov     eax, 0x00511e1c
         shr     eax, 2
-        mov     dword ptr [g_eventQueueWorkType], eax
-        call    DispatcherComplex260_00407400
+        mov     dword ptr [g_xformEntityIdx], eax
+        call    DispatcherComplex260_00407030
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
         test    byte ptr [g_state_0054208c], 4
         jne     done
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00730000
         mov     dword ptr [ecx*4 + 0x54], 0xfef70000
-        mov     edx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
         call    MStackPushComplexCallPop_004064b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00014ccc
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax

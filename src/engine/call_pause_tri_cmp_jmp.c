@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .ret
- *   mov     eax, [g_eventQueueCurrent]
+ *   mov     eax, [g_walkCallback]
  *   cmp     eax, 0x1010
  *   je      +0x13
  *   cmp     eax, 0x1011
@@ -28,7 +28,7 @@ void CallPauseTriCmpJmp_00460910(void) {
     unsigned int v;
     func_0048fc10();
     if (g_framePauseFlag != 0) return;
-    v = g_eventQueueCurrent;
+    v = (unsigned int)g_walkCallback;
     if (v == 0x1010) return;
     if (v == 0x1011) return;
     if (v == 0x0400) return;

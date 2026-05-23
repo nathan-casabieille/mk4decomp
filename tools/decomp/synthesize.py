@@ -320,6 +320,14 @@ def main():
                     # Apply per reloc type
                     r_type = r['type']
                     # x86 COFF: 6=DIR32, 20=REL32
+                    # MSVC 5.0 quirk: CRT asm emits type=6 for near Jcc/JMP/CALL to external
+                    # symbols, but the instruction slot holds a REL32 displacement. Detect by
+                    # checking the opcode byte(s) preceding the slot.
+                    if r_type == 6 and offset_in_fn >= 1:
+                        prev1 = fn_bytes[offset_in_fn - 1]
+                        prev2 = fn_bytes[offset_in_fn - 2] if offset_in_fn >= 2 else 0
+                        if (prev1 in (0xe8, 0xe9) and prev2 not in (0x81, 0x83)) or (prev2 == 0x0f and 0x80 <= prev1 <= 0x8f):
+                            r_type = 20  # treat as REL32
                     if r_type == 6:  # DIR32 - absolute address
                         existing = struct.unpack_from('<I', fn_bytes, offset_in_fn)[0]
                         if ref_va:
@@ -381,7 +389,7 @@ def main():
 
     print(f'\nFunctions placed: {placed}')
     print(f'Mismatches: {len(mismatches)}')
-    for name, va, sz, n in mismatches[:10]:
+    for name, va, sz, n in mismatches:
         print(f'  {name} @ {va:#x} ({sz}b): {n} bytes differ')
 
     # 0x90-fill inter-function padding: for any .text byte not covered by a

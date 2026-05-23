@@ -7,9 +7,9 @@
  */
 #include "engine/scenegraph.h"
 
-/* @addr 0x00438160 (6b): jmp [g_eventQueueChild]  (indirect jump through global) */
+/* @addr 0x00438160 (6b): jmp [g_eventQueueIdx]  (indirect jump through global) */
 void IndirectJmp_00438160(void) {
-    ((void (*)(void))g_eventQueueChild)();
+    ((void (*)(void))g_eventQueueIdx)();
 }
 
 /* @addr 0x00460400 (30b)

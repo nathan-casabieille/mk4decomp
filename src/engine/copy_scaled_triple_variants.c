@@ -22,7 +22,7 @@ void CopyScaledTriple_00446120(void) {
     unsigned int base;
     g_fightGroupHead = g_eventQueueIdx;
     base = g_baseSel_00542060;
-    g_eventQueueEnd = *(unsigned int *)(base * 4 + 0x78);
+    g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
     g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
     func_00405e90();
 }
@@ -32,7 +32,7 @@ extern void func_00405ce0(void);
 void CopyScaledTriple_00446350(void) {
     unsigned int base = g_baseSel_00542060;
     g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
-    g_eventQueueIdx = *(unsigned int *)(base * 4 + 0x78);
+    g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
     g_fightGroupHead = g_eventQueueEnd;
     func_00405ce0();
 }

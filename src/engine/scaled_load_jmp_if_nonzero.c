@@ -8,7 +8,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00490e00 (49b)
- *   mov     eax, [g_eventQueueIdx]
+ *   mov     eax, [g_xformEntityIdx]
  *   xor     edx, edx
  *   mov     ecx, [eax*4 + 0x4c]
  *   cmp     ecx, edx
@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u32 g_pendingNodeType;
 void ScaledLoadJmpIfNonzero_00490e00(void) {
-    unsigned int idx = g_eventQueueIdx;
+    unsigned int idx = g_xformEntityIdx;
     unsigned int v = *(unsigned int *)(idx * 4 + 0x4c);
     g_pendingNodeType = v;
     if (v == 0) return;

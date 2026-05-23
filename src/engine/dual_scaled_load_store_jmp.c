@@ -8,7 +8,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x00475790 (36b)
- *   mov     eax, [g_eventQueueIdx]
+ *   mov     eax, [g_xformEntityIdx]
  *   mov     ecx, [eax*4 + 0x3c]
  *   mov     [g_walkCallback], ecx
  *   mov     edx, [eax*4 + 0x44]
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void func_004757a4(void);
 void DualScaledLoadStoreJmp_00475790(void) {
-    unsigned int idx = g_eventQueueIdx;
+    unsigned int idx = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4 + 0x3c);
     g_eventQueueCurrent = *(unsigned int *)(idx * 4 + 0x44);
     func_004757a4();

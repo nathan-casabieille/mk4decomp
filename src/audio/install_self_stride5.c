@@ -145,8 +145,8 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         push    edi
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h

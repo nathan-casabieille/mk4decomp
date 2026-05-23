@@ -155,13 +155,13 @@ __declspec(naked) void TripleChainTailJmp_00419900(void) {
         jne     done
         test    byte ptr [g_state_0054208c], 4
         jne     done
-        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x011999
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
         mov     edx, dword ptr [g_state_00542054]
         add     edx, 0x15
-        mov     dword ptr [g_state_00542054], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         jmp     BootFlagChainAudioPause_00412080
 done:
         ret

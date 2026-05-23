@@ -204,7 +204,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         cmp     esi, ecx
         setg    al
         inc     edx
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_state_00542098], eax
         test    eax, eax
         mov     dword ptr [g_x_00542048], edx
         je      short L_7ae_pop1

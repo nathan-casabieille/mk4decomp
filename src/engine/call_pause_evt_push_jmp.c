@@ -9,10 +9,10 @@
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .ret
- *   mov     eax, [g_eventQueueCurrent]
+ *   mov     eax, [g_walkCallback]
  *   mov     ecx, [g_xformEntityIdx]
  *   inc     eax
- *   mov     [g_eventQueueCurrent], eax
+ *   mov     [g_walkCallback], eax
  *   mov     [ecx*4 + 0], eax
  *   jmp     T
  */
@@ -23,8 +23,8 @@ void CallPauseEvtPushJmp_00422880(void) {
     unsigned int v;
     SwapOrPassSet_0048fbf0();
     if (g_framePauseFlag != 0) return;
-    v = g_eventQueueCurrent + 1;
-    g_eventQueueCurrent = v;
+    v = (unsigned int)g_walkCallback + 1;
+    g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_xformEntityIdx * 4) = v;
     func_00478328();
 }

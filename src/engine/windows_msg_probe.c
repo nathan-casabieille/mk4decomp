@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   On any fail, return 0.
  */
 extern unsigned int g_PeekMessageA_007b003c;
-extern unsigned int g_x_007affe0;
+extern unsigned int g_x_007afff0;
 extern unsigned int g_x_007affe4;
 
 __declspec(naked) void WindowsMsgProbe_004b4530(void) {
@@ -168,7 +168,7 @@ __declspec(naked) void WindowsMsgProbe_004b4530(void) {
         cmp     ebx, ebp
         _emit   74h
         _emit   7ah
-        cmp     dword ptr [g_x_007affe0], ebp
+        cmp     dword ptr [g_x_007afff0], ebp
         _emit   75h
         _emit   72h
         mov     edi, [esp + 0x34]
@@ -214,7 +214,7 @@ __declspec(naked) void WindowsMsgProbe_004b4530(void) {
         mov     [ebx], ecx
         setne   al
         inc     eax
-        mov     dword ptr [g_x_007affe0], eax
+        mov     dword ptr [g_x_007afff0], eax
         mov     dword ptr [edi], 1
         mov     eax, 1
         pop     edi

@@ -138,7 +138,7 @@ void GateDispatch6c_00494580(void) {
     v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x30);
     g_walkCallback = (void (*)(void))v;
     if (v == 0) return;
-    g_eventQueueWorkType = v;
+    g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;
     if (v != 0x6c) {
@@ -150,6 +150,6 @@ void GateDispatch6c_00494580(void) {
     }
     TradePlaceChain_004933d0();
     if (g_framePauseFlag != 0) return;
-    g_state_00542054 = (unsigned int)g_walkCallback;
+    g_state_00542054 = g_scaledInit_00542044;
     StoreTwoCall_0049cb40(0x004945f0, 0x60);
 }

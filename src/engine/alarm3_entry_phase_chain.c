@@ -131,12 +131,12 @@ extern unsigned int g_data_00535e7c;
  *     [scaled+0x74]=0x201 first, calls MStackPushSet0020_004901d0, then
  *     conditionally pushes 0x4ed5a8.
  *   13b NOP align pad.
- *   Entry 3 / body (offset 0x90, 211b): phase-state install. Phase 0 →
- *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 →
+ *   Entry 3 / body (offset 0x90, 211b): phase-state install. Phase 0 ->
+ *     install Self body at [esi+8], slot[+0x84]=1, arms 0x541e6c. Phase 1 ->
  *     CmpEqInitCallElseJmp_0048d4b0, on no-error: if bit 0 of 0x54208c set
  *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
  *     If g_data_0054206c < 0x26666 (threshold) tail-installs Self.
- *     Else chains ScaledAndAldf_00490330 → EsiEdiAliasDualMul10_004906b0,
+ *     Else chains ScaledAndAldf_00490330 -> EsiEdiAliasDualMul10_004906b0,
  *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
@@ -148,7 +148,7 @@ extern unsigned int g_data_0054205c;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0054206c;
 extern unsigned int g_data_0054208c;
-extern void ArgSarStoreJmp_004594f0(void);
+extern void ArgSarStoreJmp_004594f0(unsigned int *);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void InstallSelfThresholdDispatch_0047e310(void);
@@ -158,120 +158,58 @@ extern void ScaledAndAldf_00490330(void);
 extern void TailJmpInstallSelfPair_0047e690(void);
 extern void TriPhaseDualPathInstallChain_0047e420(void);
 
-__declspec(naked) void Alarm3EntryPhaseChain_0047e1a0(void) {
-    __asm {
-        mov     ecx, dword ptr [g_data_00542060]
-        mov     eax, 0x1012
-        mov     dword ptr [g_data_0054206c], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        call    MStackPushSet0008_004901a0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_a3e_e1End
-        push    offset g_data_004ed590
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-    L_a3e_e1End:
-        ret
-        /* 13b NOP pad */
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        /* entry 2 (offset 0x40) */
-    L_a3e_entry2:
-        mov     eax, dword ptr [g_data_00542060]
-        mov     dword ptr [eax*4 + 0x68], 0x402
-        mov     ecx, dword ptr [g_data_00542060]
-        mov     eax, 0x201
-        mov     dword ptr [g_data_0054206c], eax
-        mov     dword ptr [ecx*4 + 0x74], eax
-        call    MStackPushSet0020_004901d0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_a3e_e2End
-        push    offset g_data_004ed5a8
-        call    ArgSarStoreJmp_004594f0
-        add     esp, 4
-    L_a3e_e2End:
-        ret
-        /* 13b NOP pad */
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        nop
-        /* entry 3 / body (offset 0x90) */
-    L_a3e_body:
-        mov     eax, dword ptr [g_data_00542060]
-        push    ebx
-        push    esi
-        mov     ebx, 1
-        lea     esi, [eax*4]
-        mov     eax, dword ptr [eax*4 + 0x84]
-        mov     dword ptr [esi + 0x84], 0
-        test    eax, eax
-        je      L_a3e_installPhase0
-        mov     dword ptr [g_data_0054206c], 2
-        call    CmpEqInitCallElseJmp_0048d4b0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     L_a3e_doneNoPop
-        test    byte ptr [g_data_0054208c], bl
-        je      short L_a3e_e3InitChain
-        call    TriPhaseDualPathInstallChain_0047e420
-        pop     esi
-        pop     ebx
-        ret
-    L_a3e_e3InitChain:
-        call    TailJmpInstallSelfPair_0047e690
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_a3e_doneNoPop
-        cmp     dword ptr [g_data_0054206c], 0x26666
-        jl      short L_a3e_installPhase0
-        call    ScaledAndAldf_00490330
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_a3e_doneNoPop
-        mov     dword ptr [g_data_0054206c], 0x4ccc
-        call    EsiEdiAliasDualMul10_004906b0
-        mov     eax, dword ptr [g_data_00541e6c]
-        test    eax, eax
-        jne     short L_a3e_doneNoPop
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     eax, 0x28f
-        mov     dword ptr [g_data_0054206c], eax
-        mov     dword ptr [ecx*4 + 0x4c], eax
-        call    InstallSelfThresholdDispatch_0047e310
-        pop     esi
-        pop     ebx
-        ret
-    L_a3e_installPhase0:
-        mov     dword ptr [esi + 8], offset L_a3e_body
-        mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
-        mov     dword ptr [g_data_00541e6c], ebx
-    L_a3e_doneNoPop:
-        pop     esi
-        pop     ebx
-        ret
+/* entry 1 (offset 0, 51b) */
+void Alarm3EntryPhaseChain_0047e1a0(void) {
+    g_data_0054206c = 0x1012;
+    *(unsigned int *)(g_data_00542060 * 4 + 0x74) = 0x1012;
+    MStackPushSet0008_004901a0();
+    if (g_data_00541e6c == 0)
+        ArgSarStoreJmp_004594f0(&g_data_004ed590);
+}
+
+/* entry 2 (offset 0x40, 67b) */
+void Alarm3PhaseChainEntry2_0047e1e0(void) {
+    *(unsigned int *)(g_data_00542060 * 4 + 0x68) = 0x402;
+    *(unsigned int *)(g_data_00542060 * 4 + 0x74) = g_data_0054206c = 0x201;
+    MStackPushSet0020_004901d0();
+    if (g_data_00541e6c == 0)
+        ArgSarStoreJmp_004594f0(&g_data_004ed5a8);
+}
+
+/* entry 3 / body (offset 0x90, 211b) */
+void Alarm3PhaseChainBody_0047e230(void) {
+    unsigned char *base = (unsigned char *)(g_data_00542060 * 4);
+    unsigned int phase = *(unsigned int *)(g_data_00542060 * 4 + 0x84);
+    *(unsigned int *)(base + 0x84) = 0;
+    if (phase != 0) {
+        g_data_0054206c = 2;
+        CmpEqInitCallElseJmp_0048d4b0();
+        if (g_data_00541e6c != 0) return;
+
+        if (g_data_0054208c & 1) {
+            TriPhaseDualPathInstallChain_0047e420();
+            return;
+        }
+
+        TailJmpInstallSelfPair_0047e690();
+        if (g_data_00541e6c != 0) return;
+        if ((int)g_data_0054206c >= 0x26666) {
+            ScaledAndAldf_00490330();
+            if (g_data_00541e6c != 0) return;
+
+            g_data_0054206c = 0x4ccc;
+            EsiEdiAliasDualMul10_004906b0();
+            if (g_data_00541e6c != 0) return;
+
+            g_data_0054206c = 0x28f;
+            *(unsigned int *)(g_data_0054205c * 4 + 0x4c) = 0x28f;
+            InstallSelfThresholdDispatch_0047e310();
+            return;
+        }
     }
+
+    *(unsigned int *)(base + 8) = (unsigned int)Alarm3PhaseChainBody_0047e230;
+    *(unsigned int *)(base + 0x84) = 1;
+    g_data_0054204c = 1;
+    g_data_00541e6c = 1;
 }

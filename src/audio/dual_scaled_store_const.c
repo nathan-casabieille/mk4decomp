@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void DualScaledStoreConst_004a22c0(void) {
-    *(unsigned int *)(g_eventQueueIdx * 4) = 0;
+    *(unsigned int *)(g_xformEntityIdx * 4) = 0;
     g_walkCallback = (void (*)(void))2;
     *(unsigned int *)(g_scaledInit_00542044 * 4) = 2;
 }

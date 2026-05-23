@@ -19,14 +19,14 @@ extern u32 g_eventQueueNotMask;
  *   Push g_eventQueueCurrent on stack[idx*4]; set g_eventQueueCurrent = -1;
  *   call F; pause-test → ret; pop stack value back into g_eventQueueCurrent.
  */
-extern void Helper_TickFrame_PostFight(void);
+extern void Thunk_0049cc00(void);
 void PushPopCurrentSetFFFFFFFF_00473070(void) {
     unsigned int top;
     top = g_state_004d57ac + 1;
     g_state_004d57ac = top;
     *(unsigned int *)(top * 4) = g_eventQueueCurrent;
     g_eventQueueCurrent = 0xffffffff;
-    Helper_TickFrame_PostFight();
+    Thunk_0049cc00();
     if (g_framePauseFlag != 0) return;
     top = g_state_004d57ac;
     g_eventQueueCurrent = *(unsigned int *)(top * 4);

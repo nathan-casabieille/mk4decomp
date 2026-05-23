@@ -128,12 +128,12 @@ extern unsigned int g_data_00535e7c;
  *   state 1/2 share common tail: call ScaledZeroFour; if pause? ret. Then
  *     install-self with appropriate packed_ptr offset (+0x02000000 / +0x03000000).
  *   state >=3: g_scaledInit = g_cj_0054205c; call MStackPush2ChainLLInsert_00406790; if pause? ret;
- *     else tail-call Mul10SumSqrt_00425830.
+ *     else tail-call CallSetPause_0041f830.
  */
 extern unsigned int g_pause_00541e6c;
+extern void CallSetPause_0041f830(void);
 extern void EsiInstallCounterDispatch_0049b120(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
-extern void Mul10SumSqrt_00425830(void);
 
 __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
     __asm {
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain_0049b000(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    Mul10SumSqrt_00425830
+        call    CallSetPause_0041f830
         pop     edi
         pop     esi
         ret

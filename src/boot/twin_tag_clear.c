@@ -139,7 +139,7 @@ void TwinTagClear_00416db0(void) {
         jne     done
         test    byte ptr [g_state_0054208c], 4
         jne     stage2
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [eax*4 + 0x3c], 0
 stage2:
         mov     dword ptr [g_walkCallback], 0xffffffeb
@@ -149,7 +149,7 @@ stage2:
         jne     done
         test    byte ptr [g_state_0054208c], 4
         jne     done
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [ecx*4 + 0x3c], 0
 done:

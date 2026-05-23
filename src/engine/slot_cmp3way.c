@@ -128,11 +128,9 @@ extern unsigned int g_data_00535e7c;
  *   _74=0; less-or-equal-but-not-equal -> clear bit 0, walk=1, _74=0;
  *   greater -> set bit 0, _74 = |diff|, walk=0.
  */
-extern unsigned int g_x_00542074;
-
 void SlotCmp3way_0048efa0(void) {
     __asm {
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x48]
         mov     dword ptr [g_state_00542088], ecx
         mov     eax, dword ptr [eax*4 + 0x58]
@@ -141,17 +139,17 @@ void SlotCmp3way_0048efa0(void) {
         mov     eax, dword ptr [g_state_0054208c]
         mov     dword ptr [g_walkCallback], 1
         and     al, 0xfe
-        mov     dword ptr [g_x_00542074], 0
+        mov     dword ptr [g_data_00542084], 0
         mov     dword ptr [g_state_0054208c], eax
         ret
 maybeEqual:
         je      zeroAll
         sub     eax, ecx
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_data_00542084], eax
         jns     setBit
         neg     eax
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_data_00542084], eax
 setBit:
         mov     eax, dword ptr [g_state_0054208c]
         or      al, 1
@@ -159,7 +157,7 @@ setBit:
         ret
 zeroAll:
         xor     eax, eax
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_data_00542084], eax
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_0054208c]
         and     al, 0xfe

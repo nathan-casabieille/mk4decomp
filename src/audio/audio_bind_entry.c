@@ -131,14 +131,14 @@ extern unsigned int g_data_00535e7c;
  */
 void AudioBindEntry_004a1e40(unsigned int arg) {
     if (g_data_005437f0 != 0) return;
-    g_eventQueueWorkType = arg >> 2;
+    g_xformEntityIdx = arg >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
-    if (g_walkCallback == 0) return;
-    g_data_005437f0 = (unsigned int)g_walkCallback;
+    if (g_currentNodeIdx == 0) return;
+    g_data_005437f0 = g_currentNodeIdx;
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)((unsigned int)g_walkCallback * 4 + 0x54) = 0;
-    *(unsigned int *)((unsigned int)g_walkCallback * 4 + 0x58) = 0xf0600000;
-    *(unsigned int *)((unsigned int)g_walkCallback * 4 + 0x5c) = 0x00010000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x54) = 0;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x58) = 0xf0600000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
 }

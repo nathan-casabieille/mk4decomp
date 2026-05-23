@@ -31,13 +31,13 @@ loop4c42f0:
         _emit   74h
         _emit   33h
         movsx   eax, ax
-        lea     ecx, [eax*8 + g_arr_00f8fac8]
+        lea     ecx, [eax*8]
         sub     ecx, eax
         mov     edx, [ecx*4 + g_arr_00f8fac8]
         test    edx, edx
         _emit   74h
         _emit   1ch
-        lea     edx, [eax*8 + g_arr_00f8fac8]
+        lea     edx, [eax*8]
         sub     edx, eax
         movsx   eax, word ptr [esi + 2]
         add     edx, eax

@@ -23,12 +23,12 @@
  *   ret
  */
 extern void RangePathIATDispatch_004c6ff0(int);
-extern int Helper_FRead(int);
+extern int FileTellAdjusted_004c58e0(int);
 extern void RangePathIATDispatch_004c7060(int);
 int Helper_FTell(int arg) {
     int saved;
     RangePathIATDispatch_004c6ff0(arg);
-    saved = Helper_FRead(arg);
+    saved = FileTellAdjusted_004c58e0(arg);
     RangePathIATDispatch_004c7060(arg);
     return saved;
 }

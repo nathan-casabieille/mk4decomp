@@ -152,11 +152,11 @@ __declspec(naked) void CjDispatchCommit_004818e0(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         je      same
         mov     eax, ecx
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_currentNodeIdx], eax
 same:
         mov     ecx, dword ptr [g_cj_0054205c]
         pop     esi

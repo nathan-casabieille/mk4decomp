@@ -7,7 +7,8 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_state_007affe4;
-extern unsigned int g_data_004d29c8;
+extern float g_data_004d29c8;
+extern void (__stdcall *g_iat_007b0030)(float);
 
 /* @addr 0x004b2690 (60b): pure call chain - 11 calls + 1 jmp */
 extern void TestCallIat_004c44f0(void);

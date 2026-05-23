@@ -12,7 +12,7 @@
  *   shr     eax, 8
  *   shr     ecx, 2
  *   mov     [g_data_00542070], eax
- *   mov     [g_eventQueueWorkType], ecx
+ *   mov     [g_xformEntityIdx], ecx
  *   jmp     func_00433e80
  */
 extern void func_00433e80(void);
@@ -24,7 +24,7 @@ __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
         shr     eax, 8
         shr     ecx, 2
         mov     dword ptr [g_data_00542070], eax
-        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         jmp     func_00433e80
     }
 }

@@ -149,7 +149,7 @@ __declspec(naked) void Cmp7CondStateUpdate_0042ed90(void) {
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     tailCall
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_walkCallback], ecx
         cmp     dword ptr [eax*4 + 0], ecx
         jne     tailCall

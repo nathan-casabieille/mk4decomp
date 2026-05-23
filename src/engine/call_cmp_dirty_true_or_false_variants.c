@@ -9,8 +9,8 @@ extern unsigned int g_scaledInit_00542044;
 
 /* @addr 0x0045f570 (48b)
  *   call    F
- *   mov     eax, [g_eventQueueCurrent]
- *   mov     ecx, [g_eventQueueEnd]
+ *   mov     eax, [g_walkCallback]
+ *   mov     ecx, [g_eventQueueCurrent]
  *   cmp     eax, ecx
  *   mov     eax, [g_xformDirtyFlags]
  *   je      +0x0d
@@ -26,7 +26,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void CmpP1ScaledLoad74_0045f5d0(void);
 int CallCmpDirtyTrueOrFalse_0045f570(void) {
     CmpP1ScaledLoad74_0045f5d0();
-    if (g_eventQueueCurrent != g_eventQueueEnd) {
+    if ((unsigned int)g_walkCallback != g_eventQueueCurrent) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
         return 1;
     }
@@ -38,7 +38,7 @@ int CallCmpDirtyTrueOrFalse_0045f570(void) {
 extern void func_0045f5d0_b(void);
 int CallCmpDirtyTrueOrFalse_0045f5a0(void) {
     func_0045f5d0_b();
-    if (g_eventQueueCurrent == g_eventQueueEnd) {
+    if ((unsigned int)g_walkCallback == g_eventQueueCurrent) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
         return 1;
     }

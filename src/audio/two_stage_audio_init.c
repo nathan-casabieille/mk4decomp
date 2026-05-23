@@ -126,7 +126,7 @@ extern unsigned int g_x_00537f48;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_x_0053a51c;
 extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054371c;
+extern unsigned char g_x_0054371c;
 extern void TableWalkBoundedCmp_004bd890(void);
 
 /* @addr 0x004a6180 (162b audio) - 2-stage init w/ flags:

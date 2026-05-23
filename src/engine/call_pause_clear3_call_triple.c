@@ -19,7 +19,7 @@ extern void BootInitChainHeavy_00404f20(void);
 extern unsigned int g_state_00538158_kk;
 extern unsigned int g_state_0053815c_kk;
 extern void DualEntryInitCmp_00425b20(void);
-extern void Cmp9DirtyToggle_00464320(void);
+extern void StageParticleEmitterInit_00464350(void);
 extern void func_00431230(void);
 void CallPauseClear3CallTriple_00428030(void) {
     BootInitChainHeavy_00404f20();
@@ -29,7 +29,7 @@ void CallPauseClear3CallTriple_00428030(void) {
     g_state_0053815c_kk = 0;
     DualEntryInitCmp_00425b20();
     if (g_framePauseFlag != 0) return;
-    Cmp9DirtyToggle_00464320();
+    StageParticleEmitterInit_00464350();
     if (g_framePauseFlag != 0) return;
     func_00431230();
 }

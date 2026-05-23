@@ -132,20 +132,20 @@ extern unsigned int g_data_00535e7c;
 
 void PushSetCallCleanup_00408580(void) {
     __asm {
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x1c]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         jle     setSelf
-        mov     edx, dword ptr [g_eventQueueWorkType]
+        mov     edx, dword ptr [g_xformEntityIdx]
         add     edx, ecx
-        mov     dword ptr [g_eventQueueWorkType], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [edx*4 + 0], eax
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         sub     ecx, eax
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_xformEntityIdx], ecx
 setSelf:
         mov     dword ptr [g_walkCallback], 0x00408580
         mov     eax, dword ptr [eax*4 + 0]

@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *   for each dword from bit-index down to 0, mask off lowest set bit
  *   and call helper. When the dword reaches 0, drop to next dword.
  */
-extern void BitsetTrailZeroCheck_004cc880(void);
+extern void AddOverflowCheck_004ce1f0(void);
 
 __declspec(naked) void BitsetIterClear_004cc8f0(void) {
     __asm {
@@ -158,7 +158,7 @@ __declspec(naked) void BitsetIterClear_004cc8f0(void) {
         push    edi
         push    eax
         push    ecx
-        call    BitsetTrailZeroCheck_004cc880
+        call    AddOverflowCheck_004ce1f0
         add     esp, 0xc
         dec     esi
         js      done
@@ -170,7 +170,7 @@ inner:
         push    edi
         push    1
         push    edx
-        call    BitsetTrailZeroCheck_004cc880
+        call    AddOverflowCheck_004ce1f0
         add     esp, 0xc
         dec     esi
         sub     edi, 4

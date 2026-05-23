@@ -135,6 +135,7 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_004d50b4;
 extern unsigned int g_x_00542044;
 extern unsigned int g_x_0054206c;
+extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 
 __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
@@ -201,7 +202,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         jne     short L_a32_popRet
         test    byte ptr [g_state_0054208c], 1
         jne     short L_a32_b4_skipSetJmp
-        call    SetJmp_004a1ad0
+        call    SetJmp_004a1ac0
     L_a32_b4_skipSetJmp:
         mov     ecx, dword ptr [g_state_004d50b4]
     L_a32_b4_innerSkip:
@@ -226,7 +227,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         jne     short L_a32_popRet
         test    byte ptr [g_state_0054208c], 1
         jne     short L_a32_b8_skipSetJmp
-        call    SetJmp_004a1ad0
+        call    SetJmp_004a1ac0
     L_a32_b8_skipSetJmp:
     L_a32_b8_innerSkip:
         mov     dword ptr [g_state_00542080], edi

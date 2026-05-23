@@ -6,6 +6,7 @@
  */
 #include "engine/scenegraph.h"
 
+extern void DualCallPauseJmpDual_00439190(void);
 extern void func_004391b0(void);
 
 /* @addr 0x00438e70 (37b)
@@ -13,7 +14,7 @@ extern void func_004391b0(void);
  *   mov     [g_walkCallback], 3
  *   inc     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     [eax*4 + 0], OFFSET func_004391b0
+ *   mov     [eax*4 + 0], OFFSET DualCallPauseJmpDual_00439190
  *   jmp     T
  */
 extern void func_0043928c(void);
@@ -22,7 +23,7 @@ void MStackPushPtr1Jmp_00438e70(void) {
     g_walkCallback = (void (*)(void))3;
     v++;
     g_matrixStackTop = v;
-    *(unsigned int *)(v * 4) = (unsigned int)&func_004391b0;
+    *(unsigned int *)(v * 4) = (unsigned int)&DualCallPauseJmpDual_00439190;
     func_0043928c();
 }
 

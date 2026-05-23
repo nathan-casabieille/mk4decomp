@@ -131,7 +131,7 @@ extern unsigned int g_x_0053815c;
  */
 void DualPushCallCjPop_0048c400(void) {
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_cj_0054205c;
     ScaledIncLoopState3_0048c210();
@@ -139,6 +139,6 @@ void DualPushCallCjPop_0048c400(void) {
     g_cj_0054205c = g_x_0053815c;
     g_cj_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_state_004d57ac * 4);
+    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

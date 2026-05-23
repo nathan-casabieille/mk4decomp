@@ -143,7 +143,7 @@ loopA:
         add     ecx, eax
         inc     eax
         mov     ecx, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0x58], edx
         mov     ecx, dword ptr [g_x_004f3ae4]
         cmp     eax, ecx
@@ -159,7 +159,7 @@ inB:
         add     ecx, eax
         inc     eax
         mov     ecx, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0x58], edx
         mov     ecx, dword ptr [g_x_004f3ae8]
         cmp     eax, ecx

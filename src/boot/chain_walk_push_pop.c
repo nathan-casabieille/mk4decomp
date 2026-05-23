@@ -132,18 +132,18 @@ extern unsigned int g_data_00535e7c;
 void ChainWalkPushPop_00405a40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x14]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      leaf
 loop_top:
         mov     ecx, eax
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [eax*4 + 0x14]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -155,7 +155,7 @@ leaf:
         mov     dword ptr [g_cj_0054205c], ecx
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

@@ -24,11 +24,12 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern char g_table_004f3ac8[16];
+extern char g_table_004f3f28[16];
 void MarkSlot_004ab270(int arg) {
     int i;
     for (i = 0; i < 16; i++) {
         if (arg == (int)(signed char)g_table_004f3ac8[i]) {
-            g_table_004f3ac8[i] = 1;
+            g_table_004f3f28[i] = 1;
         }
     }
 }

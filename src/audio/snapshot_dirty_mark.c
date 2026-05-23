@@ -135,7 +135,7 @@ extern void MStackPush3LinkedListWalk_004088b0(void);
 __declspec(naked) void SnapshotDirtyMark_004a1dc0(void) {
     __asm {
         push    esi
-        mov     esi, dword ptr [g_walkCallback]
+        mov     esi, dword ptr [g_currentNodeIdx]
         call    MStackBracket4_ListInsertZeroFill_00408600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -146,19 +146,19 @@ __declspec(naked) void SnapshotDirtyMark_004a1dc0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0]
         or      al, 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0], eax
-        mov     edx, dword ptr [g_eventQueueWorkType]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [esp + 8]
         mov     dword ptr [edx*4 + 0x48], ecx
-        mov     dword ptr [g_walkCallback], esi
+        mov     dword ptr [g_currentNodeIdx], esi
 done:
         pop     esi
         ret

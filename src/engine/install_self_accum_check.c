@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         mov     dword ptr [g_x_00542088], eax
         _emit   7eh
         _emit   34h
-        call    CallPauseDirty4ScaledSet_00419780
+        call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
         call    GuardedClampStoreJmp_00428bd0

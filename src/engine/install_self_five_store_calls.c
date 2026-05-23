@@ -140,8 +140,8 @@ __declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h

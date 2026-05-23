@@ -146,7 +146,7 @@ int TimerWindowThreshDispatch_0046fd70(void) {
     }
     CmpP1ScaledInit_004709c0();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
-    a = *(unsigned int *)((unsigned int)g_walkCallback * 4 + 0x58);
+    a = *(unsigned int *)((unsigned int)g_scaledInit_00542044 * 4 + 0x58);
     g_x_00542074 = a;
     c = *(unsigned int *)(g_cj_0054205c * 4 + 0x58);
     a -= c;

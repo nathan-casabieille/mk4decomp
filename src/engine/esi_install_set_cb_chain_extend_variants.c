@@ -135,7 +135,7 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
         StackPopDispatchTagged_0041f780();
         return;
     }
-    g_eventQueueEnd = g_load_0052ab10;
+    g_fightGroupHead = g_load_0052ab10;
     ZeroSixStores6c80_0048a7c0();
     g_state_00542080 = 0x0048aad0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810;
@@ -162,7 +162,7 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
         StackPopDispatchTagged_0041f780();
         return;
     }
-    g_eventQueueEnd = g_load_0052ab10;
+    g_fightGroupHead = g_load_0052ab10;
     ZeroSixStores6c80_0048a7c0();
     g_state_00542080 = 0x0048ab40;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0;
@@ -189,7 +189,7 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
         StackPopDispatchTagged_0041f780();
         return;
     }
-    g_eventQueueEnd = g_load_0052ab10;
+    g_fightGroupHead = g_load_0052ab10;
     ZeroSixStores6c80_0048a7c0();
     g_state_00542080 = 0x0048abc0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970;

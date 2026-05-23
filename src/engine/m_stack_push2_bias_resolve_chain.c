@@ -144,7 +144,7 @@ void TripleStateSwapCall_0048cc40(void) {
     g_walkCallback = (void (*)(void))save_70;
     PushBitFieldMergePop_0048bae0();
     if (g_framePauseFlag != 0) return;
-    g_cj_00542058 = g_cj_0054205c;
+    g_scaledInit_00542044 = g_cj_0054205c;
     g_walkCallback = (void (*)(void))save_walk;
     g_x_00542074 = save_74;
     PushCallPopScaledJmpIndirect_0048ce00();

@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   Call DispatchSetDirtyToggle.
  *   If bit2 of state set: g_x_00542048 = 0x0051962c >> 2. Else: 0x00519ae0 >> 2.
  *   mstack-pop g_cj_0054205c. Call MStackBracket1_TreeWalkRecursive2_00406dd0; if pause/bit2? ret.
- *   g_x_00542048 = baseSel[+0x30]. Call MStackPushTwoEntryChainCall_004058c0; if pause? ret.
+ *   g_x_00542048 = baseSel[+0x30]. Call Thunk_00405ac0; if pause? ret.
  *   Call SetupVecFsmCluster_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
@@ -138,7 +138,7 @@ extern unsigned int g_x_00542048;
 extern unsigned int g_x_00542058;
 extern void DispatchSetDirtyToggle_004ac150(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
-extern void MStackPushTwoEntryChainCall_004058c0(void);
+extern void Thunk_00405ac0(void);
 extern void PushPopScaled1cDoubleCall_00408510(void);
 extern void SetupVecFsmCluster_0043e3e0(void);
 
@@ -199,7 +199,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_x_00542048], ecx
-        call    MStackPushTwoEntryChainCall_004058c0
+        call    Thunk_00405ac0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h

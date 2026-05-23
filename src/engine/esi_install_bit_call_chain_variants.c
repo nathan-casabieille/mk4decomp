@@ -135,6 +135,8 @@ extern unsigned int g_data_00535e7c;
  */
 extern void CopyJmp_00406ba0(void);
 extern void GuardedSeq_004297b0(void);
+extern void GuardedDoubleIncCmpJmp_00429860(void);
+extern void CallPauseScaledDecJmp_00429750(void);
 extern void ScaledInitOrSelfPtr_00429680(void);
 
 __declspec(naked) void EsiInstallBitCallChain_00429530(void) {
@@ -191,7 +193,7 @@ __declspec(naked) void EsiInstallBitCallChain_004295a0(void) {
         test    eax, eax
         _emit   75h
         _emit   3bh
-        call    GuardedSeq_004297b0
+        call    GuardedDoubleIncCmpJmp_00429860
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -230,7 +232,7 @@ __declspec(naked) void EsiInstallBitCallChain_00429610(void) {
         test    eax, eax
         _emit   75h
         _emit   3bh
-        call    GuardedSeq_004297b0
+        call    CallPauseScaledDecJmp_00429750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

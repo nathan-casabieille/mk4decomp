@@ -121,7 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_004ffd40;
+extern unsigned char g_x_004ffd40;
 extern unsigned int g_x_00ab5348;
 extern unsigned int g_x_00ab574c;
 extern unsigned int g_x_00ab5750;

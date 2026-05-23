@@ -142,7 +142,7 @@ __declspec(naked) void GeoLoadFixupLoop_004bd8e0(void) {
     __asm {
         push    esi
         push    edi
-        mov     edi, dword ptr [g_walkCallback]
+        mov     edi, dword ptr [g_scaledInit_00542044]
         xor     esi, esi
         mov     eax, dword ptr [edi*4 + 4]
         cmp     eax, esi

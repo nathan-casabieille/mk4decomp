@@ -161,7 +161,7 @@ __declspec(naked) void StateSnapshotDispatch_00460b60(void) {
         mov     ecx, [eax*4 + g_arr_460b60_main]
         inc     eax
         mov     dword ptr [g_x_00542058], ecx
-        lea     ecx, [edx*4 + FiveCallGuardSetTail_0046f6b0 + 0x04]
+        lea     ecx, [edx*4 + 0x04]
         mov     dword ptr [g_x_00542054], eax
         mov     edx, dword ptr [ecx]
         mov     dword ptr [g_x_00542044], edx

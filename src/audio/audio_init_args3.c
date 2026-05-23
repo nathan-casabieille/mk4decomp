@@ -132,15 +132,15 @@ extern unsigned int g_x_00543750;
  *   arg2 at walk[+0x58], arg3 at walk[+0x5c].
  */
 void AudioInitArgs3_004a1f20(unsigned int arg0, int arg1, int arg2, int arg3) {
-    g_eventQueueWorkType = arg0 >> 2;
+    g_xformEntityIdx = arg0 >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
-    if (g_walkCallback == 0) return;
-    (&g_x_00543750)[g_x_00543748] = (unsigned int)g_walkCallback;
+    if (g_currentNodeIdx == 0) return;
+    (&g_x_00543750)[g_x_00543748] = g_currentNodeIdx;
     g_x_00543748++;
     MStackPushComplexCallPop_004064b0();
     if (g_framePauseFlag != 0) return;
-    *(int *)((unsigned int)g_walkCallback * 4 + 0x54) = arg1;
-    *(int *)((unsigned int)g_walkCallback * 4 + 0x58) = arg2;
-    *(int *)((unsigned int)g_walkCallback * 4 + 0x5c) = arg3;
+    *(int *)(g_currentNodeIdx * 4 + 0x54) = arg1;
+    *(int *)(g_currentNodeIdx * 4 + 0x58) = arg2;
+    *(int *)(g_currentNodeIdx * 4 + 0x5c) = arg3;
 }

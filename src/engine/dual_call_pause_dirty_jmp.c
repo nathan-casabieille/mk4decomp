@@ -51,13 +51,11 @@ void DualCallPauseDirtyJmp_00490c30(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    if ((g_xformDirtyFlags & 1) != 0) {
-        ChainSetupBitToggle_00491290();
-        return;
-    }
-    ScaledXorStore_004903b0();
-    if (g_framePauseFlag != 0) {
-        return;
+    if ((g_xformDirtyFlags & 1) == 0) {
+        ScaledXorStore_004903b0();
+        if (g_framePauseFlag != 0) {
+            return;
+        }
     }
     ChainSetupBitToggle_00491290();
 }

@@ -147,10 +147,10 @@ void GuardedChainDispatch_00421fe0(void) {
     val = (unsigned int)g_walkCallback;
     if (val != g_data_004f3608) goto maskOut;
     a = g_data_00538038;
-    g_eventQueueWorkType = a;
+    g_scaledInit_00542044 = a;
     if (g_data_00542050 == a) {
         a = g_data_0053803c;
-        g_eventQueueWorkType = a;
+        g_scaledInit_00542044 = a;
     }
     field = *(unsigned int *)(a * 4 + 0x34);
     g_walkCallback = (void (*)(void))field;

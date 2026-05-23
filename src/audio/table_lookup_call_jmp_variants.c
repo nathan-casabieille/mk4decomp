@@ -32,10 +32,10 @@ void TableLookupCallJmp_004aa990(void) {
 
 /* @addr 0x004aa9c0 (41b): same shape with table=0x004f3f90 */
 extern void func_00407420(void);
-extern void MStackPush2GatedTail_00409420(void);
+extern void MStackPushComplexCallPop_00406430(void);
 void TableLookupCallJmp_004aa9c0(void) {
     g_xformEntityIdx = (unsigned int)((int)g_table_004f3f90[(unsigned int)g_walkCallback] >> 2);
     func_00407420();
     if (g_framePauseFlag != 0) return;
-    MStackPush2GatedTail_00409420();
+    MStackPushComplexCallPop_00406430();
 }

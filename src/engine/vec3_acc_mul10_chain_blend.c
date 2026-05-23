@@ -140,7 +140,7 @@ void ScaledStackCallPause_0049c360(int arg) {
     idx++;
     g_data_00542050 = idx;
     g_state_004d57ac++;
-    g_eventQueueWorkType = wt;
+    g_xformEntityIdx = wt;
     *(unsigned int *)(g_state_004d57ac * 4) = saved_cj;
     MStackPushDispatchBitGate_00407330();
     if (g_framePauseFlag != 0) return;

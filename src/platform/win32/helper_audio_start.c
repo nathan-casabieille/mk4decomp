@@ -32,7 +32,7 @@ loop4c4390:
         _emit   74h
         _emit   4dh
         movsx   ecx, ax
-        lea     eax, [ecx*8 + g_arr_00f8fac8]
+        lea     eax, [ecx*8]
         sub     eax, ecx
         shl     eax, 2
         mov     edx, dword ptr [eax + g_arr_00f8fac8]
@@ -45,7 +45,7 @@ loop4c4390:
         _emit   2ah
         movsx   edx, word ptr [esi + 2]
         mov     al, byte ptr [eax + g_arr_00f8fac8 + 0x16]
-        lea     edi, [ecx*8 + g_arr_00f8fac8]
+        lea     edi, [ecx*8]
         sub     edi, ecx
         and     eax, 1
         add     edx, edi

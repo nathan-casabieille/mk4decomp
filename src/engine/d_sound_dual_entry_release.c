@@ -138,6 +138,7 @@ extern void DSoundBufferInit146_004aea40(int);
 extern void ComRelease_004aef30(void);
 extern void ComReleaseCapture_004aeee0(void);
 extern void DSoundBufferInit146_004aea40_alt(void);
+extern void R2_Init4(void);
 
 /* @addr 0x004ad7c0 (141b engine.install) - shutdown sequence:
  *   Renderer2_EndScene_D3D, VtRelease_Modal, ReleaseVtableSlot 0..15;
@@ -174,7 +175,7 @@ loop4ad7c0:
         call    ComRelease_004af000
         call    ComReleasePair_004af440
         push    0
-        call    DSoundBufferInit146_004aea40
+        call    R2_Init4
         add     esp, 4
         call    ComRelease_004aef30
         call    ComReleaseCapture_004aeee0

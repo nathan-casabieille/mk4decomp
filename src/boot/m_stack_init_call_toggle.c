@@ -124,36 +124,5 @@ extern unsigned int g_data_00535e7c;
 
 extern void MStackInitCallToggle_00408ad0(void);
 
-/*
- * @addr 0x00416db0 (110b boot) - twin tag-clear: load walk = -0x14
- *   and call helper; on pause/state-bit2 clear, zero slot at +0x3c
- *   of walk array. Repeat with walk = -0x15; same gates; final zero
- *   at +0x3c then ret.
- */
-
-void TwinTagClear_00416db0(void) {
-    __asm {
-        mov     dword ptr [g_walkCallback], 0xffffffec
-        call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     done
-        test    byte ptr [g_state_0054208c], 4
-        jne     stage2
-        mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x3c], 0
-stage2:
-        mov     dword ptr [g_walkCallback], 0xffffffeb
-        call    MStackInitCallToggle_00408ad0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     done
-        test    byte ptr [g_state_0054208c], 4
-        jne     done
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [ecx*4 + 0x3c], 0
-done:
-        }
-}
+extern void TwinTagClear_00416db0(void);
 

@@ -6,6 +6,6 @@
 extern void *PendingMatch_004c9df0(void);
 
 void Crt_srand(int x) {
-    *(int *)PendingMatch_004c9df0() = x;
+    *(int *)((unsigned char *)PendingMatch_004c9df0() + 0x14) = x;
 }
 

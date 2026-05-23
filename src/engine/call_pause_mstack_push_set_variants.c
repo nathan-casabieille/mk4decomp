@@ -10,6 +10,7 @@ extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern packed_ptr g_xformEntityIdx;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
+extern void LeaPlus22StoreSelf_0048e4d0(void);
 
 /* @addr 0x0045fcf0 (52b)
  *   call    F
@@ -26,7 +27,7 @@ extern void SelfInstallPhaseDispatch_0045fd30(void);
  */
 void CallPauseMStackPushSet0Jmp_0045fcf0(void) {
     unsigned int top;
-    WalkCallbackSetClearDirty_0048e7d0();
+    LeaPlus22StoreSelf_0048e4d0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))0;

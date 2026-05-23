@@ -144,7 +144,7 @@ __declspec(naked) void DrainQueueCallEach_004a1ec0(void) {
         mov     esi, offset g_x_00543750
 inner:
         mov     eax, dword ptr [esi]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    MStackPush2ChainLLInsert_00406790
         mov     eax, dword ptr [g_x_00543748]
         mov     dword ptr [esi], 0
@@ -156,7 +156,7 @@ inner:
 tail:
         mov     ecx, dword ptr [g_data_005437f0]
         mov     dword ptr [g_data_005437f0], 0
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPush2ChainLLInsert_00406790
         mov     dword ptr [g_x_00543748], 0
         pop     edi

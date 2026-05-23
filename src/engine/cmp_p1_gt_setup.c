@@ -31,9 +31,9 @@ extern u32 g_gtPlayerProbe2;
 extern packed_ptr g_fightGroupHead;
 void CmpP1GTSetup_00470980(void) {
     unsigned int p1 = g_player1NodeIdx;
-    g_eventQueueIdx = g_gtPlayerProbe2;
+    g_xformEntityIdx = g_gtPlayerProbe2;
     g_scaledInit_00542044 = p1;
     if (g_fightGroupHead == p1) return;
     g_scaledInit_00542044 = g_player2NodeIdx;
-    g_eventQueueIdx = g_gtPlayerProbe1;
+    g_xformEntityIdx = g_gtPlayerProbe1;
 }

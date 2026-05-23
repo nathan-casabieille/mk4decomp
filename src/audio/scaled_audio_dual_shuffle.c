@@ -140,11 +140,11 @@ void ScaledAudioDualShuffle_004a2970(void) {
         mov     edx, dword ptr [g_data_005437f0]
         add     eax, ecx
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, 0x50000
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_data_005437f0]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [edx*4 + 0x5c], ecx

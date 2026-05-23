@@ -143,8 +143,8 @@ __declspec(naked) void AudioInstallSelfStatePush_004aa8a0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         xor     ecx, ecx
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], ecx
         cmp     eax, ecx
         _emit   74h

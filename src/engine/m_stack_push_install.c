@@ -151,7 +151,7 @@ void MStackPushInstall_0048c260(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + MStackPushInstall_0048c260], 1
+        mov     [eax*4 + g_data_004d57ac_arr], 1
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax

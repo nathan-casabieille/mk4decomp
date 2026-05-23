@@ -20,11 +20,11 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, 1
  *   ret
  */
-extern u32 g_eventQueueWorkType;
+extern unsigned int g_data_0054207c;
 extern void func_00439998(void);
 int ScaledCmp200eCallBool_004398f0(void) {
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);
-    g_eventQueueWorkType = v;
+    g_data_0054207c = v;
     if (v != 0x200e) return 0;
     func_00439998();
     return 1;

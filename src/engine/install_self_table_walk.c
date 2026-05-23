@@ -141,14 +141,14 @@ extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_x_00542074;
-extern unsigned int g_x_00543590;
+extern unsigned char g_x_00543590;
 void AudioModeInit_004a2610(void) {
     if (g_x_00543590 == 1) {
-        g_walkCallback = (void (*)(void))((unsigned int)&g_data_0053a408 >> 2);
-        g_eventQueueWorkType = (unsigned int)&g_data_0053a3e0 >> 2;
+        g_currentNodeIdx = (unsigned int)&g_data_0053a408 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_data_0053a3e0 >> 2;
     } else {
-        g_walkCallback = (void (*)(void))((unsigned int)&g_data_00537e88 >> 2);
-        g_eventQueueWorkType = (unsigned int)&g_data_0053a700 >> 2;
+        g_currentNodeIdx = (unsigned int)&g_data_00537e88 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_data_0053a700 >> 2;
     }
     DualScaledStoreConst_004a22c0();
     ClearTwoCallSetStore_004a2270();

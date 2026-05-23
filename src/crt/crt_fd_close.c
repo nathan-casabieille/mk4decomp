@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004cd1c0 (147b crt) - fd-validate + close-stdio helper:
- *   if fd >= g_x_00f9efe0: errno=9 (EBADF), doserrno=0, return -1.
+ *   if fd >= g_x_00fa0ee0: errno=9 (EBADF), doserrno=0, return -1.
  *   table = arr[fd>>5]; entry = table[+(fd&0x1f)*36+4]; check open bit.
  *   If invalid: errno path.
  *   If g_x_00520064 == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_iat_004d20d4;
 extern unsigned int g_x_00520064;
-extern unsigned int g_x_00f9efe0;
+extern unsigned int g_x_00fa0ee0;
 extern void Crt_doserrno_004c8bb0(void);
 extern void Crt_errno_004c8ba0(void);
 
@@ -140,7 +140,7 @@ extern unsigned int g_arr_00fa0de0;
 __declspec(naked) int CrtFdClose_004cd1c0(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
-        mov     eax, dword ptr [g_x_00f9efe0]
+        mov     eax, dword ptr [g_x_00fa0ee0]
         push    ebx
         push    esi
         cmp     ecx, eax

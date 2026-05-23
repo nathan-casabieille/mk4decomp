@@ -135,20 +135,20 @@ extern void MStackPush2ChainPrepend_00409970(void);
 void PushSetCallPop_00406530(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x34]
         or      cl, 0xc2
         mov     dword ptr [eax*4 + 0x34], ecx
-        mov     edx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     eax, dword ptr [g_x_00541e98]
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPush2ChainPrepend_00409970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -156,7 +156,7 @@ void PushSetCallPop_00406530(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
 done:
         }

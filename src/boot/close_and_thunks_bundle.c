@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00f9f7fc;
 extern unsigned int g_iat_004d2150;
-extern unsigned int g_iat_004d219c;
+extern unsigned int g_iat_004d209c;
 extern void Crt_doserrno_004c8bb0(void);
 extern void Crt_errno_004c8ba0(void);
 extern void DosMapErr_004c8b20(void);
@@ -148,7 +148,7 @@ __declspec(naked) void CloseAndThunksBundle_004c6760(void) {
         call    dword ptr [g_iat_004d2150]
         cmp     eax, -1
         jne     short L_cl_check
-        call    dword ptr [g_iat_004d219c]
+        call    dword ptr [g_iat_004d209c]
         push    eax
         call    DosMapErr_004c8b20
         add     esp, 4

@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern packed_ptr g_xformEntityIdx;
 void SplitHi8Lo24_004abfc0(void) {
-    unsigned int v = g_eventQueueCurrent;
+    unsigned int v = *(unsigned int *)&g_walkCallback;
     g_eventQueueCurrent = v >> 24;
     g_xformEntityIdx = v & 0x00ffffff;
 }

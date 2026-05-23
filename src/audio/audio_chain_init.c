@@ -136,14 +136,14 @@ void AudioChainInit_004a77c0(void) {
         mov     eax, 0x0050a0f0
         shr     eax, 2
         add     ecx, eax
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [ecx*4 + 0]
         and     eax, 0xffffff
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [eax]
         sar     edx, 2
         and     edx, 0x3fffff
-        mov     dword ptr [g_eventQueueWorkType], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -152,9 +152,9 @@ void AudioChainInit_004a77c0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x64], 0x3243f
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x5c], 0x100000
 done:
         }

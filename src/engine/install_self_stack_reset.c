@@ -140,8 +140,8 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
 __declspec(naked) void InstallSelfStackReset_00421f40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
-        lea     ecx, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     ecx, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [ecx + 0x84], 0
         test    eax, eax
         _emit   74h

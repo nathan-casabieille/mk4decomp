@@ -153,8 +153,8 @@ __declspec(naked) void InstallSelfDualBranch_0047e800(void) {
         push    ebx
         push    esi
         mov     ebx, 1
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h

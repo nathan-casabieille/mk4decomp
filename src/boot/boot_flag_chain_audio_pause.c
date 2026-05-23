@@ -125,46 +125,4 @@ extern unsigned int g_data_00535e7c;
 extern void SlotInitAndChainLink_004191b0(void);
 extern void BootFlagChainAudioPause_00412080(void);
 
-/*
- * @addr 0x00419900 (118b boot) - 3-stage chain then tail-jmp:
- *   call MStackPush2RunCountdown_004089e0; gate; call MStackBracket7_DispatchAndChain_004b8fa0; gate; set up
- *   g_x_00542074=3 and g_data_0054204c=0x004d7afe; call SlotInitAndChainLink_004191b0;
- *   gate; if state-bit 2 clear, set walk=0x11999 into wt[+0x48] and
- *   bump g_state_00542054 by 0x15, then tail-jmp BootFlagChainAudioPause_00412080.
- */
-extern unsigned int g_data_0054204c;
-extern unsigned int g_state_00542054;
-extern unsigned int g_x_00542074;
-
-__declspec(naked) void TripleChainTailJmp_00419900(void) {
-    __asm {
-        call    MStackPush2RunCountdown_004089e0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     done
-        call    MStackBracket7_DispatchAndChain_004b8fa0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     done
-        mov     eax, 0x004d7af8
-        mov     dword ptr [g_x_00542074], 3
-        shr     eax, 2
-        mov     dword ptr [g_data_0054204c], eax
-        call    SlotInitAndChainLink_004191b0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     done
-        test    byte ptr [g_state_0054208c], 4
-        jne     done
-        mov     ecx, dword ptr [g_eventQueueWorkType]
-        mov     eax, 0x011999
-        mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [ecx*4 + 0x48], eax
-        mov     edx, dword ptr [g_state_00542054]
-        add     edx, 0x15
-        mov     dword ptr [g_state_00542054], edx
-        jmp     BootFlagChainAudioPause_00412080
-done:
-        ret
-    }
-}
+extern void TripleChainTailJmp_00419900(void);

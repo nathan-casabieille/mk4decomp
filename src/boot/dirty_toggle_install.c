@@ -136,10 +136,10 @@ void DirtyToggleInstall_00408b90(void) {
         mov     ecx, dword ptr [g_data_00542070]
         or      al, 1
         mov     dword ptr [g_state_0054208c], eax
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_currentNodeIdx]
         cmp     ecx, dword ptr [eax*4 + 0x1c]
         jne     deref
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         ret
 deref:
         mov     eax, dword ptr [eax*4 + 0]
@@ -152,7 +152,7 @@ deref:
         test    eax, eax
         jne     done
         mov     ecx, dword ptr [g_state_0054208c]
-        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     eax, dword ptr [g_xformEntityIdx]
         or      ecx, 1
         test    eax, eax
         mov     dword ptr [g_state_0054208c], ecx

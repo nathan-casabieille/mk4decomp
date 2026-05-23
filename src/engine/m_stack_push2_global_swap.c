@@ -150,7 +150,7 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [g_x_00538158]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x64]
+        mov     eax, [eax*4 + 0x64]
         mov     dword ptr [g_x_00542048], ecx
         cmp     ecx, eax
         mov     dword ptr [g_scaledInit_00542044], eax

@@ -9151,7 +9151,19 @@ functions:
     file: src/engine/aggressor_mode_cluster.c
   - addr: 0x0047e1a0
     name: Alarm3EntryPhaseChain_0047e1a0
-    size: 355
+    size: 51
+    group: game
+    status: matched
+    file: src/engine/alarm3_entry_phase_chain.c
+  - addr: 0x0047e1e0
+    name: Alarm3PhaseChainEntry2_0047e1e0
+    size: 67
+    group: game
+    status: matched
+    file: src/engine/alarm3_entry_phase_chain.c
+  - addr: 0x0047e230
+    name: Alarm3PhaseChainBody_0047e230
+    size: 211
     group: game
     status: matched
     file: src/engine/alarm3_entry_phase_chain.c

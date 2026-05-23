@@ -137,7 +137,7 @@ extern void MatrixTransform3x3Q12_004b3b80(void);
 
 void WtSnapshotPushCall_004bda70(void) {
     __asm {
-        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     eax, dword ptr [g_xformEntityIdx]
         lea     ecx, [eax*4 + 0]
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_x_007af990], edx
@@ -145,14 +145,14 @@ void WtSnapshotPushCall_004bda70(void) {
         mov     dword ptr [g_x_007af994], eax
         mov     edx, dword ptr [ecx + 8]
         mov     dword ptr [g_x_007af998], edx
-        mov     edx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx + 0xc]
         mov     dword ptr [g_x_007af99c], eax
         lea     eax, [edx*4 + 0]
         mov     cx, word ptr [ecx + 0x10]
         push    eax
         mov     word ptr [g_word_007af9a0], cx
-        mov     ecx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_pendingNodeType]
         lea     edx, [ecx*4 + 0]
         push    edx
         call    MatrixTransform3x3Q12_004b3b80

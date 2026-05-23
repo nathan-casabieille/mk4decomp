@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, [eax*4 + 0x18]
  *   mov     [g_scaledInit_00542044], eax
  *   mov     ecx, [eax*4 + 0x28]
- *   mov     [g_eventQueueIdx], ecx
+ *   mov     [g_xformEntityIdx], ecx
  *   mov     eax, [ecx*4 + 0]
  *   or      al, 8
  *   mov     [g_walkCallback], eax
@@ -26,7 +26,7 @@ void ScaledChainOr8_00404e50(void) {
     s = *(unsigned int *)(g_fightGroupHead * 4 + 0x18);
     g_scaledInit_00542044 = s;
     e = *(unsigned int *)(s * 4 + 0x28);
-    g_eventQueueIdx = e;
+    g_xformEntityIdx = e;
     v = *(unsigned int *)(e * 4) | 8;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(e * 4) = v;

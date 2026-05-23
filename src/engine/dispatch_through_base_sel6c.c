@@ -141,7 +141,7 @@ __declspec(naked) void DispatchThroughBaseSel6c_00460f20(void) {
         test    eax, eax
         jne     done
         mov     edx, dword ptr [g_state_0054208c]
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         and     edx, 0xfffffffe
         mov     dword ptr [g_data_0054204c], eax
         mov     dword ptr [g_state_0054208c], edx
@@ -151,14 +151,14 @@ __declspec(naked) void DispatchThroughBaseSel6c_00460f20(void) {
         je      done
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, 0x0048ed70
-        mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_eventQueueWorkType], 0x0048ede0
+        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_xformEntityIdx], 0x0048ede0
         mov     eax, dword ptr [eax*4 + 0x6c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     gotIt
         mov     ecx, 0x0048ede0
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
 gotIt:
         jmp     ecx
 done:

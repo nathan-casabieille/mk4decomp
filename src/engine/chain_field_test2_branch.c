@@ -138,7 +138,7 @@ extern void SubCmpCallPauseJmp_0042fc40(void);
 
 __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
     __asm {
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [ecx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x40
@@ -147,11 +147,11 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     eax, ecx
         mov     ecx, dword ptr [g_x_00538158]
         cmp     eax, ecx
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_scaledInit_00542044], ecx
         jne     after
         mov     eax, dword ptr [g_x_0053815c]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_scaledInit_00542044], eax
 after:
         call    MStackSignedMod_0042fee0
         mov     eax, dword ptr [g_framePauseFlag]

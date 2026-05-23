@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *   If was nonzero: cj[+0x4c]=0x28f; mstack-push 0x0046e2a0; tail-call
  *     InstallSelfIndirectJmp_0048f3f0; pop esi; ret.
  *   If was zero: call DirtyTestScaledCmpJmp_0046ea70; if pause? ret.
- *     call TripleFieldCopyJmpHi_0048f740; if pause? ret.
+ *     call ScaledZeroFour_00490740; if pause? ret.
  *     call CopyJmp_0048ee80; if pause? ret.
  *     if g_x_0054206c <= 0xcccc: push 0x004eb268, tail-call ArgSarStoreJmp; ret.
  *     else: call ScaledMove48to58_00490720; if pause? ret.
@@ -177,7 +177,7 @@ __declspec(naked) void InstallSelfChainedDispatch_0046cb70(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        call    TripleFieldCopyJmpHi_0048f740
+        call    ScaledZeroFour_00490740
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   0fh

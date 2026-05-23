@@ -1179,8 +1179,9 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
 }
 
 
+extern void DrainQueueCallEach_004a1ec0(void);
 /* @addr 0x004265d0 (249b game) - boot-style init sequence then guarded call chain.
- *   8 setup calls (PhaseClampInstallSlot_0049e1c0, PendingMatch_0045c8e0, Init0AndMax_00401370,
+ *   8 setup calls (DrainQueueCallEach_004a1ec0, PendingMatch_0045c8e0, Init0AndMax_00401370,
  *     g_x_0054206c=0, CopyGlobal_004ac1f0, Init6Struct_00404e20, ScenegraphWalk_0041f7d0,
  *     CallPauseClear3CallTriple_00428030). If pause? ret.
  *   mstack-push 3 (0, g_x_00542070, g_x_00542074); clear g_state_0053a7b0;
@@ -1190,7 +1191,7 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
  */
 void BootInitGuardedCallChain_004265d0(void) {
     __asm {
-        call    PhaseClampInstallSlot_0049e1c0
+        call    DrainQueueCallEach_004a1ec0
         call    PendingMatch_0045c8e0
         call    Init0AndMax_00401370
         mov     dword ptr [g_x_0054206c], 0

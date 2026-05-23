@@ -143,14 +143,14 @@ __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h
         _emit   1dh
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, [ecx*4 + FiveCallGuardSetTail_0046f6b0 + 0x5c]
+        mov     edx, [ecx*4 + 0x5c]
         dec     edx
         mov     dword ptr [g_scaledInit_00542044], edx
         _emit   78h

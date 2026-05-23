@@ -16,7 +16,7 @@ extern u32 g_eventQueueWorkType;
  *   call F2; pause → ret; testb 4,[dirty]; je +0x1b →ret-tail;
  *   inc g_state_004d57ac; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
-extern void ScaledLoadJmp_24_00429790(void);
+extern void GuardedSeq_004297b0(void);
 extern void func_00436670(void);
 extern void func_0048f330(void);
 extern void func_00428950_oo(void);
@@ -25,7 +25,7 @@ extern void InstallSelfCallBitGate_00483ae0(void);
 
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
     __asm {
-        call    ScaledLoadJmp_24_00429790
+        call    GuardedSeq_004297b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

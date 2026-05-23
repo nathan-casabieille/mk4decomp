@@ -136,15 +136,15 @@ void RegistryPushBindPop_00403c20(void) {
     unsigned char *base;
     top = g_state_004d57ac + 1;
     g_state_004d57ac = top;
-    *(unsigned int *)(top * 4) = g_eventQueueWorkType;
-    g_eventQueueWorkType = g_x_00535e6c;
+    *(unsigned int *)(top * 4) = g_xformEntityIdx;
+    g_xformEntityIdx = g_x_00535e6c;
     base = (unsigned char *)(g_x_00535e6c * 4);
     *(unsigned int *)(base + 0x54) = 0;
     *(unsigned int *)(base + 0x58) = 0;
     g_walkCallback = (void (*)(void))0xfff68000;
     *(unsigned int *)(base + 0x5c) = 0xfff68000;
-    *(unsigned int *)((unsigned int)g_walkCallback * 4 + 0x3c) = g_eventQueueWorkType;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x3c) = g_xformEntityIdx;
     top = g_state_004d57ac;
-    g_eventQueueWorkType = *(unsigned int *)(top * 4);
+    g_xformEntityIdx = *(unsigned int *)(top * 4);
     g_state_004d57ac = top - 1;
 }

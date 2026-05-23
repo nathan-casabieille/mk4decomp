@@ -22,7 +22,7 @@ extern u32 g_eventQueueNotMask;
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void func_00484572(void);
 extern void func_004ae794(void);
-extern int LoadSetFpJmp_00409400(void *);
+extern void ArgSarStoreJmp_004594f0(void);
 extern unsigned int g_data_004ee2f0;
 
 void TripleCallPauseTestPush_00482e60(void) {
@@ -51,7 +51,7 @@ void TripleCallPauseTestPush_00482e60(void) {
         _emit   00h
         _emit   00h
         push    OFFSET g_data_004ee2f0
-        call    LoadSetFpJmp_00409400
+        call    ArgSarStoreJmp_004594f0
         add     esp, 4
         }
 }

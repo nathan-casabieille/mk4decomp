@@ -138,7 +138,7 @@ void ZMaskMergePop2_0044cfe0(void) {
     top = g_state_004d57ac + 1;
     g_state_004d57ac = top;
     *(unsigned int *)(top * 4) = g_data_00542070;
-    walk = (unsigned int)g_walkCallback;
+    walk = g_scaledInit_00542044;
     slot = *(unsigned int *)(walk * 4 + 0x20);
     g_data_00542070 = 0x0f000000;
     slot = (slot & 0xf0ffffff) | g_x_00542074;

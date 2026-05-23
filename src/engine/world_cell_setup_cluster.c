@@ -140,16 +140,16 @@ void StackPushCallPopChain_0043ed70(void) {
     int r;
     unsigned int slot;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
     diff = (int)g_x_0053a3a0 - (int)g_x_004d5320;
     g_walkCallback = (void (*)(void))diff;
     r = ((int (*)(int))WorldCellSetupCluster_0042b000)(diff);
     slot = g_x_00537e9c;
     g_walkCallback = (void (*)(void))r;
-    g_eventQueueWorkType = slot;
+    g_scaledInit_00542044 = slot;
     *(unsigned int *)(slot * 4 + 0x64) = r;
     ThrowEventCluster_0043e960();
     if (g_framePauseFlag != 0) return;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_state_004d57ac * 4);
+    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

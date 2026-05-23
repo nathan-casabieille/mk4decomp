@@ -138,8 +138,8 @@ __declspec(naked) void InstallSelfPauseTwoCall_0047af70(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfPauseTwoCall_0047af70(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, 0x100e
         mov     dword ptr [g_walkCallback], eax
-        mov     [ecx*4 + FiveCallGuardSetTail_0046f6b0 + 0x74], eax
+        mov     [ecx*4 + 0x74], eax
         mov     eax, 1
         mov     dword ptr [esi + 0x08], offset InstallSelfPauseTwoCall_0047af70
         mov     dword ptr [esi + 0x84], eax

@@ -132,6 +132,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0054204c;
 extern unsigned int g_x_00542074;
 extern void MStackPush3CallChain_0045db70(void);
+extern void Thunk_0045dae0(void);
 
 __declspec(naked) void ChainWalkSelfRecursive_0045daf0(void) {
     __asm {
@@ -141,30 +142,30 @@ __declspec(naked) void ChainWalkSelfRecursive_0045daf0(void) {
         test    eax, eax
         mov     dword ptr [g_x_00542074], ecx
         je      walkChain
-        mov     edx, dword ptr [g_walkCallback]
+        mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [edx*4 + 0x14], eax
-        mov     dword ptr [g_eventQueueWorkType], 0x0045f650
-        call    Helper_TickFrame_PostFight
+        mov     dword ptr [g_xformEntityIdx], 0x0045f650
+        call    Thunk_0049cbd0
         mov     eax, dword ptr [g_framePauseFlag]
 earlyRet:
         ret
 walkChain:
-        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     eax, dword ptr [g_xformEntityIdx]
         test    eax, eax
         je      earlyRet
         add     eax, dword ptr [g_data_00542070]
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         je      earlyRet
         call    MStackPush3CallChain_0045db70
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     earlyRet
-        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     eax, dword ptr [g_xformEntityIdx]
         test    eax, eax
         je      earlyRet
-        jmp     ChainWalkSelfRecursive_0045daf0
+        jmp     Thunk_0045dae0
     }
 }

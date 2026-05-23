@@ -140,8 +140,8 @@ __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + FiveCallGuardSetTail_0046f6b0]
-        mov     eax, [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84]
+        lea     esi, [eax*4]
+        mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         _emit   74h
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
         mov     dword ptr [esi + 8], offset InstallSelfMStackPush_0041aaf0
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset InstallSelfMStackPush_0041aaf0
-        mov     [ecx*4 + FiveCallGuardSetTail_0046f6b0 + 0x84], 1
+        mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfMStackPush_0041aaf0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84], 0
+        mov     dword ptr [eax*4 + 0x84], 0
         call    KnockbackPositionReset_00472a90
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi

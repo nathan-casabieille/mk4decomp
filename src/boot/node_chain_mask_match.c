@@ -146,7 +146,7 @@ walkChain:
         je      next
         mov     eax, ecx
         sar     eax, 2
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         and     eax, esi
         cmp     eax, edx

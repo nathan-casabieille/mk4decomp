@@ -15,7 +15,7 @@ extern packed_ptr g_xformEntityIdx;
  *   sar     eax, 2
  *   mov     [g_eventQueueTotal], eax
  *   mov     ecx, [eax*4 + 0]
- *   mov     [g_walkCallback], ecx
+ *   mov     [g_scaledInit_00542044], ecx
  *   mov     ecx, [g_player1NodeIdx]
  *   cmp     edx, ecx
  *   je      +0x0c
@@ -28,7 +28,7 @@ extern packed_ptr g_fightGroupHead;
 void ArgScaledLoadCmpP1_0048e550(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     g_eventQueueTotal = idx;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(idx * 4);
+    g_scaledInit_00542044 = *(unsigned int *)(idx * 4);
     if (g_fightGroupHead == g_player1NodeIdx) return;
     g_scaledInit_00542044 = *(unsigned int *)(idx * 4 + 4);
 }

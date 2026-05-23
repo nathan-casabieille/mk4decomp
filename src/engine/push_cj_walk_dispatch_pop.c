@@ -132,11 +132,11 @@ void PushCjWalkDispatchPop_00490810(void) {
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_cj_0054205c;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = (unsigned int)g_walkCallback;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
     g_cj_0054205c = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
     ScaledMove48to58_00490720();
     if (g_framePauseFlag != 0) return;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(g_state_004d57ac * 4);
+    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
     g_cj_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;

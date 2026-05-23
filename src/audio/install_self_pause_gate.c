@@ -134,13 +134,13 @@ void InstallSelfPauseGate_004a1a50(void) {
     unsigned int v = *(unsigned int *)(base + 0x84);
     *(unsigned int *)(base + 0x84) = 0;
     if (v != 0) {
-        g_walkCallback = (void (*)(void))g_cj_0054205c;
+        g_currentNodeIdx = g_cj_0054205c;
         MStackPush2ChainLLInsert_00406790();
         if (g_framePauseFlag != 0) return;
         StackPopDispatchTagged_0041f780();
         return;
     }
-    g_cj_0054205c = (unsigned int)g_walkCallback;
+    g_cj_0054205c = g_currentNodeIdx;
     *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPauseGate_004a1a50;
     *(unsigned int *)(base + 0x84) = 1;
     g_data_0054204c = 0x26;

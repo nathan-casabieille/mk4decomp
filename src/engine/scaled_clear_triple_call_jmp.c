@@ -25,7 +25,7 @@ extern unsigned int g_framePauseFlag;
  *   jmp     +8
  *   ret
  */
-extern void OrDualStore_0048a190(void);
+extern void ZeroState_0048a1b0(void);
 extern void func_00404e10(void);
 extern void func_004222c0(void);
 extern void func_004202f5(void);
@@ -34,7 +34,7 @@ void ScaledClearTripleCallJmp_004202c0(void) {
     unsigned int v = *(unsigned int *)(base * 4 + 0x84);
     *(unsigned int *)(base * 4 + 0x84) = 0;
     if (v == 0) {
-        OrDualStore_0048a190();
+        ZeroState_0048a1b0();
     }
     func_00404e10();
     func_004222c0();

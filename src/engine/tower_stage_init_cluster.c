@@ -156,13 +156,13 @@ buildChain:
         mov     dword ptr [g_data_0054204c], ecx
         lea     eax, [edx*4 + 4]
         mov     edx, dword ptr [edx*4 + 4]
-        mov     dword ptr [g_walkCallback], edx
+        mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [edx*4 + 0], ecx
-        mov     ecx, dword ptr [g_walkCallback]
+        mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
-        mov     dword ptr [g_walkCallback], ecx
+        mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [eax], ecx
-        jmp     dword ptr [g_eventQueueWorkType]
+        jmp     dword ptr [g_xformEntityIdx]
 done:
         ret
     }

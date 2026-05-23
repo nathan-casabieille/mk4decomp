@@ -20,6 +20,7 @@ extern void ComRelease_004aedc0(void);
 extern void ComRelease_004aef30(void);
 extern void ComRelease_004af000(void);
 extern void DSoundBufferInit146_004aea40(void);
+extern void R2_Init4(void);
 extern void DSoundDualEntryRelease_004af210(void);
 extern void DualVtable8Call_004af650(void);
 extern void ReleaseVtableSlots_004af130(void);
@@ -54,7 +55,7 @@ loop4ad7c0:
         call    ComRelease_004af000
         call    ComReleasePair_004af440
         push    0
-        call    DSoundBufferInit146_004aea40
+        call    R2_Init4
         add     esp, 4
         call    ComRelease_004aef30
         call    ComReleaseCapture_004aeee0

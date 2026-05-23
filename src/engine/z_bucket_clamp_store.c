@@ -154,7 +154,7 @@ keep:
         and     ecx, 0xff0fffff
         pop     esi
         or      ecx, eax
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [g_data_00542084], ecx
         mov     dword ptr [eax*4 + 0x20], ecx
         ret

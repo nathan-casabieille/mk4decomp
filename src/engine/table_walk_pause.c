@@ -41,7 +41,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   into g_scaledInit_00542044; pause-test breaks the loop.
  */
 void TableWalkPause_004bd850(void) {
-    unsigned int *p = g_table_004ab4e78;
+    unsigned int *p = &g_table_004ab4e78;
     do {
         unsigned int v = *p;
         g_scaledInit_00542044 = v;

@@ -214,7 +214,8 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         nop
         nop
         nop
-        /* H4 */
+        /* H4 (L_480020) */
+    L_480020:
         mov      eax, dword ptr [g_data_00542060]
         xor      edx, edx
         shl      eax, 2
@@ -243,8 +244,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      dword ptr [g_data_00541e6c], 1
         pop      edi
         ret
-        /* H5 (L_480020) */
-    L_480020:
+        /* H5 */
         mov      eax, dword ptr [g_data_0054205c]
         push     esi
         mov      dword ptr [g_data_00542044], eax

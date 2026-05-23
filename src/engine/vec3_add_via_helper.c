@@ -132,9 +132,9 @@ extern unsigned int g_data_0054204c;
 
 __declspec(naked) void Vec3AddViaHelper_00425170(void) {
     __asm {
-        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_data_0054204c]
-        mov     eax, dword ptr [g_walkCallback]
+        mov     eax, dword ptr [g_scaledInit_00542044]
         push    ebx
         push    esi
         push    edi

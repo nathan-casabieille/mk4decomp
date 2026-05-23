@@ -152,7 +152,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi
         mov     edi, offset InstallSelfStatePush_00434990
-        mov     [ecx*4 + FiveCallGuardSetTail_0046f6b0 + 0x84], 1
+        mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], ecx
@@ -162,7 +162,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     [eax*4 + FiveCallGuardSetTail_0046f6b0 + 0x84], edx
+        mov     [eax*4 + 0x84], edx
         call    InstallSelf3StateDualBody_00434a30
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi

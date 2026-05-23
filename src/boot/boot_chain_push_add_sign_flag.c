@@ -19,7 +19,7 @@ extern unsigned int g_data_00542070;
 extern unsigned int g_data_00542084;
 extern unsigned int g_state_0054208c;
 extern unsigned int g_state_00542088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_state_00542098;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootChainPushAddSignFlag_004077b0 - 297b boot mstack-push1 + sign-add + bit-flag toggle.
- *   g_state_00542094 = (g_x_0054206c < 0); push g_x_00542048 to mstack.
+ *   g_state_00542098 = (g_x_0054206c < 0); push g_x_00542048 to mstack.
  *   ecx = g_x_0054205c[+0x24]; g_x_00542048 = ecx. If sign flag was set:
  *     edx = g_x_00542044[+0x28] + g_x_0054206c; g_x_0054206c = edx. If sign cleared (jns):
  *       pop mstack → g_x_00542048; g_state_0054208c &= 0xfe; pop+ret.
  *     Else: ecx = ecx[+4]; pop mstack into edx; ecx--; g_state_0054208c |= 1;
  *       g_x_00542048 = edx; g_x_0054206c = ecx; pop+ret.
  *   Otherwise (positive branch): eax = g_x_0054206c + g_x_00542044[+0x28]; g_x_0054206c = eax.
- *     esi = ecx[+4]; ecx = g_state_004d57ac--; g_state_00542094 = (eax < esi);
+ *     esi = ecx[+4]; ecx = g_state_004d57ac--; g_state_00542098 = (eax < esi);
  *     edx = mstack at top; g_x_00542048 = edx; g_state_0054208c &= 0xfffffffe;
  *     commit g_state_004d57ac. If sign result = 0: g_x_0054206c = 0; g_state_0054208c |= 1.
  *     pop+ret.
@@ -151,13 +151,13 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         mov     ecx, dword ptr [g_x_00542048]
         push    esi
         setl    al
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_state_00542098], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_x_0054205c]
-        mov     eax, dword ptr [g_state_00542094]
+        mov     eax, dword ptr [g_state_00542098]
         mov     ecx, dword ptr [edx*4 + 0x24]
         test    eax, eax
         mov     dword ptr [g_x_00542048], ecx
@@ -205,7 +205,7 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         setl    dl
         mov     eax, edx
         dec     ecx
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_state_00542098], eax
         mov     edx, dword ptr [ecx*4 + 4]
         mov     dword ptr [g_x_00542048], edx
         mov     edx, dword ptr [g_state_0054208c]

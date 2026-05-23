@@ -140,7 +140,7 @@ extern unsigned int g_x_00541fb0;
 extern unsigned int g_x_005433f0;
 extern unsigned int g_x_00543444;
 extern unsigned int g_x_0054355c;
-extern void func_004ab620(void);
+extern void AudioVolumeRescale_004ab690(void);
 
 __declspec(naked) void WeightedSumClampHelper_00439920(void) {
     __asm {
@@ -176,7 +176,7 @@ noScale:
         jle     callTail
         mov     dword ptr [g_walkCallback], 0x3cf
 callTail:
-        call    func_004ab620
+        call    AudioVolumeRescale_004ab690
         pop     esi
         ret
     }

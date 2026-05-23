@@ -136,7 +136,7 @@ void DualSetCallPair_0047dbc0(void) {
     if (g_framePauseFlag != 0) return;
     g_state_00542088 = 0xffffb334;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x78) = 0xffffb334;
-    g_eventQueueWorkType = 0x3333;
+    g_walkCallback = (void(*)(void))0x3333;
     DualFieldAddSubStore_00470340();
     if (g_framePauseFlag != 0) return;
     IterStepDualStore_00490b40(0x004ed4b8);

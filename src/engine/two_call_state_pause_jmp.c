@@ -22,11 +22,11 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern unsigned int g_state_0053a51c;
-extern int GuardedScaledLookupCallJmp_004220a0(void);
+extern void IncOrZero9_00422080(void);
 extern void func_0042a330(void);
 extern void func_0049199a(void);
 void TwoCallStatePauseJmp_00491990(void) {
-    GuardedScaledLookupCallJmp_004220a0();
+    IncOrZero9_00422080();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))g_state_0053a51c;
     func_0042a330();

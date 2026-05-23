@@ -29,7 +29,7 @@ extern packed_ptr g_xformEntityIdx;
  */
 extern int func_004594ec(void *);
 extern void *g_data_004eafb8;
-extern void Wrapper_0048a350(void);
+extern void ScaledAndAlfe_00490390(void);
 extern void func_0046b687(void);
 /* @addr 0x0046b630 (14b): cdecl call func_004594ec(&g_data_004eafb8) + ret.
  * Entry A of the original 59-byte packed block; entry B at +0x10 lives in
@@ -39,13 +39,13 @@ void DualEntryPushCall_0046b630(void) {
 }
 
 /* @addr 0x0046b640 (43b): orphan sub-entry - set walkCallback and
- * baseSel[+0x74] to 0x2010, call Wrapper_0048a350, then if !pause
+ * baseSel[+0x74] to 0x2010, call ScaledAndAlfe_00490390, then if !pause
  * tail-jmp func_0046b687. */
 void func_0046b640(void) {
     int v = 0x2010;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = v;
-    Wrapper_0048a350();
+    ScaledAndAlfe_00490390();
     if (g_framePauseFlag != 0) return;
     func_0046b687();
 }

@@ -23,7 +23,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void func_0042440c(void);
 extern void func_00432522(void);
 void AddStoreCallPauseJmp_00431da0(void) {
-    g_eventQueueWorkType = g_eventQueueChild + 0x0001921f;
+    g_eventQueueWorkType = g_xformScratch2088 + 0x0001921f;
     func_0042440c();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = (unsigned int)g_walkCallback;

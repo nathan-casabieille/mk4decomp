@@ -137,9 +137,9 @@ void DualBranchWordLookup_0048a290(void) {
         shr     eax, 2
         add     eax, ecx
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_walkCallback], eax
+        mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [ecx*4 + 0x34]
         cmp     ecx, 0x10
         mov     dword ptr [g_data_00542070], ecx

@@ -134,8 +134,8 @@ void AudioSwapNegate_004ac080(void) {
     unsigned int v;
     unsigned int chain;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueWorkType;
-    g_eventQueueWorkType = g_x_0052ab10;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
+    g_xformEntityIdx = g_x_0052ab10;
     v = (unsigned int)(-(int)*(int *)(g_x_0052ab10 * 4 + 0x64));
     g_walkCallback = (void(*)(void))v;
     chain = *(unsigned int *)(g_cj_0054205c * 4 + 0x34);
@@ -147,6 +147,6 @@ void AudioSwapNegate_004ac080(void) {
         g_walkCallback = (void(*)(void))v;
     }
     *(unsigned int *)(g_cj_0054205c * 4 + 0x64) = v;
-    g_eventQueueWorkType = *(unsigned int *)(g_state_004d57ac * 4);
+    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

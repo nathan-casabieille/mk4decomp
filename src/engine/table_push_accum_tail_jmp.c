@@ -122,6 +122,7 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
+extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_x_0053a178;
@@ -166,7 +167,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         add     eax, ecx
         mov     dword ptr [g_data_00542070], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, [eax*4 + FourGlobalsEqualFInitTail_004236a0]
+        mov     eax, [eax*4 + g_data_004d57ac_arr]
         push    eax
         push    eax
         mov     dword ptr [g_data_00542070], eax
