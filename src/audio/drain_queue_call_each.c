@@ -133,33 +133,22 @@ extern unsigned int g_x_00543748;
 extern unsigned int g_x_00543750;
 extern void MStackPush2ChainLLInsert_00406790(void);
 
-__declspec(naked) void DrainQueueCallEach_004a1ec0(void) {
-    __asm {
-        mov     eax, dword ptr [g_x_00543748]
-        push    edi
-        xor     edi, edi
-        test    eax, eax
-        jle     tail
-        push    esi
-        mov     esi, offset g_x_00543750
-inner:
-        mov     eax, dword ptr [esi]
-        mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPush2ChainLLInsert_00406790
-        mov     eax, dword ptr [g_x_00543748]
-        mov     dword ptr [esi], 0
-        inc     edi
-        add     esi, 4
-        cmp     edi, eax
-        jl      inner
-        pop     esi
-tail:
-        mov     ecx, dword ptr [g_data_005437f0]
-        mov     dword ptr [g_data_005437f0], 0
-        mov     dword ptr [g_currentNodeIdx], ecx
-        call    MStackPush2ChainLLInsert_00406790
-        mov     dword ptr [g_x_00543748], 0
-        pop     edi
-        ret
+void DrainQueueCallEach_004a1ec0(void) {
+    int count = (int)g_x_00543748;
+    int i = 0;
+    if (count > 0) {
+        unsigned int *p = &g_x_00543750;
+        do {
+            g_currentNodeIdx = *p;
+            MStackPush2ChainLLInsert_00406790();
+            count = (int)g_x_00543748;
+            *p = 0;
+            i++;
+            p++;
+        } while (i < count);
     }
+    g_currentNodeIdx = g_data_005437f0;
+    g_data_005437f0 = 0;
+    MStackPush2ChainLLInsert_00406790();
+    g_x_00543748 = 0;
 }
