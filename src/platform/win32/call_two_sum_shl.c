@@ -28,6 +28,11 @@ extern unsigned int g_state_00f9f7b8;
 extern void func_004c45c1(void);
 extern unsigned int g_iat_004d21b0;
 
+/*
+ * NON-COAXABLE: MSVC picks lea eax,[edi+edi]+pop edi+a3 store over
+ * the orig shl edi,1+mov [g],edi; scheduler frees edi early for a3 -
+ * same byte count, different encoding, not controllable from C source.
+ */
 __declspec(naked) void CallTwoSumShl_004c45a0(void) {
     __asm {
         push    esi

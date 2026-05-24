@@ -31,7 +31,11 @@ extern unsigned int g_data_0053a518;
 extern unsigned int g_data_0053a3e4;
 extern unsigned int g_data_0053a474;
 
-/* @addr 0x00433d30 */
+/* @addr 0x00433d30
+ *   NON-COAXABLE: MSVC assigns eax to the later-declared symbol (0x0053a518)
+ *   but orig has the lower-address symbol (0x0053a1a0) in eax. Register
+ *   allocation order is address-dependent, not controllable from C source.
+ */
 
 __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
     __asm {
@@ -56,7 +60,10 @@ __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
     }
 }
 
-/* @addr 0x00482ab0 */
+/* @addr 0x00482ab0
+ *   NON-COAXABLE: same pattern - MSVC assigns eax to higher-address symbol
+ *   (0x0053a474 > 0x0053a3e4), but orig has lower in eax. Same blocker.
+ */
 __declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
