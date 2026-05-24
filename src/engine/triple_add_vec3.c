@@ -16,6 +16,12 @@ extern void Mul10Tail_00404af0(void);
  *   3-component vector add: out[i] = a[i] + b[i] across i=0,1,2
  *   (variant of 0x004250f0 with `add` and slight reg reordering)
  */
+/*
+ * NON-COAXABLE: for component 2, MSVC /O2 always picks ecx (A ptr) as the
+ * accumulator for the commutative add, reusing it for out[2] = A[2]+B[2].
+ * Orig uses edx (B ptr) as accumulator instead. Register choice for
+ * commutative addition cannot be controlled from C source.
+ */
 __declspec(naked) void TripleAddVec3_00425130(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
