@@ -7,6 +7,12 @@
 /* @addr 0x004ce2c0 (45b)
  *   96-bit shift right by 1: counterpart of Shl96By1_004ce290.
  */
+/*
+ * NON-COAXABLE: MSVC /O2 assigns edi to the first-used callee-saved
+ * variable (cd2=high_copy), but orig has edi=cd1=mid_copy; MSVC
+ * stores p[2] early and uses a different instruction interleaving.
+ * esi/edi allocation order is not controllable from C source.
+ */
 __declspec(naked) void Shr96By1_004ce2c0(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]

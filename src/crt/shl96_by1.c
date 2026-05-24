@@ -8,6 +8,11 @@
  *   96-bit shift left by 1: arg points to {dword[0], dword[1], dword[2]}
  *   shifts the whole 96-bit value left by 1, carrying the high bit between dwords.
  */
+/*
+ * NON-COAXABLE: MSVC /O2 finds a 41-byte solution without push edi
+ * (reuses edx for low/carry/high sequentially); orig is 46 bytes.
+ * MSVC's optimizer eliminates the need for the edi callee-save entirely.
+ */
 __declspec(naked) void Shl96By1_004ce290(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
