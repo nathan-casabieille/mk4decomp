@@ -133,32 +133,14 @@ extern unsigned int g_data_00535e7c;
  *   edx = g_walkCallback; eax = g_acc_00542078;
  *   cmp edx,eax; if le: ret; else: jmp 0x42b930.
  */
-
-__declspec(naked) void GuardedRangeCmpFpuJmp_0042b8d0(void) {
-    __asm {
-        call    ScaledLoadCmpStoreXfm_0048f2a0
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     short L_grcfj_ret
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_00542070]
-        cmp     eax, ecx
-        jl      short L_grcfj_ret
-        mov     ecx, dword ptr [g_data_0053a46c]
-        mov     edx, dword ptr [g_eventQueueWorkType]
-        sub     ecx, edx
-        mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_acc_00542078], ecx
-        call    FpuSqrtMul_004ab350
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     short L_grcfj_ret
-        mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_acc_00542078]
-        cmp     edx, eax
-        jle     short L_grcfj_ret
-        jmp     PendingMatch_0042b930
-L_grcfj_ret:
-        ret
-    }
+void GuardedRangeCmpFpuJmp_0042b8d0(void) {
+    ScaledLoadCmpStoreXfm_0048f2a0();
+    if (g_framePauseFlag != 0) return;
+    if ((int)g_walkCallback < (int)g_data_00542070) return;
+    g_acc_00542078 = g_data_0053a46c - g_eventQueueWorkType;
+    g_eventQueueWorkType = g_walkCallback;
+    FpuSqrtMul_004ab350();
+    if (g_framePauseFlag != 0) return;
+    if ((int)g_walkCallback <= (int)g_acc_00542078) return;
+    PendingMatch_0042b930();
 }
