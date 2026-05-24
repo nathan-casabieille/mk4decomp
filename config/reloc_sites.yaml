@@ -53,8 +53,6 @@ engine/ecm_play_thread.obj#2#0x131: 5195696
 engine/gfx_init.obj#2#0x5e: 5196604
 engine/install3_state_m_stack_counter_dispatch.obj#1216#0x1e2: 4982998
 engine/install3_state_m_stack_counter_dispatch.obj#1216#0x26d: 4982998
-engine/install_self_helper2.obj#2#0x23: 4712944
-engine/install_self_helper2.obj#2#0x2a: 4785984
 engine/install_self_state_cascade.obj#2#0x21: 5513288
 engine/install_self_state_cascade.obj#2#0x3b: 5513288
 engine/install_self_state_cascade.obj#2#0x43: 5513284

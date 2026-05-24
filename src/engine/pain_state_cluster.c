@@ -127,8 +127,8 @@ extern void ScaledChainJmp_004298e0(void);
 
 /*
  * @addr 0x0047e8a0 (104b game) - install-self with 2 helpers:
- *   if base[+0x84] set, call ScaledZeroFour and exit; else call
- *   PainStateCluster_0047e9f0; on pause clear, call ScaledChainJmp; on pause
+ *   if base[+0x84] set, call PainStateCluster and exit; else call
+ *   ScaledZeroFour_00490740; on pause clear, call ScaledChainJmp; on pause
  *   clear, install self with tag 0xa.
  */
 extern void InstallSelfHelper2_0047e8a0(void);
@@ -138,10 +138,10 @@ void InstallSelfHelper2_0047e8a0(void) {
     unsigned int prev = *(unsigned int *)(base + 0x84);
     *(unsigned int *)(base + 0x84) = 0;
     if (prev != 0) {
-        ScaledZeroFour_00490740();
+        PainStateCluster_0047e9f0();
         return;
     }
-    PainStateCluster_0047e9f0();
+    ScaledZeroFour_00490740();
     if (g_framePauseFlag != 0) return;
     ScaledChainJmp_004298e0();
     if (g_framePauseFlag != 0) return;

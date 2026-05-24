@@ -48,7 +48,7 @@ __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
         je      short L_p1same_a
         mov     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-L_p1same_a:
+    L_p1same_a:
         mov     ecx, dword ptr [g_walkCallback]
         pop     esi
         mov     dword ptr [eax*4 + 0], ecx
@@ -72,7 +72,7 @@ __declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
         je      short L_p1same_b
         mov     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-L_p1same_b:
+    L_p1same_b:
         mov     ecx, dword ptr [g_walkCallback]
         pop     esi
         mov     dword ptr [eax*4 + 0], ecx
