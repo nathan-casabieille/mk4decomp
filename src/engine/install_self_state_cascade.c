@@ -130,8 +130,10 @@ extern void InstallSelfStateCascade_004382a0(void);
  *   + increment + tail-jmp/call: shifts arg, walks 3 consecutive scaled
  *   slots, stores last into base[+4]; increments walk; tail-call into
  *   Push80SetWalkNegDualCallPop_004393b0 then jmp InstallSelfStateCascade_004382a0.
+ *   NON-COAXABLE: orig generates `lea ecx, [ecx*4+4]; mov edx, [ecx]` (9b)
+ *   two-step for the ptr; MSVC SP3 /O2 folds into single `mov edx, [ecx*4+4]`
+ *   (7b) direct indexed-dereference, never emitting the intermediate lea.
  */
-
 __declspec(naked) void Scaled3StorePushCallJmp_00438220(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
