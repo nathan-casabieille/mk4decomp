@@ -195,7 +195,8 @@ def main():
 
     placed = 0
     not_found = 0
-    mismatches = []
+    placed_set = set()   # target_vas successfully placed by any OBJ
+    mismatches = {}      # target_va -> (name, va, sz, ndiffs)
     for obj_path in obj_paths:
         rel_obj_path = os.path.relpath(obj_path, str(OBJ_DIR))
         with open(obj_path,'rb') as f:
@@ -374,12 +375,15 @@ def main():
             # so mismatching functions leave correct bytes in place).
             orig_bytes = scaffold[file_off:file_off+target_size]
             if bytes(orig_bytes) != bytes(fn_bytes):
-                mismatches.append((clean, target_va, target_size,
-                                   sum(1 for a,b in zip(orig_bytes, fn_bytes) if a != b)))
+                if target_va not in placed_set:
+                    mismatches[target_va] = (clean, target_va, target_size,
+                                             sum(1 for a,b in zip(orig_bytes, fn_bytes) if a != b))
             else:
                 # Overwrite only matching functions
                 for i in range(target_size):
                     scaffold[file_off + i] = fn_bytes[i]
+                placed_set.add(target_va)
+                mismatches.pop(target_va, None)
             placed += 1
             # Mark synthesized range (offset relative to .text raddr).
             text_off = file_off - text_sec['raddr']
@@ -389,7 +393,7 @@ def main():
 
     print(f'\nFunctions placed: {placed}')
     print(f'Mismatches: {len(mismatches)}')
-    for name, va, sz, n in mismatches:
+    for name, va, sz, n in mismatches.values():
         print(f'  {name} @ {va:#x} ({sz}b): {n} bytes differ')
 
     # 0x90-fill inter-function padding: for any .text byte not covered by a

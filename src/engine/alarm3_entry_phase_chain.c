@@ -177,39 +177,60 @@ void Alarm3PhaseChainEntry2_0047e1e0(void) {
 }
 
 /* entry 3 / body (offset 0x90, 211b) */
-void Alarm3PhaseChainBody_0047e230(void) {
-    unsigned char *base = (unsigned char *)(g_data_00542060 * 4);
-    unsigned int phase = *(unsigned int *)(g_data_00542060 * 4 + 0x84);
-    *(unsigned int *)(base + 0x84) = 0;
-    if (phase != 0) {
-        g_data_0054206c = 2;
-        CmpEqInitCallElseJmp_0048d4b0();
-        if (g_data_00541e6c != 0) return;
-
-        if (g_data_0054208c & 1) {
-            TriPhaseDualPathInstallChain_0047e420();
-            return;
-        }
-
-        TailJmpInstallSelfPair_0047e690();
-        if (g_data_00541e6c != 0) return;
-        if ((int)g_data_0054206c >= 0x26666) {
-            ScaledAndAldf_00490330();
-            if (g_data_00541e6c != 0) return;
-
-            g_data_0054206c = 0x4ccc;
-            EsiEdiAliasDualMul10_004906b0();
-            if (g_data_00541e6c != 0) return;
-
-            g_data_0054206c = 0x28f;
-            *(unsigned int *)(g_data_0054205c * 4 + 0x4c) = 0x28f;
-            InstallSelfThresholdDispatch_0047e310();
-            return;
-        }
+__declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
+    __asm {
+        mov     eax, dword ptr [g_data_00542060]
+        push    ebx
+        push    esi
+        mov     ebx, 1
+        lea     esi, [eax*4]
+        mov     eax, dword ptr [eax*4 + 0x84]
+        mov     dword ptr [esi + 0x84], 0
+        test    eax, eax
+        je      L_a3b_installPhase0
+        mov     dword ptr [g_data_0054206c], 2
+        call    CmpEqInitCallElseJmp_0048d4b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     L_a3b_doneNoPop
+        test    byte ptr [g_data_0054208c], bl
+        je      short L_a3b_e3InitChain
+        call    TriPhaseDualPathInstallChain_0047e420
+        pop     esi
+        pop     ebx
+        ret
+    L_a3b_e3InitChain:
+        call    TailJmpInstallSelfPair_0047e690
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3b_doneNoPop
+        cmp     dword ptr [g_data_0054206c], 0x26666
+        jl      short L_a3b_installPhase0
+        call    ScaledAndAldf_00490330
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3b_doneNoPop
+        mov     dword ptr [g_data_0054206c], 0x4ccc
+        call    EsiEdiAliasDualMul10_004906b0
+        mov     eax, dword ptr [g_data_00541e6c]
+        test    eax, eax
+        jne     short L_a3b_doneNoPop
+        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, 0x28f
+        mov     dword ptr [g_data_0054206c], eax
+        mov     dword ptr [ecx*4 + 0x4c], eax
+        call    InstallSelfThresholdDispatch_0047e310
+        pop     esi
+        pop     ebx
+        ret
+    L_a3b_installPhase0:
+        mov     dword ptr [esi + 8], offset Alarm3PhaseChainBody_0047e230
+        mov     dword ptr [esi + 0x84], ebx
+        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_data_00541e6c], ebx
+    L_a3b_doneNoPop:
+        pop     esi
+        pop     ebx
+        ret
     }
-
-    *(unsigned int *)(base + 8) = (unsigned int)Alarm3PhaseChainBody_0047e230;
-    *(unsigned int *)(base + 0x84) = 1;
-    g_data_0054204c = 1;
-    g_data_00541e6c = 1;
 }
