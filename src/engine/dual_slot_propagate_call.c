@@ -133,26 +133,19 @@ extern unsigned int g_data_00535e7c;
  */
 extern void DualWalkRange_00468440(void);
 
-__declspec(naked) void DualSlotPropagateCall_004683e0(void) {
-    __asm {
-        mov     eax, dword ptr [g_baseSel_00542060]
-        push    esi
-        mov     ecx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_data_00542084], ecx
-        mov     edx, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_state_00542088], edx
-        mov     esi, dword ptr [eax*4 + 0x30]
-        add     ecx, esi
-        mov     dword ptr [g_data_00542084], ecx
-        mov     esi, dword ptr [eax*4 + 0x34]
-        add     edx, esi
-        mov     dword ptr [g_state_00542088], edx
-        mov     dword ptr [eax*4 + 0x38], ecx
-        mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_state_00542088]
-        mov     dword ptr [eax*4 + 0x3c], ecx
-        call    DualWalkRange_00468440
-        pop     esi
-        ret
-    }
+void DualSlotPropagateCall_004683e0(void) {
+    unsigned int base, field38, field3c, tmp;
+    base = g_baseSel_00542060;
+    field38 = *(unsigned int *)(base * 4 + 0x38);
+    g_data_00542084 = field38;
+    field3c = *(unsigned int *)(base * 4 + 0x3c);
+    g_state_00542088 = field3c;
+    tmp = *(unsigned int *)(base * 4 + 0x30);
+    field38 += tmp;
+    g_data_00542084 = field38;
+    tmp = *(unsigned int *)(base * 4 + 0x34);
+    g_state_00542088 += tmp;
+    *(unsigned int *)(base * 4 + 0x38) = field38;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = g_state_00542088;
+    DualWalkRange_00468440();
 }
