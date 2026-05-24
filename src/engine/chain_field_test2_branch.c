@@ -125,9 +125,13 @@ extern unsigned int g_data_00535e7c;
 /*
  * @addr 0x0042fbc0 (116b game) - chain field-test then 2-branch:
  *   walk = walk[+0x40]; g_state_00542094 = walk & 0x40; if zero exit.
- *   Else stash walk into wt, swap to 0x538158 (or 0x53815c if equal),
- *   call MStackSignedMod_0042fee0; on pause clear, walk=0x4ccc; if walk <= old
- *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp_0042fa10.
+ *   Else: mov eax,ecx (copy old_scaled from ecx to eax); load g_x_538158
+ *   into ecx; cmp eax,ecx; store both (g_xformEntityIdx=eax a3, g_scaledInit=ecx
+ *   89 0d) between cmp and jne; conditionally replace with g_x_53815c.
+ *   NON-COAXABLE: orig emits `mov eax,ecx` (2b) + `mov ecx,[g_x]` (6b) to get
+ *   old_scaled into eax for a3-form store; MSVC SP3 /O2 instead loads g_x into
+ *   eax (a1 5b) and keeps old_scaled in ecx, saving 3 bytes in the cmp block
+ *   (compensated by 3 nop pads at end). Reg-allocation divergence; non-coaxable.
  */
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0053815c;
@@ -143,30 +147,30 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x40
         mov     dword ptr [g_state_00542094], eax
-        je      done
+        je      L_exit
         mov     eax, ecx
         mov     ecx, dword ptr [g_x_00538158]
         cmp     eax, ecx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
-        jne     after
+        jne     L_notEqual
         mov     eax, dword ptr [g_x_0053815c]
         mov     dword ptr [g_scaledInit_00542044], eax
-after:
+    L_notEqual:
         call    MStackSignedMod_0042fee0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
-        jne     done
+        jne     L_exit
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 0x4ccc
         cmp     ecx, eax
         mov     dword ptr [g_acc_00542078], 0
         mov     dword ptr [g_x_00542074], eax
-        jle     tail2
+        jle     L_mul10
         jmp     SubCmpCallPauseJmp_0042fc40
-tail2:
+    L_mul10:
         jmp     Mul10Triple0xd999Interp_0042fa10
-done:
+    L_exit:
         ret
     }
 }

@@ -124,10 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x004bd4a0 (110b engine.geo) - chain walker with cleanup:
- *   if walk[+0x48] non-null call CleanupCallTwice on it; load
+ *   if walk[+0x48] non-null call Helper_TickAlt on it; load
  *   walk[+0] into walk; if null exit; load walk[+0x0c], if == 1
  *   indirect-chain to walk[+0] and tail-recurse; else install self,
- *   call Helper_TickAlt, then return value of g_framePauseFlag.
+ *   call CleanupCallTwice, then return value of g_framePauseFlag.
+ *   NON-COAXABLE: MSVC /O2 TCO loop-heuristic puts jmp path before
+ *   ret path; orig has else-block before tailRecurse.
  */
 extern void CleanupCallTwice_004bd530(void);
 
