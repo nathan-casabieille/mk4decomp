@@ -138,67 +138,19 @@ extern unsigned int g_x_00543b50;
 extern unsigned int g_x_00543b58;
 extern unsigned int g_x_00543b60;
 
-__declspec(naked) void NineSlotReplace_004b7a40(void) {
-    __asm {
-        mov     edx, [esp + 8]
-        push    esi
-        mov     esi, [esp + 8]
-        test    edx, edx
-        mov     eax, [esi]
-        mov     dword ptr [esi], 0
-        _emit   0fh
-        _emit   84h
-        _emit   0a6h
-        _emit   00h
-        _emit   00h
-        _emit   00h
-        mov     ecx, [esp + 0x10]
-        cmp     [ecx*4 + g_x_00543b20], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b20], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b28], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b28], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b30], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b30], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b38], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b38], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b40], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b40], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b48], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b48], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b50], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b50], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b58], edx
-        _emit   75h
-        _emit   09h
-        mov     [ecx*4 + g_x_00543b58], eax
-        xor     eax, eax
-        cmp     [ecx*4 + g_x_00543b60], edx
-        _emit   75h
-        _emit   07h
-        mov     [ecx*4 + g_x_00543b60], eax
-        mov     [esi], edx
-        pop     esi
-        ret
-    }
+void NineSlotReplace_004b7a40(unsigned int *p, unsigned int val, unsigned int idx)
+{
+    unsigned int saved = *p;
+    *p = 0;
+    if (!val) return;
+    if ((&g_x_00543b20)[idx] == val) { (&g_x_00543b20)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b28)[idx] == val) { (&g_x_00543b28)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b30)[idx] == val) { (&g_x_00543b30)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b38)[idx] == val) { (&g_x_00543b38)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b40)[idx] == val) { (&g_x_00543b40)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b48)[idx] == val) { (&g_x_00543b48)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b50)[idx] == val) { (&g_x_00543b50)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b58)[idx] == val) { (&g_x_00543b58)[idx] = saved; saved = 0; }
+    if ((&g_x_00543b60)[idx] == val) { (&g_x_00543b60)[idx] = saved; }
+    *p = val;
 }
