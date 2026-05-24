@@ -61,6 +61,10 @@ engine/install_self_state_cascade.obj#2#0x5c: 5513284
 engine/install_self_state_cascade.obj#2#0x8: 5513288
 engine/iter_load.obj#2#0x20: 4836304
 engine/joystick_init.obj#2#0xb4: 8061256
+engine/chain_path_mul25.obj#2#0x1f: 5513284
+engine/chain_path_mul25.obj#2#0x6: 5513284
+engine/chain_path_mul25.obj#2#0x61: 5513284
+engine/chain_path_mul25.obj#2#0x69: 5513284
 engine/m_stack_push_dirty_tail.obj#2#0x1f: 5513284
 engine/m_stack_push_dirty_tail.obj#2#0x6: 5513284
 engine/m_stack_push_dirty_tail.obj#2#0x61: 5513284
