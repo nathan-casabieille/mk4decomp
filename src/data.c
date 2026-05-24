@@ -2228,7 +2228,7 @@ unsigned int g_byte_00543730;
 unsigned int g_byte_00543834;
 unsigned int g_byte_0054383c;
 unsigned int g_byte_00543840;
-unsigned int g_byte_0054389c;
+unsigned char g_byte_0054389c;
 unsigned int g_byte_00543a24;
 unsigned int g_byte_00543a3c;
 unsigned int g_byte_00543a3d;
