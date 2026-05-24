@@ -133,39 +133,23 @@ extern unsigned int g_data_0054204c;
 extern unsigned int g_x_00542074;
 extern void MStackPush3CallChain_0045db70(void);
 extern void Thunk_0045dae0(void);
+extern void HitReactionDispatcher_0045f650(void);
 
-__declspec(naked) void ChainWalkSelfRecursive_0045daf0(void) {
-    __asm {
-        mov     eax, dword ptr [g_data_0054204c]
-        mov     ecx, dword ptr [eax*4 + 0x40]
-        mov     eax, dword ptr [g_walkCallback]
-        test    eax, eax
-        mov     dword ptr [g_x_00542074], ecx
-        je      walkChain
-        mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [edx*4 + 0x14], eax
-        mov     dword ptr [g_xformEntityIdx], 0x0045f650
-        call    Thunk_0049cbd0
-        mov     eax, dword ptr [g_framePauseFlag]
-earlyRet:
-        ret
-walkChain:
-        mov     eax, dword ptr [g_xformEntityIdx]
-        test    eax, eax
-        je      earlyRet
-        add     eax, dword ptr [g_data_00542070]
-        mov     dword ptr [g_xformEntityIdx], eax
-        mov     eax, dword ptr [eax*4 + 0]
-        test    eax, eax
-        mov     dword ptr [g_xformEntityIdx], eax
-        je      earlyRet
-        call    MStackPush3CallChain_0045db70
-        mov     eax, dword ptr [g_framePauseFlag]
-        test    eax, eax
-        jne     earlyRet
-        mov     eax, dword ptr [g_xformEntityIdx]
-        test    eax, eax
-        je      earlyRet
-        jmp     Thunk_0045dae0
+int ChainWalkSelfRecursive_0045daf0(void) {
+    unsigned int link = *(unsigned int *)(g_data_0054204c * 4 + 0x40);
+    g_x_00542074 = link;
+    if ((unsigned int)g_walkCallback != 0) {
+        *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x14) = (unsigned int)g_walkCallback;
+        g_xformEntityIdx = (unsigned int)&HitReactionDispatcher_0045f650;
+        Thunk_0049cbd0();
+        return g_framePauseFlag;
     }
+    if (g_xformEntityIdx == 0) return;
+    g_xformEntityIdx += g_data_00542070;
+    g_xformEntityIdx = *(unsigned int *)(g_xformEntityIdx * 4);
+    if (g_xformEntityIdx == 0) return;
+    MStackPush3CallChain_0045db70();
+    if (g_framePauseFlag != 0) return;
+    if (g_xformEntityIdx == 0) return;
+    return ((int(*)())Thunk_0045dae0)();
 }
