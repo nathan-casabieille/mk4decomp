@@ -133,6 +133,11 @@ extern unsigned int g_data_00535e7c;
  *         g_scaledInit = eax; if ne: jmp loop;
  *   out: g_walkCallback = edx; pop esi; ret.
  */
+/*
+ * NON-COAXABLE: push esi is at byte 10 in orig (after mov+xor+shr).
+ * MSVC /O2 hoists push esi + load g_walkCallback to byte 5 to hide load
+ * latency. Push placement is not controllable from C source.
+ */
 
 __declspec(naked) void LinearSearchByEsi_00459290(void) {
     __asm {
