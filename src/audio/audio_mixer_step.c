@@ -13,9 +13,15 @@ extern u32 g_tickW1;
 extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ab700 (73b)
- *   Audio mixer step: eax = [0x4d5100] + [0x4d5104]; sar 31 (sign);
- *   eax % 0x10000; pushes ecx, eax; calls helper. Stores running
- *   sum back, low-16 to walk.
+ *   Audio mixer step: load d0/d4/walk, sum=d0+d4, sign=sar 31,
+ *   store sum, adj=sign+sum, low16=sum&0xffff, d4new=d4+adj,
+ *   push low16/walk, store walk/d4new/low16, call helper, store ret.
+ */
+/*
+ * NON-COAXABLE: push esi comes at byte 19, after 3 loads + add eax,edx
+ * (Eurocom late-push style). MSVC /O2 places callee-saves right before
+ * first register use; with esi used for sign/adj, the earliest MSVC
+ * can defer push esi is after 2 loads (byte 11) - not past an add.
  */
 extern unsigned int g_data_004d5100;
 extern unsigned int g_data_004d5104;
@@ -33,7 +39,7 @@ __declspec(naked) void AudioMixerStep_004ab700(void) {
         sar     esi, 0x1f
         mov     dword ptr [g_data_004d5100], eax
         add     esi, eax
-        and     eax, 0xffff
+        and     eax, 0x0000ffff
         add     edx, esi
         push    eax
         push    ecx
