@@ -53,8 +53,6 @@ engine/ecm_play_thread.obj#2#0x131: 5195696
 engine/five_block_dispatch_variants.obj#1352#0x3db: 4323200
 engine/five_block_dispatch_variants.obj#1378#0x340: 4810912
 engine/gfx_init.obj#2#0x5e: 5196604
-engine/install3_state_m_stack_counter_dispatch.obj#1216#0x1e2: 4982998
-engine/install3_state_m_stack_counter_dispatch.obj#1216#0x26d: 4982998
 engine/install3_state_m_stack_counter_dispatch.obj#1351#0xd0: 4651852
 engine/install3_state_m_stack_counter_dispatch.obj#1351#0x139: 4651072
 engine/install3_state_m_stack_counter_dispatch.obj#1351#0x1bf: 4651072
