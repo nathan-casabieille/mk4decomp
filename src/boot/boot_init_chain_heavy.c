@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5140;
+extern unsigned int g_dispatchSave523_004d5140;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_bootChainSlot3_00537e8c;
@@ -250,7 +250,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_bootHeavyState_00537f78], esi
         mov     dword ptr [g_particleInitState_00541de0], esi
         mov     dword ptr [g_particleEmitterNode_00535e6c], esi
-        mov     dword ptr [g_data_004d5140], 0x7F000000
+        mov     dword ptr [g_dispatchSave523_004d5140], 0x7F000000
         mov     dword ptr [g_walkCallback], esi
         call    AndShlStore_00409280
     L_boot_init_exit:

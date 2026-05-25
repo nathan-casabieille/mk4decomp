@@ -216,15 +216,15 @@ extern unsigned int g_data_004d5354;
 extern unsigned int g_data_004d5358;
 extern unsigned int g_data_004d535c;
 extern unsigned int g_data_004d5ad8;
-extern unsigned int g_data_004d61d8;
+extern unsigned int g_dispatchSave522_004d61d8;
 extern unsigned int g_phaseChainArr2_004d62e8;
 extern unsigned int g_data_004d7ce8;
 extern unsigned int g_data_004d7d00;
 extern unsigned int g_data_004ded68;
-extern unsigned int g_data_004e3ac8;
+extern unsigned int g_dispatchSave505_004e3ac8;
 extern unsigned int g_data_004f2020;
 extern unsigned int g_data_004f2068;
-extern unsigned int g_data_004f2880;
+extern unsigned int g_dispatchSave510_004f2880;
 extern unsigned int g_crtHeapMaxPtr_00522154;
 extern unsigned int g_dispatchSave12_00523ae0;
 extern unsigned int g_dispatchSave19_00523ae4;
@@ -839,7 +839,7 @@ __declspec(naked) void Audio_TimerSet(void) {
  *   Entry 1 (offset 0, 180b): MStackPush8_004ab790, then on no-error
  *     mstack-pushes g_eventQueueNotMask, caches g_fightGroupHead into 0x542054,
  *     sets g_walkCallback = &g_phaseChainArr2_004d62e8>>2 (stored also in 0x5381 3c),
- *     g_eventQueueIdx = &g_data_004d61d8>>2, g_eventQueueNotMask = 0xc1.
+ *     g_eventQueueIdx = &g_dispatchSave522_004d61d8>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall_0049cb40. If bit 0 of
  *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
@@ -872,7 +872,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_alarmTriState_0053813c], eax
-        mov     eax, offset g_data_004d61d8
+        mov     eax, offset g_dispatchSave522_004d61d8
         mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax
@@ -1054,7 +1054,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute_0049bc60(void)
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     eax, offset g_data_004f2880
+        mov     eax, offset g_dispatchSave510_004f2880
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_walkCallback], eax
@@ -1518,7 +1518,7 @@ __declspec(naked) void Phase4FourPackedDispatch_0041b900(void)
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     eax, offset g_data_004f2880
+        mov     eax, offset g_dispatchSave510_004f2880
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_walkCallback], eax
@@ -1856,7 +1856,7 @@ __declspec(naked) void PunchAnimCluster_00496d80(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6f69
-        mov      eax, OFFSET g_data_004e3ac8
+        mov      eax, OFFSET g_dispatchSave505_004e3ac8
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030

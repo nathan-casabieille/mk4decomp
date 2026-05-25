@@ -125,7 +125,7 @@ extern unsigned int g_byte_004d50b4;
 extern unsigned int g_audioStateMachineVar6_004f31cc;
 extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_audioStateMachineVar4_004f3220;
-extern unsigned int g_data_004f3a30;
+extern unsigned int g_dispatchSave503_004f3a30;
 extern unsigned int g_audioStateMachineVar_004f3a38;
 extern unsigned int g_table_004f3ac8;
 extern unsigned int g_tickFlagF;
@@ -185,7 +185,7 @@ extern unsigned int g_byte_00543619;
 extern unsigned int g_byte_0054361a;
 extern unsigned int g_audioPreloadVar2_004f3a58;
 extern unsigned int g_audioPreloadVar_004f3a70;
-extern unsigned int g_data_004f3a98;
+extern unsigned int g_dispatchSave519_004f3a98;
 extern unsigned int g_data_004f3aa8;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_audioInstallArr_0050f114;
@@ -696,11 +696,11 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      ecx, dword ptr [eax + g_audioPreloadVar2_004f3a58]
         lea      ecx, [ecx + ecx*2]
         jne      short L_6f2e
-        mov      eax, dword ptr [eax + g_data_004f3a98]
+        mov      eax, dword ptr [eax + g_dispatchSave519_004f3a98]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f7f
     L_6f2e:
-        mov      eax, dword ptr [eax + g_data_004f3a98]
+        mov      eax, dword ptr [eax + g_dispatchSave519_004f3a98]
         lea      ecx, [ecx*8 + g_byte_005435b8]
         jmp      short L_6f7f
     L_6f3d:
@@ -1536,7 +1536,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         mov      ecx, dword ptr [g_audioCrewState_00541d8c]
         movsx    eax, byte ptr [esi - 5]
         add      ecx, 0x140000
-        mov      eax, dword ptr [eax*4 + g_data_004f3a30]
+        mov      eax, dword ptr [eax*4 + g_dispatchSave503_004f3a30]
         push     ecx
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax

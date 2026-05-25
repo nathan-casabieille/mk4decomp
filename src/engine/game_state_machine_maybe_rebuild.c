@@ -5,20 +5,20 @@
 #include "game/tick.h"
 
 extern unsigned int g_phaseThunkInst_004d50ac;
-extern unsigned int g_data_004f4dc8;
-extern unsigned int g_data_004f4dcc;
+extern unsigned int g_dispatchSave537_004f4dc8;
+extern unsigned int g_dispatchSave536_004f4dcc;
 extern unsigned int g_data_004f4dd0;
 extern unsigned int g_data_004f4dd4;
-extern unsigned int g_data_004f4dd8;
-extern unsigned int g_data_004f4ddc;
+extern unsigned int g_dispatchSave535_004f4dd8;
+extern unsigned int g_dispatchSave534_004f4ddc;
 extern unsigned int g_data_004f4de0;
 extern unsigned int g_data_004f4de4;
 extern unsigned int g_renderer2_var7_004f4de8;
 extern unsigned int g_renderer2_var6_004f4dec;
-extern unsigned int g_data_004f4df0;
-extern unsigned int g_data_004f4df4;
-extern unsigned int g_data_004f4df8;
-extern unsigned int g_data_004f4dfc;
+extern unsigned int g_dispatchSave518_004f4df0;
+extern unsigned int g_dispatchSave517_004f4df4;
+extern unsigned int g_dispatchSave533_004f4df8;
+extern unsigned int g_dispatchSave532_004f4dfc;
 extern unsigned int g_data_004f4e00;
 extern unsigned int g_data_004f4e04;
 extern unsigned int g_renderer2_var5_004f4e98;
@@ -99,19 +99,19 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         mov     edx, dword ptr [eax]
         and     edx, ecx
         mov     dword ptr [eax], edx
-        mov     eax, dword ptr [g_data_004f4df4]
-        mov     edx, dword ptr [g_data_004f4df0]
+        mov     eax, dword ptr [g_dispatchSave517_004f4df4]
+        mov     edx, dword ptr [g_dispatchSave518_004f4df0]
         mov     ecx, dword ptr [eax]
         not     edx
         and     ecx, edx
         mov     dword ptr [eax], ecx
     L_idep_after_clear_masks:
-        mov     ecx, dword ptr [g_data_004f4dcc]
-        mov     eax, dword ptr [g_data_004f4dc8]
+        mov     ecx, dword ptr [g_dispatchSave536_004f4dcc]
+        mov     eax, dword ptr [g_dispatchSave537_004f4dc8]
         test    dword ptr [ecx], eax
         je      L_idep_skip1
-        mov     eax, dword ptr [g_data_004f4ddc]
-        mov     edx, dword ptr [g_data_004f4dd8]
+        mov     eax, dword ptr [g_dispatchSave534_004f4ddc]
+        mov     edx, dword ptr [g_dispatchSave535_004f4dd8]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip1:
@@ -128,13 +128,13 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         mov     eax, dword ptr [g_renderer2_var7_004f4de8]
         test    dword ptr [ecx], eax
         je      L_idep_skip3
-        mov     eax, dword ptr [g_data_004f4dfc]
-        mov     edx, dword ptr [g_data_004f4df8]
+        mov     eax, dword ptr [g_dispatchSave532_004f4dfc]
+        mov     edx, dword ptr [g_dispatchSave533_004f4df8]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip3:
-        mov     ecx, dword ptr [g_data_004f4df4]
-        mov     eax, dword ptr [g_data_004f4df0]
+        mov     ecx, dword ptr [g_dispatchSave517_004f4df4]
+        mov     eax, dword ptr [g_dispatchSave518_004f4df0]
         test    dword ptr [ecx], eax
         je      L_idep_skip4
         mov     eax, dword ptr [g_data_004f4e04]

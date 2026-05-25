@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f6238;
+extern unsigned int g_dispatchSave531_004f6238;
 extern u32 g_inLoopStep;
 extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn2_x;
@@ -203,7 +203,7 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         xor      word ptr [esp + 0x26], ax
         mov      cl, byte ptr [esi + 1]
         and      ecx, 3
-        mov      dl, byte ptr [ecx + g_data_004f6238]
+        mov      dl, byte ptr [ecx + g_dispatchSave531_004f6238]
         mov      ecx, dword ptr [esp + 0x26]
         and      dl, 3
         and      ecx, 0xfe7f

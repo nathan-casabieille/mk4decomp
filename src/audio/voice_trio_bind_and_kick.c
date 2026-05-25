@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_audioStateMachineVar4_004f3220;
-extern unsigned int g_data_004f3a30;
+extern unsigned int g_dispatchSave503_004f3a30;
 extern unsigned int g_audioStateMachineVar_004f3a38;
 extern unsigned int g_audioVoiceTrioBase_0050a0f0;
 extern unsigned int g_voiceTrioBaseB_0050c618;
@@ -215,7 +215,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         movsx    ecx, byte ptr [esi + 3]
         lea      edx, [edi + 0xa0000]
         mov      dword ptr [esi + 0xc], eax
-        mov      eax, dword ptr [ecx*4 + g_data_004f3a30]
+        mov      eax, dword ptr [ecx*4 + g_dispatchSave503_004f3a30]
         push     edx
         push     ebx
         push     eax

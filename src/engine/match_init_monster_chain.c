@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_data_004a2090;
-extern unsigned int g_data_004a2180;
+extern unsigned int g_dispatchSave509_004a2180;
 extern int GuardedScaledLookupCallJmp_004220a0(void);
 extern void AndShlStore_00409280(void);
 extern void StackPopDispatchTagged_0041f780(void);
@@ -207,7 +207,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         call    StoreTwoCall_0049cb40
         add     esp, 8
         push    edi
-        push    offset g_data_004a2180
+        push    offset g_dispatchSave509_004a2180
         call    StoreTwoCall_0049cb40
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
         mov     ecx, dword ptr [g_baseSel_00542060]

@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Entry 1 (offset 0, 180b): MStackPush8_004ab790, then on no-error
  *     mstack-pushes g_eventQueueNotMask, caches g_fightGroupHead into 0x542054,
  *     sets g_walkCallback = &g_phaseChainArr2_004d62e8>>2 (stored also in 0x5381 3c),
- *     g_eventQueueIdx = &g_data_004d61d8>>2, g_eventQueueNotMask = 0xc1.
+ *     g_eventQueueIdx = &g_dispatchSave522_004d61d8>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall_0049cb40. If bit 0 of
  *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Entry 3 (offset 0x120, 81b): mirror of entry 2 with 0x3333 / 0x7ae
  *     constants; no negation before final store; tail-jmps PendingMatch_0040e310.
  */
-extern unsigned int g_data_004d61d8;
+extern unsigned int g_dispatchSave522_004d61d8;
 extern unsigned int g_phaseChainArr2_004d62e8;
 extern unsigned int g_alarmTriState_0053813c;
 extern unsigned int g_table_004d57b0;
@@ -156,7 +156,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_alarmTriState_0053813c], eax
-        mov     eax, offset g_data_004d61d8
+        mov     eax, offset g_dispatchSave522_004d61d8
         mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2
         mov     dword ptr [g_eventQueueIdx], eax

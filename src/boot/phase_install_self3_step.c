@@ -117,7 +117,7 @@ extern void InstallSelfPackedF80_00426000(void);
 extern unsigned int g_phaseInstall3Base_00506c2c;
 extern unsigned int g_dispatchSave140_00508308;
 extern unsigned int g_dispatchSave139_00508324;
-extern unsigned int g_data_004a2180;
+extern unsigned int g_dispatchSave509_004a2180;
 void PhaseInstallSelf3Step_00402350(void);
 
 extern unsigned int g_phaseIdx_0053a50c;
@@ -167,7 +167,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         test    eax, eax
         jne     L_pis3_exit
         push    0
-        push    offset g_data_004a2180
+        push    offset g_dispatchSave509_004a2180
         mov     dword ptr [g_phaseIdx_0053a50c], 3
         call    StoreTwoCall_0049cb40
         mov     ecx, offset g_phaseInstall3Base_00506c2c

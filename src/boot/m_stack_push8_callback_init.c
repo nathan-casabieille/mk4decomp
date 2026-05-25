@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   AudioMixerStep_004ab700, on no-error adds 0xd999 to it and calls
  *   ZeroAndDirty4_00405430. On no-error AND bit 2 of g_xformDirtyFlags set:
  *   calls MStackPush8_004ab790; if it returns OK loads
- *   g_eventQueueEnd = old g_fightGroupHead, g_walkCallback = &g_data_004d67b8>>2,
+ *   g_eventQueueEnd = old g_fightGroupHead, g_walkCallback = &g_dispatchSave514_004d67b8>>2,
  *   calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 NOT set,
  *   writes 0x9e into [g_fightGroupHead*4+0x30], calls
  *   ScaledTripleCopy54_004ac040 then MStackPushNegMul10_0040a690.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   into +0x0, 0xff at +0x14, and 0x00413e60 (callback addr) at +0x10.
  *   Calls MStackCall_004065b0, tail-jmp MStackPop8_004ab860.
  */
-extern unsigned int g_data_004d67b8;
+extern unsigned int g_dispatchSave514_004d67b8;
 extern void AudioMixerStep_004ab700(void);
 extern void CopyThreeFields_00404df0(void);
 extern void MStackCall_004065b0(void);
@@ -161,7 +161,7 @@ __declspec(naked) void MStackPush8CallbackInit_00413b70(void) {
         test    eax, eax
         jne     L_mp8c_ret
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, offset g_data_004d67b8
+        mov     edx, offset g_dispatchSave514_004d67b8
         shr     edx, 2
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_walkCallback], edx

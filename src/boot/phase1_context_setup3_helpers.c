@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_0049db40;
-extern unsigned int g_data_004d6c50;
+extern unsigned int g_dispatchSave521_004d6c50;
 extern unsigned int g_data_004d6c58;
 extern void CallSetPause_0041f830(void);
 extern void CopyThreeFields_00404df0(void);
@@ -135,7 +135,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         test    eax, eax
         jne     L_p13_ret
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, offset g_data_004d6c50
+        mov     eax, offset g_dispatchSave521_004d6c50
         shr     eax, 2
         mov     edx, dword ptr [ecx*4 + 0x38]
         mov     dword ptr [g_eventQueueIdx], eax

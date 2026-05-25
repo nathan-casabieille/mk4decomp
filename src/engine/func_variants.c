@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x00428390 (19b naked): Block B - reached only via external
  * jmp from a different call site. Uses _emit jne for the back-jump
  * into Block A and a forward tail-jmp. */
-extern unsigned int g_data_004e3ac8;
+extern unsigned int g_dispatchSave505_004e3ac8;
 extern unsigned int g_data_004f2240;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_table_00535ddc;
@@ -437,7 +437,7 @@ __declspec(naked) void func_00498980(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
-        mov      eax, OFFSET g_data_004e3ac8
+        mov      eax, OFFSET g_dispatchSave505_004e3ac8
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030

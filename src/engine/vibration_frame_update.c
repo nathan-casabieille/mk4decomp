@@ -124,7 +124,7 @@ extern unsigned int g_data_004d2a10;
 extern unsigned int g_data_004f6508;
 extern unsigned int g_fpuConst_004f6570;
 extern unsigned int g_data_004f6574;
-extern unsigned int g_data_004f6578;
+extern unsigned int g_dispatchSave502_004f6578;
 extern unsigned int g_data_004f657c;
 extern void DoubleToInt64_004c57d0(void);
 extern void Transform9Words_004b3a90(void);
@@ -154,7 +154,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         cmp     ecx, 2
         lea     esi, [edx*4]
         jne     L_vfu_pathB_sar
-        fld     qword ptr [g_data_004f6578]
+        fld     qword ptr [g_dispatchSave502_004f6578]
         fadd    qword ptr [g_fpuConst_004f6570]
         fst     qword ptr [g_fpuConst_004f6570]
         fcomp   qword ptr [g_data_004d2a00]
@@ -163,7 +163,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         jz      short L_vfu_skipReinitA
         mov     dword ptr [g_fpuConst_004f6570], 0xcccccccd
         mov     dword ptr [g_data_004f6574], 0x3feccccc
-        mov     dword ptr [g_data_004f6578], 0xd2f1a9fc
+        mov     dword ptr [g_dispatchSave502_004f6578], 0xd2f1a9fc
         mov     dword ptr [g_data_004f657c], 0x3f90624d
     L_vfu_skipReinitA:
         fld     qword ptr [g_fpuConst_004f6570]
@@ -173,7 +173,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         jne     short L_vfu_doConv
         mov     dword ptr [g_fpuConst_004f6570], 0x9999999a
         mov     dword ptr [g_data_004f6574], 0x3ff19999
-        mov     dword ptr [g_data_004f6578], 0xbc6a7efa
+        mov     dword ptr [g_dispatchSave502_004f6578], 0xbc6a7efa
         mov     dword ptr [g_data_004f657c], 0xbf789374
     L_vfu_doConv:
         fild    dword ptr [g_walkCallback]

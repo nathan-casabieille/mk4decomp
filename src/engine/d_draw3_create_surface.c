@@ -9,7 +9,7 @@
  *   0058c860 (DSound), 0058c87c (window). Sets 320x240 (0x140 x 0xf0) instead of 640x480.
  *   Calls DialogProbeDispatch_004afe40 (sister helper).
  */
-extern unsigned int g_data_004f47a8;
+extern unsigned int g_dispatchSave500_004f47a8;
 extern unsigned int g_dd3SurfaceCreate_0058c858;
 extern unsigned int g_dd3SurfaceSlot_0058c85c;
 extern unsigned int g_dsmi_b70_main;
@@ -22,7 +22,7 @@ extern void DialogProbeDispatch_004afe40(void);
 
 __declspec(naked) void DDraw3_CreateSurface(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_004f47a8]
+        mov     ecx, dword ptr [g_dispatchSave500_004f47a8]
         mov     eax, [esp + 4]
         sub     esp, 0x6c
         cmp     ecx, eax
@@ -34,7 +34,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         jz      L_dms2_okRet
     L_dms2_doSwitch:
         test    eax, eax
-        mov     dword ptr [g_data_004f47a8], eax
+        mov     dword ptr [g_dispatchSave500_004f47a8], eax
         jz      L_dms2_release
         push    offset g_dd3SurfaceCreate_0058c858
         call    dword ptr [g_iat_004d21ac]

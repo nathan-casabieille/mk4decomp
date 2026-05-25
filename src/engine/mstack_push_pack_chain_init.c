@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d6718;
-extern unsigned int g_data_004f27f0;
+extern unsigned int g_dispatchSave538_004f27f0;
 extern unsigned int g_savedNode_00541f98;
 extern void CallSetPause_0041f830(void);
 extern void CmpDivJmp_0049d080(void);
@@ -150,7 +150,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         pop     esi
         ret
     L_mppci_branchA:
-        mov     edx, offset g_data_004f27f0
+        mov     edx, offset g_dispatchSave538_004f27f0
         shr     edx, 2
         mov     dword ptr [g_eventQueueTotal], edx
         call    Vec3AccMul10ChainBlend_0049c3d0

@@ -8,12 +8,12 @@
  *   opens font file, fread'd page-by-page into a backbuffer, then issues two
  *   matched draw passes via PaletteFillLineHybrid_004b5ce0 with float positions for each glyph.
  */
-extern unsigned int g_data_004d29f8;
-extern unsigned int g_data_004d29fc;
+extern unsigned int g_dispatchSave529_004d29f8;
+extern unsigned int g_dispatchSave528_004d29fc;
 extern unsigned int g_dispatchVar40_004d505c;
-extern unsigned int g_data_004f5398;
-extern unsigned int g_data_004f5798;
-extern unsigned int g_data_004f613c;
+extern unsigned int g_dispatchSave526_004f5398;
+extern unsigned int g_dispatchSave525_004f5798;
+extern unsigned int g_dispatchSave524_004f613c;
 extern u16 g_texStripeBuf[];
 extern unsigned int g_data_00f6ce50;
 extern unsigned int g_iat_004d21c4;
@@ -32,7 +32,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         push    esi
         push    edi
         xor     edi, edi
-        mov     esi, offset g_data_004f5398
+        mov     esi, offset g_dispatchSave526_004f5398
     L_hfp_namelp:
         mov     eax, [esi]
         test    eax, eax
@@ -47,10 +47,10 @@ __declspec(naked) void AppInit_Misc1(void) {
     L_hfp_nameadv:
         add     esi, 4
         inc     edi
-        cmp     esi, offset g_data_004f5798
+        cmp     esi, offset g_dispatchSave525_004f5798
         jl      short L_hfp_namelp
         push    offset g_dispatchVar40_004d505c
-        push    offset g_data_004f613c
+        push    offset g_dispatchSave524_004f613c
         call    FSYS_fopen
         add     esp, 8
         mov     edi, eax
@@ -84,8 +84,8 @@ __declspec(naked) void AppInit_Misc1(void) {
         mov     esi, 1
     L_hfp_glyph:
         fild    dword ptr [esp + 0xc]
-        fmul    dword ptr [g_data_004d29f8]
-        fmul    dword ptr [g_data_004d29fc]
+        fmul    dword ptr [g_dispatchSave529_004d29f8]
+        fmul    dword ptr [g_dispatchSave528_004d29fc]
         fstp    dword ptr [esp + 0x10]
         mov     edi, [esp + 0x10]
         push    edi

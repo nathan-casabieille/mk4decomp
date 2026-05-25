@@ -112,7 +112,7 @@ extern unsigned int g_data_004d6788;
 extern unsigned int g_data_004f2100;
 extern unsigned int g_data_004f2158;
 extern unsigned int g_data_004f2168;
-extern unsigned int g_data_004f27f0;
+extern unsigned int g_dispatchSave538_004f27f0;
 extern unsigned int g_data_00800000;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
@@ -176,7 +176,7 @@ __declspec(naked) void AiComboDispatcherCluster_00497470(void)
         jmp      CallSetPause_0041f830
     L_753d:
         inc      eax
-        mov      edx, OFFSET g_data_004f27f0
+        mov      edx, OFFSET g_dispatchSave538_004f27f0
         mov      dword ptr [g_matrixStackTop], eax
         shr      edx, 2
         mov      dword ptr [eax*4], ecx

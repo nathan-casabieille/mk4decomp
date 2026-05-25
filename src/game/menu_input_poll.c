@@ -113,7 +113,7 @@ extern void TableSearchDesc_004b62c0(void);
 extern void DrawMenu(void *menu_items, s32 selection);
 extern void MenuInputPoll_004b7020(void);
 extern unsigned int g_gsmSub18Base_004f5090;
-extern unsigned int g_data_004f5094;
+extern unsigned int g_dispatchSave516_004f5094;
 extern unsigned char g_byte_00ab42d4;
 extern unsigned int g_data_00ab41a0;
 extern unsigned int g_data_00ab4364;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00ab4364;
  *   Else: load saved g_data_00ab41a0. Switch on g_data_00ab4364 = 0/2/0x45/default.
  *     If 0 → set 0x00ab4364=2 + DrawMenu epilogue.
  *     If 2 → call MenuInputPoll_004b7020(1); check bit 0x8000; bl&1: TableSearchDesc; check esi;
- *       bl&2: TableSearchAsc again; bl&0x10: load word from g_data_004f5094[eax*8] → g_data_00ab4364;
+ *       bl&2: TableSearchAsc again; bl&0x10: load word from g_dispatchSave516_004f5094[eax*8] → g_data_00ab4364;
  *       bl&0x20: g_data_00ab4364=0x45.
  *     If 0x45 → set 0x00ab4364=0.
  *     Final epilogue: push (eax, &g_gsmSub18Base_004f5090); DrawMenu; pop ret.
@@ -193,7 +193,7 @@ __declspec(naked) void Helper_GSM_Sub18(void)
         jne     short L_drawMenu
         test    bl, 0x10
         je      short L_checkBit5
-        movsx   ecx, word ptr [eax*8 + g_data_004f5094]
+        movsx   ecx, word ptr [eax*8 + g_dispatchSave516_004f5094]
         mov     dword ptr [g_data_00ab4364], ecx
     L_checkBit5:
         test    esi, esi

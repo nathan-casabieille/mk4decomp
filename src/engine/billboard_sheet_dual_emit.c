@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f6238;
+extern unsigned int g_dispatchSave531_004f6238;
 extern u32 g_inLoopStep;
 extern unsigned int g_data_007af958[];
 extern s16 g_vtxIn2_x;
@@ -207,7 +207,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         and      eax, 3
         lea      edi, [edx + ecx + 8]
         xor      edx, edx
-        mov      cl, byte ptr [eax + g_data_004f6238]
+        mov      cl, byte ptr [eax + g_dispatchSave531_004f6238]
         mov      dl, byte ptr [esi + 2]
         and      cl, 3
         movsx    ax, cl

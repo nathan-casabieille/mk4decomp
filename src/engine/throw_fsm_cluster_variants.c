@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ec0c0;
+extern unsigned int g_dispatchSave520_004ec0c0;
 extern unsigned int g_dispatchTableArr_00500c08;
 extern unsigned int g_dispatchSave31_00542aac;
 extern void ThrowFsmCluster_004700e0(void);
@@ -119,7 +119,7 @@ extern void GuardedPackedSlotInit_00428760(void);
  *   Reads phase from [g_baseSel_00542060*4 + 0x84], zeroes it, then dispatches:
  *     - phase 2 (eax-2=0): writes g_xformScratch2088 into [g_fightGroupHead*4+0x78]
  *       and tail-calls ThrowFsmCluster_004700e0.
- *     - phase 1 (eax-1=0): loads &g_data_004ec0c0>>2 (the reloc-survives-shr
+ *     - phase 1 (eax-1=0): loads &g_dispatchSave520_004ec0c0>>2 (the reloc-survives-shr
  *       packed_ptr base), calls GuardedDirtyXformFromTable_0048f6d0; on success
  *       sets g_eventQueueChild=4, installs Self at [esi+8], sets slot[+0x84]=2,
  *       and writes packed_ptr (Self + 0x02000000) at [eax*4] (with
@@ -163,7 +163,7 @@ __declspec(naked) void Phase3PackedInstallSelf_0046ff80(void) {
         pop     esi
         ret
     L_pis_phase1:
-        mov     eax, offset g_data_004ec0c0
+        mov     eax, offset g_dispatchSave520_004ec0c0
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         call    GuardedDirtyXformFromTable_0048f6d0

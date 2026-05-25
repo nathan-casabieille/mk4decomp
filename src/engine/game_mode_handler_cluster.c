@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f1408;
+extern unsigned int g_dispatchSave513_004f1408;
 extern unsigned int g_data_004f1420;
 extern unsigned int g_data_004f1430;
-extern unsigned int g_data_004f1440;
-extern unsigned int g_data_004f1458;
+extern unsigned int g_dispatchSave512_004f1440;
+extern unsigned int g_dispatchSave511_004f1458;
 extern void ArgScaledChain_004949b0(void);
 extern void FlagCascadeStateSet_0048ec30(void);
 extern void HitReactionDispatcher_0045f650(void);
@@ -140,11 +140,11 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         nop
-        /* Helper 2: install handler 0x111 with g_data_004f1408. */
+        /* Helper 2: install handler 0x111 with g_dispatchSave513_004f1408. */
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x111
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004f1408
+        push     OFFSET g_dispatchSave513_004f1408
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect_004949f0
         add      esp, 4
@@ -235,11 +235,11 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         nop
-        /* Helper 5: sister of helper 2, with g_data_004f1440. */
+        /* Helper 5: sister of helper 2, with g_dispatchSave512_004f1440. */
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x111
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004f1440
+        push     OFFSET g_dispatchSave512_004f1440
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ScaledLookupGuardJmpIndirect_004949f0
         add      esp, 4
@@ -255,8 +255,8 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         nop
-        /* Helper 6: sister of helper 3, with g_data_004f1458; tail-jumps. */
-        push     OFFSET g_data_004f1458
+        /* Helper 6: sister of helper 3, with g_dispatchSave511_004f1458; tail-jumps. */
+        push     OFFSET g_dispatchSave511_004f1458
         call     StreamInitCountdownBody_00494830
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

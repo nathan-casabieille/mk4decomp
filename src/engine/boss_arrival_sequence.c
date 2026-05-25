@@ -113,7 +113,7 @@ extern void BossArrivalSequence_00481950(void);
 extern void SwapTwoGlobals_004911c0(void);
 extern void TableHitOrSchedule_004be7a0(void);
 extern unsigned int g_data_004ef290;
-extern unsigned int g_data_004ef2c0;
+extern unsigned int g_dispatchSave539_004ef2c0;
 extern unsigned int g_bossArrivalState_00538124;
 extern unsigned int g_const_00481a10;
 extern unsigned int g_const_00481a80;
@@ -161,7 +161,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         push     OFFSET g_const_00481a80
         call     StoreTwoCall_0049cb40
         add      esp, 8
-        push     OFFSET g_data_004ef2c0
+        push     OFFSET g_dispatchSave539_004ef2c0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_1749:
