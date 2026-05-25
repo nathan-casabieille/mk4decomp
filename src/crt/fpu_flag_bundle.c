@@ -114,8 +114,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   For consolidation, both bundled into one 270-byte symbol entry.
  */
 extern unsigned int g_crtFpuTbyteVar_00522e58;
-extern unsigned int g_data_00522e68;
-extern unsigned int g_data_00523600;
+extern unsigned int g_crtFpuTbyteVar2_00522e68;
+extern unsigned int g_crtFpuStateBuf_00523600;
 extern unsigned int g_crtFpuStack_005236ac;
 extern unsigned int g_data_00f9fc1c;
 extern unsigned int g_data_00f9fc64;
@@ -149,7 +149,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
     L_fp2:
         test    cl, 0x10
         jz      short L_fp3
-        fld     tbyte ptr [g_data_00522e68]
+        fld     tbyte ptr [g_crtFpuTbyteVar2_00522e68]
         fstp    qword ptr [ebp - 8]
         fwait
     L_fp3:
@@ -223,7 +223,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         ret
     L_sm_clearPath:
         mov     edx, dword ptr [g_data_00f9fc64]
-        mov     dword ptr [g_crtFpuStack_005236ac], offset g_data_00523600
+        mov     dword ptr [g_crtFpuStack_005236ac], offset g_crtFpuStateBuf_00523600
         push    edx
         call    CrtLocaleInfoFreeAll_004cfc00
         mov     eax, dword ptr [g_data_00f9fc64]

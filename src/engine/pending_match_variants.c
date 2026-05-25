@@ -507,7 +507,7 @@ extern unsigned int g_data_0053a324;
 extern unsigned int g_clamp_0053a328;
 extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_dispatchVar6_0053a464;
-extern unsigned int g_data_0053a468;
+extern unsigned int g_phaseThunkSlot5_0053a468;
 extern unsigned int g_clamp_0053a6dc;
 extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_installOwner2_0053a7a0;
@@ -4742,7 +4742,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_tickFlagF], 3
         push     eax
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
-        mov      dword ptr [g_data_0053a468], ebx
+        mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00535e44], ebx
         call     TaggedSceneDispatch_004be690

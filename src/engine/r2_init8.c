@@ -15,10 +15,10 @@
 extern unsigned int g_data_004f478c;
 extern unsigned int g_installCountdownBase_00544298;
 extern unsigned int g_dispatchInit1007_0054429c;
-extern unsigned int g_data_005442a0;
-extern unsigned int g_data_005442a4;
-extern unsigned int g_data_005442e0;
-extern unsigned int g_data_00544300;
+extern unsigned int g_dispatchSave15_005442a0;
+extern unsigned int g_dispatchSave14_005442a4;
+extern unsigned int g_glideTileSize_005442e0;
+extern unsigned int g_glideMipInit_00544300;
 extern unsigned int g_renderer2_obj;
 
 __declspec(naked) void R2_Init8(void) {
@@ -46,11 +46,11 @@ __declspec(naked) void R2_Init8(void) {
     L_psn_fill:
         mov     eax, 0x100
         mov     dword ptr [g_installCountdownBase_00544298], 0x6c
-        mov     dword ptr [g_data_005442a4], eax
-        mov     dword ptr [g_data_005442a0], eax
+        mov     dword ptr [g_dispatchSave14_005442a4], eax
+        mov     dword ptr [g_dispatchSave15_005442a0], eax
         mov     dword ptr [g_dispatchInit1007_0054429c], 0x1007
-        mov     dword ptr [g_data_00544300], 0x04005000
-        mov     dword ptr [g_data_005442e0], 0x20
+        mov     dword ptr [g_glideMipInit_00544300], 0x04005000
+        mov     dword ptr [g_glideTileSize_005442e0], 0x20
         mov     eax, 1
         pop     edi
         ret

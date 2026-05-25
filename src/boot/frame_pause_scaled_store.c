@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void (*g_iat_004d2080)();
-extern unsigned char g_data_0050b4b4;
+extern unsigned char g_framePauseArrBase_0050b4b4;
 extern unsigned int g_chain_disp_64_49b7c0;
 extern unsigned int g_arr_next_49b7c0;
 extern unsigned int g_chain_disp_1c_49b7c0;
@@ -129,7 +129,7 @@ extern void MStackPush2ChainPrepend_00409970(void);
 
 __declspec(naked) void ChainWalkInstall_0049b7c0(void) {
     __asm {
-        mov     eax, offset g_data_0050b4b4
+        mov     eax, offset g_framePauseArrBase_0050b4b4
         shr     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax
         call    FramePauseScaledStore_00406c10

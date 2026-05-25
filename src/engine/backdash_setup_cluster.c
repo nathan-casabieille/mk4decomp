@@ -146,10 +146,10 @@ extern void GDispatch4_004089c0(void);
 
 extern unsigned char g_data_004ebee0;
 extern unsigned int g_arr_491350;
-extern unsigned int g_x_00538038_fwd;
-extern unsigned int g_x_0053803c_fwd;
-#define g_gtPlayerProbe2 g_x_00538038_fwd
-#define g_gtPlayerProbe1 g_x_0053803c_fwd
+extern unsigned int g_gtPlayerProbe2;
+extern unsigned int g_gtPlayerProbe1;
+#define g_gtPlayerProbe2 g_gtPlayerProbe2
+#define g_gtPlayerProbe1 g_gtPlayerProbe1
 extern void Thunk_0049cbd0(void);
 extern void FiveCallScaledChainTailJmp_0045f8d0(void);
 

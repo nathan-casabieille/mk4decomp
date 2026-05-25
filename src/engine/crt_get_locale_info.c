@@ -114,7 +114,7 @@ extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
 /* extern void AuxCapsBitFlagAggregate_004b5380(void); -- defined elsewhere with diff sig */
 extern void Helper_AudioStartMusic(void);
-extern unsigned int g_data_00543b68;
+extern unsigned int g_dispatchSave16_00543b68;
 extern unsigned int g_data_00543b6c;
 extern unsigned int g_data_00ab4338;
 extern void GuardedSeq_00471670(void);

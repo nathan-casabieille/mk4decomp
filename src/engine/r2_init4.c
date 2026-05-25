@@ -16,7 +16,7 @@
  */
 extern unsigned int g_data_004f47a0;
 extern unsigned int g_renderer2_baseB_0058c760;
-extern unsigned int g_data_0058c764;
+extern unsigned int g_renderer2_var3_0058c764;
 extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_990_iface;
 extern int g_renderer2_present_rc;
@@ -111,7 +111,7 @@ __declspec(naked) void R2_Init4(void) {
         call    dword ptr [ecx + 0x50]
         mov     dword ptr [g_renderer2_present_rc], eax
     L_dms_restoreCursor:
-        mov     eax, dword ptr [g_data_0058c764]
+        mov     eax, dword ptr [g_renderer2_var3_0058c764]
         mov     ecx, dword ptr [g_renderer2_baseB_0058c760]
         push    eax
         push    ecx

@@ -122,9 +122,9 @@ extern unsigned int g_data_004f61d8;
 extern unsigned int g_data_004f61e0;
 extern unsigned int g_menuPageDispatch_00543a98;
 extern unsigned int g_data_00543a9c;
-extern unsigned int g_data_00543aa0;
-extern unsigned int g_data_00543aac;
-extern unsigned int g_data_00543ab0;
+extern unsigned int g_menuRestoreA_00543aa0;
+extern unsigned int g_menuRestoreB_00543aac;
+extern unsigned int g_menuRestoreC_00543ab0;
 extern unsigned int g_byte_00543ab4;
 extern unsigned int g_data_00ab41c8;
 extern unsigned int g_data_00ab4328;
@@ -153,11 +153,11 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         ja       short L_8144
         jmp      dword ptr [eax*4 + L_080_jmptbl]
     L_80d5:
-        mov      edx, dword ptr [g_data_00543ab0]
+        mov      edx, dword ptr [g_menuRestoreC_00543ab0]
         push     edx
         jmp      short L_8117
     L_80de:
-        mov      eax, dword ptr [g_data_00543aac]
+        mov      eax, dword ptr [g_menuRestoreB_00543aac]
         jmp      short L_80ea
     L_80e5:
         mov      eax, dword ptr [g_byte_00543ab4]
@@ -178,7 +178,7 @@ __declspec(naked) void MenuPageTailDispatch_004b8080(void)
         push     eax
         jmp      short L_813b
     L_8111:
-        mov      eax, dword ptr [g_data_00543aa0]
+        mov      eax, dword ptr [g_menuRestoreA_00543aa0]
         push     eax
     L_8117:
         push     OFFSET g_data_004f6164

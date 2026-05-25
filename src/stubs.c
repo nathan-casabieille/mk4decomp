@@ -1080,8 +1080,6 @@ unsigned int g_winverMinor;
 unsigned int g_wndClassStyle;
 unsigned int g_phaseTimer_00537e94;
 unsigned int g_x_00537f48_v2;
-unsigned int g_x_00538038_fwd;
-unsigned int g_x_0053803c_fwd;
 unsigned int g_x_005380e0_v2;
 unsigned int g_x_0053a178_v2;
 unsigned int g_x_0053a250_v2;

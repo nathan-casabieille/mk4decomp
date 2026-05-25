@@ -11,7 +11,7 @@
  */
 extern unsigned int g_data_004f47a8;
 extern unsigned int g_dd3SurfaceCreate_0058c858;
-extern unsigned int g_data_0058c85c;
+extern unsigned int g_dd3SurfaceSlot_0058c85c;
 extern unsigned int g_dsmi_b70_main;
 extern unsigned int g_dsmi_b70_ret;
 extern unsigned int g_960_iface;
@@ -106,7 +106,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         call    dword ptr [ecx + 0x50]
         mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_restoreCursor:
-        mov     eax, dword ptr [g_data_0058c85c]
+        mov     eax, dword ptr [g_dd3SurfaceSlot_0058c85c]
         mov     ecx, dword ptr [g_dd3SurfaceCreate_0058c858]
         push    eax
         push    ecx

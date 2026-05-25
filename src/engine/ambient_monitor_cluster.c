@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e44;
 extern unsigned int g_audioInstall2Slot_00537eec;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_0053a468;
+extern unsigned int g_phaseThunkSlot5_0053a468;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
@@ -281,7 +281,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      dword ptr [g_tickFlagF], 3
         push     eax
         mov      dword ptr [g_audioInstall2Slot_00537eec], ebx
-        mov      dword ptr [g_data_0053a468], ebx
+        mov      dword ptr [g_phaseThunkSlot5_0053a468], ebx
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_00535e44], ebx
         call     TaggedSceneDispatch_004be690

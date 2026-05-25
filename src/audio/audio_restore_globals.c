@@ -154,9 +154,9 @@ extern unsigned int g_data_00543a60;
 extern unsigned int g_data_00543a64;
 extern unsigned int g_data_00543a68;
 extern unsigned int g_data_00543a9c;
-extern unsigned int g_data_00543aa0;
-extern unsigned int g_data_00543aac;
-extern unsigned int g_data_00543ab0;
+extern unsigned int g_menuRestoreA_00543aa0;
+extern unsigned int g_menuRestoreB_00543aac;
+extern unsigned int g_menuRestoreC_00543ab0;
 extern unsigned int g_audioRestoreSlot_00543f7c;
 extern unsigned int g_table_004f3f28;
 extern unsigned int g_table_0053a53c;
@@ -236,13 +236,13 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     dword ptr [g_or_0052ab40], ecx
     L_arg_tail:
         mov     al, byte ptr [g_byte_00543ab4]
-        mov     edx, dword ptr [g_data_00543ab0]
+        mov     edx, dword ptr [g_menuRestoreC_00543ab0]
         mov     ecx, dword ptr [g_data_00543a9c]
         mov     byte ptr [g_byte_004f360c], al
         mov     byte ptr [g_byte_004f3610], al
-        mov     eax, dword ptr [g_data_00543aac]
+        mov     eax, dword ptr [g_menuRestoreB_00543aac]
         mov     dword ptr [g_loaded_004f3608], edx
-        mov     edx, dword ptr [g_data_00543aa0]
+        mov     edx, dword ptr [g_menuRestoreA_00543aa0]
         pop     edi
         mov     dword ptr [g_data_004f3404], eax
         mov     dword ptr [g_data_0053a1f0], ecx
