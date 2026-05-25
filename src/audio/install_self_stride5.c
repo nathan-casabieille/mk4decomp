@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004a06f0 (165b audio) - install-self with 5x stride:
- *   chain[sel].slot84 -> eax; clear. If !=0: clear walkCallback/g_x_00538090,
+ *   chain[sel].slot84 -> eax; clear. If !=0: clear walkCallback/g_installSelfStride5_00538090,
  *   call CallSetPause; ret.
  *   else: eax = g_eventQueueEnd * 5; ecx = g_x_00541fc4; walkCallback=edi=1;
- *   g_eventQueueEnd = eax; eax += ecx; g_x_00538090 = 1; g_scaledInit = eax;
+ *   g_eventQueueEnd = eax; eax += ecx; g_installSelfStride5_00538090 = 1; g_scaledInit = eax;
  *   walkCallback = chain[eax].slot4; call GuardedScaledCall; pause? ret;
  *   install self at +8; chain[sel].slot84 = 1; g_pendingNodeType = 0x32; pause=1.
  */
-extern unsigned int g_x_00538090;
+extern unsigned int g_installSelfStride5_00538090;
 extern unsigned int g_x_00541fc4;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
@@ -136,7 +136,7 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         _emit   74h
         _emit   1ch
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_x_00538090], 0
+        mov     dword ptr [g_installSelfStride5_00538090], 0
         call    CallSetPause_0041f830
         pop     edi
         pop     esi
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [g_eventQueueEnd], eax
         add     eax, ecx
-        mov     dword ptr [g_x_00538090], edi
+        mov     dword ptr [g_installSelfStride5_00538090], edi
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_chain_arr_4348f0 + 0x04]
         mov     dword ptr [g_walkCallback], edx

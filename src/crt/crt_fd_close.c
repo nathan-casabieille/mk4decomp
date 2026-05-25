@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   if fd >= g_x_00fa0ee0: errno=9 (EBADF), doserrno=0, return -1.
  *   table = arr[fd>>5]; entry = table[+(fd&0x1f)*36+4]; check open bit.
  *   If invalid: errno path.
- *   If g_x_00520064 == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
+ *   If g_crtFdCloseSlot_00520064 == 1 and fd in {0,1,2}: SetStdHandle(STD_INPUT/OUTPUT/ERROR, NULL).
  *   Mark slot as -1; return 0.
  */
 extern unsigned int g_iat_004d20d4;
-extern unsigned int g_x_00520064;
+extern unsigned int g_crtFdCloseSlot_00520064;
 extern unsigned int g_x_00fa0ee0;
 extern void Crt_doserrno_004c8bb0(void);
 extern void Crt_errno_004c8ba0(void);
@@ -151,7 +151,7 @@ __declspec(naked) int CrtFdClose_004cd1c0(void) {
         cmp     dword ptr [eax], 0xffffffff
         _emit   74h
         _emit   38h
-        cmp     dword ptr [g_x_00520064], edx
+        cmp     dword ptr [g_crtFdCloseSlot_00520064], edx
         _emit   75h
         _emit   21h
         sub     ecx, 0

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00514d78;
 extern unsigned int g_data_00514de8;
-extern unsigned int g_data_0052ab48;
+extern unsigned int g_dispatchClr0_0052ab48;
 extern unsigned int g_state4_0053a3e0;
 extern void BootMstackInit_0041fb10(void);
 extern void DispatcherComplex181_00426310(void);
@@ -196,7 +196,7 @@ void DualSeqBranchInit_00477a20(void) {
         push    0x25b
         push    0x477ee0
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_data_0052ab48], 0
+        mov     dword ptr [g_dispatchClr0_0052ab48], 0
         call    BootMstackInit_0041fb10
         add     esp, 8
     L_dsbi_ret:

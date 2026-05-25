@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Fail: __errno() = 9; clear another errno-like ptr; return -1.
  */
 extern unsigned int g_SetStdHandle_004d20d4;
-extern unsigned int g_x_00520064;
+extern unsigned int g_crtFdCloseSlot_00520064;
 extern unsigned int g_x_00fa0ee0;
 extern void Crt_doserrno_004c8bb0(void);
 extern void Crt_errno_004c8ba0(void);
@@ -148,7 +148,7 @@ __declspec(naked) void SetFdMode_004cd110(void) {
         cmp     dword ptr [edx + esi], 0xffffffff
         _emit   75h
         _emit   55h
-        mov     eax, dword ptr [g_x_00520064]
+        mov     eax, dword ptr [g_crtFdCloseSlot_00520064]
         mov     ebx, [esp + 0x14]
         cmp     eax, 1
         _emit   75h

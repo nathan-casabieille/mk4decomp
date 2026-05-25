@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00405450 (348b boot) - mstack-push-2 + 6/13-dword burst init.
  *   Pushes g_currentNodeIdx and g_xformLoopCounter onto the mstack, snapshots
- *   g_data_00541eb0 to g_currentNodeIdx, calls MStackPushChainStepIndex_004ab510.
+ *   g_bootChainState4_00541eb0 to g_currentNodeIdx, calls MStackPushChainStepIndex_004ab510.
  *   On no-error AND bit 2 of g_xformDirtyFlags clear: bursts 6 dwords of 0 at
  *   the scaled g_currentNodeIdx base via unrolled 4-store loop with rep stosd
  *   tail; advances 0x542044 by 6, sets g_xformLoopCounter=0xd, bursts 13 dwords
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Always: pops the 2 mstack entries back, sets bit 2 of 0x54208c then
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
-extern unsigned int g_data_00541eb0;
+extern unsigned int g_bootChainState4_00541eb0;
 extern unsigned int g_table_004d57b0;
 extern void MStackPushChainStepIndex_004ab510(void);
 
@@ -137,7 +137,7 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
-        mov     eax, dword ptr [g_data_00541eb0]
+        mov     eax, dword ptr [g_bootChainState4_00541eb0]
         mov     dword ptr [g_currentNodeIdx], eax
         call    MStackPushChainStepIndex_004ab510
         mov     eax, dword ptr [g_framePauseFlag]

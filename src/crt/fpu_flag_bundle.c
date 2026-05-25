@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_crtFpuTbyteVar_00522e58;
 extern unsigned int g_data_00522e68;
 extern unsigned int g_data_00523600;
-extern unsigned int g_data_005236ac;
+extern unsigned int g_crtFpuStack_005236ac;
 extern unsigned int g_data_00f9fc1c;
 extern unsigned int g_data_00f9fc64;
 extern void Calloc_004c6110(void);
@@ -209,7 +209,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         ret
     L_sm_storePath:
         mov     eax, dword ptr [g_data_00f9fc64]
-        mov     dword ptr [g_data_005236ac], esi
+        mov     dword ptr [g_crtFpuStack_005236ac], esi
         push    eax
         call    CrtLocaleInfoFreeAll_004cfc00
         mov     ecx, dword ptr [g_data_00f9fc64]
@@ -223,7 +223,7 @@ __declspec(naked) void FpuFlagBundle_004cf770(void) {
         ret
     L_sm_clearPath:
         mov     edx, dword ptr [g_data_00f9fc64]
-        mov     dword ptr [g_data_005236ac], offset g_data_00523600
+        mov     dword ptr [g_crtFpuStack_005236ac], offset g_data_00523600
         push    edx
         call    CrtLocaleInfoFreeAll_004cfc00
         mov     eax, dword ptr [g_data_00f9fc64]

@@ -128,8 +128,8 @@ extern unsigned int g_data_00541ea0;
 extern unsigned int g_data_00541ea4;
 extern unsigned int g_bootChainSlot2_00541ea8;
 extern unsigned int g_data_00541eac;
-extern unsigned int g_data_00541eb0;
-extern unsigned int g_data_0054343c;
+extern unsigned int g_bootChainState4_00541eb0;
+extern unsigned int g_audioInitScaled_0054343c;
 extern void AndShlStore_00409280(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void Helper_GeoLoadPre(void);
@@ -144,7 +144,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
     __asm {
         push    esi
         xor     esi, esi
-        mov     dword ptr [g_data_0054343c], esi
+        mov     dword ptr [g_audioInitScaled_0054343c], esi
         call    Helper_GeoLoadPre
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
@@ -221,7 +221,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
         mov     eax, dword ptr [g_data_00541eac]
-        mov     ecx, dword ptr [g_data_00541eb0]
+        mov     ecx, dword ptr [g_bootChainState4_00541eb0]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], esi
         mov     dword ptr [g_pendingNodeType], 0x13

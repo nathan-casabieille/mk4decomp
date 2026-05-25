@@ -117,14 +117,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
  *     If was 0: countdown g_eventQueueEnd; if not yet 0: skip; else tail-jmp CallSetPause.
- *     Else: ecx=g_x_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
+ *     Else: ecx=g_installSelfStride5_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
  *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_state2_0053a354;
 extern u32 g_dlMode;
 extern unsigned int g_audioInitPeriodic_00537e90;
 extern unsigned int g_state2_00537ea8;
-extern unsigned int g_x_00538090;
+extern unsigned int g_installSelfStride5_00538090;
 extern unsigned int g_audioPeriodicSlot_0053a2e8;
 extern void CallSetPause_0041f830(void);
 extern void InstallSelfStride5_004a06f0(void);
@@ -183,7 +183,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         jns     short L_checkRollover
         jmp     CallSetPause_0041f830
     L_checkRollover:
-        mov     ecx, dword ptr [g_x_00538090]
+        mov     ecx, dword ptr [g_installSelfStride5_00538090]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
         jne     short L_install

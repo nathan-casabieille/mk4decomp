@@ -113,7 +113,7 @@ extern unsigned int g_const_004d2ee4;
 extern unsigned int g_const_004d2ee8;
 extern unsigned int g_const_004d2f04;
 extern unsigned int g_const_004d2f08;
-extern unsigned int g_data_00520064;
+extern unsigned int g_crtFdCloseSlot_00520064;
 extern unsigned int g_data_00522908;
 extern unsigned int g_data_0052290c;
 extern unsigned int g_crtCType_00522998;
@@ -151,7 +151,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
         je       L_c1fd
         test     eax, eax
         jne      short L_c0c0
-        cmp      dword ptr [g_data_00520064], 1
+        cmp      dword ptr [g_crtFdCloseSlot_00520064], 1
         je       L_c1fd
     L_c0c0:
         cmp      ecx, 0xfc

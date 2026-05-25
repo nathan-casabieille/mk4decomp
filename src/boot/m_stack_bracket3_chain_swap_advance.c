@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_005114b4;
+extern unsigned int g_phaseChainArr_005114b4;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -134,7 +134,7 @@ void MStackBracket3_ChainSwapAdvance_0041d560(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_fightGroupHead]
-        mov     eax, offset g_data_005114b4
+        mov     eax, offset g_phaseChainArr_005114b4
         mov     dword ptr [g_eventQueueEnd], edx
         sar     eax, 2
         mov     dword ptr [g_xformEntityIdx], eax

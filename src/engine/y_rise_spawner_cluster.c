@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00514d78;
 extern unsigned int g_data_00514de8;
-extern unsigned int g_data_0052ab48;
+extern unsigned int g_dispatchClr0_0052ab48;
 extern unsigned int g_state4_0053a700;
 extern void BootMstackInit_0041fb10(void);
 extern void DispatcherComplex181_00426310(void);
@@ -227,7 +227,7 @@ void YRiseSpawnerCluster_00477bd0(void) {
         push     0x25b
         push     OFFSET func_00477ee0
         mov      dword ptr [g_walkCallback], 0
-        mov      dword ptr [g_data_0052ab48], 0
+        mov      dword ptr [g_dispatchClr0_0052ab48], 0
         call     BootMstackInit_0041fb10
         add      esp, 8
     L_7e12:

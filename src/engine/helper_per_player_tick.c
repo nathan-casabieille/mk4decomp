@@ -8,7 +8,7 @@ extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_0052ab50;
-extern unsigned int g_data_0052d720;
+extern unsigned int g_audioBridgeSlot2_0052d720;
 extern unsigned int g_data_0052d738;
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_walkBoundsLimit_00535d60;
@@ -163,7 +163,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_data_0052ab50], esi
         mov      esi, dword ptr [g_walkBoundsLimit_00535d60]
         sub      eax, edx
-        mov      dword ptr [g_data_0052d720], ecx
+        mov      dword ptr [g_audioBridgeSlot2_0052d720], ecx
         sub      ecx, esi
         push     eax
         push     eax
@@ -202,7 +202,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         call     Mul10Tail_00404af0
         mov      edx, dword ptr [g_eventQueueNotMask]
         mov      esi, dword ptr [g_eventQueueWorkType]
-        mov      ecx, dword ptr [g_data_0052d720]
+        mov      ecx, dword ptr [g_audioBridgeSlot2_0052d720]
         add      edx, eax
         add      esp, 8
         mov      dword ptr [g_eventQueueChild], eax

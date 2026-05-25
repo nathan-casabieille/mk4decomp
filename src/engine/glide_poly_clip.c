@@ -123,7 +123,7 @@ extern unsigned int g_glideTriBatch_0058c7f4;
 extern unsigned int g_glideTriBatchB_0058c7f8;
 extern unsigned int g_glideTriBatchC_0058c7fc;
 extern unsigned int g_glideTriBatchD_0058c800;
-extern unsigned int g_data_00543f88;
+extern unsigned int g_glideTriSave_00543f88;
 extern unsigned int g_data_00543f8c;
 extern unsigned int g_data_00543f90;
 extern unsigned int g_data_00543f94;
@@ -146,7 +146,7 @@ extern unsigned int g_data_00543fd4;
 extern unsigned int g_data_00543fd8;
 extern unsigned int g_palette_00544158;
 extern f32 g_renderer2_lutTable[];
-extern unsigned int g_data_00544708;
+extern unsigned int g_glideTriVar_00544708;
 extern u8 g_renderer2_vertexBatch[];
 extern unsigned int g_glideTriArrayBase_0054471c;
 extern unsigned int g_data_00544720;
@@ -563,7 +563,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      eax, dword ptr [esp + 0x1c]
         mov      ecx, dword ptr [esp + 0x20]
         and      edx, 0xff
-        mov      dword ptr [g_data_00543f88], eax
+        mov      dword ptr [g_glideTriSave_00543f88], eax
         mov      eax, dword ptr [esp + 0x28]
         fld      dword ptr [edx*4 + g_renderer2_lutTable]
         and      eax, 0xff
@@ -675,7 +675,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         lea      esi, [ecx + ecx*2]
         mov      dword ptr [g_renderer2_batchCount], edx
         js       L_e55b
-        mov      ebp, dword ptr [g_data_00544708]
+        mov      ebp, dword ptr [g_glideTriVar_00544708]
         mov      ecx, eax
         and      ebx, 0xff
         shl      esi, 5

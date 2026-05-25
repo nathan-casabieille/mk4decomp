@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   If buf-size == 0x200 and flag-bit 8 set and flag-bit 0x400 clear: bump size to 0x1000.
  *   Decrement count, return first byte.
  */
-extern unsigned int g_data_005222e0;
+extern unsigned int g_crtFilbufBase_005222e0;
 extern unsigned int g_arr_00fa0de0;
 extern void IOWrapper_004c8fc0(void);
 extern void StreamAllocInit_004cc250(void);
@@ -182,7 +182,7 @@ __declspec(naked) void Filbuf_004c8ed0(void) {
         lea     ecx, [edi + ecx*4]
         jmp     short L_fb_checkFlags
     L_fb_useDefault:
-        mov     ecx, offset g_data_005222e0
+        mov     ecx, offset g_crtFilbufBase_005222e0
     L_fb_checkFlags:
         mov     cl, byte ptr [ecx + 4]
         and     cl, 0x82
