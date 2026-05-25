@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00415010 (356b boot) - mstack-push-8 + slot-init chain + pop-8.
  *   MStackPush8_004ab790 reserves 8 slots; on no-error stashes
  *   g_fightGroupHead into g_eventQueueEnd and sets g_walkCallback =
- *   &g_data_004d78a8>>2. Calls PushSetXfmMaskCallPop_00407140. On
+ *   &g_dispatchSave561_004d78a8>>2. Calls PushSetXfmMaskCallPop_00407140. On
  *   no-error AND bit 2 of g_xformDirtyFlags clear: writes 0xa1 into
  *   [g_fightGroupHead*4+0x30], copies [old_054054*4+0x34] into the new
  *   slot's +0x34, calls ScaledTripleCopy54_004ac040. On no-error:
@@ -119,12 +119,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   and calls MStackPushNegMul10_0040a690. On no-error: copies edx*4
  *   indirection chain through new slot's +0x6c/+0x74/+0x18, then
  *   OR's bit 3 into [scaled+0]. Writes 0xe666 into [scaled+0x48],
- *   sets &g_data_004ba0e0 at +0x10, 0xff at +0x14, then calls
+ *   sets &g_dispatchSave567_004ba0e0 at +0x10, 0xff at +0x14, then calls
  *   MStackCall_004065b0. Tail-jmp MStackPop8_004ab860 on success;
  *   bit-2-set branch also tail-jmps to MStackPop8 directly.
  */
-extern unsigned int g_data_004ba0e0;
-extern unsigned int g_data_004d78a8;
+extern unsigned int g_dispatchSave567_004ba0e0;
+extern unsigned int g_dispatchSave561_004d78a8;
 extern void MStackCall_004065b0(void);
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -139,7 +139,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         test    eax, eax
         jne     L_mp8_ret
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, offset g_data_004d78a8
+        mov     ecx, offset g_dispatchSave561_004d78a8
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
@@ -187,7 +187,7 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x48], 0xe666
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     eax, offset g_data_004ba0e0
+        mov     eax, offset g_dispatchSave567_004ba0e0
         mov     dword ptr [ecx*4 + 0x14], 0xff
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004ffd50;
+extern unsigned int g_dispatchSave569_004ffd50;
 extern u8 g_audioChannelTable[];
 extern unsigned int g_obj_size_00f8fad8;
 extern unsigned int g_data_00f8fadc;
@@ -73,7 +73,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         and      ebx, 0xffff
         lea      edx, [esp + 0x48]
         push     ebx
-        push     OFFSET g_data_004ffd50
+        push     OFFSET g_dispatchSave569_004ffd50
         push     edx
         call     Helper_Sprintf
         add      esp, 0xc

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_00481a10;
 extern unsigned int g_const_00481a80;
-extern unsigned int g_data_004ef290;
+extern unsigned int g_dispatchSave540_004ef290;
 extern unsigned int g_dispatchSave539_004ef2c0;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_bossArrivalState_00538124;
@@ -183,7 +183,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1813
-        push     OFFSET g_data_004ef290
+        push     OFFSET g_dispatchSave540_004ef290
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

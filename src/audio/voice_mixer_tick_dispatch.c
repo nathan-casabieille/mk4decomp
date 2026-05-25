@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f308c;
-extern unsigned int g_data_004f3094;
+extern unsigned int g_dispatchSave578_004f3094;
 extern unsigned int g_data_004f313c;
 extern unsigned int g_data_004f31a4;
 extern unsigned int g_data_004f31ac;
@@ -127,7 +127,7 @@ __declspec(naked) void VoiceMixerTickDispatch_004a27c0(void)
         push     ebp
         push     esi
         push     edi
-        mov      esi, OFFSET g_data_004f3094
+        mov      esi, OFFSET g_dispatchSave578_004f3094
     L_27c9:
         cmp      esi, OFFSET g_data_004f313c
         jae      L_27ed

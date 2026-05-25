@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchSave513_004f1408;
-extern unsigned int g_data_004f1420;
-extern unsigned int g_data_004f1430;
+extern unsigned int g_dispatchSave581_004f1420;
+extern unsigned int g_dispatchSave580_004f1430;
 extern unsigned int g_dispatchSave512_004f1440;
 extern unsigned int g_dispatchSave511_004f1458;
 extern void ArgScaledChain_004949b0(void);
@@ -161,13 +161,13 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         nop
         nop
         /* Helper 3: StreamInitCountdownBody_00494830 + conditional ArgScaledChain_004949b0. */
-        push     OFFSET g_data_004f1420
+        push     OFFSET g_dispatchSave581_004f1420
         call     StreamInitCountdownBody_00494830
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
         test     eax, eax
         jne      short L_5663
-        push     OFFSET g_data_004f1430
+        push     OFFSET g_dispatchSave580_004f1430
         call     ArgScaledChain_004949b0
         add      esp, 4
     L_5663:

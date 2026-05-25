@@ -112,7 +112,7 @@ extern void CjDispatchCommit_004818e0(void);
 extern void BossArrivalSequence_00481950(void);
 extern void SwapTwoGlobals_004911c0(void);
 extern void TableHitOrSchedule_004be7a0(void);
-extern unsigned int g_data_004ef290;
+extern unsigned int g_dispatchSave540_004ef290;
 extern unsigned int g_dispatchSave539_004ef2c0;
 extern unsigned int g_bossArrivalState_00538124;
 extern unsigned int g_const_00481a10;
@@ -184,7 +184,7 @@ __declspec(naked) void BlockedCounterCluster_004816d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1813
-        push     OFFSET g_data_004ef290
+        push     OFFSET g_dispatchSave540_004ef290
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

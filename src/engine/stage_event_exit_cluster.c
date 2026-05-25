@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ffe04;
+extern unsigned int g_dispatchSave551_004ffe04;
 extern void Set200dCallPauseJmp_0047c5e0(void);
 extern void StageEventExitCluster_0047cd50(void);
 extern void InstallSelfCountdown2Stage_0047c8f0(void);
@@ -124,7 +124,7 @@ extern void ScaledChainJmp_00429470(void);
  *   Selects 0x542074 = 1 or 0x10 based on g_fightGroupHead ==
  *   g_player1NodeIdx, AND with g_eventQueueCurrent → g_xformScratch94: if
  *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
- *   &g_data_004ffe04>>2 into g_currentNodeIdx / [ecx*4+0x24] and installs
+ *   &g_dispatchSave551_004ffe04>>2 into g_currentNodeIdx / [ecx*4+0x24] and installs
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
@@ -194,7 +194,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         pop     esi
         ret
     L_ism_installSelf:
-        mov     eax, offset g_data_004ffe04
+        mov     eax, offset g_dispatchSave551_004ffe04
         shr     eax, 2
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx*4 + 0x24], eax

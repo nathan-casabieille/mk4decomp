@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioBitField_00541fc0;
-extern unsigned int g_data_004f2980;
+extern unsigned int g_dispatchSave579_004f2980;
 extern u32 g_dlMode;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_state2_0053a354;
@@ -132,7 +132,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
     __asm {
         push    esi
         call    SaveStateSnapshot_004aba40
-        mov     eax, offset g_data_004f2980
+        mov     eax, offset g_dispatchSave579_004f2980
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]

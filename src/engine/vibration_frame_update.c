@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x004b9640 (301b engine.render) - vibration/feedback frame update.
  *   Reads g_fightGroupHead & 0x180000; if both bits 0, skip. Else loads
  *   [esp+0x14] as `i`; if [i*4+0x1c]==-20, set i=2. Validate i in [1,0x18].
- *   Lookup pattern entry at [i*4 + g_data_004f6508]; bail if 0x10000.
+ *   Lookup pattern entry at [i*4 + g_dispatchSave554_004f6508]; bail if 0x10000.
  *   If i==2: load FP, fadd to g_fpuConst_004f6570, fcomp 0x004d2a00; if FP overflow,
  *     re-init constants to 0x3fec_cccccccd / 0x3f90_624d_d2f1_a9fc.
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
@@ -121,11 +121,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004d2a00;
 extern unsigned int g_data_004d2a10;
-extern unsigned int g_data_004f6508;
+extern unsigned int g_dispatchSave554_004f6508;
 extern unsigned int g_fpuConst_004f6570;
-extern unsigned int g_data_004f6574;
+extern unsigned int g_dispatchSave553_004f6574;
 extern unsigned int g_dispatchSave502_004f6578;
-extern unsigned int g_data_004f657c;
+extern unsigned int g_dispatchSave552_004f657c;
 extern void DoubleToInt64_004c57d0(void);
 extern void Transform9Words_004b3a90(void);
 
@@ -146,7 +146,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         jle     L_vfu_done
         cmp     ecx, 0x18
         jg      L_vfu_done
-        mov     eax, dword ptr [ecx*4 + g_data_004f6508]
+        mov     eax, dword ptr [ecx*4 + g_dispatchSave554_004f6508]
         cmp     eax, 0x10000
         mov     dword ptr [g_walkCallback], eax
         jz      L_vfu_done
@@ -162,9 +162,9 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         test    ah, 1
         jz      short L_vfu_skipReinitA
         mov     dword ptr [g_fpuConst_004f6570], 0xcccccccd
-        mov     dword ptr [g_data_004f6574], 0x3feccccc
+        mov     dword ptr [g_dispatchSave553_004f6574], 0x3feccccc
         mov     dword ptr [g_dispatchSave502_004f6578], 0xd2f1a9fc
-        mov     dword ptr [g_data_004f657c], 0x3f90624d
+        mov     dword ptr [g_dispatchSave552_004f657c], 0x3f90624d
     L_vfu_skipReinitA:
         fld     qword ptr [g_fpuConst_004f6570]
         fcomp   qword ptr [g_data_004d2a10]
@@ -172,9 +172,9 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         test    ah, 0x41
         jne     short L_vfu_doConv
         mov     dword ptr [g_fpuConst_004f6570], 0x9999999a
-        mov     dword ptr [g_data_004f6574], 0x3ff19999
+        mov     dword ptr [g_dispatchSave553_004f6574], 0x3ff19999
         mov     dword ptr [g_dispatchSave502_004f6578], 0xbc6a7efa
-        mov     dword ptr [g_data_004f657c], 0xbf789374
+        mov     dword ptr [g_dispatchSave552_004f657c], 0xbf789374
     L_vfu_doConv:
         fild    dword ptr [g_walkCallback]
         fmul    qword ptr [g_fpuConst_004f6570]

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00418e00 (379b boot) - 2-entry packed boot setup + body.
- *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_data_004d75e0>>2,
+ *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_dispatchSave562_004d75e0>>2,
  *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
  *     g_xformDirtyFlags clear: writes [g_fightGroupHead*4+0x30]=0xa9,
  *     +0x3c=g_particleEmitterNode_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
  *     mstack entries back.
  */
-extern unsigned int g_data_004d75e0;
+extern unsigned int g_dispatchSave562_004d75e0;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern unsigned int g_table_004d57b0;
@@ -137,7 +137,7 @@ extern void SetJmp_00408d20(void);
 
 __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
     __asm {
-        mov     eax, offset g_data_004d75e0
+        mov     eax, offset g_dispatchSave562_004d75e0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140

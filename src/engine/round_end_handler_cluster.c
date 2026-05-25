@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e8698;
+extern unsigned int g_dispatchSave541_004e8698;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_stateFlag_00537e98;
 extern s32 g_dlNalt1;
@@ -226,7 +226,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7f8b
-        mov      edx, OFFSET g_data_004e8698
+        mov      edx, OFFSET g_dispatchSave541_004e8698
         push     0x262
         shr      edx, 2
         push     OFFSET func_00427780

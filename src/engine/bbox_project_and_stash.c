@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f6264;
-extern unsigned int g_data_004f63e8;
-extern unsigned int g_data_004f63ea;
+extern unsigned int g_dispatchSave571_004f63e8;
+extern unsigned int g_dispatchSave570_004f63ea;
 extern unsigned int g_data_004f63ec;
 extern unsigned int g_data_004f63ee;
 extern unsigned int g_data_004f63f0;
@@ -153,7 +153,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         cmp      edi, 0x10
         jg       L_c7d1
         shl      edi, 4
-        mov      al, byte ptr [edi + g_data_004f63e8]
+        mov      al, byte ptr [edi + g_dispatchSave571_004f63e8]
         test     al, al
         jne      L_c7d1
         mov      eax, dword ptr [g_tickCurConfig]
@@ -169,7 +169,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         cmp      cl, 1
         jne      L_c7d1
     L_c60b:
-        mov      cx, word ptr [edi + g_data_004f63ea]
+        mov      cx, word ptr [edi + g_dispatchSave570_004f63ea]
         mov      dx, word ptr [edi + g_data_004f63ee]
         movsx    eax, word ptr [g_mat3x3_007af992]
         movsx    ebp, word ptr [g_mat3x3_007af994]

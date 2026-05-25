@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void SkelAnimUpdaterCluster_0049d940(void);
-extern unsigned int g_data_004d6948;
+extern unsigned int g_dispatchSave544_004d6948;
 extern unsigned int g_audioPreloadBase2_0050bbb4;
 
 extern void CallSetPause_0041f830(void);
@@ -215,7 +215,7 @@ __declspec(naked) void Phase4DualHelperTrampoline_00412900(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4dht_A_exit
-        mov     ecx, offset g_data_004d6948
+        mov     ecx, offset g_dispatchSave544_004d6948
         mov     dword ptr [g_eventQueueNotMask], 0x99
         shr     ecx, 2
         mov     dword ptr [g_xformEntityIdx], ecx

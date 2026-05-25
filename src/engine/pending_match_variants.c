@@ -441,8 +441,8 @@ extern unsigned int g_data_004e6408;
 extern unsigned int g_data_004e6580;
 extern unsigned int g_data_004e6590;
 extern unsigned int g_data_004e65a0;
-extern unsigned int g_data_004e65b8;
-extern unsigned int g_data_004e65c8;
+extern unsigned int g_dispatchSave543_004e65b8;
+extern unsigned int g_dispatchSave542_004e65c8;
 extern unsigned int g_data_004e6f50;
 extern unsigned int g_data_004e6f60;
 extern unsigned int g_data_004e6f68;
@@ -2527,7 +2527,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
     __asm {
     L_d580:
         /* H1 */
-        push     OFFSET g_data_004e65b8
+        push     OFFSET g_dispatchSave543_004e65b8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -2580,7 +2580,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         test     eax, eax
         jne      L_d738
         mov      ecx, dword ptr [g_eventQueueEnd]
-        push     OFFSET g_data_004e65c8
+        push     OFFSET g_dispatchSave542_004e65c8
         mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]

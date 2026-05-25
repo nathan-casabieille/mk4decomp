@@ -138,8 +138,8 @@ extern void SetJmp_004753a0(void);
 extern void StoreLoadJmp_00404ef0(void);
 extern void func_004569f0(void);
 
-extern unsigned int g_data_004eef18;
-extern unsigned int g_data_004eef20;
+extern unsigned int g_dispatchSave583_004eef18;
+extern unsigned int g_dispatchSave582_004eef20;
 extern void DualEntryBitFlagDispatch_0048e820(void);
 extern void GameLoaderHandlerCluster_004876f0(void);
 extern void IterStepDualStore_00490b40(void);
@@ -246,7 +246,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         nop
         nop
         /* H3: load + sound */
-        push     OFFSET g_data_004eef18
+        push     OFFSET g_dispatchSave583_004eef18
         call     IterStepDualStore_00490b40
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -256,7 +256,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_75c1
-        push     OFFSET g_data_004eef20
+        push     OFFSET g_dispatchSave582_004eef20
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_75c1:

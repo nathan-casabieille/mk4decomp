@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3930;
+extern unsigned int g_dispatchSave556_004f3930;
 extern unsigned int g_data_004f393c;
 extern unsigned int g_data_004f394c;
 extern unsigned int g_data_004f39dc;
@@ -198,10 +198,10 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         mov      dword ptr [edx*4 + 0x58], 0xfff60000
     L_5360:
         call     AudioByteTable7LoopChainPick_004a5160
-        push     OFFSET g_data_004f3930
+        push     OFFSET g_dispatchSave556_004f3930
         call     ScaledByteIdxDualCopy_004a3260
         add      esp, 4
-        push     OFFSET g_data_004f3930
+        push     OFFSET g_dispatchSave556_004f3930
         call     AudioState50b4BitDispatcher_004a32c0
         add      esp, 4
         call     TripleCallByteCheck_004a1bf0

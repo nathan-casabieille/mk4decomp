@@ -124,10 +124,10 @@ extern unsigned int g_audioStateMachineVar5_004f31d0;
 extern unsigned int g_audioStateMachineVar3_004f3404;
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_data_004f361c;
-extern unsigned int g_data_004f3814;
-extern unsigned int g_data_004f3818;
-extern unsigned int g_data_004f381c;
-extern unsigned int g_data_004f3820;
+extern unsigned int g_dispatchSave577_004f3814;
+extern unsigned int g_dispatchSave576_004f3818;
+extern unsigned int g_dispatchSave575_004f381c;
+extern unsigned int g_dispatchSave574_004f3820;
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_audioRestoreSlot3_0053a1f0;
 extern unsigned int g_audioSavedGlobal0_00543734;
@@ -222,13 +222,13 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     edx, dword ptr [g_audioSavedReg_00543a54]
         mov     dword ptr [g_audioSavedGlobal3_00543740], eax
         mov     eax, dword ptr [g_audioSavedReg_00543a58]
-        mov     dword ptr [g_data_004f3814], ecx
+        mov     dword ptr [g_dispatchSave577_004f3814], ecx
         mov     ecx, dword ptr [g_audioSavedReg_00543a5c]
-        mov     dword ptr [g_data_004f3818], edx
+        mov     dword ptr [g_dispatchSave576_004f3818], edx
         mov     edx, dword ptr [g_audioSavedReg_00543a60]
-        mov     dword ptr [g_data_004f381c], eax
+        mov     dword ptr [g_dispatchSave575_004f381c], eax
         mov     eax, dword ptr [g_audioSavedReg_00543a64]
-        mov     dword ptr [g_data_004f3820], ecx
+        mov     dword ptr [g_dispatchSave574_004f3820], ecx
         mov     ecx, dword ptr [g_audioRestoreSlot2_00543a68]
         mov     dword ptr [g_audioStateMachine0_004f3ae4], edx
         movsb

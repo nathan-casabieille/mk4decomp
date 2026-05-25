@@ -27,14 +27,14 @@ int Crt_rand(void) {
  */
 extern void (*g_iat_0051ffd8)(void);
 extern int IterFnPtrs_004c6940(void *, void *);
-extern void *g_data_004d5000;
-extern void *g_data_004d5018;
-extern void *g_data_004d501c;
-extern void *g_data_004d5024;
+extern void *g_dispatchSave550_004d5000;
+extern void *g_dispatchSave549_004d5018;
+extern void *g_dispatchSave548_004d501c;
+extern void *g_dispatchSave547_004d5024;
 void _init_premain(void) {
     if (g_iat_0051ffd8) g_iat_0051ffd8();
-    IterFnPtrs_004c6940(&g_data_004d501c, &g_data_004d5024);
-    IterFnPtrs_004c6940(&g_data_004d5000, &g_data_004d5018);
+    IterFnPtrs_004c6940(&g_dispatchSave548_004d501c, &g_dispatchSave547_004d5024);
+    IterFnPtrs_004c6940(&g_dispatchSave550_004d5000, &g_dispatchSave549_004d5018);
 }
 
 /* @addr 0x004c6ee0 (55b)

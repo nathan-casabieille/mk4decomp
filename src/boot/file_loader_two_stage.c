@@ -112,7 +112,7 @@ extern unsigned int g_data_004d5040;
 extern unsigned int g_data_004d504c;
 extern unsigned int g_dispatchVar40_004d505c;
 extern unsigned int g_data_004d5060;
-extern unsigned int g_data_004d506c;
+extern unsigned int g_dispatchSave565_004d506c;
 extern unsigned int g_fileLoaderArr_00524158;
 extern unsigned int g_fileLoaderState_00524358;
 extern void FSYS_fclose(void);
@@ -140,7 +140,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         mov     esi, dword ptr [esp + 0x110]
         push    edi
         push    esi
-        push    offset g_data_004d506c
+        push    offset g_dispatchSave565_004d506c
         push    offset g_data_004d5060
         push    eax
         call    Helper_Sprintf
@@ -194,7 +194,7 @@ __declspec(naked) void FileLoaderTwoStage_00401120(void)
         ret
     L_fl_have_buf:
         push    esi
-        push    offset g_data_004d506c
+        push    offset g_dispatchSave565_004d506c
         lea     edx, [esp + 0x98]
         push    offset g_data_004d5040
         push    edx

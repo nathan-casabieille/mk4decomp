@@ -129,7 +129,7 @@ extern void Helper_AuxAudio_PostInit(void);
 extern unsigned int g_dispatchSave529_004d29f8;
 extern unsigned int g_dispatchSave528_004d29fc;
 extern unsigned int g_dispatchSave515_004d2b90;
-extern unsigned int g_data_004d2b94;
+extern unsigned int g_dispatchSave566_004d2b94;
 extern unsigned int g_crtMemMoveLo_004d2f20;
 extern unsigned int g_crtMemMoveHi_004d2f24;
 extern unsigned int g_crtMemMoveVar_004d2f28;

@@ -212,8 +212,8 @@ extern void TripleSubVec3_004250f0(void);
 extern unsigned int g_data_00408000;
 extern unsigned int g_pendingMatchVar2_004d531c;
 extern unsigned int g_pendingMatchVar_004d5324;
-extern unsigned int g_data_004d5354;
-extern unsigned int g_data_004d5358;
+extern unsigned int g_dispatchSave564_004d5354;
+extern unsigned int g_dispatchSave563_004d5358;
 extern unsigned int g_data_004d535c;
 extern unsigned int g_data_004d5ad8;
 extern unsigned int g_dispatchSave522_004d61d8;
@@ -7045,7 +7045,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [eax*4 + 0x70]
         lea      esi, [eax*4]
-        mov      eax, dword ptr [g_data_004d5358]
+        mov      eax, dword ptr [g_dispatchSave563_004d5358]
         add      eax, ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [esi + 0x70], eax
@@ -7093,7 +7093,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         pop      ebp
         ret      
     L_9e23:
-        mov      eax, dword ptr [g_data_004d5358]
+        mov      eax, dword ptr [g_dispatchSave563_004d5358]
         mov      edx, dword ptr [ecx*4 + 0x70]
         add      eax, edx
         mov      dword ptr [g_walkCallback], eax
@@ -7299,7 +7299,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      eax, dword ptr [edx*4 + 0x50]
         mov      dword ptr [g_acc_00542078], eax
         push     eax
-        mov      eax, dword ptr [g_data_004d5354]
+        mov      eax, dword ptr [g_dispatchSave564_004d5354]
         push     eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_eventQueueEnd]
@@ -7341,7 +7341,7 @@ __declspec(naked) void PendingMatch_00419c90(void)
         mov      dword ptr [g_walkCallback], eax
         mov      edx, dword ptr [ecx*4 + 0x58]
         sub      eax, edx
-        mov      edx, dword ptr [g_data_004d5354]
+        mov      edx, dword ptr [g_dispatchSave564_004d5354]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], eax

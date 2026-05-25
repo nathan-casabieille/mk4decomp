@@ -110,11 +110,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004edfd0;
 extern unsigned int g_data_004ee030;
-extern unsigned int g_data_004ee098;
-extern unsigned int g_data_004ee0c8;
-extern unsigned int g_data_004ee0f8;
-extern unsigned int g_data_004ee118;
-extern unsigned int g_data_004ee138;
+extern unsigned int g_dispatchSave588_004ee098;
+extern unsigned int g_dispatchSave587_004ee0c8;
+extern unsigned int g_dispatchSave586_004ee0f8;
+extern unsigned int g_dispatchSave585_004ee118;
+extern unsigned int g_dispatchSave584_004ee138;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
 extern void CjTableThresholdDispatch_00488f00(void);
@@ -165,7 +165,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27eb
-        push     OFFSET g_data_004ee098
+        push     OFFSET g_dispatchSave588_004ee098
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_27eb:
@@ -225,7 +225,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28ab
-        push     OFFSET g_data_004ee0c8
+        push     OFFSET g_dispatchSave587_004ee0c8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_28ab:
@@ -239,7 +239,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_28cb
-        push     OFFSET g_data_004ee0f8
+        push     OFFSET g_dispatchSave586_004ee0f8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_28cb:
@@ -269,7 +269,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2923
-        push     OFFSET g_data_004ee118
+        push     OFFSET g_dispatchSave585_004ee118
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_2923:
@@ -307,7 +307,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2983
-        push     OFFSET g_data_004ee138
+        push     OFFSET g_dispatchSave584_004ee138
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_2983:

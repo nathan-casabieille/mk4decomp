@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004eb6f8;
-extern unsigned int g_data_004eb710;
-extern unsigned int g_data_004eb720;
+extern unsigned int g_dispatchSave560_004eb710;
+extern unsigned int g_dispatchSave559_004eb720;
 extern unsigned int g_data_004eb738;
 extern unsigned int g_data_004eb740;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
@@ -136,12 +136,12 @@ extern void IterStepScaledStore_0048e600(void);
  *     TripleCallPauseJmp_00470500 → push 0x4eb6f8 →
  *     ArgSarStoreJmp_004594f0.
  *   6b NOP align pad.
- *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_data_004eb710>>2
+ *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_dispatchSave560_004eb710>>2
  *     and tail-jmp PhaseDispatchListAdvance_004709e0.
  *   14b NOP align pad.
  *   Entry 4 (offset 0x120, 32b): if bit 0 of g_xformDirtyFlags set tail-jmp
  *     CallPauseDirtyMStackPushFn_0046e2a0; else set g_eventQueueEnd =
- *     &g_data_004eb720>>2 and tail-jmp ComboScriptDispatchCluster_00470530.
+ *     &g_dispatchSave559_004eb720>>2 and tail-jmp ComboScriptDispatchCluster_00470530.
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp_004594f0.
  */
@@ -229,7 +229,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         nop
         /* entry 3 (offset 0x100) */
     L_fea_entry3:
-        mov     eax, offset g_data_004eb710
+        mov     eax, offset g_dispatchSave560_004eb710
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0
@@ -253,7 +253,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         je      short L_fea_e4second
         jmp     CallPauseDirtyMStackPushFn_0046e2a0
     L_fea_e4second:
-        mov     eax, offset g_data_004eb720
+        mov     eax, offset g_dispatchSave559_004eb720
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         jmp     ComboScriptDispatchCluster_00470530

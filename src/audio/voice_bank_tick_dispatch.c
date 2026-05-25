@@ -112,7 +112,7 @@ extern unsigned int g_audioStateMachineVar7_004f2fc0;
 extern unsigned int g_data_004f31a0;
 extern unsigned int g_audioStateMachineVar6_004f31cc;
 extern unsigned int g_audioStateMachineVar5_004f31d0;
-extern unsigned int g_data_004f31d8;
+extern unsigned int g_dispatchSave557_004f31d8;
 extern unsigned int g_audioStateMachineVar4_004f3220;
 extern unsigned int g_byte_004f3238;
 extern unsigned int g_data_004f3240;
@@ -151,13 +151,13 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         jmp      dword ptr [eax*4 + L_120_jmptbl]
     L_315a:
         mov      eax, dword ptr [g_audioStateMachineVar6_004f31cc]
-        mov      ecx, dword ptr [eax*4 + g_data_004f31d8]
+        mov      ecx, dword ptr [eax*4 + g_dispatchSave557_004f31d8]
         push     ecx
         push     OFFSET g_data_004f432c
         jmp      L_31d5
     L_316e:
         mov      edx, dword ptr [g_audioStateMachineVar5_004f31d0]
-        mov      eax, dword ptr [edx*4 + g_data_004f31d8]
+        mov      eax, dword ptr [edx*4 + g_dispatchSave557_004f31d8]
         push     eax
         push     OFFSET g_data_004f4320
         jmp      L_31d5

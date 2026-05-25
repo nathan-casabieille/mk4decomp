@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_renderer2_d3dInitByte_004f4790;
-extern unsigned int g_data_004f4794;
+extern unsigned int g_dispatchSave555_004f4794;
 extern unsigned int g_data_004f4798;
 extern unsigned int g_data_004f479c;
 extern u8 g_renderer2_buf2[];
@@ -143,7 +143,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_data_004f4794]
+        mov      esi, dword ptr [g_dispatchSave555_004f4794]
         mov      edx, dword ptr [eax]
         xor      ecx, ecx
         test     esi, esi
@@ -157,7 +157,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_dc15
-        mov      esi, dword ptr [g_data_004f4794]
+        mov      esi, dword ptr [g_dispatchSave555_004f4794]
         mov      edx, dword ptr [eax]
         xor      ecx, ecx
         test     esi, esi

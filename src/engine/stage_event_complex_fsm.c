@@ -119,7 +119,7 @@ extern void DeltaAbsCompareBitToggle_0048ea90(void);
 extern void DirtyToggleByGate_0048f350(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void PunchAnimCluster_00496d80(void);
-extern unsigned int g_data_004ffe28;
+extern unsigned int g_dispatchSave568_004ffe28;
 
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
@@ -195,7 +195,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         cmp      eax, edi
         mov      dword ptr [g_walkCallback], eax
         je       short L_c86e
-        mov      eax, OFFSET g_data_004ffe28
+        mov      eax, OFFSET g_dispatchSave568_004ffe28
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x24], eax

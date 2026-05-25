@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_gsmSubOther1Base_004f4f60;
-extern unsigned int g_data_004f4f64;
+extern unsigned int g_dispatchSave572_004f4f64;
 extern unsigned int g_data_00ab42d8;
 extern unsigned int g_data_00ab42f8;
 extern unsigned int g_data_00ab4384;
@@ -87,7 +87,7 @@ __declspec(naked) void Helper_GSM_Sub_Other1(void)
         mov      dword ptr [g_data_00ab4384], edi
     L_8ca8:
         mov      edx, dword ptr [g_data_00ab42f8]
-        movsx    eax, word ptr [edx*8 + g_data_004f4f64]
+        movsx    eax, word ptr [edx*8 + g_dispatchSave572_004f4f64]
         add      eax, -0xd
         cmp      eax, 3
         ja       short L_8d3b
