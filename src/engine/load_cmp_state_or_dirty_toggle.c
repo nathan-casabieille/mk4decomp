@@ -13,13 +13,13 @@ extern unsigned int g_scaledInit_00542044;
  *   load dirty | 4; cmp eax,6; if eq: dirty stays; else: dirty ^= 4;
  *   ret.
  */
-extern unsigned int g_state_00538158_ll;
+extern unsigned int g_player1NodeIdx;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 void LoadCmpStateOrDirtyToggle_0048e330(void) {
     unsigned int v = g_dlNalt1;
     g_walkCallback = (void (*)(void))v;
-    if (g_fightGroupHead != g_state_00538158_ll) {
+    if (g_fightGroupHead != g_player1NodeIdx) {
         v = g_dlNalt2;
         g_walkCallback = (void (*)(void))v;
     }
