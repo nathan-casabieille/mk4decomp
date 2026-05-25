@@ -17,8 +17,8 @@ extern unsigned int g_state_00537f10;
 extern unsigned int g_state_00543710_hh;
 extern unsigned int g_bootInitState_00535de4;
 extern unsigned int g_dispatchSave266_0052ab00;
-extern unsigned int g_state_00537f8c;
-extern unsigned int g_state_00541d90;
+extern unsigned int g_dispatchSave_00537f8c;
+extern unsigned int g_installSelfCounter2_00541d90;
 extern unsigned int g_state4_0053a3e0;
 extern unsigned int g_state4_0053a700;
 extern unsigned int g_state_00535e44;
@@ -30,8 +30,8 @@ void ZeroMultiGlobalsCmp_00404680(void) {
         g_bootInitState_00535de4 = 0;
     }
     g_dispatchSave266_0052ab00 = 0;
-    g_state_00537f8c = 0;
-    g_state_00541d90 = 0;
+    g_dispatchSave_00537f8c = 0;
+    g_installSelfCounter2_00541d90 = 0;
     g_state4_0053a3e0 = 0;
     g_state4_0053a700 = 0;
     g_state_00535e44 = 0;

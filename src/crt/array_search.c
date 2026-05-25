@@ -5,17 +5,17 @@
 #include "game/tick.h"
 
 /* @addr 0x004cba90 (60b)
- *   array search: arg2 = base, edi = g_state_00522904 = entry count;
+ *   array search: arg2 = base, edi = g_crtArraySearchCount_00522904 = entry count;
  *   linearly scan for entry whose dword == arg1; return matching slot or 0.
  */
-extern unsigned int g_state_00522904;
+extern unsigned int g_crtArraySearchCount_00522904;
 __declspec(naked) void ArraySearch_004cba90(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
         push    esi
         mov     esi, dword ptr [esp + 0x0c]
         push    edi
-        mov     edi, dword ptr [g_state_00522904]
+        mov     edi, dword ptr [g_crtArraySearchCount_00522904]
         mov     ecx, dword ptr [esi]
         mov     eax, esi
         cmp     ecx, edx

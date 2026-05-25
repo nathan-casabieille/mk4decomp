@@ -126,8 +126,8 @@ extern s32 g_dlChar13;
 extern s32 g_dlChar24;
 extern unsigned int g_audioInitState2_00541ecc;
 extern unsigned int g_audioInitState1_00541ed0;
-extern unsigned int g_x_00543894;
-extern unsigned int g_x_00543898;
+extern unsigned int g_installCountdownPair_00543894;
+extern unsigned int g_dispatchSave8_00543898;
 
 void StateInitShuffle_00422380(void) {
     __asm {
@@ -136,8 +136,8 @@ void StateInitShuffle_00422380(void) {
         xor     eax, eax
         mov     dword ptr [g_audioInitState6_00537ea0], ecx
         mov     ecx, dword ptr [g_dlChar13]
-        mov     dword ptr [g_x_00543894], eax
-        mov     dword ptr [g_x_00543898], eax
+        mov     dword ptr [g_installCountdownPair_00543894], eax
+        mov     dword ptr [g_dispatchSave8_00543898], eax
         mov     eax, dword ptr [g_dlNalt1]
         mov     dword ptr [g_audioInitState3_0053a790], eax
         mov     eax, dword ptr [g_dlNalt4]

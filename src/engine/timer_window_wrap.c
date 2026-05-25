@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_x_004d517c;
-extern unsigned int g_x_0053a7b4;
-extern unsigned int g_x_00541d68;
+extern unsigned int g_dispatchVar14_0053a7b4;
+extern unsigned int g_scenegraphWalkEnd_00541d68;
 
 /*
  * @addr 0x004310c0 (96b game) - timer-window wrap: stash globals into
@@ -122,8 +122,8 @@ void TimerWindowWrap_004310c0(void) {
     int edx_val;
     int ref;
     int eax_val;
-    g_eventQueueWorkType = g_x_0053a7b4;
-    g_acc_00542078 = g_x_00541d68;
+    g_eventQueueWorkType = g_dispatchVar14_0053a7b4;
+    g_acc_00542078 = g_scenegraphWalkEnd_00541d68;
     Atan2QuadrantLookup_004245b0();
     if (g_framePauseFlag != 0) return;
     edx_val = (int)((unsigned int)g_walkCallback + 0xfffe6de1u);

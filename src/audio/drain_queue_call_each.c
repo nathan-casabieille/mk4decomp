@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   and zero both heads.
  */
 extern unsigned int g_voicePoolHead_00543748;
-extern unsigned int g_x_00543750;
+extern unsigned int g_voicePoolTail_00543750;
 extern void MStackPush2ChainLLInsert_00406790(void);
 
 void DrainQueueCallEach_004a1ec0(void) {
     int count = (int)g_voicePoolHead_00543748;
     int i = 0;
     if (count > 0) {
-        unsigned int *p = &g_x_00543750;
+        unsigned int *p = &g_voicePoolTail_00543750;
         do {
             g_currentNodeIdx = *p;
             MStackPush2ChainLLInsert_00406790();
