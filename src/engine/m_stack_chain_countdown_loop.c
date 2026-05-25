@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_acc_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter_00541fb0;
 extern void MStackPushSearchLoop_00463ed0(void);
@@ -125,7 +125,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], edx
         call    MStackPushSearchLoop_00463ed0
@@ -176,7 +176,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_acc_00542078], edx
         pop     esi
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

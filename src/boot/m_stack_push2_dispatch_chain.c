@@ -118,7 +118,7 @@ extern void GDispatch4_004089c0(void);
 extern void MStackBracket2_StateAdvance6_004094d0(void);
 
 extern unsigned int g_chain_disp_24_4096b0;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
     __asm {
@@ -126,12 +126,12 @@ __declspec(naked) void MStackPush2DispatchChain_004096b0(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         call    BootStateTriple_00408d30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

@@ -124,14 +124,14 @@ extern void ComboMoveSelectFsmCluster_0045a2c0(void);
 extern void PendingMatch_00459510(void);
 extern void ScaledStoreOrFlagXor_00428560(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void DualEntryStateMachine_0045a180(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset body_1a0
+        mov     [eax*4 + g_matrixStack_arr], offset body_1a0
         jmp     ComboMoveSelectFsmCluster_0045a2c0
         _emit   90h
         _emit   90h
@@ -207,7 +207,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset PendingMatch_00459510
+        mov     [eax*4 + g_matrixStack_arr], offset PendingMatch_00459510
         call    ComboMoveSelectFsmCluster_0045a2c0
         pop     esi
         ret

@@ -127,7 +127,7 @@ extern void DualCmpSwapStore_0049c5a0(void);
 extern void DualMul10AndDispatchChain_0049c220(void);
 extern void ScaledStackCallPause_0049c360(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
     __asm {
@@ -136,7 +136,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x38]
@@ -166,7 +166,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x70], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_matrixStackTop], eax

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackPush3MaskBit0_004929e0(void) {
     __asm {
@@ -124,17 +124,17 @@ void MStackPush3MaskBit0_004929e0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    MStackPush2TableNot_00426230
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -152,15 +152,15 @@ void MStackPush3MaskBit0_004929e0(void) {
         or      al, 1
         mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax

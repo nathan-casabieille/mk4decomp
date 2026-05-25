@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   ecx = 0x004e4de0>>2 + masked byte; g_xformEntityIdx = [ecx*4+0]; g_cj_00542058 = same;
  *   call IncStoreCallIATDec_00439520; if !pause: mstack-pop g_baseSel, g_fightGroupHead. ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void IncStoreCallIATDec_00439520(void);
 
 void MStackChainExtractCall_004397d0(void) {
@@ -122,12 +122,12 @@ void MStackChainExtractCall_004397d0(void) {
         mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_baseSel_00542060]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_fightGroupHead], ecx
@@ -159,11 +159,11 @@ void MStackChainExtractCall_004397d0(void) {
         _emit   75h
         _emit   2bh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_baseSel_00542060], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_matrixStackTop], eax

@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Block B (+0x60): if g_table_00535ddc > g_currentNodeFlags jmp GuardedSeq_00438630; else countdown
  *     g_eventQueueChild; if not zero, self-jmp; else jmp StackPopDispatchTagged.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void GuardedSeq_00438630(void);
 
 __declspec(naked) void InstallSelfWaitCmp_00438190(void) {
@@ -128,7 +128,7 @@ __declspec(naked) void InstallSelfWaitCmp_00438190(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004381f0
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x004381f0
         jmp     GameDispatchValidateState_004339c0
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x00438190

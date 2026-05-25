@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_walkCallback = chain[g_scaledInit + 0x74].
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void PackedSelectLoad6_00433c60(void) {
     __asm {
@@ -136,27 +136,27 @@ __declspec(naked) void PackedSelectLoad6_00433c60(void) {
         _emit   07h
         mov     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_currentNodeFlags], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_xformScratch2088], edx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [g_baseSel_00542060]

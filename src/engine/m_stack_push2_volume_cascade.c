@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
  *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_walkCallback).
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void AudioVolumeRescale_004ab690(void);
 extern void PendingMatch_00444ef0(void);
 
@@ -122,12 +122,12 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 0x64
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]

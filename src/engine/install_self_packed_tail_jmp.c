@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void DualSlotCopyChain_004756f0(void);
 extern void InstallSelfChainAccumPath_004752b0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfPackedTailJmp_004751f0(void) {
     __asm {
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfPackedTailJmp_004751f0(void) {
         mov     edx, 0x004751f0
         mov     dword ptr [g_scaledInit_00542044], ecx
         add     edx, 0x01000000
-        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     [ecx*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

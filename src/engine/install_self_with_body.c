@@ -113,7 +113,7 @@ extern void GuardedPackedSlotInit_00428760(void);
 extern void InstallSelfWithBody_00438780(void);
 
 /* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void StateGateMStackOverlap_00438690(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     dword ptr [g_walkCallback], 0x00002147
         call    MStackFrameCdeclDouble_004903f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -145,7 +145,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         mov     ecx, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x00500c50
-        mov     esi, dword ptr [ecx*4 + g_data_004d57ac_arr]
+        mov     esi, dword ptr [ecx*4 + g_matrixStack_arr]
         dec     ecx
         shr     eax, 2
         mov     dword ptr [g_eventQueueChild], esi
@@ -162,7 +162,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         inc     ecx
         push    0x005422e8
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     dword ptr [ecx*4 + g_data_004d57ac_arr], esi
+        mov     dword ptr [ecx*4 + g_matrixStack_arr], esi
         mov     dword ptr [g_eventQueueNotMask], 0x0d
         call    GuardedPackedSlotInit_00428760
         mov     eax, dword ptr [g_framePauseFlag]
@@ -171,7 +171,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         _emit   75h
         _emit   1dh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_matrixStackTop], eax

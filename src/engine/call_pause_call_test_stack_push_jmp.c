@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern int DualGatedStateYield_0048fc80(void);
-extern unsigned int g_state_004d57ac_ff;
+extern unsigned int g_matrixStackTop;
 extern void MstackPopScaledChainPlusThunks_00471250(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 void CallPauseCallTestStackPushJmp_00460c60(void) {
@@ -25,10 +25,10 @@ void CallPauseCallTestStackPushJmp_00460c60(void) {
     if (DualGatedStateYield_0048fc80() != 0) {
         return;
     }
-    top = g_state_004d57ac_ff;
+    top = g_matrixStackTop;
     g_walkCallback = (void (*)(void))2;
     top++;
-    g_state_004d57ac_ff = top;
+    g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = (unsigned int)&FiveCallGuardSetTail_0046f6b0;
     MstackPopScaledChainPlusThunks_00471250();
 }

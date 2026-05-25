@@ -119,7 +119,7 @@ extern unsigned int g_load_0052ab10;
 extern void MStackPush1MagicMod2_004244d0(void);
 
 extern unsigned int g_chain_disp_64_40a690;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackPushNegMul10Var_0040a730(void) {
     __asm {
@@ -127,7 +127,7 @@ void MStackPushNegMul10Var_0040a730(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_load_0052ab10]
         neg     edx
@@ -158,7 +158,7 @@ void MStackPushNegMul10Var_0040a730(void) {
         add     esp, 8
         neg     edx
         mov     dword ptr [g_walkCallback], edx
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

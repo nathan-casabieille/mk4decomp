@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   range based on g_walkCallback sign; call FpuSqrtMul; pause-check; Mul10Tail(g_walkCallback, g_eventQueueNotMask);
  *   store result; mstack-pop both. ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackClampMul10_0048de20(void) {
     __asm {
@@ -120,12 +120,12 @@ void MStackClampMul10_0048de20(void) {
         mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
         mov     dword ptr [g_eventQueueNotMask], 0x00010000
@@ -151,11 +151,11 @@ void MStackClampMul10_0048de20(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_matrixStackTop]
         add     esp, 8
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_matrixStackTop], eax

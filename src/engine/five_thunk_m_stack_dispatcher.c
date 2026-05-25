@@ -131,7 +131,7 @@ extern void ScaledAndAlfe_00490390(void);
 extern void TripleCallPauseJmp_00470500(void);
 extern void Wrapper_0048a3c0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
     __asm {
@@ -203,7 +203,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0xc0
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0xc0
         jmp     InstallSelfMStackOverwrite_0046e9a0
         _emit   90h
         _emit   90h
@@ -223,7 +223,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
         jmp     InstallSelfMStackOverwrite_0046e9a0
         _emit   90h
         _emit   90h
@@ -238,7 +238,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
+        mov     [eax*4 + g_matrixStack_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
         jmp     InstallSelfMStackOverwrite_0046e9a0
         _emit   90h
         _emit   90h

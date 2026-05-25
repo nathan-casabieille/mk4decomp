@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern s32 g_dlNalt3;
@@ -152,7 +152,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + g_matrixStack_arr]
         push    eax
         push    eax
         mov     dword ptr [g_eventQueueCurrent], eax

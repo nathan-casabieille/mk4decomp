@@ -367,7 +367,7 @@ extern void Phase4FivePackedDispatch_0040fe40(void);
 extern void PendingMatch_00498eb0(void);
 
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_loaded_004f3608;
 extern unsigned int g_or_0052ab40;
 extern unsigned int g_dispatchVar18_0052d750;
@@ -978,12 +978,12 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 0x64
         call    AudioVolumeRescale_004ab690
         mov     eax, dword ptr [g_framePauseFlag]
@@ -1494,7 +1494,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset body_1a0
+        mov     [eax*4 + g_matrixStack_arr], offset body_1a0
         jmp     ComboMoveSelectFsmCluster_0045a2c0
         _emit   90h
         _emit   90h
@@ -1570,7 +1570,7 @@ __declspec(naked) void DualEntryStateMachine_0045a180(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset PendingMatch_00459510
+        mov     [eax*4 + g_matrixStack_arr], offset PendingMatch_00459510
         call    ComboMoveSelectFsmCluster_0045a2c0
         pop     esi
         ret
@@ -1610,7 +1610,7 @@ void MStackPush3CallChainBit2_004431e0(void) {
         mov     ecx, dword ptr [g_eventQueueEnd]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     dword ptr [g_cj_0054205c], edx
@@ -1669,18 +1669,18 @@ void MStackPush3CallChainBit2_004431e0(void) {
         mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         call    CameraZoomFsmCluster_00440aa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4fh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_matrixStackTop], eax

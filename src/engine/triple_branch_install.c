@@ -119,13 +119,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void CopyJmp_00406ba0(void);
 extern void ScaledArrStore_004285c0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void TripleBranchInstall_004283b0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         sub     eax, 0

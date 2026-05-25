@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackChainSwapTraversal_00493d00(void) {
     __asm {
@@ -124,12 +124,12 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_walkCallback], 0
@@ -181,11 +181,11 @@ void MStackChainSwapTraversal_00493d00(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     dword ptr [eax*4 + 0x18], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Block B (+0x60): cmp g_table_00535ddc, g_currentNodeFlags; set g_dispatchSave1580_00ab51f8=1 either way;
  *     if le: countdown g_eventQueueChild, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchSave1580_00ab51f8;
 extern void ChainDecCondStoreCallJmp_00434880(void);
 
@@ -132,7 +132,7 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004346f0
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x004346f0
         jmp     GameDispatchValidateState_004339c0
         mov     dword ptr [eax + 0x08], 0x00434690
         mov     dword ptr [eax + 0x84], edx

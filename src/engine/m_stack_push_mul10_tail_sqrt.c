@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Mul10Tail(eax, eax) twice; sum results into g_eventQueueWorkType; call FpuSqrtMul.
  *   if !pause: mstack-pop into g_acc_00542078, g_eventQueueWorkType. pop esi; ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
     __asm {
@@ -123,12 +123,12 @@ __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_acc_00542078]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_scaledInit_00542044], ecx
@@ -161,11 +161,11 @@ __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
         _emit   75h
         _emit   2bh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_acc_00542078], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_matrixStackTop], eax

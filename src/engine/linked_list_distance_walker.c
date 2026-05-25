@@ -120,7 +120,7 @@ extern void SetJmp_00439c30(void);
  *   Block B (+0x50): call LinkedListDistanceWalker_0045f950; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
  *     call Set0xaCmpEqSet0x26Jmp; if !pause jmp SetJmp_00439c30; ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchState_0053a478;
 
 __declspec(naked) void DualEntryBitGated_00439ba0(void) {
@@ -141,7 +141,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00439bf0
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00439bf0
         jmp     MstackPopScaledChainPlusThunks_00471250
         ret
         _emit   90h

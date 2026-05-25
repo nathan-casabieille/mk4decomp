@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void DispatcherComplex138_004760f0(void);
 extern void ScaledAndFBJmp_00476fe0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     esi, 0x91
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     dword ptr [g_scaledInit_00542044], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
@@ -151,7 +151,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, [eax*4 + 0x18]
         mov     dword ptr [g_scaledInit_00542044], ecx
@@ -161,7 +161,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         _emit   75h
         _emit   42h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax
@@ -174,7 +174,7 @@ __declspec(naked) void LoopMStackBitTest_00441fd0(void) {
         pop     esi
         pop     ebx
         ret
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

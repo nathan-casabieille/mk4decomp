@@ -123,7 +123,7 @@ extern void AtanDualDeltaThreshold_0049c870(void);
 extern void ScaledChain3c74_0048f910(void);
 extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
     __asm {
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    AtanDualDeltaThreshold_0049c870
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]

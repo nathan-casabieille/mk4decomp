@@ -22,7 +22,7 @@ extern unsigned int g_dispatchSave1569_00ab4e24;
 extern void DispatchScaledLEA_004b8f50(void);
 extern void Word9Reorder_004b3b30(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void Helper_PreTick(void) {
     __asm {
@@ -69,7 +69,7 @@ void Helper_PreTick(void) {
         mov     ecx, dword ptr [g_load_0052ab10]
         lea     eax, [ecx + 0x15]
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         mov     dword ptr [g_dispatchSave1551_00ab4d18], edx
         mov     edx, [eax*4 + 4]
         mov     dword ptr [g_dispatchSave1552_00ab4d1c], edx

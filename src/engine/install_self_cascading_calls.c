@@ -123,13 +123,13 @@ extern void MStackPushSet0008_004901a0(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfCascadingCalls_004806c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax

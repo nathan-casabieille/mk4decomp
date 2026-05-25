@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void IterLoad_0048fd30(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackBitFlagDispatch_00494750(void) {
     __asm {
@@ -141,7 +141,7 @@ void MStackBitFlagDispatch_00494750(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    MStackPush3CmpCall_0048eec0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -157,7 +157,7 @@ void MStackBitFlagDispatch_00494750(void) {
         _emit   75h
         _emit   29h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueChild], ecx

@@ -118,7 +118,7 @@ extern unsigned int g_load_0052ab10;
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void CountedLoopMStack_0042e480(void) {
     __asm {
@@ -126,12 +126,12 @@ void CountedLoopMStack_0042e480(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_eventQueueCurrent], 0xa
         mov     dword ptr [g_eventQueueWorkType], 0x005a0000
         call    MStackBracket3Init4bd5e0Tail_0042e550
@@ -159,11 +159,11 @@ void CountedLoopMStack_0042e480(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x74], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_matrixStackTop], eax

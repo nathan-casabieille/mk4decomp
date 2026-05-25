@@ -117,7 +117,7 @@ extern unsigned int g_crtFdCloseSlot_00520064;
 extern unsigned int g_crtAbortBase_00522908;
 extern unsigned int g_crtFpuSlot1_0052290c;
 extern unsigned int g_crtCType_00522998;
-extern unsigned int g_state_00f9f84c_ee;
+extern unsigned int g_crtCleanupFlag_00f9f84c;
 extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iat_004d20a0;
 extern unsigned int g_iat_004d2108;
@@ -146,7 +146,7 @@ __declspec(naked) void RaiseAbortLocalized_004cc070(void)
     L_c094:
         cmp      ecx, dword ptr [ebp*8 + g_crtAbortBase_00522908]
         jne      L_c23b
-        mov      eax, dword ptr [g_state_00f9f84c_ee]
+        mov      eax, dword ptr [g_crtCleanupFlag_00f9f84c]
         cmp      eax, 1
         je       L_c1fd
         test     eax, eax

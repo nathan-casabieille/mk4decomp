@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     g_xformDirtyFlags = (orig & ~4) | 1; ret.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void LinkedListBitMaskSearch_0041f8f0(void) {
     __asm {
@@ -131,7 +131,7 @@ void LinkedListBitMaskSearch_0041f8f0(void) {
         mov     ecx, dword ptr [g_nodeListTail]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     edx, dword ptr [g_walkCallback]
         and     edx, dword ptr [g_eventQueueCurrent]
         test    ecx, ecx
@@ -158,7 +158,7 @@ void LinkedListBitMaskSearch_0041f8f0(void) {
         mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_scaledInit_00542044], 0
         and     edx, 0xfffffffe
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         or      edx, 4
         mov     dword ptr [g_eventQueueWorkType], ecx
@@ -168,7 +168,7 @@ void LinkedListBitMaskSearch_0041f8f0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformDirtyFlags]
         and     edx, 0xfffffffb
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         or      edx, 1
         mov     dword ptr [g_eventQueueWorkType], ecx

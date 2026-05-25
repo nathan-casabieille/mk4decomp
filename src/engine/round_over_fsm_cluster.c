@@ -117,7 +117,7 @@ extern void RoundOverFsmCluster_0049b1d0(void);
  *   if !pause: mstack-pop g_eventQueueChild (no dec for first), then dec; g_eventQueueNotMask gets next; bit-0 test;
  *   if set: call RoundOverFsmCluster_0049b1d0; ret. Else dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
     __asm {
@@ -139,12 +139,12 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 6
         call    AtanDualDeltaThreshold_0049c870
         mov     eax, dword ptr [g_framePauseFlag]
@@ -152,11 +152,11 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         _emit   75h
         _emit   6ah
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]

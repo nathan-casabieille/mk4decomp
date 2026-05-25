@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_bootInitSaveSlot_00541dc4;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void LinkedListSearch_004750f0(void) {
     __asm {
@@ -127,27 +127,27 @@ void LinkedListSearch_004750f0(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         cmp     ecx, edx
         mov     dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   28h
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         test    ecx, ecx
         mov     dword ptr [g_pendingNodeType], ecx
         _emit   7ch
         _emit   20h
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         cmp     ecx, edx
         mov     dword ptr [g_bootInitSaveSlot_00541dc4], ecx
@@ -164,11 +164,11 @@ void LinkedListSearch_004750f0(void) {
         xor     eax, 4
         mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

@@ -118,7 +118,7 @@ extern unsigned int g_dispatchSave106_0052d748;
 extern void AudioVolumeRescale_004ab690(void);
 extern void DoubleStackPushAndJmp7d_00474050(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void AudioBridgeMStackChainCopy_00440730(void) {
     __asm {
@@ -142,18 +142,18 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, offset g_audioBridgeSlot_0052d718
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
         shr     edx, 2
         mov     ecx, dword ptr [eax*4 + 0x6c]
@@ -184,15 +184,15 @@ void AudioBridgeMStackChainCopy_00440730(void) {
         _emit   75h
         _emit   3eh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

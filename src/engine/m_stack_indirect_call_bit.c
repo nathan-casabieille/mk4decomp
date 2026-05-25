@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   if (g_xformDirtyFlags & 1): g_currentNodeFlags = 0x10000.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackIndirectCallBit_00470e20(void) {
     __asm {
@@ -123,17 +123,17 @@ void MStackIndirectCallBit_00470e20(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_currentNodeFlags]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_walkCallback], edx
         call    dword ptr [g_xformEntityIdx]
@@ -142,15 +142,15 @@ void MStackIndirectCallBit_00470e20(void) {
         _emit   75h
         _emit   51h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_currentNodeFlags], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]

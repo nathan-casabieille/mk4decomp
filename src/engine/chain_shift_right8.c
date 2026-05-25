@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain[g_eventQueueTotal + 0] = g_eventQueueWorkType.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void ChainShiftRight8_0045d9b0(void) {
     __asm {
@@ -143,12 +143,12 @@ void ChainShiftRight8_0045d9b0(void) {
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x08], ecx
         mov     eax, dword ptr [g_eventQueueTotal]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x04], ecx
         mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, dword ptr [g_eventQueueWorkType]
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         }
 }
 

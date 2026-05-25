@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledClearJmp_00428d40(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void InstallSelfStoreTwoCall_0049a410(void) {
     __asm {
@@ -151,7 +151,7 @@ void InstallSelfStoreTwoCall_0049a410(void) {
         mov     edx, 0x0049a410
         mov     dword ptr [g_scaledInit_00542044], ecx
         add     edx, 0x01000000
-        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     [ecx*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

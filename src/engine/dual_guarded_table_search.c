@@ -125,7 +125,7 @@ extern unsigned int g_table_00535ddc;
 extern void CmpP1GTSetup_00470980(void);
 extern void SnapshotDispatchMStack_00491350(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
     __asm {
@@ -149,7 +149,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         mov     eax, 0x004ebe90
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
@@ -162,11 +162,11 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         mov     dword ptr [g_eventQueueCurrent], edx
         _emit   74h
         _emit   2eh
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
@@ -176,7 +176,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         xor     eax, eax
         pop     esi
         ret
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_scaledInit_00542044], eax

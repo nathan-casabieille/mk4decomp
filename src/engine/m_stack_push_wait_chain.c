@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00486410 (114b game) - mstack-push self-handler & wait-then-chain.
- *   Block A (+0x00): g_data_004d57ac_arr[++g_state]=0x00486440; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
+ *   Block A (+0x00): g_matrixStack_arr[++g_state]=0x00486440; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
  *   Block B (+0x30): countdown wait on g_eventQueueChild; on zero call MStackPush2TripleCallChain_0048cf50; pause-check then
  *     two more sub-calls and tail-jmps. Self-jmp at +0x3d when timer not yet expired.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void DualEntryInstallScaledChain_00486580(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void MStackPush2TripleCallChain_0048cf50(void);
@@ -126,7 +126,7 @@ __declspec(naked) void MStackPushWaitChain_00486410(void) {
         mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00486440
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00486440
         jmp     NegInstallNegSelfTrigPair_00486610
         _emit   90h
         _emit   90h

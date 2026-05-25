@@ -124,14 +124,14 @@ extern unsigned int g_installSelfCounter2_00541d90;
  */
 extern void BootInitGuardedCallChain_004265d0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfCounter_00404920(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
         xor     ecx, ecx
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     [esi + 0x84], ecx
         cmp     eax, ecx

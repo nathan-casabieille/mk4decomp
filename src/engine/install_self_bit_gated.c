@@ -123,7 +123,7 @@ extern void Install3WayChainStateAdvance_00429130(void);
 extern void ScaledChainJmp_004298e0(void);
 extern void ScaledLoadJmp_24_00429790(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
         push    ebx
         push    esi
         mov     ebx, 1
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelfBitGated_00428eb0(void) {
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Pop g_xformEntityIdx.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void ChainListVecAdd_0049d200(void) {
     __asm {
@@ -145,7 +145,7 @@ void ChainListVecAdd_0049d200(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], eax
         shl     eax, 2
@@ -186,7 +186,7 @@ void ChainListVecAdd_0049d200(void) {
         _emit   75h
         _emit   0cch
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

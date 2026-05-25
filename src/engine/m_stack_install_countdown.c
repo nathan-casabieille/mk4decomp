@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     else countdown g_eventQueueChild; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
  *     g_pendingNodeType=0x58, g_pause=1; otherwise self-jmp.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void MStackPushWaitChain_00486410(void);
 extern void NegInstallNegSelfTrigPair_00486610(void);
 
@@ -124,7 +124,7 @@ __declspec(naked) void MStackInstallCountdown_00486370(void) {
         mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004863a0
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x004863a0
         jmp     NegInstallNegSelfTrigPair_00486610
         _emit   90h
         _emit   90h

@@ -1777,7 +1777,6 @@ g_curTexSlot: 11226740
 g_currentNodeFlags: 5513348
 g_currentNodeIdx: 5513308
 g_currentRendererMode: 5196604
-g_data_004d57ac_arr: 0
 g_data_004e4cf8: 5131512
 g_dbl_004d2bf8: 5057528
 g_demoModeFlag: 5242236
@@ -2263,10 +2262,6 @@ g_state2_0053a354: 5481300
 g_state2_00541d88: 5512584
 g_state4_0053a3e0: 5481440
 g_state4_0053a700: 5482240
-g_state_004d57ac_ff: 5068716
-g_state_00543710_hh: 5519120
-g_state_00f9f84c_ee: 16382028
-g_state_00f9f84c_gg: 16382028
 g_str_0043d8c0: 4446400
 g_str_00461980: 4594048
 g_str_004ed428: 5166120

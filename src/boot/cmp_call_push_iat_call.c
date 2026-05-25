@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern u8 g_memHeapStart[];
 extern unsigned int g_dispatchSave1654_007b41a8;
-extern unsigned int g_state_00f9f84c_ee;
+extern unsigned int g_crtCleanupFlag_00f9f84c;
 extern void DualCondCleanupCall_004cc030(void);
 extern void RaiseAbortLocalized_004cc070(void);
 
@@ -36,12 +36,12 @@ __declspec(naked) void AppInit_Misc2(void) {
 }
 
 /* @addr 0x004c6e60 (42b)
- *   if g_state_00f9f84c_ee == 1, call F; then call F2(arg);
+ *   if g_crtCleanupFlag_00f9f84c == 1, call F; then call F2(arg);
  *   call IAT [g_iat_00520060](0xff); ret.
  */
 extern void (*g_iat_00520060)(int);
 void CmpCallPushIATCall_004c6e60(int arg) {
-    if (g_state_00f9f84c_ee == 1) {
+    if (g_crtCleanupFlag_00f9f84c == 1) {
         DualCondCleanupCall_004cc030();
     }
     RaiseAbortLocalized_004cc070(arg);

@@ -118,7 +118,7 @@ extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
  *   g_xformDirtyFlags |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void FramePauseScaledStore_00406c10(void) {
     __asm {
@@ -145,18 +145,18 @@ void FramePauseScaledStore_00406c10(void) {
         mov     [ecx*4 + 0x24], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_matrixStackTop]
-        mov     eax, [eax*4 + g_data_004d57ac_arr]
+        mov     eax, [eax*4 + g_matrixStack_arr]
         inc     ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     [ecx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         sar     eax, 0x14
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x1c], eax
         mov     ecx, dword ptr [g_matrixStackTop]
-        mov     eax, [ecx*4 + g_data_004d57ac_arr]
+        mov     eax, [ecx*4 + g_matrixStack_arr]
         dec     ecx
         and     eax, 0x000fffff
         mov     dword ptr [g_matrixStackTop], ecx

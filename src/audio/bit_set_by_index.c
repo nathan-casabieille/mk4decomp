@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioBitField_00541fc0;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void BitSetByIndex_004a07a0(void) {
     __asm {
@@ -131,24 +131,24 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_audioBitField_00541fc0]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax
         mov     dword ptr [g_dispatchArg_00535e48], eax
-        mov     eax, [ecx*4 + g_data_004d57ac_arr]
+        mov     eax, [ecx*4 + g_matrixStack_arr]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + 0x10]
         mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [g_xformEntityIdx], edx
         dec     eax
-        mov     esi, [edx*4 + g_data_004d57ac_arr]
+        mov     esi, [edx*4 + g_matrixStack_arr]
         mov     dword ptr [g_acc_00542078], eax
         mov     dword ptr [g_walkCallback], esi
         _emit   78h
@@ -158,14 +158,14 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         shl     eax, cl
         or      eax, esi
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     [edx*4 + g_data_004d57ac_arr], eax
+        mov     [edx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_matrixStackTop]
         pop     esi
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_acc_00542078], edx
         mov     dword ptr [g_matrixStackTop], eax

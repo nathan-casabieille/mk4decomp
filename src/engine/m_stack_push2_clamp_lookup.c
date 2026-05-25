@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dispatchSave1264_004e87c0;
 
 extern unsigned int g_arr_459160_main;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackPush2ClampLookup_00459160(void) {
     __asm {
@@ -124,12 +124,12 @@ void MStackPush2ClampLookup_00459160(void) {
         mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, offset g_dispatchSave1264_004e87c0
         shr     eax, 2
@@ -148,11 +148,11 @@ void MStackPush2ClampLookup_00459160(void) {
         _emit   75h
         _emit   2bh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_matrixStackTop], eax

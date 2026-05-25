@@ -121,7 +121,7 @@ extern void ChainDecCondStoreCallJmp_00434880(void);
 extern void CmpDispatchPushCallPop_00438530(void);
 extern void InstallSelfChainSet80Call_004347f0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
     __asm {
@@ -159,7 +159,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, [eax + 4]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], edi
+        mov     [ecx*4 + g_matrixStack_arr], edi
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

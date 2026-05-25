@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 /* @addr 0x00490b70 (191b game) - chain[+0x58] accumulate, then 2 Mul10 calls + chain[+0x54,+0x5c] accumulate.
  *   chain[g_fightGroupHead + 0x58] += g_walkCallback; g_eventQueueWorkType = result.
@@ -124,11 +124,11 @@ void ChainAccumMul10Pair_00490b70(void) {
     g_eventQueueWorkType = v;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x58) = v;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40);
-    g_walkCallback = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
+    g_walkCallback = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_eventQueueCurrent, g_walkCallback);
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44);
-    g_eventQueueWorkType = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
+    g_eventQueueWorkType = (&g_matrixStack_arr)[g_scaledInit_00542044];
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
         g_eventQueueCurrent, g_eventQueueWorkType);
     v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x54);

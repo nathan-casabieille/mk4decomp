@@ -122,7 +122,7 @@ extern void Push15PushDataCallWordCallJmp_004a1080(void);
 extern void RoundWinTransition_0049e7e0(void);
 extern void TripleStageRollback_00404a50(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void AudioInitChainTag_004a1000(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void AudioInitChainTag_004a1000(void) {
         push    0x230
         mov     eax, [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
-        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     [ecx*4 + g_matrixStack_arr], eax
         call    TripleStageRollback_00404a50
         add     esp, 4
         call    RoundWinTransition_0049e7e0

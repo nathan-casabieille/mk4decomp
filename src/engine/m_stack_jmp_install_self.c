@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     push 0x4eb6f4; call IterStepScaledStore_0048e600; add esp,4; pause? ret.
  *     install self with packed_ptr store; call SlotEvent3EntryChain_0046fdf0; pause = 1.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void InstallSelfIndirectJmp_0048f3f0(void);
 extern void IterStepScaledStore_0048e600(void);
@@ -126,7 +126,7 @@ __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x0046ed60
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x0046ed60
         jmp     InstallSelfIndirectJmp_0048f3f0
         nop
         nop
@@ -135,7 +135,7 @@ __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
         nop
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
@@ -158,7 +158,7 @@ __declspec(naked) void MStackJmpInstallSelf_0046ed40(void) {
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax

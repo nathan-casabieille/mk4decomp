@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   mstack-pop g_eventQueueChild, mstack-pop g_eventQueueNotMask; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiInstallPushDecPopJmp_0043ba90(void);
 extern void GuardedSeq_004297b0(void);
@@ -153,23 +153,23 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         call    CmpEqInitCallElseJmp_0048d4b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   58h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     cl, byte ptr [g_xformDirtyFlags]

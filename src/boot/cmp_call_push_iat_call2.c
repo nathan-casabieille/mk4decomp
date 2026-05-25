@@ -38,16 +38,16 @@ void _init_premain(void) {
 }
 
 /* @addr 0x004c6e90 (39b)
- *   if g_state_00f9f84c_ee == 1, call F; then call F2(arg);
+ *   if g_crtCleanupFlag_00f9f84c == 1, call F; then call F2(arg);
  *   call IAT [g_iat_004d2154](0xff); ret.
  *   (variant of 0x004c6e60 with different IAT.)
  */
-extern unsigned int g_state_00f9f84c_ee;
+extern unsigned int g_crtCleanupFlag_00f9f84c;
 extern void func_004cc030_ee(void);
 extern void func_004cc070_ee(int);
 extern void (__stdcall *g_iat_004d2154)(int);
 void CmpCallPushIATCall2_004c6e90(int arg) {
-    if (g_state_00f9f84c_ee == 1) {
+    if (g_crtCleanupFlag_00f9f84c == 1) {
         func_004cc030_ee();
     }
     func_004cc070_ee(arg);

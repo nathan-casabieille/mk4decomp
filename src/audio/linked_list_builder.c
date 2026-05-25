@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   [ebx + edx] *= 0; [(ebx + edx + 1)*4] = esi.
  *   pop edi/esi/ebx.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void LinkedListBuilder_004ab380(void) {
     __asm {
@@ -132,7 +132,7 @@ __declspec(naked) void LinkedListBuilder_004ab380(void) {
         mov     esi, dword ptr [g_eventQueueTotal]
         push    edi
         mov     edi, dword ptr [g_pendingNodeType]
-        mov     dword ptr [esi*4 + g_data_004d57ac_arr], 0
+        mov     dword ptr [esi*4 + g_matrixStack_arr], 0
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     [esi*4 + 4], eax
         mov     ecx, dword ptr [g_eventQueueEnd]
@@ -142,9 +142,9 @@ __declspec(naked) void LinkedListBuilder_004ab380(void) {
         _emit   74h
         _emit   79h
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     [esi*4 + g_data_004d57ac_arr], edx
+        mov     [esi*4 + g_matrixStack_arr], edx
         lea     eax, [ebx + edx + 1]
-        mov     [eax*4 + g_data_004d57ac_arr], esi
+        mov     [eax*4 + g_matrixStack_arr], esi
         mov     eax, [esi*4 + 8]
         cmp     eax, 1
         mov     dword ptr [g_xformLoopCounter], eax
@@ -156,12 +156,12 @@ __declspec(naked) void LinkedListBuilder_004ab380(void) {
         _emit   78h
         _emit   2ah
         push    ebp
-        lea     ecx, [edx*4 + g_data_004d57ac_arr]
+        lea     ecx, [edx*4 + g_matrixStack_arr]
         mov     [ecx + ebx*4 + 4], esi
         mov     [ecx + ebx*4], eax
         mov     ebp, dword ptr [g_xformLoopCounter]
         mov     edx, eax
-        lea     ecx, [eax*4 + g_data_004d57ac_arr]
+        lea     ecx, [eax*4 + g_matrixStack_arr]
         add     eax, edi
         dec     ebp
         mov     dword ptr [g_xformLoopCounter], ebp
@@ -170,8 +170,8 @@ __declspec(naked) void LinkedListBuilder_004ab380(void) {
         pop     ebp
         lea     ecx, [ebx + edx]
         lea     edx, [ebx + edx + 1]
-        mov     dword ptr [ecx*4 + g_data_004d57ac_arr], 0
-        mov     [edx*4 + g_data_004d57ac_arr], esi
+        mov     dword ptr [ecx*4 + g_matrixStack_arr], 0
+        mov     [edx*4 + g_matrixStack_arr], esi
         pop     edi
         pop     esi
         pop     ebx

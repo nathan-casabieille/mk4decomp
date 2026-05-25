@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call DispatcherComplex260_00407400; pause-check; call 0x00406430; pause-check;
  *   load 2 chain values via scaledInit, shift, store; mstack-pop g_walkCallback. ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackPush1ChainPair_00424080(void) {
     __asm {
@@ -120,7 +120,7 @@ void MStackPush1ChainPair_00424080(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_cj_00542058]
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
@@ -172,7 +172,7 @@ void MStackPush1ChainPair_00424080(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x5c], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax

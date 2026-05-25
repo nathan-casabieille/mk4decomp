@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void IterLoad_0048fd30(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
     __asm {
@@ -125,7 +125,7 @@ __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [edx*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -174,7 +174,7 @@ __declspec(naked) void MStackCjChainSwapDualCall_0042cd30(void) {
         mov     dword ptr [g_fightAxisPosX_00535e78], edx
         mov     dword ptr [g_fightAxisPosY_00535e7c], esi
         mov     dword ptr [g_fightAxisNegY_00535e74], ecx
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_matrixStackTop], eax

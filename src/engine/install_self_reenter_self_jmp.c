@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     if bit set jmp FiveCallGuardSetTail; else mstack-push 0x00483180, jmp GameDispatchValidateState_004339c0.
  *   Block B (+0x50): standard install-self with self-jmp on chain[+0x84]!=0; install-self addr 0x00483180.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void DualScaledInitClear_00433c10(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void GuardedSeq_004297b0(void);
@@ -137,7 +137,7 @@ __declspec(naked) void InstallSelfReenterSelfJmp_00483130(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00483180
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00483180
         jmp     GameDispatchValidateState_004339c0
         ret
         _emit   90h

@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern void StateMachineInit_00493000(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void RecordListIterMStack_00422ce0(void) {
     __asm {
@@ -153,17 +153,17 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         mov     dword ptr [g_xformScratch2088], esi
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], edi
         call    StateMachineInit_00493000
         mov     eax, dword ptr [g_framePauseFlag]
@@ -171,15 +171,15 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         _emit   75h
         _emit   7fh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         test    edx, edx
         mov     dword ptr [g_eventQueueWorkType], edx

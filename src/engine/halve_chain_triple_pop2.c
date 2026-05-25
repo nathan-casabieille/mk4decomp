@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void PreFightInstallCluster_00474390(void);
 
 extern unsigned int g_chain_arr_4348f0;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void HalveChainTriplePop2_004740d0(void) {
     __asm {
@@ -146,11 +146,11 @@ void HalveChainTriplePop2_004740d0(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x74], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_cj_0054205c], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax

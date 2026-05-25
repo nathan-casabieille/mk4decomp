@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00463ed0 (209b game) - mstack-push 2 (g_eventQueueCurrent, g_scaledInit), set scaledInit and chain,
  *   loop scanning chain[*4+disp] for zero terminator, mstack-pop 2.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter_00541fb0;
 
@@ -121,12 +121,12 @@ void MStackPushSearchLoop_00463ed0(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_phaseCounter_00541fb0]
         mov     ecx, dword ptr [g_dispatchAcc_00541fb8]
         mov     dword ptr [g_eventQueueCurrent], 4
@@ -155,11 +155,11 @@ void MStackPushSearchLoop_00463ed0(void) {
         _emit   75h
         _emit   0dch
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_matrixStackTop], eax

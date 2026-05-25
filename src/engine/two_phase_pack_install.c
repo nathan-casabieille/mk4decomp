@@ -119,7 +119,7 @@ extern void DirtyGuardLitOrJmp_0047ef40(void);
  *     g_walkCallback=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
  *     else install-self at +0x08=0x0047ee90.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 
@@ -128,7 +128,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x0047ee90
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x0047ee90
         jmp     TwoPhasePackInstall_0047eff0
         _emit   90h
         _emit   90h

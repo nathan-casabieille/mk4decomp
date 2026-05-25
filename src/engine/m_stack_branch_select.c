@@ -122,7 +122,7 @@ extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void StoreTwoCallSubMain_00426b60(void);
 extern void TableLookupCall_00489f60(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackBranchSelect_00457d10(void) {
     __asm {
@@ -130,7 +130,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         mov     ecx, dword ptr [g_baseSel_00542060]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     edx, dword ptr [g_gtPlayerProbe2]
@@ -147,7 +147,7 @@ __declspec(naked) void MStackBranchSelect_00457d10(void) {
         _emit   75h
         _emit   6ch
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_fightGroupHead]

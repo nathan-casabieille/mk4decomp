@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern void InstallSelfAccumOverflow_00428b20(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
     __asm {
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
         mov     ecx, [eax + 4]
         add     edi, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], edi
+        mov     [ecx*4 + g_matrixStack_arr], edi
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

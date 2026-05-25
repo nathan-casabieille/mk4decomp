@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_phaseCounter_00541fb0;
 extern void SaveCallRestore_004049d0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void PackedTableWalkChainStore_00463e20(void) {
     __asm {
@@ -136,15 +136,15 @@ void PackedTableWalkChainStore_00463e20(void) {
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_acc_00542078], edx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_scaledInit_00542044], eax

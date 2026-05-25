@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void BackdashSetupCluster_00440dc0(void);
 
 extern unsigned int g_chain_disp_64_440d20;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
 __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
@@ -140,14 +140,14 @@ __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
         mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    BackdashSetupCluster_00440dc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   34h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, 1

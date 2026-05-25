@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_scaledIncLoopBase_00541d70;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackPushInstall_0048c260(void) {
     __asm {
@@ -125,25 +125,25 @@ void MStackPushInstall_0048c260(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, offset g_scaledIncLoopBase_00541d70
         mov     dword ptr [g_walkCallback], 1
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + g_data_004d57ac_arr], 1
+        mov     [eax*4 + g_matrixStack_arr], 1
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax

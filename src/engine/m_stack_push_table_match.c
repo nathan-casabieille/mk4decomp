@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   searching for matching ecx==edx; on miss, advance and continue. Final state: write-back accumulated
  *   chain. mstack-pop 2. ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchVar7_00541fbc;
 
 void MStackPushTableMatch_0042e720(void) {
@@ -121,12 +121,12 @@ void MStackPushTableMatch_0042e720(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_dispatchVar7_00541fbc]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
@@ -165,11 +165,11 @@ void MStackPushTableMatch_0042e720(void) {
         _emit   0ddh
         mov     dword ptr [eax*4 - 8], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax

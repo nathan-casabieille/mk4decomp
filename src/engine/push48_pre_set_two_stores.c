@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Push g_dispatchArg_00535e48 on mstack; eax = g_eventQueueEnd + g_audioVoiceCounter_00535e50;
  *   [eax*4] = 0xc; eax = g_dispatchArg_00535e48 + g_eventQueueTotal;
  *   [eax*4] = 0; eax = g_dispatchArg_00535e48 + 1; g_walkCallback = 3;
- *   [(g_eventQueueTotal+old_g_data_00535e48+1)*4] = 3;
+ *   [(g_eventQueueTotal+old_g_dispatchArg_00535e48+1)*4] = 3;
  *   pop g_dispatchArg_00535e48; ret.
  *   Hmm let me re-read.
  */

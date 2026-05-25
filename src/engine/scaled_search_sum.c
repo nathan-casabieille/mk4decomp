@@ -125,7 +125,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     restore: g_eventQueueCurrent = saved; g_scaledInit = [g_scaledInit] (no-op).
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void ScaledSearchSum_00457830(void) {
     __asm {
@@ -136,8 +136,8 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         mov     ebp, dword ptr [g_pendingNodeType]
         push    esi
         mov     [esp + 0x0c], eax
-        mov     eax, [ebp*4 + g_data_004d57ac_arr]
-        lea     edx, [ebp*4 + g_data_004d57ac_arr]
+        mov     eax, [ebp*4 + g_matrixStack_arr]
+        lea     edx, [ebp*4 + g_matrixStack_arr]
         push    edi
         xor     ecx, ecx
         xor     edi, edi
@@ -175,7 +175,7 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         inc     esi
         lea     edx, [esi + ebp]
         mov     dword ptr [g_acc_00542078], ecx
-        cmp     [edx*4 + g_data_004d57ac_arr], ecx
+        cmp     [edx*4 + g_matrixStack_arr], ecx
         _emit   75h
         _emit   0edh
         add     esi, edi

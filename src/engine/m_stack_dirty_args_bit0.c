@@ -124,7 +124,7 @@ extern void Cmp2DirtySetOrClear_0049fb10(void);
 extern void Cmp2DirtySetOrClear_0049fb40(void);
 extern void DualPushSetCallDualPop_00404b10(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
     __asm {
@@ -133,7 +133,7 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    Cmp2DirtySetOrClear_0049fb10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -189,7 +189,7 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         or      eax, ebx
         mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax

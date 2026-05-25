@@ -128,7 +128,7 @@ extern void ScaledMove48to58_00490720(void);
 extern void SetJmp_00483f20(void);
 extern void TwoCallTail_00481380(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
     __asm {
@@ -190,7 +190,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], offset SetJmp_00483f20
+        mov     [eax*4 + g_matrixStack_arr], offset SetJmp_00483f20
         jmp     GameDispatchValidateState_004339c0
         jmp     SetJmp_00483f20
         mov     dword ptr [g_eventQueueChild], 0x14

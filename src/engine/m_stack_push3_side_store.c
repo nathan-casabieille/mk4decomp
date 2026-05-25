@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   then more side-stores to chain[+0x54] (g_eventQueueCurrent) and chain[+0x5c] (g_eventQueueWorkType);
  *   mstack-pop g_eventQueueCurrent, g_eventQueueWorkType. ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void Add0fJmp_0044ccd0(void);
 
 void MStackPush3SideStore_0044cb80(void) {
@@ -122,17 +122,17 @@ void MStackPush3SideStore_0044cb80(void) {
         mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         call    Add0fJmp_0044ccd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -140,7 +140,7 @@ void MStackPush3SideStore_0044cb80(void) {
         _emit   74h
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax
@@ -152,11 +152,11 @@ void MStackPush3SideStore_0044cb80(void) {
         mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [eax*4 + 0x5c], edx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_matrixStackTop], eax

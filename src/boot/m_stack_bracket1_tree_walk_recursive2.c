@@ -122,7 +122,7 @@ extern unsigned int g_installChainTailSlot_0053a3a8;
  *   g_xformEntityIdx = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
     __asm {
@@ -150,11 +150,11 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         inc     ecx
         mov     dword ptr [g_installChainTailSlot_0053a3a8], eax
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], eax
+        mov     [ecx*4 + g_matrixStack_arr], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x40], 0x00006487
         mov     dword ptr [ecx*4 + 0x3c], 0
-        lea     eax, [ecx*4 + g_data_004d57ac_arr]
+        lea     eax, [ecx*4 + g_matrixStack_arr]
         mov     dword ptr [eax + 0x44], 0
         mov     dword ptr [eax + 0x30], 0
         mov     dword ptr [g_walkCallback], 9
@@ -166,7 +166,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

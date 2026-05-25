@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_pendingNodeType=1, pause=1; pop+ret.
  *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_00438630.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void DecJneSetCallSetJmp_004389b0(void);
 extern void DecOrZeroDirty4_00438650(void);
 extern void GuardedSeq_00438630(void);
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfMultiCascade_004388f0(void) {
         mov     dword ptr [g_eventQueueChild], esi
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00438990
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00438990
         call    GameDispatchValidateState_004339c0
         pop     esi
         ret

@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
  *     g_pendingNodeType=1; g_pause=1. pop+ret.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledInit_0048d430(void);
@@ -163,17 +163,17 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         ret
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [g_cj_00542058], ecx
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         call    ScaledArrStore_00429980
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   34h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, 1

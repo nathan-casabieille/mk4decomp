@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void CallSetPause_0041f830(void);
 extern void GuardedCallDirtyJmpInit_004a19c0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
     __asm {
@@ -144,7 +144,7 @@ __declspec(naked) void InstallSelf3WaySubDec_004a1320(void) {
         mov     ecx, [eax + 4]
         add     esi, 0x02000000
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], esi
+        mov     [ecx*4 + g_matrixStack_arr], esi
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

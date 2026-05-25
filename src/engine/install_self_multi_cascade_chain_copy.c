@@ -122,7 +122,7 @@ extern void EsiInstallDecCallChain_004294a0(void);
  *     packed_ptr[scaledInit] = 0x00483f30 + 0x01000000; g_scaledInit++; [eax+4] = scaledInit;
  *     chain[base+0x84] = 0; call EsiInstallDecCallChain; g_framePauseFlag = 1.
  */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
     __asm {
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00484000
+        mov     dword ptr [eax*4 + g_matrixStack_arr], 0x00484000
         jmp     GameDispatchValidateState_004339c0
         jmp     InstallSelfMultiCascadeChainCopy_00484000
         mov     dword ptr [g_eventQueueChild], 4
@@ -159,7 +159,7 @@ __declspec(naked) void InstallSelfTwoTailJmp_00483f30(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     [ecx*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     ecx
         mov     dword ptr [g_scaledInit_00542044], ecx

@@ -121,7 +121,7 @@ extern void MStackBracket2_StateAdvance6_004094d0(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 
 extern unsigned int g_chain_disp_24_409420;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void MStackPush2GatedTail_00409420(void) {
     __asm {
@@ -129,12 +129,12 @@ __declspec(naked) void MStackPush2GatedTail_00409420(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         call    BootStateTriple_00408d30
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -146,7 +146,7 @@ __declspec(naked) void MStackPush2GatedTail_00409420(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, [edx*4 + g_chain_disp_24_409420]
         mov     dword ptr [g_xformEntityIdx], eax
@@ -156,7 +156,7 @@ __declspec(naked) void MStackPush2GatedTail_00409420(void) {
         _emit   75h
         _emit   26h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]

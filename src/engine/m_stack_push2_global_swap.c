@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Then pop 2 into g_xformEntityIdx, g_scaledInit.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
 void MStackPush2GlobalSwap_00477400(void) {
@@ -125,12 +125,12 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, [eax*4 + 0x64]
@@ -153,11 +153,11 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_player2NodeIdx], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax

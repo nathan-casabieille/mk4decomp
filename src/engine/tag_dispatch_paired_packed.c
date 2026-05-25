@@ -124,7 +124,7 @@ extern void GatedWordPushCall_00489f90(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void PushSearchToggleBit0_004577a0(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void TagDispatchPairedPacked_004667f0(void) {
     __asm {
@@ -158,7 +158,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     edx, 0x004e28c8
         mov     dword ptr [g_matrixStackTop], eax
         sar     edx, 2
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     dword ptr [g_walkCallback], edx
         call    GuardedScaledCall_0048a020
         mov     eax, dword ptr [g_framePauseFlag]
@@ -170,7 +170,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, 0x004e28cc
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
@@ -180,7 +180,7 @@ void TagDispatchPairedPacked_004667f0(void) {
         _emit   75h
         _emit   18h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     dword ptr [g_matrixStackTop], eax

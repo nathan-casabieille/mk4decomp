@@ -200,7 +200,7 @@ extern unsigned int g_arr_chain_4348f0_main;
  *   mstack-pop g_xformEntityIdx.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void LinkedListSwapHead_0049d0a0(void) {
     __asm {
@@ -218,7 +218,7 @@ void LinkedListSwapHead_0049d0a0(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + g_arr_chain_4348f0_main]
@@ -242,7 +242,7 @@ loopWalk:
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_bootLongChainState_00537f24], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax

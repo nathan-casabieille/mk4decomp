@@ -117,13 +117,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   mstack-pop into g_xformEntityIdx.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void ChainNodeInit_0041fa50(void) {
     __asm {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         test    ecx, ecx
-        lea     eax, [ecx*4 + g_data_004d57ac_arr]
+        lea     eax, [ecx*4 + g_matrixStack_arr]
         _emit   0fh
         _emit   84h
         _emit   0a4h
@@ -134,7 +134,7 @@ void ChainNodeInit_0041fa50(void) {
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     ecx
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     [ecx*4 + g_data_004d57ac_arr], edx
+        mov     [ecx*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x84], 0
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -154,7 +154,7 @@ void ChainNodeInit_0041fa50(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 4], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

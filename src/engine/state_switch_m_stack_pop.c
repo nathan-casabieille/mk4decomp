@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern s32 g_dlNalt2;
 extern unsigned int g_eq_00542098;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void StateSwitchMStackPop_00474f20(void) {
     __asm {
@@ -151,7 +151,7 @@ void StateSwitchMStackPop_00474f20(void) {
         and     edx, 0xfffffffb
         mov     dword ptr [g_walkCallback], 2
         mov     dword ptr [g_xformDirtyFlags], edx
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_matrixStackTop], eax
@@ -161,7 +161,7 @@ void StateSwitchMStackPop_00474f20(void) {
         and     edx, 0xfffffffb
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformDirtyFlags], edx
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_matrixStackTop], eax

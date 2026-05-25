@@ -119,7 +119,7 @@ extern void BootChainTripleStoreThenDispatch_004076b0(void);
  *   mstack-pop into g_xformEntityIdx.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void MStackChainDecodeCall_004936f0(void) {
     __asm {
@@ -127,12 +127,12 @@ void MStackChainDecodeCall_004936f0(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     dword ptr [g_walkCallback], 2
         call    ScaledAddDeref_00494800
         mov     eax, dword ptr [g_framePauseFlag]
@@ -145,12 +145,12 @@ void MStackChainDecodeCall_004936f0(void) {
         shr     eax, 0x10
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], eax
-        mov     ecx, [ecx*4 + g_data_004d57ac_arr]
+        mov     ecx, [ecx*4 + g_matrixStack_arr]
         sar     ecx, 2
         add     ecx, eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     dword ptr [g_matrixStackTop], eax
@@ -160,7 +160,7 @@ void MStackChainDecodeCall_004936f0(void) {
         _emit   75h
         _emit   18h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax

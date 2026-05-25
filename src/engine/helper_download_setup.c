@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x0048bc40 (174b game) - mstack-push 2, table-search nonzero, mstack-pop 2. */
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_scaledInit_00542044;
 
@@ -15,12 +15,12 @@ void Helper_DownloadSetup(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_dispatchArg_00535e48]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
+        mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, 0x004f02d0
         lea     ecx, [eax*8 + 0]
@@ -46,11 +46,11 @@ void Helper_DownloadSetup(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         add     edx, ecx
         mov     dword ptr [g_scaledInit_00542044], edx
-        mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_dispatchArg_00535e48], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
+        mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_matrixStackTop], eax

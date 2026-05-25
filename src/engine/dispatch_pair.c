@@ -121,7 +121,7 @@ extern void TableWalkBoundedCmp_004bd890(void);
 extern void TwinLoopSlotFinder_00429a40(void);
 
 extern unsigned int g_chain_arr_4348f0;
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void DispatchPair_00429ac0(void) {
     __asm {
@@ -141,7 +141,7 @@ __declspec(naked) void DispatchPair_00429ac0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    TwinLoopSlotFinder_00429a40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -164,7 +164,7 @@ __declspec(naked) void DispatchPair_00429ac0(void) {
         _emit   75h
         _emit   1dh
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, [eax*4 + g_data_004d57ac_arr]
+        mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax

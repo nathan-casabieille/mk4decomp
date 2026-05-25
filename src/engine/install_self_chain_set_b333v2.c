@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void GuardedDirtyDispatch_00438c50(void);
 extern void StateGateMStackOverlap_00438690(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfChainSetB333v2_00437f00(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         push    esi
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
@@ -141,7 +141,7 @@ __declspec(naked) void InstallSelfChainSetB333v2_00437f00(void) {
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + g_data_004d57ac_arr], edx
+        mov     [eax*4 + g_matrixStack_arr], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax

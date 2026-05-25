@@ -125,7 +125,7 @@ extern unsigned int g_dispatchVar9_00541dc0;
  *   g_scaledInit++; chain[+0x84] = 0; call SceneEvalFsm_0049dea0; g_framePauseFlag = 1.
  */
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
     __asm {
@@ -133,7 +133,7 @@ __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
         push    esi
         push    edi
         xor     edi, edi
-        lea     esi, [eax*4 + g_data_004d57ac_arr]
+        lea     esi, [eax*4 + g_matrixStack_arr]
         mov     eax, [eax*4 + 0x84]
         mov     dword ptr [esi + 0x84], edi
         cmp     eax, edi
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfTableWalk_004200d0(void) {
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax

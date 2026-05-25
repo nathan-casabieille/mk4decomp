@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void MStackMagicModMul10_00424410(void);
 extern void ModMagicMul10Index_00424350(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 void Chain2CallMul10Accum_00426a30(void) {
     __asm {
@@ -123,7 +123,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         call    ModMagicMul10Index_00424350
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -161,7 +161,7 @@ void Chain2CallMul10Accum_00426a30(void) {
         add     edx, ecx
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_matrixStackTop], eax

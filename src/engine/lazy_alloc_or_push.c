@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern void MStackAngleRatioSubchain_00476af0(void);
 extern void PushStackAllocCall_00425900(void);
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
     __asm {
@@ -137,7 +137,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     [eax*4 + g_data_004d57ac_arr], ecx
+        mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_currentNodeFlags]
         mov     ecx, dword ptr [g_installOwnerNode_00535cf8]
         add     eax, 0xffff0000
@@ -150,7 +150,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         _emit   75h
         _emit   18h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, [eax*4 + g_data_004d57ac_arr]
+        mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_currentNodeFlags], edx
         mov     dword ptr [g_matrixStackTop], eax

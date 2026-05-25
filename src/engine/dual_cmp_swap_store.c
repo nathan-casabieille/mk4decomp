@@ -126,7 +126,7 @@ extern unsigned int g_dispatchVar29_00542014;
 extern unsigned int g_dispatchVar28_00542018;
 extern unsigned int g_dispatchVar27_0054201c;
 
-extern unsigned int g_data_004d57ac_arr;
+extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
     __asm {
@@ -169,7 +169,7 @@ __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
         mov     [edx*4 + 0x38], ecx
         mov     ecx, dword ptr [g_pendingNodeType]
         pop     edi
-        lea     eax, [edx*4 + g_data_004d57ac_arr]
+        lea     eax, [edx*4 + g_matrixStack_arr]
         pop     esi
         pop     ebx
         mov     [eax + 0x3c], ecx
