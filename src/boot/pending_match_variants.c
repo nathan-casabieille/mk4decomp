@@ -122,13 +122,13 @@ extern unsigned int g_tickFlagF;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_0053a3e8;
+extern unsigned int g_pendingMatchAcc_0053a3e8;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_data_00541df0;
 extern unsigned int g_data_00541df4;
-extern unsigned int g_data_00541f94;
+extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_data_00541f9c;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
@@ -4392,7 +4392,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 4], eax
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00541f94]
+        mov      edx, dword ptr [g_dispatchSave6_00541f94]
         add      eax, 0x18
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
@@ -5025,7 +5025,7 @@ __declspec(naked) void PendingMatch_004108a0(void)
         jne      L_091f
         mov      dword ptr [g_eventQueueWorkType], ecx
     L_092e:
-        mov      eax, dword ptr [g_data_00541f94]
+        mov      eax, dword ptr [g_dispatchSave6_00541f94]
         mov      dword ptr [g_pendingNodeType], eax
         call     MStackPush2DualModMul10Pop2_00424860
         mov      eax, dword ptr [g_framePauseFlag]
@@ -5567,7 +5567,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], ebp
         mov      dword ptr [edx*4 + 8], ebp
-        mov      eax, dword ptr [g_data_00541f94]
+        mov      eax, dword ptr [g_dispatchSave6_00541f94]
         mov      dword ptr [g_currentNodeIdx], eax
         call     Mul10HeavyTransform_00424bf0
         cmp      dword ptr [g_framePauseFlag], ebp
@@ -5899,10 +5899,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         test     eax, eax
         je       L_1d46
         jmp      L_1bf5
-        mov      eax, dword ptr [g_data_0053a3e8]
+        mov      eax, dword ptr [g_pendingMatchAcc_0053a3e8]
         inc      eax
         cmp      eax, 4
-        mov      dword ptr [g_data_0053a3e8], eax
+        mov      dword ptr [g_pendingMatchAcc_0053a3e8], eax
         jne      L_2047
         push     ebx
         push     0x23
@@ -6177,7 +6177,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
     L_2041:
-        mov      dword ptr [g_data_0053a3e8], ebp
+        mov      dword ptr [g_pendingMatchAcc_0053a3e8], ebp
     L_2047:
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel_00542060]

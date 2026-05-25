@@ -23,7 +23,7 @@ extern unsigned int g_phaseTimer_00537e94;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_phaseInstallSlot_0053a42c;
-extern unsigned int g_data_0053a730;
+extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_data_00541d68;
 extern unsigned int g_bootInitSaveSlot_00541dc4;
@@ -269,7 +269,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, 1
     L_9624:
         mov      edx, dword ptr [g_currentNodeIdx]
-        mov      dword ptr [g_data_0053a730], ecx
+        mov      dword ptr [g_phaseThunkState_0053a730], ecx
         mov      ecx, dword ptr [g_fightAxisPosX_00535e78]
         xor      edi, edi
         mov      dword ptr [g_eventQueueNotMask], edi

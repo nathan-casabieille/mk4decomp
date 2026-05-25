@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
  *   eax = g_phaseCounter_00541fb0*4 -> g_walkCallback; eax += g_dispatchAcc_00541fb8.
  *   edx = g_stateCountdown_0053a3c0 - 1; eax = [eax+0x0c]; eax += edx.
- *   ecx = g_phaseCounter_00541fb0 + g_data_00541fb4; esi = [ecx*4]; edx = eax;
+ *   ecx = g_phaseCounter_00541fb0 + g_phaseThunkVar_00541fb4; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
  *   mask to 8 bits; store edx to g_data_00535d5c and g_installState_00535d10;
  *   store eax to g_eventQueueCurrent / g_walkCallback.
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_installState_00535d10;
 extern unsigned int g_data_00535d5c;
-extern unsigned int g_data_00541fb4;
+extern unsigned int g_phaseThunkVar_00541fb4;
 extern unsigned int g_dispatchAcc_00541fb8;
 extern unsigned int g_phaseCounter_00541fb0;
 
@@ -149,7 +149,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         dec     edx
         mov     dword ptr [g_walkCallback], edx
         add     eax, edx
-        mov     edx, dword ptr [g_data_00541fb4]
+        mov     edx, dword ptr [g_phaseThunkVar_00541fb4]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         add     ecx, edx

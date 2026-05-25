@@ -125,7 +125,7 @@ extern unsigned int g_data_004f3a58;
 extern unsigned int g_data_004f3a70;
 extern unsigned int g_data_004f3a98;
 extern unsigned int g_data_004f3aa8;
-extern unsigned int g_data_0050b118;
+extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_byte_005435b8;
@@ -159,7 +159,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_702b
-        mov      ecx, OFFSET g_data_0050b118
+        mov      ecx, OFFSET g_audioPreloadBase_0050b118
         shr      ecx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default

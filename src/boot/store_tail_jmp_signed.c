@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_xformScratch94 = eax & 1; if (bit clear) skip the add;
  *   else: g_walkCallback = ecx + g_x_004d5320;
  *   call BootMod6487eClampAndChainMul10_00407510; pause? ret;
- *   g_eventQueueWorkType = g_walkCallback; g_pendingNodeType = g_x_00541f94;
+ *   g_eventQueueWorkType = g_walkCallback; g_pendingNodeType = g_dispatchSave6_00541f94;
  *   call MStackPush2DualModMul10Pop2_00424860; pause? ret;
  *   g_scaledInit = g_baseSel + 0xc; g_xformEntityIdx = g_pendingNodeType;
  *   g_pendingNodeType += 9; jmp QuadInterpolator_00425380.
  */
 extern unsigned int g_x_004d5320;
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_x_00541f94;
+extern unsigned int g_dispatchSave6_00541f94;
 extern void MStackPush2DualModMul10Pop2_00424860(void);
 extern void QuadInterpolator_00425380(void);
 
@@ -157,7 +157,7 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         _emit   75h
         _emit   51h
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_x_00541f94]
+        mov     ecx, dword ptr [g_dispatchSave6_00541f94]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_pendingNodeType], ecx
         call    MStackPush2DualModMul10Pop2_00424860

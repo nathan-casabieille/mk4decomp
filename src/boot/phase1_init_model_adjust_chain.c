@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d5320;
 extern unsigned int g_data_004d59e8;
 extern unsigned int g_data_00512538;
-extern unsigned int g_data_0053e35c;
+extern unsigned int g_phase1ModelChain_0053e35c;
 extern void FramePauseScaledStore_00406c10(void);
 extern void MStackCall_00406250(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -181,7 +181,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     dword ptr [edx*4 + 0x48], 0xB333
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x30], 0x72
-        mov     eax, dword ptr [g_data_0053e35c]
+        mov     eax, dword ptr [g_phase1ModelChain_0053e35c]
         mov     ecx, dword ptr [g_fightGroupHead]
         shr     eax, 0x10
         and     eax, 1

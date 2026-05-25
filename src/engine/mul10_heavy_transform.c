@@ -116,7 +116,7 @@ extern void BootMod6487eClampAndChainMul10_00407510(void);
 extern void Mul10HeavyTransform_00424bf0(void);
 extern void MStackPush8_004ab790(void);
 extern void MStackPop8_004ab860(void);
-extern unsigned int g_data_00541f94;
+extern unsigned int g_dispatchSave6_00541f94;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_data_00541f9c;
 
@@ -244,7 +244,7 @@ __declspec(naked) void PoseTreeBlendWalker_0049d680(void)
         jne      short L_d8d0
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [ebx + 8], ecx
-        mov      edx, dword ptr [g_data_00541f94]
+        mov      edx, dword ptr [g_dispatchSave6_00541f94]
         mov      eax, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax

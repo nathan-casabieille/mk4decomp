@@ -123,7 +123,7 @@ extern unsigned int g_data_0053a2d8;
 extern unsigned int g_data_0053a2dc;
 extern unsigned int g_data_0053a358;
 extern unsigned int g_state4_0053a3e0;
-extern unsigned int g_data_0053a3e8;
+extern unsigned int g_pendingMatchAcc_0053a3e8;
 extern unsigned int g_data_0053a6d8;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_state4_0053a700;
@@ -171,7 +171,7 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         mov     dword ptr [g_data_0053a358], esi
         mov     dword ptr [g_data_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0053a3e8], eax
+        mov     dword ptr [g_pendingMatchAcc_0053a3e8], eax
         call    ResetSceneCallbacks_00420090
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h

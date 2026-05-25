@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_00511fa4;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_0053e35c;
+extern unsigned int g_phase1ModelChain_0053e35c;
 extern void AudioMixerStep_004ab700(void);
 extern void BootSetJmpStoreThenChainTriple_0040b970(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -294,7 +294,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         test    eax, eax
         jne     L_p4sip_B_ret
     L_p4sip_B_skip_paint:
-        mov     eax, dword ptr [g_data_0053e35c]
+        mov     eax, dword ptr [g_phase1ModelChain_0053e35c]
         and     eax, 1
         mov     dword ptr [g_eventQueueCurrent], eax
         add     eax, 0x13

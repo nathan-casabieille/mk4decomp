@@ -115,7 +115,7 @@ extern unsigned int g_pendingMatchSlot_0053a19c;
 extern unsigned int g_data_00541dc0;
 
 extern unsigned int g_tickFlagF;
-extern unsigned int g_data_0053a3e8;
+extern unsigned int g_pendingMatchAcc_0053a3e8;
 extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
@@ -167,10 +167,10 @@ __declspec(naked) void PendingMatch_00401b70(void)
         test     eax, eax
         je       L_1d46
         jmp      L_1bf5
-        mov      eax, dword ptr [g_data_0053a3e8]
+        mov      eax, dword ptr [g_pendingMatchAcc_0053a3e8]
         inc      eax
         cmp      eax, 4
-        mov      dword ptr [g_data_0053a3e8], eax
+        mov      dword ptr [g_pendingMatchAcc_0053a3e8], eax
         jne      L_2047
         push     ebx
         push     0x23
@@ -445,7 +445,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         pop      ebx
         ret      
     L_2041:
-        mov      dword ptr [g_data_0053a3e8], ebp
+        mov      dword ptr [g_pendingMatchAcc_0053a3e8], ebp
     L_2047:
         mov      dword ptr [esi + 8], edi
         mov      edx, dword ptr [g_baseSel_00542060]

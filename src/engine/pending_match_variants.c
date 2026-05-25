@@ -509,7 +509,7 @@ extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_dispatchVar6_0053a464;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_clamp_0053a6dc;
-extern unsigned int g_data_0053a730;
+extern unsigned int g_phaseThunkState_0053a730;
 extern unsigned int g_installOwner2_0053a7a0;
 extern unsigned int g_pendingMatchAudio2_0053a7a8;
 extern unsigned int g_data_0053a7b4;
@@ -6751,7 +6751,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [edx*4 + 0x54], eax
         mov      dword ptr [g_walkCallback], esi
-        mov      dword ptr [g_data_0053a730], esi
+        mov      dword ptr [g_phaseThunkState_0053a730], esi
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
