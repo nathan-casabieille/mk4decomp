@@ -518,7 +518,7 @@ extern unsigned int g_scenegraphWalkEnd_00541d68;
 extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_dispatchArr_00542188;
-extern unsigned int g_data_00542a58;
+extern unsigned int g_dispatchVar37_00542a58;
 extern unsigned int g_data_00542b68;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
@@ -1905,7 +1905,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
-        push    offset g_data_00542a58
+        push    offset g_dispatchVar37_00542a58
         call    GuardedPackedSlotInit_00428760
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

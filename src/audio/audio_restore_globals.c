@@ -137,21 +137,21 @@ extern unsigned int g_audioSavedGlobal3_00543740;
 extern unsigned int g_audioSavedGlobal4_005437f8;
 extern unsigned int g_audioSavedGlobal5_005437fc;
 extern u32 g_gsmFlag;
-extern unsigned int g_data_00543a28;
-extern unsigned int g_data_00543a2c;
-extern unsigned int g_data_00543a30;
-extern unsigned int g_data_00543a34;
-extern unsigned int g_data_00543a38;
-extern unsigned int g_data_00543a40;
-extern unsigned int g_data_00543a44;
-extern unsigned int g_data_00543a48;
-extern unsigned int g_data_00543a4c;
-extern unsigned int g_data_00543a50;
-extern unsigned int g_data_00543a54;
-extern unsigned int g_data_00543a58;
-extern unsigned int g_data_00543a5c;
-extern unsigned int g_data_00543a60;
-extern unsigned int g_data_00543a64;
+extern unsigned int g_audioSavedReg_00543a28;
+extern unsigned int g_audioSavedReg_00543a2c;
+extern unsigned int g_audioSavedReg_00543a30;
+extern unsigned int g_audioSavedReg_00543a34;
+extern unsigned int g_audioSavedReg_00543a38;
+extern unsigned int g_audioSavedReg_00543a40;
+extern unsigned int g_audioSavedReg_00543a44;
+extern unsigned int g_audioSavedReg_00543a48;
+extern unsigned int g_audioSavedReg_00543a4c;
+extern unsigned int g_audioSavedReg_00543a50;
+extern unsigned int g_audioSavedReg_00543a54;
+extern unsigned int g_audioSavedReg_00543a58;
+extern unsigned int g_audioSavedReg_00543a5c;
+extern unsigned int g_audioSavedReg_00543a60;
+extern unsigned int g_audioSavedReg_00543a64;
 extern unsigned int g_audioRestoreSlot2_00543a68;
 extern unsigned int g_menuRestoreD_00543a9c;
 extern unsigned int g_menuRestoreA_00543aa0;
@@ -190,18 +190,18 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     edi, offset g_table_0053a53c
         mov     al, byte ptr [g_byte_00543a24]
         rep     movsd
-        mov     edx, dword ptr [g_data_00543a2c]
+        mov     edx, dword ptr [g_audioSavedReg_00543a2c]
         mov     ecx, 5
         mov     esi, offset g_table_00543a6c
         mov     edi, offset g_table_004f3f28
         rep     movsd
-        mov     ecx, dword ptr [g_data_00543a28]
+        mov     ecx, dword ptr [g_audioSavedReg_00543a28]
         mov     byte ptr [g_byte_004f3238], al
-        mov     eax, dword ptr [g_data_00543a30]
+        mov     eax, dword ptr [g_audioSavedReg_00543a30]
         mov     dword ptr [g_data_004f31cc], ecx
-        mov     ecx, dword ptr [g_data_00543a34]
+        mov     ecx, dword ptr [g_audioSavedReg_00543a34]
         mov     dword ptr [g_data_004f31d0], edx
-        mov     edx, dword ptr [g_data_00543a38]
+        mov     edx, dword ptr [g_audioSavedReg_00543a38]
         mov     dword ptr [g_audioSavedGlobal4_005437f8], eax
         mov     al, byte ptr [g_byte_00543a3c]
         mov     dword ptr [g_audioSavedGlobal5_005437fc], ecx
@@ -209,25 +209,25 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     dword ptr [g_gtConfig4f], edx
         mov     dl, byte ptr [g_byte_00543a3e]
         mov     byte ptr [g_byte_00543724], al
-        mov     eax, dword ptr [g_data_00543a40]
+        mov     eax, dword ptr [g_audioSavedReg_00543a40]
         mov     byte ptr [g_byte_0054372c], cl
-        mov     ecx, dword ptr [g_data_00543a44]
+        mov     ecx, dword ptr [g_audioSavedReg_00543a44]
         mov     byte ptr [g_byte_00543730], dl
-        mov     edx, dword ptr [g_data_00543a48]
+        mov     edx, dword ptr [g_audioSavedReg_00543a48]
         mov     dword ptr [g_audioSavedGlobal0_00543734], eax
-        mov     eax, dword ptr [g_data_00543a4c]
+        mov     eax, dword ptr [g_audioSavedReg_00543a4c]
         mov     dword ptr [g_audioSavedGlobal1_00543738], ecx
-        mov     ecx, dword ptr [g_data_00543a50]
+        mov     ecx, dword ptr [g_audioSavedReg_00543a50]
         mov     dword ptr [g_audioSavedGlobal2_0054373c], edx
-        mov     edx, dword ptr [g_data_00543a54]
+        mov     edx, dword ptr [g_audioSavedReg_00543a54]
         mov     dword ptr [g_audioSavedGlobal3_00543740], eax
-        mov     eax, dword ptr [g_data_00543a58]
+        mov     eax, dword ptr [g_audioSavedReg_00543a58]
         mov     dword ptr [g_data_004f3814], ecx
-        mov     ecx, dword ptr [g_data_00543a5c]
+        mov     ecx, dword ptr [g_audioSavedReg_00543a5c]
         mov     dword ptr [g_data_004f3818], edx
-        mov     edx, dword ptr [g_data_00543a60]
+        mov     edx, dword ptr [g_audioSavedReg_00543a60]
         mov     dword ptr [g_data_004f381c], eax
-        mov     eax, dword ptr [g_data_00543a64]
+        mov     eax, dword ptr [g_audioSavedReg_00543a64]
         mov     dword ptr [g_data_004f3820], ecx
         mov     ecx, dword ptr [g_audioRestoreSlot2_00543a68]
         mov     dword ptr [g_x_004f3ae4], edx

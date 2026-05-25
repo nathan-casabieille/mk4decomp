@@ -112,7 +112,7 @@ extern unsigned int g_mul10SumState_0054388c;
 extern unsigned int g_mul10SumState2_00543890;
 extern unsigned int g_data_004ec040;
 extern unsigned int g_data_004ec050;
-extern unsigned int g_data_00542a58;
+extern unsigned int g_dispatchVar37_00542a58;
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern void GuardedDualConst2AndToggle_0048eba0(void);
 extern void Mul10SumStoreNegCommit_00490970(void);
@@ -217,7 +217,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
-        push    offset g_data_00542a58
+        push    offset g_dispatchVar37_00542a58
         call    GuardedPackedSlotInit_00428760
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

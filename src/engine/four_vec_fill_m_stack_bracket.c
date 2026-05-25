@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00541fec;
-extern unsigned int g_data_00541ff0;
-extern unsigned int g_data_00541ff4;
-extern unsigned int g_data_00541ff8;
+extern unsigned int g_packedDispatchSlot3_00541ff0;
+extern unsigned int g_packedDispatchSlot2_00541ff4;
+extern unsigned int g_packedDispatchSlot1_00541ff8;
 
 __declspec(naked) void FourVecFillMStackBracket_00428130(void)
 {
@@ -151,7 +151,7 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_currentNodeIdx], esi
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop1
-        mov     eax, dword ptr [g_data_00541ff0]
+        mov     eax, dword ptr [g_packedDispatchSlot3_00541ff0]
         mov     dword ptr [g_walkCallback], 0xc
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformLoopCounter], ecx
@@ -167,7 +167,7 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop2
         mov     dword ptr [g_walkCallback], edx
-        mov     edx, dword ptr [g_data_00541ff4]
+        mov     edx, dword ptr [g_packedDispatchSlot2_00541ff4]
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], ecx
     L_fvf_loop3:
@@ -181,7 +181,7 @@ __declspec(naked) void FourVecFillMStackBracket_00428130(void)
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformLoopCounter], eax
         jns     short L_fvf_loop3
-        mov     eax, dword ptr [g_data_00541ff8]
+        mov     eax, dword ptr [g_packedDispatchSlot1_00541ff8]
         mov     dword ptr [g_xformLoopCounter], ecx
         mov     dword ptr [g_currentNodeIdx], eax
     L_fvf_loop4:
