@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     while val > mod: val -= mod;
  *     while val < 0:   val += mod;
  *     chain[i*4 + n] = val;
- *   where mod = g_state_004d5324.
+ *   where mod = g_pendingMatchVar_004d5324.
  */
-extern unsigned int g_state_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 
 void TripleVecModClamp_0042af10(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov     eax, dword ptr [edx*4 + 0]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax
@@ -143,7 +143,7 @@ add_a0:
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0], eax
         mov     eax, dword ptr [edx*4 + 4]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, ecx
         _emit   7eh
@@ -162,7 +162,7 @@ add_a0:
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 4], eax
         mov     eax, dword ptr [edx*4 + 8]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, ecx
         _emit   7eh

@@ -21,10 +21,10 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern int g_state_004f3ae4;
+extern int g_audioStateMachine0_004f3ae4;
 extern int g_counter_0054359c;
 void IncBoundedDirty_004a7db0(void) {
-    if (g_counter_0054359c < g_state_004f3ae4 - 1) {
+    if (g_counter_0054359c < g_audioStateMachine0_004f3ae4 - 1) {
         g_counter_0054359c = g_counter_0054359c + 1;
     } else {
         g_xformDirtyFlags |= 1;

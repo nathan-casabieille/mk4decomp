@@ -109,14 +109,14 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x0042ae40 (208b game) - 3-element range-clamp loop in-place at arg0 array. */
-extern unsigned int g_state_004d5320;
-extern unsigned int g_state_004d5324;
+extern unsigned int g_pendingMatchVar3_004d5320;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_state_004d532c;
 
 __declspec(naked) void RangeClampThree_0042ae40(void) {
     __asm {
-        mov     edx, dword ptr [g_state_004d5320]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     edx, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         push    esi
         mov     esi, dword ptr [esp + 8]
         mov     eax, dword ptr [esi*4 + 0]
@@ -140,8 +140,8 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi*4 + 0], eax
         mov     eax, dword ptr [esi*4 + 4]
-        mov     edx, dword ptr [g_state_004d5320]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     edx, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         cmp     eax, edx
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -162,8 +162,8 @@ __declspec(naked) void RangeClampThree_0042ae40(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi*4 + 4], eax
         mov     eax, dword ptr [esi*4 + 8]
-        mov     edx, dword ptr [g_state_004d5320]
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     edx, dword ptr [g_pendingMatchVar3_004d5320]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         cmp     eax, edx
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

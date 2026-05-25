@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_data_004ffd4c;
+extern unsigned int g_texturedTriVar_004ffd4c;
 extern unsigned int g_data_00b2d008;
 extern unsigned int g_data_00b2d00c;
 extern unsigned int g_data_00f4d040;
@@ -255,7 +255,7 @@ __declspec(naked) void ScanlineTexBlitAdditive_004c0e10(void)
         add      ecx, eax
         mov      eax, dword ptr [g_data_00f85b34]
         lea      ecx, [eax + ecx*2]
-        mov      eax, dword ptr [g_data_004ffd4c]
+        mov      eax, dword ptr [g_texturedTriVar_004ffd4c]
         test     eax, eax
         mov      dword ptr [g_data_00f85b58], ecx
         je       L_1071

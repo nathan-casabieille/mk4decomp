@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Reads g_fightGroupHead & 0x180000; if both bits 0, skip. Else loads
  *   [esp+0x14] as `i`; if [i*4+0x1c]==-20, set i=2. Validate i in [1,0x18].
  *   Lookup pattern entry at [i*4 + g_data_004f6508]; bail if 0x10000.
- *   If i==2: load FP, fadd to g_data_004f6570, fcomp 0x004d2a00; if FP overflow,
+ *   If i==2: load FP, fadd to g_fpuConst_004f6570, fcomp 0x004d2a00; if FP overflow,
  *     re-init constants to 0x3fec_cccccccd / 0x3f90_624d_d2f1_a9fc.
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
  *     / 0xbf78_9374_bc6a_7efa.
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d2a00;
 extern unsigned int g_data_004d2a10;
 extern unsigned int g_data_004f6508;
-extern unsigned int g_data_004f6570;
+extern unsigned int g_fpuConst_004f6570;
 extern unsigned int g_data_004f6574;
 extern unsigned int g_data_004f6578;
 extern unsigned int g_data_004f657c;
@@ -155,29 +155,29 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         lea     esi, [edx*4]
         jne     L_vfu_pathB_sar
         fld     qword ptr [g_data_004f6578]
-        fadd    qword ptr [g_data_004f6570]
-        fst     qword ptr [g_data_004f6570]
+        fadd    qword ptr [g_fpuConst_004f6570]
+        fst     qword ptr [g_fpuConst_004f6570]
         fcomp   qword ptr [g_data_004d2a00]
         fnstsw  ax
         test    ah, 1
         jz      short L_vfu_skipReinitA
-        mov     dword ptr [g_data_004f6570], 0xcccccccd
+        mov     dword ptr [g_fpuConst_004f6570], 0xcccccccd
         mov     dword ptr [g_data_004f6574], 0x3feccccc
         mov     dword ptr [g_data_004f6578], 0xd2f1a9fc
         mov     dword ptr [g_data_004f657c], 0x3f90624d
     L_vfu_skipReinitA:
-        fld     qword ptr [g_data_004f6570]
+        fld     qword ptr [g_fpuConst_004f6570]
         fcomp   qword ptr [g_data_004d2a10]
         fnstsw  ax
         test    ah, 0x41
         jne     short L_vfu_doConv
-        mov     dword ptr [g_data_004f6570], 0x9999999a
+        mov     dword ptr [g_fpuConst_004f6570], 0x9999999a
         mov     dword ptr [g_data_004f6574], 0x3ff19999
         mov     dword ptr [g_data_004f6578], 0xbc6a7efa
         mov     dword ptr [g_data_004f657c], 0xbf789374
     L_vfu_doConv:
         fild    dword ptr [g_walkCallback]
-        fmul    qword ptr [g_data_004f6570]
+        fmul    qword ptr [g_fpuConst_004f6570]
         call    DoubleToInt64_004c57d0
         mov     dword ptr [g_walkCallback], eax
     L_vfu_pathB_sar:

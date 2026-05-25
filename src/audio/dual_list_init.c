@@ -110,16 +110,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * @addr 0x004a8290 (113b audio) - dual-list state-init:
- *   for i in 0..g_x_004f3ae4: chain[baseSel+i][+0x34][+0x58] =
- *   0xfe2c0000; then for i in 0..g_x_004f3ae8: chain[baseSel+i]
+ *   for i in 0..g_audioStateMachine0_004f3ae4: chain[baseSel+i][+0x34][+0x58] =
+ *   0xfe2c0000; then for i in 0..g_audioStateMachine1_004f3ae8: chain[baseSel+i]
  *   [+0x48][+0x58] = 0x01ec0000.
  */
-extern unsigned int g_x_004f3ae4;
-extern unsigned int g_x_004f3ae8;
+extern unsigned int g_audioStateMachine0_004f3ae4;
+extern unsigned int g_audioStateMachine1_004f3ae8;
 
 void DualListInit_004a8290(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_004f3ae4]
+        mov     ecx, dword ptr [g_audioStateMachine0_004f3ae4]
         xor     eax, eax
         test    ecx, ecx
         jle     loopB
@@ -131,11 +131,11 @@ loopA:
         mov     ecx, dword ptr [ecx*4 + 0x34]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0x58], edx
-        mov     ecx, dword ptr [g_x_004f3ae4]
+        mov     ecx, dword ptr [g_audioStateMachine0_004f3ae4]
         cmp     eax, ecx
         jl      loopA
 loopB:
-        mov     ecx, dword ptr [g_x_004f3ae8]
+        mov     ecx, dword ptr [g_audioStateMachine1_004f3ae8]
         xor     eax, eax
         test    ecx, ecx
         jle     done
@@ -147,7 +147,7 @@ inB:
         mov     ecx, dword ptr [ecx*4 + 0x48]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0x58], edx
-        mov     ecx, dword ptr [g_x_004f3ae8]
+        mov     ecx, dword ptr [g_audioStateMachine1_004f3ae8]
         cmp     eax, ecx
         jl      inB
 done:

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
-extern unsigned int g_data_004ffd4c;
+extern unsigned int g_texturedTriVar_004ffd4c;
 extern unsigned int g_data_00f4d018;
 extern unsigned int g_data_00f4d01c;
 extern unsigned int g_data_00f4d020;
@@ -513,7 +513,7 @@ __declspec(naked) void TexturedTriRasterizeAlpha_004c19c0(void)
         mov      bp, ax
         mov      eax, dword ptr [g_data_00f70fd8]
         shl      eax, 0x10
-        cmp      dword ptr [g_data_004ffd4c], 0
+        cmp      dword ptr [g_texturedTriVar_004ffd4c], 0
         jne      L_1f0a
     L_1ed8:
         mov      ax, word ptr [esi + edx*2]

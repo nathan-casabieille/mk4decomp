@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004e5798;
 extern unsigned int g_data_004e57d0;
 extern void AudioMixerStep_004ab700(void);
@@ -307,7 +307,7 @@ __declspec(naked) void SpawnEffectCluster_004420a0(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x44]
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      edx, dword ptr [g_data_004d5324]
+        mov      edx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]

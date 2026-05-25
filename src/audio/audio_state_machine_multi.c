@@ -110,22 +110,22 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void AudioStateMachineMulti_004a7930(void);
 extern int g_table_004f3af8;
-extern int g_data_004f3aec;
-extern int g_data_004f3af0;
+extern int g_audioStateMachine2_004f3aec;
+extern int g_audioByteTable_004f3af0;
 
 /*
  * AudioMicroEntries_004a7600 - 222b audio function with six small entry points (16b-aligned).
  *   Entry 0x004a7600: g_eventQueueWorkType = table[arg1]; tail-jmp Push16Call.
- *   Entry 0x004a7620: dispatch on g_byte_00543590 == 1: set (g_data_004f3aec=1, g_data_004f3af0=0)
- *     else (g_data_004f3aec=0, g_data_004f3af0=1); g_audioMicroEntry_005433f4=1; tail-jmp AudioStateMachineMulti_004a7930.
- *   Entry 0x004a7660: countdown helper on g_x_004f3ae4 (decrements; sets g_xformDirtyFlags|=1 at end).
- *   Entry 0x004a7680: countup helper on g_x_004f3ae4 (increments; sets g_xformDirtyFlags|=1 at end).
- *   Entry 0x004a76a0: same countdown helper but on g_x_004f3ae8.
- *   Entry 0x004a76c0: same countup helper but on g_x_004f3ae8.
+ *   Entry 0x004a7620: dispatch on g_byte_00543590 == 1: set (g_audioStateMachine2_004f3aec=1, g_audioByteTable_004f3af0=0)
+ *     else (g_audioStateMachine2_004f3aec=0, g_audioByteTable_004f3af0=1); g_audioMicroEntry_005433f4=1; tail-jmp AudioStateMachineMulti_004a7930.
+ *   Entry 0x004a7660: countdown helper on g_audioStateMachine0_004f3ae4 (decrements; sets g_xformDirtyFlags|=1 at end).
+ *   Entry 0x004a7680: countup helper on g_audioStateMachine0_004f3ae4 (increments; sets g_xformDirtyFlags|=1 at end).
+ *   Entry 0x004a76a0: same countdown helper but on g_audioStateMachine1_004f3ae8.
+ *   Entry 0x004a76c0: same countup helper but on g_audioStateMachine1_004f3ae8.
  */
 extern unsigned int g_audioMicroEntry_005433f4;
-extern unsigned int g_x_004f3ae4;
-extern unsigned int g_x_004f3ae8;
+extern unsigned int g_audioStateMachine0_004f3ae4;
+extern unsigned int g_audioStateMachine1_004f3ae8;
 
 __declspec(naked) void AudioMicroEntries_004a7600(void)
 {
@@ -150,12 +150,12 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         cmp     cl, al
         mov     dword ptr [g_audioMicroEntry_005433f4], eax
         jne     short L_e2_elseBranch
-        mov     dword ptr [g_data_004f3aec], eax
-        mov     dword ptr [g_data_004f3af0], 0
+        mov     dword ptr [g_audioStateMachine2_004f3aec], eax
+        mov     dword ptr [g_audioByteTable_004f3af0], 0
         jmp     short L_e2_tail
     L_e2_elseBranch:
-        mov     dword ptr [g_data_004f3aec], 0
-        mov     dword ptr [g_data_004f3af0], eax
+        mov     dword ptr [g_audioStateMachine2_004f3aec], 0
+        mov     dword ptr [g_audioByteTable_004f3af0], eax
     L_e2_tail:
         jmp     AudioStateMachineMulti_004a7930
         _emit   90h
@@ -165,23 +165,23 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     ecx, dword ptr [g_x_004f3ae4]
+        mov     ecx, dword ptr [g_audioStateMachine0_004f3ae4]
         mov     eax, 1
         cmp     ecx, eax
         jle     short L_e3_set
         mov     eax, ecx
         dec     eax
-        mov     dword ptr [g_x_004f3ae4], eax
+        mov     dword ptr [g_audioStateMachine0_004f3ae4], eax
         ret
     L_e3_set:
         or      dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
-        mov     eax, dword ptr [g_x_004f3ae4]
+        mov     eax, dword ptr [g_audioStateMachine0_004f3ae4]
         cmp     eax, 5
         jge     short L_e4_set
         inc     eax
-        mov     dword ptr [g_x_004f3ae4], eax
+        mov     dword ptr [g_audioStateMachine0_004f3ae4], eax
         ret
     L_e4_set:
         mov     eax, dword ptr [g_xformDirtyFlags]
@@ -190,23 +190,23 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         ret
         _emit   90h
         _emit   90h
-        mov     ecx, dword ptr [g_x_004f3ae8]
+        mov     ecx, dword ptr [g_audioStateMachine1_004f3ae8]
         mov     eax, 1
         cmp     ecx, eax
         jle     short L_e5_set
         mov     eax, ecx
         dec     eax
-        mov     dword ptr [g_x_004f3ae8], eax
+        mov     dword ptr [g_audioStateMachine1_004f3ae8], eax
         ret
     L_e5_set:
         or      dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
-        mov     eax, dword ptr [g_x_004f3ae8]
+        mov     eax, dword ptr [g_audioStateMachine1_004f3ae8]
         cmp     eax, 5
         jge     short L_e6_set
         inc     eax
-        mov     dword ptr [g_x_004f3ae8], eax
+        mov     dword ptr [g_audioStateMachine1_004f3ae8], eax
         ret
     L_e6_set:
         mov     eax, dword ptr [g_xformDirtyFlags]

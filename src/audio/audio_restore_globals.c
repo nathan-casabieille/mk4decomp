@@ -162,8 +162,8 @@ extern unsigned int g_table_004f3f28;
 extern unsigned int g_table_0053a53c;
 extern unsigned int g_table_00543934;
 extern unsigned int g_table_00543a6c;
-extern unsigned int g_x_004f3ae4;
-extern unsigned int g_x_004f3ae8;
+extern unsigned int g_audioStateMachine0_004f3ae4;
+extern unsigned int g_audioStateMachine1_004f3ae8;
 extern void AudioSnapshotGlobals_004ace60(void);
 
 __declspec(naked) void AudioRestoreGlobals_004acce0(void)
@@ -230,9 +230,9 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     eax, dword ptr [g_audioSavedReg_00543a64]
         mov     dword ptr [g_data_004f3820], ecx
         mov     ecx, dword ptr [g_audioRestoreSlot2_00543a68]
-        mov     dword ptr [g_x_004f3ae4], edx
+        mov     dword ptr [g_audioStateMachine0_004f3ae4], edx
         movsb
-        mov     dword ptr [g_x_004f3ae8], eax
+        mov     dword ptr [g_audioStateMachine1_004f3ae8], eax
         mov     dword ptr [g_or_0052ab40], ecx
     L_arg_tail:
         mov     al, byte ptr [g_byte_00543ab4]

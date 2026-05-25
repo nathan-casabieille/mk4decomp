@@ -6,19 +6,19 @@
 
 /* @addr 0x004bf370 (237b engine.scenegraph) - sprite-blit dispatcher.
  *   arg0 = sprite_id (esp+4); ecx = id & 0xf. Mark g_table_00f6e058[id]=1.
- *   If g_data_004ffd4c != 0: per-row bit-encoded blit:
+ *   If g_texturedTriVar_004ffd4c != 0: per-row bit-encoded blit:
  *     For each of [esp+0x20] rows × outer count [esp+0x24]:
  *       read u16 from [0xf4d050 + offset], split bits (lo6 + hi shifted), or together,
  *       write to [0xf85b34 + offset]. Step both by 0x200 between rows.
  *   Else: bulk rep movsd/movsb copy [0xf4d050] → [0xf85b34], rows of 0x200 bytes.
  */
-extern unsigned int g_data_004ffd4c;
+extern unsigned int g_texturedTriVar_004ffd4c;
 extern unsigned int g_data_00f85b34;
 
 __declspec(naked) void Helper_TexUpload(void) {
     __asm {
         mov     ecx, [esp + 4]
-        mov     eax, dword ptr [g_data_004ffd4c]
+        mov     eax, dword ptr [g_texturedTriVar_004ffd4c]
         and     ecx, 0x0f
         push    ebx
         push    ebp

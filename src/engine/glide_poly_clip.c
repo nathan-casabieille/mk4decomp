@@ -113,7 +113,7 @@ extern void GlidePolyClip_004ae560(void);
 extern unsigned int g_const_004d2964;
 extern unsigned int g_const_004d2968;
 extern unsigned int g_const_004d296c;
-extern unsigned int g_data_004f4790;
+extern unsigned int g_renderer2_d3dInitByte_004f4790;
 extern unsigned int g_renderer2_d3dByte_0058c7d0;
 extern int g_renderer2_active;
 extern int g_renderer2_surface;
@@ -202,13 +202,13 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         cmp      bl, byte ptr [g_renderer2_d3dByte_0058c7d0]
         jne      L_dd03
         mov      cl, byte ptr [esp + 0x14]
-        mov      al, byte ptr [g_data_004f4790]
+        mov      al, byte ptr [g_renderer2_d3dInitByte_004f4790]
         cmp      cl, al
         je       L_de14
     L_dd03:
         call     Renderer2_FlushBatch_D3D
         mov      dl, byte ptr [esp + 0x14]
-        mov      al, byte ptr [g_data_004f4790]
+        mov      al, byte ptr [g_renderer2_d3dInitByte_004f4790]
         cmp      dl, al
         mov      eax, dword ptr [g_renderer2_obj]
         je       L_dd4c
@@ -226,7 +226,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      eax, dword ptr [g_renderer2_obj]
     L_dd42:
         mov      cl, byte ptr [esp + 0x14]
-        mov      byte ptr [g_data_004f4790], cl
+        mov      byte ptr [g_renderer2_d3dInitByte_004f4790], cl
     L_dd4c:
         mov      cl, byte ptr [g_renderer2_d3dByte_0058c7d0]
         cmp      bl, cl

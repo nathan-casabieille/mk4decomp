@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004d7878;
 extern unsigned int g_data_004d78b8;
 extern unsigned int g_savedNode_00541f98;
@@ -207,7 +207,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         jne     L_p4tmh_M_call_4065b0
         mov     ecx, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_savedNode_00541f98]
-        mov     eax, dword ptr [g_data_004d5324]
+        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
         dec     ecx
         mov     dword ptr [g_xformLoopCounter], ecx
         mov     dword ptr [g_xformEntityIdx], edx

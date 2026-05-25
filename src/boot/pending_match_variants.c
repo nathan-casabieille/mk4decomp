@@ -210,8 +210,8 @@ extern void TripleMul10TailIndexed_00425970(void);
 extern void TripleSubVec3_004250f0(void);
 
 extern unsigned int g_data_00408000;
-extern unsigned int g_data_004d531c;
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar2_004d531c;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004d5354;
 extern unsigned int g_data_004d5358;
 extern unsigned int g_data_004d535c;
@@ -1331,7 +1331,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy_00411d80(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mb3fsc_abort
-        mov     ecx, dword ptr [g_data_004d531c]
+        mov     ecx, dword ptr [g_pendingMatchVar2_004d531c]
         mov     edx, dword ptr [g_walkCallback]
         sub     edx, ecx
         mov     dword ptr [g_walkCallback], edx
@@ -2828,7 +2828,7 @@ __declspec(naked) void PendingMatch_0041d770(void)
         mov      ecx, dword ptr [eax*4]
         or       ecx, 0xa
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_004d5324]
+        mov      edx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
@@ -2837,7 +2837,7 @@ __declspec(naked) void PendingMatch_0041d770(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x3c], eax
-        mov      edx, dword ptr [g_data_004d5324]
+        mov      edx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
@@ -2846,7 +2846,7 @@ __declspec(naked) void PendingMatch_0041d770(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      edx, dword ptr [g_data_004d5324]
+        mov      edx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]
@@ -3314,7 +3314,7 @@ __declspec(naked) void PendingMatch_00411890(void)
         call     Atan2QuadrantLookup_004245b0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1a48
-        mov      eax, dword ptr [g_data_004d531c]
+        mov      eax, dword ptr [g_pendingMatchVar2_004d531c]
         mov      ecx, dword ptr [g_walkCallback]
         add      ecx, eax
         mov      dword ptr [g_walkCallback], ecx
@@ -3498,7 +3498,7 @@ __declspec(naked) void PendingMatch_00411890(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1d74
-        mov      ecx, dword ptr [g_data_004d531c]
+        mov      ecx, dword ptr [g_pendingMatchVar2_004d531c]
         mov      edx, dword ptr [g_walkCallback]
         sub      edx, ecx
         mov      dword ptr [g_walkCallback], edx
@@ -4358,7 +4358,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         pop      esi
         ret      
     L_133a:
-        mov      ecx, dword ptr [g_data_004d5324]
+        mov      ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], ecx
         call     AudioMixerStep_004ab700
         cmp      dword ptr [g_framePauseFlag], esi
@@ -4426,7 +4426,7 @@ __declspec(naked) void PendingMatch_00411210(void)
         call     Atan2QuadrantLookup_004245b0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1521
-        mov      eax, dword ptr [g_data_004d531c]
+        mov      eax, dword ptr [g_pendingMatchVar2_004d531c]
         mov      ecx, dword ptr [g_walkCallback]
         add      ecx, eax
         mov      dword ptr [g_walkCallback], ecx

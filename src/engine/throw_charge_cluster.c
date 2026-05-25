@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern void AudioMixerStep_004ab700(void);
 extern void DispatcherComplex138_004760f0(void);
 extern void MStackPush1MagicMod2_004244d0(void);
@@ -147,7 +147,7 @@ __declspec(naked) void ThrowChargeCluster_0044e750(void)
         jne      L_e8df
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [esi + 0x80], eax
-        mov      ecx, dword ptr [g_data_004d5324]
+        mov      ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], ecx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]

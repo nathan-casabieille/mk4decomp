@@ -109,8 +109,8 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_byte_004d50b4;
-extern unsigned int g_data_004f3ae4;
-extern unsigned int g_data_004f3ae8;
+extern unsigned int g_audioStateMachine0_004f3ae4;
+extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_audioMixerKnob_005433c4;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_audioMixerKnob2_00543440;
@@ -135,7 +135,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
     L_8ac6:
         test     byte ptr [g_byte_004d50b4], 8
         je       short L_8aea
-        mov      eax, dword ptr [g_data_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
         mov      ecx, dword ptr [g_counter_0054359c]
         dec      eax
         cmp      ecx, eax
@@ -196,7 +196,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      eax, dword ptr [g_byte_004d50b4]
         test     ah, 8
         je       short L_8be4
-        mov      eax, dword ptr [g_data_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
         mov      ecx, dword ptr [g_counter_005433c8]
         dec      eax
         cmp      ecx, eax

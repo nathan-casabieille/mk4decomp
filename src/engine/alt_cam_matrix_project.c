@@ -121,12 +121,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   camera fields, then calls Mat3x3VecMul6Bit again.
  *
  *   Always restores the original camera matrix afterward if used,
- *   writes 0x1e0 into g_data_004f623c (screen pitch?), and clamps
+ *   writes 0x1e0 into g_screenH_004f623c (screen pitch?), and clamps
  *   a derived value: takes local[0x14] (negated z), shl 9, idiv ecx,
  *   then computes `(eax * 15) << 13 >> 16 + 0xf0` and clamps to
- *   (0, 0x1e0) before storing into g_data_004f623c as a u16.
+ *   (0, 0x1e0) before storing into g_screenH_004f623c as a u16.
  */
-extern unsigned int g_data_004f623c;
+extern unsigned int g_screenH_004f623c;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
@@ -219,7 +219,7 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         mov     word ptr [g_mat3x3_007af9a0], si
     L_acm_skipRestore:
         mov     ecx, dword ptr [esp + 0x18]
-        mov     word ptr [g_data_004f623c], 0x1e0
+        mov     word ptr [g_screenH_004f623c], 0x1e0
         test    ecx, ecx
         jle     short L_acm_done
         mov     eax, dword ptr [esp + 0x14]
@@ -236,7 +236,7 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         jle     short L_acm_done
         cmp     eax, 0x1e0
         jge     short L_acm_done
-        mov     word ptr [g_data_004f623c], ax
+        mov     word ptr [g_screenH_004f623c], ax
     L_acm_done:
         pop     edi
         pop     esi

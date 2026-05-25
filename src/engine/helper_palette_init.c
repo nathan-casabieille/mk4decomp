@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004ffd4c;
+extern unsigned int g_texturedTriVar_004ffd4c;
 extern unsigned int g_data_00f4d028;
 extern unsigned int g_data_00f6e058;
 extern unsigned int g_data_00f6e05c;
@@ -23,7 +23,7 @@ __declspec(naked) void Helper_PaletteInit(void)
         mov     esi, dword ptr [esp + 0xDC]
         mov     dword ptr [g_data_00f6e060], eax
         mov     dword ptr [g_data_00f6e064], eax
-        mov     eax, dword ptr [g_data_004ffd4c]
+        mov     eax, dword ptr [g_texturedTriVar_004ffd4c]
         cmp     esi, eax
         je      L_ptb_eq_skip
         push    edi
@@ -160,7 +160,7 @@ __declspec(naked) void Helper_PaletteInit(void)
         mov     edx, dword ptr [esp + 0xE8]
         pop     ebx
         pop     ebp
-        mov     dword ptr [g_data_004ffd4c], edx
+        mov     dword ptr [g_texturedTriVar_004ffd4c], edx
         pop     edi
     L_ptb_eq_skip:
         pop     esi

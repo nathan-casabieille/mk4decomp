@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
  */
 extern unsigned int g_data_004d5328;
-extern unsigned int g_state_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_x_004d5320;
 extern unsigned int g_eq_00542098;
 
@@ -146,7 +146,7 @@ loop_004251fd:
         mov     ebx, dword ptr [g_x_004d5320]
         xor     edx, edx
         cmp     ecx, ebx
-        mov     ecx, dword ptr [g_state_004d5324]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         setle   dl
         test    eax, eax
         mov     dword ptr [g_eq_00542098], edx

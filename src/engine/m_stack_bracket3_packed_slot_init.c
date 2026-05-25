@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004ec898;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern void AudioMixerStep_004ab700(void);
@@ -190,7 +190,7 @@ __declspec(naked) void MStackBracket3PackedSlotInit_004757c0(void)
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [esi + 0x60], 0x1921f
-        mov     eax, dword ptr [g_data_004d5324]
+        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]

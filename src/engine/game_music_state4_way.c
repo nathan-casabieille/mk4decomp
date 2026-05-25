@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e2670;
+extern unsigned int g_bootClampMod6Base_004e2670;
 extern void GuardedSelfRefSet_0048d070(void);
 extern void MStackBitLoopTripleCall_0049cc30(void);
 extern void SetJmp_00405420(void);
@@ -147,7 +147,7 @@ __declspec(naked) void GameMusicState4Way_00426d90(void)
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_eventQueueEnd], eax
         jne      short L_6e34
-        mov      edx, OFFSET g_data_004e2670
+        mov      edx, OFFSET g_bootClampMod6Base_004e2670
         shr      edx, 2
     L_6e16:
         mov      eax, edx

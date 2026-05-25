@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004f4790;
+extern unsigned int g_renderer2_d3dInitByte_004f4790;
 extern unsigned int g_data_004f4794;
 extern unsigned int g_data_004f4798;
 extern unsigned int g_data_004f479c;
@@ -108,7 +108,7 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
     L_db06:
         test     eax, eax
         mov      dword ptr [g_renderer2_surface], 1
-        mov      byte ptr [g_data_004f4790], 0xff
+        mov      byte ptr [g_renderer2_d3dInitByte_004f4790], 0xff
         mov      byte ptr [g_renderer2_d3dByte_0058c7d0], 0
         je       L_dc15
         mov      edx, dword ptr [eax]

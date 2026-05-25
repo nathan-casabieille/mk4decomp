@@ -149,13 +149,13 @@ extern void PushSetCallPop_00406530(void);
  *   pop g_eventQueueEnd; pop mstack; ret.
  *   The 0x426da0 imm is the in-body label of GameMusicState4Way_00426d90.
  */
-extern unsigned int g_data_004e2670;
+extern unsigned int g_bootClampMod6Base_004e2670;
 void PushSetEventQueueCallStore_00426d30(void) {
     unsigned int top;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueEnd;
-    g_eventQueueEnd = (unsigned int)&g_data_004e2670 >> 2;
+    g_eventQueueEnd = (unsigned int)&g_bootClampMod6Base_004e2670 >> 2;
     StoreTwoCall_0049cb40(0x00426da0, 0x23c);
     top = g_matrixStackTop;
     g_eventQueueEnd = *(unsigned int *)(top * 4);
@@ -431,7 +431,7 @@ extern unsigned int g_data_004d5300;
 extern unsigned int g_data_004d5304;
 extern unsigned int g_data_004d5308;
 extern unsigned int g_data_004d530c;
-extern unsigned int g_data_004d531c;
+extern unsigned int g_pendingMatchVar2_004d531c;
 extern unsigned int g_data_004e2868;
 extern unsigned int g_data_004e51f8;
 extern unsigned int g_data_004e6208;
@@ -7130,7 +7130,7 @@ __declspec(naked) void PendingMatch_0044f8d0(void)
         mov      dword ptr [edx*4 + 0x34], eax
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      eax, dword ptr [ecx*4 + 0x64]
-        mov      ecx, dword ptr [g_data_004d531c]
+        mov      ecx, dword ptr [g_pendingMatchVar2_004d531c]
         add      eax, ecx
         push     eax
         mov      dword ptr [g_walkCallback], eax

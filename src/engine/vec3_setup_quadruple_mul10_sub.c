@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush1MagicMod2_004244d0(void);
@@ -145,7 +145,7 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         mov     dword ptr [edx*4 + 0x70], 0xffffe148
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x4c], 0x3d7
-        mov     ecx, dword ptr [g_data_004d5324]
+        mov     ecx, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], ecx
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]

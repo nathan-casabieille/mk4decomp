@@ -128,7 +128,7 @@ extern unsigned int g_data_004e7f28;
 extern unsigned int g_data_004e8158;
 extern unsigned int g_dispatchSave129_0050d434;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_particleEmitterNode_00535e6c;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void AudioMixerStep_004ab700(void);
@@ -192,7 +192,7 @@ __declspec(naked) void ThrowInitLinkCluster_004555f0(void)
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x44]
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      edx, dword ptr [g_data_004d5324]
+        mov      edx, dword ptr [g_pendingMatchVar_004d5324]
         mov      dword ptr [g_walkCallback], edx
         call     AudioMixerStep_004ab700
         mov      eax, dword ptr [g_framePauseFlag]

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5320;
+extern unsigned int g_pendingMatchVar3_004d5320;
 extern unsigned int g_data_004d59e8;
 extern unsigned int g_phase1ModelArr_00512538;
 extern unsigned int g_phase1ModelChain_0053e35c;
@@ -171,7 +171,7 @@ __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1im_ret
-        mov     eax, dword ptr [g_data_004d5320]
+        mov     eax, dword ptr [g_pendingMatchVar3_004d5320]
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax

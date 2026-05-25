@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004f623c;
+extern unsigned int g_screenH_004f623c;
 extern unsigned int g_menuRestoreSlot_00543aa8;
 extern u32 g_inLoopStep;
 extern unsigned int g_data_007af958[];
@@ -349,16 +349,16 @@ __declspec(naked) void DrawMeshBlock(void)
         mov      eax, dword ptr [g_data_00ab4e28]
         test     eax, eax
         je       L_b64d
-        mov      ax, word ptr [g_data_004f623c]
+        mov      ax, word ptr [g_screenH_004f623c]
         cmp      word ptr [esi + 2], ax
         jle      L_b633
         mov      word ptr [esi + 2], ax
-        mov      ax, word ptr [g_data_004f623c]
+        mov      ax, word ptr [g_screenH_004f623c]
     L_b633:
         cmp      word ptr [esi + 6], ax
         jle      L_b643
         mov      word ptr [esi + 6], ax
-        mov      ax, word ptr [g_data_004f623c]
+        mov      ax, word ptr [g_screenH_004f623c]
     L_b643:
         cmp      word ptr [esi + 0xa], ax
         jle      L_b64d

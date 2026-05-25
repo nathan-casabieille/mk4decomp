@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3ae4;
-extern unsigned int g_data_004f3ae8;
+extern unsigned int g_audioStateMachine0_004f3ae4;
+extern unsigned int g_audioStateMachine1_004f3ae8;
 extern unsigned int g_audioCrewState_00541d8c;
 extern unsigned int g_byte_005435a2;
 extern unsigned int g_byte_0054361a;
@@ -123,7 +123,7 @@ extern void ScaledChainStore24_004a7d40(void);
 __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
         push     ebx
         push     ebp
         push     esi
@@ -173,14 +173,14 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_816c:
-        mov      eax, dword ptr [g_data_004f3ae4]
+        mov      eax, dword ptr [g_audioStateMachine0_004f3ae4]
         inc      edi
         add      esi, 0x18
         add      ebp, OFFSET g_data_00c00000
         cmp      edi, eax
         jl       L_80b1
     L_8183:
-        mov      eax, dword ptr [g_data_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
         xor      edi, edi
         lea      ecx, [eax + eax*2]
         shl      ecx, 0x15
@@ -226,7 +226,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_826b:
-        mov      eax, dword ptr [g_data_004f3ae8]
+        mov      eax, dword ptr [g_audioStateMachine1_004f3ae8]
         inc      edi
         add      esi, 0x18
         add      ebp, OFFSET g_data_00c00000

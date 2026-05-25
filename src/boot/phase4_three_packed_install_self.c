@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5324;
+extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_data_004d7b88;
 extern unsigned int g_data_004ec8f8;
 extern unsigned int g_data_004f00d0;
@@ -313,7 +313,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     ecx, dword ptr [eax*4]
         or      ecx, 0x0A
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_004d5324]
+        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
@@ -322,7 +322,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x3C], ecx
-        mov     eax, dword ptr [g_data_004d5324]
+        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
@@ -331,7 +331,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x40], ecx
-        mov     eax, dword ptr [g_data_004d5324]
+        mov     eax, dword ptr [g_pendingMatchVar_004d5324]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_framePauseFlag]
