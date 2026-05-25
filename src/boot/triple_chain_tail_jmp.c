@@ -135,6 +135,12 @@ extern unsigned int g_x_00542074;
 extern void BootFlagChainAudioPause_00412080(void);
 extern void SlotInitAndChainLink_004191b0(void);
 
+/*
+ * NON-COAXABLE: MSVC /O2 assigns xform to eax (a1, 5b) and val to ecx (b9, 5b),
+ * forcing g_walkCallback store to 89 0d (6b) and state to a1+a3 (10b).
+ * Orig has xform in ecx (8b 0d, 6b) and val in eax (b8), giving a3 (5b) and
+ * 8b15+8915 (12b). MSVC's choice is more optimal; register layout not coaxable.
+ */
 __declspec(naked) void TripleChainTailJmp_00419900(void) {
     __asm {
         call    MStackPush2RunCountdown_004089e0

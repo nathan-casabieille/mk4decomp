@@ -180,6 +180,7 @@ unsigned int g_data_004d7a38 = 0xffffcccd;
 unsigned int g_data_004d7a68 = 0x00008000;
 unsigned int g_data_004d7a98 = 0xffff8000;
 unsigned int g_data_004d7ac8 = 0xffffb334;
+unsigned int g_data_004d7af8 = 0xffffc000;
 unsigned int g_data_004d7b28 = 0x00004000;
 unsigned int g_data_004d7b58 = 0x00004ccc;
 unsigned int g_data_004d7b88 = 0x00000005;
