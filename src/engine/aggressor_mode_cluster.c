@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004ed518;
 extern unsigned int g_data_004ed550;
 extern unsigned int g_data_004ed560;
-extern unsigned int g_data_00542ba0;
+extern unsigned int g_dispatchSave69_00542ba0;
 extern void Alarm3EntryPhaseChain_0047e1a0(void);
 extern void ArgSarStoreJmp_004594f0(void);
 extern void Cascade3ChainInit_0048fa50(void);
@@ -206,7 +206,7 @@ __declspec(naked) void AggressorModeCluster_0047df30(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
-        push     OFFSET g_data_00542ba0
+        push     OFFSET g_dispatchSave69_00542ba0
         call     GuardedPackedSlotInit_00428760
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

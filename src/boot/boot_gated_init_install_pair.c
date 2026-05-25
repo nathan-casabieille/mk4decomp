@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_byte_004f360c;
-extern unsigned int g_data_005420d8;
+extern unsigned int g_dispatchSave74_005420d8;
 extern void AudioMixerStep_004ab700(void);
 extern void ChainGetterStateInstaller_00412140(void);
 extern void ChainListVecAdd_0049d200(void);
@@ -144,7 +144,7 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         test    eax, eax
         jne     short L_bgip_ret1
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     ecx, offset g_data_005420d8
+        mov     ecx, offset g_dispatchSave74_005420d8
         shr     ecx, 2
         push    0xc0
         push    0x49db40

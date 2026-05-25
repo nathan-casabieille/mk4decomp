@@ -112,7 +112,7 @@ extern unsigned int g_data_0050b13c;
 extern unsigned int g_load_0052ab10;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_00543088;
+extern unsigned int g_dispatchSave62_00543088;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void TableWalkBoundedCmp_004bd890(void);
 extern void ZeroThreeFields_00404ed0(void);
@@ -137,7 +137,7 @@ __declspec(naked) void DualTableMappedDispatch_00492e60(void)
         test    eax, eax
         jne     L_dtmd_ret
         mov     eax, dword ptr [g_dlNalt1]
-        mov     esi, offset g_data_00543088
+        mov     esi, offset g_dispatchSave62_00543088
         shr     esi, 2
         cmp     eax, 0xf
         mov     ecx, esi

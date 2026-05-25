@@ -116,7 +116,7 @@ extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_installOwner2_0053a7a0;
-extern unsigned int g_data_00542ce8;
+extern unsigned int g_dispatchSave71_00542ce8;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void EsiInstallSetCbChainExtend_0048a810(void);
@@ -182,7 +182,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_p4tpis_A_ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, offset g_data_00542ce8
+        mov     eax, offset g_dispatchSave71_00542ce8
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueIdx], eax

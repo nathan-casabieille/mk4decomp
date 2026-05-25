@@ -519,7 +519,7 @@ extern unsigned int g_savedNode_00541f98;
 extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_dispatchArr_00542188;
 extern unsigned int g_dispatchVar37_00542a58;
-extern unsigned int g_data_00542b68;
+extern unsigned int g_dispatchSave68_00542b68;
 extern unsigned int g_installSelfCounter_005433e8;
 extern unsigned int g_audioTriEntryFlag_005433ec;
 extern unsigned int g_audioMatchStartFlag_00543714;
@@ -4358,7 +4358,7 @@ __declspec(naked) void EnduranceStateInitWalk_004785a0(void)
         ret
     L_86af:
         mov      eax, 3
-        mov      edi, OFFSET g_data_00542b68
+        mov      edi, OFFSET g_dispatchSave68_00542b68
         mov      dword ptr [g_xformLoopCounter], eax
         shr      edi, 2
     L_86c1:

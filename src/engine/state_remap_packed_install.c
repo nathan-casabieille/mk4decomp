@@ -127,8 +127,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004eaee0;
 extern unsigned int g_dispatchTableArr7_005019d0;
-extern unsigned int g_data_00542a70;
-extern unsigned int g_data_00542a78;
+extern unsigned int g_dispatchSave64_00542a70;
+extern unsigned int g_dispatchSave65_00542a78;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgScaledTestStore_00494140(void);
 extern void Install3StateRouterTail_0046b4e0(void);
@@ -155,7 +155,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
     L_srp_check15:
         cmp     eax, 0xf
         je      short L_srp_e1End
-        push    offset g_data_00542a70
+        push    offset g_dispatchSave64_00542a70
         call    ArgScaledTestStore_00494140
         add     esp, 4
     L_srp_e1End:
@@ -180,7 +180,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_srp_e2End
-        push    offset g_data_00542a78
+        push    offset g_dispatchSave65_00542a78
         call    ArgScaledTestStore_00494140
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4

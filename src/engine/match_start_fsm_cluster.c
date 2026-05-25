@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00542a54;
+extern unsigned int g_dispatchSave63_00542a54;
 extern void CjInstallSelfRouter_00470480(void);
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -317,7 +317,7 @@ __declspec(naked) void MatchStartFsmCluster_00468eb0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x101
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_00542a54
+        push     OFFSET g_dispatchSave63_00542a54
         mov      dword ptr [ecx*4 + 0x74], eax
         call     GuardedPackedSlotInit_00428760
         mov      eax, dword ptr [g_framePauseFlag]

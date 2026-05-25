@@ -164,16 +164,16 @@ extern unsigned int g_data_00541f50;
 extern unsigned int g_data_00541f54;
 extern unsigned int g_data_00541f58;
 extern unsigned int g_data_00541f5c;
-extern unsigned int g_data_00541f60;
-extern unsigned int g_data_00541f64;
-extern unsigned int g_data_00541f68;
-extern unsigned int g_data_00541f6c;
-extern unsigned int g_data_00541f70;
-extern unsigned int g_data_00541f74;
-extern unsigned int g_data_00541f78;
-extern unsigned int g_data_00541f7c;
-extern unsigned int g_data_00541f80;
-extern unsigned int g_data_00541f84;
+extern unsigned int g_clusterArr541f60_0;
+extern unsigned int g_clusterArr541f60_1;
+extern unsigned int g_clusterArr541f60_2;
+extern unsigned int g_clusterArr541f60_3;
+extern unsigned int g_clusterArr541f60_4;
+extern unsigned int g_clusterArr541f60_5;
+extern unsigned int g_clusterArr541f60_6;
+extern unsigned int g_clusterArr541f60_7;
+extern unsigned int g_clusterArr541f60_8;
+extern unsigned int g_clusterArr541f60_9;
 extern unsigned int g_tripleEntryFlag_0054380c;
 extern void Cmp2DirtyToggle_00423870(void);
 extern void TestCmpZeroFour_004238b0(void);
@@ -265,16 +265,16 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_00541f50], ebx
         mov      dword ptr [g_data_00541f5c], ebx
         mov      dword ptr [g_data_00541f58], ebx
-        mov      dword ptr [g_data_00541f64], ebx
-        mov      dword ptr [g_data_00541f60], ebx
-        mov      dword ptr [g_data_00541f6c], ebx
-        mov      dword ptr [g_data_00541f68], ebx
-        mov      dword ptr [g_data_00541f74], ebx
-        mov      dword ptr [g_data_00541f70], ebx
-        mov      dword ptr [g_data_00541f7c], ebx
-        mov      dword ptr [g_data_00541f78], ebx
-        mov      dword ptr [g_data_00541f84], ebx
-        mov      dword ptr [g_data_00541f80], ebx
+        mov      dword ptr [g_clusterArr541f60_1], ebx
+        mov      dword ptr [g_clusterArr541f60_0], ebx
+        mov      dword ptr [g_clusterArr541f60_3], ebx
+        mov      dword ptr [g_clusterArr541f60_2], ebx
+        mov      dword ptr [g_clusterArr541f60_5], ebx
+        mov      dword ptr [g_clusterArr541f60_4], ebx
+        mov      dword ptr [g_clusterArr541f60_7], ebx
+        mov      dword ptr [g_clusterArr541f60_6], ebx
+        mov      dword ptr [g_clusterArr541f60_9], ebx
+        mov      dword ptr [g_clusterArr541f60_8], ebx
         call     TriBranchFlagWrite_00422720
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      short L_25e9

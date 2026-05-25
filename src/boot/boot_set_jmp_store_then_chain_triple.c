@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     if paused: ret. Three iterations: g_walkCallback = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
  *     g_eventQueueTotal++. Tail-jmp MStackPop8.
  */
-extern unsigned int g_data_005420e8;
+extern unsigned int g_dispatchSave73_005420e8;
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
 extern void MStackPushCallPop_0040a830(void);
@@ -139,7 +139,7 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         jne     L_b970_ret
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     edx, offset g_data_005420e8
+        mov     edx, offset g_dispatchSave73_005420e8
         push    0xc0
         shr     edx, 2
         push    0x0049db40

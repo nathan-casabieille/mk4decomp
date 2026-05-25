@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004e4c20;
 extern unsigned int g_data_004e4c38;
 extern unsigned int g_data_00501a24;
-extern unsigned int g_data_005422fc;
+extern unsigned int g_dispatchSave72_005422fc;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CopyJmp_0043a620(void);
 extern void EsiInstallClampAddCall_0048fe40(void);
@@ -211,7 +211,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         call     FiveCallScaledChainTailJmp_0045f8d0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b83a
-        push     OFFSET g_data_005422fc
+        push     OFFSET g_dispatchSave72_005422fc
         call     GuardedPackedSlotInit_00428760
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
