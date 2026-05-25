@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_data_004d5100;
 extern unsigned int g_data_004d5104;
-extern unsigned int g_data_0053814c;
+extern unsigned int g_dispatchSave404_0053814c;
 extern void Mul10Tail_00404af0(int, int);
 
 __declspec(naked) void AudioMixerStep_004ab700(void) {
@@ -37,7 +37,7 @@ __declspec(naked) void AudioMixerStep_004ab700(void) {
         add     edx, esi
         push    eax
         push    ecx
-        mov     dword ptr [g_data_0053814c], ecx
+        mov     dword ptr [g_dispatchSave404_0053814c], ecx
         mov     dword ptr [g_data_004d5104], edx
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0

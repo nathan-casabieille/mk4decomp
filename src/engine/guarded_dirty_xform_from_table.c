@@ -13,18 +13,18 @@ extern unsigned int g_scaledInit_00542044;
  *   xformEntityIdx = eax; edx = g_scaledInit_00542044;
  *   [eax*4+0] = edx; ret.
  */
-extern unsigned int g_data_00542038;
-extern unsigned int g_data_0054203c;
+extern unsigned int g_dispatchSave416_00542038;
+extern unsigned int g_dispatchSave417_0054203c;
 extern void DirtyToggleByGate_0048f350(void);
 void GuardedDirtyXformFromTable_0048f6d0(void) {
     unsigned int v;
     DirtyToggleByGate_0048f350();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    v = g_data_00542038;
+    v = g_dispatchSave416_00542038;
     g_xformEntityIdx = v;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        v = g_data_0054203c;
+        v = g_dispatchSave417_0054203c;
         g_xformEntityIdx = v;
     }
     *(unsigned int *)(v * 4) = g_scaledInit_00542044;

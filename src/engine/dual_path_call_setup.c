@@ -119,16 +119,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   edx = g_scaledInit; eax = 0x1b333;
  *   g_walkCallback = eax; [edx*4 + 0x58] = eax; ret.
  */
-extern unsigned char g_data_0050cd34;
-extern unsigned char g_data_0050cd50;
+extern unsigned char g_dispatchSave411_0050cd34;
+extern unsigned char g_dispatchSave412_0050cd50;
 extern unsigned int g_stateFlag_00537e98;
 void DualPathCallSetup_00458030(void) {
     unsigned int v = g_stateFlag_00537e98;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        g_xformEntityIdx = (unsigned int)&g_data_0050cd34 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_dispatchSave411_0050cd34 >> 2;
     } else {
-        g_xformEntityIdx = (unsigned int)&g_data_0050cd50 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_dispatchSave412_0050cd50 >> 2;
     }
     DispatcherComplex260_00407030();
     if (g_framePauseFlag != 0) return;

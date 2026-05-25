@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   if walk==7 set byte g_byte_0054372c=dl; if walk==6 set g_byte_00543724=dl.
  */
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_state_00537f48_ll;
-extern unsigned int g_state_005380e0_ll;
+extern unsigned int g_dlNalt1;
+extern unsigned int g_dlNalt2;
 extern unsigned char g_byte_0054372c;
 extern unsigned char g_byte_00543724;
 
@@ -25,7 +25,7 @@ void StateCmpAndStoreByte_004a98f0(void) {
         cmp     ecx, edx
         _emit   75h
         _emit   0ch
-        mov     eax, dword ptr [g_state_00537f48_ll]
+        mov     eax, dword ptr [g_dlNalt1]
         mov     dword ptr [g_walkCallback], eax
         _emit   0ebh
         _emit   05h
@@ -33,7 +33,7 @@ void StateCmpAndStoreByte_004a98f0(void) {
         cmp     ecx, 2
         _emit   75h
         _emit   0ah
-        mov     eax, dword ptr [g_state_005380e0_ll]
+        mov     eax, dword ptr [g_dlNalt2]
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, 7
         _emit   75h

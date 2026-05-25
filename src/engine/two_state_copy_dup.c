@@ -116,11 +116,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_audioInitState6_00537ea0;
 extern unsigned int g_audioInitState5_00537edc;
 extern unsigned int g_hitPhase_00537f30;
-extern unsigned int g_x_00537f48_v2;
-extern unsigned int g_x_005380e0_v2;
-extern unsigned int g_x_0053a178_v2;
+extern unsigned int g_dlNalt1;
+extern unsigned int g_dlNalt2;
+extern unsigned int g_dlNalt3;
 extern unsigned int g_audioInitState4_0053a1cc;
-extern unsigned int g_x_0053a250_v2;
+extern unsigned int g_dlNalt4;
 extern unsigned int g_audioInitState3_0053a790;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
@@ -137,28 +137,28 @@ void TwoStateCopyDup_004225f0(void) {
         mov     ecx, dword ptr [g_audioInitState5_00537edc]
         mov     edx, dword ptr [g_audioInitState4_0053a1cc]
         mov     eax, dword ptr [g_audioInitState3_0053a790]
-        mov     dword ptr [g_x_00537f48_v2], ecx
+        mov     dword ptr [g_dlNalt1], ecx
         mov     ecx, dword ptr [g_audioInitState2_00541ecc]
-        mov     dword ptr [g_x_005380e0_v2], edx
+        mov     dword ptr [g_dlNalt2], edx
         mov     edx, dword ptr [g_audioInitState1_00541ed0]
-        mov     dword ptr [g_x_0053a178_v2], eax
+        mov     dword ptr [g_dlNalt3], eax
         mov     eax, dword ptr [g_audioInitState6_00537ea0]
         mov     dword ptr [g_dlChar13], ecx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_0053a250_v2], eax
+        mov     dword ptr [g_dlNalt4], eax
         mov     dword ptr [g_dlChar24], edx
         ret
         mov     eax, dword ptr [g_audioInitState3_0053a790]
         mov     ecx, dword ptr [g_audioInitState6_00537ea0]
         mov     edx, dword ptr [g_audioInitState5_00537edc]
-        mov     dword ptr [g_x_00537f48_v2], eax
+        mov     dword ptr [g_dlNalt1], eax
         mov     eax, dword ptr [g_audioInitState4_0053a1cc]
-        mov     dword ptr [g_x_005380e0_v2], ecx
+        mov     dword ptr [g_dlNalt2], ecx
         mov     ecx, dword ptr [g_audioInitState1_00541ed0]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_0053a250_v2], eax
+        mov     dword ptr [g_dlNalt4], eax
         mov     eax, dword ptr [g_audioInitState2_00541ecc]
-        mov     dword ptr [g_x_0053a178_v2], edx
+        mov     dword ptr [g_dlNalt3], edx
         mov     dword ptr [g_dlChar13], eax
         mov     dword ptr [g_dlChar24], ecx
         }

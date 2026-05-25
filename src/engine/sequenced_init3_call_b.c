@@ -117,14 +117,14 @@ extern unsigned int g_phaseThunkVar7_005380b8;
 extern unsigned int g_stateChangePair2_005380a4;
 extern unsigned int g_stateChangePair_00541d6c;
 extern unsigned int g_stateChangePair3_0053a278;
-extern unsigned char g_data_0050b130;
+extern unsigned char g_dispatchSave410_0050b130;
 
 /* @addr 0x00458ae0 (181b game) - sequenced init w/ multiple global stores. */
 void SequencedInit3CallB_00458ae0(void) {
     unsigned int v;
     BootInitGuardedCallChain_004265d0();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = (unsigned int)&g_data_0050b130 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave410_0050b130 >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;

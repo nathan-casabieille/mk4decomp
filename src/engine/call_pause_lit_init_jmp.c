@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ScaledXorStore_004903b0(void);
 extern void func_00488c61(void);
-extern int g_data_005006e0;
+extern int g_dispatchSave405_005006e0;
 void CallPauseLitInitJmp_00488c30(void) {
     ScaledXorStore_004903b0();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0;
-    g_xformEntityIdx = ((unsigned int)&g_data_005006e0) >> 2;
+    g_xformEntityIdx = ((unsigned int)&g_dispatchSave405_005006e0) >> 2;
     func_00488c61();
 }

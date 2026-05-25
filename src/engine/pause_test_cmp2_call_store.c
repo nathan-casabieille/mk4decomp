@@ -10,7 +10,7 @@ extern unsigned int g_scaledInit_00542044;
 /* @addr 0x0045bfe0 (60b)
  *   mov     ecx, [g_framePauseFlag]
  *   xor     eax, eax
- *   mov     al, byte ptr [g_state_00542071]
+ *   mov     al, byte ptr [g_dispatchSave403_00542071]
  *   test    ecx, ecx
  *   mov     [g_walkCallback], eax
  *   jne     +0x25

@@ -116,14 +116,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call IterLoad_00491050; pop esp; if pause: ret;
  *   jmp ScaledInitOrSelfPtrSetType_0046a5e0.
  */
-extern unsigned char g_data_00542a64;
+extern unsigned char g_dispatchSave420_00542a64;
 void PushArgClearSetCallJmp_0046a580(void) {
     g_walkCallback = 0;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x80) = 0;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x7c) = (unsigned int)g_walkCallback;
     g_walkCallback = (void (*)(void))0x1009;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74) = (unsigned int)g_walkCallback;
-    ((void (*)(void *))IterLoad_00491050)(&g_data_00542a64);
+    ((void (*)(void *))IterLoad_00491050)(&g_dispatchSave420_00542a64);
     if (g_framePauseFlag != 0) return;
     ScaledInitOrSelfPtrSetType_0046a5e0();
 }

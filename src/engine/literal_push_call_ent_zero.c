@@ -19,9 +19,9 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void *g_data_004ef1f8;
 extern int func_00491508(void *);
-extern int g_data_00500d4c;
+extern int g_dispatchSave406_00500d4c;
 void LiteralPushCallEntZero_00488c00(void) {
-    g_xformEntityIdx = ((unsigned int)&g_data_00500d4c) >> 2;
+    g_xformEntityIdx = ((unsigned int)&g_dispatchSave406_00500d4c) >> 2;
     g_walkCallback = (void (*)(void))0;
     func_00491508(&g_data_004ef1f8);
 }

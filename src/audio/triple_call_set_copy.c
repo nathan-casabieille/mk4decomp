@@ -115,13 +115,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call PushSetCallPop_00406530; if pause: ret;
  *   g_cj_00542058 = 0; g_eventQueueEnd = g_scaledInit; ret.
  */
-extern unsigned int g_data_00503308;
-extern unsigned int g_data_00506414;
+extern unsigned int g_dispatchSave407_00503308;
+extern unsigned int g_dispatchSave408_00506414;
 void TripleCallSetCopy_004a4880(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_data_00503308 >> 2;
+    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave407_00503308 >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
-    g_xformEntityIdx = (unsigned int)&g_data_00506414 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_dispatchSave408_00506414 >> 2;
     DispatcherComplex260_00407400();
     if (g_framePauseFlag != 0) return;
     PushSetCallPop_00406530();
