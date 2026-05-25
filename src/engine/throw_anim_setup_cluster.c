@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,18 +128,18 @@ extern void ThrowAnimSetupCluster_00484150(void);
 
 /* @addr 0x00484000 (336b game) - install-self with multi-call cascade + chain field-copy thunk.
  *   state!=0: tail-call FiveCallGuardSetTail; pop+ret.
- *   state==0: dec g_state_0054207c; if non-zero tail-call InstallSelfTwoTailJmp_00483f30.
+ *   state==0: dec g_eventQueueNotMask; if non-zero tail-call InstallSelfTwoTailJmp_00483f30.
  *     Call SlotPhaseResetInstallChain_0048e0e0; if pause ret.
- *     g_data_00542070=[cj*4+0x28]. Install-self at entry+0x01000000; state=1; call CallPauseScaledStoreJmp; pause=1; ret.
+ *     g_eventQueueCurrent=[cj*4+0x28]. Install-self at entry+0x01000000; state=1; call CallPauseScaledStoreJmp; pause=1; ret.
  *   Tail (+0xc0): g_walkCallback=3; call ByteWordTableTaggedDispatch; if pause ret.
- *     Call TradePlaceChain_004933d0; if pause ret. g_x_00542054=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
+ *     Call TradePlaceChain_004933d0; if pause ret. g_eventQueueEnd=g_scaledInit. If zero: tail-jmp CjInstallSelfRouter.
  *     Push 0x70, push (ThrowAnimSetupCluster_00484150 + 0x10); call StoreTwoCall; pop. Copy chain[baseSel*4+0x3c] to [scaledInit*4+0x3c].
  *     Call CopyJmp; if pause ret. If bit0(0054208c): jmp ThrowAnimSetupCluster_00484150.
  *     Else: push 0x004ee800; call ArgSarStoreJmp; pop; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ByteWordTableTaggedDispatch_0048a050(void);
 extern void CallPauseScaledStoreJmp_00428820(void);
@@ -160,9 +160,9 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         call    FiveCallGuardSetTail_0046f6b0
         pop     esi
         ret
-        mov     eax, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   07h
         call    InstallSelfTwoTailJmp_00483f30
@@ -176,7 +176,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x28]
         mov     ecx, offset InstallSelfMultiCascadeChainCopy_00484000
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [esi + 8], offset InstallSelfMultiCascadeChainCopy_00484000
         mov     eax, dword ptr [g_baseSel_00542060]
         add     ecx, 0x01000000
@@ -208,7 +208,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         _emit   69h
         mov     eax, dword ptr [g_scaledInit_00542044]
         test    eax, eax
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
         _emit   05h
         jmp     CjInstallSelfRouter_00470480
@@ -219,14 +219,14 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy_00484000(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         add     esp, 8
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         call    CopyJmp_0048ef90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   1bh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     ThrowAnimSetupCluster_00484150

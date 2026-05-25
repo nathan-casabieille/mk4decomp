@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,22 +123,22 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
- *   g_x_00542048 = 0x0050d434>>2; call MStackPushDispatchBitGate_00407330; if pause? final-ret.
- *   if bit2 of g_state_0054208c set: tail-jmp ScaledInitWithCounterAndType_004314f0.
+ *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate_00407330; if pause? final-ret.
+ *   if bit2 of g_xformDirtyFlags set: tail-jmp ScaledInitWithCounterAndType_004314f0.
  *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall_004058c0; if pause? final-ret.
  *   call MStackCall_00406340; if pause? final-ret.
- *   Clear cj[+0x5c] and g_x_0054207c. cj[+0x64] = g_x_00542058[+0x64].
- *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_x_00542058[+0x34] & 1) | 0x81000.
- *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_x_00542054[+0x54].
+ *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
+ *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
+ *   cj[+0x3c] = g_x_00535e6c. cj[+0x54] = g_eventQueueEnd[+0x54].
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void MStackCall_00406340(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 extern void MStackPushTwoEntryChainCall_004058c0(void);
@@ -148,7 +148,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
     __asm {
         mov     eax, 0x0050d434
         sar     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPushDispatchBitGate_00407330
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -158,7 +158,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
         jmp     ScaledInitWithCounterAndType_004314f0
@@ -183,20 +183,20 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         _emit   00h
         _emit   00h
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [g_eventQueueNotMask], 0
         mov     dword ptr [edx*4 + 0x5c], 0
-        mov     eax, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x64], eax
-        mov     edx, dword ptr [g_x_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     ecx, dword ptr [edx*4 + 0x34]
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         and     ecx, 1
         mov     eax, dword ptr [edx*4 + 0x34]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         and     al, 0xfe
         or      eax, ecx
         or      eax, 0x00081000
@@ -205,7 +205,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr_0043cb00(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [g_x_00535e6c]
         mov     dword ptr [eax*4 + 0x3c], ecx
-        mov     edx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x54]
         mov     dword ptr [g_x_00542078], eax

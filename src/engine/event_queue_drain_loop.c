@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,20 +122,20 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x0045c840 (138b) - event-queue drain: while (g_x_0053a2f0 != g_x_00542048):
- *   g_x_00542054 = g_x_0053a2f0; eax = arr_table[g_x_00542048];
- *   g_x_00542074 = 0x11; g_x_0054204c = eax; call AllocNode();
+/* @addr 0x0045c840 (138b) - event-queue drain: while (g_x_0053a2f0 != g_xformEntityIdx):
+ *   g_eventQueueEnd = g_x_0053a2f0; eax = arr_table[g_xformEntityIdx];
+ *   g_eventQueueWorkType = 0x11; g_pendingNodeType = eax; call AllocNode();
  *   if (g_framePauseFlag != 0): break;
- *   g_walkCallback = 0; arr_slot[g_x_00542048] = 0;
- *   ++g_x_00542048; if == g_data_00542050: reset to (g_data_0053a4b8 >> 2);
+ *   g_walkCallback = 0; arr_slot[g_xformEntityIdx] = 0;
+ *   ++g_xformEntityIdx; if == g_eventQueueTotal: reset to (g_data_0053a4b8 >> 2);
  *   loop. Then call DispatchEventQueue_Commit and ret.
  */
 extern unsigned int g_data_0053a4b8;
 extern unsigned int g_x_0053a2f0;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542074;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_arr_slot_45c840;
 extern unsigned int g_arr_table_45c840;
@@ -143,38 +143,38 @@ extern unsigned int g_arr_table_45c840;
 __declspec(naked) void EventQueueDrainLoop_0045c840(void) {
     __asm {
         mov     ecx, dword ptr [g_x_0053a2f0]
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         push    esi
         cmp     ecx, eax
         push    edi
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         _emit   74h
         _emit   6bh
         mov     edi, 0x11
         xor     esi, esi
         mov     eax, [eax*4 + g_arr_table_45c840]
-        mov     dword ptr [g_x_00542074], edi
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_eventQueueWorkType], edi
+        mov     dword ptr [g_pendingNodeType], eax
         call    AllocNode
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   4ah
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     [ecx*4 + g_arr_slot_45c840], esi
-        mov     eax, dword ptr [g_x_00542048]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_xformEntityIdx]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         cmp     eax, ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   75h
         _emit   0dh
         mov     eax, offset g_data_0053a4b8
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [g_x_0053a2f0]
         cmp     ecx, eax
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         _emit   75h
         _emit   9ch
         call    DispatchEventQueue_Commit

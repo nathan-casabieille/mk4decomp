@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,13 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   If chain[+0x84] was nonzero: g_walkCallback=2 unless was already 2 (then 6);
  *     scaledInit = 0x00543200>>2 + g_walkCallback; nested chain load;
  *     call StateMachineInit_00493000; if pause? ret. If bit2 of state set tail-call CallSetPause; ret.
- *   If was zero: g_x_00542054 = g_cj_0054205c; cj[+0x58] = 0xfffb0000; install-self;
+ *   If was zero: g_eventQueueEnd = g_cj_0054205c; cj[+0x58] = 0xfffb0000; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x00461a60+0x01000000;
  *     call InitZeroChainLookupJmp_00494210; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
 extern void CallSetPause_0041f830(void);
 extern void InitZeroChainLookupJmp_00494210(void);
 extern void StateMachineInit_00493000(void);
@@ -162,7 +162,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    StateMachineInit_00493000
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -172,7 +172,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   07h
         call    CallSetPause_0041f830
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfTableDispatch_00461a60(void) {
         ret
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 0xfffb0000
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x58], ecx
         mov     dword ptr [esi + 8], 0x00461a60

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,59 +125,59 @@ extern unsigned int g_data_004d5ed0;
 extern unsigned int g_framePauseFlag;
 extern void ThreeChanPackClamp_00404cc0(void);
 extern void CopyThreeFields_00404df0(void);
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 
 /* @addr 0x0040c100 (337b boot) - boot one-shot setup w/ MStack-push-3.
  *   Pushes 0x806000 onto ThreeChanPackClamp_00404cc0 (audio volume?),
- *   passes g_data_0054205c to CopyThreeFields_00404df0, then calls
- *   SetJmp_00405420. On no-error AND bit 2 of g_data_0054208c set:
- *   mstack-pushes g_data_00542048/00542054/0054205c (3 entries). Caches
- *   g_data_0054205c into g_data_00542054, sets g_walkCallback =
+ *   passes g_fightGroupHead to CopyThreeFields_00404df0, then calls
+ *   SetJmp_00405420. On no-error AND bit 2 of g_xformDirtyFlags set:
+ *   mstack-pushes g_xformEntityIdx/00542054/0054205c (3 entries). Caches
+ *   g_fightGroupHead into g_eventQueueEnd, sets g_walkCallback =
  *   &g_data_004d5ed0>>2, calls PushSetXfmMaskCallPop_00407140.
  *   On no-error AND bit 2 NOT set: calls ScaledChainOr8_00404e50,
- *   writes 0x18000 into [g_data_00542048*4 + 0x48], calls
- *   ScaledTripleCopy54_004ac040. On no-error sets g_data_00542044 =
- *   g_data_0054205c, g_walkCallback=0xff, calls
+ *   writes 0x18000 into [g_xformEntityIdx*4 + 0x48], calls
+ *   ScaledTripleCopy54_004ac040. On no-error sets g_currentNodeIdx =
+ *   g_fightGroupHead, g_walkCallback=0xff, calls
  *   PushSetDualDeref_00406650 → MStackCall_00406600. Pops the 3
  *   mstack entries back into 0054205c/00542054/00542048 in reverse.
  */
 void BootOneShotMStackPush3_0040c100(void) {
     ((void (*)(int))ThreeChanPackClamp_00404cc0)(0x806000);
-    ((void (*)(unsigned int))CopyThreeFields_00404df0)(g_data_0054205c);
+    ((void (*)(unsigned int))CopyThreeFields_00404df0)(g_fightGroupHead);
     SetJmp_00405420();
     if (g_framePauseFlag != 0) return;
-    if (!(g_data_0054208c & 4)) return;
+    if (!(g_xformDirtyFlags & 4)) return;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_00542048;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_00542054;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueEnd;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_0054205c;
-    g_data_00542054 = g_data_0054205c;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
+    g_eventQueueEnd = g_fightGroupHead;
     g_walkCallback = (unsigned int)&g_data_004d5ed0 >> 2;
     PushSetXfmMaskCallPop_00407140();
     if (g_framePauseFlag != 0) return;
-    if (!(g_data_0054208c & 4)) {
+    if (!(g_xformDirtyFlags & 4)) {
         ScaledChainOr8_00404e50();
         g_walkCallback = 0x18000;
-        *(unsigned int *)(g_data_00542048 * 4 + 0x48) = 0x18000;
+        *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54_004ac040();
         if (g_framePauseFlag != 0) return;
         g_walkCallback = 0xff;
-        g_data_00542044 = g_data_0054205c;
+        g_currentNodeIdx = g_fightGroupHead;
         PushSetDualDeref_00406650();
         if (g_framePauseFlag != 0) return;
         MStackCall_00406600();
         if (g_framePauseFlag != 0) return;
     }
-    g_data_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
+    g_fightGroupHead = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_data_00542054 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueEnd = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_data_00542048 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

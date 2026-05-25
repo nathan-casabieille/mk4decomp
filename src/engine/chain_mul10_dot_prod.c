@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void DualMul10ChainAcc_0042d010(void);
 
 void ChainMul10DotProd_0042cec0(void) {
@@ -135,9 +135,9 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     eax, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    DualMul10ChainAcc_0042d010
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -147,12 +147,12 @@ void ChainMul10DotProd_0042cec0(void) {
         _emit   01h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_data_0053a3dc]
-        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         mov     eax, dword ptr [g_data_0053a41c]
-        mov     dword ptr [g_state_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         push    eax
         push    edx
         mov     dword ptr [g_acc_00542078], eax
@@ -160,19 +160,19 @@ void ChainMul10DotProd_0042cec0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_acc_00542078], eax
-        mov     eax, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_acc_00542078]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         add     ecx, edx
         add     esp, 8
-        mov     dword ptr [g_data_00542070], ecx
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     dword ptr [g_eventQueueCurrent], ecx
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         add     ecx, eax
-        mov     dword ptr [g_state_0054207c], eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueNotMask], eax
+        mov     dword ptr [g_eventQueueWorkType], ecx
         call    DualMul10ChainAcc_0042d010
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -182,8 +182,8 @@ void ChainMul10DotProd_0042cec0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_0054207c]
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_eventQueueNotMask]
+        mov     ecx, dword ptr [g_eventQueueChild]
         cmp     eax, ecx
         mov     eax, dword ptr [g_walkCallback]
         _emit   7fh
@@ -195,22 +195,22 @@ void ChainMul10DotProd_0042cec0(void) {
         push    ecx
         push    eax
         mov     dword ptr [g_acc_00542078], ecx
-        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     dword ptr [g_acc_00542078], eax
-        mov     eax, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         mov     eax, dword ptr [g_acc_00542078]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x6c], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_state_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [ecx*4 + 0x74], edx
         }
 }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,10 +127,10 @@ extern unsigned int g_data_004eefd8;
 extern unsigned int g_data_004ef010;
 extern unsigned int g_data_00500710;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CinematicCFsmCluster_004884a0(void);
@@ -145,7 +145,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
 {
     __asm {
         /* === Helper 1 (0x488210): set 0x83 + push 488250 continuation === */
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0x83
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
@@ -187,7 +187,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
     L_8284:
         mov      dword ptr [esi + 8], OFFSET L_8250
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_pendingNodeType], 8
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -197,7 +197,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8361
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0xffffff7d
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
@@ -207,11 +207,11 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
@@ -223,7 +223,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_8250
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_pendingNodeType], 8
         mov      dword ptr [g_framePauseFlag], eax
     L_8361:
         pop      esi
@@ -249,7 +249,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_83be
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0xf5c
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
@@ -262,13 +262,13 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, 0xffffee15
         mov      dword ptr [edx*4 + 0x74], 0x1002
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x4c], ecx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_8370
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 4
+        mov      dword ptr [g_pendingNodeType], 4
         mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
@@ -281,7 +281,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
     L_8410:
         mov      eax, OFFSET g_data_00500710
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         call     ScaledArrStore_004298c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

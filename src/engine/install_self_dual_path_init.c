@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   state nonzero (init path): push 0x47, 0x0049a580; call StoreTwoCall;
  *     push 0x004f2770; tail-call ArgSarStoreJmp; eax=g_pause; ret.
  *   state zero: call RunBlockFsmCluster_00499c80; if !pause: push 0x0054331c, call
- *     GuardedPackedSlotInit; if !pause: g_state_00542080=4; install-self;
+ *     GuardedPackedSlotInit; if !pause: g_eventQueueChild=4; install-self;
  *     chain[+0x84]=1; scaledInit-chain push 0x0049a2f0+0x01000000;
  *     call ScaledClearJmp_00428d40; pause=1; ret.
  *   After 12 NOPs (alignment-only): tail block for another entry/sibling that
@@ -173,7 +173,7 @@ __declspec(naked) void InstallSelfDualPathInit_0049a2f0(void) {
         test    eax, eax
         _emit   75h
         _emit   69h
-        mov     dword ptr [g_state_00542080], 4
+        mov     dword ptr [g_eventQueueChild], 4
         mov     dword ptr [esi + 8], 0x0049a2f0
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, 0x0049a2f0

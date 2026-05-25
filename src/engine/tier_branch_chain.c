@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -121,7 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 /*
  * @addr 0x0048b6c0 (114b game) - branch by tier: if tier <= 2 do
@@ -132,18 +132,18 @@ extern unsigned int g_x_00542074;
 void TierBranchChain_0048b6c0(void) {
     unsigned int tier;
     unsigned int wt;
-    if ((int)g_x_00542074 <= 2) {
-        g_x_00542074 = *(unsigned int *)(g_data_00542050 * 4 + 4);
+    if ((int)g_eventQueueWorkType <= 2) {
+        g_eventQueueWorkType = *(unsigned int *)(g_eventQueueTotal * 4 + 4);
         return;
     }
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueWorkType;
-    tier = g_x_00542074;
+    tier = g_eventQueueWorkType;
     wt = g_eventQueueWorkType + tier * 2;
     wt += tier;
     wt -= 6;
     g_eventQueueWorkType = wt;
-    g_x_00542074 = *(unsigned int *)(wt * 4);
+    g_eventQueueWorkType = *(unsigned int *)(wt * 4);
     g_eventQueueWorkType = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

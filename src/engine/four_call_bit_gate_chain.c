@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,21 +123,21 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004334d0 (252b game) - 4-call pattern with bit2 gate.
- *   For each of 4 g_x_00542058 fields (+0/+4/+8/+0xc): set g_walkCallback=field;
+ *   For each of 4 g_eventQueueIdx fields (+0/+4/+8/+0xc): set g_walkCallback=field;
  *   call MStackPush2LLWalkCompare_004069b0; if pause? final-OR-state-bit0 + copy scaledInit to
- *   g_x_00542054 + ret. If bit2 of g_state_0054208c set? clear-bit0-ret.
- *   Save scaledInit to side regs (g_x_00542048/0x4c/g_data_00542050) between calls.
+ *   g_eventQueueEnd + ret. If bit2 of g_xformDirtyFlags set? clear-bit0-ret.
+ *   Save scaledInit to side regs (g_xformEntityIdx/0x4c/g_eventQueueTotal) between calls.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern void MStackPush2LLWalkCompare_004069b0(void);
 
 __declspec(naked) void FourCallBitGateChain_004334d0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         push    ebx
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
@@ -150,7 +150,7 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         _emit   84h
         _emit   0c3h
@@ -161,8 +161,8 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         _emit   00h
         _emit   00h
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_00542058]
-        mov     dword ptr [g_x_00542048], edx
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
@@ -174,12 +174,12 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   68h
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_00542058]
-        mov     dword ptr [g_x_0054204c], edx
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_pendingNodeType], edx
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
@@ -187,12 +187,12 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         test    eax, eax
         _emit   75h
         _emit   62h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   34h
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_00542058]
-        mov     dword ptr [g_data_00542050], edx
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_eventQueueTotal], edx
         mov     ecx, dword ptr [eax*4 + 0x0c]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackPush2LLWalkCompare_004069b0
@@ -200,19 +200,19 @@ __declspec(naked) void FourCallBitGateChain_004334d0(void) {
         test    eax, eax
         _emit   75h
         _emit   2eh
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   0eh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     ebx
         ret
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         mov     edx, dword ptr [g_scaledInit_00542044]
         or      al, 1
-        mov     dword ptr [g_x_00542054], edx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_eventQueueEnd], edx
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     ebx
         ret
     }

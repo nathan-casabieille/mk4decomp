@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00489170 (166b game) - install-self with 5 StoreTwoCall:
  *   chain[sel].slot84 -> eax; clear. If !=0: jmp StackPopDispatchTagged.
  *   Else: 5 calls to StoreTwoCall_0049cb40(str_x, 0x267) for different str_x,
- *   then install self at +8, slot84=1, g_x_0054204c=0xa0, pause flag=1.
+ *   then install self at +8, slot84=1, g_pendingNodeType=0xa0, pause flag=1.
  */
 extern unsigned int g_data_0044dec0;
 extern unsigned int g_data_0044e0f0;
 extern unsigned int g_data_0044e1c0;
 extern unsigned int g_data_0044e280;
 extern unsigned int g_data_0044ea20;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_pendingNodeType;
 
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
@@ -172,7 +172,7 @@ __declspec(naked) void InstallSelfFiveStoreCalls_00489170(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset InstallSelfFiveStoreCalls_00489170
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], 0xa0
+        mov     dword ptr [g_pendingNodeType], 0xa0
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

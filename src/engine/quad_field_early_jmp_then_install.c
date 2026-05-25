@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
@@ -138,10 +138,10 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x30]
         cmp     ecx, 0x6c
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         je      short L_qfeji_cont1
         jmp     DirtyToggleScaledTest_0043a630
     L_qfeji_cont1:
@@ -167,10 +167,10 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         inc     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
-        mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542074], 0x32
-        mov     dword ptr [g_data_0054204c], offset L_qfeji_sub2
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueWorkType], 0x32
+        mov     dword ptr [g_pendingNodeType], offset L_qfeji_sub2
         call    AllocNode
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -178,7 +178,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     DirtyToggleScaledTest_0043a630
     L_qfeji_ret:
@@ -208,7 +208,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         add     edx, 0x2000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     short L_qfeji_sub2_chain
     L_qfeji_sub2_phase0:
         mov     dword ptr [g_walkCallback], 0xccc
@@ -227,12 +227,12 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall_0043a670(void)
         add     edx, 0x1000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
     L_qfeji_sub2_chain:
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0

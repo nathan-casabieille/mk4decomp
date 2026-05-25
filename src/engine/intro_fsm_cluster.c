@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,11 +127,11 @@ extern unsigned int g_data_004e65b8;
 extern unsigned int g_data_004e65c8;
 extern unsigned int g_data_00501088;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DoubleScaledCrossStore_00475750(void);
@@ -154,9 +154,9 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         nop
         nop
         /* H2 */
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         js       short L_d5a2
         /* orig uses near jmp form here (e9 rel32) even though
          * short would fit; force the 5-byte encoding. */
@@ -199,9 +199,9 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d738
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         push     OFFSET g_data_004e65c8
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      dword ptr [g_fightGroupHead], ecx
         call     ArgSarStoreJmp_004594f0
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4
@@ -209,18 +209,18 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
     L_d61c:
         mov      edx, OFFSET g_data_00501088
         shr      edx, 2
-        mov      dword ptr [g_data_00542054], edx
+        mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [eax + 8], OFFSET L_d5c0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_d5c0
         add      edx, 0x3000000
         mov      dword ptr [ecx*4 + 0x84], 3
         mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -234,11 +234,11 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x2000000
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -247,15 +247,15 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         ret
     L_d6f0:
         mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [ecx*4 + 0x64], edx
         mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [ecx*4 + 0x68], edx
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_d5c0
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 0xb
+        mov      dword ptr [g_pendingNodeType], 0xb
         mov      dword ptr [g_framePauseFlag], ecx
     L_d738:
         ret
@@ -270,9 +270,9 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      eax, dword ptr [g_data_00542060]
         push     OFFSET g_const_0044d820
         mov      ecx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         call     StoreLoadJmp_00404ef0
         add      esp, 4
         mov      dword ptr [g_walkCallback], 0x2b
@@ -280,7 +280,7 @@ __declspec(naked) void IntroFsmCluster_0044d580(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d793
-        mov      dword ptr [g_data_00542054], 1
+        mov      dword ptr [g_eventQueueEnd], 1
         jmp      PendingMatch_0044d7a0
     L_d793:
         ret

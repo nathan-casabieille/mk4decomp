@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,19 +124,19 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f3608;
 extern unsigned int g_data_0053a6dc;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00537f2c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542048;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00538038;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_fightGroupHead;
 extern void Thunk_0049cbd0(void);
 extern void CallSetPause_0041f830(void);
 extern void StageEntityInitCluster_004216a0(void);
@@ -158,37 +158,37 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret
         mov     eax, dword ptr [g_data_0053a6dc]
-        mov     dword ptr [g_data_00542074], 0x26
+        mov     dword ptr [g_eventQueueWorkType], 0x26
         test    eax, eax
-        mov     dword ptr [g_data_0054204c], offset L_tdsc_sub2
+        mov     dword ptr [g_pendingNodeType], offset L_tdsc_sub2
         mov     dword ptr [g_walkCallback], eax
         jne     short L_tdsc_a1
-        mov     dword ptr [g_data_0054207c], 1
+        mov     dword ptr [g_eventQueueNotMask], 1
         call    AllocNode
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tdsc_ret
     L_tdsc_a1:
         mov     eax, dword ptr [g_data_00537f2c]
-        mov     dword ptr [g_data_0054204c], offset L_tdsc_sub3
+        mov     dword ptr [g_pendingNodeType], offset L_tdsc_sub3
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     short L_tdsc_a2
-        mov     dword ptr [g_data_00542080], 1
+        mov     dword ptr [g_eventQueueChild], 1
         call    AllocNode
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tdsc_ret
     L_tdsc_a2:
-        mov     eax, dword ptr [g_data_0054207c]
-        mov     dword ptr [g_data_00542048], 0x421830
+        mov     eax, dword ptr [g_eventQueueNotMask]
+        mov     dword ptr [g_xformEntityIdx], 0x421830
         test    eax, eax
         jne     short L_tdsc_a3
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax
         je      short L_tdsc_a4
         mov     eax, dword ptr [g_data_00538038]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
         mov     dword ptr [g_walkCallback], eax
@@ -198,15 +198,15 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         test    eax, eax
         jne     short L_tdsc_ret
     L_tdsc_a3:
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax
         jne     short L_tdsc_ret
     L_tdsc_a4:
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         test    eax, eax
         je      short L_tdsc_ret
         mov     eax, dword ptr [g_data_0053803c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
         mov     dword ptr [g_walkCallback], eax
@@ -230,10 +230,10 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_data_0053815c]
         mov     ecx, dword ptr [g_data_0053803c]
         mov     edx, dword ptr [g_data_00538158]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
-        mov     dword ptr [g_data_00542048], ecx
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_fightGroupHead], edx
         je      short L_tdsc_sub2_fall
         test    ecx, ecx
         je      short L_tdsc_sub2_fall
@@ -254,10 +254,10 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_data_00538158]
         mov     ecx, dword ptr [g_data_00538038]
         mov     edx, dword ptr [g_data_0053815c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
-        mov     dword ptr [g_data_00542048], ecx
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_fightGroupHead], edx
         je      short L_tdsc_sub3_fall
         test    ecx, ecx
         je      short L_tdsc_sub3_fall

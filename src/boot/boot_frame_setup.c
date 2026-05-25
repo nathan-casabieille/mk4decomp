@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,18 +136,18 @@ extern void Wrapper_00484d90(void);
  *     MstackPopScaledChainPlusThunks_00471250.
  *   B2 (0x30..0x4b, +4 NOPs): call ScaledAndAl7f_004902f0; if !pause: push 0x004ee8f8,
  *     tail-call ArgSarStoreJmp.
- *   B3 (0x50..0xa4, +11 NOPs): g_x_00542048 = 0x00500698>>2; 4-call chain
+ *   B3 (0x50..0xa4, +11 NOPs): g_xformEntityIdx = 0x00500698>>2; 4-call chain
  *     (BootFrameSetup_00408190, GuardedChainCmpDualBitXor, ScaledXorStore, GateDispatch6c);
  *     if all !pause: tail-jmp CallPauseDirtyPushCall_00488ba0.
  *   B4 (0xb0..0xe7, +8 NOPs): call GateDispatch6c; if !pause: call CopyJmp_0048ef90;
  *     if !pause and bit0 of state set: tail-jmp PendingMatch_00484da0; else: push 0x004ee920,
  *     tail-call ArgSarStoreJmp.
  *   B5 (0xf0..0x11b): call DirtyToggleByGate; if !pause and bit2 of state clear:
- *     tail-jmp Wrapper_00484d90; else g_state_00542080=0xd and tail-jmp
+ *     tail-jmp Wrapper_00484d90; else g_eventQueueChild=0xd and tail-jmp
  *     DualBlockInstallSelfWithSibling_00484c90.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualBlockInstallSelfWithSibling_00484c90(void);
 extern void GateDispatch6c_00494580(void);
@@ -198,7 +198,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         mov     eax, 0x00500698
         mov     dword ptr [g_walkCallback], 0
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -242,7 +242,7 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     PendingMatch_00484da0
@@ -263,11 +263,11 @@ __declspec(naked) void FiveBlockDispatchChain_00484b70(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   05h
         jmp     Wrapper_00484d90
-        mov     dword ptr [g_state_00542080], 0x0d
+        mov     dword ptr [g_eventQueueChild], 0x0d
         jmp     DualBlockInstallSelfWithSibling_00484c90
         ret
     }

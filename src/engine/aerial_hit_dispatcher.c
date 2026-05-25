@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,15 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542070;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_data_004ed8d8;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_pendingNodeType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GuardedDirtyXformFromTable_0048f6d0(void);
 extern void AerialHitDispatcher_0047c290(void);
@@ -172,22 +172,22 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         sub     eax, 0
         je      L_psisbc_phase0
         dec     eax
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         je      short L_psisbc_phase1
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x48]
         cmp     ecx, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         jg      L_psisbc_install2
         mov     ecx, offset g_data_004ed8d8
         shr     ecx, 2
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    GuardedDirtyXformFromTable_0048f6d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_psisbc_ret
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x51e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
@@ -196,10 +196,10 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         ret
     L_psisbc_phase1:
         mov     dword ptr [eax*4 + 0x58], 0
-        mov     ecx, dword ptr [g_data_00542084]
-        mov     edx, dword ptr [g_data_00542088]
+        mov     ecx, dword ptr [g_currentNodeFlags]
+        mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         call    Vec2ChainComputeStores_00480b80
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -211,7 +211,7 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
     L_psisbc_install2:
         mov     dword ptr [esi + 8], offset L_psisbc_entry2
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 1
+        mov     dword ptr [g_pendingNodeType], 1
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -221,21 +221,21 @@ __declspec(naked) void PairedSubInstallSelfBigChain_0047c0d0(void)
         test    eax, eax
         jne     L_psisbc_ret
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_00542070]
-        mov     dword ptr [g_data_00542084], eax
-        mov     dword ptr [g_data_00542088], ecx
-        mov     dword ptr [g_data_0054207c], 0xfffc0000
+        mov     ecx, dword ptr [g_eventQueueCurrent]
+        mov     dword ptr [g_currentNodeFlags], eax
+        mov     dword ptr [g_xformScratch2088], ecx
+        mov     dword ptr [g_eventQueueNotMask], 0xfffc0000
         mov     dword ptr [esi + 8], offset L_psisbc_entry2
         mov     edx, dword ptr [g_data_00542060]
         mov     ecx, offset L_psisbc_entry2
         add     ecx, 0x1000000
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,18 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0041fc50 (100b) - walk g_data_0053e368..0x541d68 by 0xe8 strides;
- *   g_walkCallback &= g_data_00542070; for each struct: if struct[0xd8] != 0
- *   AND (arr[key+3] & g_data_00542070) != g_walkCallback: call NodeUnlink(esi).
+ *   g_walkCallback &= g_eventQueueCurrent; for each struct: if struct[0xd8] != 0
+ *   AND (arr[key+3] & g_eventQueueCurrent) != g_walkCallback: call NodeUnlink(esi).
  */
 extern unsigned int g_data_0053e368;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void NodeUnlink_0041f710(void);
 
 extern unsigned int g_arr_41fc50_disp_0c;
 
 __declspec(naked) void StructArrayWalkCondCall_0041fc50(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_walkCallback]
         and     ecx, eax
         push    esi
@@ -145,7 +145,7 @@ loop41fc50:
         test    eax, eax
         _emit   74h
         _emit   31h
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, esi
         sar     eax, 2
@@ -153,7 +153,7 @@ loop41fc50:
         mov     eax, [eax*4 + g_arr_41fc50_disp_0c]
         and     eax, edx
         cmp     eax, ecx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         _emit   75h
         _emit   09h
         push    esi

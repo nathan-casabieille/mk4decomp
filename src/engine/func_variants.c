@@ -16,24 +16,24 @@ extern unsigned int g_data_004f2240;
 extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_state_004d57ac;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00535ddc;
-extern unsigned int g_state_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_004edf68;
 extern unsigned int g_data_004f21d0;
 extern unsigned int g_data_004f2250;
@@ -113,7 +113,7 @@ extern void TripleMStackPushChainStores_00476180(void);
 extern void func_004283b3(void);
 extern void func_0042976e(void);
 
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void EsiInstallChainCallIndirect_00428680(void);
 extern void IterStepDualStore_00490b40(void);
@@ -307,7 +307,7 @@ void func_00439fa0(void) {
     unsigned int v = g_state_00535ddc;
     g_walkCallback = v;
     if ((int)v < 0x13333) {
-        g_state_0054208c &= 0xfffffffeu;
+        g_xformDirtyFlags &= 0xfffffffeu;
         return;
     }
     IdCascadeBitSet_00439760();
@@ -320,7 +320,7 @@ void func_00498730(void) {
     if (g_framePauseFlag) return;
     Vec2SumMul10ChainCompute_0049bc60();
     if (g_framePauseFlag) return;
-    if ((int)g_data_00542070 <= (int)g_data_00542074) return;
+    if ((int)g_eventQueueCurrent <= (int)g_eventQueueWorkType) return;
     ScaledIndirectJmp_0049c850();
 }
 
@@ -353,7 +353,7 @@ __declspec(naked) void func_00498790(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x30]
         cmp     eax, 0x62
         mov     dword ptr [g_walkCallback], eax
@@ -368,9 +368,9 @@ __declspec(naked) void func_00498790(void)
         pop     ebx
         ret
     L_qsv_phase0:
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ebx, 1
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     eax, dword ptr [eax*4 + 0x30]
         cmp     eax, 0x6c
         mov     dword ptr [g_walkCallback], eax
@@ -380,7 +380,7 @@ __declspec(naked) void func_00498790(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_qsv_ret
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_qsv_install2
     L_qsv_install1:
         mov     dword ptr [esi + 8], offset L_qsv_main
@@ -389,11 +389,11 @@ __declspec(naked) void func_00498790(void)
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x2000000
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -409,11 +409,11 @@ __declspec(naked) void func_00498790(void)
         mov     dword ptr [eax*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x1000000
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -460,7 +460,7 @@ __declspec(naked) void func_00498980(void)
         jne      L_8ae4
         mov      eax, OFFSET g_data_004e3ac8
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -469,27 +469,27 @@ __declspec(naked) void func_00498980(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8ae4
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x43
         mov      dword ptr [g_walkCallback], eax
         push     esi
         mov      dword ptr [ecx*4 + 0x30], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_fightGroupHead]
         lea      eax, [edx*4]
         mov      edx, dword ptr [ecx*4 + 0x54]
         mov      dword ptr [g_walkCallback], edx
         mov      esi, dword ptr [ecx*4 + 0x58]
-        mov      dword ptr [g_data_00542070], esi
+        mov      dword ptr [g_eventQueueCurrent], esi
         mov      ecx, dword ptr [ecx*4 + 0x5c]
-        mov      dword ptr [g_data_00542074], ecx
+        mov      dword ptr [g_eventQueueWorkType], ecx
         mov      dword ptr [eax + 0x54], edx
-        mov      edx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [eax + 0x58], edx
-        mov      ecx, dword ptr [g_data_00542074]
+        mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [eax + 0x5c], ecx
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_fightGroupHead]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x34]
         and      eax, 1
         mov      dword ptr [g_walkCallback], eax
@@ -497,27 +497,27 @@ __declspec(naked) void func_00498980(void)
         or       eax, edx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      eax, dword ptr [g_data_00542084]
+        mov      eax, dword ptr [g_currentNodeFlags]
         push     eax
         push     0x23d7
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542088]
+        mov      ecx, dword ptr [g_xformScratch2088]
         add      esp, 8
-        mov      dword ptr [g_data_00542084], eax
+        mov      dword ptr [g_currentNodeFlags], eax
         push     ecx
         push     0x23d7
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542088], eax
-        mov      eax, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_xformScratch2088], eax
+        mov      eax, dword ptr [g_currentNodeFlags]
         add      esp, 8
         mov      dword ptr [edx*4 + 0x6c], eax
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_00542088]
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_xformScratch2088]
         push     OFFSET g_data_004f2240
         mov      dword ptr [ecx*4 + 0x74], edx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_fightGroupHead], eax
         call     ArgSar_Set0_Jmp_0049c6f0
         add      esp, 4
         pop      esi
@@ -531,7 +531,7 @@ __declspec(naked) void func_00498980(void)
 void func_00498af0(void) {
     Vec2SumMul10ChainCompute_0049bc60();
     if (g_framePauseFlag) return;
-    if ((int)g_data_00542070 <= (int)g_data_00542074) return;
+    if ((int)g_eventQueueCurrent <= (int)g_eventQueueWorkType) return;
     ScaledIndirectJmp_0049c850();
 }
 
@@ -572,7 +572,7 @@ __declspec(naked) void func_00498b20(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_8b20
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0xa
+        mov      dword ptr [g_pendingNodeType], 0xa
         mov      dword ptr [g_framePauseFlag], eax
     L_8ba8:
         pop      esi
@@ -638,18 +638,18 @@ __declspec(naked) void func_0047c3f0(void)
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, 0xfffc0000
         mov      edx, dword ptr [ecx*4 + 0x38]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_00542044], edx
+        mov      ecx, dword ptr [g_fightGroupHead]
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x58], edx
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0x51e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x4c], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x4c], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -658,18 +658,18 @@ __declspec(naked) void func_0047c3f0(void)
         mov      dword ptr [eax*4], OFFSET func_0047c510
         jmp      InstallSelfIndirectJmp_0048f3f0
     L_c4a2:
-        mov      dword ptr [g_data_0054207c], 0x30000
+        mov      dword ptr [g_eventQueueNotMask], 0x30000
         mov      dword ptr [eax + 8], OFFSET L_c3f0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_c3f0
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -689,18 +689,18 @@ __declspec(naked) void func_0047c530(void)
     __asm {
         /* === h6 (0x47c530): swap-side pose [+0x70] add 0x51e === */
         mov      eax, dword ptr [g_data_0053815c]
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_00542044], eax
+        mov      ecx, dword ptr [g_fightGroupHead]
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [g_data_00538158]
         cmp      ecx, eax
         je       short L_c54e
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
     L_c54e:
         mov      eax, dword ptr [ecx*4 + 0x70]
         add      eax, 0x51e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x70], eax
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x70], edx
         ret
@@ -721,7 +721,7 @@ void func_0047c580(void) {
     *(unsigned int *)(g_data_00542060 * 4 + 0x74) = v;
     ScaledChainAndF000DirtyToggle_0048e740();
     if (g_framePauseFlag) return;
-    if (g_data_0054208c & 1) {
+    if (g_xformDirtyFlags & 1) {
         SevenThunks_0047cc50();
         return;
     }
@@ -747,7 +747,7 @@ void func_00482240(void) {
     GateDispatch6c_00494580();
     if (g_framePauseFlag) return;
     g_walkCallback = 0x1b333;
-    g_data_00542070 = 0;
+    g_eventQueueCurrent = 0;
     Wrapper_0048ff30();
     if (g_framePauseFlag) return;
     ScaledMove48to58_00490720();
@@ -798,11 +798,11 @@ __declspec(naked) void func_004822e0(void)
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edi, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx
@@ -887,7 +887,7 @@ void func_004824b0(void) {
 /* h15 @ 0x004824e0 (30b): wait 6 + EntryThunkBodyStateMachine -> tail
  * EightEntryAlarmDispatch. */
 void func_004824e0(void) {
-    g_data_0054207c = 6;
+    g_eventQueueNotMask = 6;
     EntryThunkBodyStateMachine_00457bb0();
     if (g_framePauseFlag) return;
     EightEntryAlarmDispatch_00482500();
@@ -904,63 +904,63 @@ void func_00431c70(void) {
 /* @addr 0x0044f3d0 (28b) */
 void func_0044f3d0(void) {
     unsigned int v = (unsigned int)&g_data_004e6cd8;
-    g_data_00542088 = 0x2666;
+    g_xformScratch2088 = 0x2666;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f3f0 (28b) */
 void func_0044f3f0(void) {
     unsigned int v = (unsigned int)&g_data_004e6d30;
-    g_data_00542088 = 0x4ccc;
+    g_xformScratch2088 = 0x4ccc;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f410 (28b) */
 void func_0044f410(void) {
     unsigned int v = (unsigned int)&g_data_004e6d88;
-    g_data_00542088 = 0x4ccc;
+    g_xformScratch2088 = 0x4ccc;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f430 (28b) */
 void func_0044f430(void) {
     unsigned int v = (unsigned int)&g_data_004e6de0;
-    g_data_00542088 = 0x4ccc;
+    g_xformScratch2088 = 0x4ccc;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f450 (28b) */
 void func_0044f450(void) {
     unsigned int v = (unsigned int)&g_data_004e6e38;
-    g_data_00542088 = 0x4ccc;
+    g_xformScratch2088 = 0x4ccc;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f470 (28b) */
 void func_0044f470(void) {
     unsigned int v = (unsigned int)&g_data_004e6e90;
-    g_data_00542088 = 0x4ccc;
+    g_xformScratch2088 = 0x4ccc;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
 /* @addr 0x0044f490 (28b) */
 void func_0044f490(void) {
     unsigned int v = (unsigned int)&g_data_004e6ee8;
-    g_data_00542088 = 0x1999;
+    g_xformScratch2088 = 0x1999;
     v >>= 2;
-    g_data_00542058 = v;
+    g_eventQueueIdx = v;
     DualSubInstallChain_0044f4b0();
 }
 
@@ -971,23 +971,23 @@ void func_0044f490(void) {
 __declspec(naked) void func_00432710(void) {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         inc      eax
         push     ebx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_eventQueueIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -995,31 +995,31 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       L_2a19
         push     0x228
         call     DualPushSetCallDualPop_00404b10
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, 1
         jne      L_2a19
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      eax, 0x4e4458
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         add      ecx, eax
-        mov      dword ptr [g_data_00542084], ecx
+        mov      dword ptr [g_currentNodeFlags], ecx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
         mov      ebx, 4
-        mov      dword ptr [g_data_00542074], 0x23e
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_eventQueueWorkType], 0x23e
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0xfe9d0000
-        mov      dword ptr [g_data_0054207c], 0xff9c0000
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426490
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1028,11 +1028,11 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2a19
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x18000
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1041,10 +1041,10 @@ __declspec(naked) void func_00432710(void) {
         mov      edx, 0x4d55a8
         mov      dword ptr [g_walkCallback], 0x23f
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], edx
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0xfecf0000
-        mov      dword ptr [g_data_0054207c], 0xff9c0000
+        mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         call     Push70CallScaleArith2_00457b40
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1053,27 +1053,27 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2a19
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      dword ptr [eax*4 + 0x5c], ecx
-        mov      eax, dword ptr [g_data_00542084]
+        mov      eax, dword ptr [g_currentNodeFlags]
         lea      eax, [eax + eax*4]
         lea      eax, [eax + eax*4]
         shl      eax, 2
-        mov      dword ptr [g_data_00542084], eax
+        mov      dword ptr [g_currentNodeFlags], eax
         sar      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        mov      dword ptr [g_data_00542070], ebx
-        mov      dword ptr [g_data_00542074], 0x240
+        mov      dword ptr [g_eventQueueCurrent], ebx
+        mov      dword ptr [g_eventQueueWorkType], 0x240
         mov      dword ptr [g_data_00542078], 0xfe540000
-        mov      dword ptr [g_data_0054207c], 0xffb00000
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], 0xffb00000
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426490
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1082,10 +1082,10 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2a19
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_00542080]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueChild]
         mov      dword ptr [edx*4 + 0x5c], eax
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1094,10 +1094,10 @@ __declspec(naked) void func_00432710(void) {
         mov      ecx, 0x4d55b0
         mov      dword ptr [g_walkCallback], 0x241
         shr      ecx, 2
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0xfecf0000
-        mov      dword ptr [g_data_0054207c], 0xffb00000
+        mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         call     Push70CallScaleArith2_00457b40
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1106,33 +1106,33 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2a6a
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2a19
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_00542080]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueChild]
         push     0x228
         push     0x432f00
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      dword ptr [g_data_00542058], 0
+        mov      dword ptr [g_eventQueueIdx], 0
         call     StoreTwoCall_0049cb40
         add      esp, 8
     L_2a19:
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_eventQueueIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_pendingNodeType], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542084], edx
+        mov      dword ptr [g_currentNodeFlags], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_2a6a:
         pop      ebx
@@ -1142,24 +1142,24 @@ __declspec(naked) void func_00432710(void) {
         nop      
         nop      
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         inc      eax
         push     ebx
         mov      dword ptr [g_data_004d57ac], eax
         push     esi
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_eventQueueIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -1167,33 +1167,33 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       L_2e71
         push     0x229
         call     DualPushSetCallDualPop_00404b10
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, 1
         jne      L_2e71
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      eax, 0x4e4458
         shr      eax, 2
-        mov      dword ptr [g_data_00542080], 0x18000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_eventQueueChild], 0x18000
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         add      ecx, eax
-        mov      dword ptr [g_data_00542084], ecx
+        mov      dword ptr [g_currentNodeFlags], ecx
         call     StoreIncrMStackPush6_004275c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
         mov      ebx, 4
         mov      esi, 0xffa00000
-        mov      dword ptr [g_data_00542070], ebx
-        mov      dword ptr [g_data_00542074], 0x242
+        mov      dword ptr [g_eventQueueCurrent], ebx
+        mov      dword ptr [g_eventQueueWorkType], 0x242
         mov      dword ptr [g_data_00542078], 0x1310000
-        mov      dword ptr [g_data_0054207c], esi
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], esi
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1202,10 +1202,10 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_eventQueueChild]
         mov      dword ptr [ecx*4 + 0x5c], edx
         mov      eax, dword ptr [g_walkCallback]
         cmp      eax, 0xa
@@ -1217,10 +1217,10 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, 0x4d55a8
         mov      dword ptr [g_walkCallback], 0x243
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0x14d0000
-        mov      dword ptr [g_data_0054207c], esi
+        mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1229,7 +1229,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
         jmp      L_2caa
     L_2c3b:
@@ -1240,10 +1240,10 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, 0x4d55a8
         mov      dword ptr [g_walkCallback], 0x243
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0x1430000
-        mov      dword ptr [g_data_0054207c], esi
+        mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1252,17 +1252,17 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
     L_2caa:
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_eventQueueChild]
         mov      dword ptr [ecx*4 + 0x5c], edx
-        mov      eax, dword ptr [g_data_00542084]
+        mov      eax, dword ptr [g_currentNodeFlags]
         lea      eax, [eax + eax*4]
         lea      eax, [eax + eax*4]
         shl      eax, 2
-        mov      dword ptr [g_data_00542084], eax
+        mov      dword ptr [g_currentNodeFlags], eax
         sar      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
         call     StoreIncrMStackPush6_004275c0
@@ -1270,11 +1270,11 @@ __declspec(naked) void func_00432710(void) {
         test     eax, eax
         jne      L_2ec2
         mov      esi, 0xffb40000
-        mov      dword ptr [g_data_00542070], ebx
-        mov      dword ptr [g_data_00542074], 0x244
+        mov      dword ptr [g_eventQueueCurrent], ebx
+        mov      dword ptr [g_eventQueueWorkType], 0x244
         mov      dword ptr [g_data_00542078], 0x1310000
-        mov      dword ptr [g_data_0054207c], esi
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], esi
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1283,10 +1283,10 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      dword ptr [eax*4 + 0x5c], ecx
         mov      eax, dword ptr [g_walkCallback]
         cmp      eax, 0xa
@@ -1298,10 +1298,10 @@ __declspec(naked) void func_00432710(void) {
         mov      edx, 0x4d55b0
         mov      dword ptr [g_walkCallback], 0x245
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], edx
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0x14a0000
-        mov      dword ptr [g_data_0054207c], esi
+        mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1310,7 +1310,7 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
         jmp      L_2e43
     L_2dd7:
@@ -1321,10 +1321,10 @@ __declspec(naked) void func_00432710(void) {
         mov      edx, 0x4d55b0
         mov      dword ptr [g_walkCallback], 0x245
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_xformEntityIdx], edx
+        mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_data_00542078], 0x1400000
-        mov      dword ptr [g_data_0054207c], esi
+        mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall_00457900
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1333,34 +1333,34 @@ __declspec(naked) void func_00432710(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2ec2
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_2e71
     L_2e43:
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueChild]
         push     0x229
         push     0x432f00
         mov      dword ptr [eax*4 + 0x5c], ecx
-        mov      dword ptr [g_data_00542058], 1
+        mov      dword ptr [g_eventQueueIdx], 1
         call     StoreTwoCall_0049cb40
         add      esp, 8
     L_2e71:
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542084], ecx
+        mov      dword ptr [g_currentNodeFlags], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_2ec2:
         pop      esi
@@ -1370,7 +1370,7 @@ __declspec(naked) void func_00432710(void) {
 }
 
 void func_00448810(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x3b;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x3b;
     g_walkCallback = 0x1c;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1378,7 +1378,7 @@ void func_00448810(void) {
 }
 
 void func_00448850(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x83;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x83;
     g_walkCallback = 0x29;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1386,7 +1386,7 @@ void func_00448850(void) {
 }
 
 void func_00448890(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0x94;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x94;
     g_walkCallback = 0x1b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1394,7 +1394,7 @@ void func_00448890(void) {
 }
 
 void func_004488d0(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xa6;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xa6;
     g_walkCallback = 0x2a;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1402,7 +1402,7 @@ void func_004488d0(void) {
 }
 
 void func_00448910(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xb9;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xb9;
     g_walkCallback = 0x1b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1410,7 +1410,7 @@ void func_00448910(void) {
 }
 
 void func_00448950(void) {
-    *(unsigned int *)(g_data_0054205c * 4 + 0x28) = 0xce;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0xce;
     g_walkCallback = 0x2b;
     GatedWordPushCall_00489f90();
     if (g_framePauseFlag != 0) return;
@@ -1436,7 +1436,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
-        mov      dword ptr [g_data_0054207c], 5
+        mov      dword ptr [g_eventQueueNotMask], 5
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1448,29 +1448,29 @@ __declspec(naked) void func_00448990(void) {
         pop      esi
         ret      
     L_89fc:
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x28], 0x116
         mov      dword ptr [g_walkCallback], 0x12
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
-        mov      dword ptr [g_data_0054207c], 5
+        mov      dword ptr [g_eventQueueNotMask], 5
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8b40
-        mov      dword ptr [g_data_00542080], 0x133
+        mov      dword ptr [g_eventQueueChild], 0x133
         mov      dword ptr [esi + 8], 0x448990
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, 0x448990
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         jmp      L_8b0b
     L_8a7f:
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0xe1
         mov      dword ptr [g_walkCallback], 3
         call     GuardedSeq_00476f10
@@ -1480,11 +1480,11 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_data_00542060]
         push     0x448b50
         mov      ecx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         call     StoreLoadJmp_00404ef0
-        mov      dword ptr [g_data_00542080], 0x115
+        mov      dword ptr [g_eventQueueChild], 0x115
         mov      dword ptr [esi + 8], 0x448990
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, 0x448990
@@ -1492,12 +1492,12 @@ __declspec(naked) void func_00448990(void) {
         add      ecx, 0x1000000
         mov      dword ptr [eax*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
     L_8b0b:
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
@@ -1521,10 +1521,10 @@ __declspec(naked) void func_00448990(void) {
         nop      
         nop      
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
         mov      edx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      dword ptr [g_walkCallback], 0xc
         call     GuardedSeq_00472840
@@ -1536,26 +1536,26 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      ecx, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_fightGroupHead], ecx
         call     TripleMStackPushChainStores_00476180
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       L_8bd8
         jmp      Thunk_0049cbc0
     L_8bd8:
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_fightGroupHead]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x58]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x58], eax
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_fightGroupHead]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x3c]
         mov      dword ptr [ecx*4 + 0x3c], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x7e
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax
@@ -1563,14 +1563,14 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8cd2
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         push     0x4745e0
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         call     StoreLoadJmp_00404ef0
         add      esp, 4
         push     0x448e10
@@ -1621,18 +1621,18 @@ __declspec(naked) void func_00448990(void) {
         add      esp, 4
         ret      
     L_8d0f:
-        mov      dword ptr [g_data_00542080], 0x6d
+        mov      dword ptr [g_eventQueueChild], 0x6d
         mov      dword ptr [eax + 8], 0x448ce0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, 0x448ce0
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -1643,14 +1643,14 @@ __declspec(naked) void func_00448990(void) {
         nop      
         nop      
         nop      
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [eax*4 + 0x28], 0x7b
         mov      dword ptr [g_walkCallback], 0x17
         call     GatedWordPushCall_00489f90
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8dcd
-        mov      dword ptr [g_data_0054207c], 9
+        mov      dword ptr [g_eventQueueNotMask], 9
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1667,7 +1667,7 @@ __declspec(naked) void func_00448990(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8e0d
-        mov      dword ptr [g_data_0054207c], 9
+        mov      dword ptr [g_eventQueueNotMask], 9
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -1687,10 +1687,10 @@ __declspec(naked) void func_00448990(void) {
         sub      eax, 0
         je       L_8eec
         dec      eax
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         je       L_8e60
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jns      L_8e88
         call     ConstStoreCallJmp_00448fa0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1701,16 +1701,16 @@ __declspec(naked) void func_00448990(void) {
         ret      
     L_8e60:
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jns      L_8f2d
         call     ConstStoreCallJmp_00448fa0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8f95
-        mov      dword ptr [g_data_00542054], 0x5f
+        mov      dword ptr [g_eventQueueEnd], 0x5f
     L_8e88:
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -1722,28 +1722,28 @@ __declspec(naked) void func_00448990(void) {
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_00542054], edx
+        mov      dword ptr [g_eventQueueEnd], edx
         mov      eax, 1
         mov      dword ptr [esi + 8], 0x448e10
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      
     L_8eec:
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x64], ecx
         mov      edx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [ecx*4 + 0x4c], edx
-        mov      dword ptr [g_data_00542054], 0x64
+        mov      dword ptr [g_eventQueueEnd], 0x64
     L_8f2d:
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -1760,10 +1760,10 @@ __declspec(naked) void func_00448990(void) {
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      eax, 1
-        mov      dword ptr [g_data_00542054], edx
+        mov      dword ptr [g_eventQueueEnd], edx
         mov      dword ptr [esi + 8], 0x448e10
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
     L_8f95:
         pop      esi

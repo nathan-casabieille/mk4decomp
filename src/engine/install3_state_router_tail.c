@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046b4e0 (325b game) - 3-state install-self + dispatch state-1 (router) + tail thunk.
  *   state==0: call StateDispatchTable; if pause ret.
- *     g_x_00542054=g_walkCallback; g_x_00542084=0x1999; g_state_0054207c=0.
+ *     g_eventQueueEnd=g_walkCallback; g_currentNodeFlags=0x1999; g_eventQueueNotMask=0.
  *     Install-self at entry+0x01000000; state=1; call EsiInstallClampAddCall; pause=1; ret.
  *   state==1 (dec,je): tail-call CallPauseScaledStoreCopyJmp; if pause ret.
- *     Install-self at entry; state=2; g_x_0054204c=1; pause=1; ret.
+ *     Install-self at entry; state=2; g_pendingNodeType=1; pause=1; ret.
  *   state>=2 (fall): cmp g_x_0052aac4 with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
  *     Else: g_walkCallback=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
  *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
@@ -135,9 +135,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00541dc8;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052aac4;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542084;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void CjInstallSelfRouter_00470480(void);
@@ -186,7 +186,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   00h
         mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_x_0054204c], 1
+        mov     dword ptr [g_pendingNodeType], 1
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
@@ -200,9 +200,9 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542084], 0x1999
-        mov     dword ptr [g_x_00542054], ecx
-        mov     dword ptr [g_state_0054207c], 0
+        mov     dword ptr [g_currentNodeFlags], 0x1999
+        mov     dword ptr [g_eventQueueEnd], ecx
+        mov     dword ptr [g_eventQueueNotMask], 0
         mov     dword ptr [esi + 8], offset Install3StateRouterTail_0046b4e0
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset Install3StateRouterTail_0046b4e0

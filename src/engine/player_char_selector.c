@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,8 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004636d0 (309b game) - player-char selector with cmp/branch tables.
  *   Call BitShiftExtract; if pause ret.
- *   If g_state_0053a408==0: setup player1 (537f48). g_x_00542054 = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
- *   Else: setup player2 (005380e0). g_x_00542054 = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
+ *   If g_state_0053a408==0: setup player1 (537f48). g_eventQueueEnd = (0x00535cfc>>2). Call DownloadPlayerChar; ret.
+ *   Else: setup player2 (005380e0). g_eventQueueEnd = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
  *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_data_00535d10.
  */
 extern unsigned int g_data_00535cfc_arr;
@@ -138,7 +138,7 @@ extern unsigned int g_data_0053a250;
 extern unsigned int g_data_00541ec4;
 extern unsigned int g_data_00541ec8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 extern void BitShiftExtract_00464090(void);
 extern void DownloadPlayerChar(void);
 
@@ -190,8 +190,8 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     ecx, offset g_data_00535cfc_arr
         shr     ecx, 2
         mov     dword ptr [g_data_0053a178], eax
-        mov     dword ptr [g_x_00542054], ecx
-        mov     dword ptr [g_data_00542070], esi
+        mov     dword ptr [g_eventQueueEnd], ecx
+        mov     dword ptr [g_eventQueueCurrent], esi
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_pause_00541e6c]
         pop     esi
@@ -224,8 +224,8 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, offset g_data_0053a1d0_arr
         shr     eax, 2
         mov     dword ptr [g_data_0053a250], edx
-        mov     dword ptr [g_x_00542054], eax
-        mov     dword ptr [g_data_00542070], 1
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueCurrent], 1
         call    DownloadPlayerChar
         cmp     dword ptr [g_pause_00541e6c], esi
         _emit   75h

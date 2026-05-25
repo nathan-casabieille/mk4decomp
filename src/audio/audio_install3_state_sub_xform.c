@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,21 +125,21 @@ extern unsigned int g_data_00535e7c;
 /*
  * AudioInstall3StateSubXform_004a17d0 - 245b audio 3-state install-self.
  *   chain = g_baseSel_00542060<<2; saved=chain->state; chain->state=0.
- *   state 2+: ecx=g_x_0054205c; eax=chain[+0x6c]-0x4000; g_walkCallback=eax; chain[+0x6c]=eax;
+ *   state 2+: ecx=g_fightGroupHead; eax=chain[+0x6c]-0x4000; g_walkCallback=eax; chain[+0x6c]=eax;
  *     if eax>0 jump installSelf; else call ScaledInitOrSelfPtrSetType14; pop+ret.
- *   state 1: eax=g_x_00542054; g_walkCallback=eax; if 0 jump installSelf; else call
+ *   state 1: eax=g_eventQueueEnd; g_walkCallback=eax; if 0 jump installSelf; else call
  *     InstallSelfChainAddSigned; pop+ret.
- *   state 0: chain[+0x54]=g_x_00542074; chain[+0x58]=g_walkCallback=0; g_x_00542044=ecx;
+ *   state 0: chain[+0x54]=g_eventQueueWorkType; chain[+0x58]=g_walkCallback=0; g_currentNodeIdx=ecx;
  *     MStackPushComplexCallPop; if !paused: install-self at entry; chain->state=1;
- *     g_data_0054204c=0x1c; pause=1. pop+ret.
- *   installSelf: install-self at entry; chain->state=2; g_data_0054204c=1; pause=1; pop+ret.
+ *     g_pendingNodeType=0x1c; pause=1. pop+ret.
+ *   installSelf: install-self at entry; chain->state=2; g_pendingNodeType=1; pause=1; pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern void InstallSelfChainAddSigned_004a18d0(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void ScaledInitOrSelfPtrSetType14_004a1940(void);
@@ -157,7 +157,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         je      short L_a17_state0
         dec     eax
         je      short L_a17_state1
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x6c]
         sub     eax, 0x4000
         mov     dword ptr [g_walkCallback], eax
@@ -169,7 +169,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         pop     esi
         ret
     L_a17_state1:
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_a17_installSelf
@@ -180,19 +180,19 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret
     L_a17_state0:
-        mov     ecx, dword ptr [g_x_0054205c]
-        mov     edx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [ecx*4 + 0x54], edx
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x58], 0
-        mov     ecx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_00542044], ecx
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushComplexCallPop_00406430
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -200,7 +200,7 @@ __declspec(naked) void AudioInstall3StateSubXform_004a17d0(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset AudioInstall3StateSubXform_004a17d0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0x1c
+        mov     dword ptr [g_pendingNodeType], 0x1c
         mov     dword ptr [g_pause_00541e6c], eax
     L_a17_s0_ret:
         pop     esi

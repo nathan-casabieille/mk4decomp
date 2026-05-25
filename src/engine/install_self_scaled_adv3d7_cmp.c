@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
  *   Load idx=g_baseSel_00542060; entry=ecx=*idx*4; state=[idx*4+0x84]; clear state.
  *   state==0: clear-and-init path; copy [idx*4+0x58], [g_acc_00542078]; fall to install.
- *   state!=0: bump [g_x_00542054*4 + 0x70] by 0x3d7; compare with [g_baseSel*4 + 0x5c].
+ *   state!=0: bump [g_eventQueueEnd*4 + 0x70] by 0x3d7; compare with [g_baseSel*4 + 0x5c].
  *     if eax<edx: jump to install (state stays 1).
  *     else: clear scaledInit fields; tail-call StackPopDispatchTagged_0041f780.
- *   install: state=1; [ecx+8]=self; g_x_0054204c=1; g_pause=1; ret.
+ *   install: state=1; [ecx+8]=self; g_pendingNodeType=1; g_pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 
 __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
     __asm {
@@ -143,29 +143,29 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         mov     dword ptr [ecx + 0x84], 0
         test    eax, eax
         je      case0
-        mov     edx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [edx*4 + 0x70]
         add     eax, 0x3d7
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
-        mov     esi, dword ptr [g_x_00542054]
+        mov     esi, dword ptr [g_eventQueueEnd]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [esi*4 + 0x58]
         mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [edx*4 + 0x5c]
         cmp     eax, edx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         jl      install
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [esi*4 + 0x6c], 0
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], edx
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [ecx*4 + 0x5c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
@@ -173,19 +173,19 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp_0043a830(void) {
         pop     esi
         ret
     case0:
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     edx, dword ptr [g_acc_00542078]
         mov     dword ptr [eax*4 + 0x70], edx
     install:
         mov     eax, 1
         mov     dword ptr [ecx + 8], offset InstallSelfScaledAdv3d7Cmp_0043a830
         mov     dword ptr [ecx + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

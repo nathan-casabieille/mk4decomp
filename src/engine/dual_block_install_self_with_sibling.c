@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,16 +124,16 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00484c90 (248b game) - dual-block install-self pair.
  *   B1 (0..49, +10 NOPs): if chain[+0x84]==0: install-self at [eax+8]=0x00484c90;
- *     chain[+0x84]=1; g_x_0054204c=1; pause=1; ret.
+ *     chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
  *     Else: mstack-push 0x00484cf0 (sibling); tail-jmp GameDispatchValidateState_004339c0.
  *   B2 (96..247): snapshot+clear chain[+0x84]. If was zero -> tail-call
- *     FiveCallGuardSetTail_0046f6b0. Else: dec g_state_00542080; if zero ->
+ *     FiveCallGuardSetTail_0046f6b0. Else: dec g_eventQueueChild; if zero ->
  *     tail-call 0x00484c90 (self), else: install-self at [eax+8]=0x00484cf0;
  *     chain[+0x84]=1; scaledInit-chain push 0x00484cf0+0x01000000;
  *     call ScaledLoadIncJmp_00428d00; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_pendingNodeType;
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void ScaledLoadIncJmp_00428d00(void);
 
@@ -164,7 +164,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x00484c90
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_pause_00541e6c], ecx
         ret
         nop
@@ -189,9 +189,9 @@ __declspec(naked) void DualBlockInstallSelfWithSibling_00484c90(void) {
         call    FiveCallGuardSetTail_0046f6b0
         pop     edi
         ret
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         dec     ecx
-        mov     dword ptr [g_state_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         _emit   74h
         _emit   07h
         call    DualBlockInstallSelfWithSibling_00484c90

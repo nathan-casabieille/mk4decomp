@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,17 +126,17 @@ extern unsigned int g_data_00535e7c;
  *   Thunk A (0..0x3f): call ScaledAndAlfe; if pause ret. chain[baseSel*4+0x74]=0x603, g_walkCallback=0x603.
  *     Call TripleCallPauseJmp; if pause ret. Push 0x004eb6b8; call ArgSarStoreJmp; pop; ret. 15-NOP pad.
  *   Thunk B (+0x50): call Wrapper_0048a3c0; if pause ret.
- *     g_x_00542054 = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance_004709e0. ret. 15-NOP pad.
+ *     g_eventQueueEnd = (0x004eb6c8 >> 2); tail-jmp PhaseDispatchListAdvance_004709e0. ret. 15-NOP pad.
  *   Thunk C (+0x80): if bit0(0054208c): jmp CallPauseDirtyMStackPushFn.
- *     g_state_00542080=g_state_0054207c=7. Mstack-push body_eb80; tail-jmp InstallSelfMStackOverwrite. 8-NOP pad.
+ *     g_eventQueueChild=g_eventQueueNotMask=7. Mstack-push body_eb80; tail-jmp InstallSelfMStackOverwrite. 8-NOP pad.
  *   Thunk D body_eb80 (+0xc0): if bit0: jmp FiveEntryAlarmInstallChain_0046ee00.
- *     g_state_00542080=8; g_state_0054207c=7. Mstack-push body_ebc0; tail-jmp InstallSelfMStackOverwrite. 3-NOP pad.
+ *     g_eventQueueChild=8; g_eventQueueNotMask=7. Mstack-push body_ebc0; tail-jmp InstallSelfMStackOverwrite. 3-NOP pad.
  *   Thunk E body_ebc0 (+0x100): same as D but state_00542080=9; mstack-push body_ec00. 3-NOP pad.
  *   Thunk F body_ec00 (+0x140): if bit0 jmp FiveEntryAlarmInstallChain_0046ee00; else jmp MStackJmpInstallSelf.
  */
 extern unsigned int g_data_004eb6c8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void FiveEntryAlarmInstallChain_0046ee00(void);
@@ -191,7 +191,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   12h
         mov     eax, offset g_data_004eb6c8
         sar     eax, 2
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0
         ret
         _emit   90h
@@ -209,13 +209,13 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     CallPauseDirtyMStackPushFn_0046e2a0
         mov     eax, 7
-        mov     dword ptr [g_state_00542080], eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
@@ -230,14 +230,14 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   90h
         _emit   90h
     body_eb80:
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     FiveEntryAlarmInstallChain_0046ee00
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_state_00542080], 8
+        mov     dword ptr [g_eventQueueChild], 8
         inc     eax
-        mov     dword ptr [g_state_0054207c], 7
+        mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x100
         jmp     InstallSelfMStackOverwrite_0046e9a0
@@ -245,14 +245,14 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   90h
         _emit   90h
     body_ebc0:
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     FiveEntryAlarmInstallChain_0046ee00
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_state_00542080], 9
+        mov     dword ptr [g_eventQueueChild], 9
         inc     eax
-        mov     dword ptr [g_state_0054207c], 7
+        mov     dword ptr [g_eventQueueNotMask], 7
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], offset FiveThunkMStackDispatcher_0046eac0 + 0x140
         jmp     InstallSelfMStackOverwrite_0046e9a0
@@ -260,7 +260,7 @@ __declspec(naked) void FiveThunkMStackDispatcher_0046eac0(void) {
         _emit   90h
         _emit   90h
     body_ec00:
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     FiveEntryAlarmInstallChain_0046ee00

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -138,11 +138,11 @@ extern void IterStepScaledStore_0048e600(void);
 
 /* @addr 0x0046ee00 (356b game) - 5-entry packed install-self + alarm chain.
  *   Entry 1 (offset 0, 135b): phase from [scaled g_data_00542060+0x84].
- *     phase != 0: writes 0x28f into [g_data_0054205c*4+0x4c], pushes
+ *     phase != 0: writes 0x28f into [g_fightGroupHead*4+0x4c], pushes
  *       0x0046e2a0 (callback addr) onto mstack via g_state_004d57ac, then
  *       tail-call InstallSelfIndirectJmp_0048f3f0.
  *     phase 0: calls ScaledZeroFour_00490740; on no-error installs Self at
- *       [esi+8], slot[+0x84]=1, g_data_0054204c=0xc, arms 0x541e6c=1.
+ *       [esi+8], slot[+0x84]=1, g_pendingNodeType=0xc, arms 0x541e6c=1.
  *   9b NOP align pad.
  *   Entry 2 (offset 0x90, 106b): ScaledMove74to70_0046eaa0; on no-error
  *     sets [g_data_00542060*4+0x74]=0x604; if [scaled+0x30] != 0 tail-jmp
@@ -150,21 +150,21 @@ extern void IterStepScaledStore_0048e600(void);
  *     TripleCallPauseJmp_00470500 → push 0x4eb6f8 →
  *     ArgSarStoreJmp_004594f0.
  *   6b NOP align pad.
- *   Entry 3 (offset 0x100, 18b): sets g_data_00542054 = &g_data_004eb710>>2
+ *   Entry 3 (offset 0x100, 18b): sets g_eventQueueEnd = &g_data_004eb710>>2
  *     and tail-jmp PhaseDispatchListAdvance_004709e0.
  *   14b NOP align pad.
- *   Entry 4 (offset 0x120, 32b): if bit 0 of g_data_0054208c set tail-jmp
- *     CallPauseDirtyMStackPushFn_0046e2a0; else set g_data_00542054 =
+ *   Entry 4 (offset 0x120, 32b): if bit 0 of g_xformDirtyFlags set tail-jmp
+ *     CallPauseDirtyMStackPushFn_0046e2a0; else set g_eventQueueEnd =
  *     &g_data_004eb720>>2 and tail-jmp ComboScriptDispatchCluster_00470530.
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore_0048e600;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp_004594f0.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledAndAlfe_00490390(void);
@@ -178,7 +178,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_fea_phase0
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
@@ -197,7 +197,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset FiveEntryAlarmInstallChain_0046ee00
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0xc
+        mov     dword ptr [g_pendingNodeType], 0xc
         mov     dword ptr [g_framePauseFlag], eax
     L_fea_e1End:
         pop     esi
@@ -251,7 +251,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
     L_fea_entry3:
         mov     eax, offset g_data_004eb710
         sar     eax, 2
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0
         nop
         nop
@@ -269,13 +269,13 @@ __declspec(naked) void FiveEntryAlarmInstallChain_0046ee00(void) {
         nop
         /* entry 4 (offset 0x120) */
     L_fea_entry4:
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         je      short L_fea_e4second
         jmp     CallPauseDirtyMStackPushFn_0046e2a0
     L_fea_e4second:
         mov     eax, offset g_data_004eb720
         sar     eax, 2
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jmp     ComboScriptDispatchCluster_00470530
         /* entry 5 (offset 0x140) */
     L_fea_entry5:

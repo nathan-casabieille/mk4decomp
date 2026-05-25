@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,17 +125,17 @@ extern unsigned int g_data_00535e7c;
 /*
  * AudioByteTableLoop_004a76e0 - 221b audio iteration over a 6-element byte index table.
  *   Loop edi 0..5: esi = (g_baseSel_00542060 + edi) * 4; index = byteTab[0x004f3b48 + esi];
- *     ecx = baseSel + index; edx = chain[ecx*4]; g_x_00542044 = edx; call MStackPush2ChainLLInsert_00406790.
+ *     ecx = baseSel + index; edx = chain[ecx*4]; g_currentNodeIdx = edx; call MStackPush2ChainLLInsert_00406790.
  *     Switch on (edi-3): case 0 → push (data_004f3a30[edx*4], 0x004d2608) into Printf args;
  *     case 1 → push (data_004f3a30[eax*4 from g_data_004f3af0], 0x004d2618); other → skip.
  *     If case fired: push (0x004f43c4, 0x00543450); call PrintfStub; restore.
- *     Snapshot tab[+0xc] & tab[+4]; call GuardedSetupCallTailJmp; chain[g_x_00542044*4 + 0x5c] = tab[+0x10];
- *     tab[+8] = chain[+0x54]; ecx = movsx tab[+0]; g_data_00542070 = ecx;
- *     chain[(baseSel + index)*4] = g_x_00542044. inc edi; if <6: loop.
+ *     Snapshot tab[+0xc] & tab[+4]; call GuardedSetupCallTailJmp; chain[g_currentNodeIdx*4 + 0x5c] = tab[+0x10];
+ *     tab[+8] = chain[+0x54]; ecx = movsx tab[+0]; g_eventQueueCurrent = ecx;
+ *     chain[(baseSel + index)*4] = g_currentNodeIdx. inc edi; if <6: loop.
  */
 extern unsigned int g_data_004f3aec;
 extern unsigned int g_data_004f3af0;
-extern unsigned int g_x_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -154,7 +154,7 @@ __declspec(naked) void AudioByteTableLoop_004a76e0(void)
         movsx   eax, byte ptr [esi + 0x004f3b48]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
-        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         mov     eax, edi
         sub     eax, 3
@@ -182,18 +182,18 @@ __declspec(naked) void AudioByteTableLoop_004a76e0(void)
         push    eax
         push    ecx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    GuardedSetupCallTailJmp_004a1fa0
-        mov     edx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi + 0x004f3b58]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x5c], ecx
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [esi + 0x004f3b50], ecx
         movsx   ecx, byte ptr [esi + 0x004f3b48]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         add     ecx, edx
         inc     edi
         cmp     edi, 6

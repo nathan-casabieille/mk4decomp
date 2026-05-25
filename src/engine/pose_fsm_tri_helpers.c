@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00542094;
 extern unsigned int g_data_00542188;
 extern void AiAngleDistComputation_00431920(void);
@@ -146,13 +146,13 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
 {
     __asm {
         /* === h1 (0x431650): table-index wrapper, tail-jmp 31920 === */
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      eax, OFFSET g_data_00542188
         shr      eax, 2
         add      eax, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         jmp      AiAngleDistComputation_00431920
         nop
         nop
@@ -169,22 +169,22 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1700
-        mov      eax, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_00542088], 0x10000
+        mov      eax, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_xformScratch2088], 0x10000
         mov      eax, dword ptr [eax*4 + 0x34]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
         mov      dword ptr [g_data_00542094], eax
         je       short L_16bd
-        mov      dword ptr [g_data_00542088], 0xffff0000
+        mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_16bd:
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      eax, OFFSET g_data_00542188
         shr      eax, 2
         add      eax, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     AiAngleDistComputation_00431920
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -233,7 +233,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
     L_1747:
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [g_data_0052ab10]
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_walkCallback], edi
         lea      eax, [edx*4]
         mov      dword ptr [eax + 0x40], edi
@@ -246,9 +246,9 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x44], ecx
         lea      eax, [edx*4]
-        mov      edx, dword ptr [g_data_0054207c]
+        mov      edx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [eax + 0x34], edx
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      dword ptr [eax + 0x3c], ecx
         mov      ecx, 0x28
         mov      dword ptr [eax + 0x38], 0xfffe8000
@@ -260,11 +260,11 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
@@ -276,7 +276,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
     L_1823:
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x78]
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [esi + 8], OFFSET L_1710
         mov      dword ptr [esi + 0x84], 2
         mov      dword ptr [g_framePauseFlag], 1
@@ -287,22 +287,22 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         call     DualEntryInitDispatch_00431360
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_191d
-        mov      edx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_00542088], 0x10000
+        mov      edx, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_xformScratch2088], 0x10000
         mov      eax, dword ptr [edx*4 + 0x34]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
         mov      dword ptr [g_data_00542094], eax
         je       short L_1894
-        mov      dword ptr [g_data_00542088], 0xffff0000
+        mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_1894:
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         mov      eax, OFFSET g_data_00542188
         shr      eax, 2
         add      eax, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     AiAngleDistComputation_00431920
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_191d
@@ -312,11 +312,11 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi

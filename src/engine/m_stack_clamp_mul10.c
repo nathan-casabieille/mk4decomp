@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,46 +122,46 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x0048de20 (177b game) - mstack-push g_x_00542074+g_x_0054207c; clamp g_x_00542074 to
- *   range based on g_walkCallback sign; call FpuSqrtMul; pause-check; Mul10Tail(g_walkCallback, g_x_0054207c);
+/* @addr 0x0048de20 (177b game) - mstack-push g_eventQueueWorkType+g_eventQueueNotMask; clamp g_eventQueueWorkType to
+ *   range based on g_walkCallback sign; call FpuSqrtMul; pause-check; Mul10Tail(g_walkCallback, g_eventQueueNotMask);
  *   store result; mstack-pop both. ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
 
 void MStackClampMul10_0048de20(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_walkCallback]
         test    eax, eax
-        mov     dword ptr [g_x_0054207c], 0x00010000
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueNotMask], 0x00010000
+        mov     dword ptr [g_eventQueueWorkType], eax
         _emit   7dh
         _emit   15h
         test    eax, eax
-        mov     dword ptr [g_x_0054207c], 0xffff0000
+        mov     dword ptr [g_eventQueueNotMask], 0xffff0000
         _emit   7dh
         _emit   07h
         neg     eax
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    FpuSqrtMul_004ab350
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   45h
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
@@ -170,11 +170,11 @@ void MStackClampMul10_0048de20(void) {
         add     esp, 8
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

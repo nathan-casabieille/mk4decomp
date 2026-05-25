@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,13 +129,13 @@ extern unsigned int g_data_0053a318;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_00541dd8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543564;
 extern unsigned int g_data_00543594;
 extern unsigned int g_data_00550000;
@@ -188,11 +188,11 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f691
-        mov      dword ptr [g_data_00542070], 4
-        mov      dword ptr [g_data_00542074], 0x23b
+        mov      dword ptr [g_eventQueueCurrent], 4
+        mov      dword ptr [g_eventQueueWorkType], 0x23b
         mov      dword ptr [g_data_00542078], OFFSET g_data_00550000
-        mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], OFFSET g_data_008c0000
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -209,11 +209,11 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f691
-        mov      dword ptr [g_data_00542070], 4
-        mov      dword ptr [g_data_00542074], 0x23b
+        mov      dword ptr [g_eventQueueCurrent], 4
+        mov      dword ptr [g_eventQueueWorkType], 0x23b
         mov      dword ptr [g_data_00542078], 0xff920000
-        mov      dword ptr [g_data_0054207c], OFFSET g_data_008c0000
-        mov      dword ptr [g_data_00542084], 1
+        mov      dword ptr [g_eventQueueNotMask], OFFSET g_data_008c0000
+        mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -223,7 +223,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         test     eax, eax
         jne      short L_f691
     L_f67a:
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x14000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
@@ -248,7 +248,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f6ce
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       short L_f6c9
         push     0x225
         push     OFFSET L_f6d0
@@ -282,7 +282,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f75c
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_f733
     L_f72b:
         call     CallSetPause_0041f830
@@ -294,7 +294,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         mov      dword ptr [g_data_00541dd8], ebx
         mov      dword ptr [esi + 8], OFFSET L_f6d0
         mov      dword ptr [esi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], 0xa
+        mov      dword ptr [g_pendingNodeType], 0xa
         mov      dword ptr [g_framePauseFlag], ebx
     L_f75c:
         pop      esi

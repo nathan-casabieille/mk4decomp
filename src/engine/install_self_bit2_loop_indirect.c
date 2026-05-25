@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,18 +124,18 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049c710 (305b game) - install-self body with state-machine, bit2-loop, indirect-call dispatch.
  *   Load state; clear. state==0: call TripleBlockChainDiffMStackThunks; if pause ret.
- *   ebx=1. If g_state_00542080==0: call ScaledChain3c74; if pause ret.
+ *   ebx=1. If g_eventQueueChild==0: call ScaledChain3c74; if pause ret.
  *     If g_walkCallback==0x2001: jmp bit2-loop block.
- *   Else (state!=0 OR not 0x2001): mstack-push g_state_00542080; load chain[g_x_00542054*4+0] -> g_walkCallback.
- *     Call AtanDualDeltaThreshold_0049c870; if pause ret. Mstack-pop into g_state_00542080.
- *     If bit0(0054208c): chain[g_x_00542054*4+8] -> g_scaledInit; indirect call; pop; ret.
- *   bit2-loop: eax = [g_x_00542054*4+4]; ecx=4; set bit2 of g_state_0054208c.
+ *   Else (state!=0 OR not 0x2001): mstack-push g_eventQueueChild; load chain[g_eventQueueEnd*4+0] -> g_walkCallback.
+ *     Call AtanDualDeltaThreshold_0049c870; if pause ret. Mstack-pop into g_eventQueueChild.
+ *     If bit0(0054208c): chain[g_eventQueueEnd*4+8] -> g_scaledInit; indirect call; pop; ret.
+ *   bit2-loop: eax = [g_eventQueueEnd*4+4]; ecx=4; set bit2 of g_xformDirtyFlags.
  *     If eax!=0: toggle bit2 off; call eax; if pause ret.
- *     Install-self at entry; state=1; g_x_0054204c=1; pause=1; pop esi/ebx; ret.
+ *     Install-self at entry; state=1; g_pendingNodeType=1; pause=1; pop esi/ebx; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern void AtanDualDeltaThreshold_0049c870(void);
 extern void ScaledChain3c74_0048f910(void);
 extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
@@ -162,7 +162,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         mov     ebx, 1
         test    eax, eax
         _emit   75h
@@ -179,11 +179,11 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         cmp     dword ptr [g_walkCallback], 0x2001
         _emit   74h
         _emit   74h
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     edx, dword ptr [ecx*4 + 0]
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
@@ -200,32 +200,32 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         _emit   84h
         _emit   0c3h
-        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         _emit   74h
         _emit   16h
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [eax*4 + 8]
         mov     dword ptr [g_scaledInit_00542044], eax
         call    eax
         pop     esi
         pop     ebx
         ret
-        mov     ecx, dword ptr [g_x_00542054]
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_eventQueueEnd]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [ecx*4 + 4]
         mov     ecx, 4
         or      edx, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
         _emit   0eh
         xor     edx, ecx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
         _emit   02h
         call    eax
@@ -235,7 +235,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect_0049c710(void) {
         _emit   19h
         mov     dword ptr [esi + 8], offset InstallSelfBit2LoopIndirect_0049c710
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_x_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_pause_00541e6c], ebx
         pop     esi
         pop     ebx

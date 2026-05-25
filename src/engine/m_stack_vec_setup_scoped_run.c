@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,25 +123,25 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004749a0 (360b game) - mstack snapshot + vec setup + scoped run.
- *   Sets g_data_00542048 = &g_data_0051204c>>2 (packed_ptr), calls
+ *   Sets g_xformEntityIdx = &g_data_0051204c>>2 (packed_ptr), calls
  *   DispatcherComplex260_00407030. On no-error AND bit 2 of 0x54208c clear:
- *   pushes g_data_00542044, walks one level of [scaled+0x18] indirection,
+ *   pushes g_currentNodeIdx, walks one level of [scaled+0x18] indirection,
  *   OR's bit 9 into [resolved+0x20]. Pops the snapshot back into 0x542044,
  *   writes 0x95 into [snapshot+0x30], copies the 3-component vec at
- *   [g_data_00542058 *4 + 0/4/8] into [snapshot+0x54/+0x58/+0x5c]. Calls
+ *   [g_eventQueueIdx *4 + 0/4/8] into [snapshot+0x54/+0x58/+0x5c]. Calls
  *   AudioMixerStep_004ab700. On no-error reads g_walkCallback, adds
- *   0xa3d, writes into [snapshot+0x70], sets g_data_00542074=0xc4, advances
- *   g_data_00542044 by 0x1b, calls TripleVecAccCallStore_00476880.
+ *   0xa3d, writes into [snapshot+0x70], sets g_eventQueueWorkType=0xc4, advances
+ *   g_currentNodeIdx by 0x1b, calls TripleVecAccCallStore_00476880.
  *   On no-error subtracts 0x1b back from 0x542044, calls MStackCall_00406340,
  *   sets g_walkCallback=1 on success.
  */
 extern unsigned int g_data_0051204c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
@@ -150,21 +150,21 @@ void MStackVecSetupScopedRun_004749a0(void) {
     __asm {
         mov     eax, offset g_data_0051204c
         shr     eax, 2
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407030
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mvss_done
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_mvss_done
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      ah, 6
         mov     dword ptr [g_walkCallback], eax
@@ -174,21 +174,21 @@ void MStackVecSetupScopedRun_004749a0(void) {
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, 0x95
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        mov     eax, dword ptr [g_data_00542058]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
-        mov     edx, dword ptr [g_data_00542058]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        mov     edx, dword ptr [g_data_00542058]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 8]
         mov     dword ptr [ecx*4 + 0x5c], eax
         mov     dword ptr [g_walkCallback], 0x28f
@@ -197,19 +197,19 @@ void MStackVecSetupScopedRun_004749a0(void) {
         test    eax, eax
         jne     short L_mvss_done
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     eax, 0xa3d
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
-        mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542074], 0xc4
+        mov     ecx, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_eventQueueWorkType], 0xc4
         add     ecx, 0x1b
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    TripleVecAccCallStore_00476880
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mvss_done
-        sub     dword ptr [g_data_00542044], 0x1b
+        sub     dword ptr [g_currentNodeIdx], 0x1b
         call    MStackCall_00406340
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

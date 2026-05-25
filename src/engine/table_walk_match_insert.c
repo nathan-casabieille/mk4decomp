@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,18 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00459030 (296b game) - table-walk match scan with triple-cmp + insert.
- *   eax = 0x004e8860>>2; edx = 0x005380b0>>2; g_scaledInit=eax, g_x_00542048=edx.
+ *   eax = 0x004e8860>>2; edx = 0x005380b0>>2; g_scaledInit=eax, g_xformEntityIdx=edx.
  *   Loop: ecx = [eax*4]; if zero ret. cmp with [edx*4]; if neq jump_advance.
  *     cmp with [edx*4+4]; if neq jump_advance. cmp with [edx*4+8]; if eq jump_insert.
  *     advance: eax+=3, reload, loop while ecx!=0.
  *   Insert: g_walkCallback=3; call StorePauseImulShr16; if pause ret.
- *     eax = g_walkCallback*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_x_00542048*4 +0/4/8]; pop esi; ret.
+ *     eax = g_walkCallback*3 + (0x004e8948>>2); scaledInit=eax; copy 3 entries to [g_xformEntityIdx*4 +0/4/8]; pop esi; ret.
  */
 extern unsigned int g_data_004e8860;
 extern unsigned int g_data_004e8948;
 extern unsigned int g_data_005380b0;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void StorePauseImulShr16_004ab630(void);
 
 __declspec(naked) void TableWalkMatchInsert_00459030(void) {
@@ -144,7 +144,7 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         shr     eax, 2
         shr     edx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 0]
         push    esi
         test    ecx, ecx
@@ -200,11 +200,11 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
@@ -214,7 +214,7 @@ __declspec(naked) void TableWalkMatchInsert_00459030(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 8], ecx
         pop     esi

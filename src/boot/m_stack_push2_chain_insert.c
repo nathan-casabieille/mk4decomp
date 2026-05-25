@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,32 +124,32 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * MStackPush2ChainInsert_00409870 - 243b boot linked-list insert with mstack push2.
- *   Push g_x_0053a168, g_data_0054204c to mstack. base=g_x_00542048 (packed_ptr).
- *   esi = base[+8]; ecx = g_x_00542044 + esi; chain[ecx*4 + 4] = base; g_walkCallback = 0;
+ *   Push g_x_0053a168, g_pendingNodeType to mstack. base=g_xformEntityIdx (packed_ptr).
+ *   esi = base[+8]; ecx = g_currentNodeIdx + esi; chain[ecx*4 + 4] = base; g_walkCallback = 0;
  *   chain[ecx*4 + 8] = 0; esi = base[0]; g_walkCallback = esi; chain[ecx*4] = esi.
- *   If base[0] == 0: base[+4] = g_x_00542044; else walk: g_data_0054204c = base->key + esi;
- *     chain[g_data_0054204c*4 + 8] = g_x_00542044. base[0] = g_x_00542044. base[+0xc]++.
- *   Pop2 mstack into g_data_0054204c and g_x_0053a168; ret.
+ *   If base[0] == 0: base[+4] = g_currentNodeIdx; else walk: g_pendingNodeType = base->key + esi;
+ *     chain[g_pendingNodeType*4 + 8] = g_currentNodeIdx. base[0] = g_currentNodeIdx. base[+0xc]++.
+ *   Pop2 mstack into g_pendingNodeType and g_x_0053a168; ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_x_0053a168;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 
 __declspec(naked) void MStackPush2ChainInsert_00409870(void)
 {
     __asm
     {
         mov     ecx, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542044]
-        mov     eax, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_currentNodeIdx]
+        mov     eax, dword ptr [g_xformEntityIdx]
         push    esi
         mov     esi, dword ptr [g_x_0053a168]
         inc     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], esi
         mov     ecx, dword ptr [g_state_004d57ac]
-        mov     esi, dword ptr [g_data_0054204c]
+        mov     esi, dword ptr [g_pendingNodeType]
         inc     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], esi
@@ -168,10 +168,10 @@ __declspec(naked) void MStackPush2ChainInsert_00409870(void)
         jmp     short L_after
     L_walk:
         mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     esi, dword ptr [eax*4 + 8]
         add     ecx, esi
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [ecx*4 + 8], edx
     L_after:
         mov     dword ptr [eax*4], edx
@@ -182,7 +182,7 @@ __declspec(naked) void MStackPush2ChainInsert_00409870(void)
         pop     esi
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax

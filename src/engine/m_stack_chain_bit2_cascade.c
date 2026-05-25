@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,13 +129,13 @@ extern void MStackChainBit2Cascade_0048e8f0(void);
  *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_state_00542094 = & 4; toggle bit-0 based on result. ret.
  *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty_0048ea40;
  *     call MStackChainBit2Cascade_0048e8f0; pause-check; if bit-0 clear ret. call PushPopState70Mask_00490650; pause-check;
- *     load g_state_00538158 vs g_x_0054205c; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_walkCallback;
+ *     load g_state_00538158 vs g_fightGroupHead; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_walkCallback;
  *     toggle bit-0; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 extern void DirtyToggleByBaseSel_0048f2e0(void);
 extern void PushPopState70Mask_00490650(void);
 
@@ -143,19 +143,19 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, 4
         mov     dword ptr [g_state_00542094], eax
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h
@@ -166,7 +166,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         test    eax, eax
         _emit   75h
         _emit   7eh
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
         jmp     GuardedWalkSwitchDirty_0048ea40
@@ -175,7 +175,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         test    eax, eax
         _emit   75h
         _emit   62h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   59h
         call    PushPopState70Mask_00490650
@@ -184,25 +184,25 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         _emit   75h
         _emit   4bh
         mov     ecx, dword ptr [g_state_00538158]
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x00000200
         cmp     edx, ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         _emit   74h
         _emit   0ah
         mov     eax, 2
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_state_00542094], eax
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
     }
 }

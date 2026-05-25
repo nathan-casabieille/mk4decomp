@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,9 +125,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e51c8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ComboLoopCluster_00440070(void);
@@ -178,12 +178,12 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         test     eax, eax
         jne      L_fb81
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         shl      ecx, 2
         lea      eax, [edx*4]
         mov      edx, dword ptr [ecx + 0x3c]
@@ -202,7 +202,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_data_00542060]
         shl      eax, 2
         mov      ecx, dword ptr [eax + 0x64]
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax + 0x30]
         shl      ecx, 2
         mov      dword ptr [g_walkCallback], edx
@@ -212,8 +212,8 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [ecx + 0x58], edx
         mov      edx, dword ptr [eax + 0x38]
         mov      dword ptr [ecx + 0x5c], edx
-        mov      eax, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      eax, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_fightGroupHead], eax
         mov      dword ptr [g_walkCallback], 3
         call     GuardedSeq_00476fc0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -256,7 +256,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_data_004d57ac], eax
         ret
         nop
@@ -287,11 +287,11 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -324,11 +324,11 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0

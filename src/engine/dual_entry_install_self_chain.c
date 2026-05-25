@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,9 +127,9 @@ extern unsigned int g_data_00535e7c;
  *     push 0x004eef08; call ArgSarStoreJmp; ret.
  *   B (+0x50): standard install-self via chain[+0x84]==0 path: 0x00487480 self-addr.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void MStackPushSet0008_004901a0(void);
@@ -185,26 +185,26 @@ __declspec(naked) void DualEntryInstallSelfChain_00487430(void) {
         test    eax, eax
         _emit   75h
         _emit   48h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   08h
         call    FiveCallGuardSetTail_0046f6b0
         pop     esi
         pop     ebx
         ret
-        mov     eax, dword ptr [g_x_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   75h
         _emit   12h
         call    FiveCallGuardSetTail_0046f6b0
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [g_x_00542080], 0x40
+        mov     dword ptr [g_eventQueueChild], 0x40
         mov     dword ptr [esi + 0x08], 0x00487480
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_pause_00541e6c], ebx
         pop     esi
         pop     ebx

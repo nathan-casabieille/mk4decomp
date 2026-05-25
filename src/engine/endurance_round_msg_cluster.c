@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,8 +132,8 @@ extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern unsigned int g_data_00541e20;
 
 /* @addr 0x0043aab0 (313b game) - state-machine: 4-arm cascade dispatcher + install-self.
- *   state==0: g_x_00542048=(0x0053a408>>2); g_x_0054204c=(0x00537e88>>2).
- *     If g_cj!=g_state_00538158: g_x_00542048=g_x_0054204c. eax=[*4+0].
+ *   state==0: g_xformEntityIdx=(0x0053a408>>2); g_pendingNodeType=(0x00537e88>>2).
+ *     If g_cj!=g_state_00538158: g_xformEntityIdx=g_pendingNodeType. eax=[*4+0].
  *     If eax!=0: call SlotPhaseResetInstallChain_0048e0e0; if pause ret. Tail-call ZeroScaledZeroCallPauseJmp; pop+ret.
  *     Else: g_walkCallback=[0x00541e20]; cmp 0x78; if >: jmp body.
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
@@ -141,11 +141,11 @@ extern unsigned int g_data_00541e20;
  *     Cascade g_state_00535ddc: <0x10000 -> Wrapper_0043abf0 -> ret; <0x20000 -> Wrapper_0043ac00 -> ret;
  *       <0x30000 -> EnduranceRoundMsgCluster_0043ac10 -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
  *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
- *     state=1; g_x_0054204c=5; pause=1; pop+ret.
+ *     state=1; g_pendingNodeType=5; pause=1; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void PackedAdvanceCallTailJmp_004392c0(void);
 
@@ -167,12 +167,12 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, edi
-        mov     dword ptr [g_x_00542048], eax
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_pendingNodeType], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -256,7 +256,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset StateMachine4ArmCascade_0043aab0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], 5
+        mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_pause_00541e6c], eax
         pop     edi
         pop     esi

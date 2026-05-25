@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,15 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00428f70 (215b game) - install-self with countdown-and-dispatch.
  *   chain[+0x84]!=0 path: if bit-0 set call Thunk_004296e0; else call ScaledLoadJmp_24_00429790;
- *     if !pause: cmp [g_x_0054205c*4+0x28] vs g_x_00542080; if <: call GuardedChainCmpDualBitXor;
+ *     if !pause: cmp [g_fightGroupHead*4+0x28] vs g_eventQueueChild; if <: call GuardedChainCmpDualBitXor;
  *     if !pause: call StackPopDispatchTagged.
  *   Else (chain[+0x84]==0): install-self at +0x08=0x00428f70, scaledInit-chain push 0x00428f70|0x01000000;
  *     call Install3WayChainStateAdvance; pause=1. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542080;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueChild;
 extern void Install3WayChainStateAdvance_00429130(void);
 extern void ScaledLoadJmp_24_00429790(void);
 extern void Thunk_004296e0(void);
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         test    eax, eax
         _emit   74h
         _emit   53h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   07h
         call    Thunk_004296e0
@@ -162,11 +162,11 @@ __declspec(naked) void InstallSelfWithDispatch_00428f70(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x28]
-        mov     ecx, dword ptr [g_x_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         cmp     eax, ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   7ch
         _emit   15h
         call    GuardedChainCmpDualBitXor_004299a0

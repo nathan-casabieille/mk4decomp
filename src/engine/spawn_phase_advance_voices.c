@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,9 +127,9 @@ extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535de0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fbc;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_005a0000;
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void MStackPushTableMatch_0042e720(void);
@@ -145,42 +145,42 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         push     esi
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_eventQueueCurrent]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         push     edi
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_0052ab10]
         mov      eax, dword ptr [g_data_00541fbc]
         mov      esi, dword ptr [g_data_004d57ac]
-        mov      dword ptr [g_data_0054204c], edx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_pendingNodeType], edx
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
         lea      edx, [eax + 1]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_currentNodeIdx], edx
         je       short L_e40c
     L_e345:
         mov      eax, dword ptr [ecx*4 + 0x5c]
-        mov      edi, dword ptr [g_data_0054204c]
+        mov      edi, dword ptr [g_pendingNodeType]
         add      eax, 0xa0000
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      ebx, dword ptr [edi*4 + 0x5c]
         cmp      eax, ebx
         jg       short L_e3f0
@@ -189,17 +189,17 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      dword ptr [g_walkCallback], edi
         jne      short L_e39a
         add      eax, OFFSET g_data_005a0000
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      esi, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         jmp      short L_e3f0
     L_e39a:
         inc      esi
         mov      dword ptr [g_data_004d57ac], esi
         mov      dword ptr [esi*4], edx
-        mov      eax, dword ptr [g_data_00542048]
-        mov      dword ptr [g_data_00542044], eax
+        mov      eax, dword ptr [g_xformEntityIdx]
+        mov      dword ptr [g_currentNodeIdx], eax
         call     MStackPushTableMatch_0042e720
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -211,31 +211,31 @@ __declspec(naked) void SpawnPhaseAdvanceVoices_0042e290(void)
         mov      esi, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], esi
     L_e3f0:
         mov      ecx, dword ptr [edx*4]
         inc      edx
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_currentNodeIdx], edx
         jne      short L_e345
     L_e40c:
         mov      ecx, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], esi
         mov      edx, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_data_004d57ac], esi
         mov      eax, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_data_004d57ac], esi
         mov      ecx, dword ptr [esi*4]
         dec      esi
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [g_data_004d57ac], esi
         mov      edx, dword ptr [esi*4]
         dec      esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_const_004d2a20;
 extern unsigned int g_const_004d2a28;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_007af990;
 extern unsigned int g_data_007af994;
@@ -185,18 +185,18 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
 {
     __asm {
         sub      esp, 0x18
-        mov      eax, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_pendingNodeType]
         push     ebx
         mov      dword ptr [esp + 0x18], eax
         mov      eax, dword ptr [g_data_00ab4e68]
         push     ebp
         push     esi
         lea      eax, [eax + eax*2]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         shl      eax, 5
         shr      eax, 8
         push     edi
-        mov      edi, dword ptr [g_data_00542048]
+        mov      edi, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00ab4e5c], eax
         mov      eax, dword ptr [g_data_00543550]
@@ -239,8 +239,8 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      word ptr [g_data_00ab44e0], ax
         mov      word ptr [g_data_00ab44e6], ax
         lea      eax, [edi + 0x15]
-        mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_pendingNodeType], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      edx, dword ptr [ecx*4]
         mov      edi, dword ptr [eax*4]
         sub      edx, edi
@@ -346,7 +346,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     esi
         push     0
         call     PackColor_004b30c0
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         mov      ecx, dword ptr [g_data_00ab4e50]
         mov      esi, dword ptr [g_data_00ab4e54]
         add      esp, 0x10
@@ -468,7 +468,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         call     PackColor_004b30c0
         add      esp, 0x10
     L_9df0:
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         test     eax, 0x180000
         je       L_9e10
         mov      ecx, dword ptr [g_data_00ab4e40]
@@ -491,8 +491,8 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         pop      edi
         pop      esi
         pop      ebp
-        mov      dword ptr [g_data_00542044], edx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_currentNodeIdx], edx
+        mov      dword ptr [g_pendingNodeType], eax
         pop      ebx
         add      esp, 0x18
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,11 +125,11 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_0053a7b0;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543800;
 extern void ChainNodeAdvanceCallback_00408e70(void);
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -142,14 +142,14 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
     __asm {
         /* === Helper 1 (0x493ef0): event update + 0x494020 callback === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         push     ebx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ebx, 1
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -158,31 +158,31 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_401a
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     ScaledTestPauseStore_00408860
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_3fef
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         mov      ecx, dword ptr [eax*4]
         or       ecx, 2
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [edx*4 + 0x2c], 0x5999
         mov      dword ptr [g_walkCallback], ebx
         call     DirtyDoubleDeref_00408cb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_401a
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, OFFSET L_4020
         mov      eax, dword ptr [eax*4 + 0x28]
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [eax*4 + 0x10], ecx
         mov      al, byte ptr [g_data_0053a7b0]
         test     al, bl
@@ -197,11 +197,11 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_401a:
         pop      ebx
@@ -213,35 +213,35 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         /* === Helper 2 (0x494020): mstack save 5 + conditional update === */
     L_4020:
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542050]
+        mov      edx, dword ptr [g_eventQueueTotal]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      eax, dword ptr [g_data_00543800]
         test     eax, eax
         jne      short L_40cd
@@ -253,23 +253,23 @@ __declspec(naked) void AnimEventUpdateCluster_00493ef0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542050], edx
+        mov      dword ptr [g_eventQueueTotal], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_4131:
         ret

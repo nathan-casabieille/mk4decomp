@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,13 +126,13 @@ extern unsigned int g_data_004e4c20;
 extern unsigned int g_data_004e4c38;
 extern unsigned int g_data_00501a24;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005422fc;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CopyJmp_0043a620(void);
@@ -190,11 +190,11 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      dword ptr [ecx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x3000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -205,19 +205,19 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         ret
     L_b731:
         /* state 1: install state 2 via 43b9a0 */
-        mov      dword ptr [g_data_0054207c], 5
-        mov      dword ptr [g_data_00542080], 0x23
+        mov      dword ptr [g_eventQueueNotMask], 5
+        mov      dword ptr [g_eventQueueChild], 0x23
         mov      dword ptr [esi + 8], OFFSET L_b6a0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_b6a0
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x2000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -228,7 +228,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         ret
     L_b7a3:
         /* state 0: 0x5fa init + 48f50/45f8d0/428760 → install state 1 */
-        mov      dword ptr [g_data_00542074], 0x5fa
+        mov      dword ptr [g_eventQueueWorkType], 0x5fa
         call     Push16Call_00489f50
         call     FiveCallScaledChainTailJmp_0045f8d0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -239,18 +239,18 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         add      esp, 4
         cmp      eax, edi
         jne      short L_b83a
-        mov      dword ptr [g_data_00542080], 9
+        mov      dword ptr [g_eventQueueChild], 9
         mov      dword ptr [esi + 8], OFFSET L_b6a0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_b6a0
         add      edx, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -279,28 +279,28 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         pop      esi
         ret
     L_b876:
-        mov      dword ptr [g_data_00542074], 0x604
+        mov      dword ptr [g_eventQueueWorkType], 0x604
         call     Push16Call_00489f50
         call     FiveCallScaledChainTailJmp_0045f8d0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_b919
         mov      ecx, OFFSET g_data_00501a24
-        mov      dword ptr [g_data_00542084], 0x3333
+        mov      dword ptr [g_currentNodeFlags], 0x3333
         shr      ecx, 2
-        mov      dword ptr [g_data_0054207c], 0
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueNotMask], 0
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_b840
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_b840
         mov      dword ptr [edx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x1000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
@@ -319,7 +319,7 @@ __declspec(naked) void VersusScreenEventPoseCluster_0043b680(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b971
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       short L_b93c
         jmp      GuardedPushCall_0043b980
     L_b93c:

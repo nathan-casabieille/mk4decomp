@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,8 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542044;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_arr_460b60_main;
 extern unsigned int g_chain_disp_24_460b60;
 extern unsigned int g_chain_disp_28_460b60;
@@ -132,15 +132,15 @@ extern void PushCallPauseIncStoreSelfRecurse_00460c00(void);
 
 /* @addr 0x00460b60 (148b game) - state-snapshot + dispatch:
  *   call CopyJmp; pause? ret.
- *   key = arg1 >> 2; g_x_00542054 = key; g_x_00542058 = arr[key];
- *   ++key; g_x_00542054 = key.
- *   ptr = &chain[baseSel].slot4; g_x_00542044 = *ptr;
- *   arr[g_x_00542044] = arr[key];
- *   ++g_x_00542044; *ptr = g_x_00542044.
- *   chain[cj].slot24 = g_x_00542058;
+ *   key = arg1 >> 2; g_eventQueueEnd = key; g_eventQueueIdx = arr[key];
+ *   ++key; g_eventQueueEnd = key.
+ *   ptr = &chain[baseSel].slot4; g_currentNodeIdx = *ptr;
+ *   arr[g_currentNodeIdx] = arr[key];
+ *   ++g_currentNodeIdx; *ptr = g_currentNodeIdx.
+ *   chain[cj].slot24 = g_eventQueueIdx;
  *   g_walkCallback = 0; chain[cj].slot28 = 0; jmp PushCallPauseIncStoreSelfRecurse_00460c00.
  */
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
@@ -158,22 +158,22 @@ __declspec(naked) void StateSnapshotDispatch_00460b60(void) {
         mov     eax, dword ptr [esp + 4]
         mov     edx, dword ptr [g_baseSel_00542060]
         sar     eax, 2
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     ecx, [eax*4 + g_arr_460b60_main]
         inc     eax
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_eventQueueIdx], ecx
         lea     ecx, [edx*4 + 0x04]
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [ecx]
-        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, [eax*4 + g_arr_460b60_main]
         mov     [edx*4 + g_arr_460b60_main], eax
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx], eax
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_x_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     [ecx*4 + g_chain_disp_24_460b60], edx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], 0

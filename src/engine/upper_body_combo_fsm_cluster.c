@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,13 +126,13 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ea440;
 extern unsigned int g_data_0053a470;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543140;
 extern void CallSetPause_0041f830(void);
 extern void MStackPushComplexCallPop_00406430(void);
@@ -141,12 +141,12 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
 {
     __asm {
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -154,19 +154,19 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, OFFSET g_data_004ea440
         mov      dword ptr [g_walkCallback], edx
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
         cmp      ecx, -1
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       L_2b32
     L_2afb:
         cmp      ecx, edx
         je       L_2b1b
         add      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      ecx, dword ptr [eax*4]
         cmp      ecx, -1
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         jne      L_2afb
         jmp      L_2b32
     L_2b1b:
@@ -180,11 +180,11 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542070], edx
+        mov      dword ptr [g_eventQueueCurrent], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_2b5d:
         ret
@@ -200,51 +200,51 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         je       L_2c9f
         dec      eax
         je       L_2bde
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         jne      L_2bcc
         mov      edx, OFFSET g_data_00543140
         shr      edx, 2
     L_2bae:
         mov      eax, edx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         je       L_2bae
     L_2bcc:
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x24], ecx
         jmp      L_2c78
     L_2bde:
         mov      eax, OFFSET g_data_00543140
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         call     DispatcherComplex260_00407400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2cc0
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       L_2c20
         call     CallSetPause_0041f830
         pop      esi
         ret      
     L_2c20:
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x54], 0xff380000
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x58], 0xff800000
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x20
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
@@ -252,13 +252,13 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2cc0
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x18]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
     L_2c78:
         mov      dword ptr [esi + 8], OFFSET L_2b60
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 5
+        mov      dword ptr [g_pendingNodeType], 5
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
@@ -266,7 +266,7 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_2b60
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 2
+        mov      dword ptr [g_pendingNodeType], 2
         mov      dword ptr [g_framePauseFlag], eax
     L_2cc0:
         pop      esi
@@ -295,51 +295,51 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         je       L_2e2a
         dec      eax
         je       L_2d4e
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         jne      L_2d3c
         mov      edx, OFFSET g_data_00543140
         shr      edx, 2
     L_2d1e:
         mov      eax, edx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         je       L_2d1e
     L_2d3c:
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x24], ecx
         jmp      L_2e03
     L_2d4e:
         mov      eax, OFFSET g_data_00543140
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
         call     DispatcherComplex260_00407400
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2e4f
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       L_2d90
         call     CallSetPause_0041f830
         pop      esi
         ret      
     L_2d90:
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x54], 0xc80000
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x58], 0xff800000
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x20
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
@@ -347,25 +347,25 @@ __declspec(naked) void UpperBodyComboFsmCluster_00492aa0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2e4f
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 1
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x18]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
     L_2e03:
         mov      dword ptr [esi + 8], OFFSET L_2cd0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 5
+        mov      dword ptr [g_pendingNodeType], 5
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret      
     L_2e2a:
         mov      dword ptr [esi + 8], OFFSET L_2cd0
         mov      dword ptr [esi + 0x84], 1
-        mov      dword ptr [g_data_0054204c], 2
+        mov      dword ptr [g_pendingNodeType], 2
         mov      dword ptr [g_framePauseFlag], 1
     L_2e4f:
         pop      esi

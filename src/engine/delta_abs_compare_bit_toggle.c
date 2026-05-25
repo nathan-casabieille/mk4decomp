@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048ea90 (131b) - swap cj if mismatch; load arr[cj].slot54
  *   and arr[cj2].slot54 + arr[cj].slot6c; compute abs(delta1)/abs(delta2);
- *   set/clear bit 0 of g_state_0054208c based on |eax| vs |ecx|.
+ *   set/clear bit 0 of g_xformDirtyFlags based on |eax| vs |ecx|.
  */
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0053815c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_arr_chain_54_48ea90;
 extern unsigned int g_arr_chain_6c_48ea90;
@@ -146,32 +146,32 @@ void DeltaAbsCompareBitToggle_0048ea90(void) {
         mov     edx, [ecx*4 + g_arr_chain_54_48ea90]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, [eax*4 + g_arr_chain_54_48ea90]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     eax, [eax*4 + g_arr_chain_6c_48ea90]
         add     eax, ecx
         sub     ecx, edx
         sub     eax, edx
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         test    ecx, ecx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         _emit   7dh
         _emit   08h
         neg     ecx
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         test    eax, eax
         _emit   7dh
         _emit   07h
         neg     eax
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         cmp     eax, ecx
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   7eh
         _emit   08h
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
- *   mstack-push g_x_00542070 and g_scaledInit_00542044. g_x_00542070=4.
+ *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
  *   eax = g_data_00541fb0*4 -> g_walkCallback; eax += g_data_00541fb8.
  *   edx = g_x_0053a3c0 - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_x_00541fb0 + g_data_00541fb4; esi = [ecx*4]; edx = eax;
  *   shift = ((esi-2)&3)<<3; sar edx,cl; ecx = esi*8; sar eax,cl;
  *   mask to 8 bits; store edx to g_data_00535d5c and g_data_00535d10;
- *   store eax to g_x_00542070 / g_walkCallback.
+ *   store eax to g_eventQueueCurrent / g_walkCallback.
  *   mstack-pop pair.
  */
 extern unsigned int g_data_00535d10;
@@ -138,12 +138,12 @@ extern unsigned int g_data_00541fb4;
 extern unsigned int g_data_00541fb8;
 extern unsigned int g_x_0053a3c0;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_00542070;
+extern unsigned int g_eventQueueCurrent;
 
 __declspec(naked) void BitShiftExtract_00464090(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -155,7 +155,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [eax*4 + 0], edx
         mov     ecx, dword ptr [g_x_00541fb0]
         mov     edx, dword ptr [g_data_00541fb8]
-        mov     dword ptr [g_x_00542070], 4
+        mov     dword ptr [g_eventQueueCurrent], 4
         lea     eax, [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], eax
         add     eax, edx
@@ -169,7 +169,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
         add     ecx, edx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     esi, dword ptr [ecx*4 + 0]
         mov     edx, eax
@@ -184,7 +184,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [g_data_00535d5c], edx
         mov     dword ptr [g_data_00535d10], edx
         and     eax, 0xff
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
@@ -193,7 +193,7 @@ __declspec(naked) void BitShiftExtract_00464090(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         ret
     }

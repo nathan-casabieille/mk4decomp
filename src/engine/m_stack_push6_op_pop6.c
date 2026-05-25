@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -121,40 +121,40 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_00542084;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_currentNodeFlags;
 
 /* @addr 0x0048af60 (292b game) - mstack-push 6 + middle-op + mstack-pop 6.
  *   Push 6 globals onto mstack: 70, 74, 78, 80, 4c, 7c.
- *   Op: g_x_0054204c = g_state_0054207c; g_x_00542084 += g_state_00542088.
+ *   Op: g_pendingNodeType = g_eventQueueNotMask; g_currentNodeFlags += g_xformScratch2088.
  *   Pop 6 in reverse: 7c, 4c, 80, 78, 74, 70.
  */
 void MStackPush6OpPop6_0048af60(void) {
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_00542070;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueCurrent;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_x_00542074;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueWorkType;
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = g_acc_00542078;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_state_00542080;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueChild;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_x_0054204c;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_pendingNodeType;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_state_0054207c;
-    g_x_0054204c = g_state_0054207c;
-    g_x_00542084 += g_state_00542088;
-    g_state_0054207c = *(unsigned int *)(g_state_004d57ac * 4);
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueNotMask;
+    g_pendingNodeType = g_eventQueueNotMask;
+    g_currentNodeFlags += g_xformScratch2088;
+    g_eventQueueNotMask = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_x_0054204c = *(unsigned int *)(g_state_004d57ac * 4);
+    g_pendingNodeType = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_state_00542080 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueChild = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
     g_acc_00542078 = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_x_00542074 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueWorkType = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_data_00542070 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueCurrent = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

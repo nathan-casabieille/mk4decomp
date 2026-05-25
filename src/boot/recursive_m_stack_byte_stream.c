@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,18 +127,18 @@ extern void DispatchSetDirtyToggle_004ac150(void);
 extern void RecursiveMStackByteStream_00406d00(void);
 
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
- *   push g_scaledInit_00542044 and g_x_00542048 onto mstack (2x inc g_state_004d57ac).
+ *   push g_scaledInit_00542044 and g_xformEntityIdx onto mstack (2x inc g_state_004d57ac).
  *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_data_00538158
  *     use g_data_00537f48 else use g_data_005380e0; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
- *   load scaledInit[+0x14] -> g_x_00542048; call DispatchSetDirtyToggle_004ac150; if pause? ret.
- *   if bit2 of g_state_0054208c clear: load scaledInit[+0x18] -> g_x_00542048.
- *   call RecursiveMStackByteStream_00406d00; if pause? ret. pop pair: g_x_00542048, g_scaledInit_00542044; ret.
+ *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle_004ac150; if pause? ret.
+ *   if bit2 of g_xformDirtyFlags clear: load scaledInit[+0x18] -> g_xformEntityIdx.
+ *   call RecursiveMStackByteStream_00406d00; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537f48;
 extern unsigned int g_state_005380e0;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 void MStackPushPairTriCall_0048ce60(void) {
     __asm {
@@ -148,7 +148,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
@@ -171,18 +171,18 @@ void MStackPushPairTriCall_0048ce60(void) {
         _emit   74h
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, dword ptr [eax*4 + 0x14]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatchSetDirtyToggle_004ac150
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   54h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   12h
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    RecursiveMStackByteStream_00406d00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -191,7 +191,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00434730 (185b game) - install-self with abs-diff threshold gating.
  *   eax = base*4; edx=0; flag = [eax+0x84]; clear via edx.
  *   if (flag != 0): call ChainDecCondStoreCallJmp; pop edi; ret.
- *   ecx = abs(g_walkCallback - g_x_00542084); g_walkCallback = ecx;
+ *   ecx = abs(g_walkCallback - g_currentNodeFlags); g_walkCallback = ecx;
  *   if (ecx > 0x20000): goto install-path.
  *   else: call InstallSelfChainSet80Call; pop edi; ret.
- *   install-path: g_x_00542080 = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
+ *   install-path: g_eventQueueChild = 0x50; install self with packed_ptr store; call CmpDispatchPushCallPop;
  *     pause = 1.
  */
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
 extern void ChainDecCondStoreCallJmp_00434880(void);
 extern void CmpDispatchPushCallPop_00438530(void);
 extern void InstallSelfChainSet80Call_004347f0(void);
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         pop     edi
         ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edi, dword ptr [g_x_00542084]
+        mov     edi, dword ptr [g_currentNodeFlags]
         sub     ecx, edi
         mov     dword ptr [g_walkCallback], ecx
         _emit   79h
@@ -167,7 +167,7 @@ __declspec(naked) void InstallSelfAbsDiff_00434730(void) {
         call    InstallSelfChainSet80Call_004347f0
         pop     edi
         ret
-        mov     dword ptr [g_x_00542080], 0x50
+        mov     dword ptr [g_eventQueueChild], 0x50
         mov     dword ptr [eax + 8], 0x00434730
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edi, 0x00434730

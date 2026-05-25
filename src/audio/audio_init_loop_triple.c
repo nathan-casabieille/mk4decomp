@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * AudioInitLoopTriple_004a7840 - 237b audio 2-entry init + triple-loop body.
- *   Entry 0x004a7840: g_x_00542048 = (0x0050f114 >> 2); call DispatcherComplex260;
+ *   Entry 0x004a7840: g_xformEntityIdx = (0x0050f114 >> 2); call DispatcherComplex260;
  *     if paused: ret. push 0x13333; SnapshotDirtyMark; MStackPushComplexCallPop;
- *     if paused: ret. chain[g_x_00542044*4 + 0x5c] = 0x00100000; ret.
- *   16b-aligned body 0x004a7890: g_x_00542074 = 0x32a; Push16Call.
+ *     if paused: ret. chain[g_currentNodeIdx*4 + 0x5c] = 0x00100000; ret.
+ *   16b-aligned body 0x004a7890: g_eventQueueWorkType = 0x32a; Push16Call.
  *     Loop1 (esi: byte-table at 0x004f3b48 to 0x004f3c20 step 0x24): chain[(g_baseSel+byte)*4],
  *       call MStackPush2ChainLLInsert_00406790. Loop2 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x34], call.
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
@@ -136,9 +136,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0050f114;
 extern unsigned int g_data_005433f4;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueWorkType;
 extern void AudioInstallSelfStateMachine2_004a85c0(void);
 extern void DrainQueueCallEach_004a1ec0(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -152,7 +152,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
     {
         mov     eax, offset g_data_0050f114
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -164,7 +164,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_e0_ret
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x5c], 0x00100000
     L_e0_ret:
         ret
@@ -177,7 +177,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         _emit   90h
         _emit   90h
         push    esi
-        mov     dword ptr [g_x_00542074], 0x32a
+        mov     dword ptr [g_eventQueueWorkType], 0x32a
         call    Push16Call_00489f50
         mov     esi, 0x004f3b48
     L_loop1:
@@ -185,7 +185,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         mov     ecx, dword ptr [g_baseSel_00542060]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
-        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         add     esi, 0x24
         cmp     esi, 0x004f3c20
@@ -195,7 +195,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         mov     eax, dword ptr [g_baseSel_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         inc     esi
         cmp     esi, 5
@@ -205,7 +205,7 @@ __declspec(naked) void AudioInitLoopTriple_004a7840(void)
         mov     eax, dword ptr [g_baseSel_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_x_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         inc     esi
         cmp     esi, 5

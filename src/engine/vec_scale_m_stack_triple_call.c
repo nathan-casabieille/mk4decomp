@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,28 +125,28 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00446980 (389b game) - 2-entry packed: vec-scale helper +
  *   mstack-push + 3-call rescale.
  *   Entry 1 (offset 0, 85b): scales a vec component. Pushes
- *     g_data_00542070 onto Mul10Tail_00404af0 with 0x13333 weight, then
+ *     g_eventQueueCurrent onto Mul10Tail_00404af0 with 0x13333 weight, then
  *     0x54206c = 0xf5c → StoreDoubleNegPauseSubStore_004ab750. On
  *     no-error adds 0x10000 to 0x54206c, calls Mul10Tail again with that
- *     value, stores result in g_data_00542070.
+ *     value, stores result in g_eventQueueCurrent.
  *   11b NOP align pad.
- *   Entry 2 (offset 0x60, 293b): pushes g_data_0054205c onto mstack,
+ *   Entry 2 (offset 0x60, 293b): pushes g_fightGroupHead onto mstack,
  *     calls ChainWalkPushPop_00405a40. On no-error sets 0x54206c=0x12c
  *     → AudioVolumeRescale_004ab690. If bit 0 of 0x54208c set also
  *     calls MStackPush2VolumeCascade_00444e00. Then for each of the
- *     3 components at [g_data_0054205c*4 + 0x6c/0x70/0x74]:
- *       - copy into g_data_00542070
+ *     3 components at [g_fightGroupHead*4 + 0x6c/0x70/0x74]:
+ *       - copy into g_eventQueueCurrent
  *       - call entry 1 (the scaler)
  *       - store result back
  *     Then clamps the scaled +0x58 field at -0x2666 (0xffffd99a) and
- *     zeroes +0x70 when clamped. Sets g_data_00542048-pointed slot's
+ *     zeroes +0x70 when clamped. Sets g_xformEntityIdx-pointed slot's
  *     +0x10=0, +0x14=&g_data_004e6070>>2. Pops mstack and returns.
  */
 extern unsigned int g_data_004e6070;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -155,26 +155,26 @@ extern void StoreDoubleNegPauseSubStore_004ab750(void);
 
 __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    0x13333
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_walkCallback], 0xf5c
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_vsm_e1End
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         add     eax, 0x10000
         push    ecx
         push    eax
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
     L_vsm_e1End:
         ret
         nop
@@ -191,7 +191,7 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         /* entry 2 (offset 0x60) */
     L_vsm_entry2:
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -205,49 +205,49 @@ __declspec(naked) void VecScaleMStackTripleCall_00446980(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         je      short L_vsm_doVecScale
         call    MStackPush2VolumeCascade_00444e00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_vsm_pop1
     L_vsm_doVecScale:
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x6c]
         lea     esi, [edx*4]
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         call    VecScaleMStackTripleCall_00446980
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     edx, dword ptr [esi + 0x70]
         mov     dword ptr [esi + 0x6c], ecx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         call    VecScaleMStackTripleCall_00446980
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [esi + 0x74]
         mov     dword ptr [esi + 0x70], eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         call    VecScaleMStackTripleCall_00446980
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, 0xffffd99a
         mov     dword ptr [esi + 0x74], edx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         cmp     dword ptr [eax*4 + 0x58], ecx
         jl      short L_vsm_skipClamp
         mov     dword ptr [eax*4 + 0x58], ecx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x70], 0
     L_vsm_skipClamp:
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, offset g_data_004e6070
         shr     eax, 2
         mov     dword ptr [ecx*4 + 0x10], 0
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x14], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_state_004d57ac], eax
     L_vsm_pop1:
         pop     esi

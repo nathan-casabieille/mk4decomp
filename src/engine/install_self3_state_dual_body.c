@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_x_00ab51f8;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_chain_arr_4348f0;
 extern void InstallSelf3StateDualBody_00434a30(void);
 
 /* @addr 0x00434990 (148b) - install-self variant of 0x4348f0:
  *   Same shape as InstallSelfStatePush_004348f0, but writes 0x10041 instead
- *   of 0x10042 to g_x_0054207c and installs self at 0x00434990.
+ *   of 0x10042 to g_eventQueueNotMask and installs self at 0x00434990.
  */
 extern void HitReactionDispatcher_0045f650(void);
 
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfStatePush_00434990(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   0fh
-        mov     dword ptr [g_x_0054207c], 0x10041
+        mov     dword ptr [g_eventQueueNotMask], 0x10041
         jmp     HitReactionDispatcher_0045f650
         mov     dword ptr [eax + 8], offset InstallSelfStatePush_00434990
         mov     ecx, dword ptr [g_baseSel_00542060]

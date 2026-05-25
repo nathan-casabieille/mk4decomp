@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,15 +130,15 @@ extern unsigned int g_data_005108dc;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542a08;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void InstallSelfDispatch_00407620(void);
@@ -150,49 +150,49 @@ extern void MStackPush4LLWalkPop4_004090e0(void);
 __declspec(naked) void CombatChainWalkExpand_00463870(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_pendingNodeType]
         mov      edx, OFFSET g_data_0050cb3c
         push     ebx
         push     ebp
         mov      ecx, dword ptr [eax*4 + 0xc]
         push     edi
         shr      edx, 2
-        mov      dword ptr [g_data_00542050], ecx
-        mov      dword ptr [g_data_0054207c], 0
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_eventQueueTotal], ecx
+        mov      dword ptr [g_eventQueueNotMask], 0
+        mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      L_3c6e
-        mov      eax, dword ptr [g_data_0054204c]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_pendingNodeType]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4 + 4]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x54], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054207c]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [edx*4 + 0x58], eax
-        mov      ecx, dword ptr [g_data_0054204c]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_pendingNodeType]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 8]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [edx*4 + 0x5c], eax
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      ecx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_0052ab10]
-        mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054204c], eax
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [edx*4 + 0x3c], eax
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [edx*4 + 0x40], 0
@@ -200,29 +200,29 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        mov      eax, dword ptr [g_data_00542044]
-        mov      edi, dword ptr [g_data_0054207c]
-        mov      dword ptr [g_data_0054205c], eax
-        mov      eax, dword ptr [g_data_00542050]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      edi, dword ptr [g_eventQueueNotMask]
+        mov      dword ptr [g_fightGroupHead], eax
+        mov      eax, dword ptr [g_eventQueueTotal]
         sub      edi, 0x6978
         inc      eax
-        mov      dword ptr [g_data_0054207c], edi
+        mov      dword ptr [g_eventQueueNotMask], edi
         mov      ecx, dword ptr [eax*4 - 4]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542074], ecx
-        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_eventQueueWorkType], ecx
+        mov      dword ptr [g_eventQueueTotal], eax
         je       L_3c4f
         mov      ebx, OFFSET g_data_0050cab0
         mov      ebp, 1
         shr      ebx, 2
         mov      edi, 0x4baf40
     L_39cd:
-        mov      dword ptr [g_data_00542048], ebx
+        mov      dword ptr [g_xformEntityIdx], ebx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      L_3c6e
         call     MStackBracket4_ListInsertZeroFill_00408600
         mov      eax, dword ptr [g_framePauseFlag]
@@ -233,35 +233,35 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         test     eax, eax
         jne      L_3c6e
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_0054204c]
+        mov      edx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_0052ab10]
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054204c], eax
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [ecx*4 + 0x3c], eax
         mov      eax, OFFSET g_data_005108dc
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      edx, dword ptr [eax*4]
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         sar      edx, 2
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      ecx, dword ptr [eax*4 + 0x18]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     InstallSelfDispatch_00407620
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
         mov      edx, OFFSET g_data_0050a49c
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         call     MStackPush4LLWalkPop4_004090e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -269,43 +269,43 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [ecx*4 + 4]
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_0054207c]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [eax*4 + 0x58], ecx
-        mov      edx, dword ptr [g_data_0054204c]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_pendingNodeType]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 8]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [edx*4 + 0x40], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_00542074]
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueWorkType]
+        mov      dword ptr [g_fightGroupHead], ecx
         mov      ecx, OFFSET g_data_00542a08
         shr      ecx, 2
         mov      dword ptr [g_walkCallback], ebp
-        mov      dword ptr [g_data_00542070], 0xff
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueCurrent], 0xff
+        mov      dword ptr [g_eventQueueEnd], ecx
         jmp      L_3b89
     L_3b83:
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
     L_3b89:
-        and      eax, dword ptr [g_data_00542070]
+        and      eax, dword ptr [g_eventQueueCurrent]
         cmp      eax, 0x10
         mov      dword ptr [g_data_00535e48], eax
         ja       L_3c6e
@@ -316,37 +316,37 @@ __declspec(naked) void CombatChainWalkExpand_00463870(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_3c6e
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_data_00542078]
         mov      dword ptr [eax*4 + 0x24], ecx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x28]
         mov      dword ptr [eax*4 + 0x10], edi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      edx, dword ptr [ecx*4 + 0x28]
         mov      dword ptr [edx*4 + 0x14], eax
-        mov      eax, dword ptr [g_data_00542074]
+        mov      eax, dword ptr [g_eventQueueWorkType]
         mov      ecx, dword ptr [g_walkCallback]
         sar      eax, 8
         inc      ecx
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         cmp      ecx, 4
         mov      dword ptr [g_walkCallback], ecx
         jbe      L_3b83
-        mov      eax, dword ptr [g_data_0054207c]
+        mov      eax, dword ptr [g_eventQueueNotMask]
         sub      eax, 0x6978
-        mov      dword ptr [g_data_0054207c], eax
-        mov      eax, dword ptr [g_data_00542050]
+        mov      dword ptr [g_eventQueueNotMask], eax
+        mov      eax, dword ptr [g_eventQueueTotal]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542074], ecx
-        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_eventQueueWorkType], ecx
+        mov      dword ptr [g_eventQueueTotal], eax
         jne      L_39cd
     L_3c4f:
-        mov      ecx, dword ptr [g_data_0054204c]
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_pendingNodeType]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [ecx*4]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x30], eax

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,15 +125,15 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00434690 (154b game) - install-self + countdown loop with global flag.
  *   Block A: standard install-self at 0x00434690; mstack-push 0x004346f0 jmp GameDispatchValidateState_004339c0.
  *     Also sets g_data_00ab51f8 = 1 at entry.
- *   Block B (+0x60): cmp g_state_00535ddc, g_x_00542084; set g_data_00ab51f8=1 either way;
- *     if le: countdown g_x_00542080, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
+ *   Block B (+0x60): cmp g_state_00535ddc, g_currentNodeFlags; set g_data_00ab51f8=1 either way;
+ *     if le: countdown g_eventQueueChild, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00ab51f8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
 extern void ChainDecCondStoreCallJmp_00434880(void);
 
 __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         jmp     GameDispatchValidateState_004339c0
         mov     dword ptr [eax + 0x08], 0x00434690
         mov     dword ptr [eax + 0x84], edx
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_pause_00541e6c], edx
         ret
         _emit   90h
@@ -162,16 +162,16 @@ __declspec(naked) void InstallSelfFlagCountdown_00434690(void) {
         _emit   90h
         _emit   90h
         mov     eax, dword ptr [g_state_00535ddc]
-        mov     ecx, dword ptr [g_x_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_data_00ab51f8], 1
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
         _emit   05h
         jmp     ChainDecCondStoreCallJmp_00434880
-        mov     eax, dword ptr [g_x_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
         jmp     InstallSelfFlagCountdown_00434690

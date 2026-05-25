@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d50b4;
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_005433c4;
 extern unsigned int g_data_005433c8;
@@ -164,10 +164,10 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      al, byte ptr [g_data_004d50b4]
         mov      ecx, dword ptr [g_data_0054359c]
         test     al, 4
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       short L_8b34
         call     SetJmp_004a1ad0
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         lea      eax, [ecx + ecx*2]
         mov      dl, byte ptr [eax*8 + g_data_005435a0]
         dec      dl
@@ -178,7 +178,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         test     byte ptr [g_data_004d50b4], 8
         je       short L_8b68
         call     SetJmp_004a1ad0
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         lea      eax, [ecx + ecx*2]
         mov      dl, byte ptr [eax*8 + g_data_005435a0]
         inc      dl
@@ -194,7 +194,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      dword ptr [g_walkCallback], edx
         add      ecx, eax
         mov      edx, dword ptr [ecx*4 + 0x34]
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         call     ScaledChainStore24_004a7d40
     L_8b98:
         mov      eax, dword ptr [g_data_005433c4]
@@ -226,10 +226,10 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      eax, dword ptr [g_data_004d50b4]
         add      ecx, 5
         test     ah, 4
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       short L_8c32
         call     SetJmp_004a1ad0
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         lea      eax, [ecx + ecx*2]
         mov      dl, byte ptr [eax*8 + g_data_005435a0]
         dec      dl
@@ -241,7 +241,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         test     ah, 8
         je       short L_8c67
         call     SetJmp_004a1ad0
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         lea      eax, [ecx + ecx*2]
         mov      dl, byte ptr [eax*8 + g_data_005435a0]
         inc      dl
@@ -257,7 +257,7 @@ __declspec(naked) void AudioMixerKnobUpdate_004a8aa0(void)
         mov      dword ptr [g_walkCallback], eax
         add      edx, ecx
         mov      eax, dword ptr [edx*4 + 0x48]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         jmp      ScaledChainStore24_004a7d40
     L_8c96:
         ret

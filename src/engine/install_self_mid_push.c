@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,16 +125,16 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0045bd80 (187b game) - install-self with mid-function push-edi save.
  *   eax = base*4; edx=0; flag=[eax+0x84]; clear.
  *   if (flag == 0): install-path (push edi here).
- *   else: g_walkCallback=1; chain[g_x_0054205c+0x28]=1; jmp StackPopDispatchTagged_0041f780.
- *   install-path: g_x_00542080=0; g_x_00542058=0; g_x_00542084=0xa3d; g_x_00542088=0x4000.
+ *   else: g_walkCallback=1; chain[g_fightGroupHead+0x28]=1; jmp StackPopDispatchTagged_0041f780.
+ *   install-path: g_eventQueueChild=0; g_eventQueueIdx=0; g_currentNodeFlags=0xa3d; g_xformScratch2088=0x4000.
  *     install self: [eax+8]=0x45bd80, push edi for packed_ptr store,
  *     g_scaledInit++; chain[+0x84]=0; call InstallSelfAccumOverflow_00428b20; pause=1.
  */
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 extern void InstallSelfAccumOverflow_00428b20(void);
 
 extern unsigned int g_data_004d57ac_arr;
@@ -149,14 +149,14 @@ __declspec(naked) void InstallSelfMidPush_0045bd80(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   20h
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 1
         mov     dword ptr [ecx*4 + 0x28], 1
         jmp     StackPopDispatchTagged_0041f780
-        mov     dword ptr [g_x_00542080], edx
-        mov     dword ptr [g_x_00542058], edx
-        mov     dword ptr [g_x_00542084], 0x00000a3d
-        mov     dword ptr [g_x_00542088], 0x00004000
+        mov     dword ptr [g_eventQueueChild], edx
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_currentNodeFlags], 0x00000a3d
+        mov     dword ptr [g_xformScratch2088], 0x00004000
         mov     dword ptr [eax + 8], 0x0045bd80
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi

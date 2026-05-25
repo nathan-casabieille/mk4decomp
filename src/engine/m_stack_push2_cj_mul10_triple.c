@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
  *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
- *   Call PreFightInstallCluster_00474390; if pause? final-ret. If bit2 of g_state_0054208c set? skip 3 Mul10Tails.
+ *   Call PreFightInstallCluster_00474390; if pause? final-ret. If bit2 of g_xformDirtyFlags set? skip 3 Mul10Tails.
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
  *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
  */
@@ -153,7 +153,7 @@ void MStackPush2CjMul10Triple_00474170(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   95h

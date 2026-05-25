@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,9 +123,9 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004237d0 (154b game) - 2-state lookup with dirty toggle:
- *   g_scaledInit = (0x4dde70 >> 2); g_x_00542048 = (0x4dde80 >> 2);
+ *   g_scaledInit = (0x4dde70 >> 2); g_xformEntityIdx = (0x4dde80 >> 2);
  *   call Cmp2DirtyToggle; pause? ret;
- *   if (g_state_0054208c & 1): g_scaledInit = g_x_00542048;
+ *   if (g_xformDirtyFlags & 1): g_scaledInit = g_xformEntityIdx;
  *   key = g_scaledInit + (chain[cj].slot30*2 - 2);
  *   g_walkCallback = (chain[cj].slot30*2 - 2);
  *   g_scaledInit = key; chain[cj].slot54 = arr[key];
@@ -134,7 +134,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004ded70;
 extern unsigned int g_data_004ded80;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void Cmp2DirtyToggle_00423870(void);
 
 extern unsigned int g_arr_4237d0;
@@ -147,16 +147,16 @@ void TwoStateLookupDirty_004237d0(void) {
         shr     eax, 2
         shr     ecx, 2
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    Cmp2DirtyToggle_00423870
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   70h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   0ch
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     eax, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [g_scaledInit_00542044]

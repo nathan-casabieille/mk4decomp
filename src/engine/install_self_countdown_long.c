@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,17 +124,17 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0047ee70 (199b game) - dual-entry install-self with countdown.
  *   A: mstack-push 0x0047ee90; jmp TwoPhasePackInstall_0047eff0.
- *   B (+0x20): standard install-self.  chain[+0x84]!=0 path: load [g_x_0054205c*4+0x4c];
- *     if nonzero: g_x_00542080 = ax (after decrement?), jmp 0x80; else push 0x004ed6b8, call ArgSarStoreJmp, pop+ret.
- *     +0x6c countdown: dec g_x_00542080; if zero proceed; else self-call jmp.
+ *   B (+0x20): standard install-self.  chain[+0x84]!=0 path: load [g_fightGroupHead*4+0x4c];
+ *     if nonzero: g_eventQueueChild = ax (after decrement?), jmp 0x80; else push 0x004ed6b8, call ArgSarStoreJmp, pop+ret.
+ *     +0x6c countdown: dec g_eventQueueChild; if zero proceed; else self-call jmp.
  *     g_walkCallback=0xc, call CmpEqInitCallElseJmp; pause-check; bit-0 test; if set call DirtyGuardLitOrJmp;
  *     else install-self at +0x08=0x0047ee90.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueChild;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void DirtyGuardLitOrJmp_0047ef40(void);
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         test    eax, eax
         _emit   74h
         _emit   2ah
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x4c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -172,9 +172,9 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         add     esp, 4
         pop     esi
         ret
-        mov     eax, dword ptr [g_x_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   07h
         call    InstallSelfCountdownLong_0047ee70
@@ -186,7 +186,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         test    eax, eax
         _emit   75h
         _emit   2dh
-        mov     cl, byte ptr [g_state_0054208c]
+        mov     cl, byte ptr [g_xformDirtyFlags]
         mov     eax, 1
         _emit   84h
         _emit   0c8h
@@ -197,7 +197,7 @@ __declspec(naked) void InstallSelfCountdownLong_0047ee70(void) {
         ret
         mov     dword ptr [esi + 0x08], 0x0047ee90
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

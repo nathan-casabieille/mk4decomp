@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,98 +123,98 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045f310 (303b game) - arg-table indexed setup with conditional double-init + bitmask result.
- *   Init: eax=[esp+4]>>2; g_x_00542050=eax. Load 4 from [eax*4+0]: g_x_00542074, g_acc, g_state_0054207c, g_state_00542080.
+ *   Init: eax=[esp+4]>>2; g_eventQueueTotal=eax. Load 4 from [eax*4+0]: g_eventQueueWorkType, g_acc, g_eventQueueNotMask, g_eventQueueChild.
  *   Load g_state_00538158 into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
  *   Else load 4 more from [eax*4+0] into same globals. Call NotMaskStorePair.
- *   If pause: ret. Compute (g_walkCallback & g_state_0054207c) and (g_data_00542070 & g_state_00542080).
+ *   If pause: ret. Compute (g_walkCallback & g_eventQueueNotMask) and (g_eventQueueCurrent & g_eventQueueChild).
  *   If g_data_005424c0 != 0: jmp set-bit branch (or al,1).
- *   Else: cmp g_x_00542074 with eax (g_walkCallback & 7c).
+ *   Else: cmp g_eventQueueWorkType with eax (g_walkCallback & 7c).
  *     If equal: cmp g_acc with ecx. If equal: set bit. Else clear bit. Ret.
  *     If first not equal: clear bit, ret.
  */
 extern unsigned int g_data_005424c0;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542050;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueWorkType;
 extern void NotMaskStorePair_0045f440(void);
 
 void ArgIndexedBitmaskInit_0045f310(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_x_00542074], ecx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_acc_00542078], edx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_state_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     ecx, dword ptr [g_state_00538158]
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [g_cj_0054205c]
         inc     eax
         cmp     edx, ecx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         _emit   74h
         _emit   4ch
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_x_00542074], ecx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_acc_00542078], edx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_state_0054207c], ecx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueNotMask], ecx
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_state_00542080], edx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueChild], edx
+        mov     dword ptr [g_eventQueueTotal], eax
         call    NotMaskStorePair_0045f440
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   66h
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_state_0054207c]
-        mov     edx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
+        mov     edx, dword ptr [g_eventQueueChild]
         and     eax, ecx
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         and     ecx, edx
         mov     edx, dword ptr [g_data_005424c0]
         test    edx, edx
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   75h
         _emit   2ah
-        cmp     dword ptr [g_x_00542074], eax
+        cmp     dword ptr [g_eventQueueWorkType], eax
         _emit   74h
         _emit   0dh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         cmp     dword ptr [g_acc_00542078], ecx
         _emit   74h
         _emit   0dh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

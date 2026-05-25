@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -131,9 +131,9 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_00542004;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_005433a8;
 extern unsigned int g_x_005433e8;
 extern unsigned int g_x_005433ec;
@@ -156,22 +156,22 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         mov     ecx, 0x0053a3e0
         shr     eax, 2
         shr     ecx, 2
-        mov     dword ptr [g_x_00542044], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         jmp     short L_common
     L_modeB:
         mov     edx, 0x00537e88
         mov     eax, 0x0053a700
         shr     edx, 2
         shr     eax, 2
-        mov     dword ptr [g_x_00542044], edx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_currentNodeIdx], edx
+        mov     dword ptr [g_xformEntityIdx], eax
     L_common:
         call    DualScaledStoreConst_004a22c0
         call    ClearTwoCallSetStore_004a2270
         mov     dword ptr [g_data_00542004], 0
         call    SixCallSeqPushImm_004a1d80
-        mov     dword ptr [g_x_00542074], 0
+        mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

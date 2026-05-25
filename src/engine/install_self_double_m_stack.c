@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,17 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043b9a0 (236b game) - install-self with countdown.
- *   chain[+0x84]!=0 path: dec g_x_0054207c; if not zero call StackPopDispatchTagged; pop+ret;
- *   call GuardedSeq_004297b0; pause-check; mstack-push g_x_00542080, mstack-push g_x_00542080 again
- *   (with g_x_0054207c copied to g_walkCallback then g_x_00542080); call CmpEqInitCallElseJmp; pause-check;
- *   mstack-pop g_x_00542080, mstack-pop g_x_0054207c; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
- *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_data_0054204c=1, pause=1; pop+ret.
+ *   chain[+0x84]!=0 path: dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; pop+ret;
+ *   call GuardedSeq_004297b0; pause-check; mstack-push g_eventQueueChild, mstack-push g_eventQueueChild again
+ *   (with g_eventQueueNotMask copied to g_walkCallback then g_eventQueueChild); call CmpEqInitCallElseJmp; pause-check;
+ *   mstack-pop g_eventQueueChild, mstack-pop g_eventQueueNotMask; bit-0 test; if set call EsiInstallPushDecPopJmp; pop+ret.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x0043b9a0, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiInstallPushDecPopJmp_0043ba90(void);
 extern void GuardedSeq_004297b0(void);
@@ -148,9 +148,9 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         test    eax, eax
         _emit   74h
         _emit   14h
-        mov     eax, dword ptr [g_x_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax
-        mov     dword ptr [g_x_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   75h
         _emit   07h
         call    StackPopDispatchTagged_0041f780
@@ -166,14 +166,14 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542080]
-        mov     edx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueChild]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
@@ -185,12 +185,12 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054207c], ecx
-        mov     cl, byte ptr [g_state_0054208c]
+        mov     dword ptr [g_eventQueueNotMask], ecx
+        mov     cl, byte ptr [g_xformDirtyFlags]
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, 1
         _emit   84h
@@ -202,7 +202,7 @@ __declspec(naked) void InstallSelfDoubleMStack_0043b9a0(void) {
         ret
         mov     dword ptr [esi + 0x08], 0x0043b9a0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

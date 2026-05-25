@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,14 +128,14 @@ extern unsigned int g_data_004d6818;
 extern unsigned int g_data_004d6828;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541ffc;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void MStackCall_00406600(void);
@@ -153,7 +153,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [ecx*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         je      short L_bpdp_skipReplace
         mov     edx, offset g_data_004d6818
         shr     edx, 2
@@ -163,10 +163,10 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpdp_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_bpdp_ret
-        mov     eax, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [eax*4 + 0x34]
         and     eax, 1
         mov     dword ptr [g_walkCallback], eax
@@ -178,24 +178,24 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x58]
         add     ecx, 0xffffe667
         mov     dword ptr [eax*4 + 0x58], ecx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0x14], 0xff
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x4ba0e0
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     MStackCall_00406600
     L_bpdp_ret:
         ret
@@ -221,20 +221,20 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_bpdp_main_phase0
-        mov     eax, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         dec     eax
-        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         jns     short L_bpdp_main_chain
         call    CallSetPause_0041f830
         pop     esi
         ret
     L_bpdp_main_phase0:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [g_data_00541ffc]
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [edx*4 + 0x30], eax
-        mov     dword ptr [g_data_00542058], 5
+        mov     dword ptr [g_eventQueueIdx], 5
     L_bpdp_main_chain:
         mov     dword ptr [g_walkCallback], 0x3333
         call    AudioMixerStep_004ab700
@@ -246,7 +246,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp_main_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bpdp_main_install
         call    BootPackedDispatchPair_00413380
         mov     eax, dword ptr [g_framePauseFlag]
@@ -256,7 +256,7 @@ __declspec(naked) void BootPackedDispatchPair_00413380(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_bpdp_main
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_pendingNodeType], 4
         mov     dword ptr [g_framePauseFlag], eax
     L_bpdp_main_ret:
         pop     esi
@@ -274,7 +274,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [ecx*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         je      short L_bpdp2_skipReplace
         mov     edx, offset g_data_004d6828
         shr     edx, 2
@@ -284,10 +284,10 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bpdp2_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_bpdp2_ret
-        mov     eax, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [eax*4 + 0x34]
         and     eax, 1
         mov     dword ptr [g_walkCallback], eax
@@ -299,24 +299,24 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x58]
         add     ecx, 0xffffe667
         mov     dword ptr [eax*4 + 0x58], ecx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0x14], 0xff
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x4ba0e0
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     MStackCall_00406600
     L_bpdp2_ret:
         ret
@@ -342,20 +342,20 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_bpdp2_main_phase0
-        mov     eax, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         dec     eax
-        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         jns     short L_bpdp2_main_chain
         call    CallSetPause_0041f830
         pop     esi
         ret
     L_bpdp2_main_phase0:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [g_data_00541ffc]
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [edx*4 + 0x30], eax
-        mov     dword ptr [g_data_00542058], 4
+        mov     dword ptr [g_eventQueueIdx], 4
     L_bpdp2_main_chain:
         mov     dword ptr [g_walkCallback], 0x3333
         call    AudioMixerStep_004ab700
@@ -367,7 +367,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bpdp2_main_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bpdp2_main_install
         call    BootPackedDispatchPair_00413580
         mov     eax, dword ptr [g_framePauseFlag]
@@ -377,7 +377,7 @@ __declspec(naked) void BootPackedDispatchPair_00413580(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_bpdp2_main
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_pendingNodeType], 4
         mov     dword ptr [g_framePauseFlag], eax
     L_bpdp2_main_ret:
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00474f20 (162b game) - switch on (g_x_00542098 ? walk : alt):
- *   v = g_x_00542098 ? g_data_00542070 : (g_data_00542070 = g_x_005380e0).
+ *   v = g_x_00542098 ? g_eventQueueCurrent : (g_eventQueueCurrent = g_x_005380e0).
  *   switch (v) {
  *     case 2: case 9: walkCallback=0; state |= 4; jmp 0x83 path.
- *     case 1: walkCallback=2; clear bit 2; mstack-pop into g_data_00542070; ret.
- *     default: walkCallback=1; clear bit 2; mstack-pop into g_data_00542070; ret.
+ *     case 1: walkCallback=2; clear bit 2; mstack-pop into g_eventQueueCurrent; ret.
+ *     default: walkCallback=1; clear bit 2; mstack-pop into g_eventQueueCurrent; ret.
  *   }
  */
 extern unsigned int g_x_005380e0;
@@ -142,17 +142,17 @@ void StateSwitchMStackPop_00474f20(void) {
         _emit   75h
         _emit   0ch
         mov     eax, dword ptr [g_x_005380e0]
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   0ebh
         _emit   05h
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         cmp     eax, 2
         _emit   74h
         _emit   05h
         cmp     eax, 9
         _emit   75h
         _emit   15h
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_walkCallback], 0
         or      edx, 4
         _emit   0ebh
@@ -160,24 +160,24 @@ void StateSwitchMStackPop_00474f20(void) {
         cmp     eax, 1
         _emit   75h
         _emit   32h
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_state_004d57ac]
         and     edx, 0xfffffffb
         mov     dword ptr [g_walkCallback], 2
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         ret
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_walkCallback], 1
         and     edx, 0xfffffffb
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

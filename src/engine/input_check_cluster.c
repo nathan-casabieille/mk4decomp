@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* ------------------------------------------------------------------ */
 /* Scripted-event packet decoder (582b game)                           */
-/* Consumes a (op,arg)-stream from [g_data_00542044] and dispatches    */
+/* Consumes a (op,arg)-stream from [g_currentNodeIdx] and dispatches    */
 /* event-IDs 0xdd, 0xaa plus collision/state-flag checks.              */
 /* ------------------------------------------------------------------ */
 extern void ConditionalAcc4or3_0045e0b0(void);
@@ -137,10 +137,10 @@ extern unsigned int g_data_0053a498;
 
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
 extern unsigned int g_data_00542094;
 
@@ -150,43 +150,43 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         push     ebx
         push     esi
         push     edi
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [edi*4]
         inc      edi
         test     edx, edx
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_00542044], edi
+        mov      dword ptr [g_currentNodeIdx], edi
         je       L_e084
         mov      eax, dword ptr [edi*4]
         inc      edi
         cmp      edx, -1
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542044], edi
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_currentNodeIdx], edi
         je       L_dfc9
         mov      eax, edx
         xor      ecx, ecx
         shr      eax, 8
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         je       short L_deba
     L_deaf:
         inc      ecx
         shr      eax, 8
         jne      short L_deaf
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
     L_deba:
-        mov      esi, dword ptr [g_data_00542050]
-        mov      eax, dword ptr [g_data_00542054]
+        mov      esi, dword ptr [g_eventQueueTotal]
+        mov      eax, dword ptr [g_eventQueueEnd]
         add      esi, ecx
         dec      eax
-        mov      dword ptr [g_data_00542050], esi
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueTotal], esi
+        mov      dword ptr [g_eventQueueEnd], eax
     L_ded3:
-        mov      edi, dword ptr [g_data_00542054]
+        mov      edi, dword ptr [g_eventQueueEnd]
         mov      eax, edx
         and      eax, 0xff
         inc      edi
         cmp      eax, 0xdd
-        mov      dword ptr [g_data_00542054], edi
+        mov      dword ptr [g_eventQueueEnd], edi
         mov      dword ptr [g_data_00542078], eax
         jne      short L_df10
         call     ConditionalAcc4or3_0045e0b0
@@ -205,31 +205,31 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      edx, dword ptr [g_walkCallback]
         mov      eax, dword ptr [g_data_00542078]
     L_df34:
-        mov      esi, dword ptr [g_data_00542050]
+        mov      esi, dword ptr [g_eventQueueTotal]
         mov      ecx, dword ptr [esi*4]
         dec      esi
         cmp      eax, ecx
-        mov      dword ptr [g_data_00542074], ecx
-        mov      dword ptr [g_data_00542050], esi
+        mov      dword ptr [g_eventQueueWorkType], ecx
+        mov      dword ptr [g_eventQueueTotal], esi
         jne      short L_dfc0
         shr      edx, 8
         mov      dword ptr [g_walkCallback], edx
         jne      L_ded3
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edi*4]
         shr      eax, 0x10
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 0x40
         mov      dword ptr [g_data_00542094], eax
         jne      short L_dfc9
-        mov      esi, dword ptr [g_data_0054205c]
+        mov      esi, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [g_data_00538158]
         mov      ecx, 0x20
         cmp      esi, eax
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       short L_dfa5
         mov      ecx, 0x2000
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
     L_dfa5:
         mov      eax, dword ptr [g_data_004d50a4]
         not      eax
@@ -245,7 +245,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         pop      ebx
         ret
     L_dfc9:
-        mov      esi, dword ptr [g_data_0054205c]
+        mov      esi, dword ptr [g_fightGroupHead]
     L_dfcf:
         mov      ebx, dword ptr [edi*4]
         xor      ecx, ecx
@@ -253,14 +253,14 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         inc      edi
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00542044], edi
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_currentNodeIdx], edi
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       short L_e014
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_data_0053a498]
         mov      edx, dword ptr [edx*4]
         sub      eax, edx
-        mov      dword ptr [g_data_00542074], edx
+        mov      dword ptr [g_eventQueueWorkType], edx
         cmp      eax, ecx
         mov      dword ptr [g_data_00542078], eax
         jg       short L_e084
@@ -268,15 +268,15 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      eax, ebx
         shr      eax, 0x10
         and      eax, 0x10
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         jne      short L_e061
         mov      eax, dword ptr [esi*4 + 0x40]
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         and      eax, 0x200
         mov      dword ptr [g_data_00542094], eax
         jne      short L_e061
         mov      eax, dword ptr [esi*4 + 0x48]
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      ecx, dword ptr [esi*4 + 0x58]
         cmp      ecx, eax
         mov      dword ptr [g_data_00542078], ecx
@@ -289,7 +289,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
     L_e061:
         mov      eax, dword ptr [esi*4 + 0x40]
         mov      ecx, eax
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         and      ecx, 1
         mov      dword ptr [g_data_00542094], ecx
         jne      short L_e084
@@ -304,7 +304,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         ret
     L_e092:
         shr      ebx, 0x18
-        mov      dword ptr [g_data_00542070], ebx
+        mov      dword ptr [g_eventQueueCurrent], ebx
         je       short L_e0a2
         call     MStackPush3IndirectCall_0045e100
     L_e0a2:

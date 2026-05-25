@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,9 +136,9 @@ void PhaseInstallSelf3Step_00402350(void);
 
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
 extern void BootInitGuardedCallChain_004265d0(void);
 
@@ -160,18 +160,18 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         pop     ebx
         ret
     L_pis3_phase1:
-        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
         mov     ecx, dword ptr [g_data_00542060]
         mov     edx, offset PhaseInstallSelf3Step_00402350
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -192,29 +192,29 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     ecx, offset g_data_00506c2c
         add     esp, 8
         shr     ecx, 2
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     edx, offset g_data_00506c2c
         shr     edx, 2
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
         mov     eax, offset g_data_00508308
         shr     eax, 2
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     ebx, 0x1F
         mov     dword ptr [ecx*4 + 0x54], 0xFFB00000
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
@@ -227,14 +227,14 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         jne     L_pis3_exit
         mov     eax, offset g_data_00508324
         shr     eax, 2
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pis3_exit
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x00770000
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [edx*4 + 0x30], ebx
         call    PushSetCallPop_00406530
@@ -248,7 +248,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset PhaseInstallSelf3Step_00402350
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0x1E0
+        mov     dword ptr [g_pendingNodeType], 0x1E0
         mov     dword ptr [g_framePauseFlag], eax
     L_pis3_exit:
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,8 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
 extern void DualConstJmp_00453480(void);
 extern void DualConstJmp_004534a0(void);
@@ -170,11 +170,11 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_322e:
         /* case 1: decrement counter, branch on sign */
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jns      L_3365
-        mov      dword ptr [g_data_00542054], 0x33
+        mov      dword ptr [g_eventQueueEnd], 0x33
         jmp      L_33be
     L_324e:
         /* case 2: 0x420 / 0x4a0 then state 3 */
@@ -189,7 +189,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
@@ -206,13 +206,13 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 4
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_32da:
         /* case 0: init loop then state 1 */
-        mov      dword ptr [g_data_00542054], 4
+        mov      dword ptr [g_eventQueueEnd], 4
         call     GuardedSetCallOrJmp_00453420
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -234,9 +234,9 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_3401
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         js       short L_335b
         call     GuardedSetCallOrJmp_00453420
         mov      eax, dword ptr [g_framePauseFlag]
@@ -245,7 +245,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         pop      esi
         ret
     L_335b:
-        mov      dword ptr [g_data_00542054], 4
+        mov      dword ptr [g_eventQueueEnd], 4
     L_3365:
         call     GuardedSetCallOrJmp_00453420
         mov      eax, dword ptr [g_framePauseFlag]
@@ -262,15 +262,15 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
     L_33b1:
         /* default (state >= 4): decrement, fall through to L_33be */
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         js       short L_33fc
     L_33be:
         call     GuardedSetCallOrJmp_00453420
@@ -284,7 +284,7 @@ __declspec(naked) void IdleFsm4CaseDispatch_004531d0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3200
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret

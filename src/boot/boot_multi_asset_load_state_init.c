@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,21 +124,21 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootMultiAssetLoadStateInit_00403b10 - 258b boot multi-asset loader chain.
- *   push 8; TableWalkBoundedCmp; g_x_00542044 = (0x00506c14>>2);
- *   call LoadGeoAsset_Default; if paused: ret. g_x_00542044 = (0x00506c14>>2) again;
- *   call LoadGeoAsset_Default; if paused: ret. g_x_00542048 = (0x005080d8>>2);
- *   call DispatcherComplex260_00407400; if paused: ret. esi=0x1f; chain[g_x_00542044*4 + 0x54] = 0x00627d70;
- *   g_walkCallback=0x1f; chain[g_x_00542044*4 + 0x30]=0x1f; call PushSetCallPop_00406530; if paused: ret.
- *   call RegistryPushBindPop_00403c20; if paused: ret. g_x_00542048 = (0x005080bc>>2);
- *   call DispatcherComplex260; if paused: ret. chain[g_x_00542044*4 + 0x54] = 0x8bff9b80;
+ *   push 8; TableWalkBoundedCmp; g_currentNodeIdx = (0x00506c14>>2);
+ *   call LoadGeoAsset_Default; if paused: ret. g_currentNodeIdx = (0x00506c14>>2) again;
+ *   call LoadGeoAsset_Default; if paused: ret. g_xformEntityIdx = (0x005080d8>>2);
+ *   call DispatcherComplex260_00407400; if paused: ret. esi=0x1f; chain[g_currentNodeIdx*4 + 0x54] = 0x00627d70;
+ *   g_walkCallback=0x1f; chain[g_currentNodeIdx*4 + 0x30]=0x1f; call PushSetCallPop_00406530; if paused: ret.
+ *   call RegistryPushBindPop_00403c20; if paused: ret. g_xformEntityIdx = (0x005080bc>>2);
+ *   call DispatcherComplex260; if paused: ret. chain[g_currentNodeIdx*4 + 0x54] = 0x8bff9b80;
  *   g_walkCallback=0x1f; chain[+0x30]=0x1f; call PushSetCallPop; if paused: ret. Tail-call RegistryPushBindPop.
  */
 extern unsigned int g_data_00506c14;
 extern unsigned int g_data_005080bc;
 extern unsigned int g_data_005080d8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern void RegistryPushBindPop_00403c20(void);
 extern void TableWalkBoundedCmp_004bd890(void);
 
@@ -152,29 +152,29 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         mov     eax, offset g_data_00506c14
         add     esp, 4
         shr     eax, 2
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_ml_ret
         mov     ecx, offset g_data_00506c14
         shr     ecx, 2
-        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_ml_ret
         mov     edx, offset g_data_005080d8
         shr     edx, 2
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_ml_ret
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     esi, 0x1f
         mov     dword ptr [eax*4 + 0x54], 0x00627d70
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x30], esi
         call    PushSetCallPop_00406530
@@ -187,14 +187,14 @@ __declspec(naked) void BootMultiAssetLoadStateInit_00403b10(void)
         jne     short L_ml_ret
         mov     edx, offset g_data_005080bc
         shr     edx, 2
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_ml_ret
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x54], 0xff9b8000
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x30], esi
         call    PushSetCallPop_00406530

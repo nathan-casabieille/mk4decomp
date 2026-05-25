@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,15 +130,15 @@ extern unsigned int g_state_00537ea8;
  *   Multi-cmp on eax: ==ebx → branch_A; ==2/3/4 → +0xe then call LinkedListIndirectDirtyToggle_0049f7b0; ==5 → use esi.
  *     <5 → CallSetPause; ==0xa/0xf → -5; ==0x12 → -4; >0x12 → CallSetPause.
  *   After call LinkedListIndirectDirtyToggle_0049f7b0: if pause CallSetPause; if !bit0(0054208c) loop to start.
- *   Else: chain[scaledInit*4]=g_walkCallback; copy g_state_00535e48 to g_data_00542070;
- *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_x_00542048*4+8];
+ *   Else: chain[scaledInit*4]=g_walkCallback; copy g_state_00535e48 to g_eventQueueCurrent;
+ *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
  *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  *   Tail thunk_2 (+0x110): if g_state_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e48;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
@@ -232,13 +232,13 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_x_00535e48]
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   25h
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020

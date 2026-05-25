@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,14 +128,14 @@ extern void PushPopScaled1cDoubleCall_00408510(void);
 extern unsigned int g_x_0053a3a8;
 
 /* @addr 0x004a7030 (189b audio) - packed-ptr install + chain init + tail-jmp.
- *   g_x_00542048 = packed_ptr(0x50d418); call MStackBracket1_TreeWalkRecursive2_00406dd0; pause? -> end;
+ *   g_xformEntityIdx = packed_ptr(0x50d418); call MStackBracket1_TreeWalkRecursive2_00406dd0; pause? -> end;
  *   (208c&4)? -> end;
  *   mstack-push g_scaledInit; [0x53a3a8] = g_scaledInit;
  *   chain[+0x40] = 0x6487; chain[+0x3c] = 0; chain[+0x44] = 0; chain[+0x30] = 0;
  *   g_walkCallback = 9; call DirtyDoubleDeref; pause? -> end;
- *   g_x_00542048 = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
+ *   g_xformEntityIdx = g_scaledInit; mstack-pop into g_scaledInit; jmp PushPopScaled1cDoubleCall.
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -143,7 +143,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
     __asm {
         mov     eax, 0x0050d418
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    MStackBracket1_TreeWalkRecursive2_00406dd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -153,7 +153,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   90h
@@ -180,7 +180,7 @@ __declspec(naked) void InstallChainInitTailJmp_004a7030(void) {
         _emit   29h
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx

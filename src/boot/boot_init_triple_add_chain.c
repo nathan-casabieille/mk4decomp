@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,22 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d78d8;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541f98;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 
 /*
  * BootInitTripleAddChain_00419bc0 - 203b boot pause-gated init.
  *   Call ModelRenderDispatch_004b9510; if paused: ret.
- *   Snapshot g_x_00542044 → g_x_00542048; g_x_00542044 = g_x_00541f98; g_data_0054204c = (0x004d78d8>>2).
+ *   Snapshot g_currentNodeIdx → g_xformEntityIdx; g_currentNodeIdx = g_x_00541f98; g_pendingNodeType = (0x004d78d8>>2).
  *   Call QuadInterpolator_00425380; if paused: ret.
- *   g_data_00542070 = 0xcccc; g_x_00542074 = 0x13333; call TripleMul10TailIndexed; if paused: ret.
- *   g_x_00542048 = g_x_0054205c + 0x15; call MStackBracket3_FieldSequentialCopy_00411d80; if paused or g_state_0054208c & 4: ret.
- *   eax = g_x_00542044; g_x_00542048 = eax + 0x1b; g_x_00542044 = eax + 0x15; g_data_0054204c = eax + 0x15.
+ *   g_eventQueueCurrent = 0xcccc; g_eventQueueWorkType = 0x13333; call TripleMul10TailIndexed; if paused: ret.
+ *   g_xformEntityIdx = g_fightGroupHead + 0x15; call MStackBracket3_FieldSequentialCopy_00411d80; if paused or g_xformDirtyFlags & 4: ret.
+ *   eax = g_currentNodeIdx; g_xformEntityIdx = eax + 0x1b; g_currentNodeIdx = eax + 0x15; g_pendingNodeType = eax + 0x15.
  *   Call TripleAddVec3; if paused: ret. Call TripleAddVec3; if paused: ret. Tail-jmp TripleAddVec3.
  */
 void BootInitTripleAddChain_00419bc0(void)
@@ -145,24 +145,24 @@ void BootInitTripleAddChain_00419bc0(void)
     unsigned int v;
     ModelRenderDispatch_004b9510();
     if (g_pause_00541e6c != 0) return;
-    g_x_00542048 = g_x_00542044;
-    g_x_00542044 = g_x_00541f98;
-    g_data_0054204c = (unsigned int)&g_data_004d78d8 >> 2;
+    g_xformEntityIdx = g_currentNodeIdx;
+    g_currentNodeIdx = g_x_00541f98;
+    g_pendingNodeType = (unsigned int)&g_data_004d78d8 >> 2;
     QuadInterpolator_00425380();
     if (g_pause_00541e6c != 0) return;
-    g_data_00542070 = 0xcccc;
-    g_x_00542074 = 0x13333;
+    g_eventQueueCurrent = 0xcccc;
+    g_eventQueueWorkType = 0x13333;
     TripleMul10TailIndexed_00425970();
     if (g_pause_00541e6c != 0) return;
-    g_x_00542048 = g_x_0054205c + 0x15;
+    g_xformEntityIdx = g_fightGroupHead + 0x15;
     MStackBracket3_FieldSequentialCopy_00411d80();
     if (g_pause_00541e6c != 0) return;
-    if (g_state_0054208c & 4) return;
-    v = g_x_00542044;
-    g_x_00542048 = v + 0x1b;
+    if (g_xformDirtyFlags & 4) return;
+    v = g_currentNodeIdx;
+    g_xformEntityIdx = v + 0x1b;
     v += 0x15;
-    g_x_00542044 = v;
-    g_data_0054204c = v;
+    g_currentNodeIdx = v;
+    g_pendingNodeType = v;
     TripleAddVec3_00425130();
     if (g_pause_00541e6c != 0) return;
     TripleAddVec3_00425130();

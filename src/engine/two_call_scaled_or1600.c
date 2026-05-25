@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0043f8f0 (199b game) - g_walkCallback = (0x4e5650 >> 2);
  *   call F1; pause? ret; (208c&4)? ret; call F2; pause? ret;
  *   chain[g_scaledInit + 0x30] = 0x76; push 0xfb43fb;
- *   ecx = chain[g_scaledInit + 0x18]; g_x_00542048 = ecx;
- *   chain[ecx + 0x20] |= 0x1600; g_x_0054205c = g_scaledInit;
- *   call F3 (cdecl, ate 0xfb43fb); push g_x_0054205c; call F4 (cdecl);
- *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
+ *   ecx = chain[g_scaledInit + 0x18]; g_xformEntityIdx = ecx;
+ *   chain[ecx + 0x20] |= 0x1600; g_fightGroupHead = g_scaledInit;
+ *   call F3 (cdecl, ate 0xfb43fb); push g_fightGroupHead; call F4 (cdecl);
+ *   g_xformDirtyFlags |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern void CopyThreeFields_00404df0(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -151,7 +151,7 @@ void TwoCallScaledOr1600_0043f8f0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   9ah
@@ -174,29 +174,29 @@ void TwoCallScaledOr1600_0043f8f0(void) {
         mov     [ecx*4 + 0x30], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, [edx*4 + 0x18]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + 0x20]
         or      ah, 0x16
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054205c], eax
+        mov     dword ptr [g_fightGroupHead], eax
         call    ThreeChanPackClamp_00404cc0
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         add     esp, 4
         push    ecx
         call    CopyThreeFields_00404df0
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         add     esp, 4
         or      ecx, 4
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   0ah
         mov     eax, ecx
         xor     eax, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

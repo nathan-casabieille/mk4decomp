@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5320;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542094;
 extern void RandSarMod0xFFFSub400_0041f1f0(void);
 extern void RandSarMod0xFFF_0041f230(void);
@@ -134,15 +134,15 @@ extern void WorldCellSetupCluster_0042b000(void);
 
 void RandPushTrigPair_0043f120(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         mov     eax, dword ptr [g_data_004d5320]
         sub     eax, dword ptr [ecx*4 + 0x64]
         add     eax, 0xa666
         push    eax
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    WorldCellSetupCluster_0042b000
         add     esp, 4
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    RandSarMod0xFFF_0041f230
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -152,36 +152,36 @@ void RandPushTrigPair_0043f120(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
-        mov     ecx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         mov     eax, dword ptr [g_data_004d5320]
         sub     eax, dword ptr [ecx*4 + 0x64]
         add     eax, 0xa666
         push    eax
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    WorldCellSetupCluster_0042b000
         add     esp, 4
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    RandSarMod0xFFFSub400_0041f1f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_rptp_ret
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_data_00542070], 0x1cccc
+        mov     dword ptr [g_eventQueueCurrent], 0x1cccc
         neg     eax
         push    eax
         push    0x1cccc
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     ecx, dword ptr [edx*4 + 0x5c]
         add     eax, ecx
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [eax*4]
         dec     eax
         push    ecx
@@ -189,11 +189,11 @@ void RandPushTrigPair_0043f120(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_state_004d57ac], eax
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     ecx, dword ptr [edx*4 + 0x34]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         and     ecx, 1
         mov     dword ptr [g_data_00542094], ecx
         je      short L_rptp_pos1
@@ -202,14 +202,14 @@ void RandPushTrigPair_0043f120(void) {
     L_rptp_pos1:
         mov     ecx, dword ptr [edx*4 + 0x54]
         add     eax, ecx
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
-        mov     edx, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     eax, dword ptr [g_data_004d5320]
         mov     ecx, dword ptr [edx*4 + 0x64]
         sub     eax, ecx
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         sub     eax, 0xf333
         and     ecx, 1
         mov     dword ptr [g_walkCallback], eax
@@ -220,7 +220,7 @@ void RandPushTrigPair_0043f120(void) {
     L_rptp_pos2:
         push    eax
         call    WorldCellSetupCluster_0042b000
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 4
         mov     dword ptr [edx*4 + 0x64], eax

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,13 +127,13 @@ extern unsigned int g_data_00535e7c;
  *     state==0: g_walkCallback=0x1016; chain[baseSel*4+0x74]=0x1016; install-self at entry+0x01000000.
  *     state=1; call ScaledLoadJmp; pause=1; pop esi/edi; ret.
  *   Tail (+0xa0): call PendingMatch_0049a670; if pause ret.
- *     Mul10Tail(0x3333, g_x_00542084)->[g_x_00542084 + scaledInit chain offset +0x6c].
- *     Mul10Tail(0x3333, g_state_00542088)->chain[+0x74].
+ *     Mul10Tail(0x3333, g_currentNodeFlags)->[g_currentNodeFlags + scaledInit chain offset +0x6c].
+ *     Mul10Tail(0x3333, g_xformScratch2088)->chain[+0x74].
  *     g_cj=scaledInit; push 0x23fb23; call ThreeChanPackClamp; push g_cj; call CopyThreeFields;
  *     push 0x004f2410; call ArgSar_Set0_Jmp; pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_currentNodeFlags;
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
 extern void CopyThreeFields_00404df0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -196,23 +196,23 @@ __declspec(naked) void DualBlockInstallMul10Tail_0049a4e0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi
         push    ecx
         push    0x3333
         lea     esi, [eax*4 + 0]
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         add     esp, 8
-        mov     dword ptr [g_x_00542084], eax
+        mov     dword ptr [g_currentNodeFlags], eax
         push    edx
         push    0x3333
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_state_00542088], eax
-        mov     eax, dword ptr [g_x_00542084]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
         mov     dword ptr [esi + 0x6c], eax
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]

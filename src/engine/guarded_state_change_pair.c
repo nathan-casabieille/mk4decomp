@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,10 +128,10 @@ extern unsigned int g_data_005380b0;
 extern unsigned int g_data_0053a278;
 extern unsigned int g_data_00541d6c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void CallSetPause_0041f830(void);
 extern void MStackPush2ClampLookup_00459160(void);
 extern void SpawnTrioInitCluster_00458440(void);
@@ -155,14 +155,14 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     eax, offset g_data_005380b0
         shr     eax, 2
         cmp     ecx, 2
-        mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_eventQueueCurrent], ecx
         jg      short L_gscp_inst
         add     eax, ecx
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
@@ -176,7 +176,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         inc     eax
         mov     dword ptr [g_state_004d57ac], ecx
         cmp     eax, 2
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         jle     short L_gscp_setSlot
     L_gscp_inst:
         mov     eax, 1
@@ -202,7 +202,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     edx, dword ptr [g_data_005380a4]
         lea     ecx, [edx - 1]
         test    ecx, ecx
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         jge     short L_gscp_decOk
         jmp     CallSetPause_0041f830
     L_gscp_decOk:
@@ -211,7 +211,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], 0x27
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], 0x27
         call    SpawnTrioInitCluster_00458440
         mov     eax, dword ptr [g_framePauseFlag]
@@ -230,7 +230,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     dword ptr [eax + 0x84], 0
         test    ecx, ecx
         je      short L_gscp_sub2_inst
-        mov     dword ptr [g_data_00542074], 0x264
+        mov     dword ptr [g_eventQueueWorkType], 0x264
         call    Push16Call_00489f50
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -240,7 +240,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset L_gscp_sub2
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_framePauseFlag], ecx
     L_gscp_sub2_ret:
         ret

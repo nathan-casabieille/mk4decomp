@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543550;
 extern unsigned int g_data_00ab4db8;
 extern unsigned int g_data_00ab4e5c;
@@ -20,7 +20,7 @@ __declspec(naked) void Helper_TickAlt(void)
 {
     __asm
     {
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         push    ebx
         push    ebp
         push    esi
@@ -34,15 +34,15 @@ __declspec(naked) void Helper_TickAlt(void)
         je      short L_ilw_done
     L_ilw_loop:
         lea     ecx, [ebp + eax]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     esi, dword ptr [ecx*4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], edi
         call    edi
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_ilw_ret
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_ilw_setMask
         mov     eax, esi
         mov     ebx, esi
@@ -50,23 +50,23 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     dword ptr [g_walkCallback], eax
         jne     short L_ilw_loop
     L_ilw_done:
-        mov     ecx, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, 4
         or      ecx, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         jmp     short L_ilw_finish
     L_ilw_setMask:
         mov     eax, 4
     L_ilw_finish:
-        mov     edx, dword ptr [g_data_0054208c]
-        mov     dword ptr [g_data_00542044], ebx
+        mov     edx, dword ptr [g_xformDirtyFlags]
+        mov     dword ptr [g_currentNodeIdx], ebx
         or      edx, eax
         test    ebx, ebx
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_ilw_ret
         mov     ecx, edx
         xor     ecx, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
     L_ilw_ret:
         pop     edi
         pop     esi
@@ -84,7 +84,7 @@ __declspec(naked) void Helper_TickAlt(void)
         nop
         nop
     L_amw_entry:
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         push    ebx
         mov     ebx, dword ptr [g_data_00543550]
         push    esi
@@ -92,7 +92,7 @@ __declspec(naked) void Helper_TickAlt(void)
         mov     eax, ebx
         cdq
         push    edi
-        mov     edi, dword ptr [g_data_00542058]
+        mov     edi, dword ptr [g_eventQueueIdx]
         sub     eax, edx
         mov     ecx, dword ptr [edi*4 + 0x64]
         mov     dword ptr [g_data_00ab4e60], ebx
@@ -154,7 +154,7 @@ __declspec(naked) void Helper_TickAlt(void)
         pop     ebx
         ret
     L_amw_setNeg:
-        mov     dword ptr [g_data_00542044], 0xffffffff
+        mov     dword ptr [g_currentNodeIdx], 0xffffffff
     L_amw_skipCall:
         pop     edi
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004e7a68;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformScratch2088;
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
 extern void DualPushSet7dCallPop_00474290(void);
 extern void DualScaledStore_00452740(void);
@@ -144,44 +144,44 @@ extern void Thunk_0049cbc0(void);
 __declspec(naked) void StunDownCluster_00451fc0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jl       L_2054
     L_1fdc:
         call     ChainDirtyBitWalker_00408c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2054
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      edx, OFFSET g_data_004e7a68
         shr      edx, 2
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_00542054], eax
-        mov      eax, dword ptr [g_data_00542048]
+        mov      dword ptr [g_eventQueueEnd], eax
+        mov      eax, dword ptr [g_xformEntityIdx]
         add      eax, 0xf
-        mov      dword ptr [g_data_00542050], ecx
-        mov      dword ptr [g_data_0054204c], edx
-        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_eventQueueTotal], ecx
+        mov      dword ptr [g_pendingNodeType], edx
+        mov      dword ptr [g_eventQueueIdx], eax
     L_201d:
         call     DualPushSet7dCallPop_00474290
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_2054
-        mov      eax, dword ptr [g_data_00542050]
+        mov      eax, dword ptr [g_eventQueueTotal]
         dec      eax
-        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_eventQueueTotal], eax
         jns      L_201d
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jge      L_1fdc
     L_2054:
         ret      
@@ -208,20 +208,20 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         ja       L_22da
         jmp      dword ptr [eax*4 + L_jmptbl]
     L_208d:
-        mov      dword ptr [g_data_00542054], 0x4f
-        mov      dword ptr [g_data_00542088], 0xfffffeb9
+        mov      dword ptr [g_eventQueueEnd], 0x4f
+        mov      dword ptr [g_xformScratch2088], 0xfffffeb9
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_2060
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x2000000
         jmp      L_223b
     L_20d1:
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], 0x50
+        mov      dword ptr [g_pendingNodeType], 0x50
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -229,40 +229,40 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
     L_20f9:
         push     OFFSET StunDownChainCluster_00452310 + 0x380
         call     StoreLoadJmp_00404ef0
-        mov      dword ptr [g_data_00542054], 0x22
-        mov      dword ptr [g_data_00542088], 0xfffffeb9
+        mov      dword ptr [g_eventQueueEnd], 0x22
+        mov      dword ptr [g_xformScratch2088], 0xfffffeb9
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_2060
         add      esp, 4
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x4000000
         jmp      L_223b
     L_214a:
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 5
-        mov      dword ptr [g_data_0054204c], 0xc8
+        mov      dword ptr [g_pendingNodeType], 0xc8
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_2172:
-        mov      dword ptr [g_data_00542054], 0x1e
-        mov      dword ptr [g_data_00542088], 0xfffffd71
+        mov      dword ptr [g_eventQueueEnd], 0x1e
+        mov      dword ptr [g_xformScratch2088], 0xfffffd71
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_2060
         mov      dword ptr [ecx*4 + 0x84], 6
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x6000000
         jmp      L_223b
     L_21b6:
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], 7
-        mov      dword ptr [g_data_0054204c], 0x1e
+        mov      dword ptr [g_pendingNodeType], 0x1e
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -273,21 +273,21 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         jne      L_22df
         push     OFFSET StunDownChainCluster_00452310 + 0x80
         call     StoreLoadJmp_00404ef0
-        mov      dword ptr [g_data_00542054], 0x4b
-        mov      dword ptr [g_data_00542088], 0x28f
+        mov      dword ptr [g_eventQueueEnd], 0x4b
+        mov      dword ptr [g_xformScratch2088], 0x28f
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_2060
         add      esp, 4
         mov      dword ptr [ecx*4 + 0x84], 8
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x8000000
     L_223b:
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -306,7 +306,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         call     Chain2AxisDiffStoreTailJmp_0044cad0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_22df
-        mov      dword ptr [g_data_00542074], 0xe666
+        mov      dword ptr [g_eventQueueWorkType], 0xe666
         mov      dword ptr [g_walkCallback], 0xfffe7334
         call     MStackPush3SideStore_0044cb80
         cmp      dword ptr [g_framePauseFlag], edi
@@ -314,7 +314,7 @@ __declspec(naked) void StunDownCluster_00451fc0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_2060
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x28
+        mov      dword ptr [g_pendingNodeType], 0x28
         mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi

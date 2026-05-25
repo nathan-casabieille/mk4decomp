@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,12 +130,12 @@ extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_00541de0;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void SaveCallRestoreOrXor_00404a00(void);
 extern void ScaledChainInit2Phase_0042e800(void);
 
@@ -143,28 +143,28 @@ void RoundEndAudioCluster_0042e8d0(void) {
     __asm {
         /* H1 */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         push     0x23c
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         call     SaveCallRestoreOrXor_00404a00
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, OFFSET g_data_0050d23c
         shr      ecx, 2
         add      esp, 4
-        mov      dword ptr [g_data_00542054], eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_eventQueueEnd], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e9a6
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_e949
         push     0x23a
         call     ScaledChainInit2Phase_0042e800
@@ -172,12 +172,12 @@ void RoundEndAudioCluster_0042e8d0(void) {
     L_e949:
         mov      edx, OFFSET g_data_0050d258
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e9a6
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_e97b
         push     0x268
         call     ScaledChainInit2Phase_0042e800
@@ -186,11 +186,11 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_e9a6:
         ret
@@ -211,30 +211,30 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         jne      short L_e9d6
-        mov      dword ptr [g_data_00542084], 0xe666
+        mov      dword ptr [g_currentNodeFlags], 0xe666
     L_e9d6:
         mov      ecx, dword ptr [g_data_00537f78]
-        mov      edx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      edx, dword ptr [g_data_00541de0]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x3c], ecx
         mov      ecx, dword ptr [g_data_00535e6c]
-        mov      edx, dword ptr [g_data_00542084]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      edx, dword ptr [g_currentNodeFlags]
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4 + 0x3c], edx
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         sub      ecx, 0x83
         mov      dword ptr [g_walkCallback], 0x83
         cmp      ecx, 0x1999
-        mov      dword ptr [g_data_00542084], ecx
+        mov      dword ptr [g_currentNodeFlags], ecx
         jge      short L_ea43
-        mov      dword ptr [g_data_00542084], 0x1999
+        mov      dword ptr [g_currentNodeFlags], 0x1999
     L_ea43:
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_e9b0
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
@@ -260,7 +260,7 @@ void RoundEndAudioCluster_0042e8d0(void) {
         mov      dword ptr [edx + 0x84], 0
         test     eax, eax
         je       short L_ea9c
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
     L_ea9c:
         mov      eax, ecx
         shl      eax, 8
@@ -271,14 +271,14 @@ void RoundEndAudioCluster_0042e8d0(void) {
         cmp      ecx, 0x19
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_0052ab4c], eax
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         jge      short L_eac8
-        mov      dword ptr [g_data_00542054], 0x19
+        mov      dword ptr [g_eventQueueEnd], 0x19
     L_eac8:
         mov      eax, 1
         mov      dword ptr [edx + 8], OFFSET L_ea70
         mov      dword ptr [edx + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 7
+        mov      dword ptr [g_pendingNodeType], 7
         mov      dword ptr [g_framePauseFlag], eax
         }
 }

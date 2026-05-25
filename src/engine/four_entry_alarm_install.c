@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,18 +125,18 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004662e0 (384b game) - 4-entry packed: alarm + packed_ptr +
  *   phase-install + alarm.
  *   Entry 1 (offset 0, 96b): copies [g_data_00542060*4 + 0x34/0x38/0x3c]
- *     into g_data_00542054/00542058/0054205c, then writes
- *     g_data_00542054 = 0x5c-arg, g_data_00542074 = 0x267,
- *     g_data_0054204c = 0x44ea20. Calls AllocNode; on no-error pushes
+ *     into g_eventQueueEnd/00542058/0054205c, then writes
+ *     g_eventQueueEnd = 0x5c-arg, g_eventQueueWorkType = 0x267,
+ *     g_pendingNodeType = 0x44ea20. Calls AllocNode; on no-error pushes
  *     0x4ea9c0 + ArgSarStoreJmp_004594f0.
  *   Entry 2 (offset 0x60, 40b): packs &g_data_00501838>>2 into
- *     [g_data_0054205c*4 + 0x24], pushes 0x4ea9d8 → ArgSarStoreJmp.
+ *     [g_fightGroupHead*4 + 0x24], pushes 0x4ea9d8 → ArgSarStoreJmp.
  *   8b NOP pad.
  *   Entry 3 / body (offset 0x90, 144b): phase-state install.
  *     phase != 0: tail-call ScaledDecBranch_00466460.
  *     phase 0: pushes 0x267 onto TripleStageRollback_00404a50; if
  *       slot[+0x30] == 1 → push 0x4ea9e8 + ArgSarStoreJmp; else
- *       installs Self at body with slot[+0x84]=1, g_data_0054204c=0xf,
+ *       installs Self at body with slot[+0x84]=1, g_pendingNodeType=0xf,
  *       arms 0x541e6c=1.
  *   Entry 4 (offset 0x120, 96b): mirror of entry 1 with alarm 0x4ea9f8.
  */
@@ -146,12 +146,12 @@ extern unsigned int g_data_004ea9e8;
 extern unsigned int g_data_004ea9f8;
 extern unsigned int g_data_00501838;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledDecBranch_00466460(void);
 extern void TripleStageRollback_00404a50(void);
@@ -160,14 +160,14 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
     __asm {
         mov     eax, dword ptr [g_data_00542060]
         mov     ecx, dword ptr [eax*4 + 0x34]
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [g_eventQueueIdx], edx
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_data_0054205c], eax
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542074], 0x267
-        mov     dword ptr [g_data_0054204c], 0x44ea20
+        mov     dword ptr [g_fightGroupHead], eax
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueWorkType], 0x267
+        mov     dword ptr [g_pendingNodeType], 0x44ea20
         call    AllocNode
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -178,7 +178,7 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
     L_fea2_e1End:
         ret
     L_fea2_entry2:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, offset g_data_00501838
         sar     eax, 2
         mov     dword ptr [g_walkCallback], eax
@@ -227,21 +227,21 @@ __declspec(naked) void FourEntryAlarmInstall_004662e0(void) {
         add     esp, 4
         mov     dword ptr [esi + 8], offset L_fea2_body
         mov     dword ptr [esi + 0x84], 1
-        mov     dword ptr [g_data_0054204c], 0xf
+        mov     dword ptr [g_pendingNodeType], 0xf
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_fea2_entry4:
         mov     eax, dword ptr [g_data_00542060]
         mov     ecx, dword ptr [eax*4 + 0x34]
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [g_eventQueueIdx], edx
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_data_0054205c], eax
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542074], 0x267
-        mov     dword ptr [g_data_0054204c], 0x44ea20
+        mov     dword ptr [g_fightGroupHead], eax
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueWorkType], 0x267
+        mov     dword ptr [g_pendingNodeType], 0x44ea20
         call    AllocNode
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

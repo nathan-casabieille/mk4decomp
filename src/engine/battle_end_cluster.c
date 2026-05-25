@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,8 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542084;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_currentNodeFlags;
 extern unsigned int g_data_004eed08;
 extern void ScaledTestCallPauseJmpFar_00487150(void);
 extern void CopyJmp_0048ef90(void);
@@ -135,16 +135,16 @@ extern void ChainDispatcher4Call_00486290(void);
 /* @addr 0x00486130 (352b game) - 3-entry packed phase-state install w/ tails.
  *   Entry 1 (offset 0, 247b): phase from [scaled g_data_00542060 + 0x84].
  *     phase 0: tail-calls StackPopDispatchTagged_0041f780.
- *     phase 1: add g_data_00542084 into [g_data_0054205c*4 + 0x58] AND into
- *              [g_data_00542054*4 + 0x58] (both mirrored through 0x54206c),
- *              installs Self at [eax+8], slot[+0x84]=2, g_data_0054204c=3,
+ *     phase 1: add g_currentNodeFlags into [g_fightGroupHead*4 + 0x58] AND into
+ *              [g_eventQueueEnd*4 + 0x58] (both mirrored through 0x54206c),
+ *              installs Self at [eax+8], slot[+0x84]=2, g_pendingNodeType=3,
  *              arms g_framePauseFlag=1.
- *     phase 2: sub g_data_00542084 from the same +0x58 fields, installs
- *              Self, slot[+0x84]=1, g_data_0054204c=3, arms 0x541e6c=1.
+ *     phase 2: sub g_currentNodeFlags from the same +0x58 fields, installs
+ *              Self, slot[+0x84]=1, g_pendingNodeType=3, arms 0x541e6c=1.
  *   (9-byte NOP align pad.)
  *   Entry 2 (offset 0x100, 56b): chains ScaledTestCallPauseJmpFar_00487150
  *     then CopyJmp_0048ef90, both gated by 0x541e6c. If bit 0 of
- *     g_data_0054208c set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
+ *     g_xformDirtyFlags set, tail-jmp TwoCallTail_00481380; else push 0x4eed08
  *     and call ArgSarStoreJmp_004594f0.
  *   (8-byte NOP align pad.)
  *   Entry 3 (offset 0x140, 36b): if [scaled g_data_00542060 + 0x7c] > 3
@@ -152,10 +152,10 @@ extern void ChainDispatcher4Call_00486290(void);
  *     function ChainDispatcher4Call_00486290 via jmp.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 
 __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
     __asm {
@@ -172,31 +172,31 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         pop     esi
         ret
     L_p3p_phase1:
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         add     ecx, dword ptr [edx*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     edx, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         add     ecx, dword ptr [edx*4 + 0x58]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
         mov     dword ptr [eax + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p3p_phase2:
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     esi, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     esi, dword ptr [g_currentNodeFlags]
         mov     ecx, dword ptr [edx*4 + 0x58]
         sub     ecx, esi
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     edx, dword ptr [g_data_00542054]
-        mov     esi, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     esi, dword ptr [g_currentNodeFlags]
         mov     ecx, dword ptr [edx*4 + 0x58]
         sub     ecx, esi
         pop     esi
@@ -205,7 +205,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset Phase3Packed3EntryDispatch_00486130
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], ecx
         ret
         /* 9-byte NOP pad */
@@ -228,7 +228,7 @@ __declspec(naked) void Phase3Packed3EntryDispatch_00486130(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3p_e2End
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         je      short L_p3p_pushPath
         jmp     TwoCallTail_00481380
     L_p3p_pushPath:

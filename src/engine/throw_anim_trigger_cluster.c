@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,11 +130,11 @@ extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00541d88;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void GameStateTick_0049f1f0(void);
 extern void MStackBracket4_ListInsertZeroFill_00408600(void);
@@ -148,28 +148,28 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
     __asm {
         /* === Helper 1 (0x49efa0): throw setup with mstack save === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         inc      eax
         mov      edx, OFFSET g_data_0050c0bc
         mov      dword ptr [g_data_004d57ac], eax
         shr      edx, 2
         mov      dword ptr [eax*4], ecx
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f183
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      L_f145
         call     MStackBracket4_ListInsertZeroFill_00408600
         mov      eax, dword ptr [g_framePauseFlag]
@@ -181,47 +181,47 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         jne      L_f183
         mov      eax, OFFSET g_data_0050a0f0
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         call     MStackPush4LLWalkPop4_004090e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [ecx*4 + 0x54], 0
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x58], edx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_walkCallback]
         mov      eax, 6
         mov      dword ptr [edx*4 + 0x5c], ecx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
         call     MStackCall_00406340
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_f183
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, 0x10000
         mov      eax, dword ptr [ecx*4 + 0x34]
-        mov      dword ptr [g_data_00542070], edx
+        mov      dword ptr [g_eventQueueCurrent], edx
         or       eax, edx
         mov      dword ptr [ecx*4 + 0x34], eax
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054204c], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_pendingNodeType], eax
         mov      eax, dword ptr [g_data_00535e6c]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4 + 0x54], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0xffff8000
         mov      dword ptr [ecx*4 + 0x58], 0
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x5c], eax
-        mov      ecx, dword ptr [g_data_0054204c]
-        mov      eax, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_pendingNodeType]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x3c], eax
         call     RoundWinTransition_0049e7e0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -231,15 +231,15 @@ __declspec(naked) void ThrowAnimTriggerCluster_0049efa0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054205c], edx
+        mov      dword ptr [g_fightGroupHead], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
     L_f183:
         ret

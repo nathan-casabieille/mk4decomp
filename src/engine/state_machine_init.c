@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_00542084;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_currentNodeFlags;
 extern void MStackCall_004062f0(void);
 extern void MStackPushDispatchBitGate_00407330(void);
 extern void MStackPushTableWalk_00493a20(void);
@@ -138,7 +138,7 @@ extern void PushSetCallTailJmp_00493e40(void);
 void StateMachineInit_00493000(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    MStackPushDispatchBitGate_00407330
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -148,15 +148,15 @@ void StateMachineInit_00493000(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   0aeh
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00542074]
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackPushTableWalk_00493a20
@@ -168,13 +168,13 @@ void StateMachineInit_00493000(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_x_00542048]
-        mov     eax, dword ptr [g_x_0054205c]
-        mov     ecx, dword ptr [g_x_00542084]
-        mov     dword ptr [g_data_0054204c], edx
+        mov     edx, dword ptr [g_xformEntityIdx]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_currentNodeFlags]
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [eax*4 + 0x54], ecx
-        mov     edx, dword ptr [g_x_0054205c]
-        mov     eax, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [g_xformScratch2088]
         mov     dword ptr [edx*4 + 0x5c], eax
         call    PushSetCallTailJmp_00493e40
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -182,7 +182,7 @@ void StateMachineInit_00493000(void) {
         _emit   75h
         _emit   47h
         mov     eax, dword ptr [g_x_00535e6c]
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         call    MStackCall_004062f0
@@ -190,16 +190,16 @@ void StateMachineInit_00493000(void) {
         test    eax, eax
         _emit   75h
         _emit   22h
-        mov     ecx, dword ptr [g_state_0054208c]
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
+        mov     eax, dword ptr [g_fightGroupHead]
         or      ecx, 4
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   0ah
         mov     eax, ecx
         xor     eax, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

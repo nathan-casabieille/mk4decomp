@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004906b0 (107b)
  *   eax = g_cj_0054205c; push esi; push edi;
  *   ecx = [eax*4+0x6c]; lea esi,[eax*4+0x6c]; lea edi,[eax*4+0x74];
- *   g_data_00542070 = ecx; push ecx;
+ *   g_eventQueueCurrent = ecx; push ecx;
  *   ecx = g_walkCallback; eax = [edi]; push ecx;
  *   g_eventQueueWorkType = eax; call Mul10Tail_00404af0;
  *   edx = g_eventQueueWorkType; add esp,8;
- *   g_data_00542070 = eax (return); eax = g_walkCallback;
+ *   g_eventQueueCurrent = eax (return); eax = g_walkCallback;
  *   push edx; push eax; call Mul10Tail_00404af0;
- *   ecx = g_data_00542070; g_eventQueueWorkType = eax;
+ *   ecx = g_eventQueueCurrent; g_eventQueueWorkType = eax;
  *   [esi] = ecx; edx = g_eventQueueWorkType; add esp,8;
  *   [edi] = edx; pop edi; pop esi; ret.
  */
@@ -149,7 +149,7 @@ __declspec(naked) void EsiEdiAliasDualMul10_004906b0(void) {
         mov     ecx, dword ptr [eax*4 + 0x6c]
         lea     esi, [eax*4 + 0x6c]
         lea     edi, [eax*4 + 0x74]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         push    ecx
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [edi]
@@ -158,12 +158,12 @@ __declspec(naked) void EsiEdiAliasDualMul10_004906b0(void) {
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_eventQueueWorkType]
         add     esp, 8
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     eax, dword ptr [g_walkCallback]
         push    edx
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [esi], ecx
         mov     edx, dword ptr [g_eventQueueWorkType]

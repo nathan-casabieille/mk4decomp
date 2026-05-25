@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d5324;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueWorkType;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
 extern void MStackPush1MagicMod2_004244d0(void);
@@ -141,27 +141,27 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x7e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        mov     edx, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x3c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
-        mov     edx, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        mov     edx, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x44]
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x70], 0xffffe148
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x4c], 0x3d7
         mov     ecx, dword ptr [g_data_004d5324]
         mov     dword ptr [g_walkCallback], ecx
@@ -170,24 +170,24 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         test    eax, eax
         jne     L_v3sqs_ret
         mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    MStackPush1MagicMod2_004244d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_v3sqs_ret
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    0x1c28
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         push    ecx
         push    0x1c28
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         add     esp, 8
         lea     esi, [edx*4]
         mov     dword ptr [esi + 0x6c], eax
@@ -214,16 +214,16 @@ __declspec(naked) void Vec3SetupQuadrupleMul10Sub_00442bc0(void)
         jne     short L_v3sqs_ret
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [esi + 0x80], ecx
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     esi, 0x1b
-        mov     dword ptr [g_data_00542074], 0x7ae
+        mov     dword ptr [g_eventQueueWorkType], 0x7ae
         add     ecx, esi
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    TripleVecAccCallStore_00476880
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v3sqs_ret
-        sub     dword ptr [g_data_00542044], esi
+        sub     dword ptr [g_currentNodeIdx], esi
     L_v3sqs_ret:
         pop     esi
         ret

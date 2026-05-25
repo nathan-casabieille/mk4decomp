@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,22 +123,22 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004708c0 (186b game) - dual-guarded packed-table search by chain[+0x34].
- *   call MStackPush3CmpCall_0048eec0. if (!(g_state_0054208c & 1)): return 0.
+ *   call MStackPush3CmpCall_0048eec0. if (!(g_xformDirtyFlags & 1)): return 0.
  *   eax = [0x535ddc]; g_walkCallback = eax; if (eax > 0x10000): return 0.
  *   call CmpP1GTSetup_00470980; g_scaledInit = packed_ptr(0x4ebe90);
  *   ecx = chain[scaledInit]; scaledInit++;
- *   loop: g_x_00542074 = ecx; if (ecx < 0) break;
- *     esi = g_x_00542048; if (chain[esi+0x34] == ecx) goto found.
- *     ecx = chain[scaledInit++]; g_x_00542074 = ecx; scaledInit++ again;
+ *   loop: g_eventQueueWorkType = ecx; if (ecx < 0) break;
+ *     esi = g_xformEntityIdx; if (chain[esi+0x34] == ecx) goto found.
+ *     ecx = chain[scaledInit++]; g_eventQueueWorkType = ecx; scaledInit++ again;
  *     ecx = chain[scaledInit]; if (ecx >= 0) goto loop.
  *   break: return 0.
  *   found: g_walkCallback = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour_00490740; return 1.
  */
 extern unsigned int g_x_00535ddc;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void CmpP1GTSetup_00470980(void);
 extern void SnapshotDispatchMStack_00491350(void);
 
@@ -148,7 +148,7 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
     __asm {
         push    esi
         call    MStackPush3CmpCall_0048eec0
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   04h
         xor     eax, eax
@@ -169,24 +169,24 @@ __declspec(naked) void DualGuardedTableSearch_004708c0(void) {
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7ch
         _emit   41h
-        mov     esi, dword ptr [g_x_00542048]
+        mov     esi, dword ptr [g_xformEntityIdx]
         mov     edx, [esi*4 + 0x34]
         cmp     edx, ecx
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         _emit   74h
         _emit   2eh
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7dh
         _emit   0c5h

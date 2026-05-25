@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,25 +123,25 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00472db0 (81b)
- *   eax = g_baseSel_00542060[4*idx + 0x68] → g_data_00542050;
+ *   eax = g_baseSel_00542060[4*idx + 0x68] → g_eventQueueTotal;
  *   ecx = eax[4*idx + 0x30] → g_walkCallback;
  *   call SetJmp_0049cb90; if pause: ret;
- *   eax = arg0[esp+4] >> 2 → g_data_00542050;
- *   edx = [eax*4]; ++eax → g_xformEntityIdx, g_data_00542050;
+ *   eax = arg0[esp+4] >> 2 → g_eventQueueTotal;
+ *   edx = [eax*4]; ++eax → g_xformEntityIdx, g_eventQueueTotal;
  *   jmp Thunk_0049cbd0.
  */
 void ScaledIdxLoadCallTailThunk_00472db0(int arg0) {
     unsigned int v;
     unsigned int p;
     v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x68);
-    g_data_00542050 = v;
+    g_eventQueueTotal = v;
     g_walkCallback = (void (*)(void))*(unsigned int *)(v * 4 + 0x30);
     SetJmp_0049cb90();
     if (g_framePauseFlag != 0) return;
     p = (unsigned int)(arg0 >> 2);
-    g_data_00542050 = p;
+    g_eventQueueTotal = p;
     g_xformEntityIdx = *(unsigned int *)(p * 4);
     p++;
-    g_data_00542050 = p;
+    g_eventQueueTotal = p;
     Thunk_0049cbd0();
 }

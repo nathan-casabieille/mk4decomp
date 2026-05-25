@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,10 +122,10 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x004ab380 (191b audio) - linked-list builder for ESI=g_x_00542050 array.
- *   ebx = g_x_00542048; esi = g_x_00542050; edi = g_x_0054204c.
- *   [esi+0] = 0; [esi+4] = ebx; [esi+8] = g_x_00542054.
- *   if (g_x_00542054 == 0): return.
+/* @addr 0x004ab380 (191b audio) - linked-list builder for ESI=g_eventQueueTotal array.
+ *   ebx = g_xformEntityIdx; esi = g_eventQueueTotal; edi = g_pendingNodeType.
+ *   [esi+0] = 0; [esi+4] = ebx; [esi+8] = g_eventQueueEnd.
+ *   if (g_eventQueueEnd == 0): return.
  *   [esi+0] = g_scaledInit; eax = ebx + g_scaledInit + 1; [eax*4] = esi.
  *   [0x53a1ac] = [esi+8]; if (<= 1) skip loop;
  *   [0x53a1ac] -= 2; eax = g_scaledInit + edi;
@@ -138,25 +138,25 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_x_0053a1ac;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542050;
-extern unsigned int g_x_00542054;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueEnd;
 
 __declspec(naked) void LinkedListBuilder_004ab380(void) {
     __asm {
         push    ebx
-        mov     ebx, dword ptr [g_x_00542048]
+        mov     ebx, dword ptr [g_xformEntityIdx]
         push    esi
-        mov     esi, dword ptr [g_x_00542050]
+        mov     esi, dword ptr [g_eventQueueTotal]
         push    edi
-        mov     edi, dword ptr [g_x_0054204c]
+        mov     edi, dword ptr [g_pendingNodeType]
         mov     dword ptr [esi*4 + g_data_004d57ac_arr], 0
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     [esi*4 + 4], eax
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     [esi*4 + 8], ecx
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         test    eax, eax
         _emit   74h
         _emit   79h

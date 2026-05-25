@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,15 +129,15 @@ extern unsigned int g_data_00535e50;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
 extern unsigned int g_data_00541fc4;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543320;
 extern void AudioInitChainTag_004a1000(void);
 extern void Eleven404b90_404c00_004266d0(void);
@@ -152,7 +152,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
     __asm {
         /* === Helper 1 (0x4a0d60): sample-pick from mul-5 stride === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -161,13 +161,13 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         lea      eax, [eax + eax*4 - 5]
         mov      dword ptr [g_data_00542078], eax
         add      eax, edx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_data_00542078], eax
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         ret
         nop
@@ -199,10 +199,10 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         jmp      L_0f19
     L_0e03:
         mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         mov      ebp, 0xf
         mov      dword ptr [edx*4 + 0x30], ecx
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [g_data_00535e48], eax
         mov      dword ptr [g_walkCallback], ebp
         call     StorePauseImulShr16_004ab630
@@ -213,30 +213,30 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         call     LinkedListIndirectDirtyToggle_0049f7b0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0ff9
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_0ed1
         mov      eax, dword ptr [g_data_00541fc0]
         mov      edx, dword ptr [g_data_00535e48]
         mov      ecx, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_walkCallback], ebx
-        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_eventQueueIdx], ecx
         mov      edx, dword ptr [eax*4 + 0x14]
         mov      eax, OFFSET g_data_00543320
         mov      dword ptr [edx*4], ebx
-        mov      edx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_eventQueueCurrent]
         shr      eax, 2
         add      eax, edx
         mov      dword ptr [g_data_00535e50], esi
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         cmp      eax, esi
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         jne      short L_0eed
     L_0ed1:
         mov      dword ptr [g_walkCallback], ebp
@@ -249,16 +249,16 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         pop      ebx
         ret
     L_0eed:
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, OFFSET g_data_004f2dc0
         shr      eax, 2
-        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_eventQueueTotal], eax
         mov      eax, dword ptr [ecx*4 + 8]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x38], eax
     L_0f19:
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_data_00535e50]
         add      eax, ecx
         mov      eax, dword ptr [eax*4]
@@ -274,14 +274,14 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
     L_0f40:
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x34], eax
-        mov      ecx, dword ptr [g_data_00542058]
+        mov      ecx, dword ptr [g_eventQueueIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4], eax
         call     RoundWinTransition_0049e7e0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         mov      eax, dword ptr [edx*4 + 0x38]
         mov      dword ptr [g_walkCallback], eax
         mov      eax, dword ptr [g_data_004d57ac]
@@ -292,15 +292,15 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542050]
+        mov      ecx, dword ptr [g_eventQueueTotal]
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      eax, dword ptr [g_data_00535e50]
         add      ecx, eax
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      edx, dword ptr [ecx*4]
-        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_pendingNodeType], edx
         call     Eleven404b90_404c00_004266d0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0ff9

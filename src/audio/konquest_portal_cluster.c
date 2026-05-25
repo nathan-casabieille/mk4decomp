@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -134,13 +134,13 @@ extern unsigned int g_data_0050f14c;
 extern unsigned int g_data_0051599c;
 extern unsigned int g_data_00535de4;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005433b8;
 extern unsigned int g_data_005437f4;
 extern void AudioBindEntry_004a1e40(void);
@@ -184,10 +184,10 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         pop      ebx
         ret
     L_52cd:
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         cmp      eax, ebp
         je       short L_52e0
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     MStackPush2ChainLLInsert_00406790
     L_52e0:
         mov      eax, dword ptr [g_data_005433b8]
@@ -197,26 +197,26 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         jne      short L_530d
         mov      ecx, OFFSET g_data_0050f130
         shr      ecx, 2
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         jmp      short L_530d
     L_52ff:
         mov      edx, OFFSET g_data_0050f14c
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
     L_530d:
         call     DispatcherComplex260_00407400
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542058], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueIdx], eax
         call     MStackPushComplexCallPop_00406430
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_5360
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x54], ebp
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x58], 0xfff60000
     L_5360:
         call     AudioByteTable7LoopChainPick_004a5160
@@ -235,35 +235,35 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         lea      ecx, [eax + eax*8]
         mov      eax, dword ptr [ecx*4 + g_data_004f393c]
         cmp      eax, ebp
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         je       short L_53c3
         call     SetJmp_004a1ac0
-        call     dword ptr [g_data_00542044]
+        call     dword ptr [g_currentNodeIdx]
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_552f
     L_53c3:
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_53d8
     L_53cb:
         call     RetZero_004a1c40
         test     eax, eax
         je       L_5516
     L_53d8:
-        mov      dword ptr [g_data_00542074], 0x32f
+        mov      dword ptr [g_eventQueueWorkType], 0x32f
         call     Push16Call_00489f50
         call     AudioByteTable7LoopChainPick_004a5160
-        mov      dword ptr [g_data_00542070], 0x20
+        mov      dword ptr [g_eventQueueCurrent], 0x20
         mov      dword ptr [edi + 8], OFFSET L_5290
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_5290
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [edi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], ebp
@@ -312,18 +312,18 @@ __declspec(naked) void KonquestPortalCluster_004a5290(void)
         add      esp, 4
         mov      dword ptr [eax*4 + 0x30], ebx
         mov      dword ptr [g_data_005433b8], 4
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      short L_552f
         call     TripleCallSetCopy_004a4880
-        mov      dword ptr [g_data_00542058], ebp
-        mov      dword ptr [g_data_00542074], 9
+        mov      dword ptr [g_eventQueueIdx], ebp
+        mov      dword ptr [g_eventQueueWorkType], 9
         call     Push16Call_00489f50
     L_5516:
         mov      dword ptr [edi + 8], OFFSET L_5290
         mov      dword ptr [edi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], ebx
+        mov      dword ptr [g_pendingNodeType], ebx
         mov      dword ptr [g_framePauseFlag], ebx
     L_552f:
         pop      edi

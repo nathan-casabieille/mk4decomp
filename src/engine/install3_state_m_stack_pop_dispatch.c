@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046f560 (325b game) - 3-state install-self with state-1 mstack-pop dispatch. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_pendingNodeType;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -154,9 +154,9 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_state_00542088], edx
+        mov     dword ptr [g_xformScratch2088], edx
         mov     dword ptr [ecx*4 + 4], eax
-        cmp     dword ptr [g_state_00542088], 1
+        cmp     dword ptr [g_xformScratch2088], 1
         _emit   7fh
         _emit   07h
         call    FiveCallGuardSetTail_0046f6b0
@@ -173,7 +173,7 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         _emit   00h
         mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch_0046f560
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_x_0054204c], 0x1c
+        mov     dword ptr [g_pendingNodeType], 0x1c
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
@@ -187,7 +187,7 @@ __declspec(naked) void Install3StateMStackPopDispatch_0046f560(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], ecx

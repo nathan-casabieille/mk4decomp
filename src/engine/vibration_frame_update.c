@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004b9640 (301b engine.render) - vibration/feedback frame update.
- *   Reads g_data_0054205c & 0x180000; if both bits 0, skip. Else loads
+ *   Reads g_fightGroupHead & 0x180000; if both bits 0, skip. Else loads
  *   [esp+0x14] as `i`; if [i*4+0x1c]==-20, set i=2. Validate i in [1,0x18].
  *   Lookup pattern entry at [i*4 + g_data_004f6508]; bail if 0x10000.
  *   If i==2: load FP, fadd to g_data_004f6570, fcomp 0x004d2a00; if FP overflow,
@@ -131,7 +131,7 @@ extern unsigned int g_data_00535e7c;
  *   Else: check fcomp 0x004d2a10; if outside range, re-init to 0x3ff1_9999_9999_999a
  *     / 0xbf78_9374_bc6a_7efa.
  *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
- *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_state_0054208c.
+ *   call Transform9Words_004b3a90(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
  */
 extern unsigned int g_data_004d2a00;
 extern unsigned int g_data_004d2a10;
@@ -140,14 +140,14 @@ extern unsigned int g_data_004f6570;
 extern unsigned int g_data_004f6574;
 extern unsigned int g_data_004f6578;
 extern unsigned int g_data_004f657c;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern void DoubleToInt64_004c57d0(void);
 extern void Transform9Words_004b3a90(void);
 
 __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
     __asm {
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         sub     esp, 0x0c
         test    eax, 0x180000
         push    esi
@@ -166,7 +166,7 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         cmp     eax, 0x10000
         mov     dword ptr [g_walkCallback], eax
         jz      L_vfu_done
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         cmp     ecx, 2
         lea     esi, [edx*4]
         jne     L_vfu_pathB_sar
@@ -205,10 +205,10 @@ __declspec(naked) void VibrationFrameUpdate_004b9640(void) {
         push    eax
         push    esi
         call    Transform9Words_004b3a90
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         add     esp, 8
         or      al, 0x30
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
     L_vfu_pathB:
     L_vfu_done:
         pop     esi

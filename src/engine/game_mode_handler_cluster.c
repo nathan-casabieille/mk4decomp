@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,12 +129,12 @@ extern unsigned int g_data_004f1430;
 extern unsigned int g_data_004f1440;
 extern unsigned int g_data_004f1458;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern void ArgScaledChain_004949b0(void);
 extern void FlagCascadeStateSet_0048ec30(void);
 extern void HitReactionDispatcher_0045f650(void);
@@ -148,16 +148,16 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
     __asm {
         /* Helper 1: Computed-jump dispatcher. */
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         mov      eax, dword ptr [eax*4 + 0x30]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
         sub      eax, 0x60
         add      ecx, eax
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      ecx, dword ptr [ecx*4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         jmp      ecx
         nop
         nop
@@ -212,13 +212,13 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         test     eax, eax
         jne      L_5711
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      dword ptr [g_data_0054207c], 0x20016
+        mov      dword ptr [g_eventQueueNotMask], 0x20016
         inc      eax
-        mov      dword ptr [g_data_00542080], 0x20017
+        mov      dword ptr [g_eventQueueChild], 0x20017
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], 0x20016
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -229,16 +229,16 @@ __declspec(naked) void GameModeHandlerCluster_004955d0(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_eventQueueChild], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         test     al, 1
-        mov      dword ptr [g_data_0054207c], edx
+        mov      dword ptr [g_eventQueueNotMask], edx
         je       short L_570c
-        mov      dword ptr [g_data_0054207c], ecx
+        mov      dword ptr [g_eventQueueNotMask], ecx
     L_570c:
         jmp      HitReactionDispatcher_0045f650
     L_5711:

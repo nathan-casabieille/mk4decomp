@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,12 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004ba630 (140b engine.render) - dirty-bit gated triple-write or
- *   func call: if (g_state_0054208c & 0x30): write ecx to 3 stack slots and
- *   call func_4b3a90(arr_main[g_x_0054204c], esp). Else: write ecx to
- *   arr_main[g_x_0054204c]+0,+8,+10 and zero +4,+0xc. Always set state |= 0x30.
+ *   func call: if (g_xformDirtyFlags & 0x30): write ecx to 3 stack slots and
+ *   call func_4b3a90(arr_main[g_pendingNodeType], esp). Else: write ecx to
+ *   arr_main[g_pendingNodeType]+0,+8,+10 and zero +4,+0xc. Always set state |= 0x30.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern void Transform9Words_004b3a90(void);
 
 extern unsigned int g_arr_ba630_disp_48;
@@ -136,15 +136,15 @@ extern unsigned int g_arr_ba630_main;
 
 void DirtyBitTripleWriteOrCall_004ba630(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         sub     esp, 0x0c
         mov     ecx, [eax*4 + g_arr_ba630_disp_48]
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         sar     ecx, 4
         test    al, 0x30
         _emit   75h
         _emit   3ah
-        mov     edx, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     [edx*4 + g_arr_ba630_main], ecx
         mov     [edx*4 + g_arr_ba630_main + 0x8], ecx
         mov     [edx*4 + g_arr_ba630_main + 0x10], ecx
@@ -152,9 +152,9 @@ void DirtyBitTripleWriteOrCall_004ba630(void) {
         xor     edx, edx
         mov     dword ptr [eax + 4], edx
         mov     dword ptr [eax + 0x0c], edx
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 0x30
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         add     esp, 0x0c
         ret
         mov     dword ptr [esp + 8], ecx
@@ -163,7 +163,7 @@ void DirtyBitTripleWriteOrCall_004ba630(void) {
         _emit   4ch
         _emit   24h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         _emit   8dh
         _emit   44h
         _emit   24h
@@ -172,10 +172,10 @@ void DirtyBitTripleWriteOrCall_004ba630(void) {
         push    eax
         push    edx
         call    Transform9Words_004b3a90
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         add     esp, 8
         or      al, 0x30
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         add     esp, 0x0c
         }
 }

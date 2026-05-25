@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00425a80 (155b game) - 3-element clamp loop:
  *   neg = -g_walkCallback; for i in {0,1,2}:
- *     v = arr_src[g_x_00542048++];
+ *     v = arr_src[g_xformEntityIdx++];
  *     if (v < 0): if (v < neg) v = neg; else: if (v > g_walkCallback) v = walkCallback;
  *     arr_dst[g_scaledInit++] = v.
- *   Then: g_x_0053a1ac = 2 (the iter sentinel), rollback g_scaledInit/g_x_00542048 by 3.
+ *   Then: g_x_0053a1ac = 2 (the iter sentinel), rollback g_scaledInit/g_xformEntityIdx by 3.
  */
 extern unsigned int g_x_0053a1ac;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542074;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_arr_425a80_dst;
 extern unsigned int g_arr_425a80_src;
@@ -145,20 +145,20 @@ __declspec(naked) void ThreeClampLoop_00425a80(void) {
         mov     edx, esi
         mov     edi, 2
         neg     edx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     ebx, 3
         _emit   0ebh
         _emit   0ch
 loop425a80:
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     esi, dword ptr [g_walkCallback]
 afterReload:
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, [ecx*4 + g_arr_425a80_src]
         inc     ecx
         test    eax, eax
-        mov     dword ptr [g_x_00542074], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_eventQueueWorkType], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         _emit   7dh
         _emit   08h
         cmp     eax, edx
@@ -171,7 +171,7 @@ afterReload:
         _emit   7eh
         _emit   07h
         mov     eax, esi
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     [ecx*4 + g_arr_425a80_dst], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -181,7 +181,7 @@ afterReload:
         mov     dword ptr [g_scaledInit_00542044], edx
         _emit   75h
         _emit   0a6h
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, edx
         mov     dword ptr [g_x_0053a1ac], edi
         sub     ecx, 3
@@ -189,7 +189,7 @@ afterReload:
         pop     edi
         pop     esi
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         pop     ebx
         ret
     }

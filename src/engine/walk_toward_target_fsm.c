@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_data_0053815c;
 extern void Distance2DSaturationClamp_004300a0(void);
 extern void ChainFieldTest2Branch_0042fbc0(void);
@@ -145,24 +145,24 @@ extern void GuardedSeq_0042fb80(void);
  *   → ChainFieldTest2Branch_0042fbc0 → LoadSetCallPauseStoreJmp_0042fea0 →
  *   MStackPush4DualCallAbsPop4_00430d30. After the chain:
  *     - if g_data_00542078 > 0xa3d, tail-call WalkTowardTargetFsm_004301e0.
- *     - else call DualMul10ChainAcc7C_00430020, then if g_data_0054207c <
+ *     - else call DualMul10ChainAcc7C_00430020, then if g_eventQueueNotMask <
  *       0x300000 tail-call EsiInstallChainCallCmpThreshold_0042fad0.
- *     - else (>= 0x370000): compute eax = g_data_00542074 - 0x1999,
+ *     - else (>= 0x370000): compute eax = g_eventQueueWorkType - 0x1999,
  *       store into g_data_00542078, compare 0x54206c/0x542070 against it
  *       and select one of three tails:
  *         - if 0x54206c <  threshold: GuardedSeq_0042fba0
  *         - else if 0x542070 < threshold: GuardedSeq_0042fba0
  *         - else if 0x54206c < 0x542074: pick Mul10Triple0xd999Interp_0042fa10
  *           or SubCmpCallPauseJmp_0042fc40 (after stashing 0x5381cc into
- *           g_data_00542044)
+ *           g_currentNodeIdx)
  *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
     __asm {
@@ -178,13 +178,13 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         test    eax, eax
         jne     L_pii_done
         mov     ecx, dword ptr [g_data_00538158]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    ChainFieldTest2Branch_0042fbc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
         mov     edx, dword ptr [g_data_0053815c]
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ChainFieldTest2Branch_0042fbc0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -207,16 +207,16 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         cmp     eax, 0x300000
         jge     short L_pii_check3
         call    EsiInstallChainCallCmpThreshold_0042fad0
         pop     esi
         ret
     L_pii_check3:
-        mov     ecx, dword ptr [g_data_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     esi, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         cmp     eax, 0x370000
         jl      short L_pii_sample
         lea     eax, [ecx - 0x1999]
@@ -243,7 +243,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
     L_pii_storeEsi:
         mov     eax, dword ptr [g_data_0053815c]
         mov     dword ptr [g_data_00542078], esi
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    SubCmpCallPauseJmp_0042fc40
         pop     esi
         ret
@@ -262,7 +262,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset PhaseInstall2DInterpDispatch_0042f8a0
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_framePauseFlag], ecx
     L_pii_done:
         pop     esi

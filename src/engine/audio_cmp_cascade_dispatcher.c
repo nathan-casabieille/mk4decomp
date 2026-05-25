@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,12 +128,12 @@ extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00537f88;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542094;
 extern void AudioMStackPushHandlerPair_0049ff30(void);
 extern void BitSetByIndex_004a07a0(void);
@@ -153,7 +153,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 1
         test    al, bl
         je      L_acsd_ret
@@ -166,13 +166,13 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     dword ptr [g_walkCallback], eax
         jne     L_acsd_ret
         mov     eax, dword ptr [g_data_00537e90]
-        mov     dword ptr [g_data_0054207c], ebx
+        mov     dword ptr [g_eventQueueNotMask], ebx
         cmp     eax, 0xf
         mov     dword ptr [g_data_00542078], eax
         ja      L_acsd_cmp10
         push    0x253
         call    DualPushSetCallDualPop_00404b10
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         test    al, bl
         jne     short L_acsd_skipPush
@@ -180,7 +180,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
-        mov     eax, dword ptr [g_data_00542074]
+        mov     eax, dword ptr [g_eventQueueWorkType]
         and     eax, 0x20
         mov     dword ptr [g_data_00542094], eax
         jne     short L_acsd_callsub
@@ -209,11 +209,11 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_acsd_ret
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         je      L_acsd_ret
         push    0x238
         call    DualPushSetCallDualPop_00404b10
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         test    al, bl
         je      short L_acsd_skipCmp
@@ -230,7 +230,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         mov     eax, dword ptr [g_data_00542078]
         push    0x239
         push    0x4a0b00
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
         pop     ebx
@@ -240,7 +240,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         jne     short L_acsd_cmp11
         push    0x23e
         push    0x4a0dc0
-        mov     dword ptr [g_data_00542054], ebx
+        mov     dword ptr [g_eventQueueEnd], ebx
         call    SetWalkCurCallPauseDirty_00404c70
         add     esp, 8
         mov     dword ptr [g_walkCallback], ebx
@@ -251,7 +251,7 @@ __declspec(naked) void AudioCmpCascadeDispatcher_0049fd50(void)
         cmp     eax, 0x11
         jne     short L_acsd_cmp12
         mov     cx, word ptr [g_data_004e2864]
-        mov     dword ptr [g_data_00542054], ebx
+        mov     dword ptr [g_eventQueueEnd], ebx
         push    ecx
         call    TaggedSceneDispatch_004be690
         add     esp, 4

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,60 +127,60 @@ extern void NegateThree_00425360(void);
 extern void QuadInterpolatorV2_004255b0(void);
 
 /* @addr 0x00408350 (349b boot) - mstack-push-4 scope with +0x18 cj advance.
- *   Pushes g_data_00542048/4c/50/54 onto mstack, advances cj by 0x18, sets
+ *   Pushes g_xformEntityIdx/4c/50/54 onto mstack, advances cj by 0x18, sets
  *   esi from local frame (lea [esp+4] then sar 2 - encodes "frame slot 1"),
  *   calls ScaledTestChainDispatch_00424ba0. On no-error: reads
- *   [g_data_0054205c*4 + 0x34] into 0x54206c, mirrors low bit to 0x542094,
+ *   [g_fightGroupHead*4 + 0x34] into 0x54206c, mirrors low bit to 0x542094,
  *   conditionally calls NegateThree_00425360, then sets up a 2nd scope
  *   advancing cj by 0x15 and calls QuadInterpolatorV2_004255b0. Finally pops the 4
  *   originals back to 0054204c/50/54/48 in reverse order.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542094;
 extern unsigned int g_table_004d57b0;
 
 __declspec(naked) void MStackBootPush4Init_00408350(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         sub     esp, 0x24
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         push    esi
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         lea     esi, [esp + 4]
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     ecx, 0x18
         sar     esi, 2
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542048], ecx
-        mov     dword ptr [g_data_00542044], esi
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_currentNodeIdx], esi
         call    ScaledTestChainDispatch_00424ba0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp4i_cleanup
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 1
@@ -191,35 +191,35 @@ __declspec(naked) void MStackBootPush4Init_00408350(void) {
         test    eax, eax
         jne     L_mp4i_cleanup
     L_mp4i_skipCall:
-        mov     eax, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00542048], esi
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_xformEntityIdx], esi
         lea     eax, [ecx + 0x15]
-        mov     dword ptr [g_data_00542050], eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    QuadInterpolatorV2_004255b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mp4i_cleanup
-        mov     edx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_mp4i_cleanup:
         pop     esi

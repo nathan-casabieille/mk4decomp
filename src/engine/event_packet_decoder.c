@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,40 +127,40 @@ extern void EventPacketDecoder_0045de60(void);
 extern unsigned int g_state_0053a730;
 
 /* @addr 0x0045dd90 (202b game) - chain-pick + arg-based scaledInit setup.
- *   if (g_x_0054205c == 0) jmp Thunk_0045e0f0.
- *   ecx = g_cj_00542058; clear g_state_00542088; load 0x54-field into g_walkCallback/70/74;
- *   3 nested tests; if min/max swap; check eax<>g_x_00542080.
- *   If lo: g_state_00542088 = 1.
- *   Store g_data_00542050 to [baseSel*4+0x64]; eax = arg0>>2; g_data_00542054 store at [baseSel*4+0x68];
- *   g_data_0054204c=eax+0xf; scaledInit=eax+g_x_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
+ *   if (g_fightGroupHead == 0) jmp Thunk_0045e0f0.
+ *   ecx = g_cj_00542058; clear g_xformScratch2088; load 0x54-field into g_walkCallback/70/74;
+ *   3 nested tests; if min/max swap; check eax<>g_eventQueueChild.
+ *   If lo: g_xformScratch2088 = 1.
+ *   Store g_eventQueueTotal to [baseSel*4+0x64]; eax = arg0>>2; g_eventQueueEnd store at [baseSel*4+0x68];
+ *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_x_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
-extern unsigned int g_data_0054204c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         test    eax, eax
         _emit   75h
         _emit   05h
         jmp     Thunk_0045e0f0
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     dword ptr [g_state_00542088], 0
+        mov     dword ptr [g_xformScratch2088], 0
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     eax, dword ptr [g_state_0053a730]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         test    eax, eax
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         _emit   74h
         _emit   22h
         test    eax, eax
-        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         _emit   74h
         _emit   18h
         mov     edx, ecx
@@ -168,14 +168,14 @@ __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
         mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   0ch
-        mov     ecx, dword ptr [g_x_00542080]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     ecx, dword ptr [g_eventQueueChild]
+        mov     dword ptr [g_eventQueueCurrent], ecx
         cmp     edx, ecx
         _emit   7dh
         _emit   0ah
-        mov     dword ptr [g_state_00542088], 1
+        mov     dword ptr [g_xformScratch2088], 1
         mov     edx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     dword ptr [edx*4 + 0x64], eax
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [g_baseSel_00542060]
@@ -183,7 +183,7 @@ __declspec(naked) void ChainPickArgScaledInit_0045dd90(void) {
         sar     eax, 2
         mov     dword ptr [ecx*4 + 0x68], edx
         lea     ecx, [eax + 0x0f]
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [g_x_00542078]
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax

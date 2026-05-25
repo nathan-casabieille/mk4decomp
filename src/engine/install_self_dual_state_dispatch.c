@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,8 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042c9f0 (205b game) - dual-entry install-self. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void EsiInstallClampAddCall_0048fe40(void);
@@ -160,9 +160,9 @@ __declspec(naked) void InstallSelfDualStateDispatch_0042c9f0(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [g_eventQueueNotMask], 0
         mov     dword ptr [g_cj_00542054], ecx
-        mov     dword ptr [g_x_00542084], 0x00000ccc
+        mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         mov     dword ptr [esi + 0x08], 0x0042ca00
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, 0x0042ca00

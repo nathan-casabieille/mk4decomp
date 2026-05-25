@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004a8310 (377b audio) - phase-state install w/ vol-up/down on input.
  *   Phase 0: sets [0x52aac4]=2, [0x53a50c]=0xe, installs Self with
- *     slot[+0x84]=1, g_data_0054204c=1, arms 0x541e6c=1.
+ *     slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c=1.
  *   Phase 1+: AudioSwap2ChainBank3State_004a8490; reads slot[+0x30]:
  *     if 4 → reads vol byte at [g_data_005435a0 + 0x542070*0x18],
  *     if 3 → similar with g_data_0054359c stride. Then
@@ -134,16 +134,16 @@ extern unsigned int g_data_00535e7c;
  *     wrapping at 0/0xe. Final call TripleCallByteCheck_004a1bf0; on
  *     zero, calls AudioMicroEntries_004a7600 with the current vol byte
  *     and tail-jmps StackPopDispatchTagged_0041f780. Else: stores
- *     g_data_00542054 into 0x542044, vol byte into 0x54206c, calls
+ *     g_eventQueueEnd into 0x542044, vol byte into 0x54206c, calls
  *     ScaledChainStore24_004a7d40 and falls through to install tail.
  */
 extern unsigned int g_data_004d50b4;
 extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_005433c8;
 extern unsigned int g_data_00543590;
@@ -178,15 +178,15 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         add     ecx, eax
         add     eax, 5
         mov     edx, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
         jmp     short L_p3v_storeVol
     L_p3v_phase3:
         mov     eax, dword ptr [g_data_0054359c]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
     L_p3v_storeVol:
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
     L_p3v_afterSnap:
         call    DualListInit_004a8290
         cmp     byte ptr [g_data_00543590], 1
@@ -203,7 +203,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         je      short L_p3v_checkUp
     L_p3v_doDown:
         call    SetJmp_004a1ad0
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         lea     eax, [eax + eax*2]
         mov     cl, byte ptr [eax*8 + g_data_005435a0]
         dec     cl
@@ -219,7 +219,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         je      short L_p3v_postUp
     L_p3v_doUp:
         call    SetJmp_004a1ad0
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         lea     eax, [eax + eax*2]
         mov     dl, byte ptr [eax*8 + g_data_005435a0]
         inc     dl
@@ -231,7 +231,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
     L_p3v_postUp:
         call    TripleCallByteCheck_004a1bf0
         test    eax, eax
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         je      short L_p3v_storeAndCall
         lea     eax, [eax + eax*2]
         movsx   ecx, byte ptr [eax*8 + g_data_005435a0]
@@ -242,9 +242,9 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         pop     esi
         ret
     L_p3v_storeAndCall:
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         lea     edx, [eax + eax*2]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         movsx   eax, byte ptr [edx*8 + g_data_005435a0]
         mov     dword ptr [g_walkCallback], eax
         call    ScaledChainStore24_004a7d40
@@ -256,7 +256,7 @@ __declspec(naked) void Phase3InstallVolToggle_004a8310(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset Phase3InstallVolToggle_004a8310
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

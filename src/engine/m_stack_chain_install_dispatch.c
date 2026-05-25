@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,12 +125,12 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_00537f98;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542094;
 extern void DirtyFlagsManip_0048de00(void);
 extern void DualEntryBitFlagDispatch_0048e820(void);
@@ -149,14 +149,14 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d7ad
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 1
         test     al, bl
         je       L_d7ad
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         xor      ecx, ecx
         mov      dword ptr [g_data_00537f98], ebx
-        mov      dword ptr [g_data_00542088], ecx
+        mov      dword ptr [g_xformScratch2088], ecx
         mov      eax, dword ptr [eax*4 + 0x10]
         shr      eax, 0x18
         mov      dword ptr [g_walkCallback], eax
@@ -164,11 +164,11 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [g_data_00542094], eax
         je       short L_d55d
         mov      ecx, 0x10
-        mov      dword ptr [g_data_00542088], ecx
+        mov      dword ptr [g_xformScratch2088], ecx
     L_d55d:
         mov      edx, dword ptr [g_data_00542060]
         mov      edx, dword ptr [edx*4 + 0x38]
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      eax, dword ptr [edx*4 + 0x40]
         mov      esi, eax
         mov      dword ptr [g_walkCallback], eax
@@ -186,29 +186,29 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      dword ptr [edx*4 + 0x40], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      eax, dword ptr [eax*4 + 0x38]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      eax, dword ptr [eax*4 + 0x40]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 8
         mov      dword ptr [g_data_00542094], eax
         jne      L_d6a7
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, OFFSET DualEntryBitFlagDispatch_0048e820 + 0x40
-        mov      dword ptr [g_data_00542048], OFFSET MStackChainBit2Cascade_0048e8f0
-        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_xformEntityIdx], OFFSET MStackChainBit2Cascade_0048e8f0
+        mov      dword ptr [g_pendingNodeType], edx
         mov      eax, dword ptr [ecx*4 + 0x10]
         shr      eax, 0x18
         mov      dword ptr [g_walkCallback], eax
         and      eax, ebx
         mov      dword ptr [g_data_00542094], eax
         je       short L_d605
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
     L_d605:
         mov      eax, dword ptr [g_data_004d57ac]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        call     dword ptr [g_data_00542048]
+        call     dword ptr [g_xformEntityIdx]
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d7ad
@@ -216,9 +216,9 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [ecx*4]
         dec      ecx
         mov      dword ptr [g_data_004d57ac], ecx
-        mov      cl, byte ptr [g_data_0054208c]
+        mov      cl, byte ptr [g_xformDirtyFlags]
         test     cl, bl
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         je       short L_d6ac
         mov      eax, dword ptr [eax*4 + 0x14]
         push     eax
@@ -231,17 +231,17 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
-        mov      eax, dword ptr [g_data_00542088]
+        mov      eax, dword ptr [g_xformScratch2088]
         test     eax, eax
         je       short L_d6a7
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         xor      ecx, ecx
-        mov      dword ptr [g_data_00542088], ebx
+        mov      dword ptr [g_xformScratch2088], ebx
         mov      cl, byte ptr [edx*4 + 0x12]
         mov      dword ptr [g_walkCallback], ecx
         jmp      short L_d763
     L_d6a7:
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
     L_d6ac:
         mov      eax, dword ptr [eax*4 + 0x14]
         mov      dword ptr [g_walkCallback], eax
@@ -253,11 +253,11 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d7ad
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         je       short L_d6ff
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         xor      ecx, ecx
-        mov      dword ptr [g_data_00542088], 3
+        mov      dword ptr [g_xformScratch2088], 3
         mov      cl, byte ptr [edx*4 + 0x11]
         jmp      short L_d736
     L_d6ff:
@@ -269,22 +269,22 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         test     eax, eax
         jne      short L_d7ad
     L_d71a:
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542088], 2
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_xformScratch2088], 2
         mov      ecx, dword ptr [eax*4 + 0x10]
         and      ecx, 0xff
     L_d736:
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [g_walkCallback], ecx
         mov      ecx, dword ptr [edx*4 + 0x3c]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x7c]
         inc      eax
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x7c], eax
     L_d763:
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542088]
+        mov      ecx, dword ptr [g_xformScratch2088]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -296,10 +296,10 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
-        mov      eax, dword ptr [g_data_0054208c]
+        mov      eax, dword ptr [g_xformDirtyFlags]
         or       eax, ebx
-        mov      dword ptr [g_data_00542088], edx
-        mov      dword ptr [g_data_0054208c], eax
+        mov      dword ptr [g_xformScratch2088], edx
+        mov      dword ptr [g_xformDirtyFlags], eax
     L_d7ad:
         pop      esi
         pop      ebx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -131,12 +131,12 @@ extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void DualPushSetCallDualPop_00404b10(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
@@ -151,7 +151,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
     __asm {
         /* === h1 (0x477e20): mstack lookup + counter inc === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -163,7 +163,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      eax, dword ptr [g_data_004f3608]
         cmp      edx, eax
         jne      short L_7ec2
-        mov      eax, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_pendingNodeType]
         mov      ecx, dword ptr [g_data_00538158]
         cmp      eax, ecx
         jne      short L_7e7d
@@ -181,7 +181,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      ecx, OFFSET g_data_0053a700
     L_7e90:
         shr      ecx, 2
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4]
         inc      eax
         cmp      eax, 0x3e7
@@ -196,7 +196,7 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_7eda:
         ret
@@ -223,51 +223,51 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
         je       L_8005
         cmp      eax, edi
         jne      L_7fee
-        mov      edx, dword ptr [g_data_0054208c]
-        mov      eax, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_xformDirtyFlags]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ebp, 4
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         or       edx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       short L_7f5e
         mov      ecx, edx
         xor      ecx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], ecx
+        mov      dword ptr [g_xformDirtyFlags], ecx
         je       short L_7f5e
         call     MStackPushComplexCallPop_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_7f5e:
-        mov      edx, dword ptr [g_data_0054208c]
-        mov      eax, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_xformDirtyFlags]
+        mov      eax, dword ptr [g_eventQueueIdx]
         or       edx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_currentNodeIdx], eax
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       L_80c4
         mov      ecx, edx
         xor      ecx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], ecx
+        mov      dword ptr [g_xformDirtyFlags], ecx
         je       L_80c4
         call     MStackPushComplexCallPop_00406430
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
         push     0x90
         call     DualPushSetCallDualPop_00404b10
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, 1
         je       L_80c4
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      ecx, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     MStackPush2ChainLLInsert_00406790
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
-        mov      edx, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_00542044], edx
+        mov      edx, dword ptr [g_eventQueueIdx]
+        mov      dword ptr [g_currentNodeIdx], edx
         call     MStackPush2ChainLLInsert_00406790
         jmp      L_80b3
     L_7fee:
@@ -278,34 +278,34 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
     L_8005:
         cmp      eax, edi
         jne      L_809b
-        mov      edx, dword ptr [g_data_0054208c]
-        mov      eax, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_xformDirtyFlags]
+        mov      eax, dword ptr [g_eventQueueEnd]
         mov      ebp, 4
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         or       edx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       short L_804d
         mov      ecx, edx
         xor      ecx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], ecx
+        mov      dword ptr [g_xformDirtyFlags], ecx
         je       short L_804d
         call     ScaledLoadGuardedJmp_004066d0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_8119
     L_804d:
-        mov      edx, dword ptr [g_data_0054208c]
-        mov      eax, dword ptr [g_data_00542058]
+        mov      edx, dword ptr [g_xformDirtyFlags]
+        mov      eax, dword ptr [g_eventQueueIdx]
         or       edx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_currentNodeIdx], eax
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       short L_8088
         mov      ecx, edx
         xor      ecx, ebp
         cmp      eax, edi
-        mov      dword ptr [g_data_0054208c], ecx
+        mov      dword ptr [g_xformDirtyFlags], ecx
         je       short L_8088
         call     ScaledLoadGuardedJmp_004066d0
         cmp      dword ptr [g_framePauseFlag], edi
@@ -331,18 +331,18 @@ __declspec(naked) void AiWalkCounterDualCluster_00477e20(void)
     L_80c4:
         push     0x232
         call     SaveCallRestoreOrXor_00404a00
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         add      esp, 4
-        mov      dword ptr [g_data_00542054], edx
+        mov      dword ptr [g_eventQueueEnd], edx
         push     0x233
         call     SaveCallRestoreOrXor_00404a00
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 4
-        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [esi + 8], OFFSET L_7ee0
         mov      dword ptr [esi + 0x84], 1
     L_8105:
-        mov      dword ptr [g_data_0054204c], 0xa
+        mov      dword ptr [g_pendingNodeType], 0xa
         mov      dword ptr [g_framePauseFlag], 1
     L_8119:
         pop      edi

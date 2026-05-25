@@ -6,28 +6,28 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 
 /* @addr 0x004389b0 (48b)
- *   mov     eax, [g_data_0054207c]
+ *   mov     eax, [g_eventQueueNotMask]
  *   dec     eax
- *   mov     [g_data_0054207c], eax
+ *   mov     [g_eventQueueNotMask], eax
  *   jne     +0x22
  *   mov     [g_walkCallback], 0x18
  *   call    F
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     +0x0a
- *   mov     [g_data_0054207c], 0x0d
+ *   mov     [g_eventQueueNotMask], 0x0d
  *   ret
  */
 extern void func_004385f4(void);
 
 void DecJneSetCallSetJmp_004389b0(void) {
     __asm {
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax
-        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   75h
         _emit   22h
         mov     dword ptr [g_walkCallback], 0x18
@@ -36,7 +36,7 @@ void DecJneSetCallSetJmp_004389b0(void) {
         test    eax, eax
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_0054207c], 0x0d
+        mov     dword ptr [g_eventQueueNotMask], 0x0d
         }
 }
 

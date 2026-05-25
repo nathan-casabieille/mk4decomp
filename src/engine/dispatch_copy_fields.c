@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,8 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043ec80 (227b game) - dispatch then 6-field copy.
- *   shr 0x004ec8f8 >> 2 -> g_x_00542048; call DispatcherComplex260; if pause? ret.
- *   if bit2 of g_state_0054208c set: copy g_cj_00542058 to g_x_00537e9c, ret.
+ *   shr 0x004ec8f8 >> 2 -> g_xformEntityIdx; call DispatcherComplex260; if pause? ret.
+ *   if bit2 of g_xformDirtyFlags set: copy g_cj_00542058 to g_x_00537e9c, ret.
  *   else: scaledInit[+0x30] = 0x78; call MStackCall; if pause? ret.
  *   else: copy fields +0x54/+0x58/+0x5c (via g_walkCallback temp) and +0x64 from
  *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
@@ -132,15 +132,15 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00537e9c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 extern void MStackCall_00406340(void);
 
 void DispatchCopyFields_0043ec80(void) {
     __asm {
         mov     eax, 0x004ec8f8
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407030
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -150,7 +150,7 @@ void DispatchCopyFields_0043ec80(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   0dh
         mov     ecx, dword ptr [g_cj_00542058]
@@ -198,7 +198,7 @@ void DispatchCopyFields_0043ec80(void) {
         _emit   0e2h
         _emit   0feh
         or      edx, ecx
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x34], edx
         }

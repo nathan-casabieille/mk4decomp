@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,9 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   push 0x15; call DualPushSetCallDualPop; add esp,4; if (208c & 1) goto end-bit-set.
  *   push 0x16; call DualPushSetCallDualPop; add esp,4; if (208c & 1) goto end-bit-set.
  *   push 0x250; call DualPushSetCallDualPop; add esp,4; if !(208c & 1) goto end-bit-clear.
- *   end-bit-set: g_state_0054208c &= ~1; jmp store.
- *   end-bit-clear: g_state_0054208c |= 1.
- *   store: g_state_0054208c = result.
+ *   end-bit-set: g_xformDirtyFlags &= ~1; jmp store.
+ *   end-bit-clear: g_xformDirtyFlags |= 1.
+ *   store: g_xformDirtyFlags = result.
  *   mstack-pop into g_scaledInit.
  */
 extern void Cmp2DirtySetOrClear_0049fb10(void);
@@ -157,7 +157,7 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 1
         _emit   84h
         _emit   0c3h
@@ -168,12 +168,12 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         test    eax, eax
         _emit   75h
         _emit   71h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   3ch
         push    0x15
         call    DualPushSetCallDualPop_00404b10
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
         _emit   0c3h
@@ -181,7 +181,7 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         _emit   29h
         push    0x16
         call    DualPushSetCallDualPop_00404b10
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
         _emit   0c3h
@@ -189,19 +189,19 @@ __declspec(naked) void MStackDirtyArgsBit0_0049fa50(void) {
         _emit   16h
         push    0x250
         call    DualPushSetCallDualPop_00404b10
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
         _emit   0c3h
         _emit   74h
         _emit   09h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
         _emit   0ebh
         _emit   07h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      eax, ebx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax

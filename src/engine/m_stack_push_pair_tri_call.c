@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,13 +129,13 @@ extern void MStackPushPairTriCall_0048ce60(void);
  *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
  *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate_00486490.
  *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_00489ff0; pause-check;
- *   call MStackPushPairTriCall_0048ce60; pause-check; g_x_0054207c=0; call CopyJmp_0048ef90; pause-check;
- *   if bit-0 set g_x_0054207c=1; g_x_00542080=6; jmp MStackInstallCountdown_00486370.
+ *   call MStackPushPairTriCall_0048ce60; pause-check; g_eventQueueNotMask=0; call CopyJmp_0048ef90; pause-check;
+ *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown_00486370.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void MStackInstallCountdown_00486370(void);
 extern void MStackPushSet0008_004901a0(void);
@@ -147,7 +147,7 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         mov     dword ptr [g_walkCallback], 0x00008000
         mov     eax, dword ptr [eax*4 + 0x7c]
         test    eax, eax
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   7eh
         _emit   0ah
         mov     dword ptr [g_walkCallback], 0x00004ccc
@@ -186,17 +186,17 @@ __declspec(naked) void ChainDispatcher4Call_00486290(void) {
         test    eax, eax
         _emit   75h
         _emit   3ah
-        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [g_eventQueueNotMask], 0
         call    CopyJmp_0048ef90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   22h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   0ah
-        mov     dword ptr [g_x_0054207c], 1
-        mov     dword ptr [g_x_00542080], 6
+        mov     dword ptr [g_eventQueueNotMask], 1
+        mov     dword ptr [g_eventQueueChild], 6
         jmp     MStackInstallCountdown_00486370
         ret
     }

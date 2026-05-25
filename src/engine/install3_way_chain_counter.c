@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004809e0 (210b game) - 3-way install-self with chain[+0x84] value dispatch (0, 1, 2+).
  *   Value 0: fresh init via MStackPushSet0008, chain[+0x74]=0x100f, push str, call IterStepNegStore,
- *     call CopyJmp_00406ba0, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_data_0054204c=4, pause=1.
- *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_data_0054204c=8.
+ *     call CopyJmp_00406ba0, install-self at +0x08=0x004809e0, chain[+0x84]=1, g_pendingNodeType=4, pause=1.
+ *   Value 1 (after dec → 0): "advance" via ScaledZeroFour, if !pause install w/ chain[+0x84]=2, g_pendingNodeType=8.
  *   Value 2+: call FiveCallGuardSetTail_0046f6b0, pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern void CopyJmp_00406ba0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -162,7 +162,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         _emit   00h
         mov     dword ptr [esi + 0x08], 0x004809e0
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 8
+        mov     dword ptr [g_pendingNodeType], 8
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
@@ -190,7 +190,7 @@ __declspec(naked) void Install3WayChainCounter_004809e0(void) {
         mov     eax, 1
         mov     dword ptr [esi + 0x08], 0x004809e0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_pendingNodeType], 4
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

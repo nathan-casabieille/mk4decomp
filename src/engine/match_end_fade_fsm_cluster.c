@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,16 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_00542088;
+extern unsigned int g_xformScratch2088;
 extern void Chain2AxisDiffStoreTailJmp_0044cad0(void);
 extern void DualPushAddCallDualPopJmp_0044cc50(void);
 extern void GuardedSeq_00473f50(void);
@@ -147,7 +147,7 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         /* === h1 (0x449010): pre-fade init → tail-jmp 473f50 === */
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x64]
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      dword ptr [g_fightGroupHead], ecx
         call     MStackPush2RunCountdown_004089e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -157,11 +157,11 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_909c
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         mov      ecx, dword ptr [eax*4]
         or       ecx, 4
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         mov      eax, 0xa0000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x34], eax
@@ -189,18 +189,18 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         jmp      dword ptr [eax*4 + L_jmptbl_92dc]
     L_90ce:
         /* case 1: install state 2 */
-        mov      dword ptr [g_data_00542070], 0xfffeb334
+        mov      dword ptr [g_eventQueueCurrent], 0xfffeb334
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_90a0
         add      edx, 0x2000000
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0
@@ -212,36 +212,36 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         /* case 2: install state 3 (no work) */
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], 0x28
+        mov      dword ptr [g_pendingNodeType], 0x28
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
     L_9160:
         /* case 3: store fade params, call 44cc50, install state 4 */
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_00542074], 0xfffee667
+        mov      dword ptr [g_eventQueueWorkType], 0xfffee667
         mov      edx, dword ptr [ecx*4 + 0x68]
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         call     DualPushAddCallDualPopJmp_0044cc50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
-        mov      eax, dword ptr [g_data_00542070]
-        mov      ecx, dword ptr [g_data_00542074]
-        mov      dword ptr [g_data_00542084], eax
-        mov      dword ptr [g_data_00542088], ecx
-        mov      dword ptr [g_data_00542070], 0xfffed99a
+        mov      eax, dword ptr [g_eventQueueCurrent]
+        mov      ecx, dword ptr [g_eventQueueWorkType]
+        mov      dword ptr [g_currentNodeFlags], eax
+        mov      dword ptr [g_xformScratch2088], ecx
+        mov      dword ptr [g_eventQueueCurrent], 0xfffed99a
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_90a0
         add      ecx, 0x4000000
         mov      dword ptr [edx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], 0
@@ -252,11 +252,11 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
     L_9211:
         /* case 0: full init - call 4493e0 helper via push/call, then chain */
         mov      eax, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         push     0x4493e0
         mov      dword ptr [eax*4 + 0x64], ecx
         mov      edx, dword ptr [g_data_00542060]
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         mov      dword ptr [edx*4 + 0x68], eax
         call     StoreLoadJmp_00404ef0
         add      esp, 4
@@ -264,27 +264,27 @@ __declspec(naked) void MatchEndFadeFsmCluster_00449010(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_92d8
-        mov      dword ptr [g_data_00542074], 0xb333
+        mov      dword ptr [g_eventQueueWorkType], 0xb333
         mov      dword ptr [g_walkCallback], 0xfffec000
         call     MStackPush3SideStore_0044cb80
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8
-        mov      dword ptr [g_data_00542074], 0x1999
+        mov      dword ptr [g_eventQueueWorkType], 0x1999
         call     DualPushAddCallDualPopJmp_0044cc50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_92d8
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542070]
-        mov      edx, dword ptr [g_data_00542074]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
+        mov      edx, dword ptr [g_eventQueueWorkType]
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, 1
-        mov      dword ptr [g_data_00542084], ecx
-        mov      dword ptr [g_data_00542088], edx
+        mov      dword ptr [g_currentNodeFlags], ecx
+        mov      dword ptr [g_xformScratch2088], edx
         mov      dword ptr [esi + 8], OFFSET L_90a0
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0xc8
+        mov      dword ptr [g_pendingNodeType], 0xc8
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret

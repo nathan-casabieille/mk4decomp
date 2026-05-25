@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -134,28 +134,28 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
 /* @addr 0x00480840 (356b game) - countdown loop install-self w/ 3-way tails.
  *   On phase = [scaled g_data_00542060+0x84] == 0 jumps direct to install
  *   tail. Else runs a polling loop:
- *     DualGatedStateYield_0048fc80 → on success decrement g_data_00542080
+ *     DualGatedStateYield_0048fc80 → on success decrement g_eventQueueChild
  *     and update g_data_00542098 (sete on dec result), if <= 0 sets it
  *     to 0xc. If g_data_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
- *     If g_data_00542088 == 1 tail-jmp Install3WayChainCounter_004809e0.
+ *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter_004809e0.
  *     Else calls ScaledChain3c7c_0048f930. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
- *     and calls EsiEdiAliasDualMul10_004906b0, sets g_data_00542088=0x9999,
+ *     and calls EsiEdiAliasDualMul10_004906b0, sets g_xformScratch2088=0x9999,
  *     calls PunchAnimCluster_00496d80, then NotMaskStorePair_0045f440. Selects
- *     g_data_00542074 = 1 (if 0x54205c == g_data_00538158) or 0x10,
- *     AND's with g_data_00542070 → g_data_00542094; if zero tail-jmp
+ *     g_eventQueueWorkType = 1 (if 0x54205c == g_data_00538158) or 0x10,
+ *     AND's with g_eventQueueCurrent → g_data_00542094; if zero tail-jmp
  *     FiveCallGuardSetTail_0046f6b0; else continues loop iteration by
  *     re-reading phase and jumping back if non-zero. Install tail:
- *     [eax+8]=Self, slot[+0x84]=1, g_data_0054204c=1, 0x541e6c=1.
+ *     [eax+8]=Self, slot[+0x84]=1, g_pendingNodeType=1, 0x541e6c=1.
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00542094;
 extern void EsiEdiAliasDualMul10_004906b0(void);
 
@@ -178,16 +178,16 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         call    DualGatedStateYield_0048fc80
         test    eax, eax
         jne     L_cis_done
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         mov     ecx, 0
         dec     eax
         sete    cl
         cmp     eax, edi
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_data_00542098], ecx
         jg      short L_cis_skipReset
         mov     eax, 0xc
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
     L_cis_skipReset:
         cmp     ecx, edi
         mov     esi, eax
@@ -196,7 +196,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
     L_cis_skipCall1:
-        cmp     dword ptr [g_data_00542088], ebx
+        cmp     dword ptr [g_xformScratch2088], ebx
         je      L_cis_call9e0
         call    ScaledChain3c7c_0048f930
         cmp     dword ptr [g_framePauseFlag], edi
@@ -207,24 +207,24 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         call    EsiEdiAliasDualMul10_004906b0
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_cis_done
-        mov     dword ptr [g_data_00542088], ebp
+        mov     dword ptr [g_xformScratch2088], ebp
         call    PunchAnimCluster_00496d80
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
         call    NotMaskStorePair_0045f440
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_data_00538158]
         mov     eax, ebx
         cmp     ecx, edx
-        mov     dword ptr [g_data_00542080], esi
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueChild], esi
+        mov     dword ptr [g_eventQueueWorkType], eax
         je      short L_cis_pickEax
         mov     eax, 0x10
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
     L_cis_pickEax:
-        and     eax, dword ptr [g_data_00542070]
+        and     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_data_00542094], eax
         je      short L_cis_call6b0
         mov     edx, dword ptr [g_data_00542060]
@@ -236,7 +236,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
     L_cis_install:
         mov     dword ptr [eax + 8], offset CountdownInstallSelfMultiTail_00480840
         mov     dword ptr [eax + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx
     L_cis_done:
         pop     edi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00492920 (182b game) - same pattern as MStackPush3MaskBit0_004929e0 but with mask 0x01.
- *   Push g_walkCallback, g_x_00542070, g_x_00542074; call MStackPush2TableNot_00426230; pause? -> end.
- *   edx = g_walkCallback & 1; eax = g_state_0054208c; g_x_00542094 = edx;
+ *   Push g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType; call MStackPush2TableNot_00426230; pause? -> end.
+ *   edx = g_walkCallback & 1; eax = g_xformDirtyFlags; g_x_00542094 = edx;
  *   if (edx != 0): or al, 1; else: and al, 0xfe.
- *   g_state_0054208c = eax.
- *   mstack-pop into g_x_00542074, g_x_00542070, g_walkCallback.
+ *   g_xformDirtyFlags = eax.
+ *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback.
  */
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542094;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -143,12 +143,12 @@ void MStackPush3MaskBit_00492920(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
@@ -158,7 +158,7 @@ void MStackPush3MaskBit_00492920(void) {
         _emit   75h
         _emit   5fh
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     edx, 1
         mov     dword ptr [g_x_00542094], edx
         _emit   75h
@@ -167,15 +167,15 @@ void MStackPush3MaskBit_00492920(void) {
         _emit   0ebh
         _emit   02h
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax

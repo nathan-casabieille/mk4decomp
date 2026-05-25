@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,23 +123,23 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00486370 (146b game) - dual-entry mstack-push + install-self with countdown.
- *   Block A (+0x00): mstack-push 0x004863a0; g_x_00542084=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
- *   Block B (+0x30): if chain[+0x84]!=0 (already armed): g_x_00542080=3, jmp MStackPushWaitChain_00486410;
- *     else countdown g_x_00542080; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
- *     g_data_0054204c=0x58, g_pause=1; otherwise self-jmp.
+ *   Block A (+0x00): mstack-push 0x004863a0; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
+ *   Block B (+0x30): if chain[+0x84]!=0 (already armed): g_eventQueueChild=3, jmp MStackPushWaitChain_00486410;
+ *     else countdown g_eventQueueChild; on zero: install-self at +0x08=0x004863a0, chain[+0x84]=1,
+ *     g_pendingNodeType=0x58, g_pause=1; otherwise self-jmp.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
 extern void MStackPushWaitChain_00486410(void);
 extern void NegInstallNegSelfTrigPair_00486610(void);
 
 __declspec(naked) void MStackInstallCountdown_00486370(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_00542084], 0x00000ccc
+        mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x004863a0
@@ -162,18 +162,18 @@ __declspec(naked) void MStackInstallCountdown_00486370(void) {
         test    ecx, ecx
         _emit   74h
         _emit   0fh
-        mov     dword ptr [g_x_00542080], 3
+        mov     dword ptr [g_eventQueueChild], 3
         jmp     MStackPushWaitChain_00486410
-        mov     ecx, dword ptr [g_x_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         dec     ecx
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         _emit   74h
         _emit   05h
         jmp     MStackInstallCountdown_00486370
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x004863a0
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], 0x58
+        mov     dword ptr [g_pendingNodeType], 0x58
         mov     dword ptr [g_pause_00541e6c], ecx
         ret
     }

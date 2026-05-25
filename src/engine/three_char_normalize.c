@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00459200 (133b) - 3-char input normalizer:
- *   for (i=0; i<3; ++i) { c = arr[g_x_00542054 + i]; g_walkCallback = c;
+ *   for (i=0; i<3; ++i) { c = arr[g_eventQueueEnd + i]; g_walkCallback = c;
  *     if (c < 0 || (c > 0x5f && c not in 0x7b,0x7c,0x7d)) c = 0;
  *     call LinearSearchByEsi(); if (g_framePauseFlag) break;
- *     arr[g_x_00542054 + i] = g_walkCallback; }
+ *     arr[g_eventQueueEnd + i] = g_walkCallback; }
  */
 extern unsigned int g_data_005380b0;
 extern unsigned int g_x_00535e48;
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 extern void LinearSearchByEsi_00459290(void);
 
 extern unsigned int g_arr_459200;
@@ -142,11 +142,11 @@ __declspec(naked) void ThreeCharNormalize_00459200(void) {
         shr     ecx, 2
         xor     esi, esi
         xor     eax, eax
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_x_00535e48], eax
         _emit   0ebh
         _emit   06h
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         add     ecx, eax
         mov     eax, [ecx*4 + g_arr_459200]
         cmp     eax, esi
@@ -170,7 +170,7 @@ __declspec(naked) void ThreeCharNormalize_00459200(void) {
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   2ah
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [g_x_00535e48]
         mov     edx, dword ptr [g_walkCallback]
         add     eax, ecx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,10 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00461260 (222b game) - 9-entry-point flag dispatcher.
- *   A: call Wrapper_0048a300; if !pause: g_x_00542080=0xd; ret.
+ *   A: call Wrapper_0048a300; if !pause: g_eventQueueChild=0xd; ret.
  *   B (+0x20): g_walkCallback=0x4000; jmp OrDualStore.
  *   C (+0x30): g_walkCallback=0x2000; jmp OrDualStore.
- *   D (+0x40): g_walkCallback=0x1000, g_x_00542070=5, g_data_0053a7d8=5; jmp OrDualStore.
+ *   D (+0x40): g_walkCallback=0x1000, g_eventQueueCurrent=5, g_data_0053a7d8=5; jmp OrDualStore.
  *   E (+0x60): byte[g_x_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
  *   F (+0x80): call FiveSetWalkJmp_00461360; if !pause: g_walkCallback=0x400; jmp OrDualStore.
  *   G (+0xa0): g_walkCallback=0x200; jmp OrDualStore.
@@ -135,8 +135,8 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0053a7d8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueChild;
 extern unsigned int g_x_00543730;
 extern void FiveSetWalkJmp_00461360(void);
 extern void OrDualStore_0048e4b0(void);
@@ -150,7 +150,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         test    eax, eax
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_x_00542080], 0x0d
+        mov     dword ptr [g_eventQueueChild], 0x0d
         ret
         _emit   90h
         _emit   90h
@@ -167,7 +167,7 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         _emit   90h
         mov     eax, 5
         mov     dword ptr [g_walkCallback], 0x00001000
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_data_0053a7d8], eax
         jmp     OrDualStore_0048e4b0
         _emit   90h

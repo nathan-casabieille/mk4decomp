@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -133,9 +133,9 @@ extern unsigned int g_data_004d5328;
 extern unsigned int g_state_004d5324;
 extern unsigned int g_x_004d5320;
 extern unsigned int g_x_0053a1ac;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542098;
 
 __declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
@@ -146,16 +146,16 @@ __declspec(naked) void TripleArrayDiffClamp_004251f0(void) {
         mov     esi, 2
         mov     edi, 3
 loop_004251fd:
-        mov     ecx, dword ptr [g_x_00542048]
-        mov     edx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [ecx*4 + 0]
         mov     ebx, dword ptr [edx*4 + 0]
         sub     eax, ebx
         inc     edx
         inc     ecx
-        mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_pendingNodeType], edx
         test    eax, eax
         mov     ecx, eax
         _emit   7dh
@@ -177,7 +177,7 @@ loop_004251fd:
         _emit   75h
         _emit   07h
         add     eax, ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
@@ -186,8 +186,8 @@ loop_004251fd:
         dec     edi
         mov     dword ptr [g_scaledInit_00542044], edx
         jne     loop_004251fd
-        mov     ecx, dword ptr [g_x_00542048]
-        mov     eax, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_xformEntityIdx]
+        mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_x_0053a1ac], esi
         sub     edx, 3
         sub     ecx, 3
@@ -195,8 +195,8 @@ loop_004251fd:
         pop     edi
         pop     esi
         mov     dword ptr [g_scaledInit_00542044], edx
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_pendingNodeType], eax
         pop     ebx
         ret
     }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,11 +128,11 @@ extern unsigned int g_data_00538158;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_00541de0;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void InstallSelf5CallVecChain_00464660(void);
 extern void MStackCall_004063e0(void);
@@ -151,19 +151,19 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x3c], 0xe666
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x30], 0x11
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_data_00537f78], eax
         mov      dword ptr [eax*4 + 0x54], 0xffffb0a4
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x58], 0xfffe0000
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [eax*4 + 0x5c], esi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
@@ -181,19 +181,19 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x3c], 0xe666
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x30], 0x12
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_data_00541de0], eax
         mov      dword ptr [eax*4 + 0x54], 0x4f5c
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x58], 0xfffe0000
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x5c], esi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
@@ -211,19 +211,19 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4551
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x3c], 0xf333
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x30], 0x13
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_data_00535e6c], eax
         mov      dword ptr [eax*4 + 0x54], 0xffe80000
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], 0xffd00000
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 0
         mov      dword ptr [edx*4 + 0x5c], 0
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 8
         mov      dword ptr [g_walkCallback], eax
@@ -257,18 +257,18 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_data_00538158
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
-        mov      eax, dword ptr [g_data_0054207c]
+        mov      dword ptr [g_eventQueueEnd], eax
+        mov      eax, dword ptr [g_eventQueueNotMask]
         shr      ecx, 2
         cmp      eax, 1
-        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_45d8
         mov      edx, OFFSET g_data_0053815c
         mov      eax, OFFSET g_data_00541de0
         shr      edx, 2
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], edx
-        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_eventQueueEnd], edx
+        mov      dword ptr [g_eventQueueIdx], eax
     L_45d8:
         jmp      InstallSelf5CallVecChain_00464660
         nop
@@ -286,18 +286,18 @@ __declspec(naked) void StageParticleEmitterInit_00464350(void)
         mov      dword ptr [edx*4 + 0x38], eax
         mov      eax, OFFSET g_data_00538158
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
-        mov      eax, dword ptr [g_data_0054207c]
+        mov      dword ptr [g_eventQueueEnd], eax
+        mov      eax, dword ptr [g_eventQueueNotMask]
         shr      ecx, 2
         cmp      eax, 1
-        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_eventQueueIdx], ecx
         je       short L_4658
         mov      edx, OFFSET g_data_0053815c
         mov      eax, OFFSET g_data_00541de0
         shr      edx, 2
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], edx
-        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_eventQueueEnd], edx
+        mov      dword ptr [g_eventQueueIdx], eax
     L_4658:
         jmp      InstallSelf5CallVecChain_00464660
     }

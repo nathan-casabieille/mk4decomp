@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,14 +136,14 @@ extern unsigned int g_data_004f2980;
  *     On match-indirect: if pause skip; if bit0(0054208c): call MStackRestore27_004abd50; or bit0; pop+ret.
  *       Else: call MStackRestore27_004abd50; clear bit0; pop esi; ret.
  *   Tail thunks (+0xc0..): call DualTestDirtyToggle; if pause ret. Bit-test gates + chained data lookups.
- *   Multiple 16-byte aligned blocks all set/clear bit0 of g_state_0054208c.
+ *   Multiple 16-byte aligned blocks all set/clear bit0 of g_xformDirtyFlags.
  */
 extern unsigned int g_data_0053a1bc;
 extern unsigned int g_data_0053a354;
 extern unsigned int g_data_00542004;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e48;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
     __asm {
@@ -154,12 +154,12 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7ch
         _emit   5bh
@@ -170,19 +170,19 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         _emit   3dh
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   7dh
         _emit   0d2h
         call    MStackRestore27_004abd50
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
         call    edx
@@ -190,19 +190,19 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         test    eax, eax
         _emit   75h
         _emit   2dh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   13h
         call    MStackRestore27_004abd50
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
         call    MStackRestore27_004abd50
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
         _emit   90h
@@ -212,7 +212,7 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         test    eax, eax
         _emit   75h
         _emit   4bh
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ecx, 1
         test    al, cl
         _emit   74h
@@ -232,11 +232,11 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   07h
-        or      dword ptr [g_state_0054208c], ecx
+        or      dword ptr [g_xformDirtyFlags], ecx
         ret
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h
@@ -244,23 +244,23 @@ __declspec(naked) void LinkedListIndirectDirtyToggle_0049f7b0(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
     }
 }

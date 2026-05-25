@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,71 +123,71 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004750f0 (200b game) - linked-list search by value in chain.
- *   mstack-push g_x_00542048, g_x_0054204c; ecx = chain[g_x_00542048++];
- *   g_x_00541dc4 = ecx; if (ecx == g_x_00542070) bit_set;
- *   loop: ecx = chain[eax]; g_x_0054204c = ecx; if (ecx < 0) bit_clear;
+ *   mstack-push g_xformEntityIdx, g_pendingNodeType; ecx = chain[g_xformEntityIdx++];
+ *   g_x_00541dc4 = ecx; if (ecx == g_eventQueueCurrent) bit_set;
+ *   loop: ecx = chain[eax]; g_pendingNodeType = ecx; if (ecx < 0) bit_clear;
  *     ecx = chain[eax++]; g_x_00541dc4 = ecx; if (ecx != edx) loop;
- *   bit_set: g_state_0054208c |= 4; jmp store_ret;
- *   bit_clear: g_state_0054208c |= 4; g_x_0054204c = -1; g_state_0054208c ^= 4;
- *   store_ret: mstack-pop into g_x_0054204c, g_x_00542048.
+ *   bit_set: g_xformDirtyFlags |= 4; jmp store_ret;
+ *   bit_clear: g_xformDirtyFlags |= 4; g_pendingNodeType = -1; g_xformDirtyFlags ^= 4;
+ *   store_ret: mstack-pop into g_pendingNodeType, g_xformEntityIdx.
  */
 extern unsigned int g_x_00541dc4;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
 
 extern unsigned int g_data_004d57ac_arr;
 
 void LinkedListSearch_004750f0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     eax, dword ptr [g_x_00542048]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_xformEntityIdx]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         cmp     ecx, edx
         mov     dword ptr [g_x_00541dc4], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   28h
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         test    ecx, ecx
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         _emit   7ch
         _emit   20h
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         cmp     ecx, edx
         mov     dword ptr [g_x_00541dc4], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   75h
         _emit   0d8h
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 4
         _emit   0ebh
         _emit   14h
-        mov     eax, dword ptr [g_state_0054208c]
-        mov     dword ptr [g_x_0054204c], 0xffffffff
+        mov     eax, dword ptr [g_xformDirtyFlags]
+        mov     dword ptr [g_pendingNodeType], 0xffffffff
         or      al, 4
         xor     eax, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

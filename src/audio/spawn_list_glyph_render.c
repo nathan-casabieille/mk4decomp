@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,12 +126,12 @@ extern unsigned int g_data_004f3ee0;
 extern unsigned int g_data_005157a4;
 extern unsigned int g_data_00538038;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00543398;
 extern unsigned int g_data_005433d8;
 extern void AudioFlagDispatchAggregatorAH_004aa520(void);
@@ -151,11 +151,11 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         push     esi
         push     edi
         call     BootPhaseGateBracketedInit_004060c0
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 4
         test     al, bl
         jne      L_a73d
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         or       dword ptr [edi*4 + 0x34], 0x20000
         call     MStackPushComplexCallPop_00406430
         mov      eax, dword ptr [g_framePauseFlag]
@@ -163,54 +163,54 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         cmp      eax, esi
         jne      short L_a73d
         call     MStackBracket5_FieldClear_StateAdvance_00405630
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x24], esi
         mov      dword ptr [edi*4 + 0x18], eax
         mov      dword ptr [eax*4 + 0x18], edi
         mov      dword ptr [g_walkCallback], ebx
         call     MStackPush3HelperCondToggle_0049cf70
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, OFFSET g_data_005157a4
         shr      ecx, 2
-        mov      dword ptr [g_data_00542070], 0xffffe667
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_eventQueueCurrent], 0xffffe667
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      edx, eax
         mov      dword ptr [eax*4 + 0xc], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ebx, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ebx, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [eax*4 + 4], ebx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ebx, 0xf5c
         mov      dword ptr [eax*4 + 8], esi
-        mov      eax, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         add      eax, ebx
-        mov      dword ptr [g_data_00542070], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4]
         cmp      eax, esi
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         je       short L_a731
         push     ebp
     L_a6e4:
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [eax*4 + 0xc], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ebp, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ebp, dword ptr [g_eventQueueCurrent]
         mov      dword ptr [eax*4 + 4], ebp
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 8], esi
-        mov      eax, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         add      eax, ebx
-        mov      dword ptr [g_data_00542070], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4]
         cmp      eax, esi
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         jne      short L_a6e4
         pop      ebp
     L_a731:
-        mov      dword ptr [g_data_00542044], edi
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_currentNodeIdx], edi
+        mov      dword ptr [g_xformEntityIdx], edx
     L_a73d:
         pop      edi
         pop      esi
@@ -243,7 +243,7 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      dword ptr [ebx + 0x84], esi
         cmp      eax, esi
         jne      short L_a7e2
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         mov      edx, dword ptr [g_data_00538038]
         xor      eax, eax
     L_a77f:
@@ -265,14 +265,14 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         mov      edi, ecx
         call     L_a610
         mov      ecx, dword ptr [g_data_00542060]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [ecx*4 + 0x30], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], edi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], 0x6e0000
     L_a7e2:
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_data_00538038]
         cmp      edx, eax
         jne      short L_a7f8
@@ -283,9 +283,9 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
     L_a7fd:
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [eax*4 + 0x30]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
     L_a80f:
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_data_00538038]
         cmp      edx, eax
         jne      short L_a827
@@ -297,25 +297,25 @@ __declspec(naked) void SpawnListGlyphRender_004aa610(void)
         push     ecx
     L_a82e:
         call     SplitInt32_004aa410
-        mov      edx, dword ptr [g_data_00542070]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_eventQueueCurrent]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         add      esi, 4
         add      esp, 4
         mov      eax, dword ptr [edx*4 + g_data_004f3ee0]
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [ecx*4 + 0xc], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         cmp      esi, 0x10
         mov      eax, dword ptr [edx*4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         jl       L_a80f
         mov      eax, 1
         pop      edi
         mov      dword ptr [ebx + 8], OFFSET L_a750
         mov      dword ptr [ebx + 0x84], eax
         pop      esi
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      ebx
         ret

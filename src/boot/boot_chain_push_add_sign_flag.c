@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542098;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,21 +124,21 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootChainPushAddSignFlag_004077b0 - 297b boot mstack-push1 + sign-add + bit-flag toggle.
- *   g_state_00542098 = (g_walkCallback < 0); push g_x_00542048 to mstack.
- *   ecx = g_x_0054205c[+0x24]; g_x_00542048 = ecx. If sign flag was set:
- *     edx = g_x_00542044[+0x28] + g_walkCallback; g_walkCallback = edx. If sign cleared (jns):
- *       pop mstack → g_x_00542048; g_state_0054208c &= 0xfe; pop+ret.
- *     Else: ecx = ecx[+4]; pop mstack into edx; ecx--; g_state_0054208c |= 1;
- *       g_x_00542048 = edx; g_walkCallback = ecx; pop+ret.
- *   Otherwise (positive branch): eax = g_walkCallback + g_x_00542044[+0x28]; g_walkCallback = eax.
+ *   g_state_00542098 = (g_walkCallback < 0); push g_xformEntityIdx to mstack.
+ *   ecx = g_fightGroupHead[+0x24]; g_xformEntityIdx = ecx. If sign flag was set:
+ *     edx = g_currentNodeIdx[+0x28] + g_walkCallback; g_walkCallback = edx. If sign cleared (jns):
+ *       pop mstack → g_xformEntityIdx; g_xformDirtyFlags &= 0xfe; pop+ret.
+ *     Else: ecx = ecx[+4]; pop mstack into edx; ecx--; g_xformDirtyFlags |= 1;
+ *       g_xformEntityIdx = edx; g_walkCallback = ecx; pop+ret.
+ *   Otherwise (positive branch): eax = g_walkCallback + g_currentNodeIdx[+0x28]; g_walkCallback = eax.
  *     esi = ecx[+4]; ecx = g_state_004d57ac--; g_state_00542098 = (eax < esi);
- *     edx = mstack at top; g_x_00542048 = edx; g_state_0054208c &= 0xfffffffe;
- *     commit g_state_004d57ac. If sign result = 0: g_walkCallback = 0; g_state_0054208c |= 1.
+ *     edx = mstack at top; g_xformEntityIdx = edx; g_xformDirtyFlags &= 0xfffffffe;
+ *     commit g_state_004d57ac. If sign result = 0: g_walkCallback = 0; g_xformDirtyFlags |= 1.
  *     pop+ret.
  */
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 
 __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
 {
@@ -147,7 +147,7 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         mov     edx, dword ptr [g_walkCallback]
         xor     eax, eax
         test    edx, edx
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         push    esi
         setl    al
         mov     dword ptr [g_state_00542098], eax
@@ -155,13 +155,13 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_state_00542098]
         mov     ecx, dword ptr [edx*4 + 0x24]
         test    eax, eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         je      short L_77_pos
-        mov     edx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x28]
         mov     edx, dword ptr [g_walkCallback]
         add     edx, eax
@@ -173,12 +173,12 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         dec     ecx
         or      al, 1
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
     L_77_signClear:
@@ -186,10 +186,10 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
     L_77_pos:
@@ -206,17 +206,17 @@ __declspec(naked) void BootChainPushAddSignFlag_004077b0(void)
         dec     ecx
         mov     dword ptr [g_state_00542098], eax
         mov     edx, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_x_00542048], edx
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     edx, dword ptr [g_xformDirtyFlags]
         and     edx, 0xfffffffe
         mov     dword ptr [g_state_004d57ac], ecx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         jne     short L_77_done
         mov     dword ptr [g_walkCallback], eax
         mov     eax, edx
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
     L_77_done:
         pop     esi
         ret

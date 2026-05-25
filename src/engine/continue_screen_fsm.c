@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,14 +127,14 @@ extern unsigned int g_data_004df9a0;
 extern unsigned int g_data_00506c14;
 extern unsigned int g_data_005080f4;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
 extern void InstallSelfPackedF80_00426000(void);
@@ -163,11 +163,11 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         jne      L_3e8f
         mov      ecx, OFFSET g_data_00506c14
         shr      ecx, 2
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
-        mov      dword ptr [g_data_00542074], 0x25
+        mov      dword ptr [g_eventQueueWorkType], 0x25
         call     Push16Call_00489f50
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
@@ -178,37 +178,37 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      edx, OFFSET g_data_004dee18
         mov      dword ptr [g_walkCallback], 0xa
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
-        mov      dword ptr [g_data_00542070], 4
+        mov      dword ptr [g_xformEntityIdx], edx
+        mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_data_00542078], edi
-        mov      dword ptr [g_data_0054207c], 0xff9c0000
+        mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         call     Push70CallScaleArith_00457ad0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x10000
         mov      edx, OFFSET g_data_004df9a0
         mov      dword ptr [g_walkCallback], eax
         shr      edx, 2
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      dword ptr [g_data_00542058], edx
+        mov      dword ptr [g_eventQueueIdx], edx
         call     OpcodeStreamDispatch_00423ea0
         pop      edi
         pop      esi
         ret
     L_3d25:
-        mov      dword ptr [g_data_00542070], 4
+        mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [esi + 8], OFFSET L_3c20
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_3c20
         add      ecx, 0x3000000
         mov      dword ptr [eax*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
@@ -220,25 +220,25 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
     L_3d8d:
         mov      eax, OFFSET g_data_00506c14
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_3e8f
         mov      ecx, OFFSET g_data_00506c14
         shr      ecx, 2
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     LoadGeoAsset_Default
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
         mov      edx, OFFSET g_data_005080f4
         shr      edx, 2
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         call     DispatcherComplex260_00407400
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_3e8f
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], edi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x1f
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x30], eax
@@ -250,7 +250,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         jne      short L_3e8f
         mov      dword ptr [esi + 8], OFFSET L_3c20
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0xf0
+        mov      dword ptr [g_pendingNodeType], 0xf0
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
@@ -266,7 +266,7 @@ __declspec(naked) void ContinueScreenFsm_00423c20(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_3c20
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_pendingNodeType], 8
         mov      dword ptr [g_framePauseFlag], eax
     L_3e8f:
         pop      edi

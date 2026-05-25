@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,10 +125,10 @@ extern unsigned int g_data_00535e7c;
 /*
  * @addr 0x00425170 (120b game) - vec3 add via three BootMod6487eClampAndChainMul10_00407510
  *   calls: takes pointers to two 3-vectors and an output 3-vector
- *   from wt/g_data_0054204c/g_walkCallback scaled arrays; sums each
+ *   from wt/g_pendingNodeType/g_walkCallback scaled arrays; sums each
  *   component into g_walkCallback and stores via the helper.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 
 /*
  * NON-COAXABLE: orig loads raw indices into volatile regs (ecx/edx/eax) before
@@ -141,7 +141,7 @@ extern unsigned int g_data_0054204c;
 __declspec(naked) void Vec3AddViaHelper_00425170(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    ebx
         push    esi

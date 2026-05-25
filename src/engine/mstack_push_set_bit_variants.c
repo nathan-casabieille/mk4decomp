@@ -6,74 +6,74 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 
 /* @addr 0x00490140 */
 void MStackPushSet0200_00490140(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 0x0200;
+    g_eventQueueNotMask = 0x0200;
     func_0049036e();
 }
 
 /* @addr 0x00490170 */
 void MStackPushSet0080_00490170(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 0x0080;
+    g_eventQueueNotMask = 0x0080;
     func_0049039e();
 }
 
 /* @addr 0x004901a0 */
 void MStackPushSet0008_004901a0(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 8;
+    g_eventQueueNotMask = 8;
     func_004903ce();
 }
 
 /* @addr 0x004901d0 */
 void MStackPushSet0020_004901d0(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 0x20;
+    g_eventQueueNotMask = 0x20;
     func_004903fe();
 }
 
 /* @addr 0x00490200 */
 void MStackPushSet0040_00490200(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 0x40;
+    g_eventQueueNotMask = 0x40;
     func_0049042e();
 }
 
 /* @addr 0x00490230 */
 void MStackPushSet0004_00490230(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 4;
+    g_eventQueueNotMask = 4;
     func_0049045e();
 }
 
 /* @addr 0x00490260 */
 void MStackPushSet0001_00490260(void) {
-    unsigned int acc = g_data_0054207c;
+    unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = acc;
-    g_data_0054207c = 1;
+    g_eventQueueNotMask = 1;
     func_0049048e();
 }

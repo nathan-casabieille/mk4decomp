@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,17 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049ca10 (302b game) - 3-block: chain-diff mstack-push + push-call thunks.
- *   Block A (0..0x6c): mstack-push g_state_00542080. Compute diffs between [baseSel*4+0x38] and g_cj fields.
- *     g_x_00542074 = [scaledInit*4+0x54] - [cj*4+0x54]; g_acc = [scaledInit*4+0x5c] - [cj*4+0x5c].
+ *   Block A (0..0x6c): mstack-push g_eventQueueChild. Compute diffs between [baseSel*4+0x38] and g_cj fields.
+ *     g_eventQueueWorkType = [scaledInit*4+0x54] - [cj*4+0x54]; g_acc = [scaledInit*4+0x5c] - [cj*4+0x5c].
  *     Call Atan2QuadrantLookup_004245b0; if pause skip. Call BootMod6487eClampAndChainMul10_00407510; if pause skip.
- *     chain[baseSel*4+0x70] = g_walkCallback. Mstack-pop into g_state_00542080. Pop esi; ret.
+ *     chain[baseSel*4+0x70] = g_walkCallback. Mstack-pop into g_eventQueueChild. Pop esi; ret.
  *   Block B (+0xc0): call CondPickDualStore; if pause ret. Push 0x004f2778; call ArgSarStoreJmp; pop; ret.
  *   Block C (+0xe0): call DualCmpSwapStore; if pause ret. Push 0x004f27b8; call ScaledStackCallPause; pop; if pause ret.
  *     If bit2(0054208c): jmp CallSetPause. Else call DualMul10AndDispatchChain; if pause ret.
  *     Push 0x004f27c8; call ArgSar_Set1_Jmp; pop; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set1_Jmp_0049c6d0(void);
 extern void Atan2QuadrantLookup_004245b0(void);
@@ -148,7 +148,7 @@ extern unsigned int g_data_004d57ac_arr;
 __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -160,13 +160,13 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [ecx*4 + 0x5c]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     esi, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_x_00542074], esi
+        mov     dword ptr [g_eventQueueWorkType], esi
         mov     eax, dword ptr [eax*4 + 0x5c]
         sub     esi, edx
         sub     eax, ecx
-        mov     dword ptr [g_x_00542074], esi
+        mov     dword ptr [g_eventQueueWorkType], esi
         mov     dword ptr [g_acc_00542078], eax
         call    Atan2QuadrantLookup_004245b0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -184,7 +184,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_state_004d57ac], eax
         pop     esi
         ret
@@ -223,7 +223,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks_0049ca10(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   05h
         jmp     CallSetPause_0041f830

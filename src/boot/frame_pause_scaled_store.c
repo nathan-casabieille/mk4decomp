@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,21 +132,21 @@ extern void FramePauseScaledStore_00406c10(void);
 extern void MStackPush2ChainPrepend_00409970(void);
 
 /* @addr 0x0049b7c0 (143b game) - walk linked chain until end:
- *   g_x_00542048 = (0x50b4b4 >> 2); call F; pause? ret.
- *   ecx = chain[sel].slot64; g_x_00542048 = ecx;
+ *   g_xformEntityIdx = (0x50b4b4 >> 2); call F; pause? ret.
+ *   ecx = chain[sel].slot64; g_xformEntityIdx = ecx;
  *   while (arr_next[ecx] != 0): ecx = arr_next[ecx]; g_walkCallback = ecx.
- *   At tail: eax = -0x4ccc; g_x_00542070 = eax;
+ *   At tail: eax = -0x4ccc; g_eventQueueCurrent = eax;
  *   ecx = chain[last].slot1c; g_walkCallback = ecx;
- *   if (ecx == 4): eax = 0xffff6667; g_x_00542070 = eax;
+ *   if (ecx == 4): eax = 0xffff6667; g_eventQueueCurrent = eax;
  *   chain[g_scaledInit].slot38 = eax; jmp F2.
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 __declspec(naked) void ChainWalkInstall_0049b7c0(void) {
     __asm {
         mov     eax, offset g_data_0050b4b4
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    FramePauseScaledStore_00406c10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -154,7 +154,7 @@ __declspec(naked) void ChainWalkInstall_0049b7c0(void) {
         _emit   73h
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     ecx, [ecx*4 + g_chain_disp_64_49b7c0]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + g_arr_next_49b7c0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -162,21 +162,21 @@ __declspec(naked) void ChainWalkInstall_0049b7c0(void) {
         _emit   18h
 walkNext:
         mov     ecx, eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [eax*4 + g_arr_next_49b7c0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0e8h
         mov     eax, 0xffffb334
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     ecx, [ecx*4 + g_chain_disp_1c_49b7c0]
         cmp     ecx, 4
         mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   0ah
         mov     eax, 0xffff6667
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     [edx*4 + g_chain_disp_38_49b7c0], eax
         jmp     MStackPush2ChainPrepend_00409970

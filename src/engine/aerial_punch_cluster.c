@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,13 +128,13 @@ extern void EsiInstallDecCallChain_004294a0(void);
 
 /* @addr 0x0047baf0 (305b game) - state-machine: 4-arm dispatcher with shared common-tail call.
  *   Load state; clear. If state!=0: scaledInit=[baseSel*4+0x3c]; inc [scaledInit*4+0x7c] -> g_walkCallback.
- *     g_state_0054207c=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
+ *     g_eventQueueNotMask=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
  *     g_walkCallback=0x5f; call ScaledLitLoadCall; if pause ret. Tail-call AerialPunchCluster_0047bc30; pop+ret.
- *   state==0: g_state_0054207c=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
- *     If g_state_00542088==1: tail-call AerialPunchCluster_0047bc30; pop+ret.
+ *   state==0: g_eventQueueNotMask=0; call EntryThunkBodyStateMachine_00457bb0; if pause ret.
+ *     If g_xformScratch2088==1: tail-call AerialPunchCluster_0047bc30; pop+ret.
  *     Else: call MStackPush3CmpCall; if pause ret.
  *     If bit0(0054208c) set: tail-call AerialPunchCluster_0047bc30; pop+ret.
- *     Else: g_state_00542080=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
+ *     Else: g_eventQueueChild=6; install-self at entry+0x01000000; call EsiInstallDecCallChain;
  *     pause=1; pop edi/esi/ebx; ret.
  */
 extern unsigned int g_pause_00541e6c;
@@ -160,7 +160,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         inc     eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x7c], eax
-        mov     dword ptr [g_state_0054207c], edi
+        mov     dword ptr [g_eventQueueNotMask], edi
         call    EntryThunkBodyStateMachine_00457bb0
         cmp     dword ptr [g_pause_00541e6c], edi
         _emit   0fh
@@ -183,7 +183,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [g_state_0054207c], edi
+        mov     dword ptr [g_eventQueueNotMask], edi
         call    EntryThunkBodyStateMachine_00457bb0
         cmp     dword ptr [g_pause_00541e6c], edi
         _emit   0fh
@@ -192,7 +192,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         mov     ebx, 1
         cmp     eax, ebx
         _emit   75h
@@ -219,7 +219,7 @@ __declspec(naked) void StateMachineSharedTail_0047baf0(void) {
         pop     esi
         pop     ebx
         ret
-        mov     dword ptr [g_state_00542080], 6
+        mov     dword ptr [g_eventQueueChild], 6
         mov     dword ptr [esi + 8], offset StateMachineSharedTail_0047baf0
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, offset StateMachineSharedTail_0047baf0

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x00473f90 (120b game) - call-call-shift-call:
- *   call ChainDirtyBitWalker_00408c10 then move (wt,g_acc) into (g_data_0054204c,
+ *   call ChainDirtyBitWalker_00408c10 then move (wt,g_acc) into (g_pendingNodeType,
  *   g_walkCallback); call ChainDirtyBitWalker_00408c10 again; on pause clear shift
- *   wt/g_data_0054204c by +0xf, snapshot cj from g_x_00541f98, call
- *   TripleSubVec3; pop walk -> g_data_0054204c.
+ *   wt/g_pendingNodeType by +0xf, snapshot cj from g_x_00541f98, call
+ *   TripleSubVec3; pop walk -> g_pendingNodeType.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_x_00541f98;
 extern void TripleSubVec3_004250f0(void);
 
@@ -141,17 +141,17 @@ void DualSetShiftCall_00473f90(void) {
         jne     done
         mov     eax, dword ptr [g_eventQueueWorkType]
         mov     ecx, dword ptr [g_acc_00542078]
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_walkCallback], ecx
         call    ChainDirtyBitWalker_00408c10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [g_eventQueueWorkType]
         add     edx, 0xf
         add     eax, 0xf
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     edx, dword ptr [g_x_00541f98]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_cj_00542058], eax
@@ -161,7 +161,7 @@ void DualSetShiftCall_00473f90(void) {
         test    eax, eax
         jne     done
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
 done:
         }
 }

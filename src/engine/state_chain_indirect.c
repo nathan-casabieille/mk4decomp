@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,16 +124,16 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00494670 (219b game) - 2-call cascade + state-based chain selection + indirect call.
  *   call ScaledLoadCmp0fJmp; if !pause: call MStackBitFlagDispatch; if !pause:
- *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_x_0054205c==g_state_00538158;
- *   g_walkCallback=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_x_00542070=[scaledInit*4+0x7c];
+ *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_fightGroupHead==g_state_00538158;
+ *   g_walkCallback=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_eventQueueCurrent=[scaledInit*4+0x7c];
  *   if > 3: ecx=0x4ccc, g_walkCallback=ecx; store ecx to [chain*4+0].
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
  *   eax = ecx + 0x004f1b28>>2; scaledInit=eax; eax=[eax*4+0]; scaledInit=eax; call eax. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 extern void MStackBitFlagDispatch_00494750(void);
 extern void ScaledLoadCmp0fJmp_004930e0(void);
 
@@ -157,7 +157,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         push    esi
         mov     esi, dword ptr [g_state_00538158]
         mov     ecx, 0x0053a3e4
@@ -166,11 +166,11 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         shr     eax, 2
         cmp     edx, esi
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [g_walkCallback], ecx
@@ -178,7 +178,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     edx, dword ptr [edx*4 + 0x7c]
         cmp     edx, 3
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         _emit   7eh
         _emit   0bh
         mov     ecx, 0x00004ccc

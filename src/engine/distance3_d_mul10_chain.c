@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,11 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0042d090 (304b game) - 3D-distance mul10 + scaled chain advance.
  *   Load eax/ecx/edx from globals 0053a1a8/0053a1a4/g_cj. esi = [cj*4+0x54].
  *   Compute diffs: eax -= esi; ecx -= edx[cj*4+0x5c].
- *   Mul10Tail(eax,eax)->g_x_00542074. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_x_00542074.
+ *   Mul10Tail(eax,eax)->g_eventQueueWorkType. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_eventQueueWorkType.
  *   Call FpuSqrtMul; if pause ret.
- *   Mul10Tail(g_x_00542084, g_walkCallback)->g_state_00542080.
- *   Mul10Tail(eax, g_data_0053a41c)->g_x_00542074. Mul10Tail(ecx, g_data_0053a3dc)->g_acc.
- *   Sum: g_walkCallback = g_data_0053a1a8 + g_x_00542074; g_data_00542070 = g_data_0053a1a4 + g_acc.
+ *   Mul10Tail(g_currentNodeFlags, g_walkCallback)->g_eventQueueChild.
+ *   Mul10Tail(eax, g_data_0053a41c)->g_eventQueueWorkType. Mul10Tail(ecx, g_data_0053a3dc)->g_acc.
+ *   Sum: g_walkCallback = g_data_0053a1a8 + g_eventQueueWorkType; g_eventQueueCurrent = g_data_0053a1a4 + g_acc.
  *   Store both into [g_cj*4+0x54] and [+0x5c]. Tail-call DualCallPauseDirtyJmp; pop esi; ret.
  */
 extern unsigned int g_data_0053a1a4;
@@ -137,8 +137,8 @@ extern unsigned int g_data_0053a1a8;
 extern unsigned int g_data_0053a3dc;
 extern unsigned int g_data_0053a41c;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_currentNodeFlags;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 
 __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
@@ -147,7 +147,7 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         mov     ecx, dword ptr [g_data_0053a1a4]
         mov     edx, dword ptr [g_cj_0054205c]
         push    esi
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_acc_00542078], ecx
         mov     esi, dword ptr [edx*4 + 0x54]
         mov     dword ptr [g_walkCallback], esi
@@ -156,21 +156,21 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         sub     ecx, edx
         push    eax
         push    eax
-        mov     dword ptr [g_data_00542070], edx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueCurrent], edx
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_acc_00542078], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_acc_00542078]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         add     esp, 8
         add     ecx, eax
         mov     dword ptr [g_acc_00542078], eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         call    FpuSqrtMul_004ab350
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -181,28 +181,28 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         push    eax
-        mov     eax, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_currentNodeFlags]
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_data_0053a41c]
         mov     edx, dword ptr [g_data_0053a3dc]
         add     esp, 8
-        mov     dword ptr [g_state_00542080], eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_acc_00542078], edx
         push    ecx
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         add     esp, 8
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_acc_00542078]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         mov     ecx, dword ptr [g_data_0053a1a8]
         add     ecx, edx
         mov     edx, dword ptr [g_data_0053a1a4]
@@ -210,11 +210,11 @@ __declspec(naked) void Distance3DMul10Chain_0042d090(void) {
         add     edx, eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         add     esp, 8
         mov     dword ptr [eax*4 + 0x54], ecx
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [ecx*4 + 0x5c], edx
         call    DualCallPauseDirtyJmp_00490c30
         pop     esi

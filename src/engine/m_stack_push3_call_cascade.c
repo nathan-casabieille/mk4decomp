@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,18 +122,18 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00486d90 (234b game) - mstack-push 3 (g_x_0054207c, g_x_00542080, g_x_00542074);
- *   negate g_walkCallback; if g_x_00542070 != 0 call StanceFsmCluster_004871f0; pause-check.
+/* @addr 0x00486d90 (234b game) - mstack-push 3 (g_eventQueueNotMask, g_eventQueueChild, g_eventQueueWorkType);
+ *   negate g_walkCallback; if g_eventQueueCurrent != 0 call StanceFsmCluster_004871f0; pause-check.
  *   call MStackFrameCdeclDouble; pause-check. push 0x004eee48; call IterStepDualStore;
- *   pause-check. mstack-pop g_x_00542074 (with test); if zero skip call; else call CjTableThresholdDispatch_00488f00;
- *   pause-check. mstack-pop g_x_00542080, g_x_0054207c. jmp GatedChainClamp_00486e80.
+ *   pause-check. mstack-pop g_eventQueueWorkType (with test); if zero skip call; else call CjTableThresholdDispatch_00488f00;
+ *   pause-check. mstack-pop g_eventQueueChild, g_eventQueueNotMask. jmp GatedChainClamp_00486e80.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void CjTableThresholdDispatch_00488f00(void);
 extern void GatedChainClamp_00486e80(void);
 extern void StanceFsmCluster_004871f0(void);
@@ -141,7 +141,7 @@ extern void StanceFsmCluster_004871f0(void);
 __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         neg     eax
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_state_004d57ac]
@@ -149,16 +149,16 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542080]
+        mov     edx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
-        mov     eax, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         test    eax, eax
         _emit   74h
         _emit   0eh
@@ -183,7 +183,7 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         _emit   74h
         _emit   13h
@@ -195,11 +195,11 @@ __declspec(naked) void MStackPush3CallCascade_00486d90(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     GatedChainClamp_00486e80
         ret

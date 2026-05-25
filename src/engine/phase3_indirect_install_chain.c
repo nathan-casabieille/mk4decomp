@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,29 +125,29 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0045a010 (360b game) - 4-entry packed phase-state with indirect.
  *   Entry 1 (offset 0, 187b): phase from [scaled g_data_00542060+0x84].
  *     phase 2: tail-call PendingMatch_00459510.
- *     phase 1: indirect-call [g_data_00542054].
- *     phase 0: pop mstack into g_data_00542054 (saving the prior
+ *     phase 1: indirect-call [g_eventQueueEnd].
+ *     phase 0: pop mstack into g_eventQueueEnd (saving the prior
  *       function-ptr), call CallDualStoreXorBit_004285e0; on no-error AND
  *       bit 2 of 0x54208c clear, call ScaledArrStore_004285c0. Tail
  *       installs Self with slot[+0x84] = 2 (bit-2 path) or 1 (clean path).
  *   5b NOP pad.
  *   Entry 2 (offset 0xc0, 70b): ScaledIterStep_0045c020; on no-error writes
- *     g_walkCallback into [g_data_0054205c*4+0x24], zeroes +0x28, sets
- *     g_data_00542080=0xc8, tail-jmp DualEntryStateMachine_0045a180.
+ *     g_walkCallback into [g_fightGroupHead*4+0x24], zeroes +0x28, sets
+ *     g_eventQueueChild=0xc8, tail-jmp DualEntryStateMachine_0045a180.
  *   10b NOP pad.
- *   Entry 3 (offset 0x110, 40b): mask g_data_00542070 with 0xff; on
- *     no-error set g_data_00542080 = that and tail-jmp ScaledIterStep.
+ *   Entry 3 (offset 0x110, 40b): mask g_eventQueueCurrent with 0xff; on
+ *     no-error set g_eventQueueChild = that and tail-jmp ScaledIterStep.
  *   8b NOP pad.
  *   Entry 4 (offset 0x140, 40b): same shape as entry 3 but tail-jmp
  *     DualEntryStateMachine_0045a180.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void CallDualStoreXorBit_004285e0(void);
 extern void DualEntryStateMachine_0045a180(void);
@@ -170,32 +170,32 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         pop     esi
         ret
     L_p3i_phase1:
-        call    dword ptr [g_data_00542054]
+        call    dword ptr [g_eventQueueEnd]
         pop     esi
         ret
     L_p3i_phase0:
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_state_004d57ac], eax
         call    CallDualStoreXorBit_004285e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_p3i_bit2Set
         call    ScaledArrStore_004285c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_p3i_done
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_p3i_clean
     L_p3i_bit2Set:
         mov     eax, 1
         mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
@@ -203,7 +203,7 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset Phase3IndirectInstallChain_0045a010
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_p3i_done:
         pop     esi
@@ -220,13 +220,13 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         xor     eax, eax
         cmp     ecx, eax
         jne     short L_p3i_e2End
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x24], ecx
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x28], eax
-        mov     dword ptr [g_data_00542080], 0xc8
+        mov     dword ptr [g_eventQueueChild], 0xc8
         jmp     DualEntryStateMachine_0045a180
     L_p3i_e2End:
         ret
@@ -242,14 +242,14 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         nop
         /* entry 3 (offset 0x110) */
     L_p3i_entry3:
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [g_framePauseFlag]
         and     ecx, 0xff
         test    eax, eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         jne     short L_p3i_e3End
         mov     eax, ecx
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         jmp     ScaledIterStep_0045c020
     L_p3i_e3End:
         ret
@@ -263,14 +263,14 @@ __declspec(naked) void Phase3IndirectInstallChain_0045a010(void) {
         nop
         /* entry 4 (offset 0x140) */
     L_p3i_entry4:
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [g_framePauseFlag]
         and     ecx, 0xff
         test    eax, eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         jne     short L_p3i_e4End
         mov     eax, ecx
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         jmp     DualEntryStateMachine_0045a180
     L_p3i_e4End:
         ret

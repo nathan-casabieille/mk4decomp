@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,42 +126,42 @@ extern void MStackBracket3Init4bd5e0Tail_0042e550(void);
 extern unsigned int g_x_0052ab10;
 
 /* @addr 0x0042e480 (200b game) - mstack-push 2, counted call-loop, restore globals.
- *   Push g_x_00542070, g_x_00542074; set 70=10, 74=0x5a0000; call F1; pause? ret;
+ *   Push g_eventQueueCurrent, g_eventQueueWorkType; set 70=10, 74=0x5a0000; call F1; pause? ret;
  *   Loop: 74 -= 0xa0000; 70--; if (70 == 0) break; call F1; while (!pause).
- *   After: g_x_0054205c = [0x52ab10]; g_walkCallback = chain[+0x74] = 0xffffaaab;
- *   mstack-pop into g_x_00542074, g_x_00542070.
+ *   After: g_fightGroupHead = [0x52ab10]; g_walkCallback = chain[+0x74] = 0xffffaaab;
+ *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent.
  */
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_data_004d57ac_arr;
 
 void CountedLoopMStack_0042e480(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     dword ptr [g_x_00542070], 0xa
-        mov     dword ptr [g_x_00542074], 0x005a0000
+        mov     dword ptr [g_eventQueueCurrent], 0xa
+        mov     dword ptr [g_eventQueueWorkType], 0x005a0000
         call    MStackBracket3Init4bd5e0Tail_0042e550
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   75h
-        mov     ecx, dword ptr [g_x_00542074]
-        mov     eax, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         sub     ecx, 0x000a0000
         dec     eax
-        mov     dword ptr [g_x_00542074], ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   0fh
         call    MStackBracket3Init4bd5e0Tail_0042e550
@@ -172,17 +172,17 @@ void CountedLoopMStack_0042e480(void) {
         ret
         mov     eax, dword ptr [g_x_0052ab10]
         mov     ecx, 0xffffaaab
-        mov     dword ptr [g_x_0054205c], eax
+        mov     dword ptr [g_fightGroupHead], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x74], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

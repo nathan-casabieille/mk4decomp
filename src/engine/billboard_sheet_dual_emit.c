@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,9 +123,9 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f6238;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_007af92c;
 extern unsigned int g_data_007af958;
 extern unsigned int g_data_007af95a;
@@ -189,7 +189,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         or       ecx, eax
         shl      ecx, 5
         or       eax, ecx
-        mov      cl, byte ptr [g_data_0054205c]
+        mov      cl, byte ptr [g_fightGroupHead]
         test     cl, 0x60
         je       L_be12
         mov      edx, dword ptr [g_data_00ab4398]
@@ -213,7 +213,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      dword ptr [g_data_007af9a8], edx
         mov      dword ptr [g_data_007af9ac], ecx
     L_be3f:
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         mov      esi, dword ptr [esp + 0x6c]
         mov      ecx, dword ptr [ecx + 4]
         mov      bp, word ptr [esi + 0xa]
@@ -295,7 +295,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
     L_bf84:
         mov      word ptr [esp + 0x3a], ax
         mov      word ptr [esp + 0x5a], ax
-        test     byte ptr [g_data_00542084], 0x40
+        test     byte ptr [g_currentNodeFlags], 0x40
         jne      L_c15a
         movsx    eax, word ptr [g_data_007af9b4]
         movsx    ecx, word ptr [g_data_007af9b6]
@@ -419,10 +419,10 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         call     Helper_DrawCursor
         add      esp, 4
     L_c15a:
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [ecx*4 + 0x2c]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         je       L_c45f
         mov      edx, dword ptr [g_data_007af9a4]
         mov      eax, dword ptr [g_data_007af9a8]
@@ -434,7 +434,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      edx, dword ptr [ecx*4 + 4]
         mov      eax, dword ptr [ecx*4 + 8]
         mov      ecx, dword ptr [ecx*4 + 0xc]
-        mov      ebx, dword ptr [g_data_00542084]
+        mov      ebx, dword ptr [g_currentNodeFlags]
         sar      edx, 7
         sar      eax, 7
         sar      ecx, 7
@@ -600,10 +600,10 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         call     Helper_DrawCursor
         add      esp, 4
     L_c444:
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [ecx*4]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         jne      L_c192
     L_c45f:
         pop      edi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,20 +123,20 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_00542084;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542048;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern void StackPopDispatchTagged_0041f780(void);
 extern void BootFrameSetup_00408190(void);
 extern void CopyJmp_00406ba0(void);
@@ -153,38 +153,38 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_sipd3_phase0
-        mov     eax, dword ptr [g_data_00542088]
-        mov     edx, dword ptr [g_data_00542084]
+        mov     eax, dword ptr [g_xformScratch2088]
+        mov     edx, dword ptr [g_currentNodeFlags]
         add     eax, edx
         cmp     eax, 0x10000
-        mov     dword ptr [g_data_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         jle     L_sipd3_common
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
     L_sipd3_phase0:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x24]
         mov     ecx, dword ptr [g_state_004d57ac]
         inc     ecx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     eax, dword ptr [edx*4 + 0x28]
         inc     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4], eax
-        mov     eax, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    BootFrameSetup_00408190
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sipd3_ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
@@ -194,31 +194,31 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x24], ecx
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [ecx*4 + 0x2c]
-        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         call    CopyJmp_00406ba0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     eax, dword ptr [g_data_00542088]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     eax, dword ptr [g_xformScratch2088]
+        mov     dword ptr [g_currentNodeIdx], ecx
     L_sipd3_common:
-        mov     edx, dword ptr [g_data_00542080]
+        mov     edx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_data_0054207c]
-        mov     dword ptr [g_data_00542070], edx
-        mov     dword ptr [g_data_00542050], eax
+        mov     eax, dword ptr [g_eventQueueNotMask]
+        mov     dword ptr [g_eventQueueCurrent], edx
+        mov     dword ptr [g_eventQueueTotal], eax
         call    MStackPushTripleFields_00407d50
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sipd3_ret
-        mov     eax, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         test    eax, eax
         je      short L_sipd3_afterPtr
         call    eax
@@ -229,7 +229,7 @@ __declspec(naked) void SelfInstallPhaseDispatch_00428990(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset SelfInstallPhaseDispatch_00428990
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_sipd3_ret:
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,17 +125,17 @@ extern unsigned int g_data_00535e7c;
 /*
  * BootDualStateInstallSelf_00403070 - 246b 3-state install-self.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
- *   sub eax, 0 → flags. If state == 0: g_x_00542074=0; Push16Call; install-self with chain->state=1
- *     and g_data_0054204c=1, pause=1; pop+ret.
+ *   sub eax, 0 → flags. If state == 0: g_eventQueueWorkType=0; Push16Call; install-self with chain->state=1
+ *     and g_pendingNodeType=1, pause=1; pop+ret.
  *   If state == 1: call FiveTableWalkInit; if paused: pop+ret. Else tail StackPopDispatchTagged; pop+ret.
- *   Otherwise: call TwinMStackPushScaledChain_00422110; if paused: pop+ret. g_data_00542070=5; install-self;
- *     chain->state=2; mstack-push (entry+0x02000000); g_x_00542044++; clear g_baseSel*4+0x84;
+ *   Otherwise: call TwinMStackPushScaledChain_00422110; if paused: pop+ret. g_eventQueueCurrent=5; install-self;
+ *     chain->state=2; mstack-push (entry+0x02000000); g_currentNodeIdx++; clear g_baseSel*4+0x84;
  *     call InstallSelfPackedF80_00426000; g_pause_00541e6c=1; pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueWorkType;
 extern void FiveTableWalkInit_00403c90(void);
 extern void InstallSelfPackedF80_00426000(void);
 extern void TwinMStackPushScaledChain_00422110(void);
@@ -165,18 +165,18 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_ret
-        mov     dword ptr [g_data_00542070], 5
+        mov     dword ptr [g_eventQueueCurrent], 5
         mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset BootDualStateInstallSelf_00403070
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -185,7 +185,7 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         pop     esi
         ret
     L_state0:
-        mov     dword ptr [g_x_00542074], 0
+        mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -193,7 +193,7 @@ __declspec(naked) void BootDualStateInstallSelf_00403070(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset BootDualStateInstallSelf_00403070
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
     L_ret:
         pop     esi

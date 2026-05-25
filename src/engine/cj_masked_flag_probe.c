@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,13 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x0048ecf0 (128b game) - cj-keyed flag-mask probe:
- *   call DirtyToggleByGate; gate; set g_data_00542070=0x20,
- *   g_x_00542074=0x2000; call PushPopState70Mask; gate; pick
+ *   call DirtyToggleByGate; gate; set g_eventQueueCurrent=0x20,
+ *   g_eventQueueWorkType=0x2000; call PushPopState70Mask; gate; pick
  *   mask based on cj == 0x538158; AND with walk; set bit 0 of
  *   state if result non-zero, else clear bit 0.
  */
 extern unsigned int g_x_00538158;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void PushPopState70Mask_00490650(void);
 
 void CjMaskedFlagProbe_0048ecf0(void) {
@@ -139,10 +139,10 @@ void CjMaskedFlagProbe_0048ecf0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     clearBit
-        mov     dword ptr [g_data_00542070], 0x20
-        mov     dword ptr [g_x_00542074], 0x2000
+        mov     dword ptr [g_eventQueueCurrent], 0x20
+        mov     dword ptr [g_eventQueueWorkType], 0x2000
         call    PushPopState70Mask_00490650
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -151,23 +151,23 @@ void CjMaskedFlagProbe_0048ecf0(void) {
         mov     ecx, dword ptr [g_x_00538158]
         cmp     eax, ecx
         je      useMask
-        mov     eax, dword ptr [g_x_00542074]
-        mov     dword ptr [g_data_00542070], eax
+        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     dword ptr [g_eventQueueCurrent], eax
         jmp     applyMask
 useMask:
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
 applyMask:
         and     eax, dword ptr [g_walkCallback]
         mov     dword ptr [g_state_00542094], eax
         je      clearBit
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
 clearBit:
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
 done:
         }
 }

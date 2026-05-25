@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,18 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00431360 (100b game) - dual-entry init+dispatch.
- *   entry +0x00: eax = g_x_0054205c; eax *= 4; zero out 6 fields at offsets 0x6c,0x70,0x74,0x78,0x7c,0x80
+ *   entry +0x00: eax = g_fightGroupHead; eax *= 4; zero out 6 fields at offsets 0x6c,0x70,0x74,0x78,0x7c,0x80
  *     of struct at [eax], with g_walkCallback=0 used as scratch zero source. ret.
  *   12 NOPs alignment pad.
  *   entry +0x50 (= 0x004313b0): self-call to +0x00 init, then if !g_pause: tail-jmp ScaledInitWithCounterAndType.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_fightGroupHead;
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
 __declspec(naked) void DualEntryInitDispatch_00431360(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         xor     ecx, ecx
         shl     eax, 2
         mov     dword ptr [g_walkCallback], ecx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,10 +130,10 @@ extern unsigned int g_data_004e7fb0;
 extern unsigned int g_data_004e7fc0;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -157,9 +157,9 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_538a
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         push     OFFSET g_data_004e7fb0
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_538a:
@@ -170,7 +170,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         nop
         nop
         /* === Helper 2: set slot-bit 4 + event === */
-        mov      ecx, dword ptr [g_data_00542058]
+        mov      ecx, dword ptr [g_eventQueueIdx]
         push     OFFSET g_data_004e7fc0
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       al, 4
@@ -218,7 +218,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         cmp      ecx, esi
         jne      short L_53ec
     L_540a:
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [edx*4 + 0x4c]
         cmp      ecx, esi
         mov      dword ptr [g_walkCallback], ecx
@@ -226,7 +226,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         add      ecx, dword ptr [edx*4 + 0x70]
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x70], ecx
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [edx*4 + 0x58]
         mov      dword ptr [g_walkCallback], ecx
         mov      edi, dword ptr [edx*4 + 0x48]
@@ -236,10 +236,10 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         jle      short L_5495
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [edx*4 + 0x70], esi
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [edx*4 + 0x4c], ecx
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [ecx*4 + 0x48]
         mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [ecx*4 + 0x58], edx
@@ -248,7 +248,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      dword ptr [eax + 8], OFFSET L_53d0
         mov      dword ptr [eax + 0x84], ecx
         pop      edi
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_framePauseFlag], ecx
         pop      esi
         ret
@@ -270,7 +270,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_5510
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [ecx*4 + 0x4c]
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], ecx
@@ -285,7 +285,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_54c0
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_framePauseFlag], ecx
     L_552e:
         ret
@@ -301,9 +301,9 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         je       short L_55c8
         dec      eax
         je       short L_556a
-        mov      eax, dword ptr [g_data_00542054]
+        mov      eax, dword ptr [g_eventQueueEnd]
         dec      eax
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         jns      short L_5598
         call     Thunk_0049cbc0
         pop      esi
@@ -314,9 +314,9 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_55e9
-        mov      ecx, dword ptr [g_data_00542058]
-        mov      dword ptr [g_data_00542054], 0x28
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      ecx, dword ptr [g_eventQueueIdx]
+        mov      dword ptr [g_eventQueueEnd], 0x28
+        mov      dword ptr [g_fightGroupHead], ecx
     L_5598:
         call     ThrowInitLinkCluster_004555f0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -325,7 +325,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_5530
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
@@ -333,7 +333,7 @@ __declspec(naked) void StageTransitionCluster_00455340(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_5530
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 5
+        mov      dword ptr [g_pendingNodeType], 5
         mov      dword ptr [g_framePauseFlag], eax
     L_55e9:
         pop      esi

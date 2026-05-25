@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -137,12 +137,12 @@ extern void BootOneShotMStackPush3_0040c100(void);
 extern void Phase4FourPackedDispatch_0041b900(void);
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void CallSetPause_0041f830(void);
 extern void FlagThunk4EntryDispatcher_0040a470(void);
 
@@ -203,9 +203,9 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [ecx*4 + 4], eax
         call    StackPopDispatchTagged_0041f780
         pop     esi
@@ -223,7 +223,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], 3
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
@@ -234,25 +234,25 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         jne     L_p4dmi_A_exit
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
     L_p4dmi_A_phase0:
         mov     eax, dword ptr [g_data_00542060]
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], edx
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     ecx, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         call    FlagThunk4EntryDispatcher_0040a470
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -272,7 +272,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B610
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 3
+        mov     dword ptr [g_pendingNodeType], 3
         mov     dword ptr [g_framePauseFlag], eax
     L_p4dmi_A_exit:
         pop     esi
@@ -289,11 +289,11 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_p4dmi_B_phase0
-        mov     eax, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         dec     eax
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jns     L_p4dmi_B_call
-        mov     dword ptr [g_data_0054207c], 1
+        mov     dword ptr [g_eventQueueNotMask], 1
         call    Phase4FourPackedDispatch_0041b900
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -302,8 +302,8 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         pop     esi
         ret
     L_p4dmi_B_phase0:
-        mov     dword ptr [g_data_00542054], 0x14
-        mov     dword ptr [g_data_0054207c], 0
+        mov     dword ptr [g_eventQueueEnd], 0x14
+        mov     dword ptr [g_eventQueueNotMask], 0
     L_p4dmi_B_call:
         call    Phase4FourPackedDispatch_0041b900
         mov     eax, dword ptr [g_framePauseFlag]
@@ -312,7 +312,7 @@ __declspec(naked) void Phase4DispatchMultiInit_0041b610(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0041B860
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_pendingNodeType], 2
         mov     dword ptr [g_framePauseFlag], eax
     L_p4dmi_B_exit:
         pop     esi

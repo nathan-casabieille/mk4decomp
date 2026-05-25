@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,12 +129,12 @@ extern unsigned int g_data_0053a430;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541ec4;
 extern unsigned int g_data_00541ec8;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542094;
 extern unsigned int g_data_00543200;
 extern unsigned int g_data_00543250;
@@ -153,7 +153,7 @@ extern void TestStoreConstJmp_004933b0(void);
 void StrikeAnim4Picker_00493100(void) {
     __asm {
         mov      eax, dword ptr [g_data_0052ab40]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 0x20
         mov      dword ptr [g_data_00542094], eax
         je       short L_3126
@@ -185,7 +185,7 @@ void StrikeAnim4Picker_00493100(void) {
         shr      eax, 2
         jmp      short L_3167
     L_3162:
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
     L_3167:
         cmp      ecx, 2
         jne      short L_3174
@@ -198,40 +198,40 @@ void StrikeAnim4Picker_00493100(void) {
         shr      eax, 2
     L_3181:
         add      eax, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x30], eax
         mov      dword ptr [g_walkCallback], 1
         call     ScaledAddDeref_00494800
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         call     ScaledAddDeref_00494800
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
         mov      ecx, dword ptr [g_data_004d57ac]
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_0054204c]
+        mov      edx, dword ptr [g_pendingNodeType]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542050]
+        mov      ecx, dword ptr [g_eventQueueTotal]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
@@ -239,25 +239,25 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      L_3350
-        mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542050], edx
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueTotal], edx
         call     ScaledTestPauseStore_00408860
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_33a1
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         jne      L_3342
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [eax*4 + 0x1c]
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         call     PushSetCallCleanup_00408580
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        mov      edx, dword ptr [g_data_00542050]
-        mov      dword ptr [g_data_00542044], edx
+        mov      edx, dword ptr [g_eventQueueTotal]
+        mov      dword ptr [g_currentNodeIdx], edx
         call     MStackChainDecodeCall_004936f0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -267,10 +267,10 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542050]
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueTotal]
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     MStackPush2ChainPrepend_00409970
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -279,10 +279,10 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33a1
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [ecx*4 + 0x40]
         or       al, 2
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x40], eax
         jmp      short L_3350
     L_3342:
@@ -294,19 +294,19 @@ void StrikeAnim4Picker_00493100(void) {
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542050], edx
+        mov      dword ptr [g_eventQueueTotal], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054204c], ecx
+        mov      dword ptr [g_pendingNodeType], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
     L_33a1:
         }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,10 +127,10 @@ extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_0053e35c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00543800;
 extern void AudioMixerStep_004ab700(void);
 extern void BootSetJmpStoreThenChainTriple_0040b970(void);
@@ -153,18 +153,18 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, offset g_data_00511fa4
         shr     ecx, 2
-        mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPushDispatchBitGate_00407330
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4sip_A_tailjmp
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         lea     eax, [ecx*4]
         mov     dword ptr [ecx*4 + 0x30], 0xA3
         mov     ecx, dword ptr [g_data_00535e6c]
@@ -174,29 +174,29 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         or      ch, 0x40
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x34], ecx
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     ecx, dword ptr [edx*4]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x54], ecx
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         inc     ecx
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [ecx*4]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x58], ecx
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         inc     ecx
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [ecx*4]
         mov     dword ptr [eax + 0x5C], ecx
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     edx
         mov     ecx, 0x13333
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x60], ecx
         mov     eax, dword ptr [g_data_0052ab10]
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0x64]
         neg     edx
         mov     dword ptr [g_walkCallback], edx
@@ -204,7 +204,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x64], ecx
         mov     dword ptr [g_walkCallback], 0x1999
@@ -255,7 +255,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_A_ret
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x00416280
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
@@ -273,7 +273,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         test    eax, eax
         jne     L_p4sip_B_ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
@@ -281,13 +281,13 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0x168
         mov     eax, dword ptr [ecx*4 + 0x70]
         add     eax, 0x168
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x58]
         sub     eax, 0xCCC
         mov     dword ptr [g_walkCallback], eax
@@ -296,19 +296,19 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      L_p4sip_B_skip_paint
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0xFFFFE667
         mov     dword ptr [ecx*4 + 0x70], 0xFFFFF5C3
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         lea     ecx, [eax + 0x15]
         add     eax, 0x1B
-        mov     dword ptr [g_data_00542044], ecx
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_currentNodeIdx], ecx
+        mov     dword ptr [g_xformEntityIdx], eax
         call    BootSetJmpStoreThenChainTriple_0040b970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -316,7 +316,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
     L_p4sip_B_skip_paint:
         mov     eax, dword ptr [g_data_0053e35c]
         and     eax, 1
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         add     eax, 0x13
         mov     dword ptr [g_walkCallback], eax
         call    TableLookupCall_00489ff0
@@ -327,12 +327,12 @@ __declspec(naked) void Phase4SlotInitPackedHelper_00416040(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret
-        mov     dword ptr [g_data_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
     L_p4sip_B_pop1:
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_p4sip_B_ret:
         ret

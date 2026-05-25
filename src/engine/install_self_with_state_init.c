@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,16 +126,16 @@ extern unsigned int g_data_00535e7c;
  *   snapshot+clear chain[+0x84]. If was nonzero: call IndirectJmp_00438160; ret.
  *   Else: call LeaPlus22StoreSelf_0048e4d0; if pause? ret.
  *   set g_walkCallback=5; call StorePauseImulShr16_004ab630; if pause? ret.
- *   eax = (0x004e4db8>>2) + g_walkCallback*2 -> g_x_00542048; load eax[+0]/eax[+4]
- *   into g_x_00542084 / g_x_00542058; g_state_00542080=0x1e;
+ *   eax = (0x004e4db8>>2) + g_walkCallback*2 -> g_xformEntityIdx; load eax[+0]/eax[+4]
+ *   into g_currentNodeFlags / g_eventQueueIdx; g_eventQueueChild=0x1e;
  *   install-self at [esi+8]=0x00438060; chain[+0x84]=1;
  *   scaledInit-chain push 0x00438060+0x01000000;
  *   call StateGateMStackOverlap_00438690; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542084;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_currentNodeFlags;
 extern void IndirectJmp_00438160(void);
 extern void StateGateMStackOverlap_00438690(void);
 extern void StorePauseImulShr16_004ab630(void);
@@ -178,12 +178,12 @@ __declspec(naked) void InstallSelfWithStateInit_00438060(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         mov     edx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_x_00542058], edx
-        mov     dword ptr [g_state_00542080], 0x1e
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_eventQueueChild], 0x1e
         mov     dword ptr [esi + 8], 0x00438060
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, 0x00438060

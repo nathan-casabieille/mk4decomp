@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,10 +126,10 @@ extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a318;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_data_00543564;
 extern unsigned int g_data_00543594;
 extern void Helper_Sprintf(void);
@@ -157,7 +157,7 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      dword ptr [g_walkCallback], eax
         cmp      eax, esi
         mov      eax, dword ptr [g_data_0053a408]
-        mov      dword ptr [g_data_00542084], 0x14000
+        mov      dword ptr [g_currentNodeFlags], 0x14000
         mov      ebp, 4
         jne      L_f272
         test     eax, eax
@@ -233,11 +233,11 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x543450
         mov      edi, 0x238
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], 0x5a0000
-        mov      dword ptr [g_data_0054207c], 0x370000
+        mov      dword ptr [g_eventQueueNotMask], 0x370000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -258,8 +258,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x03
         _emit    0x00
         _emit    0x00
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         jmp      L_f121
     L_f11c:
@@ -278,10 +278,10 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5578
         mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], 0x5a0000
-        mov      dword ptr [g_data_0054207c], 0x500000
+        mov      dword ptr [g_eventQueueNotMask], 0x500000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -302,8 +302,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x03
         _emit    0x00
         _emit    0x00
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -318,11 +318,11 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5588
         mov      esi, 0x610000
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], esi
-        mov      dword ptr [g_data_0054207c], 0x640000
+        mov      dword ptr [g_eventQueueNotMask], 0x640000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -343,8 +343,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x02
         _emit    0x00
         _emit    0x00
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -359,10 +359,10 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5628
         mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], esi
-        mov      dword ptr [g_data_0054207c], 0x780000
+        mov      dword ptr [g_eventQueueNotMask], 0x780000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -459,11 +459,11 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x543450
         mov      edi, 0x238
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], 0xffa60000
-        mov      dword ptr [g_data_0054207c], 0x370000
+        mov      dword ptr [g_eventQueueNotMask], 0x370000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -484,8 +484,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x01
         _emit    0x00
         _emit    0x00
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         jmp      L_f394
     L_f38f:
@@ -504,10 +504,10 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5568
         mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], 0xffa60000
-        mov      dword ptr [g_data_0054207c], 0x500000
+        mov      dword ptr [g_eventQueueNotMask], 0x500000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -528,8 +528,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         _emit    0x00
         _emit    0x00
         _emit    0x00
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -544,11 +544,11 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5588
         mov      esi, 0xff9f0000
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], edi
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], esi
-        mov      dword ptr [g_data_0054207c], 0x640000
+        mov      dword ptr [g_eventQueueNotMask], 0x640000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -565,8 +565,8 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         /* jne 0x42f4e8 (external, raw bytes) */
         _emit    0x75
         _emit    0x7e
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542084]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_currentNodeFlags]
         mov      dword ptr [edx*4 + 0x5c], ecx
         call     AllocSlotPushTripleGlobals_00427470
         mov      eax, dword ptr [g_framePauseFlag]
@@ -577,10 +577,10 @@ __declspec(naked) void MultiPlayerWinStringFormat_0042efc0(void)
         mov      eax, 0x4d5628
         mov      dword ptr [g_walkCallback], edi
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
-        mov      dword ptr [g_data_00542070], ebp
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      dword ptr [g_eventQueueCurrent], ebp
         mov      dword ptr [g_data_00542078], esi
-        mov      dword ptr [g_data_0054207c], 0x780000
+        mov      dword ptr [g_eventQueueNotMask], 0x780000
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

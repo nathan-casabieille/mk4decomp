@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,13 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0040a730 (166b boot) - same shape as MStackPushNegMul10_0040a690
  *   but with 3rd FP step: mstack-push scaledInit; snapshot g_x_0052ab10
- *   into scaledInit; chain[+0x64] -> g_x_00542074; call MStackPush1MagicMod2_004244d0;
- *   pause? ret; Mul10Tail(g_data_00542070, neg) -> g_x_00542074;
- *   Mul10Tail(walkCallback, neg) -> g_data_00542070; neg g_x_00542074 -> walkCallback;
+ *   into scaledInit; chain[+0x64] -> g_eventQueueWorkType; call MStackPush1MagicMod2_004244d0;
+ *   pause? ret; Mul10Tail(g_eventQueueCurrent, neg) -> g_eventQueueWorkType;
+ *   Mul10Tail(walkCallback, neg) -> g_eventQueueCurrent; neg g_eventQueueWorkType -> walkCallback;
  *   mstack-pop into scaledInit.
  */
 extern unsigned int g_x_0052ab10;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void MStackPush1MagicMod2_004244d0(void);
 
 extern unsigned int g_chain_disp_64_40a690;
@@ -149,26 +149,26 @@ void MStackPushNegMul10Var_0040a730(void) {
         mov     dword ptr [g_acc_00542078], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, [eax*4 + g_chain_disp_64_40a690]
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    MStackPush1MagicMod2_004244d0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   5bh
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     edx, dword ptr [g_acc_00542078]
         push    ecx
         push    edx
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_acc_00542078]
         add     esp, 8
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_walkCallback]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_00542074]
-        mov     dword ptr [g_data_00542070], eax
+        mov     edx, dword ptr [g_eventQueueWorkType]
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     eax, dword ptr [g_state_004d57ac]
         add     esp, 8
         neg     edx

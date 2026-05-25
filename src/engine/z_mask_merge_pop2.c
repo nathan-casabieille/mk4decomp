@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x0044cfe0 (116b game) - z-mask sub-byte merge:
- *   push g_data_00542070 on state stack; load walk[+0x20], AND with
- *   0xf0ffffff (clear top byte's low nibble), OR with g_x_00542074;
- *   set g_data_00542070=0x0f000000; pop two state-stack entries into
- *   g_data_00542070 and g_x_00542074.
+ *   push g_eventQueueCurrent on state stack; load walk[+0x20], AND with
+ *   0xf0ffffff (clear top byte's low nibble), OR with g_eventQueueWorkType;
+ *   set g_eventQueueCurrent=0x0f000000; pop two state-stack entries into
+ *   g_eventQueueCurrent and g_eventQueueWorkType.
  */
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 void ZMaskMergePop2_0044cfe0(void) {
     unsigned int top;
@@ -137,11 +137,11 @@ void ZMaskMergePop2_0044cfe0(void) {
     unsigned int slot;
     top = g_state_004d57ac + 1;
     g_state_004d57ac = top;
-    *(unsigned int *)(top * 4) = g_data_00542070;
+    *(unsigned int *)(top * 4) = g_eventQueueCurrent;
     walk = g_scaledInit_00542044;
     slot = *(unsigned int *)(walk * 4 + 0x20);
-    g_data_00542070 = 0x0f000000;
-    slot = (slot & 0xf0ffffff) | g_x_00542074;
+    g_eventQueueCurrent = 0x0f000000;
+    slot = (slot & 0xf0ffffff) | g_eventQueueWorkType;
     g_walkCallback = (void (*)(void))slot;
     *(unsigned int *)(walk * 4 + 0x20) = slot;
     /* Dual-pop: orig alternates edx/ecx; MSVC SP3 prefers ecx for both. */
@@ -149,11 +149,11 @@ void ZMaskMergePop2_0044cfe0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_state_004d57ac], eax
     }
 }

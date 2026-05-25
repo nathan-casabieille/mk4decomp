@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -133,24 +133,24 @@ extern unsigned int g_data_00535e7c;
  *     phase != 0: push 0x4e9f80 → GuardedScaledChainJmpIndirect_00460e40
  *       → DispatchThroughBaseSel6c_00460f20. If bit 0 of 0x54208c set,
  *       0x54206c=0x51e + 0x542070=0x28 + GatedScaledSubSat. If
- *       g_data_00542070 > 0: decrement g_data_00542080; if zero call
+ *       g_eventQueueCurrent > 0: decrement g_eventQueueChild; if zero call
  *       NineEntryFlagDispatch_00461260; else fall through to install
  *       success tail. Else tail-call ZeroScaledZeroCallPauseJmp_0045fa90.
- *     phase 0: sets g_data_00542048 = &g_data_00500c50>>2, calls
+ *     phase 0: sets g_xformEntityIdx = &g_data_00500c50>>2, calls
  *       DualScaledStoreZero_00491080. On no-error writes 0xb into
- *       [g_data_0054205c*4 + 0x28], g_data_00542080=1, installs Self
+ *       [g_fightGroupHead*4 + 0x28], g_eventQueueChild=1, installs Self
  *       at body, arms 0x541e6c=1.
  */
 extern unsigned int g_data_004e9f78;
 extern unsigned int g_data_004e9f80;
 extern unsigned int g_data_00500c50;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern void DispatchThroughBaseSel6c_00460f20(void);
 extern void DualScaledStoreZero_00491080(void);
 extern void GatedScaledSubSat_0048fb40(void);
@@ -174,7 +174,7 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         test    eax, eax
         jne     short L_aci_e1End
         mov     dword ptr [g_walkCallback], 0x51e
-        mov     dword ptr [g_data_00542070], 0x28
+        mov     dword ptr [g_eventQueueCurrent], 0x28
         call    GatedScaledSubSat_0048fb40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -212,17 +212,17 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_aci_doneNoPop
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 1
         test    al, bl
         je      short L_aci_checkVel
         mov     dword ptr [g_walkCallback], 0x51e
-        mov     dword ptr [g_data_00542070], 0x28
+        mov     dword ptr [g_eventQueueCurrent], 0x28
         call    GatedScaledSubSat_0048fb40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_aci_doneNoPop
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         test    eax, eax
         jg      short L_aci_doCountdown
     L_aci_checkVel:
@@ -231,9 +231,9 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
         pop     ebx
         ret
     L_aci_doCountdown:
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         jne     short L_aci_installTail
         call    NineEntryFlagDispatch_00461260
         mov     eax, dword ptr [g_framePauseFlag]
@@ -243,21 +243,21 @@ __declspec(naked) void AlarmCountdownInstall_004609e0(void) {
     L_aci_phase0:
         mov     ecx, offset g_data_00500c50
         shr     ecx, 2
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    DualScaledStoreZero_00491080
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_aci_doneNoPop
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0xb
         mov     dword ptr [g_walkCallback], eax
         mov     ebx, 1
         mov     dword ptr [edx*4 + 0x28], eax
-        mov     dword ptr [g_data_00542080], ebx
+        mov     dword ptr [g_eventQueueChild], ebx
     L_aci_installTail:
         mov     dword ptr [esi + 8], offset L_aci_body
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx
     L_aci_doneNoPop:
         pop     esi

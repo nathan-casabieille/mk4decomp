@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,12 +128,12 @@ extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fb0;
 extern unsigned int g_data_00541fb4;
 extern unsigned int g_data_00541fb8;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void MStackChainOrBitLoop_004635a0(void);
 extern void MStackPush2LLWalkCompare_004069b0(void);
@@ -150,31 +150,31 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      ecx, dword ptr [g_data_00541fb4]
         add      ecx, eax
         push     ebx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      ecx, dword ptr [ecx*4]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       L_264f
         mov      edx, dword ptr [g_data_00541fb8]
         shl      eax, 2
         mov      dword ptr [g_walkCallback], eax
         add      eax, edx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_walkCallback], eax
         call     MStackPush2LLWalkCompare_004069b0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_264f
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 4
         test     al, bl
         jne      short L_264f
-        mov      eax, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         mov      edx, 0xfffe6de1
         dec      eax
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         je       short L_25fd
         mov      ecx, eax
     L_25e8:
@@ -182,29 +182,29 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         dec      eax
         dec      ecx
         jne      short L_25e8
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_walkCallback], edx
     L_25fd:
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_264f
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
     L_2610:
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x64], ecx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x40]
-        mov      edx, dword ptr [g_data_0054208c]
+        mov      edx, dword ptr [g_xformDirtyFlags]
         or       edx, ebx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       short L_264f
         mov      ecx, edx
         xor      ecx, ebx
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], ecx
+        mov      dword ptr [g_xformDirtyFlags], ecx
         jne      short L_2610
     L_264f:
         pop      ebx
@@ -232,13 +232,13 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_26ae
-        mov      ecx, dword ptr [g_data_00542058]
+        mov      ecx, dword ptr [g_eventQueueIdx]
         dec      ecx
-        mov      dword ptr [g_data_00542058], ecx
+        mov      dword ptr [g_eventQueueIdx], ecx
         jne      short L_26c2
-        mov      ecx, dword ptr [g_data_00542054]
+        mov      ecx, dword ptr [g_eventQueueEnd]
         dec      ecx
-        mov      dword ptr [g_data_00542054], ecx
+        mov      dword ptr [g_eventQueueEnd], ecx
         jne      short L_26b8
         push     0
         push     OFFSET func_00462ac0
@@ -246,14 +246,14 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         add      esp, 8
         jmp      CallSetPause_0041f830
     L_26ae:
-        mov      dword ptr [g_data_00542054], 0xf
+        mov      dword ptr [g_eventQueueEnd], 0xf
     L_26b8:
-        mov      dword ptr [g_data_00542058], 6
+        mov      dword ptr [g_eventQueueIdx], 6
     L_26c2:
         mov      ecx, 1
         mov      dword ptr [eax + 8], OFFSET L_2660
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 0xa
+        mov      dword ptr [g_pendingNodeType], 0xa
         mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
@@ -284,7 +284,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         jne      short L_277a
         mov      dword ptr [esi + 8], OFFSET L_26f0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 4
+        mov      dword ptr [g_pendingNodeType], 4
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -296,7 +296,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_26f0
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 4
+        mov      dword ptr [g_pendingNodeType], 4
         mov      dword ptr [g_framePauseFlag], eax
     L_277a:
         pop      esi

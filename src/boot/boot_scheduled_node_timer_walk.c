@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0052ab3c;
 extern unsigned int g_data_00535d14;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00543800;
 extern void NodeUnlink_0041f710(void);
 
@@ -165,21 +165,21 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         sar     eax, 2
         mov     dword ptr [g_data_00542060], eax
         mov     ecx, dword ptr [eax*4 + 0x14]
-        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     ecx, dword ptr [eax*4 + 0x24]
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     edx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542058], edx
+        mov     dword ptr [g_eventQueueIdx], edx
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x2c]
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         mov     ecx, dword ptr [eax*4 + 0x1c]
-        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         mov     edx, dword ptr [eax*4 + 0x20]
-        mov     dword ptr [g_data_00542088], edx
+        mov     dword ptr [g_xformScratch2088], edx
         mov     eax, dword ptr [eax*4 + 8]
         mov     dword ptr [esi + 0xd8], eax
         mov     dword ptr [g_framePauseFlag], ebx
@@ -195,24 +195,24 @@ __declspec(naked) void BootScheduledNodeTimerWalk_0041f570(void)
         mov     eax, dword ptr [edx*4 + 8]
         mov     dword ptr [esi + 0xd8], eax
         mov     ecx, dword ptr [g_data_00542060]
-        mov     edx, dword ptr [g_data_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         lea     eax, [ecx*4]
         mov     dword ptr [eax + 0x14], edx
-        mov     ecx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [eax + 0x18], ecx
-        mov     edx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_currentNodeFlags]
         mov     dword ptr [eax + 0x1c], edx
-        mov     ecx, dword ptr [g_data_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         mov     dword ptr [eax + 0x20], ecx
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [eax + 0x10], edx
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [eax + 0x24], ecx
-        mov     edx, dword ptr [g_data_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [eax + 0x28], edx
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax + 0x2c], ecx
-        mov     dx, word ptr [g_data_0054204c]
+        mov     dx, word ptr [g_pendingNodeType]
         mov     word ptr [esi + 0xdc], dx
     L_bsntw_checkDead:
         cmp     dword ptr [esi + 0xd8], ebp

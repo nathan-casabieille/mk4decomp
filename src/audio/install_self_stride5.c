@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,15 +125,15 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004a06f0 (165b audio) - install-self with 5x stride:
  *   chain[sel].slot84 -> eax; clear. If !=0: clear walkCallback/g_x_00538090,
  *   call CallSetPause; ret.
- *   else: eax = g_x_00542054 * 5; ecx = g_x_00541fc4; walkCallback=edi=1;
- *   g_x_00542054 = eax; eax += ecx; g_x_00538090 = 1; g_scaledInit = eax;
+ *   else: eax = g_eventQueueEnd * 5; ecx = g_x_00541fc4; walkCallback=edi=1;
+ *   g_eventQueueEnd = eax; eax += ecx; g_x_00538090 = 1; g_scaledInit = eax;
  *   walkCallback = chain[eax].slot4; call GuardedScaledCall; pause? ret;
- *   install self at +8; chain[sel].slot84 = 1; g_x_0054204c = 0x32; pause=1.
+ *   install self at +8; chain[sel].slot84 = 1; g_pendingNodeType = 0x32; pause=1.
  */
 extern unsigned int g_x_00538090;
 extern unsigned int g_x_00541fc4;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 
@@ -157,12 +157,12 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         pop     edi
         pop     esi
         ret
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [g_x_00541fc4]
         mov     edi, 1
         lea     eax, [eax + eax*4]
         mov     dword ptr [g_walkCallback], edi
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         add     eax, ecx
         mov     dword ptr [g_x_00538090], edi
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -175,7 +175,7 @@ __declspec(naked) void InstallSelfStride5_004a06f0(void) {
         _emit   1dh
         mov     dword ptr [esi + 8], offset InstallSelfStride5_004a06f0
         mov     dword ptr [esi + 0x84], edi
-        mov     dword ptr [g_x_0054204c], 0x32
+        mov     dword ptr [g_pendingNodeType], 0x32
         mov     dword ptr [g_framePauseFlag], edi
         pop     edi
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,19 +125,19 @@ extern unsigned int g_data_00535e7c;
 /*
  * @addr 0x0045daf0 (125b game) - chain-walking self-recursive
  *   dispatcher: if walk != 0, store into _4204c[+0x14], call Thunk;
- *   else walk a singly-linked chain (advance wt += g_data_00542070,
+ *   else walk a singly-linked chain (advance wt += g_eventQueueCurrent,
  *   deref scaled), call MStackPush3CallChain_0045db70 at each step, tail-recurse on
  *   self.
  */
-extern unsigned int g_data_0054204c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueWorkType;
 extern void MStackPush3CallChain_0045db70(void);
 extern void Thunk_0045dae0(void);
 extern void HitReactionDispatcher_0045f650(void);
 
 int ChainWalkSelfRecursive_0045daf0(void) {
-    unsigned int link = *(unsigned int *)(g_data_0054204c * 4 + 0x40);
-    g_x_00542074 = link;
+    unsigned int link = *(unsigned int *)(g_pendingNodeType * 4 + 0x40);
+    g_eventQueueWorkType = link;
     if ((unsigned int)g_walkCallback != 0) {
         *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x14) = (unsigned int)g_walkCallback;
         g_xformEntityIdx = (unsigned int)&HitReactionDispatcher_0045f650;
@@ -145,7 +145,7 @@ int ChainWalkSelfRecursive_0045daf0(void) {
         return g_framePauseFlag;
     }
     if (g_xformEntityIdx == 0) return;
-    g_xformEntityIdx += g_data_00542070;
+    g_xformEntityIdx += g_eventQueueCurrent;
     g_xformEntityIdx = *(unsigned int *)(g_xformEntityIdx * 4);
     if (g_xformEntityIdx == 0) return;
     MStackPush3CallChain_0045db70();

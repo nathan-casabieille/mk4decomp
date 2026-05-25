@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,15 +126,15 @@ extern unsigned int g_data_004d5ed0;
 extern unsigned int g_data_004d6610;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern unsigned int g_data_00543800;
 extern void CallSetPause_0041f830(void);
 extern void ClampMulShiftStore_004ba0e0(void);
@@ -150,14 +150,14 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
 {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    0x84
         mov     dword ptr [g_state_004d57ac], eax
         push    0x0040FA90
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
@@ -166,11 +166,11 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         add     esp, 8
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
         ret
         nop
@@ -185,18 +185,18 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         je      L_p4ttp_B_phase0
         dec     eax
         je      L_p4ttp_B_phase1
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushZeroCallPop_004066f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        mov     eax, dword ptr [g_data_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         dec     eax
-        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         jns     L_p4ttp_B_install
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], edx
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackCall_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -204,14 +204,14 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         pop     esi
         ret
     L_p4ttp_B_phase1:
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         call    MStackPushZeroCallPop_004066f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackCall_004062a0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -219,32 +219,32 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0040FA90
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret
     L_p4ttp_B_phase0:
         mov     eax, dword ptr [g_data_0052ab10]
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542050], eax
-        mov     dword ptr [g_data_00542054], edx
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     dword ptr [g_eventQueueEnd], edx
         mov     ecx, dword ptr [eax*4 + 0x54]
-        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x5C]
-        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         call    QuadMul10TailFpuChain_00431120
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        mov     eax, dword ptr [g_data_00542054]
-        mov     edx, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     ecx, dword ptr [eax*4 + 0x54]
         add     edx, ecx
-        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         mov     edx, dword ptr [eax*4 + 0x5C]
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         add     eax, edx
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         mov     eax, offset g_data_004d5ed0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
@@ -252,37 +252,37 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4ttp_B_tailjmp_0041f830
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [ecx*4 + 0x54], edx
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [eax*4 + 0x5C], ecx
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [edx*4 + 0x58], 0xFFFFB334
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0x46
         mov     dword ptr [eax*4 + 0x30], 0x46
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x18]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4]
         or      ecx, 8
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [edx*4 + 0x48], 0x1999
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x14], 0xFF
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x0040FDE0
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], edx
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackCall_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -294,41 +294,41 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      L_p4ttp_B_continue
     L_p4ttp_B_tailjmp_0041f830:
         call    CallSetPause_0041f830
         pop     esi
         ret
     L_p4ttp_B_continue:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x30], 0x46
         mov     dword ptr [g_walkCallback], 0xC0
         call    PushSetDualDeref_00406650
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [edx*4 + 0x54], eax
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueChild]
         mov     dword ptr [ecx*4 + 0x5C], edx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x58], 0x18000
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0xFFFFEE98
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         call    ScaledChainOr8_00404e50
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x16666
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
-        mov     dword ptr [g_data_00542058], 0x0D
+        mov     dword ptr [g_eventQueueIdx], 0x0D
     L_p4ttp_B_install:
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         call    MStackCall_00406600
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -336,7 +336,7 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0040FA90
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_p4ttp_B_exit:
         pop     esi
@@ -356,11 +356,11 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, dword ptr [g_data_00543800]
         test    eax, eax
         jne     L_p4ttp_C_ret
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 0x48]
         add     ecx, 0x11EB
         mov     dword ptr [eax*4 + 0x48], ecx
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [ecx*4 + 0x48]
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [ecx*4 + 0x14]

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,10 +125,10 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00537f98;
 extern unsigned int g_data_0053a430;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueChild;
 extern void InstallSelfStackReset_00421f40(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
 
@@ -156,15 +156,15 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         pop     esi
         ret
     L_dcpgi_call40:
-        mov     ecx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         dec     ecx
-        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         je      short L_dcpgi_install
         jmp     short L_dcpgi_setup
     L_dcpgi_phase1:
-        mov     ecx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         dec     ecx
-        mov     dword ptr [g_data_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         jne     L_dcpgi_install2
         mov     ecx, dword ptr [g_data_0053a430]
         cmp     ecx, edx
@@ -178,7 +178,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
     L_dcpgi_resetSetup:
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00537f98], edx
-        mov     dword ptr [g_data_00542080], 0xf0
+        mov     dword ptr [g_eventQueueChild], 0xf0
     L_dcpgi_setup:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
         mov     ecx, dword ptr [g_data_00542060]
@@ -186,11 +186,11 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
         add     esi, 0x2000000
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], esi
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -205,18 +205,18 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         dec     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     ecx, dword ptr [g_data_00542060]
-        mov     dword ptr [g_data_00542048], esi
+        mov     dword ptr [g_xformEntityIdx], esi
         mov     edi, dword ptr [ecx*4 + 4]
         lea     ecx, [ecx*4 + 4]
-        mov     dword ptr [g_data_00542044], edi
+        mov     dword ptr [g_currentNodeIdx], edi
         mov     dword ptr [edi*4], esi
-        mov     esi, dword ptr [g_data_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         inc     esi
-        mov     dword ptr [g_data_00542044], esi
+        mov     dword ptr [g_currentNodeIdx], esi
         mov     dword ptr [ecx], esi
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [g_data_00537f98], edx
-        mov     dword ptr [g_data_00542080], 0x3c
+        mov     dword ptr [g_eventQueueChild], 0x3c
     L_dcpgi_install2:
         mov     dword ptr [eax + 8], offset DualCounterPhaseGateInstall_00421d50
         mov     ecx, dword ptr [g_data_00542060]
@@ -225,11 +225,11 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], edi
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,12 +136,12 @@ extern unsigned int g_data_004ea000;
 /* @addr 0x00460470 (308b game) - multi-thunk: push-call entry + state dispatcher + 6 LeaPlus22 thunks.
  *   Block A (0..0x1c): push 0x00542980; call ArgScaledTestStore; pop; if !pause tail-jmp DualScaledStoreZero; ret.
  *   Block B (0x20..0xbc): call DirtyToggleByGate; if pause ret. If bit2(0054208c) ret.
- *     g_x_00542050 = (0x004ea000>>2); call NotShrCmp1Store; if pause ret.
- *     ecx = g_x_00542050 + (g_walkCallback & 0xf); jmp [ecx*4].
+ *     g_eventQueueTotal = (0x004ea000>>2); call NotShrCmp1Store; if pause ret.
+ *     ecx = g_eventQueueTotal + (g_walkCallback & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542050;
+extern unsigned int g_eventQueueTotal;
 extern void ArgScaledTestStore_00494140(void);
 
 extern unsigned int g_data_004ea000;
@@ -175,25 +175,25 @@ __declspec(naked) void MultiThunkDispatcher_00460470(void) {
         test    eax, eax
         _emit   75h
         _emit   4eh
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   45h
         mov     eax, offset g_data_004ea000
         shr     eax, 2
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         call    NotShrCmp1Store_00460d80
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   2ah
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_x_00542050]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         and     eax, 0xf
         add     ecx, eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00542050], ecx
+        mov     dword ptr [g_eventQueueTotal], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_x_00542050], ecx
+        mov     dword ptr [g_eventQueueTotal], ecx
         jmp     ecx
         ret
         _emit   90h

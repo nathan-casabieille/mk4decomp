@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,24 +123,24 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00457830 (164b game) - search-with-counter through scaled array, find slot by value, return chain[+8].
- *   Save g_x_00542070 to [esp+0xc]. ebp = g_x_0054204c (offset).
+ *   Save g_eventQueueCurrent to [esp+0xc]. ebp = g_pendingNodeType (offset).
  *   eax = chain[ebp]; edx = &chain[ebp]; ecx=0; edi=0; esi=0.
  *   if (chain[ebp] == 0) skip-loop.
  *   else: ebx = g_walkCallback (target value).
  *     loop_outer: ecx = chain[edx+4]; edx += 4; esi++.
  *       if (ebx < eax || ebx > ecx) { edx += 4; ecx -= eax; esi++; eax = [edx];
- *         edi += ecx + 1; g_x_00542070 = eax;
+ *         edi += ecx + 1; g_eventQueueCurrent = eax;
  *         if (eax != 0): loop_outer.
  *         else: ecx=0; edi=0; jmp skip-loop.
  *       } else: ebx -= eax; edi += ebx; ecx=0; esi++; fall to skip-loop.
  *   skip-loop: edx = esi + ebp; g_x_00542078 = ecx;
  *     while (chain[edx] != ecx): esi++; edx = esi + ebp;
- *     esi += edi + ebp; g_x_00542048 = chain[esi*4 + 8];
- *     restore: g_x_00542070 = saved; g_scaledInit = [g_scaledInit] (no-op).
+ *     esi += edi + ebp; g_xformEntityIdx = chain[esi*4 + 8];
+ *     restore: g_eventQueueCurrent = saved; g_scaledInit = [g_scaledInit] (no-op).
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542078;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -148,10 +148,10 @@ extern unsigned int g_data_004d57ac_arr;
 __declspec(naked) void ScaledSearchSum_00457830(void) {
     __asm {
         push    ecx
-        mov     eax, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    ebx
         push    ebp
-        mov     ebp, dword ptr [g_x_0054204c]
+        mov     ebp, dword ptr [g_pendingNodeType]
         push    esi
         mov     [esp + 0x0c], eax
         mov     eax, [ebp*4 + g_data_004d57ac_arr]
@@ -161,7 +161,7 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         xor     edi, edi
         xor     esi, esi
         cmp     eax, ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   2ch
         mov     ebx, dword ptr [g_walkCallback]
@@ -180,7 +180,7 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         mov     eax, [edx]
         lea     edi, [edi + ecx + 1]
         test    eax, eax
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   75h
         _emit   0dch
         xor     ecx, ecx
@@ -202,10 +202,10 @@ __declspec(naked) void ScaledSearchSum_00457830(void) {
         pop     edi
         mov     eax, [esi*4 + 8]
         pop     esi
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         pop     ebp
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         pop     ebx
         pop     ecx

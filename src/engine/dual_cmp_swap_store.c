@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,17 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049c5a0 (199b game) - dual-cmp swap-and-store with 3 saved regs.
- *   edx = g_x_0054205c; ebx = [0x538158]; esi = [0x53803c]; edi = [0x538038];
- *   g_x_00542048 = edi; if (edx != ebx) g_x_00542048 = esi;
- *   g_x_00542084 = chain[g_x_00542048 + 0x68];
- *   g_x_00542088 = chain[g_x_00542048 + 0x6c];
- *   ecx = [0x53815c]; g_x_00542050 = g_x_00542010;
- *   g_x_00542048 = ecx; g_x_0054204c = esi; g_x_00542054 = g_x_00542014;
- *   if (ecx == edx): swap with ebx-side; g_x_0054204c = edi;
- *      g_x_00542048 = ebx; g_x_00542050 = g_x_00542018; g_x_00542054 = g_x_0054201c;
+ *   edx = g_fightGroupHead; ebx = [0x538158]; esi = [0x53803c]; edi = [0x538038];
+ *   g_xformEntityIdx = edi; if (edx != ebx) g_xformEntityIdx = esi;
+ *   g_currentNodeFlags = chain[g_xformEntityIdx + 0x68];
+ *   g_xformScratch2088 = chain[g_xformEntityIdx + 0x6c];
+ *   ecx = [0x53815c]; g_eventQueueTotal = g_x_00542010;
+ *   g_xformEntityIdx = ecx; g_pendingNodeType = esi; g_eventQueueEnd = g_x_00542014;
+ *   if (ecx == edx): swap with ebx-side; g_pendingNodeType = edi;
+ *      g_xformEntityIdx = ebx; g_eventQueueTotal = g_x_00542018; g_eventQueueEnd = g_x_0054201c;
  *   eax = g_baseSel*4; chain[eax + 0x38] = ecx;
- *   chain[eax + 0x3c] = g_x_0054204c (=ecx-or-edi);
- *   chain[eax + 0x40] = g_x_00542050; chain[eax + 0x44] = g_x_00542054.
+ *   chain[eax + 0x3c] = g_pendingNodeType (=ecx-or-edi);
+ *   chain[eax + 0x40] = g_eventQueueTotal; chain[eax + 0x44] = g_eventQueueEnd.
  */
 extern unsigned int g_x_00538038;
 extern unsigned int g_x_0053803c;
@@ -143,19 +143,19 @@ extern unsigned int g_x_00542010;
 extern unsigned int g_x_00542014;
 extern unsigned int g_x_00542018;
 extern unsigned int g_x_0054201c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542050;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 
 extern unsigned int g_data_004d57ac_arr;
 
 __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
     __asm {
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         push    ebx
         mov     ebx, dword ptr [g_x_00538158]
         push    esi
@@ -164,43 +164,43 @@ __declspec(naked) void DualCmpSwapStore_0049c5a0(void) {
         mov     edi, dword ptr [g_x_00538038]
         cmp     edx, ebx
         mov     eax, edi
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   07h
         mov     eax, esi
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, [eax*4 + 0x68]
-        mov     dword ptr [g_x_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         mov     eax, [eax*4 + 0x6c]
         mov     ecx, dword ptr [g_x_0053815c]
-        mov     dword ptr [g_x_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         mov     eax, dword ptr [g_x_00542010]
         cmp     ecx, edx
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [g_x_00542014]
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_x_0054204c], esi
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_pendingNodeType], esi
+        mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
         _emit   24h
         mov     edx, dword ptr [g_x_00542018]
         mov     eax, dword ptr [g_x_0054201c]
         mov     ecx, ebx
-        mov     dword ptr [g_x_0054204c], edi
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_x_00542050], edx
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_pendingNodeType], edi
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_eventQueueTotal], edx
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     [edx*4 + 0x38], ecx
-        mov     ecx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         pop     edi
         lea     eax, [edx*4 + g_data_004d57ac_arr]
         pop     esi
         pop     ebx
         mov     [eax + 0x3c], ecx
-        mov     edx, dword ptr [g_x_00542050]
+        mov     edx, dword ptr [g_eventQueueTotal]
         mov     [eax + 0x40], edx
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     [eax + 0x44], ecx
         ret
     }

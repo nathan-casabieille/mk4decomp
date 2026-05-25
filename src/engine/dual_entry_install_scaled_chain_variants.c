@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,22 +129,22 @@ extern void NegInstallNegSelfTrigPair_00486610(void);
 extern void DualEntryInstallScaledChain_00486580(void);
 
 /* @addr 0x00486410 (114b game) - mstack-push self-handler & wait-then-chain.
- *   Block A (+0x00): g_data_004d57ac_arr[++g_state]=0x00486440; g_x_00542084=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
- *   Block B (+0x30): countdown wait on g_x_00542080; on zero call MStackPush2TripleCallChain_0048cf50; pause-check then
+ *   Block A (+0x00): g_data_004d57ac_arr[++g_state]=0x00486440; g_currentNodeFlags=0xccc; jmp NegInstallNegSelfTrigPair_00486610.
+ *   Block B (+0x30): countdown wait on g_eventQueueChild; on zero call MStackPush2TripleCallChain_0048cf50; pause-check then
  *     two more sub-calls and tail-jmps. Self-jmp at +0x3d when timer not yet expired.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void SlotEvent3EntryChain_0046fdf0(void);
 
 __declspec(naked) void MStackPushWaitChain_00486410(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_x_00542084], 0x00000ccc
+        mov     dword ptr [g_currentNodeFlags], 0x00000ccc
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], 0x00486440
@@ -160,9 +160,9 @@ __declspec(naked) void MStackPushWaitChain_00486410(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_x_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   74h
         _emit   05h
         jmp     MStackPushWaitChain_00486410
@@ -171,7 +171,7 @@ __declspec(naked) void MStackPushWaitChain_00486410(void) {
         test    eax, eax
         _emit   75h
         _emit   21h
-        cmp     dword ptr [g_x_0054207c], 1
+        cmp     dword ptr [g_eventQueueNotMask], 1
         _emit   75h
         _emit   05h
         jmp     DualEntryInstallScaledChain_00486580

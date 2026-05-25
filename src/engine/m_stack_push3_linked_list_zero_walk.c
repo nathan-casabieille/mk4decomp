@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,38 +125,38 @@ extern unsigned int g_data_00535e7c;
 extern void MStackPush3LinkedListZeroWalk_0049ce00(void);
 
 /* @addr 0x0049cf70 (259b game) - mstack-push triple, call helper, conditional cj update + bit toggle.
- *   mstack-push g_x_00542048, g_x_0054204c, g_data_00542050.
- *   g_data_00542050 = g_scaledInit_00542044.
+ *   mstack-push g_xformEntityIdx, g_pendingNodeType, g_eventQueueTotal.
+ *   g_eventQueueTotal = g_scaledInit_00542044.
  *   call MStackPush3LinkedListZeroWalk_0049ce00; if pause? final-ret.
- *   if bit2 of g_state_0054208c set, skip middle block.
- *   else: g_x_0054204c=[g_data_00542050*4 + 0x2c]; [g_x_00542048*4]=g_x_0054204c;
- *     [g_data_00542050*4 + 0x2c]=g_scaledInit_00542044.
- *   mstack-pop triple. g_state_0054208c |= 4; if scaledInit==0 ret;
- *   else g_state_0054208c ^= 4 (clear bit2); ret.
+ *   if bit2 of g_xformDirtyFlags set, skip middle block.
+ *   else: g_pendingNodeType=[g_eventQueueTotal*4 + 0x2c]; [g_xformEntityIdx*4]=g_pendingNodeType;
+ *     [g_eventQueueTotal*4 + 0x2c]=g_scaledInit_00542044.
+ *   mstack-pop triple. g_xformDirtyFlags |= 4; if scaledInit==0 ret;
+ *   else g_xformDirtyFlags ^= 4 (clear bit2); ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 
 void MStackPush3HelperCondToggle_0049cf70(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_eventQueueTotal], edx
         call    MStackPush3LinkedListZeroWalk_0049ce00
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -166,43 +166,43 @@ void MStackPush3HelperCondToggle_0049cf70(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ecx, 4
         _emit   84h
         _emit   0c1h
         _emit   75h
         _emit   30h
-        mov     eax, dword ptr [g_data_00542050]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [eax*4 + 0x2c]
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [edx*4 + 0], eax
-        mov     eax, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [eax*4 + 0x2c], edx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542048], edx
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         or      edx, ecx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
         _emit   09h
         mov     eax, edx
         xor     eax, ecx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

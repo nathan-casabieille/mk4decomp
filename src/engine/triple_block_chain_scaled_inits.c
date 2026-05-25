@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00450f10 (324b game) - 3-block: chain-init + ScaledInit dual thunks. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueWorkType;
 extern void ChainGatedNegAccum_0048b740(void);
 extern void MStackCall_00406600(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -145,7 +145,7 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   0e5h
@@ -162,14 +162,14 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_cj_0054205c], eax
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         call    ChainGatedNegAccum_0048b740
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -183,15 +183,15 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         mov     edx, dword ptr [g_acc_00542078]
         mov     dword ptr [ecx*4 + 0x54], edx
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [eax*4 + 0x5c], ecx
-        mov     edx, dword ptr [g_x_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0xc]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_00542074], 0x1999
+        mov     dword ptr [g_eventQueueWorkType], 0x1999
         add     edx, 0x15
         mov     dword ptr [g_scaledInit_00542044], edx
         call    TripleVecAccCallStore_00476880
@@ -199,16 +199,16 @@ __declspec(naked) void TripleBlockChainScaledInits_00450f10(void) {
         test    eax, eax
         _emit   75h
         _emit   22h
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         or      ecx, 4
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   0ah
         mov     eax, ecx
         xor     eax, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h

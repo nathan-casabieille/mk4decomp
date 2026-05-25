@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00464660 (386b game) - install-self with 5-call vec/slot chain.
  *   Always installs Self at end (no phase check). Sets:
- *     - g_data_00542048 = g_data_00541f8c (vec0 base)
- *     - g_data_0054204c = g_data_00542060 + 0xc (slot pointer+0xc)
- *     - g_data_00542050 = [g_data_00542054*4] (deref scope)
- *   If 0x542050 is non-zero AND [g_data_00542058*4] is non-zero, runs a
+ *     - g_xformEntityIdx = g_data_00541f8c (vec0 base)
+ *     - g_pendingNodeType = g_data_00542060 + 0xc (slot pointer+0xc)
+ *     - g_eventQueueTotal = [g_eventQueueEnd*4] (deref scope)
+ *   If 0x542050 is non-zero AND [g_eventQueueIdx*4] is non-zero, runs a
  *   5-step chain through scaled-buffer indices: QuadInterpolatorV2_004255b0 (+0x15) →
  *   TripleSubVec3_004250f0 (+0x15) → ThreeMul10Stores_004252c0
  *   (with 0xcccc weight) → TripleSubVec3_004250f0 (+0x1b) →
@@ -135,16 +135,16 @@ extern unsigned int g_data_00535e7c;
  *   (with +0x1b advance). Failure path skips remaining calls.
  *
  *   Tail unconditionally installs Self with slot[+0x84]=1,
- *   g_data_0054204c=2, arms 0x541e6c=1.
+ *   g_pendingNodeType=2, arms 0x541e6c=1.
  */
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f8c;
 extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern unsigned int g_data_00542060;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
@@ -160,66 +160,66 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     edx, dword ptr [g_data_00542060]
         mov     ecx, dword ptr [g_data_00541f8c]
         lea     esi, [eax*4]
-        mov     eax, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         add     edx, 0xc
-        mov     dword ptr [g_data_00542048], ecx
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     eax, dword ptr [eax*4]
         test    eax, eax
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         je      L_isvc_install
         mov     ecx, dword ptr [g_data_00541f98]
         add     eax, 0x15
-        mov     dword ptr [g_data_00542050], eax
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_eventQueueTotal], eax
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    QuadInterpolatorV2_004255b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
-        mov     edx, dword ptr [g_data_00542044]
-        mov     eax, dword ptr [g_data_00542058]
-        mov     ecx, dword ptr [g_data_00542050]
-        mov     dword ptr [g_data_00542048], edx
+        mov     edx, dword ptr [g_currentNodeIdx]
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_eventQueueTotal]
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4]
         test    ecx, ecx
         je      L_isvc_install
         add     eax, 0x15
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         call    TripleSubVec3_004250f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0xcccc
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    ThreeMul10Stores_004252c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_isvc_done
-        mov     edx, dword ptr [g_data_00542044]
-        mov     eax, dword ptr [g_data_00542058]
-        mov     dword ptr [g_data_00542048], edx
+        mov     edx, dword ptr [g_currentNodeIdx]
+        mov     eax, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4]
         add     ecx, 0x1b
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         call    TripleSubVec3_004250f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0x4ccc
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    ThreeClampLoop_00425a80
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_isvc_done
-        mov     eax, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_00542058]
-        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     ecx, dword ptr [g_eventQueueIdx]
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [ecx*4]
         add     eax, 0x1b
-        mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    TripleAddVec3_00425130
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -228,7 +228,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset InstallSelf5CallVecChain_00464660
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_pendingNodeType], 2
         mov     dword ptr [g_framePauseFlag], eax
     L_isvc_done:
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -131,34 +131,34 @@ extern void PendingMatch_00498eb0(void);
 /* @addr 0x00498df0 (180b game) - triple-entry 3-block dispatcher with Mul10Tail and pause-gated paths. */
 extern unsigned int g_data_0053a498;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_00542084;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_currentNodeFlags;
 
 __declspec(naked) void TripleEntry3Block_00498df0(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi
         push    ecx
         push    0x00003333
         lea     esi, [eax*4 + 0]
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         add     esp, 8
-        mov     dword ptr [g_x_00542084], eax
+        mov     dword ptr [g_currentNodeFlags], eax
         push    edx
         push    0x00003333
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_state_00542088], eax
-        mov     eax, dword ptr [g_x_00542084]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
         mov     dword ptr [esi + 0x6c], eax
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         pop     esi
         ret
         _emit   90h
@@ -178,8 +178,8 @@ __declspec(naked) void TripleEntry3Block_00498df0(void) {
         test    eax, eax
         _emit   75h
         _emit   14h
-        mov     eax, dword ptr [g_x_00542070]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_eventQueueCurrent]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         cmp     eax, ecx
         _emit   7eh
         _emit   05h

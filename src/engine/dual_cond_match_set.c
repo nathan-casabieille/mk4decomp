@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,16 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00488dc0 (208b game) - g_x_0052aac4 == 2 && g_state_00537f94 != 0:
- *   call SwapOrPassSet; if !pause: cmp g_x_0054205c vs g_data_0054204c; if eq jmp CmpEax1OrSetDirty.
+ *   call SwapOrPassSet; if !pause: cmp g_fightGroupHead vs g_pendingNodeType; if eq jmp CmpEax1OrSetDirty.
  *   else set g_walkCallback=0x1000; call SetJmp_0049cb90; if !pause: set bit-2 of state;
  *   if scaledInit nonzero: load chain[*4+8] = 0x00421f40 store; if !=0x00421f40: clear bit-0;
  *   else xor bit-2 and set bit-0. Multiple ret paths.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052aac4;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern void CmpEax1OrSetDirty_00488e90(void);
 extern void SwapOrPassSet_0048fbf0(void);
 
@@ -165,8 +165,8 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_0054205c]
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_pendingNodeType]
         cmp     eax, ecx
         _emit   74h
         _emit   05h
@@ -177,37 +177,37 @@ __declspec(naked) void DualCondMatchSet_00488dc0(void) {
         test    eax, eax
         _emit   75h
         _emit   6ch
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         mov     ecx, 4
         or      eax, ecx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         test    eax, eax
         _emit   74h
         _emit   39h
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         xor     edx, ecx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         _emit   75h
         _emit   0ah
         mov     eax, edx
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         mov     eax, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_data_0054204c], 0x00421f40
+        mov     dword ptr [g_pendingNodeType], 0x00421f40
         cmp     eax, 0x00421f40
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   0dh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
     }
 }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,18 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470d10 (271b game) - install-self with mstack-pop and indirect-call branch.
- *   If chain[+0x84] nonzero: dec baseSel[+4] (mstack-pop); load scaledInit and g_x_00542048.
- *   Read g_x_00542054[0] (state push); if signed >= 0: indirect call [eax*4]; ret.
+ *   If chain[+0x84] nonzero: dec baseSel[+4] (mstack-pop); load scaledInit and g_xformEntityIdx.
+ *   Read g_eventQueueEnd[0] (state push); if signed >= 0: indirect call [eax*4]; ret.
  *   Else: call ScaledArrStore; if pause? ret.
- *   Check baseSel[+0x3c][+0x74] == 0x2001 OR g_x_00542084 != 0: skip middle call.
+ *   Check baseSel[+0x3c][+0x74] == 0x2001 OR g_currentNodeFlags != 0: skip middle call.
  *   Else: call MStackIndirectCallBit_00470e20; if pause? ret.
  *   Install-self via baseSel[+4] chain push; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542084;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_currentNodeFlags;
 extern void MStackIndirectCallBit_00470e20(void);
 extern void ScaledArrStore_00429980(void);
 
@@ -153,14 +153,14 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
-        mov     dword ptr [g_state_00542080], ecx
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueChild], ecx
+        mov     dword ptr [g_eventQueueEnd], eax
         _emit   7dh
         _emit   09h
         call    dword ptr [eax*4 + 0]
@@ -183,7 +183,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   17h
-        mov     eax, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_currentNodeFlags]
         test    eax, eax
         _emit   75h
         _emit   0eh
@@ -193,7 +193,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         _emit   75h
         _emit   52h
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], ecx
@@ -205,7 +205,7 @@ __declspec(naked) void InstallSelfBranchIndirect_00470d10(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00470d10
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

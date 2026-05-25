@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,39 +125,39 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004252c0 (150b game) - 3 Mul10Tail calls writing to chain[+0, +4, +8]:
  *   For i in {0, 4, 8}: r = Mul10Tail(g_walkCallback, arr_src[i]);
  *   arr_dst[+i] = r.
- *   g_x_00542070, g_x_00542074, g_walkCallback updated as scratch.
+ *   g_eventQueueCurrent, g_eventQueueWorkType, g_walkCallback updated as scratch.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542074;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_arr_4252c0_0;
 extern unsigned int g_arr_4252c0_4_dst;
 
 void ThreeMul10Stores_004252c0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, [eax*4 + g_arr_4252c0_0]
         push    ecx
         push    edx
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_data_00542070], eax
-        mov     eax, dword ptr [g_x_00542048]
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     eax, dword ptr [g_xformEntityIdx]
         add     esp, 8
         mov     ecx, [eax*4 + g_arr_4252c0_0 + 0x04]
         push    ecx
         push    edx
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542070]
-        mov     dword ptr [g_x_00542074], eax
+        mov     ecx, dword ptr [g_eventQueueCurrent]
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
         add     esp, 8
         mov     [eax*4 + g_arr_4252c0_4_dst], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_eventQueueWorkType]
         mov     [edx*4 + g_arr_4252c0_4_dst + 0x04], eax
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, [edx*4 + g_arr_4252c0_0 + 0x08]
         push    ecx

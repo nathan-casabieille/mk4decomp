@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,15 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f360c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005420d8;
 extern void AudioMixerStep_004ab700(void);
 extern void ChainGetterStateInstaller_00412140(void);
@@ -161,22 +161,22 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bgip_ret1
         call    MStackPush8_004ab790
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bgip_ret1
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, offset g_data_005420d8
         shr     ecx, 2
         push    0xc0
         push    0x49db40
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542058], ecx
-        mov     dword ptr [g_data_0054207c], 0xc1
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueIdx], ecx
+        mov     dword ptr [g_eventQueueNotMask], 0xc1
         call    StoreTwoCall_0049cb40
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 8
         test    al, 1
         jne     short L_bgip_tailPop
@@ -209,41 +209,41 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      short L_bgip_phase0
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax
         test    eax, eax
-        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         jg      short L_bgip_skipToChain
         call    GuardedSeq_00471670
         pop     esi
         ret
     L_bgip_phase0:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [ecx*4 + 0x18]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4]
         or      ecx, 8
         mov     dword ptr [eax*4], ecx
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x4000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x48], eax
-        mov     dword ptr [g_data_0054207c], 0xb
+        mov     dword ptr [g_eventQueueNotMask], 0xb
     L_bgip_skipToChain:
         call    ChainGetterStateInstaller_00412140
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         sub     eax, 0x51e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [ecx*4]
         or      al, 8
         mov     dword ptr [g_walkCallback], eax
@@ -255,7 +255,7 @@ __declspec(naked) void BootGatedInitInstallPair_00412280(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_bgip_main
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_bgip_main_ret:
         pop     esi

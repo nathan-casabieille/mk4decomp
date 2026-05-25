@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,12 +126,12 @@ extern unsigned int g_data_00535e7c;
  *   call ScaledMove48to58; if !pause: scaledInit=(arg0>>2); call GDispatch1; if !pause: call DirtyToggleByGate;
  *   if !pause: bit-2 check; if not set call GuardedDualConst2AndToggle; if !pause: bit-0 check;
  *   if set jmp InstallSelfScaledChain_004916f0; baseSel[*4+0x74]=0x200e; eax=[g_cj_00542054*4 + 0]; g_walkCallback=eax;
- *   call MStackFrameCdeclDouble_004903f0; if !pause: g_x_00542048 = [g_cj_00542054*4 + 4],
- *   store to [g_x_0054205c*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp_004915f0. ret.
+ *   call MStackFrameCdeclDouble_004903f0; if !pause: g_xformEntityIdx = [g_cj_00542054*4 + 4],
+ *   store to [g_fightGroupHead*4 + 0x24], clear g_walkCallback; jmp StoreGuardedBitInstallJmp_004915f0. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern void GDispatch1_00488da0(void);
 extern void InstallSelfScaledChain_004916f0(void);
 extern void ScaledMove48to58_00490720(void);
@@ -169,7 +169,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   1ch
         call    GuardedDualConst2AndToggle_0048eba0
@@ -177,7 +177,7 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         test    eax, eax
         _emit   75h
         _emit   73h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     InstallSelfScaledChain_004916f0
@@ -194,9 +194,9 @@ __declspec(naked) void Cascade5StageInit_00491520(void) {
         _emit   75h
         _emit   2eh
         mov     ecx, dword ptr [g_cj_00542054]
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [edx*4 + 0x24], eax
         mov     dword ptr [g_walkCallback], 0
         jmp     StoreGuardedBitInstallJmp_004915f0

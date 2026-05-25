@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,31 +124,31 @@ extern unsigned int g_data_00535e7c;
 
 extern void Triple3VecMul10Tail_00424a20(void);
 extern void ThrowPairPoseCluster_0048a3d0(void);
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542070;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueCurrent;
 
 /* @addr 0x0044cad0 (169b game) - 2-axis chain diff (+0x54, +0x5c) store + Mul10 + tail-jmp.
- *   eax = chain[g_x_00542054 + 0x54]; g_walkCallback = eax;
- *   ecx = chain[g_x_00542058 + 0x54]; eax -= ecx;  (eax = diff)
- *   g_x_00542070 = ecx; chain[g_baseSel + 0x3c] = eax.
+ *   eax = chain[g_eventQueueEnd + 0x54]; g_walkCallback = eax;
+ *   ecx = chain[g_eventQueueIdx + 0x54]; eax -= ecx;  (eax = diff)
+ *   g_eventQueueCurrent = ecx; chain[g_baseSel + 0x3c] = eax.
  *   Same for +0x5c -> +0x44. g_scaledInit = g_baseSel + 0xf.
  *   call Triple3VecMul10Tail; pause? -> ret. jmp ThrowPairPoseCluster_0048a3d0.
  */
 void Chain2AxisDiffStoreTailJmp_0044cad0(void) {
     unsigned int a, b;
-    a = *(unsigned int *)(g_x_00542054 * 4 + 0x54);
+    a = *(unsigned int *)(g_eventQueueEnd * 4 + 0x54);
     g_walkCallback = a;
-    b = *(unsigned int *)(g_x_00542058 * 4 + 0x54);
+    b = *(unsigned int *)(g_eventQueueIdx * 4 + 0x54);
     a -= b;
-    g_x_00542070 = b;
+    g_eventQueueCurrent = b;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = a;
     g_walkCallback = 0;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40) = 0;
-    a = *(unsigned int *)(g_x_00542054 * 4 + 0x5c);
+    a = *(unsigned int *)(g_eventQueueEnd * 4 + 0x5c);
     g_walkCallback = a;
-    b = *(unsigned int *)(g_x_00542058 * 4 + 0x5c);
-    g_x_00542070 = b;
+    b = *(unsigned int *)(g_eventQueueIdx * 4 + 0x5c);
+    g_eventQueueCurrent = b;
     a -= b;
     g_walkCallback = a;
     *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44) = a;

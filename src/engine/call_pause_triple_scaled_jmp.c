@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_acc_00542078;
 extern packed_ptr g_xformEntityIdx;
 
@@ -15,7 +15,7 @@ extern packed_ptr g_xformEntityIdx;
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     +0x24
- *   mov     eax, [g_data_0054207c]
+ *   mov     eax, [g_eventQueueNotMask]
  *   mov     [g_scaledInit_00542044], eax
  *   mov     eax, [eax*4 + 0x0c]
  *   mov     [g_scaledInit_00542044], eax
@@ -29,7 +29,7 @@ void CallPauseTripleScaledJmp_0046c520(void) {
     unsigned int v;
     func_0046e750();
     if (g_framePauseFlag) return;
-    v = g_data_0054207c;
+    v = g_eventQueueNotMask;
     g_scaledInit_00542044 = v;
     v = *(unsigned int *)(v * 4 + 0x0c);
     g_scaledInit_00542044 = v;

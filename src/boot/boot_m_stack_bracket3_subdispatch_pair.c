@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 extern void BootMStackBracket3SubdispatchPair_00407920(void);
 extern void MStackPushZeroCallPop_00407d00_thunk_dup(void);
 
-/* @addr 0x0048fe40 (158b) - install-self pattern w/ g_state_00542088 +=
- *   g_data_00542084 clamped to 0x10000 + MStackPushZeroCallPop tail.
+/* @addr 0x0048fe40 (158b) - install-self pattern w/ g_xformScratch2088 +=
+ *   g_currentNodeFlags clamped to 0x10000 + MStackPushZeroCallPop tail.
  */
 
 __declspec(naked) void EsiInstallClampAddCall_0048fe40(void) {
@@ -139,7 +139,7 @@ __declspec(naked) void EsiInstallClampAddCall_0048fe40(void) {
         test    eax, eax
         _emit   74h
         _emit   13h
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         cmp     eax, 0x10000
         _emit   7ch
         _emit   17h
@@ -152,16 +152,16 @@ __declspec(naked) void EsiInstallClampAddCall_0048fe40(void) {
         _emit   75h
         _emit   59h
         xor     eax, eax
-        add     eax, dword ptr [g_data_00542084]
+        add     eax, dword ptr [g_currentNodeFlags]
         cmp     eax, 0x10000
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         _emit   7ch
         _emit   0ah
         mov     eax, 0x10000
-        mov     dword ptr [g_state_00542088], eax
-        mov     ecx, dword ptr [g_state_0054207c]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         call    MStackPushZeroCallPop_00407d00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

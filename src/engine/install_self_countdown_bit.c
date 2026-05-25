@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,16 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049aef0 (225b game) - install-self with countdown.
- *   chain[+0x84]==0 path: install-self at +0x08=0x0049aef0; chain[+0x84]=1; g_data_0054204c=1; pause=1; ret.
- *   chain[+0x84]!=0 path: mstack-push g_x_0054207c, g_x_00542080; g_walkCallback=6; call AtanDualDeltaThreshold_0049c870;
- *   if !pause: mstack-pop g_x_00542080 (no dec for first), then dec; g_x_0054207c gets next; bit-0 test;
- *   if set: call RoundOverFsmCluster_0049b1d0; ret. Else dec g_x_0054207c; if not zero call StackPopDispatchTagged; ret.
+ *   chain[+0x84]==0 path: install-self at +0x08=0x0049aef0; chain[+0x84]=1; g_pendingNodeType=1; pause=1; ret.
+ *   chain[+0x84]!=0 path: mstack-push g_eventQueueNotMask, g_eventQueueChild; g_walkCallback=6; call AtanDualDeltaThreshold_0049c870;
+ *   if !pause: mstack-pop g_eventQueueChild (no dec for first), then dec; g_eventQueueNotMask gets next; bit-0 test;
+ *   if set: call RoundOverFsmCluster_0049b1d0; ret. Else dec g_eventQueueNotMask; if not zero call StackPopDispatchTagged; ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void AtanDualDeltaThreshold_0049c870(void);
 extern void RoundOverFsmCluster_0049b1d0(void);
 
@@ -153,12 +153,12 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542080]
+        mov     edx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
@@ -171,24 +171,24 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         _emit   84h
         _emit   0c3h
-        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         _emit   74h
         _emit   08h
         call    RoundOverFsmCluster_0049b1d0
         pop     esi
         pop     ebx
         ret
-        mov     eax, dword ptr [g_x_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         dec     eax
-        mov     dword ptr [g_x_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   75h
         _emit   08h
         call    StackPopDispatchTagged_0041f780
@@ -197,7 +197,7 @@ __declspec(naked) void InstallSelfCountdownBit_0049aef0(void) {
         ret
         mov     dword ptr [esi + 0x08], 0x0049aef0
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_pause_00541e6c], ebx
         pop     esi
         pop     ebx

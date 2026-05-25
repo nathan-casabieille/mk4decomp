@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,15 +124,15 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00460eb0 (98b)
  *   ecx = g_state_00538158; edx = g_cj_0054205c; eax = 4;
- *   cmp edx,ecx; g_data_00542070 = eax; g_scaledInit = ecx;
- *   if eq: skip; eax = 0x40; g_data_00542070 = 0x40;
- *   skip: ecx = g_state_004d50a8; edx = g_state_0054208c;
+ *   cmp edx,ecx; g_eventQueueCurrent = eax; g_scaledInit = ecx;
+ *   if eq: skip; eax = 0x40; g_eventQueueCurrent = 0x40;
+ *   skip: ecx = g_state_004d50a8; edx = g_xformDirtyFlags;
  *   ~ecx; edx &= 0xfffffffe; eax &= ecx;
  *   g_state_00542094 = eax; g_walkCallback = ecx;
- *   g_state_0054208c = edx; eax = edx;
+ *   g_xformDirtyFlags = edx; eax = edx;
  *   if (not equal flag): jmp clear;
- *   eax |= 4; g_state_0054208c = eax; ret;
- *   clear: eax &= 0xfb; g_state_0054208c = eax; ret.
+ *   eax |= 4; g_xformDirtyFlags = eax; ret;
+ *   clear: eax &= 0xfb; g_xformDirtyFlags = eax; ret.
  */
 extern unsigned int g_state_004d50a8;
 
@@ -142,28 +142,28 @@ void DualCmpSetFlagBitToggle_00460eb0(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, 4
         cmp     edx, ecx
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         _emit   74h
         _emit   0ah
         mov     eax, 0x40
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     ecx, dword ptr [g_state_004d50a8]
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         not     ecx
         and     edx, 0xfffffffe
         and     eax, ecx
         mov     dword ptr [g_state_00542094], eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         mov     eax, edx
         _emit   75h
         _emit   08h
         or      al, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         and     al, 0xfb
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,21 +124,21 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
  *   mstack-push g_scaledInit_00542044, g_data_00535e48.
- *   ecx = g_x_00541fc0; eax = g_walkCallback; g_x_00542048=ecx; edx=eax;
+ *   ecx = g_x_00541fc0; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
  *   ecx += eax (sum index); g_data_00535e48=edx (original eax).
- *   eax = [ecx*4]; g_x_00542048=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
+ *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
  *   ecx = [ecx*4]; g_walkCallback=ecx. cmp ecx, 0xf;
  *   ecx = [eax*4 + 0x40]; g_scaledInit_00542044=ecx; ecx = [ecx*4];
  *   g_walkCallback=ecx. jbe block_8or10 (ecx<=0xf).
  *   block_c_or_e (ecx>0xf): edx = (ecx!=0 ? 0xe : 0xc).
  *   block_8_or_a: edx = (ecx!=0 ? 0xa : 8).
- *   Merge: edx += g_x_00542070; eax += edx; g_data_00535e48=edx; eax=[eax*4];
- *   g_x_00542048=eax. mstack-pop pair.
+ *   Merge: edx += g_eventQueueCurrent; eax += edx; g_data_00535e48=edx; eax=[eax*4];
+ *   g_xformEntityIdx=eax. mstack-pop pair.
  */
 extern unsigned int g_data_00535e48;
 extern unsigned int g_x_00541fc0;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 
 void DoubleIndirectFourWaySelect_0049ec00(void) {
     __asm {
@@ -154,12 +154,12 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         mov     dword ptr [eax*4 + 0], edx
         mov     ecx, dword ptr [g_x_00541fc0]
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, eax
         add     ecx, eax
         mov     dword ptr [g_data_00535e48], edx
         mov     eax, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
@@ -189,11 +189,11 @@ void DoubleIndirectFourWaySelect_0049ec00(void) {
         _emit   74h
         _emit   05h
         mov     edx, 0x0a
-        add     edx, dword ptr [g_x_00542070]
+        add     edx, dword ptr [g_eventQueueCurrent]
         add     eax, edx
         mov     dword ptr [g_data_00535e48], edx
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax

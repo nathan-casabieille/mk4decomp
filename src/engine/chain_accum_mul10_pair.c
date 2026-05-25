@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -121,37 +121,37 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_004d57ac_arr;
 
 /* @addr 0x00490b70 (191b game) - chain[+0x58] accumulate, then 2 Mul10 calls + chain[+0x54,+0x5c] accumulate.
- *   chain[g_x_0054205c + 0x58] += g_walkCallback; g_x_00542074 = result.
- *   g_scaledInit = chain[g_baseSel + 0x40]; push packed_ptr[g_scaledInit], g_x_00542070;
+ *   chain[g_fightGroupHead + 0x58] += g_walkCallback; g_eventQueueWorkType = result.
+ *   g_scaledInit = chain[g_baseSel + 0x40]; push packed_ptr[g_scaledInit], g_eventQueueCurrent;
  *   call Mul10Tail; g_walkCallback = result; add esp,8.
  *   g_scaledInit = chain[g_baseSel + 0x44]; eax = packed_ptr[g_scaledInit];
- *   g_x_00542074 = eax; push eax, g_x_00542070; call Mul10Tail; add esp,8.
- *   g_x_00542074 = result; chain[g_x_0054205c + 0x54] += g_walkCallback; g_x_00542070 = sum.
- *   chain[g_x_0054205c + 0x5c] += g_x_00542074; g_x_00542070 = sum.
+ *   g_eventQueueWorkType = eax; push eax, g_eventQueueCurrent; call Mul10Tail; add esp,8.
+ *   g_eventQueueWorkType = result; chain[g_fightGroupHead + 0x54] += g_walkCallback; g_eventQueueCurrent = sum.
+ *   chain[g_fightGroupHead + 0x5c] += g_eventQueueWorkType; g_eventQueueCurrent = sum.
  */
 void ChainAccumMul10Pair_00490b70(void) {
     unsigned int v;
-    v = g_walkCallback + *(unsigned int *)(g_x_0054205c * 4 + 0x58);
-    g_x_00542074 = v;
-    *(unsigned int *)(g_x_0054205c * 4 + 0x58) = v;
+    v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x58);
+    g_eventQueueWorkType = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x58) = v;
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x40);
     g_walkCallback = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
-        g_x_00542070, g_walkCallback);
+        g_eventQueueCurrent, g_walkCallback);
     g_scaledInit_00542044 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x44);
-    g_x_00542074 = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
-    g_x_00542074 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
-        g_x_00542070, g_x_00542074);
-    v = g_walkCallback + *(unsigned int *)(g_x_0054205c * 4 + 0x54);
-    g_x_00542070 = v;
-    *(unsigned int *)(g_x_0054205c * 4 + 0x54) = v;
-    v = g_x_00542074 + *(unsigned int *)(g_x_0054205c * 4 + 0x5c);
-    g_x_00542070 = v;
-    *(unsigned int *)(g_x_0054205c * 4 + 0x5c) = v;
+    g_eventQueueWorkType = (&g_data_004d57ac_arr)[g_scaledInit_00542044];
+    g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(
+        g_eventQueueCurrent, g_eventQueueWorkType);
+    v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x54);
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x54) = v;
+    v = g_eventQueueWorkType + *(unsigned int *)(g_fightGroupHead * 4 + 0x5c);
+    g_eventQueueCurrent = v;
+    *(unsigned int *)(g_fightGroupHead * 4 + 0x5c) = v;
 }

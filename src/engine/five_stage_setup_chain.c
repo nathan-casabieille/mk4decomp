@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00485cc0 (151b game) - sequential 5-call setup chain:
  *   GateDispatch6c -> pause? ret;
  *   Wrapper_0048a280 -> pause? ret;
- *   g_x_0054207c = 0; EntryThunkBodyStateMachine_00457bb0 -> pause? ret;
+ *   g_eventQueueNotMask = 0; EntryThunkBodyStateMachine_00457bb0 -> pause? ret;
  *   g_walkCallback = 6; ByteWordTableTaggedDispatch_0048a050 -> pause? ret;
- *   g_x_00542078 = chain[cj].slot54; g_x_0054207c = chain[cj].slot5c;
+ *   g_x_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
  *   StoreTwoCallSubMain_00426b60 -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
  */
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void ByteWordTableTaggedDispatch_0048a050(void);
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void GateDispatch6c_00494580(void);
@@ -156,7 +156,7 @@ void FiveStageSetupChain_00485cc0(void) {
         test    eax, eax
         _emit   75h
         _emit   76h
-        mov     dword ptr [g_x_0054207c], 0
+        mov     dword ptr [g_eventQueueNotMask], 0
         call    EntryThunkBodyStateMachine_00457bb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -172,7 +172,7 @@ void FiveStageSetupChain_00485cc0(void) {
         mov     ecx, [eax*4 + g_chain_arr_485cc0 + 0x54]
         mov     dword ptr [g_acc_00542078], ecx
         mov     edx, [eax*4 + g_chain_arr_485cc0 + 0x5c]
-        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         call    StoreTwoCallSubMain_00426b60
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

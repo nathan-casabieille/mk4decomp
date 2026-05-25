@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -135,14 +135,14 @@ extern unsigned int g_data_00538164;
 extern unsigned int g_data_0053a178;
 extern unsigned int g_data_0053a250;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void CallPauseLoadAndDispatch_004235f0(void);
 extern void InstallSelfPause2_00423630(void);
 extern void RangeMulMod_004ab2a0(void);
@@ -154,60 +154,60 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      ecx, dword ptr [g_data_00538158]
         mov      edx, dword ptr [g_data_0053815c]
         push     esi
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_currentNodeIdx], ecx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      esi, dword ptr [ecx*4 + 0x54]
         mov      dword ptr [g_data_00542078], esi
         mov      eax, dword ptr [edx*4 + 0x54]
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      ecx, dword ptr [ecx*4 + 0x5c]
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      edx, dword ptr [edx*4 + 0x5c]
         sub      eax, esi
         sub      edx, ecx
         push     eax
         push     eax
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_0054207c], eax
-        mov      dword ptr [g_data_00542080], edx
+        mov      dword ptr [g_eventQueueNotMask], eax
+        mov      dword ptr [g_eventQueueChild], edx
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      eax, dword ptr [g_walkCallback]
         push     eax
         push     eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542074]
+        mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         add      ecx, eax
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542074], ecx
+        mov      dword ptr [g_eventQueueWorkType], ecx
         call     FpuSqrtMul_004ab350
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      eax, dword ptr [g_walkCallback]
-        mov      ecx, dword ptr [g_data_0054207c]
-        mov      dword ptr [g_data_00542084], eax
+        mov      ecx, dword ptr [g_eventQueueNotMask]
+        mov      dword ptr [g_currentNodeFlags], eax
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      edx, dword ptr [g_walkCallback]
-        mov      eax, dword ptr [g_data_00542080]
-        mov      ecx, dword ptr [g_data_00542084]
-        mov      dword ptr [g_data_0054207c], edx
+        mov      eax, dword ptr [g_eventQueueChild]
+        mov      ecx, dword ptr [g_currentNodeFlags]
+        mov      dword ptr [g_eventQueueNotMask], edx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_33e4
         mov      edx, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542080], edx
+        mov      dword ptr [g_eventQueueChild], edx
     L_33e4:
         pop      esi
         ret
@@ -224,7 +224,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         /* === h2 (0x4233f0): p1→p2 seed → 4235f0 === */
         mov      eax, dword ptr [g_data_00538158]
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_00537f48]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
@@ -241,7 +241,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, OFFSET g_data_00535e7c
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
         jmp      CallPauseLoadAndDispatch_004235f0
         nop
@@ -253,7 +253,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         /* === h3 (0x423470): p2→p1 seed → 4235f0 === */
         mov      eax, dword ptr [g_data_0053815c]
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_005380e0]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
@@ -270,7 +270,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, OFFSET g_data_00535e74
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
         jmp      CallPauseLoadAndDispatch_004235f0
         nop
@@ -282,7 +282,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         /* === h4 (0x4234f0): p3→p4 seed → 423630 === */
         mov      eax, dword ptr [g_data_00538160]
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_0053a178]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
@@ -299,7 +299,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, OFFSET g_data_00535e7c
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
         jmp      InstallSelfPause2_00423630
         nop
@@ -311,7 +311,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         /* === h5 (0x423570): p4→p3 seed → 423630 === */
         mov      eax, dword ptr [g_data_00538164]
         mov      ecx, dword ptr [g_data_00542060]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_0053a250]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
@@ -328,7 +328,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      edx, dword ptr [g_data_00542060]
         mov      eax, OFFSET g_data_00535e74
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x44], eax
         jmp      InstallSelfPause2_00423630
     }

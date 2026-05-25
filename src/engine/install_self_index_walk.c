@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,17 +126,17 @@ extern unsigned int g_data_00535e7c;
  *   snapshot+clear chain[+0x84]. If was nonzero -> recompute eax = 0x004e7528>>2 + 5
  *     (jmp at +0xa7 back to +0x63) then resume search.
  *   If was zero: call DualScaledStore; if pause? ret.
- *   else: copy g_cj_0054205c to baseSel[+0x4c] and g_x_00542058; compute
- *   eax = 0x004e7528>>2 -> g_x_00542054 -> [eax*4]; if <0: call Thunk_0049cbc0, ret.
- *   else: add g_data_00542080; load scaledInit; indirect call. If pause? ret.
- *   else: refetch [g_x_00542054*4+0x10]; if zero: add 5 to eax, jmp back to scaledInit
+ *   else: copy g_cj_0054205c to baseSel[+0x4c] and g_eventQueueIdx; compute
+ *   eax = 0x004e7528>>2 -> g_eventQueueEnd -> [eax*4]; if <0: call Thunk_0049cbc0, ret.
+ *   else: add g_eventQueueChild; load scaledInit; indirect call. If pause? ret.
+ *   else: refetch [g_eventQueueEnd*4+0x10]; if zero: add 5 to eax, jmp back to scaledInit
  *   walk. If non-zero: install-self at [esi+8]=0x00450de0, chain[+0x84]=1, pause=1; ret.
  */
 extern unsigned int g_data_004e7528;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern void DualScaledStore_00452740(void);
 extern void Thunk_0049cbc0(void);
 
@@ -159,11 +159,11 @@ __declspec(naked) void InstallSelfIndexWalk_00450de0(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     dword ptr [edx*4 + 0x4c], ecx
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_x_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         mov     eax, OFFSET g_data_004e7528
         shr     eax, 2
 L_isw_walk:
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -173,7 +173,7 @@ L_isw_walk:
         pop     esi
         ret
 L_isw_after_thunk:
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
@@ -182,7 +182,7 @@ L_isw_after_thunk:
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_isw_pop_ret
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 0x10]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -190,12 +190,12 @@ L_isw_after_thunk:
         add     eax, 5
         jmp     short L_isw_walk
 L_isw_resume2:
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         add     eax, 5
         jmp     short L_isw_walk
 L_isw_install:
         mov     eax, 1
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [esi + 8], edi
         mov     dword ptr [esi + 0x84], eax
         mov     dword ptr [g_pause_00541e6c], eax

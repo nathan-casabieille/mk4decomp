@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,10 +130,10 @@ extern unsigned int g_data_0053a424;
 extern unsigned int g_data_0053a428;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f88;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
 extern void QuadInterpolator_00425380(void);
 
@@ -142,23 +142,23 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
     __asm
     {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
@@ -168,19 +168,19 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_data_0052ab10]
-        mov     edx, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     edx, dword ptr [g_pendingNodeType]
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     esi, dword ptr [edx*4]
         mov     dword ptr [g_walkCallback], esi
         mov     ecx, dword ptr [eax*4 + 0x54]
         sub     ecx, esi
-        mov     dword ptr [g_data_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_data_0053a420], ecx
         mov     esi, dword ptr [edx*4 + 4]
         mov     dword ptr [g_walkCallback], esi
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, esi
-        mov     dword ptr [g_data_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     dword ptr [g_data_0053a424], ecx
         mov     edx, dword ptr [edx*4 + 8]
         mov     ecx, offset g_data_00538098
@@ -188,14 +188,14 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     eax, dword ptr [eax*4 + 0x5c]
         sub     eax, edx
         mov     edx, offset g_data_0053a420
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_data_0053a428], eax
         mov     eax, dword ptr [g_data_00541f88]
         shr     edx, 2
         shr     ecx, 2
-        mov     dword ptr [g_data_0054204c], edx
-        mov     dword ptr [g_data_00542048], eax
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_pendingNodeType], edx
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    QuadInterpolator_00425380
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -209,19 +209,19 @@ __declspec(naked) void Vec3PackedTripleCallBracket_004764d0(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
     L_v3ptcb_ret:
         pop     esi

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,28 +123,28 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00432000 (264b game) - 4-field setup + 2-iter Mul10Tail loop.
- *   diff = g_walkCallback - [g_x_0054204c*4]; -= [g_data_00542050*4]; shl 16;
- *   += [g_x_0054204c*4 +4]; += [g_data_00542050*4 +4].
+ *   diff = g_walkCallback - [g_pendingNodeType*4]; -= [g_eventQueueTotal*4]; shl 16;
+ *   += [g_pendingNodeType*4 +4]; += [g_eventQueueTotal*4 +4].
  *   call DivLongPushCall_004ab320; if pause? final-ret.
  *   Init g_data_0053a1ac = 2. Loop while g_data_0053a1ac >= 0:
- *     Mul10Tail([g_x_00542048*4], g_walkCallback), store to scaledInit++, ++g_x_00542048, --g_data_0053a1ac.
- *   At end: scaledInit -= 3, g_x_00542048 -= 4 (rewind to start), pop esi, ret.
+ *     Mul10Tail([g_xformEntityIdx*4], g_walkCallback), store to scaledInit++, ++g_xformEntityIdx, --g_data_0053a1ac.
+ *   At end: scaledInit -= 3, g_xformEntityIdx -= 4 (rewind to start), pop esi, ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0053a1ac;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
 extern void DivLongPushCall_004ab320(void);
 
 __declspec(naked) void DiffMul10Loop_00432000(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [g_walkCallback]
         push    esi
         mov     edx, dword ptr [ecx*4 + 0]
         sub     eax, edx
-        mov     edx, dword ptr [g_data_00542050]
+        mov     edx, dword ptr [g_eventQueueTotal]
         mov     dword ptr [g_walkCallback], eax
         sub     eax, dword ptr [edx*4 + 0]
         shl     eax, 0x10
@@ -164,17 +164,17 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [eax*4 + 0]
         push    ecx
         push    edx
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         add     esp, 8
         inc     ecx
-        mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_x_0053a1ac], 2
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0], eax
@@ -182,18 +182,18 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         mov     ecx, dword ptr [g_walkCallback]
         inc     edx
         mov     dword ptr [g_scaledInit_00542044], edx
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
         push    eax
         push    ecx
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_x_0053a1ac]
         add     esp, 8
         inc     edx
         dec     ecx
-        mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_x_0053a1ac], ecx
         _emit   79h
         _emit   0a8h
@@ -202,7 +202,7 @@ __declspec(naked) void DiffMul10Loop_00432000(void) {
         sub     ecx, 3
         sub     eax, 4
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         pop     esi
         ret
     }

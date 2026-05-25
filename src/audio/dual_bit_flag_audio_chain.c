@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *   Reads g_state_004d50b4 as byte pair (al,ah).
  *   Branch 0 (al bit 0 OR ah bit 0): movsx slot from g_byteTab_004f3080[edx*4];
  *     if slot != -1 set chain->field_30 = slot and SetJmp; push 0x00160000;
- *     g_state_00542080 = 0x708; call Helper_AudioStub_2960.
+ *     g_eventQueueChild = 0x708; call Helper_AudioStub_2960.
  *   Branch 1 (al bit 1 OR ah bit 1): same with g_byteTab_004f3080+1 and push 0xffea0000.
  */
 extern unsigned int g_byteTab_004f3080;
@@ -156,7 +156,7 @@ void DualBitFlagAudioChain_004a29d0(void) {
         call    SetJmp_004a1ad0
     L_b0_skip:
         push    0x00160000
-        mov     dword ptr [g_state_00542080], 0x00000708
+        mov     dword ptr [g_eventQueueChild], 0x00000708
         call    Helper_AudioStub_2960
         mov     eax, dword ptr [g_state_004d50b4]
         add     esp, 4
@@ -179,7 +179,7 @@ void DualBitFlagAudioChain_004a29d0(void) {
         call    SetJmp_004a1ad0
     L_b1_skip:
         push    0xffea0000
-        mov     dword ptr [g_state_00542080], 0x00000708
+        mov     dword ptr [g_eventQueueChild], 0x00000708
         call    Helper_AudioStub_2960
         add     esp, 4
     L_ret:

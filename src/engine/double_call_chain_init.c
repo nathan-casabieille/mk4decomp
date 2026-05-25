@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0043d780 (169b game) - init + 2-stage loop call sequence with chain[+0x30/+0x6c/+0x70/+0x74] init.
- *   g_walkCallback=0x83; g_x_00542070=-1; call Thunk; pause? -> ret.
+ *   g_walkCallback=0x83; g_eventQueueCurrent=-1; call Thunk; pause? -> ret.
  *   esi=0; ebx=0x45; g_walkCallback=ebx; call MStackPush2LLWalkCompare_004069b0; pause? -> ret.
  *   ebp=0x7a; edi=0xffffeb86; loop_top:
  *     if (208c & 4): ret;
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *     g_walkCallback=ebx=0x45; call MStackPush2LLWalkCompare_004069b0;
  *     if (pause == 0): loop;
  */
-extern unsigned int g_x_00542070;
+extern unsigned int g_eventQueueCurrent;
 extern void MStackPush2LLWalkCompare_004069b0(void);
 extern void Thunk_0049cc00(void);
 
@@ -144,7 +144,7 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
         push    esi
         push    edi
         mov     dword ptr [g_walkCallback], 0x83
-        mov     dword ptr [g_x_00542070], 0xffffffff
+        mov     dword ptr [g_eventQueueCurrent], 0xffffffff
         call    Thunk_0049cc00
         mov     eax, dword ptr [g_framePauseFlag]
         xor     esi, esi
@@ -159,7 +159,7 @@ __declspec(naked) void DoubleCallChainInit_0043d780(void) {
         _emit   64h
         mov     ebp, 0x7a
         mov     edi, 0xffffeb86
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   51h
         mov     eax, dword ptr [g_scaledInit_00542044]

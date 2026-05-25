@@ -6,16 +6,16 @@
 
 /* @addr 0x004b9770 (197b engine.render) - dispatch + reorder + scaled chain copy.
  *   call DispatchScaledLEA; ecx = [0x52ab10] + 0x18; g_scaledInit = packed_ptr(0xab4878);
- *   g_x_00542048 = ecx; call NodeApplyTransform; pause? -> tail copy.
+ *   g_xformEntityIdx = ecx; call NodeApplyTransform; pause? -> tail copy.
  *   push 0xab4d58, 0xab4878; call Word9Reorder; add esp, 8.
  *   Two memcpy-shl4 loops: [0x52aa90 .. +9 dwords] = [0xab4878 .. +9 words]*16;
  *     [0x537f50 .. +9 dwords] = [0xab4d58 .. +9 words]*16.
- *   ecx = [0x52ab10] + 0x15 (packed_ptr ofs); g_x_00542048 = ecx;
+ *   ecx = [0x52ab10] + 0x15 (packed_ptr ofs); g_xformEntityIdx = ecx;
  *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
  */
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_x_0052ab10;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_x_00ab4d18;
 extern unsigned int g_x_00ab4d1c;
 extern unsigned int g_x_00ab4d20;
@@ -33,7 +33,7 @@ void Helper_PreTick(void) {
         sar     eax, 2
         add     ecx, 0x18
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    NodeApplyTransform_C
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -69,7 +69,7 @@ void Helper_PreTick(void) {
         _emit   0ebh
         mov     ecx, dword ptr [g_x_0052ab10]
         lea     eax, [ecx + 0x15]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_x_00ab4d18], edx
         mov     edx, [eax*4 + 4]

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /*
  * @addr 0x0042ed90 (125b game) - cmp7-check then conditional state update:
  *   call Cmp7DirtyToggle; on pause clear, if state-bit 0 set and
- *   0x537f8c is null and slot[walk]==1 and g_x_0053a318==g_data_00542070,
+ *   0x537f8c is null and slot[walk]==1 and g_x_0053a318==g_eventQueueCurrent,
  *   update slot[walk]=2 and 0x537f8c=g_x_0053a318; then tail-call
  *   CallSetPause.
  */
@@ -140,7 +140,7 @@ __declspec(naked) void Cmp7CondStateUpdate_0042ed90(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     done
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ecx, 1
         test    al, cl
         push    esi
@@ -154,11 +154,11 @@ __declspec(naked) void Cmp7CondStateUpdate_0042ed90(void) {
         cmp     dword ptr [eax*4 + 0], ecx
         jne     tailCall
         mov     edx, dword ptr [g_x_0053a318]
-        mov     esi, dword ptr [g_data_00542070]
+        mov     esi, dword ptr [g_eventQueueCurrent]
         cmp     edx, esi
         mov     dword ptr [g_walkCallback], edx
         je      tailCall
-        mov     dword ptr [g_data_00542070], 2
+        mov     dword ptr [g_eventQueueCurrent], 2
         mov     dword ptr [eax*4 + 0], 2
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_x_00537f8c], ecx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,8 +122,8 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00439410 (135b) - install-self pattern w/ dec g_state_00542080
- *   + g_state_00535ddc < g_data_00542084 cmp gate. */
+/* @addr 0x00439410 (135b) - install-self pattern w/ dec g_eventQueueChild
+ *   + g_state_00535ddc < g_currentNodeFlags cmp gate. */
 extern void PushCallSet2147Jmp_00439320(void);
 
 __declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
@@ -136,16 +136,16 @@ __declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
         test    eax, eax
         _emit   74h
         _emit   2fh
-        mov     eax, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   75h
         _emit   07h
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
         mov     eax, dword ptr [g_state_00535ddc]
-        mov     ecx, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         _emit   7ch
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfDecCmpGate_00439410(void) {
         test    eax, eax
         _emit   75h
         _emit   26h
-        mov     dword ptr [g_state_00542080], 0x3c
+        mov     dword ptr [g_eventQueueChild], 0x3c
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00439410
         mov     dword ptr [esi + 0x84], eax

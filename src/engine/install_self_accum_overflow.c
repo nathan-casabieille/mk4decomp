@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,16 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00428b20 (166b game) - install-self with accumulator overflow check:
- *   chain[sel].slot84 -> eax; clear. If !=0: eax = g_state_00542088 + g_currentNodeFlags;
- *     g_state_00542088 = eax. If eax > 0x10000: jmp StackPopDispatchTagged; ret.
+ *   chain[sel].slot84 -> eax; clear. If !=0: eax = g_xformScratch2088 + g_currentNodeFlags;
+ *     g_xformScratch2088 = eax. If eax > 0x10000: jmp StackPopDispatchTagged; ret.
  *   Else: GuardedClampStoreJmp; pause? ret.
- *   Then: walkCallback = g_state_00542088; g_data_00542070 = g_state_00542080;
+ *   Then: walkCallback = g_xformScratch2088; g_eventQueueCurrent = g_eventQueueChild;
  *     MStackPushZeroCallPop; pause? ret;
- *     if (g_x_00542058 != 0) call g_x_00542058; pause? ret;
- *     install self, slot84=1, g_x_0054204c=1, framePauseFlag=1.
+ *     if (g_eventQueueIdx != 0) call g_eventQueueIdx; pause? ret;
+ *     install self, slot84=1, g_pendingNodeType=1, framePauseFlag=1.
  */
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542058;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueIdx;
 extern void GuardedClampStoreJmp_00428bd0(void);
 
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -147,11 +147,11 @@ __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
         test    eax, eax
         _emit   74h
         _emit   20h
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         mov     edx, dword ptr [g_currentNodeFlags]
         add     eax, edx
         cmp     eax, 0x10000
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         _emit   7eh
         _emit   1ah
         call    StackPopDispatchTagged_0041f780
@@ -162,16 +162,16 @@ __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
         test    eax, eax
         _emit   75h
         _emit   54h
-        mov     eax, dword ptr [g_state_00542088]
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_xformScratch2088]
+        mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         call    MStackPushZeroCallPop_00407d00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   30h
-        mov     eax, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         test    eax, eax
         _emit   74h
         _emit   02h
@@ -183,7 +183,7 @@ __declspec(naked) void InstallSelfAccumOverflow_00428b20(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset InstallSelfAccumOverflow_00428b20
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

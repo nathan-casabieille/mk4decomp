@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0042ee40 (370b game) - boot-init: clears slot 0x52ab10, seeds
  *   bookkeeping globals, and zero-fills a counted region.
  *   Calls BootInitGuardedCallChain_004265d0 first. On no-error: reads the
- *   slot index from g_data_0052ab10 into g_data_00542044, calls
+ *   slot index from g_data_0052ab10 into g_currentNodeIdx, calls
  *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
  *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_data_00535e6c slot getting
  *   (0, 0, 0x10000, 0). Then sets globals: 0x535de0=0, 0x541dd8=0,
@@ -155,8 +155,8 @@ extern unsigned int g_data_0053a1ac;
 extern unsigned int g_data_00541dd8;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fbc;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_0054371c;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
@@ -175,14 +175,14 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         cmp     eax, ebx
         jne     L_bic_done
         mov     eax, dword ptr [g_data_0052ab10]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         lea     esi, [eax*4]
         call    ZeroThreeFields_00404ed0
         mov     dword ptr [esi + 0x54], ebx
         mov     dword ptr [esi + 0x58], ebx
         mov     dword ptr [esi + 0x5c], 0xfffc0000
         mov     eax, dword ptr [g_data_00535e6c]
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         shl     eax, 2
         mov     dword ptr [eax + 0x54], ebx
         mov     dword ptr [eax + 0x58], ebx
@@ -190,21 +190,21 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [eax + 0x34], ebx
         mov     eax, dword ptr [g_data_00541fbc]
         mov     dword ptr [g_data_00535de0], ebx
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, 0xa
         mov     dword ptr [g_data_00541dd8], ebx
         mov     dword ptr [g_data_0053a170], 2
         mov     dword ptr [g_walkCallback], ebx
         mov     dword ptr [g_data_0053a1ac], eax
     L_bic_zeroLoop:
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4], ecx
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_data_0053a1ac]
         inc     edx
         dec     ecx
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_data_0053a1ac], ecx
         jns     short L_bic_zeroLoop
         mov     dword ptr [g_data_0052aabc], eax
@@ -213,19 +213,19 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_bic_done
         mov     esi, dword ptr [g_walkCallback]
-        mov     edi, dword ptr [g_data_00542070]
+        mov     edi, dword ptr [g_eventQueueCurrent]
         push    2
         call    TableWalkBoundedCmp_004bd890
         mov     eax, dword ptr [g_data_00537f48]
         add     esp, 4
         mov     byte ptr [g_data_0054371c], 1
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00542070], ebx
+        mov     dword ptr [g_eventQueueCurrent], ebx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
         mov     ecx, dword ptr [g_data_005380e0]
-        mov     dword ptr [g_data_00542070], 1
+        mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_walkCallback], ecx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
@@ -234,14 +234,14 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     byte ptr [g_data_0054371c], bl
         shr     edx, 2
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_data_00542070], edi
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_eventQueueCurrent], edi
+        mov     dword ptr [g_currentNodeIdx], edx
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
         mov     eax, offset g_data_0050b214
         shr     eax, 2
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
     L_bic_done:
         pop     edi

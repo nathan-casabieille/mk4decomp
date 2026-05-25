@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,11 +126,11 @@ extern unsigned int g_data_004d6718;
 extern unsigned int g_data_004f27f0;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void CmpDivJmp_0049d080(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -143,7 +143,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
     __asm
     {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     edx, offset g_data_004d6718
         mov     dword ptr [g_state_004d57ac], eax
@@ -156,15 +156,15 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         xor     esi, esi
         cmp     eax, esi
         jne     L_mppci_ret
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 4
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         je      short L_mppci_branchA
         call    CallSetPause_0041f830
         pop     esi
@@ -172,45 +172,45 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
     L_mppci_branchA:
         mov     edx, offset g_data_004f27f0
         shr     edx, 2
-        mov     dword ptr [g_data_00542050], edx
+        mov     dword ptr [g_eventQueueTotal], edx
         call    Vec3AccMul10ChainBlend_0049c3d0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_mppci_ret
         call    TripleEntry3Block_00498df0
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x64], esi
-        mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054204c], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_pendingNodeType], eax
         mov     ecx, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_walkCallback], 1
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    CmpDivJmp_0049d080
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_mppci_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_mppci_join
         mov     edx, dword ptr [g_data_00541f98]
-        mov     eax, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_data_00542048], edx
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4 + 0x6c]
         push    eax
         push    0xffff3334
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         add     esp, 8
         mov     dword ptr [ecx*4], eax
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 4], esi
-        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [eax*4 + 0x74]
         push    eax
         push    0xffff3334
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
@@ -218,11 +218,11 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_mppci_ret
     L_mppci_join:
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     eax, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2
         mov     ecx, dword ptr [eax]
         or      ecx, 8
@@ -230,8 +230,8 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         mov     ecx, 0xc000
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x48], ecx
-        mov     eax, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     dword ptr [g_currentNodeIdx], eax
     L_mppci_ret:
         pop     esi
         ret

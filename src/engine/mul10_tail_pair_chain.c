@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,25 +123,25 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470390 (232b game) - Mul10Tail pair with chain init + indirect via scaledInit pair.
- *   Pick scaledInit from 0x005380c0>>2 (if g_x_0054205c==g_state_00538158) or 0x0052d728>>2;
- *   chain[+0]=g_walkCallback=[g_x_0054205c*4+0x54], chain[+4]=g_x_00542070=[g_x_0054205c*4+0x5c];
+ *   Pick scaledInit from 0x005380c0>>2 (if g_fightGroupHead==g_state_00538158) or 0x0052d728>>2;
+ *   chain[+0]=g_walkCallback=[g_fightGroupHead*4+0x54], chain[+4]=g_eventQueueCurrent=[g_fightGroupHead*4+0x5c];
  *   call ScaledChainDouble_004911f0; pause-check.
  *   Two Mul10Tail calls with 0x00027333 multiplier:
- *     g_x_0054207c = Mul10Tail(0x27333, g_x_0054207c);
- *     eax = Mul10Tail(0x27333, g_x_00542080); g_x_00542080=eax;
- *   accumulate: g_walkCallback += g_x_0054207c, g_x_00542070 += eax; store back to chain[+8/+0xc]. ret.
+ *     g_eventQueueNotMask = Mul10Tail(0x27333, g_eventQueueNotMask);
+ *     eax = Mul10Tail(0x27333, g_eventQueueChild); g_eventQueueChild=eax;
+ *   accumulate: g_walkCallback += g_eventQueueNotMask, g_eventQueueCurrent += eax; store back to chain[+8/+0xc]. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void ScaledChainDouble_004911f0(void);
 
 __declspec(naked) void Mul10TailPairChain_00470390(void) {
     __asm {
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         push    esi
         mov     esi, dword ptr [g_state_00538158]
         mov     eax, 0x005380c0
@@ -149,48 +149,48 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_scaledInit_00542044], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [edx*4 + 0x54]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x5c]
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_x_00542048]
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_xformEntityIdx]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 4], ecx
         call    ScaledChainDouble_004911f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   72h
-        mov     edx, dword ptr [g_x_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         push    edx
         push    0x00027333
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_x_0054207c], eax
-        mov     eax, dword ptr [g_x_00542080]
+        mov     dword ptr [g_eventQueueNotMask], eax
+        mov     eax, dword ptr [g_eventQueueChild]
         push    eax
         push    0x00027333
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
-        mov     esi, dword ptr [g_x_0054207c]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     esi, dword ptr [g_eventQueueNotMask]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         add     esp, 8
         add     ecx, esi
         add     edx, eax
-        mov     dword ptr [g_x_00542070], edx
-        mov     edx, dword ptr [g_x_00542048]
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueCurrent], edx
+        mov     edx, dword ptr [g_xformEntityIdx]
+        mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4 + 8], ecx
-        mov     eax, dword ptr [g_x_00542048]
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_xformEntityIdx]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 0x0c], ecx
         pop     esi
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,16 +124,16 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048fb40 (127b) - if (g_x_0052ab40 & 0x4000) ret;
  *   call ArgScaledLoadCmpP1_0048e550(str_542fa0); pause? ret;
- *   arr1[sel] = g_x_00542070;
+ *   arr1[sel] = g_eventQueueCurrent;
  *   call ArgScaledLoadCmpP1_0048e550(str_542fa8); pause? ret;
- *   diff = arr2[sel] - g_walkCallback; g_x_00542070 = diff;
- *   if (diff < 0) { diff=0; g_x_00542070=0; }
+ *   diff = arr2[sel] - g_walkCallback; g_eventQueueCurrent = diff;
+ *   if (diff < 0) { diff=0; g_eventQueueCurrent=0; }
  *   arr2[sel] = diff.
  */
 extern unsigned int g_str_00542fa0;
 extern unsigned int g_str_00542fa8;
 extern unsigned int g_x_0052ab40;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void ArgScaledLoadCmpP1_0048e550(void);
 
 extern unsigned int g_arr_005d8208;
@@ -142,7 +142,7 @@ extern unsigned int g_arr_005d83a4;
 void GatedScaledSubSat_0048fb40(void) {
     __asm {
         mov     eax, dword ptr [g_x_0052ab40]
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 0x4000
         mov     dword ptr [g_state_00542094], eax
         _emit   75h
@@ -155,7 +155,7 @@ void GatedScaledSubSat_0048fb40(void) {
         _emit   75h
         _emit   52h
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         push    offset g_str_00542fa8
         mov     [eax*4 + g_arr_005d83a4], ecx
         call    ArgScaledLoadCmpP1_0048e550
@@ -168,11 +168,11 @@ void GatedScaledSubSat_0048fb40(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, [ecx*4 + g_arr_005d8208]
         sub     eax, edx
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   79h
         _emit   07h
         xor     eax, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     [ecx*4 + g_arr_005d8208], eax
         }
 }

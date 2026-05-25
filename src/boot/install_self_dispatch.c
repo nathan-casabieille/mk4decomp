@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00407620 (140b boot) - install-self pattern with conditional dispatch:
- *   g_x_0054204c = g_scaledInit + 0xf; mstack-push g_walkCallback; ++g_x_00542048.
+ *   g_pendingNodeType = g_scaledInit + 0xf; mstack-push g_walkCallback; ++g_xformEntityIdx.
  *   If arr[g_scaledInit].disp20[1] (ch bit 0) is set: call F1, else: call F2.
  *   On pause: ret. install self; if arr_final[g_scaledInit] != 0: call F3;
- *   pause? ret. clear bit 0 of g_state_0054208c.
+ *   pause? ret. clear bit 0 of g_xformDirtyFlags.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern void ExtractBitsToVec3_00407c00(void);
 extern void ThreeChan11BitPack_00407c60(void);
 
@@ -141,12 +141,12 @@ void InstallSelfDispatch_00407620(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         lea     ecx, [eax + 0xf]
-        mov     dword ptr [g_x_0054204c], ecx
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, [ecx*4 + g_arr_407620_mstack]
         inc     ecx
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     ecx, [eax*4 + g_arr_407620_disp_20]
         test    ch, 1
         _emit   74h
@@ -167,7 +167,7 @@ void InstallSelfDispatch_00407620(void) {
         mov     dword ptr [g_walkCallback], offset InstallSelfDispatch_00407620
         mov     eax, [eax*4 + g_arr_407620_final]
         test    eax, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   0eh
         call    Helper_TickAlt
@@ -175,9 +175,9 @@ void InstallSelfDispatch_00407620(void) {
         test    eax, eax
         _emit   75h
         _emit   0ch
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

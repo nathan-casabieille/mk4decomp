@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,12 +132,12 @@ extern unsigned int g_data_00537f88;
 extern unsigned int g_data_0053a408;
 extern unsigned int g_data_00541d88;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542094;
 extern void AudioMStackPushHandlerPair_0049ff30(void);
 extern void BitSetByIndex_004a07a0(void);
@@ -158,7 +158,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         xor      esi, esi
         cmp      eax, esi
         jne      L_fd46
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 1
         test     al, bl
         je       L_fd46
@@ -171,20 +171,20 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         mov      dword ptr [g_walkCallback], eax
         jne      L_fd46
         mov      eax, dword ptr [g_data_00537f88]
-        mov      dword ptr [g_data_0054207c], esi
+        mov      dword ptr [g_eventQueueNotMask], esi
         cmp      eax, 0xf
         mov      dword ptr [g_data_00542078], eax
         ja       L_fcd4
         push     0x252
         call     DualPushSetCallDualPop_00404b10
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, bl
         jne      short L_fc0c
         call     MStackPush2TableNot_00426230
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_fd46
-        mov      eax, dword ptr [g_data_00542074]
+        mov      eax, dword ptr [g_eventQueueWorkType]
         and      eax, 4
         mov      dword ptr [g_data_00542094], eax
         jne      short L_fc58
@@ -212,11 +212,11 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         call     MStackDualPushSaveRestore_004a09c0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         je       short L_fd46
         push     0x239
         call     DualPushSetCallDualPop_00404b10
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         add      esp, 4
         test     al, bl
         je       short L_fc9e
@@ -232,7 +232,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         mov      eax, dword ptr [g_data_00542078]
         push     0x238
         push     OFFSET g_const_004a0b00
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
         pop      esi
@@ -243,7 +243,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         jne      short L_fd00
         push     0x23d
         push     OFFSET g_const_004a0dc0
-        mov      dword ptr [g_data_00542054], esi
+        mov      dword ptr [g_eventQueueEnd], esi
         call     SetWalkCurCallPauseDirty_00404c70
         add      esp, 8
         mov      dword ptr [g_walkCallback], ebx
@@ -255,7 +255,7 @@ __declspec(naked) void GameNetSyncState_0049fb70(void)
         cmp      eax, 0x11
         jne      short L_fd3c
         mov      cx, word ptr [g_data_004e2860]
-        mov      dword ptr [g_data_00542054], esi
+        mov      dword ptr [g_eventQueueEnd], esi
         push     ecx
         call     TaggedSceneDispatch_004be690
         add      esp, 4

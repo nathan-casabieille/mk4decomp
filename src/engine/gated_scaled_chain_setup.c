@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,15 +125,15 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00427390 (204b game) - 5-step setup if [g_x_004f360c] is set.
  *   call MStackPush8_004ab790; pause-check. Set g_walkCallback = 0x004e2760>>2.
  *   call PushSetXfmMaskCallPop; pause-check.
- *   If bit-2 not set: setup chain[+0x30]=0x25c, [+0x54]=g_x_00542078, [+0x5c]=g_x_0054207c,
+ *   If bit-2 not set: setup chain[+0x30]=0x25c, [+0x54]=g_x_00542078, [+0x5c]=g_eventQueueNotMask,
  *     [+0x58]=0xfffffd71. Set g_walkCallback=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
  *   call MStackCall_004062f0; if !pause jmp MStackPop8_004ab860; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_004f360c;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void MStackCall_004062f0(void);
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -170,22 +170,22 @@ __declspec(naked) void GatedScaledChainSetup_00427390(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   7fh
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x30], 0x0000025c
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_x_00542078]
         mov     dword ptr [edx*4 + 0x54], eax
-        mov     ecx, dword ptr [g_x_0054205c]
-        mov     edx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     eax, 0xfffffd71
         mov     dword ptr [ecx*4 + 0x5c], edx
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, 0x00018000
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_walkCallback], ecx

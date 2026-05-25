@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void MStackSignedMod_0042fee0(void);
 
 __declspec(naked) void PoseBlendDriver_0042fc80(void)
@@ -145,37 +145,37 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_data_00535e7c]
         mov      edx, dword ptr [eax*4 + 0x54]
-        mov      dword ptr [g_data_0054207c], edx
+        mov      dword ptr [g_eventQueueNotMask], edx
         mov      eax, dword ptr [eax*4 + 0x5c]
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         mov      eax, dword ptr [g_data_00535e78]
         push     eax
         push     0x1999
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_eventQueueCurrent]
         add      esp, 8
         mov      dword ptr [g_walkCallback], eax
         push     edx
         push     0x1999
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      edi, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         add      esp, 8
         mov      ecx, dword ptr [edx*4 + 0x54]
-        mov      dword ptr [g_data_00542074], ecx
+        mov      dword ptr [g_eventQueueWorkType], ecx
         mov      esi, dword ptr [edx*4 + 0x5c]
         add      ecx, edi
         add      esi, eax
-        mov      dword ptr [g_data_00542074], ecx
+        mov      dword ptr [g_eventQueueWorkType], ecx
         mov      dword ptr [g_data_00542078], esi
         mov      dword ptr [edx*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      ecx, dword ptr [g_data_00542078]
         mov      dword ptr [eax*4 + 0x5c], ecx
         call     MStackSignedMod_0042fee0
@@ -189,17 +189,17 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         dec      eax
         cmp      esi, ecx
         mov      dword ptr [g_data_004d57ac], eax
-        mov      eax, dword ptr [g_data_0054205c]
-        mov      dword ptr [g_data_00542070], ecx
-        mov      ecx, dword ptr [g_data_0054207c]
+        mov      eax, dword ptr [g_fightGroupHead]
+        mov      dword ptr [g_eventQueueCurrent], ecx
+        mov      ecx, dword ptr [g_eventQueueNotMask]
         setg     dl
         dec      edx
         and      edx, 0x20000
         add      edx, 0xffff0000
-        mov      dword ptr [g_data_00542074], edx
+        mov      dword ptr [g_eventQueueWorkType], edx
         mov      dword ptr [eax*4 + 0x54], ecx
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [g_data_00542080]
+        mov      edx, dword ptr [g_fightGroupHead]
+        mov      eax, dword ptr [g_eventQueueChild]
         mov      dword ptr [edx*4 + 0x5c], eax
         mov      ecx, dword ptr [g_walkCallback]
         lea      eax, [ecx - 0x4ccc]
@@ -223,37 +223,37 @@ __declspec(naked) void PoseBlendDriver_0042fc80(void)
         mov      edx, dword ptr [g_data_00535e7c]
         push     ecx
         push     eax
-        mov      dword ptr [g_data_0054207c], ecx
-        mov      dword ptr [g_data_00542080], edx
+        mov      dword ptr [g_eventQueueNotMask], ecx
+        mov      dword ptr [g_eventQueueChild], edx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_data_00542078]
         add      esp, 8
-        mov      dword ptr [g_data_0054207c], eax
-        mov      eax, dword ptr [g_data_00542080]
+        mov      dword ptr [g_eventQueueNotMask], eax
+        mov      eax, dword ptr [g_eventQueueChild]
         push     eax
         push     ecx
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_0054207c]
+        mov      edx, dword ptr [g_eventQueueNotMask]
         add      esp, 8
-        mov      dword ptr [g_data_00542080], eax
-        mov      eax, dword ptr [g_data_00542074]
+        mov      dword ptr [g_eventQueueChild], eax
+        mov      eax, dword ptr [g_eventQueueWorkType]
         push     edx
         push     eax
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542080]
-        mov      edx, dword ptr [g_data_00542074]
+        mov      ecx, dword ptr [g_eventQueueChild]
+        mov      edx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
-        mov      dword ptr [g_data_0054207c], eax
+        mov      dword ptr [g_eventQueueNotMask], eax
         push     ecx
         push     edx
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_0054207c]
-        mov      dword ptr [g_data_00542080], eax
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_eventQueueNotMask]
+        mov      dword ptr [g_eventQueueChild], eax
+        mov      eax, dword ptr [g_fightGroupHead]
         add      esp, 8
         mov      dword ptr [eax*4 + 0x6c], ecx
-        mov      edx, dword ptr [g_data_0054205c]
-        mov      eax, dword ptr [g_data_00542080]
+        mov      edx, dword ptr [g_fightGroupHead]
+        mov      eax, dword ptr [g_eventQueueChild]
         mov      dword ptr [edx*4 + 0x74], eax
     L_fe9d:
         pop      edi

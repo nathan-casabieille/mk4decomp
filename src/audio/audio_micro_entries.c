@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * AudioMicroEntries_004a7600 - 222b audio function with six small entry points (16b-aligned).
- *   Entry 0x004a7600: g_x_00542074 = table[arg1]; tail-jmp Push16Call.
+ *   Entry 0x004a7600: g_eventQueueWorkType = table[arg1]; tail-jmp Push16Call.
  *   Entry 0x004a7620: dispatch on g_byte_00543590 == 1: set (g_data_004f3aec=1, g_data_004f3af0=0)
  *     else (g_data_004f3aec=0, g_data_004f3af0=1); g_data_005433f4=1; tail-jmp AudioStateMachineMulti_004a7930.
- *   Entry 0x004a7660: countdown helper on g_x_004f3ae4 (decrements; sets g_state_0054208c|=1 at end).
- *   Entry 0x004a7680: countup helper on g_x_004f3ae4 (increments; sets g_state_0054208c|=1 at end).
+ *   Entry 0x004a7660: countdown helper on g_x_004f3ae4 (decrements; sets g_xformDirtyFlags|=1 at end).
+ *   Entry 0x004a7680: countup helper on g_x_004f3ae4 (increments; sets g_xformDirtyFlags|=1 at end).
  *   Entry 0x004a76a0: same countdown helper but on g_x_004f3ae8.
  *   Entry 0x004a76c0: same countup helper but on g_x_004f3ae8.
  */
@@ -138,7 +138,7 @@ extern unsigned int g_data_005433f4;
 extern unsigned int g_table_004f3af8;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00543590;
 extern void AudioStateMachineMulti_004a7930(void);
 
@@ -148,7 +148,7 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
     {
         mov     eax, dword ptr [esp + 4]
         mov     ecx, dword ptr [eax*4 + g_table_004f3af8]
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         jmp     Push16Call_00489f50
         _emit   90h
         _emit   90h
@@ -189,7 +189,7 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         mov     dword ptr [g_x_004f3ae4], eax
         ret
     L_e3_set:
-        or      dword ptr [g_state_0054208c], eax
+        or      dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         mov     eax, dword ptr [g_x_004f3ae4]
@@ -199,9 +199,9 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         mov     dword ptr [g_x_004f3ae4], eax
         ret
     L_e4_set:
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         _emit   90h
@@ -214,7 +214,7 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         mov     dword ptr [g_x_004f3ae8], eax
         ret
     L_e5_set:
-        or      dword ptr [g_state_0054208c], eax
+        or      dword ptr [g_xformDirtyFlags], eax
         ret
         _emit   90h
         mov     eax, dword ptr [g_x_004f3ae8]
@@ -224,9 +224,9 @@ __declspec(naked) void AudioMicroEntries_004a7600(void)
         mov     dword ptr [g_x_004f3ae8], eax
         ret
     L_e6_set:
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
     }
 }

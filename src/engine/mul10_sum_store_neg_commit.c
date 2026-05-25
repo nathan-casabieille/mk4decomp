@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00543890;
 extern unsigned int g_data_004ec040;
 extern unsigned int g_data_004ec050;
 extern unsigned int g_data_00542a58;
-extern unsigned int g_data_00542050;
+extern unsigned int g_eventQueueTotal;
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern void GuardedDualConst2AndToggle_0048eba0(void);
 extern void Mul10SumStoreNegCommit_00490970(void);
@@ -144,25 +144,25 @@ extern void ScaledClearJmp_00428d60(void);
  *   g_data_00542060:
  *     - matches g_data_00538038: if g_data_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
- *       into g_data_00542050, clears g_data_0054388c, jumps to next.
+ *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
  *     - matches g_data_0053803c: mirror with g_data_00543890.
- *     - default: both g_data_00542050 and 0x54204c set to the two
- *       packed_ptrs, zeroes g_data_00542080, calls
+ *     - default: both g_eventQueueTotal and 0x54204c set to the two
+ *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle_0048eba0. If bit 0 of 0x54208c set,
- *       sets g_data_00542080=1 and copies 0x54204c into 0x542050; else
+ *       sets g_eventQueueChild=1 and copies 0x54204c into 0x542050; else
  *       keeps 0x542050.
  *   Tail: copies chosen base into 0x542044, calls Mul10SumStoreNegCommit_00490970, pushes
  *   0x542a58 and calls GuardedPackedSlotInit_00428760, then
  *   MStackPush3CmpCall_0048eec0. If bit 0 of 0x54208c set, calls
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
- *   ScaledClearJmp_00428d60 depending on g_data_00542080.
+ *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern void GuardedPackedSlotInit_00428760(void);
 extern void ScaledChainJmp_00429470(void);
 extern void TableLookupCall_00489ff0(void);
@@ -192,7 +192,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, offset g_data_004ec040
     L_sfp_useEax1:
         shr     eax, 2
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_data_0054388c], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
@@ -207,7 +207,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, offset g_data_004ec040
     L_sfp_useEax2:
         shr     eax, 2
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_data_00543890], 0
         jmp     short L_sfp_callBlock
     L_sfp_defaultPath:
@@ -215,27 +215,27 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     ecx, offset g_data_004ec050
         shr     eax, 2
         shr     ecx, 2
-        mov     dword ptr [g_data_0054204c], eax
-        mov     dword ptr [g_data_00542050], ecx
-        mov     dword ptr [g_data_00542080], 0
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_eventQueueTotal], ecx
+        mov     dword ptr [g_eventQueueChild], 0
         call    GuardedDualConst2AndToggle_0048eba0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_sfp_done
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     eax, 1
         je      short L_sfp_useSecond
-        mov     dword ptr [g_data_00542080], 1
+        mov     dword ptr [g_eventQueueChild], 1
     L_sfp_useSecond:
         test    eax, eax
         je      short L_sfp_useStored
-        mov     eax, dword ptr [g_data_0054204c]
-        mov     dword ptr [g_data_00542050], eax
+        mov     eax, dword ptr [g_pendingNodeType]
+        mov     dword ptr [g_eventQueueTotal], eax
         jmp     short L_sfp_callBlock
     L_sfp_useStored:
-        mov     eax, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
     L_sfp_callBlock:
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    Mul10SumStoreNegCommit_00490970
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -250,14 +250,14 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         je      short L_sfp_skipCallb0
         call    PendingMatch_004694b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_sfp_done
     L_sfp_skipCallb0:
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax
         jne     short L_sfp_tailClear
         jmp     ScaledChainJmp_00429470

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,10 +126,10 @@ extern unsigned int g_data_00535e7c;
  *   eax = 0x4e8720>>2; edx = 0; push esi;
  *   esi = g_walkCallback; g_eventQueueWorkType = 0;
  *   g_scaledInit = eax; ecx = [eax*4]; ++eax;
- *   cmp ecx,esi; g_data_00542070 = ecx; g_scaledInit = eax;
+ *   cmp ecx,esi; g_eventQueueCurrent = ecx; g_scaledInit = eax;
  *   if eq: jmp out;
  *   loop: ++edx; ++eax; g_eventQueueWorkType = edx;
- *         ecx = [eax*4 - 4]; cmp ecx,esi; g_data_00542070 = ecx;
+ *         ecx = [eax*4 - 4]; cmp ecx,esi; g_eventQueueCurrent = ecx;
  *         g_scaledInit = eax; if ne: jmp loop;
  *   out: g_walkCallback = edx; pop esi; ret.
  */
@@ -151,7 +151,7 @@ __declspec(naked) void LinearSearchByEsi_00459290(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         cmp     ecx, esi
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         je      short L_lsbe_done
 L_lsbe_loop:
@@ -160,7 +160,7 @@ L_lsbe_loop:
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     ecx, dword ptr [eax*4 - 4]
         cmp     ecx, esi
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         jne     short L_lsbe_loop
 L_lsbe_done:

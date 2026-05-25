@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004eee3c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void GatedChainClamp_00486e80(void);
 extern void MStackPush3CallCascade_00486d90(void);
 extern void Phase2InitDispatchInstallSelf_0040ba70(void);
@@ -147,17 +147,17 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_eventQueueCurrent]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_0054207c]
+        mov      ecx, dword ptr [g_eventQueueNotMask]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542080]
+        mov      edx, dword ptr [g_eventQueueChild]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], edx
@@ -165,13 +165,13 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_69c8
-        mov      ecx, dword ptr [g_data_0054207c]
-        mov      edx, dword ptr [g_data_00542080]
-        mov      esi, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_eventQueueNotMask]
+        mov      edx, dword ptr [g_eventQueueChild]
+        mov      esi, dword ptr [g_fightGroupHead]
         sar      ecx, 1
         sar      edx, 1
-        mov      dword ptr [g_data_0054207c], ecx
-        mov      dword ptr [g_data_00542080], edx
+        mov      dword ptr [g_eventQueueNotMask], ecx
+        mov      dword ptr [g_eventQueueChild], edx
         mov      eax, dword ptr [esi*4 + 0x54]
         mov      dword ptr [g_walkCallback], eax
         mov      esi, dword ptr [esi*4 + 0x5c]
@@ -180,19 +180,19 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         add      esi, edx
         add      ecx, 0x19
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], esi
-        mov      dword ptr [g_data_00542074], 0xfffe6667
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_eventQueueCurrent], esi
+        mov      dword ptr [g_eventQueueWorkType], 0xfffe6667
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_00542074]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [edx*4 + 4], eax
-        mov      edx, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         mov      eax, OFFSET g_data_004eee3c
         shr      eax, 2
         mov      dword ptr [edx*4 + 8], ecx
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         call     Phase2InitDispatchInstallSelf_0040ba70
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -200,15 +200,15 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_eventQueueChild], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_0054207c], edx
+        mov      dword ptr [g_eventQueueNotMask], edx
         mov      dword ptr [g_data_004d57ac], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
@@ -225,11 +225,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x74], 0x4004
-        mov      dword ptr [g_data_00542070], 1
-        mov      dword ptr [g_data_00542074], 0
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 1
+        mov      dword ptr [g_eventQueueWorkType], 0
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0xf5c
-        mov      dword ptr [g_data_00542080], 3
+        mov      dword ptr [g_eventQueueChild], 3
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -242,21 +242,21 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         xor      ecx, ecx
         mov      eax, 1
-        mov      dword ptr [g_data_00542070], ecx
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054207c], eax
+        mov      dword ptr [g_eventQueueCurrent], ecx
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542080], 0x10
+        mov      dword ptr [g_eventQueueChild], 0x10
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
         nop
         nop
-        mov      dword ptr [g_data_00542070], 0
-        mov      dword ptr [g_data_00542074], 1
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 0
+        mov      dword ptr [g_eventQueueWorkType], 1
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x2e14
-        mov      dword ptr [g_data_00542080], 0x15
+        mov      dword ptr [g_eventQueueChild], 0x15
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -268,11 +268,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         mov      eax, 1
-        mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueNotMask], 2
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [g_walkCallback], 0x3333
-        mov      dword ptr [g_data_00542080], 0x16
+        mov      dword ptr [g_eventQueueChild], 0x16
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -289,10 +289,10 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         mov      eax, 1
-        mov      dword ptr [g_data_00542080], 0x17
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054207c], 3
+        mov      dword ptr [g_eventQueueChild], 0x17
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueNotMask], 3
         mov      dword ptr [g_walkCallback], 0x4000
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -310,10 +310,10 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         mov      eax, 1
-        mov      dword ptr [g_data_00542080], 7
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_0054207c], 3
+        mov      dword ptr [g_eventQueueChild], 7
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueNotMask], 3
         mov      dword ptr [g_walkCallback], 0x4000
         jmp      MStackPush3CallCascade_00486d90
         nop
@@ -331,11 +331,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         mov      eax, 1
-        mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueNotMask], 2
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         mov      dword ptr [g_walkCallback], 0x3333
-        mov      dword ptr [g_data_00542080], 6
+        mov      dword ptr [g_eventQueueChild], 6
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -351,11 +351,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         nop
-        mov      dword ptr [g_data_00542070], 1
-        mov      dword ptr [g_data_00542074], 0
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 1
+        mov      dword ptr [g_eventQueueWorkType], 0
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x3333
-        mov      dword ptr [g_data_00542080], 6
+        mov      dword ptr [g_eventQueueChild], 6
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -366,11 +366,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         nop
-        mov      dword ptr [g_data_00542070], 0
-        mov      dword ptr [g_data_00542074], 1
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 0
+        mov      dword ptr [g_eventQueueWorkType], 1
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x2e14
-        mov      dword ptr [g_data_00542080], 5
+        mov      dword ptr [g_eventQueueChild], 5
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -381,11 +381,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         nop
-        mov      dword ptr [g_data_00542070], 0
-        mov      dword ptr [g_data_00542074], 1
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 0
+        mov      dword ptr [g_eventQueueWorkType], 1
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x2666
-        mov      dword ptr [g_data_00542080], 4
+        mov      dword ptr [g_eventQueueChild], 4
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -399,11 +399,11 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x74], 0x4004
         mov      eax, 1
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0xf5c
-        mov      dword ptr [g_data_00542080], 3
+        mov      dword ptr [g_eventQueueChild], 3
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -420,21 +420,21 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         mov      eax, 1
-        mov      dword ptr [g_data_00542070], 0
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054207c], eax
+        mov      dword ptr [g_eventQueueCurrent], 0
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_walkCallback], 0x3d70
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
         nop
         xor      eax, eax
-        mov      dword ptr [g_data_0054207c], 1
+        mov      dword ptr [g_eventQueueNotMask], 1
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueChild], eax
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -449,19 +449,19 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         xor      eax, eax
         mov      dword ptr [g_walkCallback], 0x2147
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], eax
-        mov      dword ptr [g_data_0054207c], 2
-        mov      dword ptr [g_data_00542080], 5
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
+        mov      dword ptr [g_eventQueueNotMask], 2
+        mov      dword ptr [g_eventQueueChild], 5
         jmp      MStackPush3CallCascade_00486d90
         nop
         xor      eax, eax
         mov      ecx, 1
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], eax
-        mov      dword ptr [g_data_00542074], ecx
-        mov      dword ptr [g_data_0054207c], ecx
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
+        mov      dword ptr [g_eventQueueWorkType], ecx
+        mov      dword ptr [g_eventQueueNotMask], ecx
+        mov      dword ptr [g_eventQueueChild], eax
         jmp      MStackPush3CallCascade_00486d90
         nop
         nop
@@ -473,10 +473,10 @@ __declspec(naked) void RoundResultSlotInitTable_00486860(void)
         nop
         nop
         xor      eax, eax
-        mov      dword ptr [g_data_00542070], 1
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueCurrent], 1
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         jmp      GatedChainClamp_00486e80
     }
 }

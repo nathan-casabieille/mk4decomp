@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049f530 (354b game) - 3-entry indirect dispatcher with state walk.
- *   Entry 1 (offset 0, 260b): cache [g_data_00541fc0] into g_data_00542048,
+ *   Entry 1 (offset 0, 260b): cache [g_data_00541fc0] into g_xformEntityIdx,
  *     index it by [g_data_00535e48] base, deref once, save in 0x542048
- *     and [edx*4+4] in g_data_00542044 then `call eax` (indirect). On
- *     no-error AND bit 0 of g_data_0054208c set: walks an outer state
+ *     and [edx*4+4] in g_currentNodeIdx then `call eax` (indirect). On
+ *     no-error AND bit 0 of g_xformDirtyFlags set: walks an outer state
  *     loop comparing eax to {1,6,11,16} (each takes the install path);
  *     other values get dec'd, call LinkedListIndirectDirtyToggle_0049f7b0,
  *     and on bit 0 still set may re-enter the loop. Else writes ecx into
- *     [eax*4], copies g_data_00535e48 into g_data_00542070, calls
+ *     [eax*4], copies g_data_00535e48 into g_eventQueueCurrent, calls
  *     RoundWinTransition_0049e7e0 then GuardedScaledCall_0048a020 with [scaled+8] prep.
  *     Both successful tails fall through to CallSetPause_0041f830.
  *   (12b NOP align pad.)
@@ -147,9 +147,9 @@ extern unsigned int g_data_00537ea8;
 extern unsigned int g_data_00541d88;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fc0;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void IndirectStateDispatcher_0049f6a0(void);
@@ -160,24 +160,24 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
     __asm {
         mov     eax, dword ptr [g_data_00541fc0]
         mov     ecx, dword ptr [g_data_00535e48]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx
         push    ebx
         mov     eax, dword ptr [eax*4]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_id3_doneNoPop
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 1
         test    al, bl
         je      L_id3_freshPath
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4]
         cmp     eax, ebx
         mov     dword ptr [g_walkCallback], eax
@@ -195,7 +195,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         je      short L_id3_writeCx
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, ebx
@@ -204,16 +204,16 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         pop     ebx
         ret
     L_id3_writeCx:
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_data_00535e48]
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_id3_doneNoPop
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020

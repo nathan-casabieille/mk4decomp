@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00422e20 (196b game) - 0x537f48 download/dual-push setup.
- *   g_walkCallback = [0x537f48]; g_x_00542070 = 0; call DownloadPlayerChar;
+ *   g_walkCallback = [0x537f48]; g_eventQueueCurrent = 0; call DownloadPlayerChar;
  *   pause? ret;
- *   g_walkCallback = [0x537f48] (reload); g_x_00542074 = [0x53a510];
- *   g_x_00542070 = 0; call GuardedDualPushTailJmp; pause? ret;
- *   [0x538158] = g_x_0054205c; g_walkCallback = 1; chain[+0x30] = 1;
+ *   g_walkCallback = [0x537f48] (reload); g_eventQueueWorkType = [0x53a510];
+ *   g_eventQueueCurrent = 0; call GuardedDualPushTailJmp; pause? ret;
+ *   [0x538158] = g_fightGroupHead; g_walkCallback = 1; chain[+0x30] = 1;
  *   chain[+0x34] |= 0x001c0000; chain[+0x54] = 0xfffeb334; chain[+0x5c] = 0;
  *   chain[+0x3c] = [0x537f78]; g_walkCallback = same.
  */
@@ -135,16 +135,16 @@ extern unsigned int g_x_00537f48;
 extern unsigned int g_x_00537f78;
 extern unsigned int g_x_00538158;
 extern unsigned int g_x_0053a510;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
 
 void DownloadDualPush_00422e20(void) {
     __asm {
         mov     eax, dword ptr [g_x_00537f48]
-        mov     dword ptr [g_x_00542070], 0
+        mov     dword ptr [g_eventQueueCurrent], 0
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_framePauseFlag]
@@ -158,28 +158,28 @@ void DownloadDualPush_00422e20(void) {
         mov     ecx, dword ptr [g_x_00537f48]
         mov     edx, dword ptr [g_x_0053a510]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_x_00542070], 0
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueCurrent], 0
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    GuardedDualPushTailJmp_004231f0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   6dh
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, 1
         mov     dword ptr [g_x_00538158], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x30], ecx
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, [eax*4 + 0x34]
         or      ecx, 0x001c0000
         mov     [eax*4 + 0x34], ecx
-        mov     eax, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [eax*4 + 0x54], 0xfffeb334
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x5c], 0
         mov     eax, dword ptr [g_x_00537f78]
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x3c], eax
         }

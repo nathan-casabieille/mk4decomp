@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,19 +130,19 @@ extern unsigned int g_data_00535e7c;
  *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition_0049e7e0; if !paused: pop+ret;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
- *     If was 0: countdown g_x_00542054; if not yet 0: skip; else tail-jmp CallSetPause.
+ *     If was 0: countdown g_eventQueueEnd; if not yet 0: skip; else tail-jmp CallSetPause.
  *     Else: ecx=g_x_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
- *     Else: install-self at body; chain->state=1; g_data_0054204c=2; g_pause_00541e6c=1; ret.
+ *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_pause_00541e6c=1; ret.
  */
 extern unsigned int g_data_0053a354;
 extern unsigned int g_data_00542004;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537e90;
 extern unsigned int g_x_00537ea8;
 extern unsigned int g_x_00538090;
 extern unsigned int g_x_0053a2e8;
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 extern void CallSetPause_0041f830(void);
 extern void InstallSelfStride5_004a06f0(void);
 extern void RoundWinTransition_0049e7e0(void);
@@ -194,9 +194,9 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     dword ptr [eax + 0x84], 0
         test    ecx, ecx
         jne     short L_checkRollover
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         dec     ecx
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         jns     short L_checkRollover
         jmp     CallSetPause_0041f830
     L_checkRollover:
@@ -209,7 +209,7 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
         mov     ecx, 1
         mov     dword ptr [eax + 8], offset L_body
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], 2
+        mov     dword ptr [g_pendingNodeType], 2
         mov     dword ptr [g_pause_00541e6c], ecx
         ret
     }

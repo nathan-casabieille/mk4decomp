@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_0053a7a0;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542044;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00501094;
 extern void Thunk_0049cbc0(void);
 extern void EsiInstallSetCbChainExtend_0048a970(void);
@@ -155,8 +155,8 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         jmp     Thunk_0049cbc0
     L_dsic_install1:
         mov     ecx, dword ptr [g_data_0053a7a0]
-        mov     dword ptr [g_data_0054207c], edx
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueNotMask], edx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [eax + 8], offset DualSubInstallChain_0044f4b0
         mov     ecx, dword ptr [g_data_00542060]
         push    edi
@@ -164,11 +164,11 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x1000000
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], edi
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -215,9 +215,9 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         push    0x91
         push    0x450360
         call    StoreTwoCall_0049cb40
-        mov     ecx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         add     esp, 8
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         call    DoubleCallChainInit_0043d780
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -225,17 +225,17 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     edx, offset g_data_00501094
         mov     ecx, offset L_dsic_sub2
         shr     edx, 2
-        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [esi + 8], offset L_dsic_sub2
         mov     eax, dword ptr [g_data_00542060]
         add     ecx, 0x1000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -249,7 +249,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         push    0x44fe40
         call    StoreTwoCall_0049cb40
         add     esp, 8
-        mov     dword ptr [g_data_00542054], 0xd
+        mov     dword ptr [g_eventQueueEnd], 0xd
         jmp     VersusScreenFsmCluster_0044f670
     }
 }

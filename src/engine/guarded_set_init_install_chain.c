@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004ec710;
 extern unsigned int g_data_0053a498;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00543384;
 extern unsigned int g_data_00543570;
@@ -183,15 +183,15 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         je      short L_gsiic_sub2_phase0
         dec     eax
         je      short L_gsiic_sub2_phase1
-        mov     eax, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         dec     eax
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jns     short L_gsiic_sub2_inner
         call    Thunk_0049cbc0
         pop     esi
         ret
     L_gsiic_sub2_phase1:
-        mov     dword ptr [g_data_00542054], 0xf
+        mov     dword ptr [g_eventQueueEnd], 0xf
     L_gsiic_sub2_inner:
         mov     dword ptr [g_walkCallback], 3
         call    StorePauseImulShr16_004ab630
@@ -205,7 +205,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         jne     short L_gsiic_sub2_ret
         mov     dword ptr [esi + 8], offset L_gsiic_sub2
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 6
+        mov     dword ptr [g_pendingNodeType], 6
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         ret
@@ -218,7 +218,7 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_gsiic_sub2
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0x11
+        mov     dword ptr [g_pendingNodeType], 0x11
         mov     dword ptr [g_framePauseFlag], eax
     L_gsiic_sub2_ret:
         pop     esi
@@ -249,24 +249,24 @@ __declspec(naked) void GuardedSetInitInstallChain_004728c0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_gsiic_sub3_ret
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         jmp     short L_gsiic_sub3_load
     L_gsiic_sub3_phase0:
         mov     ecx, offset g_data_004ec710
         shr     ecx, 2
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
     L_gsiic_sub3_load:
         mov     eax, dword ptr [ecx*4]
         inc     ecx
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         jne     short L_gsiic_sub3_install
         call    Thunk_0049cbc0
         pop     esi
         ret
     L_gsiic_sub3_install:
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_gsiic_sub3
         mov     dword ptr [esi + 0x84], eax

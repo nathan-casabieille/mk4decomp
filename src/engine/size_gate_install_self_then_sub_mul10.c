@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,10 +125,10 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004ec950;
 extern unsigned int g_data_004ecc38;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void AudioMixerStep_004ab700(void);
 extern void PendingMatch_00473640(void);
 extern void ScaledStoreThree_00409260(void);
@@ -138,7 +138,7 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_data_00542078]
         push    esi
         xor     esi, esi
@@ -147,11 +147,11 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         mov     dword ptr [g_walkCallback], ecx
         jl      L_sgis_lateTail
         mov     ecx, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x40]
         cmp     eax, esi
         mov     dword ptr [g_walkCallback], eax
@@ -159,18 +159,18 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         push    eax
         push    0x1999
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x48], eax
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         or      dword ptr [eax*4], 8
     L_sgis_after40:
         mov     dword ptr [g_walkCallback], 0x10000
         call    StoreDoubleNegPauseSubStore_004ab750
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x18], edx
         mov     dword ptr [g_walkCallback], 0xccc
@@ -178,10 +178,10 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_sgis_ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         add     ecx, 0xccc
         mov     dword ptr [edx*4 + 0x1c], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     ecx, offset g_data_004ecc38
         shr     ecx, 2
@@ -192,14 +192,14 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         call    ScaledStoreThree_00409260
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, offset g_data_004ec950
         shr     eax, 2
         mov     dword ptr [edx*4 + 0x10], esi
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x14], eax
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
     L_sgis_lateTail:
         mov     eax, dword ptr [eax*4 + 0xc]
         cmp     eax, esi
@@ -210,9 +210,9 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         cmp     dword ptr [g_framePauseFlag], esi
         jne     short L_sgis_ret
     L_sgis_clear:
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
     L_sgis_ret:
         pop     esi
         ret
@@ -230,13 +230,13 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10_00473480(void)
         nop
         nop
     L_sgis_sub2:
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [eax*4 + 0x48]
         push    eax
         push    0x13f35
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x48], eax

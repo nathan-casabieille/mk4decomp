@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,21 +124,21 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00461b70 (296b game) - dual entry: thunk + install-self with scaled init.
  *   Entry (0..0x35): if g_data_0053a748!=0: dec; push 0x26, push body addr; call StoreTwoCall;
- *     pop; chain[scaledInit*4+0x14]=g_data_0054207c; ret.
+ *     pop; chain[scaledInit*4+0x14]=g_eventQueueNotMask; ret.
  *   Body (+0x40): load state at [base*4+0x84]; clear state.
  *   state!=0: call MStackCall; if pause ret. Tail-call CallSetPause; pop esi; ret.
- *   state==0: load eax=offset g_data_00542998>>2 + g_data_0054207c -> g_scaledInit.
+ *   state==0: load eax=offset g_data_00542998>>2 + g_eventQueueNotMask -> g_scaledInit.
  *     Init multiple globals; call Push70CallScaleArith; if pause ret.
  *     Set chain[+0x5c]=0x1b333; g_cj=scaledInit; install-self at body; state=1;
- *     g_x_0054204c=0xb4; pause=1; ret.
+ *     g_pendingNodeType=0xb4; pause=1; ret.
  *   Tail (+0x120): set g_data_00543720=1; ret.
  */
 extern unsigned int g_data_0053a748;
 extern unsigned int g_data_00542998;
 extern unsigned int g_data_00543720;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern void CallSetPause_0041f830(void);
 extern void MStackCall_00406740(void);
 
@@ -146,16 +146,16 @@ __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
     __asm {
         mov     eax, dword ptr [g_data_0053a748]
         test    eax, eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   27h
         dec     eax
         push    0x26
         push    offset body_bb0
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         call    StoreTwoCall_0049cb40
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_state_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x14], eax
         ret
@@ -190,17 +190,17 @@ __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
         call    CallSetPause_0041f830
         pop     esi
         ret
-        mov     ecx, dword ptr [g_state_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         mov     eax, offset g_data_00542998
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], 0x5f
-        mov     dword ptr [g_x_00542048], ecx
-        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_xformEntityIdx], ecx
+        mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_acc_00542078], 0
-        mov     dword ptr [g_state_0054207c], 0xc80000
+        mov     dword ptr [g_eventQueueNotMask], 0xc80000
         call    Push70CallScaleArith_00457ad0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -215,7 +215,7 @@ __declspec(naked) void DualEntryInstallSelfScaled_00461b70(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset body_bb0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], 0xb4
+        mov     dword ptr [g_pendingNodeType], 0xb4
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

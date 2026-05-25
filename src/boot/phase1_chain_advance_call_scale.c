@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,9 +125,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d5364;
 extern unsigned int g_data_00507118;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00543800;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -141,19 +141,19 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
     __asm {
         mov     eax, offset g_data_00507118
         shr     eax, 2
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    MStackBracket1_TreeWalkRecursive2_00406dd0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1c2_ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x40], 0xFFFE6DE1
         mov     dword ptr [edx*4 + 0x3C], 0x0005E666
         lea     eax, [edx*4]
@@ -164,12 +164,12 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_ret
-        mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542048], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     PushPopScaled1cDoubleCall_00408510
     L_p1c2_ret:
@@ -191,7 +191,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
@@ -199,13 +199,13 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_data_004d5364]
         add     eax, dword ptr [ecx*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
         js      L_p1c2_helper_skip_block
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x58]
         add     eax, 0x1999
         test    eax, eax
@@ -216,9 +216,9 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         je      L_p1c2_helper_else
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         lea     esi, [eax*4 + 0x70]
         mov     eax, dword ptr [eax*4 + 0x70]
         push    eax
@@ -229,7 +229,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         add     esp, 8
         mov     dword ptr [esi], eax
     L_p1c2_helper_skip_block:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x78]
         lea     esi, [ecx*4]
         push    eax
@@ -261,12 +261,12 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
-        mov     dword ptr [g_data_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
     L_p1c2_helper_pop1:
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_p1c2_helper_pop_ret:
         pop     esi

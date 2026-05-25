@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,28 +124,28 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00433c60 (197b game) - branch packed_ptr select, then load 6 fields.
  *   eax = packed_ptr(0x541d98); ecx = packed_ptr(0x535d18);
- *   g_scaledInit = eax; g_x_00542048 = ecx;
- *   if (g_x_0054205c != [0x538158]) g_scaledInit = ecx;
+ *   g_scaledInit = eax; g_xformEntityIdx = ecx;
+ *   if (g_fightGroupHead != [0x538158]) g_scaledInit = ecx;
  *   Walk g_scaledInit forward, storing 6 values into:
- *     g_x_0054207c, 80, 84, 88, 54, 58 (using edx/ecx alternating).
+ *     g_eventQueueNotMask, 80, 84, 88, 54, 58 (using edx/ecx alternating).
  *   Then: g_scaledInit = chain[g_baseSel + 0x3c];
  *   g_walkCallback = chain[g_scaledInit + 0x74].
  */
 extern unsigned int g_x_00538158;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 
 extern unsigned int g_data_004d57ac_arr;
 
 __declspec(naked) void PackedSelectLoad6_00433c60(void) {
     __asm {
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         push    esi
         mov     esi, dword ptr [g_x_00538158]
         mov     eax, 0x00541d98
@@ -154,36 +154,36 @@ __declspec(naked) void PackedSelectLoad6_00433c60(void) {
         shr     ecx, 2
         cmp     edx, esi
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_00542088], edx
+        mov     dword ptr [g_xformScratch2088], edx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_eventQueueIdx], edx
         pop     esi
         mov     eax, [eax*4 + 0x3c]
         mov     dword ptr [g_scaledInit_00542044], eax

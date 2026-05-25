@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049cc30 (267b game) - mstack-push + bit-gated loop with 3 helper calls. */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void AndStoreJmp_0049cc10(void);
 extern void Thunk_0049cb80(void);
 
@@ -140,7 +140,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         push    esi
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -152,7 +152,7 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         _emit   00h
         mov     ebx, 4
         or      esi, 0xffffffff
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   0fh
         _emit   85h
         _emit   0a4h
@@ -164,27 +164,27 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         cmp     ecx, dword ptr [eax*4 + 0x2c]
         _emit   74h
         _emit   5ch
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         or      edx, ebx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
         _emit   7eh
         mov     ecx, edx
         xor     ecx, ebx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   70h
-        mov     edx, dword ptr [g_x_00542074]
-        mov     dword ptr [g_x_00542070], esi
+        mov     edx, dword ptr [g_eventQueueWorkType]
+        mov     dword ptr [g_eventQueueCurrent], esi
         mov     dword ptr [g_walkCallback], edx
         call    AndStoreJmp_0049cc10
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   68h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   48h
         mov     eax, dword ptr [g_scaledInit_00542044]
@@ -192,13 +192,13 @@ __declspec(naked) void MStackBitLoopTripleCall_0049cc30(void) {
         cmp     ecx, dword ptr [eax*4 + 0x2c]
         _emit   75h
         _emit   0a4h
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         call    Thunk_0049cb80
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   39h
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [g_walkCallback], edx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]

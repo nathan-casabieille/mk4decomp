@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,15 +128,15 @@ extern void BootMStackBracketChain_00413ce0(void);
  * BootInstallPeriodicAudio_00413aa0 - 197b 2-body boot init.
  *   Entry 0x00413aa0: push 0x8c size and pointer to body2; call StoreTwoCall; ret.
  *   Body2 0x00413ac0: chain via g_baseSel_00542060 packed_ptr; save & clear chain->state.
- *     If state was != 0: countdown g_x_00542058; if not yet 0: jump to mainloop;
+ *     If state was != 0: countdown g_eventQueueIdx; if not yet 0: jump to mainloop;
  *       else call CallSetPause_0041f830; pop+ret.
- *     If state == 0 (or countdown done): reset g_x_00542058=0x14;
+ *     If state == 0 (or countdown done): reset g_eventQueueIdx=0x14;
  *     mainloop: g_walkCallback=0x3333; AudioMixerStep; if paused: pop+ret. Else
- *     g_walkCallback += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_state_0054208c & 4:
+ *     g_walkCallback += 0xd999; ZeroAndDirty4; if paused: pop+ret. If g_xformDirtyFlags & 4:
  *     call BootMStackBracketChain_00413ce0; if paused: pop+ret. Install-self at body2; chain->state=1;
- *     g_x_0054204c=1; g_pause_00541e6c=1; pop+ret.
+ *     g_pendingNodeType=1; g_pause_00541e6c=1; pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
@@ -192,7 +192,7 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b2_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_install_self
         call    BootMStackBracketChain_00413ce0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -202,7 +202,7 @@ __declspec(naked) void BootInstallPeriodicAudio_00413aa0(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
     L_b2_ret:
         pop     esi

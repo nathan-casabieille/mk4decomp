@@ -7,23 +7,23 @@
 #include "game/tick.h"
 
 /* @addr 0x00433e50 (32b)
- *   mov     eax, [g_data_00542070]
+ *   mov     eax, [g_eventQueueCurrent]
  *   mov     ecx, 0x004e4cf8
  *   shr     eax, 8
  *   shr     ecx, 2
- *   mov     [g_data_00542070], eax
+ *   mov     [g_eventQueueCurrent], eax
  *   mov     [g_xformEntityIdx], ecx
  *   jmp     func_00433e80
  */
 extern void func_00433e80(void);
-extern unsigned int g_data_00542070;
+extern unsigned int g_eventQueueCurrent;
 __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         mov     ecx, 0x004e4cf8
         shr     eax, 8
         shr     ecx, 2
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         jmp     func_00433e80
     }

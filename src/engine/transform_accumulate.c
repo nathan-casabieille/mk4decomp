@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,15 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004bddf0 (151b engine.geo) - vec3 transform + accumulate:
- *   src = &arr_src[g_x_00542050]; load v3 from src to g_walkCallback/
- *   g_x_00542070/g_x_00542048.
+ *   src = &arr_src[g_eventQueueTotal]; load v3 from src to g_walkCallback/
+ *   g_eventQueueCurrent/g_xformEntityIdx.
  *   Mat3x3VecMul6Bit(arr_a + 4*scaledInit, arr_b + 4*sceneFlags);
- *   add g_walkCallback to arr_b[+0], g_x_00542070 to arr_b[+4],
- *   g_x_00542048 to arr_b[+8].
+ *   add g_walkCallback to arr_b[+0], g_eventQueueCurrent to arr_b[+4],
+ *   g_xformEntityIdx to arr_b[+8].
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542050;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueTotal;
 extern void Mat3x3VecMul6Bit_004b3590(void);
 
 extern unsigned int g_arr_4bddf0_a;
@@ -140,15 +140,15 @@ extern unsigned int g_arr_4bddf0_src;
 
 void TransformAccumulate_004bddf0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + g_arr_4bddf0_src]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, [eax*4 + g_arr_4bddf0_src + 0x04]
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     eax, [eax*4 + g_arr_4bddf0_src + 0x08]
-        mov     dword ptr [g_x_00542048], eax
-        mov     eax, dword ptr [g_x_0054204c]
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     eax, dword ptr [g_pendingNodeType]
         lea     edx, [ecx*4 + g_arr_4bddf0_a]
         lea     ecx, [eax*4 + g_arr_4bddf0_b]
         push    edx
@@ -161,12 +161,12 @@ void TransformAccumulate_004bddf0(void) {
         add     ecx, edx
         mov     [eax*4 + g_arr_4bddf0_a], ecx
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     edx, [eax*4 + g_arr_4bddf0_a + 0x04]
         add     edx, ecx
         mov     [eax*4 + g_arr_4bddf0_a + 0x04], edx
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         add     [eax*4 + g_arr_4bddf0_a + 0x08], edx
         }
 }

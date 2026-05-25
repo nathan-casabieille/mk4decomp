@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,7 +129,7 @@ extern void MStackPush2ScaledChainLoop_00463430(void);
 extern void TripleEntryWordChainInc5_00462870(void);
 
 /* @addr 0x004627c0 (168b game) - triple-entry pause-gated chain.
- *   Block A: if g_state_00537f74 != 0: dec g_x_00541fb0 -> g_x_00542080; if >= 0:
+ *   Block A: if g_state_00537f74 != 0: dec g_x_00541fb0 -> g_eventQueueChild; if >= 0:
  *     call MStackChainOrBitLoop_004635a0, pause-check, sync 80→fb0; call PackedTableWalkChainStore, pause-check;
  *     call MStackPush2ScaledChainLoop_00463430, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch_004be690.
  *     Fall-through to jmp CallSetPause_0041f830.
@@ -138,7 +138,7 @@ extern void TripleEntryWordChainInc5_00462870(void);
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueChild;
 extern void CallSetPause_0041f830(void);
 
 __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         mov     eax, dword ptr [g_x_00541fb0]
         dec     eax
         test    eax, eax
-        mov     dword ptr [g_x_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         _emit   7ch
         _emit   46h
         call    MStackChainOrBitLoop_004635a0
@@ -159,7 +159,7 @@ __declspec(naked) void TripleEntryWordPushChain_004627c0(void) {
         test    eax, eax
         _emit   75h
         _emit   3dh
-        mov     ecx, dword ptr [g_x_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         mov     dword ptr [g_x_00541fb0], ecx
         call    PackedTableWalkChainStore_00463e20
         mov     eax, dword ptr [g_pause_00541e6c]

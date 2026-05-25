@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004683e0 (94b)
  *   eax = g_baseSel; push esi;
- *   ecx = [eax*4+0x38]; g_data_00542084 = ecx;
- *   edx = [eax*4+0x3c]; g_state_00542088 = edx;
- *   esi = [eax*4+0x30]; ecx += esi; g_data_00542084 = ecx;
- *   esi = [eax*4+0x34]; edx += esi; g_state_00542088 = edx;
- *   [eax*4+0x38] = ecx; eax = g_baseSel; ecx = g_state_00542088;
+ *   ecx = [eax*4+0x38]; g_currentNodeFlags = ecx;
+ *   edx = [eax*4+0x3c]; g_xformScratch2088 = edx;
+ *   esi = [eax*4+0x30]; ecx += esi; g_currentNodeFlags = ecx;
+ *   esi = [eax*4+0x34]; edx += esi; g_xformScratch2088 = edx;
+ *   [eax*4+0x38] = ecx; eax = g_baseSel; ecx = g_xformScratch2088;
  *   [eax*4+0x3c] = ecx; call DualWalkRange_00468440; pop esi; ret.
  */
 extern void DualWalkRange_00468440(void);
@@ -137,15 +137,15 @@ void DualSlotPropagateCall_004683e0(void) {
     unsigned int base, field38, field3c, tmp;
     base = g_baseSel_00542060;
     field38 = *(unsigned int *)(base * 4 + 0x38);
-    g_data_00542084 = field38;
+    g_currentNodeFlags = field38;
     field3c = *(unsigned int *)(base * 4 + 0x3c);
-    g_state_00542088 = field3c;
+    g_xformScratch2088 = field3c;
     tmp = *(unsigned int *)(base * 4 + 0x30);
     field38 += tmp;
-    g_data_00542084 = field38;
+    g_currentNodeFlags = field38;
     tmp = *(unsigned int *)(base * 4 + 0x34);
-    g_state_00542088 += tmp;
+    g_xformScratch2088 += tmp;
     *(unsigned int *)(base * 4 + 0x38) = field38;
-    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = g_state_00542088;
+    *(unsigned int *)(g_baseSel_00542060 * 4 + 0x3c) = g_xformScratch2088;
     DualWalkRange_00468440();
 }

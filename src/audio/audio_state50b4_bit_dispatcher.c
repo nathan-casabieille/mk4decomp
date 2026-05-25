@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,15 +125,15 @@ extern unsigned int g_data_00535e7c;
 /*
  * AudioState50b4BitDispatcher_004a32c0 - 309b 4-bit dispatcher on g_state_004d50b4 (cl/ch).
  *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
- *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_state_00542080 = edi.
- *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_x_00542044): if !=0: clear
- *     g_state_0054208c bit 0; call eax (indirect); if paused: pop+ret; test bit 1, if not set:
- *     call 0x004a1ac0 (sister). Then g_state_00542080 = edi.
+ *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_eventQueueChild = edi.
+ *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_currentNodeIdx): if !=0: clear
+ *     g_xformDirtyFlags bit 0; call eax (indirect); if paused: pop+ret; test bit 1, if not set:
+ *     call 0x004a1ac0 (sister). Then g_eventQueueChild = edi.
  *   Pop+ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_004d50b4;
-extern unsigned int g_x_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 
@@ -162,7 +162,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         call    SetJmp_004a1ad0
         mov     ecx, dword ptr [g_state_004d50b4]
     L_a32_b1_innerSkip:
-        mov     dword ptr [g_state_00542080], edi
+        mov     dword ptr [g_eventQueueChild], edi
     L_a32_b1_outerSkip:
         test    cl, 2
         jne     short L_a32_b2_do
@@ -180,7 +180,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         call    SetJmp_004a1ad0
         mov     ecx, dword ptr [g_state_004d50b4]
     L_a32_b2_innerSkip:
-        mov     dword ptr [g_state_00542080], edi
+        mov     dword ptr [g_eventQueueChild], edi
     L_a32_b2_outerSkip:
         test    cl, 4
         jne     short L_a32_b4_do
@@ -192,20 +192,20 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         lea     eax, [eax + eax*8]
         mov     eax, dword ptr [esi + eax*4 + 4]
         test    eax, eax
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         je      short L_a32_b4_innerSkip
-        and     dword ptr [g_state_0054208c], 0xfffffffe
+        and     dword ptr [g_xformDirtyFlags], 0xfffffffe
         call    eax
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_a32_popRet
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_a32_b4_skipSetJmp
         call    SetJmp_004a1ac0
     L_a32_b4_skipSetJmp:
         mov     ecx, dword ptr [g_state_004d50b4]
     L_a32_b4_innerSkip:
-        mov     dword ptr [g_state_00542080], edi
+        mov     dword ptr [g_eventQueueChild], edi
     L_a32_b4_outerSkip:
         test    cl, 8
         jne     short L_a32_b8_do
@@ -217,19 +217,19 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         lea     edx, [eax + eax*8]
         mov     eax, dword ptr [esi + edx*4 + 8]
         test    eax, eax
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         je      short L_a32_b8_innerSkip
-        and     dword ptr [g_state_0054208c], 0xfffffffe
+        and     dword ptr [g_xformDirtyFlags], 0xfffffffe
         call    eax
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_a32_popRet
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_a32_b8_skipSetJmp
         call    SetJmp_004a1ac0
     L_a32_b8_skipSetJmp:
     L_a32_b8_innerSkip:
-        mov     dword ptr [g_state_00542080], edi
+        mov     dword ptr [g_eventQueueChild], edi
     L_a32_popRet:
         pop     edi
         pop     esi

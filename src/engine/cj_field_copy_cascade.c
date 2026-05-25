@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,12 +125,12 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0044c430 (241b game) - 4-field copy from scaledInit chain to chain via cj alias.
  *   Set cj = baseSel[+0x4c]; call MStackPush2RunCountdown_004089e0; if pause? ret.
  *   g_walkCallback=2; call BootStateTriple_00408d30; if pause? ret.
- *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_x_00542048[k]
+ *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_xformEntityIdx[k]
  *     (first iteration also OR's al with 4).
  *   Then call MStackBracket7_DispatchAndChain_004b8fa0; if !pause: g_walkCallback=3, g_x_00542078=2, tail-jmp GuardedSeq_00473ef0; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_x_00542078;
 extern void BootStateTriple_00408d30(void);
 extern void GuardedSeq_00473ef0(void);
@@ -160,7 +160,7 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         _emit   00h
         _emit   00h
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [ecx*4 + 0]
@@ -168,17 +168,17 @@ __declspec(naked) void CjFieldCopyCascade_0044c430(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0], eax
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [ecx*4 + 0x30]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0x38]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x38], eax

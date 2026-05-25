@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,11 +130,11 @@ extern unsigned int g_data_004eec90;
 extern unsigned int g_data_004eecc0;
 extern unsigned int g_data_004eece8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -243,7 +243,7 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_5fa7
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       short L_5f9a
         jmp      QuadBlockDispatch_00483090
     L_5f9a:
@@ -346,31 +346,31 @@ __declspec(naked) void OutroEventForwarderCluster_00485e70(void)
         pop      edi
         ret
     L_6085:
-        mov      ecx, dword ptr [g_data_00542080]
+        mov      ecx, dword ptr [g_eventQueueChild]
         dec      ecx
-        mov      dword ptr [g_data_00542080], ecx
+        mov      dword ptr [g_eventQueueChild], ecx
         jne      short L_60c5
         mov      dword ptr [eax + 8], OFFSET L_6060
         mov      dword ptr [eax + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0xf
+        mov      dword ptr [g_pendingNodeType], 0xf
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         ret
     L_60bb:
-        mov      dword ptr [g_data_00542080], 0xa
+        mov      dword ptr [g_eventQueueChild], 0xa
     L_60c5:
-        mov      dword ptr [g_data_00542084], 0x147a
+        mov      dword ptr [g_currentNodeFlags], 0x147a
         mov      dword ptr [eax + 8], OFFSET L_6060
         mov      ecx, dword ptr [g_data_00542060]
         mov      edi, OFFSET L_6060
         add      edi, 0x1000000
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edi
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edx

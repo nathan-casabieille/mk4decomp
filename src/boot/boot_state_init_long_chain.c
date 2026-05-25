@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,7 +136,7 @@ extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
 
 extern unsigned int g_x_00542058_v2;
-#define g_x_00542058 g_x_00542058_v2
+#define g_eventQueueIdx g_x_00542058_v2
 
 extern unsigned char g_data_004ded70;
 extern unsigned char g_data_004ded80;
@@ -211,12 +211,12 @@ extern unsigned int g_arr_chain_4348f0_main;
 
 /* @addr 0x0049d0a0 (166b game) - linked-list walk + swap head:
  *   eax = chain[scaledInit].slot2c; if 0: ret.
- *   mstack-push g_x_00542048; ecx = eax; g_x_00542048 = ecx;
- *   while ((eax = arr[ecx]) != 0): ecx = eax; g_x_00542048 = ecx;
+ *   mstack-push g_xformEntityIdx; ecx = eax; g_xformEntityIdx = ecx;
+ *   while ((eax = arr[ecx]) != 0): ecx = eax; g_xformEntityIdx = ecx;
  *   At tail: arr[ecx] = g_x_00537f24; g_x_00537f24 = chain[scaledInit].slot2c;
- *   mstack-pop g_x_00542048.
+ *   mstack-pop g_xformEntityIdx.
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -233,12 +233,12 @@ void LinkedListSwapHead_0049d0a0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + g_arr_chain_4348f0_main]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -246,7 +246,7 @@ void LinkedListSwapHead_0049d0a0(void) {
         _emit   18h
 loopWalk:
         mov     ecx, eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [eax*4 + g_arr_chain_4348f0_main]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -262,7 +262,7 @@ loopWalk:
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

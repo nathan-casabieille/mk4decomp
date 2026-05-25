@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,41 +125,41 @@ extern unsigned int g_data_00535e7c;
 extern void AerialKickComboCluster_0048b090(void);
 
 /* @addr 0x0048ae50 (263b game) - mstack-push pair + indirect dispatch + cj copy.
- *   mstack-push g_x_00542084 and g_x_00542088. g_x_00542070 = g_x_00542084.
- *   g_scaledInit_00542044 = g_x_00542054; g_x_00542048 = g_x_00542058.
- *   g_walkCallback = 0; indirect call [g_state_00542080] (cdecl callback).
+ *   mstack-push g_currentNodeFlags and g_xformScratch2088. g_eventQueueCurrent = g_currentNodeFlags.
+ *   g_scaledInit_00542044 = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
+ *   g_walkCallback = 0; indirect call [g_eventQueueChild] (cdecl callback).
  *   If pause? final-ret. call AerialKickComboCluster_0048b090; if pause? final-ret.
- *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_x_00542084; cj[+0x5c] = g_x_00542088.
- *   mstack-pop g_x_00542088, g_x_00542084. g_walkCallback = 1; tail-jmp [g_state_00542080].
- *   ret. Followed by small tail block: if g_walkCallback == 0, g_data_00542050 = 0x00537ec0>>2; ret.
+ *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_currentNodeFlags; cj[+0x5c] = g_xformScratch2088.
+ *   mstack-pop g_xformScratch2088, g_currentNodeFlags. g_walkCallback = 1; tail-jmp [g_eventQueueChild].
+ *   ret. Followed by small tail block: if g_walkCallback == 0, g_eventQueueTotal = 0x00537ec0>>2; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 
 __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
     __asm {
         mov     ecx, dword ptr [g_state_004d57ac]
-        mov     eax, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_currentNodeFlags]
         inc     ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_state_004d57ac], ecx
         mov     dword ptr [ecx*4 + 0], eax
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_x_00542054]
-        mov     eax, dword ptr [g_x_00542058]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_scaledInit_00542044], edx
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], 0
-        call    dword ptr [g_state_00542080]
+        call    dword ptr [g_eventQueueChild]
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   0fh
@@ -177,22 +177,22 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x58], edx
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_x_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         mov     dword ptr [eax*4 + 0x54], ecx
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_x_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [eax*4 + 0x5c], edx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542088], ecx
+        mov     dword ptr [g_xformScratch2088], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_currentNodeFlags], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [g_walkCallback], 1
-        jmp     dword ptr [g_state_00542080]
+        jmp     dword ptr [g_eventQueueChild]
         ret
         nop
         nop
@@ -206,7 +206,7 @@ __declspec(naked) void IndirectDispatchCjStore_0048ae50(void) {
         _emit   0dh
         mov     eax, 0x00537ec0
         shr     eax, 2
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         ret
     }
 }

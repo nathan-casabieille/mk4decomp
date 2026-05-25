@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_004f623c;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00543aa8;
 extern unsigned int g_data_007af92c;
 extern unsigned int g_data_007af958;
@@ -106,7 +106,7 @@ __declspec(naked) void DrawMeshBlock(void)
     L_b2d6:
         mov      eax, dword ptr [edi + 8]
         mov      ecx, dword ptr [edi + 4]
-        mov      edx, dword ptr [g_data_0054204c]
+        mov      edx, dword ptr [g_pendingNodeType]
         lea      ebx, [eax + edi + 8]
         lea      edi, [edi + ecx + 4]
         lea      esi, [edx + 4]

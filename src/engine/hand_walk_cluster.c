@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,11 +132,11 @@ extern void PoseStateInitNode_0043cd60(void);
 /* @addr 0x0043cc10 (326b game) - dual-block: state-0 chain-init + state-1 body.
  *   state==0: if g_x_0052aac4==2: set byte g_x_00538148=1. g_x_0053a430=g_walkCallback.
  *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call PushCallPauseSetMaxThenCallPauseJmp_0048e380; if pause ret.
- *     g_x_00542058=g_cj; push 0x90, push body addr; g_x_00542054=[baseSel*4+0x38]; call StoreTwoCall.
- *     Install-self at entry; state=1; g_x_0054204c=0x64; pause=1; pop+ret. 15-NOP pad.
- *   Body (+0xc0): chain[baseSel*4+0x64]=g_x_00542054; chain[baseSel*4+0x68]=g_x_00542058.
+ *     g_eventQueueIdx=g_cj; push 0x90, push body addr; g_eventQueueEnd=[baseSel*4+0x38]; call StoreTwoCall.
+ *     Install-self at entry; state=1; g_pendingNodeType=0x64; pause=1; pop+ret. 15-NOP pad.
+ *   Body (+0xc0): chain[baseSel*4+0x64]=g_eventQueueEnd; chain[baseSel*4+0x68]=g_eventQueueIdx.
  *     Call HandWalkCluster_00475cd0; if pause ret. Call MoveCommitPackedDispatcher_0048d0f0; if pause ret.
- *     g_cj=g_x_00542054. Call MoveCommitPackedDispatcher_0048d0f0; if pause ret.
+ *     g_cj=g_eventQueueEnd. Call MoveCommitPackedDispatcher_0048d0f0; if pause ret.
  *     g_walkCallback=0x80. Call PushPopCurrentSetFFFFFFFF; if pause ret.
  *     Call TripleStringPauseChain; if pause ret. Tail-jmp PoseStateInitNode_0043cd60.
  */
@@ -144,9 +144,9 @@ extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_0052aac4;
 extern unsigned int g_x_00538148;
 extern unsigned int g_x_0053a430;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 
 __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
@@ -177,16 +177,16 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         _emit   55h
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_eventQueueIdx], edx
         push    0x90
         mov     ecx, dword ptr [eax*4 + 0x38]
         push    offset body_cd0
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         call    StoreTwoCall_0049cb40
         add     esp, 8
         mov     dword ptr [esi + 8], offset DualBlockChainInitBody_0043cc10
         mov     dword ptr [esi + 0x84], 1
-        mov     dword ptr [g_x_0054204c], 0x64
+        mov     dword ptr [g_pendingNodeType], 0x64
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
@@ -207,10 +207,10 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         _emit   90h
     body_cd0:
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [eax*4 + 0x64], ecx
         mov     edx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [edx*4 + 0x68], eax
         call    HandWalkCluster_00475cd0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -222,7 +222,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         test    eax, eax
         _emit   75h
         _emit   45h
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MoveCommitPackedDispatcher_0048d0f0
         mov     eax, dword ptr [g_pause_00541e6c]

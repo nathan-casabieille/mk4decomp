@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 extern void MStackBracket5_FieldClear_StateAdvance_00405630(void);
 
 /* @addr 0x00406c10 (198b boot) - call F; pause? ret; (208c&4)? ret;
- *   chain[g_scaledInit + 0x24] = g_x_00542048;
- *   mstack-push *g_x_00542048;
+ *   chain[g_scaledInit + 0x24] = g_xformEntityIdx;
+ *   mstack-push *g_xformEntityIdx;
  *   chain[g_scaledInit + 0x1c] = (val >> 20);
  *   chain[g_scaledInit + 0x20] = (mstack-pop & 0xfffff) | 0x08000000;
- *   g_state_0054208c |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
+ *   g_xformDirtyFlags |= 4; if g_scaledInit == 0: ret; else: clear bit 2.
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -146,7 +146,7 @@ void FramePauseScaledStore_00406c10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     edx, 4
         test    al, dl
         _emit   0fh
@@ -156,9 +156,9 @@ void FramePauseScaledStore_00406c10(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     [ecx*4 + 0x24], eax
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     eax, [eax*4 + g_data_004d57ac_arr]
         inc     ecx
@@ -179,16 +179,16 @@ void FramePauseScaledStore_00406c10(void) {
         or      eax, 0x08000000
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         or      ecx, edx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   09h
         mov     eax, ecx
         xor     eax, edx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

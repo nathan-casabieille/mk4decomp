@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,18 +124,18 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootChainMaskAndDispatch_00416cb0 - 250b boot 2-body chain dispatch.
- *   Entry 0x00416cb0: g_walkCallback=2; DirtyDoubleDeref; if paused or g_x_00542044==0: ret.
+ *   Entry 0x00416cb0: g_walkCallback=2; DirtyDoubleDeref; if paused or g_currentNodeIdx==0: ret.
  *     chain[+0x20] &= 0xfffffffb; g_walkCallback=-0x14; MStackInitCallToggle; if paused: ret.
- *     If !(g_state_0054208c & 4): MStackBracket2_TreeWalkRecursive_00405e70; if paused: ret.
- *     g_walkCallback=-0x16; MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *     If !(g_xformDirtyFlags & 4): MStackBracket2_TreeWalkRecursive_00405e70; if paused: ret.
+ *     g_walkCallback=-0x16; MStackInitCallToggle; if paused: ret. If !(g_xformDirtyFlags & 4):
  *       tail-jmp MStackBracket2_TreeWalkRecursive_00405e70. Ret.
  *   Entry 0x00416d40 (16b-aligned): g_walkCallback=-0x14; MStackInitCallToggle; if paused: ret.
- *     If !(g_state_0054208c & 4): chain[+0x3c] = 0x00800000. g_walkCallback=-0x15;
- *     MStackInitCallToggle; if paused: ret. If !(g_state_0054208c & 4):
+ *     If !(g_xformDirtyFlags & 4): chain[+0x3c] = 0x00800000. g_walkCallback=-0x15;
+ *     MStackInitCallToggle; if paused: ret. If !(g_xformDirtyFlags & 4):
  *       chain[+0x3c] = -0x16666 = g_walkCallback; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void DirtyDoubleDeref_00408cb0(void);
 extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void MStackInitCallToggle_00408ad0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b1_ret
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         je      short L_b1_ret
         mov     ecx, dword ptr [eax*4 + 0x20]
@@ -160,7 +160,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b1_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_b1_callMid
         call    MStackBracket2_TreeWalkRecursive_00405e70
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -172,7 +172,7 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b1_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_b1_ret
         jmp     MStackBracket2_TreeWalkRecursive_00405e70
     L_b1_ret:
@@ -190,9 +190,9 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b2_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_b2_step2
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x3c], 0x00008000
     L_b2_step2:
         mov     dword ptr [g_walkCallback], 0xffffffeb
@@ -200,9 +200,9 @@ __declspec(naked) void BootChainMaskAndDispatch_00416cb0(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b2_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     short L_b2_ret
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0xfffe999a
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax

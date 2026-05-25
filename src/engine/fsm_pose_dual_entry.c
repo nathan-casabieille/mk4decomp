@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,13 +123,13 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542094;
 extern void ChainListVecAdd_0049d200(void);
 extern void DualEntryRecursiveInstall_00471710(void);
@@ -149,19 +149,19 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [esi + 0x84], 0
         test     eax, eax
         je       L_272d
-        mov      ecx, dword ptr [g_data_0054205c]
-        mov      edi, dword ptr [g_data_0054208c]
+        mov      ecx, dword ptr [g_fightGroupHead]
+        mov      edi, dword ptr [g_xformDirtyFlags]
         mov      eax, dword ptr [ecx*4 + 0x18]
         mov      ecx, 4
         or       edi, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], edi
+        mov      dword ptr [g_xformDirtyFlags], edi
         je       L_2724
         mov      edx, edi
         xor      edx, ecx
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         jne      short L_25cc
         call     GuardedSeq_00471670
         pop      edi
@@ -173,21 +173,21 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         or       ecx, 0x40
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax*4 + 0x20], ecx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x2c]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
         je       L_26b4
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      ecx, dword ptr [eax*4 + 0x14]
         lea      eax, [eax*4 + 0x14]
         mov      edx, 0x1ca
         add      ecx, edx
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [eax], ecx
-        mov      ecx, dword ptr [g_data_00542048]
-        mov      edi, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_xformEntityIdx]
+        mov      edi, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [ecx*4 + 8]
         mov      dword ptr [g_walkCallback], eax
         mov      ebx, dword ptr [edi*4 + 0x58]
@@ -198,15 +198,15 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [g_walkCallback], eax
         je       short L_26b4
     L_265b:
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      ecx, dword ptr [eax*4 + 0x14]
         lea      eax, [eax*4 + 0x14]
         add      ecx, edx
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [eax], ecx
-        mov      ecx, dword ptr [g_data_00542048]
-        mov      edi, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_xformEntityIdx]
+        mov      edi, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [ecx*4 + 8]
         mov      dword ptr [g_walkCallback], eax
         mov      ebx, dword ptr [edi*4 + 0x58]
@@ -217,11 +217,11 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [g_walkCallback], eax
         jne      short L_265b
     L_26b4:
-        mov      eax, dword ptr [g_data_0054205c]
+        mov      eax, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [eax*4 + 0x18]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      eax, dword ptr [eax*4]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x400
@@ -237,7 +237,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
     L_2707:
         mov      dword ptr [ecx*4 + 0x38], eax
     L_270e:
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [ecx*4 + 0x18]
         test     eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -249,9 +249,9 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         pop      ebx
         ret
     L_272d:
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [edx*4 + 0x18]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     ChainListVecAdd_0049d200
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -259,7 +259,7 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_2560
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
     L_2769:
         pop      edi
@@ -276,8 +276,8 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [eax + 0x84], 0
         test     ecx, ecx
         je       short L_27b3
-        mov      dword ptr [g_data_00542070], 0x1999
-        mov      dword ptr [g_data_00542074], 0x9999
+        mov      dword ptr [g_eventQueueCurrent], 0x1999
+        mov      dword ptr [g_eventQueueWorkType], 0x9999
         call     DualEntryRecursiveInstall_00471710
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -290,11 +290,11 @@ __declspec(naked) void FsmPoseDualEntry_00472560(void)
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      ecx, dword ptr [eax + 4]
         add      edx, 0x1000000
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [ecx*4], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      ecx
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [eax + 4], ecx
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], 0

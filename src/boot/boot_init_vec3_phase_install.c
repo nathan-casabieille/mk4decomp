@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,12 +126,12 @@ extern unsigned int g_data_00506d7c;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
 extern void FiveTableWalkInit_00403c90(void);
 extern void InstallSelfPackedF80_00426000(void);
@@ -174,25 +174,25 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         mov     ecx, offset g_data_00506d7c
         add     esp, 8
         shr     ecx, 2
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatcherComplex260_00407030
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_bivpi_doVec3Init
     L_bivpi_phase1:
-        mov     dword ptr [g_data_00542070], 3
+        mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
         mov     edx, dword ptr [g_data_00542060]
         mov     ecx, offset BootInitVec3PhaseInstall_00402c10
         add     ecx, 0x2000000
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], edi
@@ -202,12 +202,12 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         pop     esi
         ret
     L_bivpi_doVec3Init:
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     dword ptr [eax + 0x54], edi
         mov     dword ptr [eax + 0x58], edi
         mov     dword ptr [eax + 0x5c], edi
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 9
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
@@ -215,30 +215,30 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
         mov     eax, dword ptr [g_data_00535e6c]
-        mov     edx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054205c], edx
+        mov     edx, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_fightGroupHead], edx
         shl     eax, 2
         mov     ecx, 0xfffde667
         mov     dword ptr [eax + 0x54], edi
         mov     dword ptr [eax + 0x58], edi
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax + 0x5c], ecx
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x3c], ecx
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x34]
         or      ecx, 0x80000
         mov     dword ptr [eax*4 + 0x34], ecx
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0xc91
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x7c], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], offset BootInitVec3PhaseInstall_00402c10
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0x180
+        mov     dword ptr [g_pendingNodeType], 0x180
         mov     dword ptr [g_framePauseFlag], eax
     L_bivpi_pop:
         pop     edi

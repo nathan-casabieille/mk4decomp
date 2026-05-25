@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void AudioMixerStep_004ab700(void);
 extern void EsiTripleMul10Vec_00440660(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -140,7 +140,7 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         xor      esi, esi
         cmp      eax, esi
         jne      L_0657
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [ecx*4 + 0x58]
         cmp      eax, esi
         mov      dword ptr [g_walkCallback], eax
@@ -155,17 +155,17 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         je       L_0657
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x58], esi
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4 + 0x70]
         push     eax
         push     0xffff999a
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         add      esp, 8
         cmp      eax, 0xfffffd71
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         jle      short L_052e
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x6c], esi
         mov      edx, dword ptr [g_walkCallback]
@@ -187,7 +187,7 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         mov      dword ptr [eax + 0x58], ecx
         mov      dword ptr [g_walkCallback], edx
         mov      eax, dword ptr [eax + 0x5c]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     MStackBracketed3StoreCall_00475990
     L_0527:
         mov      eax, dword ptr [g_framePauseFlag]
@@ -202,54 +202,54 @@ __declspec(naked) void CameraBounceUpdate_00440430(void)
         call     StoreDoubleNegPauseSubStore_004ab750
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_0657
-        mov      eax, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         mov      edx, dword ptr [g_walkCallback]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         add      eax, edx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [ecx*4 + 0x70], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [edx*4 + 0x6c]
         push     eax
         push     0x6666
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_walkCallback], 0x20000
         call     AudioMixerStep_004ab700
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0657
-        mov      eax, dword ptr [g_data_00542070]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         mov      ecx, dword ptr [g_walkCallback]
         push     eax
         push     ecx
         call     Mul10Tail_00404af0
-        mov      edx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542070], eax
+        mov      edx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueCurrent], eax
         add      esp, 8
         mov      dword ptr [edx*4 + 0x6c], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [eax*4 + 0x74]
         push     eax
         push     0x6666
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         add      esp, 8
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_walkCallback], 0x30000
         call     AudioMixerStep_004ab700
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_0657
-        mov      ecx, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_eventQueueCurrent]
         mov      edx, dword ptr [g_walkCallback]
         push     ecx
         push     edx
         call     Mul10Tail_00404af0
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         add      esp, 8
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      dword ptr [g_data_00542070], 0xffff0ccd
+        mov      dword ptr [g_eventQueueCurrent], 0xffff0ccd
         call     EsiTripleMul10Vec_00440660
     L_0657:
         pop      esi

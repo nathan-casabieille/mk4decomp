@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -140,13 +140,13 @@ extern unsigned int g_data_00537f94;
 extern unsigned int g_data_00538068;
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 
 __declspec(naked) void StageEventComplexFsm_0047c680(void)
 {
@@ -176,24 +176,24 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      ecx, eax
         and      ecx, 9
         cmp      ecx, 9
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       L_c85a
         and      eax, 5
         cmp      eax, 5
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         je       L_c864
         mov      dword ptr [g_walkCallback], 0xb333
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        mov      dword ptr [g_data_00542088], ebx
+        mov      dword ptr [g_xformScratch2088], ebx
         call     PunchAnimCluster_00496d80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
         call     DeltaAbsCompareBitToggle_0048ea90
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      dword ptr [g_walkCallback], ebp
         test     al, 1
         jne      short L_c759
@@ -202,18 +202,18 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        mov      edx, dword ptr [g_data_0054205c]
+        mov      edx, dword ptr [g_fightGroupHead]
         mov      esi, dword ptr [g_data_00538158]
         mov      eax, OFFSET g_data_0052d74c
         mov      ecx, OFFSET g_data_00538068
         shr      eax, 2
         shr      ecx, 2
         cmp      edx, esi
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_currentNodeIdx], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
         je       short L_c79c
         mov      eax, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
     L_c79c:
         mov      eax, dword ptr [eax*4]
         cmp      eax, edi
@@ -221,7 +221,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         je       short L_c86e
         mov      eax, OFFSET g_data_004ffe28
         shr      eax, 2
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [edx*4 + 0x24], eax
         mov      ecx, dword ptr [g_data_00542060]
         mov      eax, dword ptr [ecx*4 + 0x68]
@@ -245,7 +245,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         call     DirtyToggleByGate_0048f350
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_c855
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_c839
     L_c82f:
         call     StageEventExitCluster_0047cd50
@@ -258,7 +258,7 @@ __declspec(naked) void StageEventComplexFsm_0047c680(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET StageEventComplexFsm_0047c680
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
     L_c855:
         pop      edi

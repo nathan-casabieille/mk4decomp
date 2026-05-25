@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,19 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00446680 (272b game) - load baseSel triple + call cascade with bit2 gate.
- *   Load baseSel[+0x30/+0x60/+0x4c] -> scaledInit/g_x_00542048/g_cj_0054205c.
+ *   Load baseSel[+0x30/+0x60/+0x4c] -> scaledInit/g_xformEntityIdx/g_cj_0054205c.
  *   Call PushPopScaled1cDoubleCall; if pause? ret.
- *   mstack-push g_cj_0054205c; g_cj_0054205c = g_x_00542058.
+ *   mstack-push g_cj_0054205c; g_cj_0054205c = g_eventQueueIdx.
  *   Call DispatchSetDirtyToggle.
- *   If bit2 of state set: g_x_00542048 = 0x0051962c >> 2. Else: 0x00519ae0 >> 2.
+ *   If bit2 of state set: g_xformEntityIdx = 0x0051962c >> 2. Else: 0x00519ae0 >> 2.
  *   mstack-pop g_cj_0054205c. Call MStackBracket1_TreeWalkRecursive2_00406dd0; if pause/bit2? ret.
- *   g_x_00542048 = baseSel[+0x30]. Call Thunk_00405ac0; if pause? ret.
+ *   g_xformEntityIdx = baseSel[+0x30]. Call Thunk_00405ac0; if pause? ret.
  *   Call SetupVecFsmCluster_0043e3e0; if pause? ret. Else: state |= 4; if scaledInit was 0 ret;
  *   else: state ^= 4 (clear bit2); ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542058;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
 extern void DispatchSetDirtyToggle_004ac150(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);
 extern void Thunk_00405ac0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     edx, dword ptr [eax*4 + 0x60]
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4 + 0x4c]
         mov     dword ptr [g_cj_0054205c], eax
         call    PushPopScaled1cDoubleCall_00408510
@@ -166,10 +166,10 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_x_00542058]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_cj_0054205c], edx
         call    DispatchSetDirtyToggle_004ac150
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     ebx, 4
         _emit   84h
         _emit   0c3h
@@ -177,12 +177,12 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         _emit   0fh
         mov     eax, 0x0051962c
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         _emit   0ebh
         _emit   0eh
         mov     ecx, 0x00519ae0
         shr     ecx, 2
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
@@ -193,12 +193,12 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         test    eax, eax
         _emit   75h
         _emit   56h
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   4eh
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    Thunk_00405ac0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -209,16 +209,16 @@ __declspec(naked) void GuardedCascadeBaseSelBit_00446680(void) {
         test    eax, eax
         _emit   75h
         _emit   20h
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         or      ecx, ebx
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   09h
         mov     eax, ecx
         xor     eax, ebx
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     ebx
         ret
     }

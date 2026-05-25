@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,25 +132,25 @@ extern void ScaledChainJmp_00429470(void);
 /* @addr 0x0047c990 (357b game) - install-self w/ MStack snapshot + packed_ptr.
  *   On phase != 0 tail-calls Set200dCallPauseJmp_0047c5e0. Then if
  *   g_data_00537f94 != 0 tail-calls StageEventExitCluster_0047cd50.
- *   Otherwise pushes g_data_00542080 onto the mstack and sets
+ *   Otherwise pushes g_eventQueueChild onto the mstack and sets
  *   g_walkCallback=0xb333, calls EsiEdiAliasDualMul10_004906b0. On
- *   no-error sets g_data_00542088=0x11999, calls PunchAnimCluster_00496d80. Pops
- *   back into g_data_00542080, then calls NotMaskStorePair_0045f440.
- *   Selects 0x542074 = 1 or 0x10 based on g_data_0054205c ==
- *   g_data_00538158, AND with g_data_00542070 → g_data_00542094: if
+ *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster_00496d80. Pops
+ *   back into g_eventQueueChild, then calls NotMaskStorePair_0045f440.
+ *   Selects 0x542074 = 1 or 0x10 based on g_fightGroupHead ==
+ *   g_data_00538158, AND with g_eventQueueCurrent → g_data_00542094: if
  *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
- *   &g_data_004ffe04>>2 into g_data_00542044 / [ecx*4+0x24] and installs
+ *   &g_data_004ffe04>>2 into g_currentNodeIdx / [ecx*4+0x24] and installs
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00542094;
 extern unsigned int g_table_004d57b0;
 extern void EsiEdiAliasDualMul10_004906b0(void);
@@ -179,7 +179,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         ret
     L_ism_push:
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
-        mov     dword ptr [g_data_00542088], 0x11999
+        mov     dword ptr [g_xformScratch2088], 0x11999
         call    PunchAnimCluster_00496d80
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -196,22 +196,22 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_state_004d57ac], eax
         call    NotMaskStorePair_0045f440
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_ism_done
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_data_00538158]
         mov     eax, 1
         cmp     ecx, edx
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         je      short L_ism_pickEax
         mov     eax, 0x10
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
     L_ism_pickEax:
-        and     eax, dword ptr [g_data_00542070]
+        and     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_data_00542094], eax
         je      short L_ism_installSelf
         call    InstallSelfCountdown2Stage_0047c8f0
@@ -220,7 +220,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
     L_ism_installSelf:
         mov     eax, offset g_data_004ffe04
         shr     eax, 2
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     dword ptr [esi + 8], offset InstallSelfMStackPackedFlow_0047c990
         mov     eax, dword ptr [g_data_00542060]
@@ -228,11 +228,11 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_data_00542060]
         mov     dword ptr [edx*4 + 0x84], 0

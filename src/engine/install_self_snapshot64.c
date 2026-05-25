@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00440d20 (152b game) - install-self with snapshot:
- *   chain[sel].slot84 -> eax; clear. If !=0: g_x_00542054 = chain[sel].slot64;
+ *   chain[sel].slot84 -> eax; clear. If !=0: g_eventQueueEnd = chain[sel].slot64;
  *     tail to StackPopDispatch.
- *   Else: mstack-push g_x_0054207c; call BackdashSetupCluster_00440dc0; pause? ret;
- *     pop into g_x_0054207c; install self; set state.
+ *   Else: mstack-push g_eventQueueNotMask; call BackdashSetupCluster_00440dc0; pause? ret;
+ *     pop into g_eventQueueNotMask; install self; set state.
  */
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueNotMask;
 extern void BackdashSetupCluster_00440dc0(void);
 
 extern unsigned int g_chain_disp_64_440d20;
@@ -149,12 +149,12 @@ __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
         _emit   1ah
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, [ecx*4 + g_chain_disp_64_440d20]
-        mov     dword ptr [g_x_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
@@ -168,10 +168,10 @@ __declspec(naked) void InstallSelfSnapshot64_00440d20(void) {
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     eax, 1
-        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [esi + 8], offset InstallSelfSnapshot64_00440d20
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,10 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void DualScaledStore_00452740(void);
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void GatedWordPushCall_00489f90(void);
@@ -165,7 +165,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0x12
+        mov      dword ptr [g_pendingNodeType], 0x12
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -177,7 +177,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], 0x12
+        mov      dword ptr [g_pendingNodeType], 0x12
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -194,7 +194,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 4
-        mov      dword ptr [g_data_0054204c], 0x11
+        mov      dword ptr [g_pendingNodeType], 0x11
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -206,7 +206,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 5
-        mov      dword ptr [g_data_0054204c], 0x5f
+        mov      dword ptr [g_pendingNodeType], 0x5f
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -218,7 +218,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 6
-        mov      dword ptr [g_data_0054204c], 0xf
+        mov      dword ptr [g_pendingNodeType], 0xf
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -230,7 +230,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 7
-        mov      dword ptr [g_data_0054204c], 4
+        mov      dword ptr [g_pendingNodeType], 4
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -247,14 +247,14 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        mov      dword ptr [g_data_0054207c], 5
+        mov      dword ptr [g_eventQueueNotMask], 5
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 8
-        mov      dword ptr [g_data_0054204c], 0x1b
+        mov      dword ptr [g_pendingNodeType], 0x1b
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -271,14 +271,14 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        mov      dword ptr [g_data_0054207c], 7
+        mov      dword ptr [g_eventQueueNotMask], 7
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], 9
-        mov      dword ptr [g_data_0054204c], 7
+        mov      dword ptr [g_pendingNodeType], 7
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         ret
@@ -287,7 +287,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1ef0
-        mov      dword ptr [g_data_0054207c], 6
+        mov      dword ptr [g_eventQueueNotMask], 6
         call     EntryThunkBodyStateMachine_00457bb0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -295,7 +295,7 @@ __declspec(naked) void JuggleFsmCluster_00451b90(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_1ba0
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x55
+        mov      dword ptr [g_pendingNodeType], 0x55
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret      

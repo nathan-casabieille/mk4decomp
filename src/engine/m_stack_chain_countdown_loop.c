@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,9 +122,9 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_walkCallback → g_x_00542074;
- *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_x_00542074) into eax;
- *   scaledInit = g_x_00541fb0*4 + g_data_00541fb8; g_x_00542070 = [scaledInit*4+4];
+/* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_walkCallback → g_eventQueueWorkType;
+ *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_eventQueueWorkType) into eax;
+ *   scaledInit = g_x_00541fb0*4 + g_data_00541fb8; g_eventQueueCurrent = [scaledInit*4+4];
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_x_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
@@ -132,8 +132,8 @@ extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fb8;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00541fb0;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542078;
 extern void MStackPushSearchLoop_00463ed0(void);
 
@@ -145,7 +145,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    MStackPushSearchLoop_00463ed0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -156,29 +156,29 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_eventQueueWorkType]
         cmp     ecx, eax
         push    esi
         _emit   73h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     ecx, dword ptr [g_x_00541fb0]
         mov     edx, dword ptr [g_data_00541fb8]
         shl     ecx, 2
-        mov     dword ptr [g_x_00542070], 4
+        mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_walkCallback], ecx
         lea     esi, [edx + ecx]
         mov     dword ptr [g_scaledInit_00542044], esi
         mov     ecx, dword ptr [esi*4 + 4]
         test    eax, eax
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   75h
         _emit   05h
         mov     eax, 1
         mov     edx, 0xffff9688
         dec     eax
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   17h
@@ -189,7 +189,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         _emit   75h
         _emit   0f6h
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     edx, dword ptr [esi*4 + 8]
         mov     eax, dword ptr [g_state_004d57ac]
         mov     dword ptr [g_x_00542078], edx

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,13 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0041fa50 (186b boot) - chain node init using g_scaledInit as id.
  *   ecx = g_scaledInit; eax = ecx*4 (chain ptr); if (ecx == 0): mstack pop+ret.
- *   mstack-push g_x_00542048.
- *   chain[+0x84] = 0; chain[+8] = g_x_00542048; chain[eax+0xd8] = chain[+8];
+ *   mstack-push g_xformEntityIdx.
+ *   chain[+0x84] = 0; chain[+8] = g_xformEntityIdx; chain[eax+0xd8] = chain[+8];
  *   chain[+0x10] = 1; g_walkCallback = 1; chain[eax+0xdc] = (word)1;
  *   ecx = g_scaledInit + 0x22; g_walkCallback = ecx; chain[+4] = ecx;
- *   mstack-pop into g_x_00542048.
+ *   mstack-pop into g_xformEntityIdx.
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -146,14 +146,14 @@ void ChainNodeInit_0041fa50(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     ecx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     [ecx*4 + g_data_004d57ac_arr], edx
         mov     ecx, dword ptr [g_scaledInit_00542044]
         mov     dword ptr [ecx*4 + 0x84], 0
         mov     edx, dword ptr [g_scaledInit_00542044]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     [edx*4 + 8], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     ecx, [edx*4 + 8]
@@ -171,7 +171,7 @@ void ChainNodeInit_0041fa50(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

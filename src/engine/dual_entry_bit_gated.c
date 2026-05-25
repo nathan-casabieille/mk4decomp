@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00439ba0 (128b game) - dual-entry pause/bit gated.
- *   Block A: call LinkedListDistanceWalker_0045f950; if !pause: cl=g_state_0054208c; if (al=1 & cl): g_data_0053a478=1,
+ *   Block A: call LinkedListDistanceWalker_0045f950; if !pause: cl=g_xformDirtyFlags; if (al=1 & cl): g_data_0053a478=1,
  *     mstack-push 0x00439bf0, jmp MstackPopScaledChainPlusThunks_00471250; ret.
  *   Block B (+0x50): call LinkedListDistanceWalker_0045f950; if !pause: if bitfield set jmp MStackPushPtr1Jmp_00438ef0;
  *     call Set0xaCmpEqSet0x26Jmp; if !pause jmp SetJmp_00439c30; ret.
@@ -144,7 +144,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         test    eax, eax
         _emit   75h
         _emit   39h
-        mov     cl, byte ptr [g_state_0054208c]
+        mov     cl, byte ptr [g_xformDirtyFlags]
         mov     eax, 1
         _emit   84h
         _emit   0c8h
@@ -171,7 +171,7 @@ __declspec(naked) void DualEntryBitGated_00439ba0(void) {
         test    eax, eax
         _emit   75h
         _emit   21h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   05h
         jmp     MStackPushPtr1Jmp_00438ef0

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048c2f0 (114b)
  *   Push g_scaledInit on mstack; ecx=g_walkCallback;
- *   edx=g_state_0054208c; eax=0x541d70>>2; eax+=ecx;
+ *   edx=g_xformDirtyFlags; eax=0x541d70>>2; eax+=ecx;
  *   ecx=4; g_scaledInit=eax; edx|=4; eax=[eax*4];
- *   g_state_0054208c=edx; test eax,eax; g_data_00542070=eax;
- *   if zero: skip; eax=edx; eax^=4; g_state_0054208c=eax;
+ *   g_xformDirtyFlags=edx; test eax,eax; g_eventQueueCurrent=eax;
+ *   if zero: skip; eax=edx; eax^=4; g_xformDirtyFlags=eax;
  *   skip: pop g_scaledInit; ret.
  */
 extern unsigned char g_data_00541d70;
@@ -141,12 +141,12 @@ void PushScaledIdxBitToggle_0048c2f0(void) {
     *(unsigned int *)(top * 4) = g_scaledInit_00542044;
     p = ((unsigned int)&g_data_00541d70 >> 2) + (unsigned int)g_walkCallback;
     g_scaledInit_00542044 = p;
-    dirty = g_state_0054208c | 4;
+    dirty = g_xformDirtyFlags | 4;
     v = *(unsigned int *)(p * 4);
-    g_state_0054208c = dirty;
-    g_data_00542070 = v;
+    g_xformDirtyFlags = dirty;
+    g_eventQueueCurrent = v;
     if (v != 0) {
-        g_state_0054208c = dirty ^ 4;
+        g_xformDirtyFlags = dirty ^ 4;
     }
     top = g_state_004d57ac;
     g_scaledInit_00542044 = *(unsigned int *)(top * 4);

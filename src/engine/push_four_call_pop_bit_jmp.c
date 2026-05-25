@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,28 +123,28 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00461020 (103b)
- *   eax = g_state_004d57ac; g_data_00542070 = 4;
+ *   eax = g_state_004d57ac; g_eventQueueCurrent = 4;
  *   ++eax; g_state_004d57ac = eax; [eax*4] = 4;
  *   call FlagCascadeStateSet_0048ec30; if pause: ret;
  *   ecx = g_state_004d57ac; eax = [ecx*4]; --ecx;
- *   g_state_004d57ac = ecx; cl = byte [g_state_0054208c];
- *   test cl,1; g_data_00542070 = eax;
- *   if zero: skip; eax = 6; g_data_00542070 = 6;
+ *   g_state_004d57ac = ecx; cl = byte [g_xformDirtyFlags];
+ *   test cl,1; g_eventQueueCurrent = eax;
+ *   if zero: skip; eax = 6; g_eventQueueCurrent = 6;
  *   skip: g_walkCallback = eax; jmp 0x471190.
  */
 void PushFourCallPopBitJmp_00461020(void) {
     unsigned int v;
-    g_data_00542070 = 4;
+    g_eventQueueCurrent = 4;
     g_state_004d57ac++;
     *(unsigned int *)(g_state_004d57ac * 4) = 4;
     FlagCascadeStateSet_0048ec30();
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_data_00542070 = v;
-    if ((g_state_0054208c & 1) != 0) {
+    g_eventQueueCurrent = v;
+    if ((g_xformDirtyFlags & 1) != 0) {
         v = 6;
-        g_data_00542070 = 6;
+        g_eventQueueCurrent = 6;
     }
     g_walkCallback = (void (*)(void))v;
     StateDispatchYield_00471190();

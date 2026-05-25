@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,12 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00438530 (93b)
- *   eax = g_state_00535ddc; ecx = g_data_00542084;
+ *   eax = g_state_00535ddc; ecx = g_currentNodeFlags;
  *   cmp eax,ecx; g_walkCallback = eax;
  *   if lt: jmp StackPopDispatchTagged_0041f780;
- *   else: push g_state_00542080 on mstack;
+ *   else: push g_eventQueueChild on mstack;
  *         call Push80SetWalkDualCallPop_00439350;
- *         if pause: ret; pop g_state_00542080; tail-jmp InstallSelfBit4Gate_00438590.
+ *         if pause: ret; pop g_eventQueueChild; tail-jmp InstallSelfBit4Gate_00438590.
  */
 extern void Push80SetWalkDualCallPop_00439350(void);
 extern void InstallSelfBit4Gate_00438590(void);
@@ -138,18 +138,18 @@ void CmpDispatchPushCallPop_00438530(void) {
     unsigned int saved;
     v = g_state_00535ddc;
     g_walkCallback = (void (*)(void))v;
-    if ((int)v < (int)g_data_00542084) {
+    if ((int)v < (int)g_currentNodeFlags) {
         StackPopDispatchTagged_0041f780();
         return;
     }
     top = g_state_004d57ac + 1;
     g_state_004d57ac = top;
-    *(unsigned int *)(top * 4) = g_state_00542080;
+    *(unsigned int *)(top * 4) = g_eventQueueChild;
     Push80SetWalkDualCallPop_00439350();
     if (g_framePauseFlag != 0) return;
     top = g_state_004d57ac;
     saved = *(unsigned int *)(top * 4);
-    g_state_00542080 = saved;
+    g_eventQueueChild = saved;
     g_state_004d57ac = top - 1;
     InstallSelfBit4Gate_00438590();
 }

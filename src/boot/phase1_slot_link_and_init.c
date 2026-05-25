@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueNotMask;
 extern void BootChainBidirRecurseWalk_00405ca0(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void GuardedChainPushSetCallPop_00406bb0(void);
@@ -140,8 +140,8 @@ extern void ScaledTestPauseStore_00408860(void);
 __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
 {
     __asm {
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         call    GuardedChainPushSetCallPop_00406bb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -155,90 +155,90 @@ __declspec(naked) void Phase1SlotLinkAndInit_00419470(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1sli_ret
-        mov     ecx, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542050], ecx
+        mov     ecx, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_eventQueueTotal], ecx
         call    ScaledTestPauseStore_00408860
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1sli_ret
         call    BootPhaseGateBracketedInit_004060c0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1sli_ret
-        mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_00542054], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [eax*4 + 0x30], 0x85
         mov     eax, dword ptr [g_data_00535e6c]
-        mov     edx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x3C], eax
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054207c], 0x10000
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_eventQueueNotMask], 0x10000
         mov     eax, dword ptr [eax*4 + 0x34]
         and     eax, 1
         je      L_p1sli_after_select
-        mov     dword ptr [g_data_0054207c], 0xFFFF0000
+        mov     dword ptr [g_eventQueueNotMask], 0xFFFF0000
     L_p1sli_after_select:
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         or      ah, 0x40
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4]
         or      ecx, 8
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x00419040
         mov     dword ptr [edx*4 + 0x48], 0x11999
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [edx*4 + 0x54]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [edx*4 + 0x58]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [edx*4 + 0x5C]
         mov     dword ptr [ecx*4 + 0x5C], eax
-        mov     edx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [edx*4 + 0x6C], 0x666
-        mov     eax, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [eax*4 + 0x70], 0xFFFFE3D8
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     eax, 0xFFFFFAE2
         mov     dword ptr [ecx*4 + 0x74], 0xCCC
-        mov     edx, dword ptr [g_data_00542054]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [edx*4 + 0x7C], 0x3333
-        mov     ecx, dword ptr [g_data_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x80], eax
-        mov     edx, dword ptr [g_data_00542050]
-        mov     dword ptr [g_data_00542044], edx
+        mov     edx, dword ptr [g_eventQueueTotal]
+        mov     dword ptr [g_currentNodeIdx], edx
         call    BootChainBidirRecurseWalk_00405ca0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p1sli_ret
-        mov     eax, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x18], ecx
-        mov     eax, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_00542054]
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     edx, dword ptr [g_eventQueueEnd]
         mov     dword ptr [eax*4 + 0x18], edx
-        mov     ecx, dword ptr [g_data_00542054]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     ecx, dword ptr [g_eventQueueEnd]
+        mov     dword ptr [g_currentNodeIdx], ecx
         jmp     MStackCall_00406340
     L_p1sli_ret:
         ret

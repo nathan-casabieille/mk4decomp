@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,24 +123,24 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
- *   mstack-push g_scaledInit_00542044; g_x_00542048 = 0x0050f4e8 >> 2.
+ *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
  *   call DispatcherComplex260_00407400; if pause? final-ret.
- *   If bit2 of g_state_0054208c set, skip to final-ret.
+ *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
  *   call MStackPushComplexCallPop_00406430; if pause? final-ret.
  *   g_walkCallback = g_data_00535de4; call StoreIncrMStackPush6_004275c0; if pause? final-ret.
- *   Set 5 fields (g_x_00542070=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
+ *   Set 5 fields (g_eventQueueCurrent=1, _74=0x1d, _78=0, _7c=0xffb50000, _84=0).
  *   call DispatcherComplex181_004263d0; if pause? final-ret.
  *   call RoundCleanupCluster_00427690; if pause? final-ret. mstack-pop scaledInit; ret.
  */
 extern unsigned int g_data_00535de4;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_currentNodeFlags;
 extern void DispatcherComplex181_004263d0(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void RoundCleanupCluster_00427690(void);
@@ -155,7 +155,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         shr     edx, 2
         mov     dword ptr [eax*4 + 0], ecx
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -165,7 +165,7 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   0ach
@@ -192,11 +192,11 @@ void MStackPushChainDispatchInit5_004925d0(void) {
         test    eax, eax
         _emit   75h
         _emit   66h
-        mov     dword ptr [g_x_00542070], 1
-        mov     dword ptr [g_x_00542074], 0x1d
+        mov     dword ptr [g_eventQueueCurrent], 1
+        mov     dword ptr [g_eventQueueWorkType], 0x1d
         mov     dword ptr [g_x_00542078], 0
-        mov     dword ptr [g_x_0054207c], 0xffb50000
-        mov     dword ptr [g_x_00542084], 0
+        mov     dword ptr [g_eventQueueNotMask], 0xffb50000
+        mov     dword ptr [g_currentNodeFlags], 0
         call    DispatcherComplex181_004263d0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

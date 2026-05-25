@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,41 +123,41 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004580a0 (185b game) - 3-call dual-tagged setup with bit-4 gating.
- *   g_x_00542048 = (([0x537e98] != 0) ? packed_ptr(0x4d55f8) : packed_ptr(0x4d55e8)).
+ *   g_xformEntityIdx = (([0x537e98] != 0) ? packed_ptr(0x4d55f8) : packed_ptr(0x4d55e8)).
  *   Init: g_walkCallback=0xa; +0x70=4; +0x78=0; +0x7c=0xff9c0000.
  *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
- *   g_x_0054207c += 0x140000; g_x_00542048 = packed_ptr(0x4d55c0).
+ *   g_eventQueueNotMask += 0x140000; g_xformEntityIdx = packed_ptr(0x4d55c0).
  *   Call Push70CallScaleArith; pause? -> end; (208c&4)? -> end.
- *   g_x_0054207c = 0x780000; g_x_00542048 = packed_ptr(0x4d55d8); tail-jmp Push70CallScaleArith.
+ *   g_eventQueueNotMask = 0x780000; g_xformEntityIdx = packed_ptr(0x4d55d8); tail-jmp Push70CallScaleArith.
  */
 extern unsigned int g_data_004d55e8;
 extern unsigned int g_data_004d55f8;
 extern unsigned int g_data_004d55c0;
 extern unsigned int g_data_004d55d8;
 extern unsigned int g_x_00537e98;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 void TriplePackedTagged_004580a0(void) {
     if (g_x_00537e98 == 0) {
-        g_x_00542048 = (unsigned int)&g_data_004d55e8 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_data_004d55e8 >> 2;
     } else {
-        g_x_00542048 = (unsigned int)&g_data_004d55f8 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_data_004d55f8 >> 2;
     }
     g_walkCallback = 0x0a;
-    g_x_00542070 = 4;
+    g_eventQueueCurrent = 4;
     g_x_00542078 = 0;
-    g_x_0054207c = 0xff9c0000;
+    g_eventQueueNotMask = 0xff9c0000;
     Push70CallScaleArith_00457ad0();
     if (g_framePauseFlag != 0) return;
-    if ((g_state_0054208c & 4) != 0) return;
-    g_x_0054207c += 0x00140000;
-    g_x_00542048 = (unsigned int)&g_data_004d55c0 >> 2;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    g_eventQueueNotMask += 0x00140000;
+    g_xformEntityIdx = (unsigned int)&g_data_004d55c0 >> 2;
     Push70CallScaleArith_00457ad0();
     if (g_framePauseFlag != 0) return;
-    if ((g_state_0054208c & 4) != 0) return;
-    g_x_0054207c = 0x00780000;
-    g_x_00542048 = (unsigned int)&g_data_004d55d8 >> 2;
+    if ((g_xformDirtyFlags & 4) != 0) return;
+    g_eventQueueNotMask = 0x00780000;
+    g_xformEntityIdx = (unsigned int)&g_data_004d55d8 >> 2;
     Push70CallScaleArith_00457ad0();
 }

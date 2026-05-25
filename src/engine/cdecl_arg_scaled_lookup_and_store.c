@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,82 +123,82 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045f470 (251b game) - cdecl arg-1 + 8-field copy + AND chain + bit toggle.
- *   arg1 = [esp+4]; eax = arg1>>2 -> g_data_00542050.
- *   Copy [eax*4 +0/+4/+8/+0xc] -> g_x_00542074/g_x_00542078/g_x_0054207c/g_state_00542080.
+ *   arg1 = [esp+4]; eax = arg1>>2 -> g_eventQueueTotal.
+ *   Copy [eax*4 +0/+4/+8/+0xc] -> g_eventQueueWorkType/g_x_00542078/g_eventQueueNotMask/g_eventQueueChild.
  *   If g_cj_0054205c == g_state_00538158: skip second 8-field load; else copy
  *     [eax*4 +0x10/+0x14/+0x18/+0x1c] -> same dests. eax += 8, store; call
  *     NotMaskStorePair_0045f440; if pause? ret.
- *   AND g_walkCallback &= g_x_0054207c; AND g_x_00542070 &= g_state_00542080;
- *   if g_x_00542074 == g_walkCallback then: if g_x_00542078 == g_x_00542070:
- *     bit0 of g_state_0054208c set, else clear; else clear bit0; ret.
+ *   AND g_walkCallback &= g_eventQueueNotMask; AND g_eventQueueCurrent &= g_eventQueueChild;
+ *   if g_eventQueueWorkType == g_walkCallback then: if g_x_00542078 == g_eventQueueCurrent:
+ *     bit0 of g_xformDirtyFlags set, else clear; else clear bit0; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542078;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void NotMaskStorePair_0045f440(void);
 
 void CdeclArgScaledLookupAndStore_0045f470(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         sar     eax, 2
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_x_00542078], edx
         mov     ecx, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x0c]
         mov     ecx, dword ptr [g_state_00538158]
-        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], ecx
         cmp     edx, ecx
         _emit   74h
         _emit   34h
         mov     ecx, dword ptr [eax*4 + 0x10]
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     edx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_x_00542078], edx
         mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x1c]
-        mov     dword ptr [g_state_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         add     eax, 8
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         call    NotMaskStorePair_0045f440
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   5ah
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_x_0054207c]
-        mov     edx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
+        mov     edx, dword ptr [g_eventQueueChild]
         and     eax, ecx
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         and     ecx, edx
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         cmp     edx, eax
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   74h
         _emit   0dh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         mov     eax, dword ptr [g_x_00542078]
         cmp     eax, ecx
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

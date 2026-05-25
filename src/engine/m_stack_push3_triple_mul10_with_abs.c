@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,49 +123,49 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048b500 (271b game) - mstack-push 3 globals + 3 Mul10Tail + abs/half.
- *   mstack-push g_state_00542080, g_x_00542084, g_state_00542088.
- *   Compute: ecx = g_state_00542080 << 0x10; eax = g_state_00542088 - ecx; abs(eax).
- *   ecx = g_x_00542084 >> 1; push twice; Mul10Tail; result -> g_walkCallback.
- *   Push edx=g_state_00542088 and eax (last result); Mul10Tail.
+ *   mstack-push g_eventQueueChild, g_currentNodeFlags, g_xformScratch2088.
+ *   Compute: ecx = g_eventQueueChild << 0x10; eax = g_xformScratch2088 - ecx; abs(eax).
+ *   ecx = g_currentNodeFlags >> 1; push twice; Mul10Tail; result -> g_walkCallback.
+ *   Push edx=g_xformScratch2088 and eax (last result); Mul10Tail.
  *   eax >>= 2; ecx >>= 2; add; sub edx; add 0x10000; Mul10Tail; -> g_walkCallback.
  *   mstack-pop 3.
  */
-extern unsigned int g_x_00542084;
+extern unsigned int g_currentNodeFlags;
 
 void MStackPush3TripleMul10WithAbs_0048b500(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542084]
+        mov     edx, dword ptr [g_currentNodeFlags]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     ecx, dword ptr [g_state_00542080]
-        mov     eax, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_eventQueueChild]
+        mov     eax, dword ptr [g_xformScratch2088]
         shl     ecx, 0x10
         sub     eax, ecx
-        mov     dword ptr [g_state_00542080], ecx
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_eventQueueChild], ecx
+        mov     dword ptr [g_xformScratch2088], eax
         _emit   79h
         _emit   07h
         neg     eax
-        mov     dword ptr [g_state_00542088], eax
-        mov     ecx, dword ptr [g_x_00542084]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     ecx, dword ptr [g_currentNodeFlags]
         push    eax
         sar     ecx, 1
         push    eax
-        mov     dword ptr [g_x_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
         push    edx
@@ -177,8 +177,8 @@ void MStackPush3TripleMul10WithAbs_0048b500(void) {
         sar     eax, 2
         sar     ecx, 2
         add     ecx, eax
-        mov     dword ptr [g_state_00542088], eax
-        mov     eax, dword ptr [g_x_00542084]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
         sub     ecx, edx
         add     ecx, 0x00010000
         push    ecx
@@ -190,15 +190,15 @@ void MStackPush3TripleMul10WithAbs_0048b500(void) {
         add     esp, 8
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_state_00542088], ecx
+        mov     dword ptr [g_xformScratch2088], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_currentNodeFlags], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_state_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_state_004d57ac], eax
         }
 }

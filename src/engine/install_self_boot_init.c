@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,16 +127,16 @@ extern unsigned int g_data_00535e7c;
  *   If was nonzero: call BootInitGuardedCallChain_004265d0; if pause? ret.
  *     baseSel[+0x0c]=0x1000; tail-call InstallSelfTableWalk_004200d0; ret.
  *   If was zero: clear scaledInit[0]=0; g_state_00537f74=1; g_walkCallback=2;
- *     g_state_0053a408=2; g_state_00537e88=2; g_x_00542074=4.
+ *     g_state_0053a408=2; g_state_00537e88=2; g_eventQueueWorkType=4.
  *     call Push16Call_00489f50; if pause? ret.
- *     call ScenegraphWalk_0041f7d0; g_x_00542070=0xc; install-self at
+ *     call ScenegraphWalk_0041f7d0; g_eventQueueCurrent=0xc; install-self at
  *     [esi+8]=0x00462980; chain[+0x84]=1; scaledInit-chain push 0x00462980+0x01000000.
  *     Call InstallSelfPackedF80_00426000; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537f74;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void InstallSelfPackedF80_00426000(void);
 extern void InstallSelfTableWalk_004200d0(void);
@@ -175,14 +175,14 @@ __declspec(naked) void InstallSelfBootInit_00462980(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_state_0053a408], eax
         mov     dword ptr [g_state_00537e88], eax
-        mov     dword ptr [g_x_00542074], 4
+        mov     dword ptr [g_eventQueueWorkType], 4
         call    Push16Call_00489f50
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   6eh
         call    ScenegraphWalk_0041f7d0
-        mov     dword ptr [g_x_00542070], 0x0c
+        mov     dword ptr [g_eventQueueCurrent], 0x0c
         mov     dword ptr [esi + 8], 0x00462980
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, 0x00462980

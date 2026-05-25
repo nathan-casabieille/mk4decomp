@@ -7,8 +7,8 @@
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_data_004d5c20;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_fightGroupHead;
 
 /* @addr 0x004111f0 (18b): set g_eventQueueIdx = (0x004d5c20>>2); tail-jmp
  * func_00411202 (= PendingMatch_00411210). The 4-byte nop gap before this
@@ -25,5 +25,5 @@ extern void StoreTwoCall_0049cb40(unsigned int, unsigned int);
 extern void func_00416e50(void);
 void PendingMatch_00416e20(void) {
     StoreTwoCall_0049cb40((unsigned int)&func_00416e50, 0xb6);
-    *(unsigned int *)(g_data_00542044 * 4 + 0x2c) = g_data_0054205c;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x2c) = g_fightGroupHead;
 }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -138,13 +138,13 @@ extern void EsiEdiAliasDualMul10_004906b0(void);
 extern unsigned int g_data_004ed160;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 
@@ -161,9 +161,9 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_b036
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         je       short L_b036
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      eax, 0x17
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x28], eax
@@ -212,50 +212,50 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         jmp      dword ptr [eax*4 + L_jmptbl_b29c]
     L_b09d:
         /* case 1: bit 0x13, call 0047b2c0, install state 2 */
-        mov      dword ptr [g_data_00542080], 0x13
+        mov      dword ptr [g_eventQueueChild], 0x13
         call     StageGateFsmCluster_0047b2c0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
     L_b0db:
         /* case 2: bit 0x12, call 0047b2c0, install state 3 */
-        mov      dword ptr [g_data_00542080], 0x12
+        mov      dword ptr [g_eventQueueChild], 0x12
         call     StageGateFsmCluster_0047b2c0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
     L_b119:
         /* case 3: wait counter = 6, fall into L_b19a (install state 4) */
-        mov      dword ptr [g_data_0054207c], 6
+        mov      dword ptr [g_eventQueueNotMask], 6
         jmp      short L_b19a
     L_b125:
         /* case 4: install state 5 via EsiInstallChainCmpDualCall_00429300 */
-        mov      dword ptr [g_data_00542080], 0x13
+        mov      dword ptr [g_eventQueueChild], 0x13
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      ecx, dword ptr [g_data_00542060]
         mov      edx, OFFSET L_b070
         add      edx, 0x5000000
         mov      dword ptr [ecx*4 + 0x84], 5
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -266,9 +266,9 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         ret
     L_b18d:
         /* case 5: dec wait counter; if 0 jump to L_b1f8 (state 6), else fall to L_b19a */
-        mov      eax, dword ptr [g_data_0054207c]
+        mov      eax, dword ptr [g_eventQueueNotMask]
         dec      eax
-        mov      dword ptr [g_data_0054207c], eax
+        mov      dword ptr [g_eventQueueNotMask], eax
         je       short L_b1f8
     L_b19a:
         /* install state 4 via ScaledLoadIncJmp_00428d00 */
@@ -278,11 +278,11 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x4000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -299,11 +299,11 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         mov      dword ptr [ecx*4 + 0x84], 6
         mov      eax, dword ptr [esi + 4]
         add      edx, 0x6000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -314,15 +314,15 @@ __declspec(naked) void RoundFsmCluster_0047aff0(void)
         ret
     L_b256:
         /* case 0: clear wait, bit 0x12, call 0047b2c0, install state 1 */
-        mov      dword ptr [g_data_0054207c], edi
-        mov      dword ptr [g_data_00542080], 0x12
+        mov      dword ptr [g_eventQueueNotMask], edi
+        mov      dword ptr [g_eventQueueChild], 0x12
         call     StageGateFsmCluster_0047b2c0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_b297
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_b070
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi

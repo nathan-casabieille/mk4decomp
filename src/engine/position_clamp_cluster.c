@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -134,11 +134,11 @@ extern unsigned int g_data_0054200c;
 
 extern unsigned int g_data_00535d04;
 extern unsigned int g_data_0053a774;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542080;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
 {
@@ -146,9 +146,9 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         /* H1 */
         mov      ecx, dword ptr [g_data_00535d04]
         mov      eax, dword ptr [g_data_0053a774]
-        mov      dword ptr [g_data_00542084], ecx
+        mov      dword ptr [g_currentNodeFlags], ecx
         mov      ecx, dword ptr [g_data_0052d74c]
-        mov      dword ptr [g_data_00542080], eax
+        mov      dword ptr [g_eventQueueChild], eax
         xor      eax, eax
         test     ecx, ecx
         mov      dword ptr [g_walkCallback], eax
@@ -158,7 +158,7 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
     L_9871:
         mov      ecx, dword ptr [g_data_00538068]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         je       short L_9889
         jl       short L_9889
         inc      eax
@@ -166,9 +166,9 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
     L_9889:
         mov      edx, dword ptr [g_data_0054200c]
         add      eax, edx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      eax, dword ptr [eax*4]
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         jmp      eax
         nop
         nop
@@ -183,67 +183,67 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         nop
         nop
         /* H1 case body */
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542074], 0xccc
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueWorkType], 0xccc
         mov      ecx, dword ptr [eax*4 + 0x54]
         mov      eax, dword ptr [g_data_00535e70]
         push     eax
         push     0xccc
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         add      ecx, eax
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_00542074]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         mov      ecx, dword ptr [eax*4 + 0x5c]
         mov      eax, dword ptr [g_data_00535e74]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         add      ecx, eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], ecx
         add      esp, 8
         mov      dword ptr [eax*4 + 0x5c], ecx
-        mov      ecx, dword ptr [g_data_00542048]
+        mov      ecx, dword ptr [g_xformEntityIdx]
         mov      eax, dword ptr [g_data_00535e78]
         mov      edx, dword ptr [ecx*4 + 0x54]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         push     eax
-        mov      eax, dword ptr [g_data_00542074]
+        mov      eax, dword ptr [g_eventQueueWorkType]
         push     eax
         mov      dword ptr [g_walkCallback], edx
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_data_00542048]
+        mov      edx, dword ptr [g_xformEntityIdx]
         add      ecx, eax
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [edx*4 + 0x54], ecx
-        mov      eax, dword ptr [g_data_00542048]
-        mov      edx, dword ptr [g_data_00542074]
+        mov      eax, dword ptr [g_xformEntityIdx]
+        mov      edx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         mov      ecx, dword ptr [eax*4 + 0x5c]
         mov      eax, dword ptr [g_data_00535e7c]
         push     eax
         push     edx
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         call     Mul10Tail_00404af0
         mov      ecx, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542070], eax
+        mov      dword ptr [g_eventQueueCurrent], eax
         add      ecx, eax
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], ecx
         add      esp, 8
         mov      dword ptr [eax*4 + 0x5c], ecx
@@ -258,16 +258,16 @@ __declspec(naked) void GeoTransformDispatchAndApply_00489840(void)
         nop
         nop
         /* H2: swap + tail-jmp */
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_00542048]
-        mov      edx, dword ptr [g_data_00542084]
-        mov      dword ptr [g_data_0054204c], eax
-        mov      dword ptr [g_data_00542048], eax
-        mov      eax, dword ptr [g_data_00542080]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_xformEntityIdx]
+        mov      edx, dword ptr [g_currentNodeFlags]
+        mov      dword ptr [g_pendingNodeType], eax
+        mov      dword ptr [g_xformEntityIdx], eax
+        mov      eax, dword ptr [g_eventQueueChild]
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542080], edx
-        mov      dword ptr [g_data_00542084], eax
+        mov      dword ptr [g_eventQueueChild], edx
+        mov      dword ptr [g_currentNodeFlags], eax
         jmp      PositionClampCluster_00489a30
     }
 }

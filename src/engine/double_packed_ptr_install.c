@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00458ba0 (198b game) - paired packed_ptr install + chain setup.
- *   g_x_00542048 = packed_ptr(0x0050f1f4); call Dispatcher; pause? ret; (208c&4)? ret;
+ *   g_xformEntityIdx = packed_ptr(0x0050f1f4); call Dispatcher; pause? ret; (208c&4)? ret;
  *   chain[g_scaledInit + 0x54] = 0xffba0000; chain[+0x30] = 0x1f;
  *   call PushSetCallPop; pause? ret; call RegistryPushBindPop; pause? ret;
- *   g_x_00542048 = packed_ptr(0x0050f210); call Dispatcher; pause? ret;
+ *   g_xformEntityIdx = packed_ptr(0x0050f210); call Dispatcher; pause? ret;
  *   chain[+0x54] = 0x00810000; chain[+0x30] = 0x1f;
  *   call PushSetCallPop; pause? ret; call RegistryPushBindPop;
  */
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void RegistryPushBindPop_00403c20(void);
 
 __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
@@ -138,7 +138,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         mov     eax, 0x0050f1f4
         push    esi
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -148,7 +148,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   97h
@@ -173,7 +173,7 @@ __declspec(naked) void DoublePackedPtrInstall_00458ba0(void) {
         _emit   52h
         mov     eax, 0x0050f210
         shr     eax, 2
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_00407400
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

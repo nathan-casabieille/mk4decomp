@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00482680 (101b)
  *   3-call guard cascade (CjTableThresholdDispatch_00488f00, GateDispatch6c_00494580, CopyJmp_0048ef90);
- *   if (bit0 of g_state_0054208c) != 0:
+ *   if (bit0 of g_xformDirtyFlags) != 0:
  *     eax = g_cj_0054205c; [eax*4 + 0x4c] = 0x28f;
  *     ecx = g_cj_0054205c; eax = 0x1999; g_walkCallback = eax;
  *     [ecx*4 + 0x70] = eax; jmp TwoEntryWrapperGuarded_004826f0;
@@ -138,7 +138,7 @@ void TripleGuardSetTailJmp_00482680(void) {
     if (g_framePauseFlag != 0) return;
     CopyJmp_0048ef90();
     if (g_framePauseFlag != 0) return;
-    if ((g_state_0054208c & 1) == 0) {
+    if ((g_xformDirtyFlags & 1) == 0) {
         *(unsigned int *)(g_cj_0054205c * 4 + 0x4c) = 0x28f;
         v = 0x1999;
         g_walkCallback = (void (*)(void))v;

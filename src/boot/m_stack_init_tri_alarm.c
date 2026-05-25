@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0040e190 (369b boot) - 3-entry packed mstack-scoped init + alarms.
  *   Entry 1 (offset 0, 180b): MStackPush8_004ab790, then on no-error
- *     mstack-pushes g_data_0054207c, caches g_data_0054205c into 0x542054,
+ *     mstack-pushes g_eventQueueNotMask, caches g_fightGroupHead into 0x542054,
  *     sets g_walkCallback = &g_data_004d62e8>>2 (stored also in 0x5381 3c),
- *     g_data_00542058 = &g_data_004d61d8>>2, g_data_0054207c = 0xc1.
+ *     g_eventQueueIdx = &g_data_004d61d8>>2, g_eventQueueNotMask = 0xc1.
  *     Pushes 0x49db40, 0xc0 onto StoreTwoCall_0049cb40. If bit 0 of
  *     0x54208c clear, calls StackPushAdd15CallPop_0040a7e0 +
  *     ZeroThreeFields_0040a8b0. Pops the snapshot back and tail-jmps
@@ -144,11 +144,11 @@ extern unsigned int g_data_004d61d8;
 extern unsigned int g_data_004d62e8;
 extern unsigned int g_data_0053813c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -164,24 +164,24 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         test    eax, eax
         jne     L_msi_e1Ret
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         push    0xc0
         mov     dword ptr [g_state_004d57ac], eax
         push    0x49db40
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, offset g_data_004d62e8
-        mov     dword ptr [g_data_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_data_0053813c], eax
         mov     eax, offset g_data_004d61d8
-        mov     dword ptr [g_data_0054207c], 0xc1
+        mov     dword ptr [g_eventQueueNotMask], 0xc1
         shr     eax, 2
-        mov     dword ptr [g_data_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         call    StoreTwoCall_0049cb40
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 8
         test    al, 1
         jne     short L_msi_skipAlarm
@@ -197,7 +197,7 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_state_004d57ac], eax
         jmp     MStackPop8_004ab860
     L_msi_e1Ret:
@@ -216,21 +216,21 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         nop
         /* entry 2 (offset 0xc0) */
     L_msi_entry2:
-        mov     dword ptr [g_data_0054207c], 0x2666
+        mov     dword ptr [g_eventQueueNotMask], 0x2666
         mov     dword ptr [g_walkCallback], 0x170a
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e2End
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         add     eax, 0x10000
         push    ecx
         push    eax
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         neg     eax
         mov     dword ptr [g_walkCallback], eax
         jmp     PendingMatch_0040e310
@@ -251,21 +251,21 @@ __declspec(naked) void MStackInitTriAlarm_0040e190(void) {
         nop
         /* entry 3 (offset 0x120) */
     L_msi_entry3:
-        mov     dword ptr [g_data_0054207c], 0x3333
+        mov     dword ptr [g_eventQueueNotMask], 0x3333
         mov     dword ptr [g_walkCallback], 0x7ae
         call    StoreDoubleNegPauseSubStore_004ab750
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_msi_e3End
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         add     eax, 0x10000
         push    ecx
         push    eax
         mov     dword ptr [g_walkCallback], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         mov     dword ptr [g_walkCallback], eax
         jmp     PendingMatch_0040e310
     L_msi_e3End:

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,14 +132,14 @@ extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
 extern unsigned int g_data_0053a6dc;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern void Cmp2DirtyToggle_00423870(void);
 extern void DualAddSar_004ab600(void);
 extern void SaveCallRestore_004049d0(void);
@@ -166,7 +166,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ebx, 1
         test     al, bl
         je       L_1aa8
@@ -191,7 +191,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      dword ptr [esi + 8], OFFSET L_18b0
         mov      dword ptr [esi + 0x84], 3
         add      esp, 4
-        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_pendingNodeType], 8
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
@@ -204,13 +204,13 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         jne      L_1aa1
         mov      dword ptr [esi + 8], OFFSET L_18b0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 0x90
+        mov      dword ptr [g_pendingNodeType], 0x90
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
         ret
     L_19b0:
-        mov      dword ptr [g_data_00542074], 0
+        mov      dword ptr [g_eventQueueWorkType], 0
         call     Push16Call_00489f50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -219,15 +219,15 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      ebx, 1
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_data_0052d724], ebx
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [g_data_00542048], OFFSET func_004214a0
+        mov      dword ptr [g_currentNodeIdx], ecx
+        mov      dword ptr [g_xformEntityIdx], OFFSET func_004214a0
         call     Thunk_0049cbd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      edx, dword ptr [g_data_0053803c]
-        mov      dword ptr [g_data_00542048], OFFSET func_004214a0
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_xformEntityIdx], OFFSET func_004214a0
+        mov      dword ptr [g_currentNodeIdx], edx
         call     Thunk_0049cbd0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -235,22 +235,22 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      eax, OFFSET g_data_004d56d8
         mov      dword ptr [g_walkCallback], 0x24b
         shr      eax, 2
-        mov      dword ptr [g_data_00542070], 4
+        mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_data_00542078], 0
-        mov      dword ptr [g_data_0054207c], 0xffc90000
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_eventQueueNotMask], 0xffc90000
+        mov      dword ptr [g_xformEntityIdx], eax
         call     Push70CallScaleArith_00457ad0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
-        mov      dword ptr [g_data_00542074], 0x48
+        mov      dword ptr [g_eventQueueWorkType], 0x48
         call     Push16Call_00489f50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1aa1
         mov      dword ptr [esi + 8], OFFSET L_18b0
         mov      dword ptr [esi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], 0x10
+        mov      dword ptr [g_pendingNodeType], 0x10
         mov      dword ptr [g_framePauseFlag], ebx
     L_1aa1:
         pop      esi
@@ -264,7 +264,7 @@ __declspec(naked) void MkIntroFsm_004218b0(void)
         mov      ecx, dword ptr [g_data_00537f2c]
         cmp      eax, ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         jg       short L_1ae4
         jl       L_1920
         cmp      eax, 0x10000

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,19 +125,19 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00426000 (199b game) - install-self gate with three-way exit:
  *   esi = base*4; snapshot [esi+0x84]; clear.
  *   if (snapshot != 0) goto install-self-zero;
- *   save g_x_00542070 in 0x53a384; call DispatcherChainRampClamp_004260d0; pause? ret;
+ *   save g_eventQueueCurrent in 0x53a384; call DispatcherChainRampClamp_004260d0; pause? ret;
  *   if (208c & 4 != 0) goto install-self-zero;
- *   else: chain[g_x_00542048 + 0x10] = 0x426190 (handler);
- *         chain[+0x14] = 0x80; restore g_x_00542070;
+ *   else: chain[g_xformEntityIdx + 0x10] = 0x426190 (handler);
+ *         chain[+0x14] = 0x80; restore g_eventQueueCurrent;
  *         g_walkCallback = 0x80; call DivBy; pause? ret;
- *         g_walkCallback += 6; g_x_0054204c = g_walkCallback;
+ *         g_walkCallback += 6; g_pendingNodeType = g_walkCallback;
  *         [esi+8] = 0x00426000; [esi+0x84] = 1; pause = 1.
  *   install-self-zero: g_x_00543550 = 0; call StackPopDispatchTagged; ret.
  */
 extern unsigned int g_x_0053a384;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00543550;
 extern void DispatcherChainRampClamp_004260d0(void);
 extern void DivBy_004ab300(void);
@@ -154,7 +154,7 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_x_0053a384], ecx
         call    DispatcherChainRampClamp_004260d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -165,20 +165,20 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   11h
         mov     dword ptr [g_x_00543550], 0
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x80
         mov     dword ptr [edx*4 + 0x10], 0x00426190
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     [ecx*4 + 0x14], eax
         mov     edx, dword ptr [g_x_0053a384]
-        mov     dword ptr [g_x_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], eax
         call    DivBy_004ab300
         mov     eax, dword ptr [g_framePauseFlag]
@@ -188,7 +188,7 @@ __declspec(naked) void InstallSelfPackedF80_00426000(void) {
         mov     eax, dword ptr [g_walkCallback]
         add     eax, 6
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00426000
         mov     dword ptr [esi + 0x84], eax

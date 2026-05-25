@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,40 +122,40 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d6478;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 
 /*
  * BootCallChainDoubleMul10_0040b890 - 217b boot init via StoreTwoCall + dual Mul10.
- *   Snapshot g_x_0054205c → g_x_00542054; g_cj_00542058 = (0x004d6478 >> 2);
- *   g_state_0054207c = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall_0049cb40.
- *   If g_state_0054208c & 1: ret. Call StackPushAdd15CallPop_0040a7e0; if paused: ret.
- *   g_data_00542070 = 0x3333; load g_x_0054205c[+0x6c] → eax → g_walkCallback;
+ *   Snapshot g_fightGroupHead → g_eventQueueEnd; g_cj_00542058 = (0x004d6478 >> 2);
+ *   g_eventQueueNotMask = 0xc1; push 0xc0, 0x0049db40; call StoreTwoCall_0049cb40.
+ *   If g_xformDirtyFlags & 1: ret. Call StackPushAdd15CallPop_0040a7e0; if paused: ret.
+ *   g_eventQueueCurrent = 0x3333; load g_fightGroupHead[+0x6c] → eax → g_walkCallback;
  *   push (eax,0x3333); call Mul10Tail; chain[+0x44] = result.
  *   g_walkCallback = 0; chain[+0x48] = 0;
- *   load g_x_0054205c[+0x74] → eax → g_walkCallback; push (eax, g_data_00542070);
+ *   load g_fightGroupHead[+0x74] → eax → g_walkCallback; push (eax, g_eventQueueCurrent);
  *   call Mul10Tail; chain[+0x4c] = result; ret.
  */
 void BootCallChainDoubleMul10_0040b890(void) {
     unsigned int v;
-    g_x_00542054 = g_x_0054205c;
+    g_eventQueueEnd = g_fightGroupHead;
     g_cj_00542058 = (unsigned int)&g_data_004d6478 >> 2;
-    g_state_0054207c = 0xc1;
+    g_eventQueueNotMask = 0xc1;
     ((void (*)(int, int))StoreTwoCall_0049cb40)(0x0049db40, 0xc0);
-    if (g_state_0054208c & 1) return;
+    if (g_xformDirtyFlags & 1) return;
     StackPushAdd15CallPop_0040a7e0();
     if (g_framePauseFlag != 0) return;
-    g_data_00542070 = 0x3333;
-    v = *(unsigned int *)(g_x_0054205c * 4 + 0x6c);
+    g_eventQueueCurrent = 0x3333;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x6c);
     g_walkCallback = v;
     v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(0x3333, v);
-    *(unsigned int *)(g_x_00542044 * 4 + 0x44) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x44) = v;
     g_walkCallback = 0;
-    *(unsigned int *)(g_x_00542044 * 4 + 0x48) = 0;
-    v = *(unsigned int *)(g_x_0054205c * 4 + 0x74);
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x48) = 0;
+    v = *(unsigned int *)(g_fightGroupHead * 4 + 0x74);
     g_walkCallback = v;
-    v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_data_00542070, v);
+    v = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail_00404af0)(g_eventQueueCurrent, v);
     g_walkCallback = v;
-    *(unsigned int *)(g_x_00542044 * 4 + 0x4c) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x4c) = v;
 }

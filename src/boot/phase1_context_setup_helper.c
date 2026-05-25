@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -147,25 +147,25 @@ extern void MStackCall_00406740(void);
  *   Entry 3 (offset 0x60, 190b): DualCmpSwapStore_0049c5a0 → push
  *     0x4f2640 → ScaledStackCallPause_0049c360. If bit 2 of 0x54208c
  *     set, tail-call CallSetPause_0041f830. Else does two Mul10Tail
- *     calls multiplying g_data_00542084 / 00542088 by 0x3333 (interp
+ *     calls multiplying g_currentNodeFlags / 00542088 by 0x3333 (interp
  *     factor) then stores results back. Writes them into [esi+0x6c]
- *     and [esi+0x74], writes g_data_00542044 → g_data_0054205c, sets
+ *     and [esi+0x74], writes g_currentNodeIdx → g_fightGroupHead, sets
  *     [g_data_00542060*4+0x5c]=0x30, pushes 0x4f2650 → ArgSar_Set0_Jmp_0049c6f0.
  *   2b NOP pad.
  *   Entry 4 (offset 0xf0, 40b): Vec2SumMul10ChainCompute_0049bc60 → on no-error compare
- *     g_data_00542070 vs g_data_00542074: if le tail-jmp Phase1ChainSetupCallScale6_0040ca70,
+ *     g_eventQueueCurrent vs g_eventQueueWorkType: if le tail-jmp Phase1ChainSetupCallScale6_0040ca70,
  *     else tail-jmp ScaledIndirectJmp_0049c850.
  *   8b NOP pad.
  *   Entry 5 (offset 0x150, 34b): Phase1ContextSetupHelper_0040c260 + BootCallChainDoubleMul10_0040b890;
  *     on no-error tail-jmps Triple3PathDispatch_0049bf90.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallSetPause_0041f830(void);
 extern void Phase1ChainSetupCallScale6_0040ca70(void);
@@ -232,34 +232,34 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         add     esp, 4
         test    eax, eax
         jne     L_a5e_e3End
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      short L_a5e_doInterp
         call    CallSetPause_0041f830
         pop     esi
         ret
     L_a5e_doInterp:
-        mov     ecx, dword ptr [g_data_00542084]
-        mov     eax, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeFlags]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    ecx
         push    0x3333
         lea     esi, [eax*4]
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         add     esp, 8
-        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_currentNodeFlags], eax
         push    edx
         push    0x3333
         call    Mul10Tail_00404af0
-        mov     dword ptr [g_data_00542088], eax
-        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
         mov     dword ptr [esi + 0x6c], eax
-        mov     ecx, dword ptr [g_data_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, 0x30
-        mov     dword ptr [g_data_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_walkCallback], eax
         push    offset g_data_004f2650
         mov     dword ptr [ecx*4 + 0x5c], eax
@@ -276,8 +276,8 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e4End
-        mov     eax, dword ptr [g_data_00542070]
-        mov     ecx, dword ptr [g_data_00542074]
+        mov     eax, dword ptr [g_eventQueueCurrent]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         cmp     eax, ecx
         jle     short L_a5e_e4tail2
         jmp     ScaledIndirectJmp_0049c850

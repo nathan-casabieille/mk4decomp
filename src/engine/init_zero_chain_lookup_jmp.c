@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  *   eax = 0x5431c0>>2; g_scaledInit=eax; ecx = [ecx*4+0x30] - 0x60;
  *   eax += ecx; g_walkCallback = ecx; g_scaledInit = eax;
  *   eax = [eax*4]; g_eventQueueEnd = eax;
- *   edx = [eax*4]; ++eax; g_data_00542084 = edx;
+ *   edx = [eax*4]; ++eax; g_currentNodeFlags = edx;
  *   g_eventQueueEnd = eax; jmp 0x494290.
  */
 extern unsigned int g_data_005431c0;
@@ -153,7 +153,7 @@ void InitZeroChainLookupJmp_00494210(void) {
     g_scaledInit_00542044 = eax_val;
     eax_val = *(unsigned int *)(eax_val * 4);
     g_eventQueueEnd = eax_val;
-    g_data_00542084 = *(unsigned int *)(eax_val * 4);
+    g_currentNodeFlags = *(unsigned int *)(eax_val * 4);
     g_eventQueueEnd = eax_val + 1;
     InstallSelfCmdStreamInterp_00494290();
 }

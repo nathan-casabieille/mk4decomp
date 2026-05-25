@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,10 +125,10 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004261d0 (82b)
  *   call MStackPush2TableNot_00426230; if pause: ret;
  *   g_walkCallback &= 0x7070; g_eventQueueWorkType = 0xffff;
- *   if walkCallback != 0: set bit0 of g_state_0054208c, ret;
- *   else g_data_00542070 &= 0x77;
- *   if zero: clear bit0 of g_state_0054208c, ret;
- *   else: set bit0 of g_state_0054208c, ret.
+ *   if walkCallback != 0: set bit0 of g_xformDirtyFlags, ret;
+ *   else g_eventQueueCurrent &= 0x77;
+ *   if zero: clear bit0 of g_xformDirtyFlags, ret;
+ *   else: set bit0 of g_xformDirtyFlags, ret.
  */
 
 void GuardedDualMaskFlagToggle_004261d0(void) {
@@ -144,18 +144,18 @@ void GuardedDualMaskFlagToggle_004261d0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0fh
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         and     eax, 0x77
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   0dh
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

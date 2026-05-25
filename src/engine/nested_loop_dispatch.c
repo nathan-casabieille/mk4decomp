@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,39 +123,39 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00458f40 (238b game) - nested 3x15 loop with character-range dispatch.
- *   mstack-push g_x_00542074, g_x_0054204c. esi=3.
- *   g_x_0054204c=(0x0053a53c>>2); outer g_x_00542070=0xf; inner g_x_00542074=esi=3.
+ *   mstack-push g_eventQueueWorkType, g_pendingNodeType. esi=3.
+ *   g_pendingNodeType=(0x0053a53c>>2); outer g_eventQueueCurrent=0xf; inner g_eventQueueWorkType=esi=3.
  *   LOOP_HEAD: call ScaledMaskByte_004774d0; if pause exit.
  *   compare g_walkCallback to {0x20, 0x7b/c/d, 0x5f}; dispatch one path.
  *   inner inc-dec; if !=0 LOOP_HEAD; else dec outer; if 0 -> FINAL_OK; else reset inner.
  *   FINAL_OK: call BitmapBlitRunLength_004592f0; if !pause: mstack-pop pair; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void BitmapBlitRunLength_004592f0(void);
 extern void ScaledMaskByte_004774d0(void);
 
 __declspec(naked) void NestedLoopDispatch_00458f40(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
         mov     esi, 3
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + 0], edx
         mov     eax, 0x0053a53c
         shr     eax, 2
-        mov     dword ptr [g_x_0054204c], eax
-        mov     dword ptr [g_x_00542070], 0xf
-        mov     dword ptr [g_x_00542074], esi
+        mov     dword ptr [g_pendingNodeType], eax
+        mov     dword ptr [g_eventQueueCurrent], 0xf
+        mov     dword ptr [g_eventQueueWorkType], esi
         call    ScaledMaskByte_004774d0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -181,19 +181,19 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         cmp     eax, 0x5f
         _emit   77h
         _emit   30h
-        mov     ecx, dword ptr [g_x_0054204c]
-        mov     eax, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_pendingNodeType]
+        mov     eax, dword ptr [g_eventQueueWorkType]
         inc     ecx
         dec     eax
-        mov     dword ptr [g_x_0054204c], ecx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_eventQueueWorkType], eax
         _emit   75h
         _emit   0b6h
-        mov     eax, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         inc     ecx
         dec     eax
-        mov     dword ptr [g_x_0054204c], ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_pendingNodeType], ecx
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   10h
         _emit   0ebh
@@ -206,11 +206,11 @@ __declspec(naked) void NestedLoopDispatch_00458f40(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_state_004d57ac], eax
         pop     esi
         ret

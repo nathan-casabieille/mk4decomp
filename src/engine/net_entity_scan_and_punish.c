@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,9 +126,9 @@ extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ecac8;
 extern unsigned int g_data_00535df0;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_xformDirtyFlags;
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -141,47 +141,47 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         push     ebx
         push     esi
         push     edi
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      edi, 0x147
         mov      ebx, 0x77
         mov      esi, 0xfffff852
     L_4b6c:
         mov      eax, dword ptr [eax*4]
     L_4b73:
-        mov      edx, dword ptr [g_data_0054208c]
+        mov      edx, dword ptr [g_xformDirtyFlags]
         mov      ecx, 4
         or       edx, ecx
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       L_4d2c
         xor      edx, ecx
         test     eax, eax
-        mov      dword ptr [g_data_0054208c], edx
+        mov      dword ptr [g_xformDirtyFlags], edx
         je       L_4d2c
         mov      ecx, dword ptr [eax*4 + 0x30]
         cmp      ecx, 0x95
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         jne      short L_4b6c
         mov      ecx, dword ptr [eax*4 + 0x70]
         mov      dword ptr [g_walkCallback], edi
         add      ecx, edi
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [eax*4 + 0x70], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4 + 0x58]
         test     ecx, ecx
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         jl       short L_4b6c
         mov      ecx, dword ptr [eax*4]
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         mov      ecx, dword ptr [g_data_004d57ac]
         mov      eax, dword ptr [eax*4 + 0x54]
         inc      ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_004d57ac], ecx
         mov      dword ptr [ecx*4], eax
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_data_004d57ac]
         mov      eax, dword ptr [edx*4 + 0x5c]
         inc      ecx
@@ -199,7 +199,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d31
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_4cac
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
@@ -209,11 +209,11 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], edx
         jmp      L_4b73
     L_4cac:
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [eax*4 + 0x30], ebx
         call     MStackCall_00406340
@@ -221,7 +221,7 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         test     eax, eax
         jne      short L_4d31
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_walkCallback], ecx
@@ -231,12 +231,12 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_data_004d57ac], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], ecx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], esi
         mov      dword ptr [ecx*4 + 0x58], esi
-        mov      eax, dword ptr [g_data_00542048]
+        mov      eax, dword ptr [g_xformEntityIdx]
         jmp      L_4b73
     L_4d2c:
         call     ScaledInitOrSelfPtr_00474b10

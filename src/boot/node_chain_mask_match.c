@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,14 +128,14 @@ extern unsigned int g_data_00535e7c;
  *   compute scaled load [node>>2 + 0x0c] & mask; if matches stash
  *   path, set bit 0 of state and exit; else clear bit 0 and exit.
  */
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 __declspec(naked) void NodeChainMaskMatch_0041f870(void) {
     __asm {
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, dword ptr [g_nodeListTail]
         push    esi
-        mov     esi, dword ptr [g_data_00542070]
+        mov     esi, dword ptr [g_eventQueueCurrent]
         and     edx, esi
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], edx
@@ -150,28 +150,28 @@ walkChain:
         mov     eax, dword ptr [eax*4 + 0x0c]
         and     eax, esi
         cmp     eax, edx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         je      hit
 next:
         mov     ecx, dword ptr [ecx + 0xe4]
         test    ecx, ecx
         jne     walkChain
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
 hit:
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         pop     esi
         ret
 empty:
-        mov     eax, dword ptr [g_state_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         pop     esi
         and     al, 0xfe
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
     }
 }

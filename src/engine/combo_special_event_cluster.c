@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,13 +122,13 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_state_004d57ac;
-extern unsigned int g_data_0054208c;
-extern unsigned int g_data_00542070;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_eventQueueCurrent;
 extern void ScaledChain3c74_0048f910(void);
 extern void ScaledInit_0048d430(void);
 extern void DualGatedStateYield_0048fc80(void);
@@ -140,7 +140,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         test    eax, eax
         jne     L_tcrc_ret1
         call    ScaledChain3c74_0048f910
@@ -149,13 +149,13 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         jne     short L_tcrc_ret1
         mov     eax, dword ptr [g_data_00542060]
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x5c]
         cmp     eax, 1
         mov     dword ptr [g_walkCallback], eax
         je      short L_tcrc_ret1
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
@@ -168,11 +168,11 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     al, byte ptr [g_data_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
-        mov     dword ptr [g_data_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         je      short L_tcrc_ret1
-        mov     dword ptr [g_data_0054207c], 1
+        mov     dword ptr [g_eventQueueNotMask], 1
     L_tcrc_ret1:
         ret
         nop
@@ -198,7 +198,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         jne     short L_tcrc_sub2_check102
         mov     eax, dword ptr [g_data_00542060]
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         cmp     eax, 0x18
         mov     dword ptr [g_walkCallback], eax
@@ -212,7 +212,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         jne     short L_tcrc_sub2_setOne
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [ecx*4 + 0x3c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x5c]
         cmp     eax, 1
         mov     dword ptr [g_walkCallback], eax
@@ -228,7 +228,7 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub3_ret
-        test    byte ptr [g_data_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         jne     short L_tcrc_sub3_doCall
         jmp     ComboSpecialEventCluster_0046df90
     L_tcrc_sub3_doCall:
@@ -236,21 +236,21 @@ __declspec(naked) void TriCounterReinitChain_0046dd90(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_tcrc_sub3_ret
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4]
-        mov     dword ptr [g_data_00542070], 0
+        mov     dword ptr [g_eventQueueCurrent], 0
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4], 0
-        mov     edx, dword ptr [g_data_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, 4
         or      edx, eax
         test    ecx, ecx
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_tcrc_sub3_ret
         mov     ecx, edx
         xor     ecx, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
     L_tcrc_sub3_ret:
         ret
     }

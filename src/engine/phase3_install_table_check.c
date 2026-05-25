@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,28 +123,28 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048acd0 (384b game) - phase-state install-self with table check.
- *   Phase 0: indirect-call [g_data_00542080]; on no-error copies the
- *     3-vec at [g_data_0054205c*4+0x54/0x58/0x5c] into [g_data_00542050*4
+ *   Phase 0: indirect-call [g_eventQueueChild]; on no-error copies the
+ *     3-vec at [g_fightGroupHead*4+0x54/0x58/0x5c] into [g_eventQueueTotal*4
  *     + 0/4/8], then IndirectDispatchCjStore_0048ae50, installs Self
- *     at body with slot[+0x84]=1, g_data_0054204c=1, arms 0x541e6c.
+ *     at body with slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c.
  *   Phase non-0: if byte g_data_00538148 != 0, checks the scaled
- *     g_data_00542058 ptr against the 4 sentinel addresses
+ *     g_eventQueueIdx ptr against the 4 sentinel addresses
  *     {0x4efe18, 0x4eff00, 0x4effe8, 0x4f00d0}; on match tail-call
  *     CallSetPause_0041f830. Otherwise byte g_data_00538148 = 0, then
- *     indirect-call [g_data_00542080] (vtable advance), call
- *     MStackPush6OpPop6_0048af60. Reads g_data_00542084 cap;
- *     [g_data_00542058*4] + 0x30000 is the next target; if cap >= that
- *     target, store target into g_data_00542084 and tail-call
+ *     indirect-call [g_eventQueueChild] (vtable advance), call
+ *     MStackPush6OpPop6_0048af60. Reads g_currentNodeFlags cap;
+ *     [g_eventQueueIdx*4] + 0x30000 is the next target; if cap >= that
+ *     target, store target into g_currentNodeFlags and tail-call
  *     IndirectDispatchCjStore_0048ae50, then StackPopDispatchTagged_0041f780.
  *     Else tail-call IndirectDispatchCjStore directly.
  */
 extern unsigned int g_data_00538148;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueChild;
 extern void CallSetPause_0041f830(void);
 extern void IndirectDispatchCjStore_0048ae50(void);
 extern void MStackPush6OpPop6_0048af60(void);
@@ -162,7 +162,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         je      L_p3itc_phase0
         cmp     byte ptr [g_data_00538148], bl
         je      short L_p3itc_phase1
-        mov     ecx, dword ptr [g_data_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         lea     eax, [ecx*4]
         cmp     eax, 0x4efe18
         je      L_p3itc_pauseTail
@@ -175,20 +175,20 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     byte ptr [g_data_00538148], bl
     L_p3itc_phase1:
         mov     dword ptr [g_walkCallback], ebx
-        call    dword ptr [g_data_00542080]
+        call    dword ptr [g_eventQueueChild]
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
         call    MStackPush6OpPop6_0048af60
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
-        mov     edx, dword ptr [g_data_00542058]
-        mov     ecx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_eventQueueIdx]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         mov     eax, dword ptr [edx*4]
         add     eax, 0x30000
         cmp     ecx, eax
         mov     dword ptr [g_walkCallback], eax
         jl      L_p3itc_dispatchOnly
-        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_currentNodeFlags], eax
         call    IndirectDispatchCjStore_0048ae50
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
@@ -198,21 +198,21 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         ret
     L_p3itc_phase0:
         mov     dword ptr [g_walkCallback], ebx
-        call    dword ptr [g_data_00542080]
+        call    dword ptr [g_eventQueueChild]
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     L_p3itc_done
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         mov     eax, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         mov     eax, dword ptr [edx*4 + 0x58]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 4], eax
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     ecx, dword ptr [g_data_00542050]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_eventQueueTotal]
         mov     eax, dword ptr [edx*4 + 0x5c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 8], eax
@@ -223,7 +223,7 @@ __declspec(naked) void Phase3InstallTableCheck_0048acd0(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], offset Phase3InstallTableCheck_0048acd0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_p3itc_done:
         pop     esi

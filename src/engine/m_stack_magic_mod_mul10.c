@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,10 +132,10 @@ extern void TripleFieldCopyJmpLo_0048f810(void);
 
 void GuardedArithDualCallChain_00431e90(void) {
     __asm {
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 0xfffe6de1
         sub     eax, ecx
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_eventQueueWorkType], eax
         call    ModMagicMul10Index_00424350
         mov     eax, dword ptr [g_framePauseFlag]
@@ -153,11 +153,11 @@ void GuardedArithDualCallChain_00431e90(void) {
         test    eax, eax
         _emit   75h
         _emit   68h
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         mov     ecx, dword ptr [g_acc_00542078]
         neg     eax
         sub     eax, 0x1921f
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         mov     eax, ecx
         shl     eax, 3
         sub     eax, ecx
@@ -173,7 +173,7 @@ void GuardedArithDualCallChain_00431e90(void) {
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         mov     dword ptr [edx*4 + 0x64], ecx
         }
 }

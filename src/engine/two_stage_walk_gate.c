@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -138,7 +138,7 @@ void TwoStageWalkGate_00439ae0(void) {
     walk = (int)(unsigned int)g_walkCallback;
     if (walk < 0xf0) return;
     state_val = (int)g_state_00535ddc;
-    g_data_00542070 = (unsigned int)state_val;
+    g_eventQueueCurrent = (unsigned int)state_val;
     if (state_val < 0x20000) return;
     if (walk > 0x258) {
         Set258Call_PauseDirtyJmp_00439b50();
@@ -147,6 +147,6 @@ void TwoStageWalkGate_00439ae0(void) {
     g_walkCallback = (void (*)(void))0xc8;
     AudioVolumeRescale_004ab690();
     if (g_framePauseFlag != 0) return;
-    if ((g_state_0054208c & 1) == 0) return;
+    if ((g_xformDirtyFlags & 1) == 0) return;
     Thunk_00439c20();
 }

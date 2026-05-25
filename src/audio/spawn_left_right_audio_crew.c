@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00541d8c;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_005435a2;
 extern unsigned int g_data_0054361a;
@@ -158,20 +158,20 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
         mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
         mov      edx, ebp
         mov      dword ptr [eax*4 + 0x34], ecx
         mov      eax, dword ptr [g_data_00541d8c]
         sub      edx, eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         shl      edx, 2
         mov      dword ptr [eax*4 + 0x54], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], ebx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x64], 0
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
         mov      dword ptr [g_walkCallback], ecx
@@ -182,11 +182,11 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_data_00541d8c]
         mov      edx, ebp
         sub      edx, eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], 0xff890000
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_816c:
         mov      eax, dword ptr [g_data_004f3ae4]
@@ -211,20 +211,20 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      dword ptr [g_walkCallback], 0x10
         call     AudioChainInit_004a77c0
         mov      edx, dword ptr [g_data_00542060]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         lea      eax, [edi + edx]
         mov      edx, ebp
         mov      dword ptr [eax*4 + 0x48], ecx
         mov      eax, dword ptr [g_data_00541d8c]
         sub      edx, eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         shl      edx, 2
         mov      dword ptr [eax*4 + 0x54], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], ebx
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x64], 0
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x5c], 0xc0000
         movsx    ecx, byte ptr [esi - 2]
         mov      dword ptr [g_walkCallback], ecx
@@ -235,11 +235,11 @@ __declspec(naked) void SpawnLeftRightAudioCrew_004a8080(void)
         mov      eax, dword ptr [g_data_00541d8c]
         mov      edx, ebp
         sub      edx, eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], edx
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [ecx*4 + 0x58], OFFSET g_data_007b0000
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x5c], 0x30000
     L_826b:
         mov      eax, dword ptr [g_data_004f3ae8]

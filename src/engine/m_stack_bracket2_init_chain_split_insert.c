@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,9 +125,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e74;
 extern unsigned int g_data_00541e78;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_xformDirtyFlags;
 extern void MStackBracket5_LinkedListUnlink_00409aa0(void);
 extern void MStackPush2ChainInsert_00409870(void);
 
@@ -136,45 +136,45 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
     __asm
     {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ebx, 4
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, ebx
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         jae     short L_mbsi_skip1
-        mov     dword ptr [g_data_00542070], ebx
+        mov     dword ptr [g_eventQueueCurrent], ebx
     L_mbsi_skip1:
         mov     eax, dword ptr [g_data_00541e74]
         mov     dword ptr [g_walkCallback], 0x425ba0
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    Helper_TickAlt
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         jne     L_mbsi_loadSav
-        mov     dword ptr [g_data_00542048], 0
+        mov     dword ptr [g_xformEntityIdx], 0
         call    MStackBracket5_LinkedListUnlink_00409aa0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
         mov     ecx, dword ptr [g_data_00541e78]
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPush2ChainInsert_00409870
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mbsi_pop
-        mov     eax, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [eax*4 + 0xc]
         sub     ecx, edx
         cmp     ecx, 8
@@ -182,22 +182,22 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         jb      L_mbsi_combine
         mov     dword ptr [eax*4 + 0xc], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00542070]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueCurrent]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         add     edx, -4
         lea     eax, [ecx + eax + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0xc], edx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 4], 0
         mov     ecx, dword ptr [g_data_00541e74]
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPush2ChainInsert_00409870
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -208,30 +208,30 @@ __declspec(naked) void MStackBracket2InitChainSplitInsert_00425be0(void)
         mov     dword ptr [g_state_004d57ac], ecx
     L_mbsi_combine:
         add     eax, ebx
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     short L_mbsi_loadCommon
     L_mbsi_loadSav:
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
     L_mbsi_loadCommon:
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_state_004d57ac]
         mov     dword ptr [g_walkCallback], edx
         mov     edx, dword ptr [ecx*4]
         dec     ecx
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], ecx
         mov     edx, dword ptr [ecx*4]
         dec     ecx
-        mov     dword ptr [g_data_00542048], edx
-        mov     edx, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     edx, dword ptr [g_xformDirtyFlags]
         or      edx, ebx
         mov     dword ptr [g_state_004d57ac], ecx
         test    eax, eax
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_mbsi_pop
         mov     eax, edx
         xor     eax, ebx
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
     L_mbsi_pop:
         pop     ebx
         ret

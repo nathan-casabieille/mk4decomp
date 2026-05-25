@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,8 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004616e0 (345b game) - init thunk + 10 state-tag thunks (each jmps DualSave_00461840).
  *   Init (0..0x1f): g_walkCallback=[g_state_0053a51c]; if !=4, set g_walkCallback=g_data_0053a748=0xa; ret. 1-NOP pad.
- *   Thunks 0..8 (offsets 0x20+i*0x20): g_walkCallback=0x11+i; g_data_00542070=1+i; jmp DualSave; 7-NOP pad.
- *   Thunk 9 (+0x140): g_walkCallback=0x1b (skips 0x1a); g_data_00542070=0xa; jmp DualSave (no NOP pad).
+ *   Thunks 0..8 (offsets 0x20+i*0x20): g_walkCallback=0x11+i; g_eventQueueCurrent=1+i; jmp DualSave; 7-NOP pad.
+ *   Thunk 9 (+0x140): g_walkCallback=0x1b (skips 0x1a); g_eventQueueCurrent=0xa; jmp DualSave (no NOP pad).
  */
 extern unsigned int g_data_0053a748;
 extern unsigned int g_state_0053a51c;
@@ -144,7 +144,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         ret
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x11
-        mov     dword ptr [g_data_00542070], 1
+        mov     dword ptr [g_eventQueueCurrent], 1
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -154,7 +154,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x12
-        mov     dword ptr [g_data_00542070], 2
+        mov     dword ptr [g_eventQueueCurrent], 2
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -164,7 +164,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x13
-        mov     dword ptr [g_data_00542070], 3
+        mov     dword ptr [g_eventQueueCurrent], 3
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -174,7 +174,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x14
-        mov     dword ptr [g_data_00542070], 4
+        mov     dword ptr [g_eventQueueCurrent], 4
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -184,7 +184,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x15
-        mov     dword ptr [g_data_00542070], 5
+        mov     dword ptr [g_eventQueueCurrent], 5
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -194,7 +194,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x16
-        mov     dword ptr [g_data_00542070], 6
+        mov     dword ptr [g_eventQueueCurrent], 6
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -204,7 +204,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x17
-        mov     dword ptr [g_data_00542070], 7
+        mov     dword ptr [g_eventQueueCurrent], 7
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -214,7 +214,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x18
-        mov     dword ptr [g_data_00542070], 8
+        mov     dword ptr [g_eventQueueCurrent], 8
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -224,7 +224,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x19
-        mov     dword ptr [g_data_00542070], 9
+        mov     dword ptr [g_eventQueueCurrent], 9
         jmp     DualSave_00461840
         _emit   90h
         _emit   90h
@@ -234,7 +234,7 @@ __declspec(naked) void TenThunkDualSave_004616e0(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x1b
-        mov     dword ptr [g_data_00542070], 0xa
+        mov     dword ptr [g_eventQueueCurrent], 0xa
         jmp     DualSave_00461840
     }
 }

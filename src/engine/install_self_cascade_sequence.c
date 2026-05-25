@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,18 +127,18 @@ extern unsigned int g_data_00535e7c;
  *   state==0: call Cmp2CallDirtyCall; if !=0 ret.
  *   Call StoreCallPauseDirtyStoreJmp; if pause ret.
  *   If !bit0(0054208c): tail-call GuardedSeq; pop+ret.
- *   g_x_00542084=0x78000; install-self at entry+0x01000000; state=1; call EsiInstallTwoCallCmpInstall; pause=1; ret.
+ *   g_currentNodeFlags=0x78000; install-self at entry+0x01000000; state=1; call EsiInstallTwoCallCmpInstall; pause=1; ret.
  *   Tail (+0xc0, 1-NOP pad): set g_data_0053a478=0; call InstallSelfCountdownCascade; if pause ret.
  *     If [0053a478]!=0 ret; call Cmp2CallDirtyCall; if !=0 ret.
  *     If [baseSel*4+0x34]!=0: jmp InstallSelfThreeStateLeaPlus22.
  *     Else: g_walkCallback=0x1f4; call AudioVolumeRescale; if pause ret.
  *       If bit0(0054208c): jmp InstallSelfChainSetB333v3 (0x00437fb0).
- *       Else: g_state_0054207c=0x10028; jmp HitReactionDispatcher_0045f650.
+ *       Else: g_eventQueueNotMask=0x10028; jmp HitReactionDispatcher_0045f650.
  *   Tail (+0x140 after 6-NOP pad): jmp InstallSelfChainSetB333v2_00437f00.
  */
 extern unsigned int g_data_0053a478;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_currentNodeFlags;
 extern void AudioVolumeRescale_004ab690(void);
 extern void EsiInstallTwoCallCmpInstall_00438b10(void);
 extern void GuardedSeq_00433bb0(void);
@@ -176,13 +176,13 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         test    eax, eax
         _emit   75h
         _emit   79h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
         call    GuardedSeq_00433bb0
         pop     esi
         ret
-        mov     dword ptr [g_x_00542084], 0x78000
+        mov     dword ptr [g_currentNodeFlags], 0x78000
         mov     dword ptr [esi + 8], offset InstallSelfCascadeSequence_00434350
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset InstallSelfCascadeSequence_00434350
@@ -229,11 +229,11 @@ __declspec(naked) void InstallSelfCascadeSequence_00434350(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     InstallSelfChainSetB333v3_00437fb0
-        mov     dword ptr [g_state_0054207c], 0x10028
+        mov     dword ptr [g_eventQueueNotMask], 0x10028
         jmp     HitReactionDispatcher_0045f650
         ret
         _emit   90h

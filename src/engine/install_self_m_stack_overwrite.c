@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,17 +123,17 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046e9a0 (206b game) - dual-path install-self with mstack overwrite.
- *   chain[+0x84]!=0 path: esi=g_x_0054207c; call CopyJmp_0048ef90; pause-check; bit-0 test:
+ *   chain[+0x84]!=0 path: esi=g_eventQueueNotMask; call CopyJmp_0048ef90; pause-check; bit-0 test:
  *     if set call CallPauseDirtyMStackPushFn_0046e2a0; pop+ret. Else g_walkCallback=esi; call ScaledInit_0048d430;
  *     if !pause: call [g_cj_00542058]; pop+ret.
  *   chain[+0x84]==0 path: snapshot+swap mstack top: ecx=mstack[N], save to g_cj_00542058, overwrite mstack[N]=g_walkCallback.
  *     call ScaledArrStore_00429980; pause-check; mstack-pop into g_walkCallback; install-self at +0x08=0x0046e9a0;
- *     g_data_0054204c=1; g_pause=1. pop+ret.
+ *     g_pendingNodeType=1; g_pause=1. pop+ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern void CallPauseDirtyMStackPushFn_0046e2a0(void);
 extern void ScaledArrStore_00429980(void);
 extern void ScaledInit_0048d430(void);
@@ -148,7 +148,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         test    eax, eax
         _emit   74h
         _emit   44h
-        mov     esi, dword ptr [g_x_0054207c]
+        mov     esi, dword ptr [g_eventQueueNotMask]
         call    CopyJmp_0048ef90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   07h
         call    CallPauseDirtyMStackPushFn_0046e2a0
@@ -197,7 +197,7 @@ __declspec(naked) void InstallSelfMStackOverwrite_0046e9a0(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi + 0x08], 0x0046e9a0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

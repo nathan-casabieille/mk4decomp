@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -134,8 +134,8 @@ extern void InstallSelfThreeStateDispatch_00436030(void);
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_00438ee0,
  *     >0x14ccc jmp PoseFsm4StateInstall_00437c10, else jmp InstallSelfThreeStateDispatch_00436030. ret.
  */
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 extern void GuardedSeq_00433bb0(void);
 extern void PoseFsm4StateInstall_00437c10(void);
 extern void PrefixThunkInstallSelf3State_00438f80(void);
@@ -143,24 +143,24 @@ extern void Wrapper_00438ee0(void);
 
 __declspec(naked) void Mul10ThresholdQuad_00435f50(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x6c]
         mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [ecx*4 + 0x74]
         push    eax
         push    eax
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
         add     esp, 8
         add     eax, ecx
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         _emit   74h
         _emit   05h
         jmp     CmpRangeJmpStateInit_00436250

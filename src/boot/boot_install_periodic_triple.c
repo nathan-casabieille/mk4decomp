@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,18 +126,18 @@ extern unsigned int g_data_00535e7c;
  * BootInstallPeriodicTriple_00414920 - 223b boot 2-body periodic with triple call.
  *   Entry 0x00414920: push (0xb0, &body); StoreTwoCall; chain[+0x34] = g_baseSel_00542060; ret.
  *   Body 0x00414950: chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
- *     If was nonzero: eax = chain[+0x34]; g_x_00542044 = eax; eax = eax->field_74; if 0x1001:
- *       just snapshot g_x_0054205c to g_x_00542054. Else: push 0x1392; TableHitOrSchedule;
+ *     If was nonzero: eax = chain[+0x34]; g_currentNodeIdx = eax; eax = eax->field_74; if 0x1001:
+ *       just snapshot g_fightGroupHead to g_eventQueueEnd. Else: push 0x1392; TableHitOrSchedule;
  *       CallSetPause; pop+ret.
  *     Common: call BootSlotInstallChainTail_00414a00 three times with pause-checks between. If completed unpaused:
- *       install-self at body; chain->state=1; g_data_0054204c=1; g_pause_00541e6c=1.
+ *       install-self at body; chain->state=1; g_pendingNodeType=1; g_pause_00541e6c=1.
  *     Pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 extern void BootSlotInstallChainTail_00414a00(void);
 extern void CallSetPause_0041f830(void);
 extern void TableHitOrSchedule_004be7a0(void);
@@ -149,7 +149,7 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         push    0xb0
         push    offset L_body2
         call    StoreTwoCall_0049cb40
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_baseSel_00542060]
         add     esp, 8
         mov     dword ptr [eax*4 + 0x34], ecx
@@ -175,7 +175,7 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         je      short L_branchB
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x1001
         mov     dword ptr [g_walkCallback], eax
@@ -187,8 +187,8 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         pop     esi
         ret
     L_branchB:
-        mov     edx, dword ptr [g_x_0054205c]
-        mov     dword ptr [g_x_00542054], edx
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_eventQueueEnd], edx
     L_callTrip:
         call    BootSlotInstallChainTail_00414a00
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -205,7 +205,7 @@ __declspec(naked) void BootInstallPeriodicTriple_00414920(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
     L_b2_ret:
         pop     esi

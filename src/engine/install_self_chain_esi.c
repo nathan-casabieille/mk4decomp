@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,15 +123,15 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004753b0 (221b game) - install-self with chain[+0x84] dispatch.
- *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_x_00542084=0x32f1, g_state_00542088=0x3333,
- *   g_x_00542080=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
- *   chain[+0x84]!=0 path: set [g_x_0054205c*4+0x24]=g_cj_00542054, [g_x_0054205c*4+0x28]=0, g_walkCallback=0,
+ *   chain[+0x84]==0 path: install-self at +0x08=0x004753b0; g_currentNodeFlags=0x32f1, g_xformScratch2088=0x3333,
+ *   g_eventQueueChild=0; scaledInit-chain push 0x004753b0|0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; pop+ret.
+ *   chain[+0x84]!=0 path: set [g_fightGroupHead*4+0x24]=g_cj_00542054, [g_fightGroupHead*4+0x28]=0, g_walkCallback=0,
  *   g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68]; jmp StackPopDispatchTagged.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542080;
-extern unsigned int g_x_00542084;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_currentNodeFlags;
 extern void SelfInstallPhaseDispatch_00428990(void);
 
 __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
@@ -144,10 +144,10 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         cmp     ecx, edx
         _emit   74h
         _emit   48h
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_cj_00542054]
         mov     dword ptr [ecx*4 + 0x24], eax
-        mov     ecx, dword ptr [g_x_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 0x28], edx
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -156,9 +156,9 @@ __declspec(naked) void InstallSelfChainEsi_004753b0(void) {
         mov     eax, dword ptr [eax*4 + 0x68]
         mov     dword ptr [g_cj_00542058], eax
         jmp     StackPopDispatchTagged_0041f780
-        mov     dword ptr [g_x_00542084], 0x000032f1
-        mov     dword ptr [g_state_00542088], 0x00003333
-        mov     dword ptr [g_x_00542080], edx
+        mov     dword ptr [g_currentNodeFlags], 0x000032f1
+        mov     dword ptr [g_xformScratch2088], 0x00003333
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [eax + 0x08], 0x004753b0
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi

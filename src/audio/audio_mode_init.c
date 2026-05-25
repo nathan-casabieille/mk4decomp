@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  * @addr 0x004a2610 (120b audio) - audio init two-mode setup:
  *   if g_x_00543590 == 1 use slot 0x53a408/0x53a3e0 else 0x537e88/
  *   0x53a700; call DualScaledStoreConst, ClearTwoCallSetStore, set
- *   g_data_00542004=1, call SixCallSeqPushImm; clear g_x_00542074;
+ *   g_data_00542004=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
  *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk_004200d0.
  */
 extern unsigned int g_data_0053a408;
@@ -134,7 +134,7 @@ extern unsigned int g_data_0053a3e0;
 extern unsigned int g_data_00537e88;
 extern unsigned int g_data_0053a700;
 extern unsigned int g_data_00542004;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned char g_x_00543590;
 void AudioModeInit_004a2610(void) {
     if (g_x_00543590 == 1) {
@@ -148,7 +148,7 @@ void AudioModeInit_004a2610(void) {
     ClearTwoCallSetStore_004a2270();
     g_data_00542004 = 1;
     SixCallSeqPushImm_004a1d80();
-    g_x_00542074 = 0;
+    g_eventQueueWorkType = 0;
     Push16Call_00489f50();
     if (g_framePauseFlag != 0) return;
     InstallSelfTableWalk_004200d0();

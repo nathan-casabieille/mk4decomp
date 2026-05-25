@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,40 +123,40 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00422ce0 (318b game) - 0xffff0000-terminated record-list iterator with 3-push call + 3-pop.
- *   For each record from g_x_00542058 stream: read 3 fields (g_x_00542048, g_x_00542074, g_x_00542084).
- *   If 3rd field (g_x_00542084) == 0xffff0000: terminate.
- *   Else: read 4th field (g_state_00542088). mstack-push g_x_00542074, g_data_00542070, g_x_00542048.
+ *   For each record from g_eventQueueIdx stream: read 3 fields (g_xformEntityIdx, g_eventQueueWorkType, g_currentNodeFlags).
+ *   If 3rd field (g_currentNodeFlags) == 0xffff0000: terminate.
+ *   Else: read 4th field (g_xformScratch2088). mstack-push g_eventQueueWorkType, g_eventQueueCurrent, g_xformEntityIdx.
  *   g_walkCallback=0x6c. Call StateMachineInit_00493000. If pause: ret.
- *   Mstack-pop: g_x_00542048, g_data_00542070, g_x_00542074. If g_x_00542074!=0: [g_cj*4+0x58]=g_x_00542074.
- *   Re-read next field from g_x_00542058 stream, if !=0xffff0000 loop. Pop edi/esi; ret.
+ *   Mstack-pop: g_xformEntityIdx, g_eventQueueCurrent, g_eventQueueWorkType. If g_eventQueueWorkType!=0: [g_cj*4+0x58]=g_eventQueueWorkType.
+ *   Re-read next field from g_eventQueueIdx stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_00542084;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_currentNodeFlags;
 extern void StateMachineInit_00493000(void);
 
 extern unsigned int g_data_004d57ac_arr;
 
 __declspec(naked) void RecordListIterMStack_00422ce0(void) {
     __asm {
-        mov     ecx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         push    esi
         push    edi
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
-        mov     dword ptr [g_x_00542048], eax
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_xformEntityIdx], eax
+        mov     dword ptr [g_eventQueueIdx], ecx
         mov     edx, dword ptr [ecx*4 + 0]
         inc     ecx
-        mov     dword ptr [g_x_00542074], edx
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_eventQueueWorkType], edx
+        mov     dword ptr [g_eventQueueIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         cmp     eax, 0xffff0000
-        mov     dword ptr [g_x_00542084], eax
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_currentNodeFlags], eax
+        mov     dword ptr [g_eventQueueIdx], ecx
         _emit   0fh
         _emit   84h
         _emit   0eeh
@@ -169,17 +169,17 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         mov     esi, dword ptr [ecx*4 + 0]
         inc     ecx
         inc     eax
-        mov     dword ptr [g_state_00542088], esi
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_xformScratch2088], esi
+        mov     dword ptr [g_eventQueueIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
@@ -192,29 +192,29 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         test    edx, edx
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_state_004d57ac], eax
         _emit   74h
         _emit   17h
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [eax*4 + 0x58], edx
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         mov     esi, dword ptr [ecx*4 + 0]
         inc     ecx
         cmp     esi, 0xffff0000
-        mov     dword ptr [g_x_00542084], esi
-        mov     dword ptr [g_x_00542058], ecx
+        mov     dword ptr [g_currentNodeFlags], esi
+        mov     dword ptr [g_eventQueueIdx], ecx
         _emit   0fh
         _emit   85h
         _emit   1ch

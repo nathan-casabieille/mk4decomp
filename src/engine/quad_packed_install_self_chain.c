@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,15 +127,15 @@ extern void QuadPackedInstallSelfChain_0048aa20(void);
 /* @addr 0x0043f2c0 (223b game) - install-self.
  *   chain[+0x84]!=0 path: g_cj_00542054=baseSel[*4+0x64], g_cj_00542058=baseSel[*4+0x68];
  *   jmp StackPopDispatchTagged_0041f780.
- *   chain[+0x84]==0 path: g_x_0054207c=g_cj_00542058, [0x00535cf8]=g_cj_00542058,
- *   g_cj_00542054=[0x00537e9c], g_cj_00542058=0x004e55f8>>2, g_state_00542088=0x7ae,
- *   g_x_00542084=0x32666, install-self at +0x08=0x0043f2c0, scaledInit-chain push,
+ *   chain[+0x84]==0 path: g_eventQueueNotMask=g_cj_00542058, [0x00535cf8]=g_cj_00542058,
+ *   g_cj_00542054=[0x00537e9c], g_cj_00542058=0x004e55f8>>2, g_xformScratch2088=0x7ae,
+ *   g_currentNodeFlags=0x32666, install-self at +0x08=0x0043f2c0, scaledInit-chain push,
  *   call QuadPackedInstallSelfChain_0048aa20, g_pause=1. pop edi; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00537e9c;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_currentNodeFlags;
 
 __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
     __asm {
@@ -154,15 +154,15 @@ __declspec(naked) void InstallSelfChainStateInit_0043f2c0(void) {
         mov     dword ptr [g_cj_00542058], edx
         jmp     StackPopDispatchTagged_0041f780
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     dword ptr [g_x_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [g_data_00535cf8], ecx
         mov     ecx, dword ptr [g_x_00537e9c]
         mov     dword ptr [g_cj_00542054], ecx
         mov     ecx, 0x004e55f8
         shr     ecx, 2
         mov     dword ptr [g_cj_00542058], ecx
-        mov     dword ptr [g_state_00542088], 0x000007ae
-        mov     dword ptr [g_x_00542084], 0x00032666
+        mov     dword ptr [g_xformScratch2088], 0x000007ae
+        mov     dword ptr [g_currentNodeFlags], 0x00032666
         mov     dword ptr [eax + 0x08], 0x0043f2c0
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi

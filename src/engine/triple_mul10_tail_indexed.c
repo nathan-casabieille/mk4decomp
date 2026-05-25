@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,19 +123,19 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00425970 (269b game) - 3-iter call-Mul10Tail-store loop for scaledInit[0/4/8].
- *   For each of 3 indices (0, 4, 8): g_walkCallback = g_x_00542074 - g_x_00542070;
- *   call AudioMixerStep_004ab700; if pause? ret. Compute eax = g_walkCallback + g_x_00542070;
+ *   For each of 3 indices (0, 4, 8): g_walkCallback = g_eventQueueWorkType - g_eventQueueCurrent;
+ *   call AudioMixerStep_004ab700; if pause? ret. Compute eax = g_walkCallback + g_eventQueueCurrent;
  *   Mul10Tail(eax, scaledInit[idx]); store result to scaledInit[idx]. ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void AudioMixerStep_004ab700(void);
 
 void TripleMul10TailIndexed_00425970(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542074]
-        mov     ecx, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueWorkType]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         sub     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
@@ -148,7 +148,7 @@ void TripleMul10TailIndexed_00425970(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
@@ -159,8 +159,8 @@ void TripleMul10TailIndexed_00425970(void) {
         mov     ecx, dword ptr [g_scaledInit_00542044]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0], eax
-        mov     edx, dword ptr [g_x_00542074]
-        sub     edx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_eventQueueWorkType]
+        sub     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], edx
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -172,7 +172,7 @@ void TripleMul10TailIndexed_00425970(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
@@ -183,8 +183,8 @@ void TripleMul10TailIndexed_00425970(void) {
         mov     edx, dword ptr [g_scaledInit_00542044]
         add     esp, 8
         mov     dword ptr [edx*4 + 4], eax
-        mov     eax, dword ptr [g_x_00542074]
-        sub     eax, dword ptr [g_x_00542070]
+        mov     eax, dword ptr [g_eventQueueWorkType]
+        sub     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         call    AudioMixerStep_004ab700
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -192,7 +192,7 @@ void TripleMul10TailIndexed_00425970(void) {
         _emit   75h
         _emit   3bh
         mov     eax, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_x_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax

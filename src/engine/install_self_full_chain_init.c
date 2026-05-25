@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,7 +130,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_fightGroupHead;
 extern void PendingMatch_00432110(void);
 
 __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfFullChainInit_00462470(void) {
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x3c], edx
         mov     edx, dword ptr [g_load_0052ab10]
-        mov     dword ptr [g_x_0054205c], edx
+        mov     dword ptr [g_fightGroupHead], edx
         shl     edx, 2
         mov     edi, dword ptr [edx + 0x60]
         mov     dword ptr [eax + 0x40], edi

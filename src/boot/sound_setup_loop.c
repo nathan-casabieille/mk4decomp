@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00413ea0 (157b boot) - 4-stage sound setup loop:
  *   ThreeChanPackClamp(0x408000); CopyThreeFields(cj); MStackPush8_004ab790;
- *   pause? jmp tail. g_x_00542050=0x23, g_x_00542054=cj; SetJmp; pause? jmp tail.
- *   if !(g_state_0054208c & 4): g_x_00542050 = 0x14.
+ *   pause? jmp tail. g_eventQueueTotal=0x23, g_eventQueueEnd=cj; SetJmp; pause? jmp tail.
+ *   if !(g_xformDirtyFlags & 4): g_eventQueueTotal = 0x14.
  *   loop: call PendingMatch_00413f40; pause? jmp tail. if dirty bit2: jmp 0x96 path.
- *   if (--g_x_00542050 >= 0): loop again.
+ *   if (--g_eventQueueTotal >= 0): loop again.
  *   tail: call MStackPop8_004ab860; ret.
  */
 extern unsigned int g_data_00408000;
-extern unsigned int g_x_00542054;
+extern unsigned int g_eventQueueEnd;
 extern void CopyThreeFields_00404df0(void);
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -155,32 +155,32 @@ __declspec(naked) void SoundSetupLoop_00413ea0(void) {
         _emit   75h
         _emit   71h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_data_00542050], 0x23
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueTotal], 0x23
+        mov     dword ptr [g_eventQueueEnd], ecx
         call    SetJmp_00405420
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   4dh
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         _emit   84h
         _emit   0c3h
         _emit   75h
         _emit   0ah
-        mov     dword ptr [g_data_00542050], 0x14
+        mov     dword ptr [g_eventQueueTotal], 0x14
 loop413ea0:
         call    PendingMatch_00413f40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   2ah
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   1dh
-        mov     eax, dword ptr [g_data_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         dec     eax
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         _emit   78h
         _emit   10h
         call    PendingMatch_00413f40

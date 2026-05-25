@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
- *   call DownloadPlayerChar with g_x_00542070=2; if pause? ret.
+ *   call DownloadPlayerChar with g_eventQueueCurrent=2; if pause? ret.
  *   call GuardedDualPushTailJmp_004231f0; if pause? ret.
  *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear_00409320, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
@@ -138,8 +138,8 @@ extern unsigned int g_x_00538164;
 extern unsigned int g_x_0053a178;
 extern unsigned int g_x_0053a250;
 extern unsigned int g_x_00541de0;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
 extern void ScaledOr4DirtyClear_00409320(void);
@@ -148,7 +148,7 @@ extern void TwoStateLookupDirty_004237d0(void);
 void QuadGuardedCjSet_00422fc0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a178]
-        mov     dword ptr [g_x_00542070], 2
+        mov     dword ptr [g_eventQueueCurrent], 2
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -162,8 +162,8 @@ void QuadGuardedCjSet_00422fc0(void) {
         mov     ecx, dword ptr [g_x_0053a178]
         mov     edx, dword ptr [g_data_00541e34]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_x_00542070], 2
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueCurrent], 2
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    GuardedDualPushTailJmp_004231f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -216,7 +216,7 @@ void QuadGuardedCjSet_00422fc0(void) {
 }
 
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).
- *   Set up locals (g_x_00542070=3, g_walkCallback=g_x_0053a250); call DownloadPlayerChar.
+ *   Set up locals (g_eventQueueCurrent=3, g_walkCallback=g_x_0053a250); call DownloadPlayerChar.
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
  *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
@@ -225,7 +225,7 @@ void QuadGuardedCjSet_00422fc0(void) {
 void QuadGuardedCjSet_004230b0(void) {
     __asm {
         mov     eax, dword ptr [g_x_0053a250]
-        mov     dword ptr [g_x_00542070], 3
+        mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -239,8 +239,8 @@ void QuadGuardedCjSet_004230b0(void) {
         mov     ecx, dword ptr [g_x_0053a250]
         mov     edx, dword ptr [g_data_00541e38]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_x_00542070], 3
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueCurrent], 3
+        mov     dword ptr [g_eventQueueWorkType], edx
         call    GuardedDualPushTailJmp_004231f0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax

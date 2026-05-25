@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,50 +123,50 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00487dd0 (166b game) - snapshot + dispatch + accumulator update:
- *   walkCallback=2; g_x_00537e94=2; g_x_00542074 = g_state_00542088;
- *   g_state_00542080 = g_currentNodeFlags;
- *   g_acc_00542078 = chain[g_x_00542058].slot54;
- *   g_x_0054207c = chain[g_x_00542058].slot5c;
+ *   walkCallback=2; g_x_00537e94=2; g_eventQueueWorkType = g_xformScratch2088;
+ *   g_eventQueueChild = g_currentNodeFlags;
+ *   g_acc_00542078 = chain[g_eventQueueIdx].slot54;
+ *   g_eventQueueNotMask = chain[g_eventQueueIdx].slot5c;
  *   call BossSpinCluster_00487e80; pause? ret;
- *   chain[cj].slot54 = g_data_00542070; chain[cj].slot5c = walkCallback;
- *   g_state_00542088 += 0x4ccc; g_currentNodeFlags += 0x28f; if > 0x30000: = 0x50000.
+ *   chain[cj].slot54 = g_eventQueueCurrent; chain[cj].slot5c = walkCallback;
+ *   g_xformScratch2088 += 0x4ccc; g_currentNodeFlags += 0x28f; if > 0x30000: = 0x50000.
  */
 extern unsigned int g_x_00537e94;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
 extern void BossSpinCluster_00487e80(void);
 
 extern unsigned int g_chain_arr_4348f0;
 
 void SnapshotDispatchAccum_00487dd0(void) {
     __asm {
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     ecx, dword ptr [g_xformScratch2088]
         mov     eax, 2
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00537e94], eax
         mov     eax, dword ptr [g_currentNodeFlags]
-        mov     dword ptr [g_x_00542074], ecx
-        mov     dword ptr [g_state_00542080], eax
-        mov     eax, dword ptr [g_x_00542058]
+        mov     dword ptr [g_eventQueueWorkType], ecx
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     eax, dword ptr [g_eventQueueIdx]
         mov     edx, [eax*4 + g_chain_arr_4348f0 + 0x54]
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x5c]
-        mov     dword ptr [g_x_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         call    BossSpinCluster_00487e80
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   54h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x54], edx
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x5c], eax
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         add     eax, 0x4ccc
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         mov     eax, dword ptr [g_currentNodeFlags]
         add     eax, 0x28f
         cmp     eax, 0x30000

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,25 +123,25 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00457b40 (108b)
- *   Push g_data_00542070 on mstack; call StreamChainStringInstall_00457900;
- *   if (bit2 of g_state_0054208c)!=0: pop g_data_00542070; ret;
- *   eax = g_scaledInit; ecx = g_data_00542070; neg ecx;
+ *   Push g_eventQueueCurrent on mstack; call StreamChainStringInstall_00457900;
+ *   if (bit2 of g_xformDirtyFlags)!=0: pop g_eventQueueCurrent; ret;
+ *   eax = g_scaledInit; ecx = g_eventQueueCurrent; neg ecx;
  *   edx = [eax*4+0x54]; g_walkCallback = edx;
  *   edx = [eax*4+0x54]; shl ecx,9; edx += ecx;
- *   [eax*4+0x54] = edx; pop g_data_00542070; ret.
+ *   [eax*4+0x54] = edx; pop g_eventQueueCurrent; ret.
  */
 void Push70CallScaleArith2_00457b40(void) {
     unsigned int sc;
     unsigned int neg_data;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_data_00542070;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueCurrent;
     StreamChainStringInstall_00457900();
-    if ((g_state_0054208c & 4) == 0) {
+    if ((g_xformDirtyFlags & 4) == 0) {
         sc = g_scaledInit_00542044;
-        neg_data = (unsigned int)(-(int)g_data_00542070);
+        neg_data = (unsigned int)(-(int)g_eventQueueCurrent);
         g_walkCallback = (void (*)(void))*(unsigned int *)(sc * 4 + 0x54);
         *(unsigned int *)(sc * 4 + 0x54) += neg_data << 9;
     }
-    g_data_00542070 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueCurrent = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

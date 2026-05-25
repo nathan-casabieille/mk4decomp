@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,20 +123,20 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004a07a0 (196b audio) - mstack-push 2; sample bit-update by index.
- *   Push g_x_00542078, g_x_00542048.
- *   ecx = [0x541fc0]; eax = g_walkCallback; g_x_00542048 = ecx;
+ *   Push g_x_00542078, g_xformEntityIdx.
+ *   ecx = [0x541fc0]; eax = g_walkCallback; g_xformEntityIdx = ecx;
  *   [0x535e48] = eax (= g_walkCallback snapshot); ecx += eax;
- *   eax = chain[ecx]; g_x_00542048 = eax;
- *   edx = chain[eax + 0x10]; g_x_00542048 = edx; esi = chain[edx];
+ *   eax = chain[ecx]; g_xformEntityIdx = eax;
+ *   edx = chain[eax + 0x10]; g_xformEntityIdx = edx; esi = chain[edx];
  *   g_x_00542078--; g_walkCallback = esi;
  *   if (g_x_00542078 > 0 before decrement, i.e., decremented value >= 0):
- *     g_x_00542070 = (1 << g_x_00542078) | esi; chain[edx] = same.
- *   mstack-pop into g_x_00542048, g_x_00542078.
+ *     g_eventQueueCurrent = (1 << g_x_00542078) | esi; chain[edx] = same.
+ *   mstack-pop into g_xformEntityIdx, g_x_00542078.
  */
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542078;
 
 extern unsigned int g_data_004d57ac_arr;
@@ -150,20 +150,20 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     ecx, dword ptr [g_x_00541fc0]
         mov     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         add     ecx, eax
         mov     dword ptr [g_x_00535e48], eax
         mov     eax, [ecx*4 + g_data_004d57ac_arr]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + 0x10]
         mov     eax, dword ptr [g_x_00542078]
-        mov     dword ptr [g_x_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         dec     eax
         mov     esi, [edx*4 + g_data_004d57ac_arr]
         mov     dword ptr [g_x_00542078], eax
@@ -174,13 +174,13 @@ __declspec(naked) void BitSetByIndex_004a07a0(void) {
         mov     eax, 1
         shl     eax, cl
         or      eax, esi
-        mov     dword ptr [g_x_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     [edx*4 + g_data_004d57ac_arr], eax
         mov     eax, dword ptr [g_state_004d57ac]
         pop     esi
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax

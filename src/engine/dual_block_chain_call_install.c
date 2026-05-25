@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
  *   Block B (+0x70): load state; clear. state!=0: call DirtyToggleByGate; if pause ret.
  *     If bit2 of 0054208c: mstack-push SetJmp_00483f20; jmp GameDispatchValidateState_004339c0.
  *     Else: jmp SetJmp_00483f20.
- *   state==0 (je from cmp): g_state_00542080=0x14; install-self at body+0x01000000.
+ *   state==0 (je from cmp): g_eventQueueChild=0x14; install-self at body+0x01000000.
  *     state=1; call EsiInstallDecCallChain; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
@@ -160,7 +160,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     TwoCallTail_00481380
@@ -199,7 +199,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   1bh
         mov     eax, dword ptr [g_state_004d57ac]
@@ -208,7 +208,7 @@ __declspec(naked) void DualBlockChainCallInstall_00483de0(void) {
         mov     [eax*4 + g_data_004d57ac_arr], offset SetJmp_00483f20
         jmp     GameDispatchValidateState_004339c0
         jmp     SetJmp_00483f20
-        mov     dword ptr [g_state_00542080], 0x14
+        mov     dword ptr [g_eventQueueChild], 0x14
         mov     dword ptr [eax + 8], offset body_e50
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edx, offset body_e50

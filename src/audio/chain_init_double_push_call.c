@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004a47c0 (183b audio) - chain init + two cdecl push-twice calls.
  *   chain[g_scaledInit + 0x54/0x58/0x5c] = 0; g_walkCallback = 0;
  *   chain[+0x30] = 9; g_walkCallback = 9; call MStackCall_00406340; pause? ret.
- *   g_x_0054205c = g_scaledInit; g_scaledInit = [0x535e6c];
+ *   g_fightGroupHead = g_scaledInit; g_scaledInit = [0x535e6c];
  *   g_walkCallback = 0xe666; chain[g_scaledInit + 0x3c] = 0xe666.
  *   push 0x4f3030, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call AudioStoreXfer3SelfInstall_004a2060; add esp, 8.
  */
 extern unsigned int g_x_0052ab10;
 extern unsigned int g_x_00535e6c;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_fightGroupHead;
 extern void AudioStoreXfer3SelfInstall_004a2060(void);
 extern void MStackCall_00406340(void);
 
@@ -158,7 +158,7 @@ void ChainInitDoublePushCall_004a47c0(void) {
         _emit   52h
         mov     eax, dword ptr [g_scaledInit_00542044]
         mov     ecx, 0x0000e666
-        mov     dword ptr [g_x_0054205c], eax
+        mov     dword ptr [g_fightGroupHead], eax
         mov     eax, dword ptr [g_x_00535e6c]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_walkCallback], ecx

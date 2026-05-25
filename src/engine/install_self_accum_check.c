@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,22 +125,22 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00428c20 (195b game) - install-self with accumulator overflow path.
  *   esi = base*4; snapshot [esi+0x84]; clear.
  *   if (snap == 0): main path.
- *   else: g_x_00542088 += g_x_00542084; if (sum > 0x10000): call CallPauseDirty4ScaledSet; ret;
+ *   else: g_xformScratch2088 += g_currentNodeFlags; if (sum > 0x10000): call CallPauseDirty4ScaledSet; ret;
  *     else: fall through to setup.
  *   Main: call GuardedClampStoreJmp; pause? -> end.
  *   call StateDispatchTable_00490fc0; pause? -> end.
- *   g_x_00542054 = g_walkCallback; g_walkCallback = g_x_00542088; g_x_00542070 = 0;
+ *   g_eventQueueEnd = g_walkCallback; g_walkCallback = g_xformScratch2088; g_eventQueueCurrent = 0;
  *   call MStackPushZeroCallPop; pause? -> end.
- *   if (g_x_00542058 != 0): call eax = g_x_00542058. pause? -> end.
- *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_x_0054204c=1; pause=1.
+ *   if (g_eventQueueIdx != 0): call eax = g_eventQueueIdx. pause? -> end.
+ *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_pendingNodeType=1; pause=1.
  */
 extern unsigned int g_x_00541dc4;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 extern void CallPauseDirty4ScaledSet_00419780(void);
 extern void GuardedClampStoreJmp_00428bd0(void);
 extern void StateDispatchTable_00490fc0(void);
@@ -157,11 +157,11 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         test    eax, eax
         _emit   74h
         _emit   20h
-        mov     eax, dword ptr [g_x_00542088]
-        mov     edx, dword ptr [g_x_00542084]
+        mov     eax, dword ptr [g_xformScratch2088]
+        mov     edx, dword ptr [g_currentNodeFlags]
         add     eax, edx
         cmp     eax, 0x00010000
-        mov     dword ptr [g_x_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         _emit   7eh
         _emit   34h
         call    StackPopDispatchTagged_0041f780
@@ -178,16 +178,16 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         _emit   75h
         _emit   63h
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_x_00542088]
-        mov     dword ptr [g_x_00542054], ecx
+        mov     eax, dword ptr [g_xformScratch2088]
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00542070], 0
+        mov     dword ptr [g_eventQueueCurrent], 0
         call    MStackPushZeroCallPop_00407d00
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   35h
-        mov     eax, dword ptr [g_x_00542058]
+        mov     eax, dword ptr [g_eventQueueIdx]
         test    eax, eax
         mov     dword ptr [g_x_00541dc4], eax
         _emit   74h
@@ -200,7 +200,7 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00428c20
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

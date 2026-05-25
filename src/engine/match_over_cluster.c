@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -133,20 +133,20 @@ extern void MStackJmpInstallSelf_0046ed40(void);
 /* @addr 0x0046ec20 (275b game) - 5 adjacent blocks.
  *   B1 (0..0x4f, 64+15 NOPs): call ScaledAndAlfe_00490390; if !pause: cj[+0x74]=0x604;
  *     call TripleCallPauseJmp_00470500; if !pause: push 0x004eb6d8, tail-call ArgSarStoreJmp.
- *   B2 (0x50..0x7f): call Wrapper_0048a3c0; if !pause: g_x_00542054 = 0x004eb6e8>>2;
+ *   B2 (0x50..0x7f): call Wrapper_0048a3c0; if !pause: g_eventQueueEnd = 0x004eb6e8>>2;
  *     tail-jmp PhaseDispatchListAdvance_004709e0.
  *   B3 (0x80..0xbf): if bit0 of state set: tail-jmp CallPauseDirtyMStackPushFn_0046e2a0.
- *     Else: g_state_00542080=8, g_x_0054207c=8, mstack-push 0x0046ece0 (B4 addr);
+ *     Else: g_eventQueueChild=8, g_eventQueueNotMask=8, mstack-push 0x0046ece0 (B4 addr);
  *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
  *   B4 (0xc0..0xff): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
- *     Else: g_state_00542080=9, g_x_0054207c=8, mstack-push 0x0046ed20 (B5 addr);
+ *     Else: g_eventQueueChild=9, g_eventQueueNotMask=8, mstack-push 0x0046ed20 (B5 addr);
  *     tail-jmp InstallSelfMStackOverwrite_0046e9a0.
  *   B5 (0x100..0x112): if bit0 of state set: tail-jmp MatchOverCluster_0046ef70.
  *     Else: tail-jmp MStackJmpInstallSelf_0046ed40.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueNotMask;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ScaledAndAlfe_00490390(void);
 
@@ -192,7 +192,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         _emit   12h
         mov     eax, 0x004eb6e8
         sar     eax, 2
-        mov     dword ptr [g_x_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         jmp     PhaseDispatchListAdvance_004709e0
         ret
         nop
@@ -210,13 +210,13 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         nop
         nop
         nop
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     CallPauseDirtyMStackPushFn_0046e2a0
         mov     eax, 8
-        mov     dword ptr [g_state_00542080], eax
-        mov     dword ptr [g_x_0054207c], eax
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
@@ -240,14 +240,14 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         nop
         nop
         nop
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     MatchOverCluster_0046ef70
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_state_00542080], 9
+        mov     dword ptr [g_eventQueueChild], 9
         inc     eax
-        mov     dword ptr [g_x_0054207c], 8
+        mov     dword ptr [g_eventQueueNotMask], 8
         mov     dword ptr [g_state_004d57ac], eax
         _emit   0c7h
         _emit   04h
@@ -264,7 +264,7 @@ __declspec(naked) void FiveBlockDispatchChain_0046ec20(void) {
         nop
         nop
         nop
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     MatchOverCluster_0046ef70

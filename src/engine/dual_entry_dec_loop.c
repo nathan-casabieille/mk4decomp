@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,23 +123,23 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00480f20 (144b game) - dual-entry chain decrement loop.
- *   Block A (+0x00): set [g_x_00542048*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
+ *   Block A (+0x00): set [g_xformEntityIdx*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
  *   Block A2 (+0x20): call CallPauseDirtyScaledSet7; if !pause: call CmpP1GTSetup; if !pause:
- *     ecx=g_x_00542048; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_state_00541dc4=eax; if eax<0 set
+ *     ecx=g_xformEntityIdx; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_state_00541dc4=eax; if eax<0 set
  *     g_walkCallback=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
  *   Block B (+0x80): g_walkCallback=1; g_state_00537e94=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537e94;
 extern unsigned int g_state_00541dc4;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void CallPauseDirtyScaledSet7_00480ef0(void);
 extern void CmpP1GTSetup_00470980(void);
 extern void TableLookupCall_00489f60(void);
 
 __declspec(naked) void DualEntryDecLoop_00480f20(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x5c], 7
         mov     dword ptr [g_walkCallback], 0x29
         jmp     TableLookupCall_00489f60
@@ -154,7 +154,7 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         test    eax, eax
         _emit   75h
         _emit   39h
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [ecx*4 + 0x5c]
         dec     eax
         mov     dword ptr [g_walkCallback], eax

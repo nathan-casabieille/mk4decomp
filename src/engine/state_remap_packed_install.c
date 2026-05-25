@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,13 +124,13 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0046b360 (374b game) - 3-entry packed: state-remap + install +
  *   state-remap-call.
- *   Entry 1 (offset 0, 80b): sets g_data_00542048 = &g_data_005019d0>>2,
+ *   Entry 1 (offset 0, 80b): sets g_xformEntityIdx = &g_data_005019d0>>2,
  *     reads [g_data_00542060*4 + 0x34] as state code; if 0x10 → 2, if
  *     0x11 → 7. If != 0xf, pushes 0x542a70 → ArgScaledTestStore_00494140.
  *   Entry 2 (offset 0x50, 219b): phase-state install. Phase != 0 tail-jmps
  *     StackPopDispatchTagged_0041f780. Phase 0: writes [scaled+0x74]=0x2002,
  *     ScaledAndAlfe_00490390 → push 0x542a78 → ArgScaledTestStore. On
- *     no-error writes g_data_00542048 → [0x54205c*4 + 0x24], installs Self
+ *     no-error writes g_xformEntityIdx → [0x54205c*4 + 0x24], installs Self
  *     entry 1 (0x46b3b0) with packed_ptr (Self + 0x01000000), calls
  *     ScaledClearJmp_00428d60.
  *   5b NOP align pad.
@@ -142,9 +142,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004eaee0;
 extern unsigned int g_data_005019d0;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00542a70;
 extern unsigned int g_data_00542a78;
@@ -159,7 +159,7 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, offset g_data_005019d0
         shr     eax, 2
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [ecx*4 + 0x34]
         cmp     eax, 0x10
         mov     dword ptr [g_walkCallback], eax
@@ -205,8 +205,8 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         add     esp, 4
         test    eax, eax
         jne     short L_srp_e2End
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     eax, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [edx*4 + 0x24], eax
         mov     dword ptr [esi + 8], offset L_srp_entry2
         mov     ecx, dword ptr [g_data_00542060]
@@ -214,11 +214,11 @@ __declspec(naked) void StateRemapPackedInstall_0046b360(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], 0

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,10 +124,10 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00415010 (356b boot) - mstack-push-8 + slot-init chain + pop-8.
  *   MStackPush8_004ab790 reserves 8 slots; on no-error stashes
- *   g_data_0054205c into g_data_00542054 and sets g_walkCallback =
+ *   g_fightGroupHead into g_eventQueueEnd and sets g_walkCallback =
  *   &g_data_004d78a8>>2. Calls PushSetXfmMaskCallPop_00407140. On
- *   no-error AND bit 2 of g_data_0054208c clear: writes 0xa1 into
- *   [g_data_0054205c*4+0x30], copies [old_054054*4+0x34] into the new
+ *   no-error AND bit 2 of g_xformDirtyFlags clear: writes 0xa1 into
+ *   [g_fightGroupHead*4+0x30], copies [old_054054*4+0x34] into the new
  *   slot's +0x34, calls ScaledTripleCopy54_004ac040. On no-error:
  *   copies [old+0x68] into new+0x68, sets g_walkCallback=0xfffffeb9
  *   and calls MStackPushNegMul10_0040a690. On no-error: copies edx*4
@@ -140,11 +140,11 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004ba0e0;
 extern unsigned int g_data_004d78a8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern void MStackCall_004065b0(void);
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
@@ -158,23 +158,23 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, offset g_data_004d78a8
         shr     ecx, 2
-        mov     dword ptr [g_data_00542054], eax
+        mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop_00407140
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_mp8_tailJmp
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0xa1
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
-        mov     eax, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
@@ -182,8 +182,8 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
-        mov     edx, dword ptr [g_data_00542054]
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_eventQueueEnd]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x68]
         mov     dword ptr [ecx*4 + 0x68], eax
         mov     dword ptr [g_walkCallback], 0xfffffeb9
@@ -191,29 +191,29 @@ __declspec(naked) void MStackPush8SlotInitPop8_00415010(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mp8_ret
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x6c], ecx
         lea     eax, [edx*4]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax + 0x74], edx
         mov     eax, dword ptr [eax + 0x18]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4]
         or      ecx, 8
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x48], 0xe666
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, offset g_data_004ba0e0
         mov     dword ptr [ecx*4 + 0x14], 0xff
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x10], eax
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_00542044], eax
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_currentNodeIdx], eax
         call    MStackCall_004065b0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

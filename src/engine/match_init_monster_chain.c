@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -149,7 +149,7 @@ extern void MatchInitMonsterChain_004228b0(void);
  *       0x02000000 tag), then calls MatchInitMonsterChain_004228b0 and asserts the error
  *       flag g_framePauseFlag = 1.
  *     - phase 2: install self at [esi+8]=0x403170, zero [esi+0x84]=3,
- *       set g_data_0054204c=4, set g_framePauseFlag=1, return.
+ *       set g_pendingNodeType=4, set g_framePauseFlag=1, return.
  *     - phase 3: call GuardedScaledLookupCallJmp_004220a0, on no-error set
  *       g_walkCallback=3, call AndShlStore_00409280, call
  *       StackPopDispatchTagged_0041f780, return.
@@ -158,8 +158,8 @@ extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_00541dc8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
 
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
@@ -193,7 +193,7 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         mov     dword ptr [g_data_00541dc8], edi
         mov     dword ptr [esi + 8], offset Phase3InstallSelf_00403170
         mov     dword ptr [esi + 0x84], 3
-        mov     dword ptr [g_data_0054204c], 4
+        mov     dword ptr [g_pendingNodeType], 4
         mov     dword ptr [g_framePauseFlag], 1
         pop     edi
         pop     esi
@@ -234,11 +234,11 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_data_00542060]
         mov     dword ptr [eax*4 + 0x84], edi

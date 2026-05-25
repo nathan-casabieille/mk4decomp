@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_x_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
- *   set fixed state (walkCallback=2, g_x_00542074=0x22, g_data_00542070=2,
- *   g_x_00542078=0, g_x_0054207c=0xff960000, g_currentNodeFlags=2);
+ *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
+ *   g_x_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
 extern unsigned int g_x_0053a718;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
 extern void DispatcherComplex181_004263d0(void);
 extern void RoundCleanupCluster_00427690(void);
 extern void SaveCallRestoreOrXor_00404a00(void);
@@ -146,7 +146,7 @@ __declspec(naked) void PollThenInit_00477920(void) {
         add     esp, 4
         push    0x22
         call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         add     esp, 4
         _emit   84h
@@ -159,7 +159,7 @@ loopPoll:
         add     esp, 4
         push    0x22
         call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
         _emit   0c3h
@@ -177,10 +177,10 @@ loopPoll:
         _emit   75h
         _emit   40h
         mov     eax, 2
-        mov     dword ptr [g_x_00542074], 0x22
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueWorkType], 0x22
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_acc_00542078], 0
-        mov     dword ptr [g_x_0054207c], 0xff960000
+        mov     dword ptr [g_eventQueueNotMask], 0xff960000
         mov     dword ptr [g_currentNodeFlags], eax
         call    DispatcherComplex181_004263d0
         mov     eax, dword ptr [g_framePauseFlag]

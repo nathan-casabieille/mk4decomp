@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0046c3d0 (332b game) - install-self with multi-thunk dispatch.
  *   state!=0: tail-jmp FiveCallGuardSetTail. state==0: install-self at entry+0x01000000;
  *     state=1; call ScaledLoadIncJmp_00428d00; pause=1; pop edi; ret.
- *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_state_0054207c=[baseSel*4+0x30].
+ *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
  *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_state_00535ddc<=0xcccc;
  *     if yes: jmp IntroSettingsFsmCluster_0046bea0; else jmp DualEntryStateGated. Ret.
@@ -181,7 +181,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
         jmp     CallPauseTripleScaledJmp_0046c520
@@ -190,7 +190,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   05h
         jmp     DualEntryStateGated_00460fa0
@@ -210,7 +210,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
         jmp     CallPauseTripleScaledJmp_0046c520
@@ -231,7 +231,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch_0046c3d0(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         _emit   74h
         _emit   05h
         jmp     CallPauseTripleScaledJmp_0046c520

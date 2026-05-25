@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,8 +129,8 @@ extern void RoundCleanupCluster_00427690(void);
 /* @addr 0x00477920 (165b game) - poll-then-init pattern:
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_x_0053a718, 0); call StoreIncrMStackPush6_004275c0; pause? ret.
- *   set fixed state (walkCallback=2, g_x_00542074=0x22, g_data_00542070=2,
- *   g_x_00542078=0, g_x_0054207c=0xff960000, g_currentNodeFlags=2);
+ *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
+ *   g_x_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_00427690.
  */
 extern unsigned int g_data_004d57ac;
@@ -140,19 +140,19 @@ extern unsigned int g_data_004e7f60;
 extern unsigned int g_data_004e7f70;
 extern unsigned int g_data_00501250;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_x_0053a718;
-extern unsigned int g_x_00542074;
-extern unsigned int g_x_0054207c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueNotMask;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
 extern void DualScaledStore_00452740(void);
@@ -185,7 +185,7 @@ __declspec(naked) void PollThenInit_00477920(void) {
         add     esp, 4
         push    0x22
         call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 4
         add     esp, 4
         _emit   84h
@@ -198,7 +198,7 @@ loopPoll:
         add     esp, 4
         push    0x22
         call    SaveCallRestoreOrXor_00404a00
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 4
         _emit   84h
         _emit   0c3h
@@ -216,10 +216,10 @@ loopPoll:
         _emit   75h
         _emit   40h
         mov     eax, 2
-        mov     dword ptr [g_x_00542074], 0x22
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueWorkType], 0x22
+        mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_acc_00542078], 0
-        mov     dword ptr [g_x_0054207c], 0xff960000
+        mov     dword ptr [g_eventQueueNotMask], 0xff960000
         mov     dword ptr [g_currentNodeFlags], eax
         call    DispatcherComplex181_004263d0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -243,7 +243,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      dword ptr [eax + 0x84], 0
         mov      dword ptr [eax + 8], OFFSET RoundCleanupCluster_00487510
         mov      dword ptr [eax + 0x84], ecx
-        mov      dword ptr [g_data_0054204c], 0x28
+        mov      dword ptr [g_pendingNodeType], 0x28
         mov      dword ptr [g_framePauseFlag], ecx
         ret
         nop
@@ -263,8 +263,8 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_758b
-        mov      dword ptr [g_data_00542074], 1
-        mov      dword ptr [g_data_0054207c], 2
+        mov      dword ptr [g_eventQueueWorkType], 1
+        mov      dword ptr [g_eventQueueNotMask], 2
         mov      dword ptr [g_walkCallback], 0x23d7
         jmp      MStackPush3CallCascade_00486d90
     L_758b:
@@ -322,13 +322,13 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_76ea
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         je       short L_7637
         call     MStackPush3CmpCall_0048eec0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_76ea
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      short L_763f
     L_7637:
         call     FiveCallGuardSetTail_0046f6b0
@@ -338,7 +338,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
     L_763f:
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], ebx
+        mov      dword ptr [g_pendingNodeType], ebx
         mov      dword ptr [g_framePauseFlag], ebx
         pop      esi
         pop      ebx
@@ -364,7 +364,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
     L_76a0:
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], 5
+        mov      dword ptr [g_pendingNodeType], 5
         mov      dword ptr [g_framePauseFlag], 1
         pop      esi
         pop      ebx
@@ -373,7 +373,7 @@ __declspec(naked) void RoundCleanupCluster_00487510(void)
         mov      ebx, 1
         mov      dword ptr [esi + 8], OFFSET L_75d0
         mov      dword ptr [esi + 0x84], ebx
-        mov      dword ptr [g_data_0054204c], 8
+        mov      dword ptr [g_pendingNodeType], 8
         mov      dword ptr [g_framePauseFlag], ebx
     L_76ea:
         pop      esi
@@ -394,9 +394,9 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         nop
         nop
         /* === Helper 2 (0x455930): counter loop calling helper 1 === */
-        mov      eax, dword ptr [g_data_00542058]
+        mov      eax, dword ptr [g_eventQueueIdx]
         dec      eax
-        mov      dword ptr [g_data_00542058], eax
+        mov      dword ptr [g_eventQueueIdx], eax
         js       short L_5942
         /* force 5-byte NEAR jmp (orig is e9 de ff ff ff, not short jmp) */
         _emit    0xe9
@@ -428,26 +428,26 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      dword ptr [esi + 0x84], 2
         add      esp, 4
-        mov      dword ptr [g_data_0054204c], 0x64
+        mov      dword ptr [g_pendingNodeType], 0x64
         mov      dword ptr [g_framePauseFlag], 1
         pop      edi
         pop      esi
         ret
     L_59b2:
         /* case 2: install + state 3 */
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054205c], ecx
+        mov      ecx, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_5950
         add      ecx, 0x3000000
         mov      dword ptr [edx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
@@ -461,17 +461,17 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, OFFSET g_data_00501250
         mov      edx, OFFSET L_5950
         shr      eax, 2
-        mov      dword ptr [g_data_00542054], eax
+        mov      dword ptr [g_eventQueueEnd], eax
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      ecx, dword ptr [g_data_00542060]
         add      edx, 0x4000000
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi
@@ -488,28 +488,28 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET L_5950
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], 0x47
+        mov      dword ptr [g_pendingNodeType], 0x47
         mov      dword ptr [g_framePauseFlag], eax
         pop      edi
         pop      esi
         ret
     L_5abd:
-        mov      ecx, dword ptr [g_data_00542058]
+        mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_data_00542078], 0x16666
-        mov      dword ptr [g_data_00542044], ecx
-        mov      dword ptr [g_data_0054207c], edi
+        mov      dword ptr [g_currentNodeIdx], ecx
+        mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum_0048b740
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
-        mov      edx, dword ptr [g_data_00542054]
+        mov      edx, dword ptr [g_eventQueueEnd]
         mov      eax, dword ptr [g_data_00542078]
         push     OFFSET g_data_004e7f60
         mov      dword ptr [edx*4 + 0x54], eax
-        mov      ecx, dword ptr [g_data_00542054]
-        mov      edx, dword ptr [g_data_0054207c]
+        mov      ecx, dword ptr [g_eventQueueEnd]
+        mov      edx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [ecx*4 + 0x5c], edx
-        mov      eax, dword ptr [g_data_00542054]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      eax, dword ptr [g_eventQueueEnd]
+        mov      dword ptr [g_fightGroupHead], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_5b22:
@@ -548,13 +548,13 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         nop
         /* === Helper 4 (0x455b3b): set 0x10 bit + event 004e7f70 === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, dword ptr [edx*4 + 0x64]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x34]
         or       ah, 0x10
         mov      dword ptr [g_walkCallback], eax
@@ -562,7 +562,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         mov      eax, dword ptr [g_data_004d57ac]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_data_004d57ac], eax
         call     MStackPush2GlobalSwap_00477400
         mov      eax, dword ptr [g_framePauseFlag]
@@ -585,7 +585,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         nop
         nop
         /* === Helper 5 (0x455bc0): init counter + jmp 00455bd0 === */
-        mov      dword ptr [g_data_00542058], 0x16
+        mov      dword ptr [g_eventQueueIdx], 0x16
         jmp      PendingMatch_00455bd0
     }
 }

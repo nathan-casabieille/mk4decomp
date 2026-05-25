@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,17 +125,17 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00418e00 (379b boot) - 2-entry packed boot setup + body.
  *   Entry 1 (offset 0, 194b): sets g_walkCallback = &g_data_004d75e0>>2,
  *     calls PushSetXfmMaskCallPop_00407140. On no-error AND bit 2 of
- *     g_data_0054208c clear: writes [g_data_0054205c*4+0x30]=0xa9,
+ *     g_xformDirtyFlags clear: writes [g_fightGroupHead*4+0x30]=0xa9,
  *     +0x3c=g_data_00535e6c, +0x70=0xffffaaab, +0x80=0xffffb334. Calls
  *     SetJmp_00408d20. On no-error writes the body label at
- *     [g_data_00542048*4+0x10] and calls ScaledTripleCopy54_004ac040.
- *     On no-error writes g_data_0054207c → +0x58 and tail-jmps
+ *     [g_xformEntityIdx*4+0x10] and calls ScaledTripleCopy54_004ac040.
+ *     On no-error writes g_eventQueueNotMask → +0x58 and tail-jmps
  *     0x4062f0.
  *   14b NOP align pad.
  *   Entry 2 / body (offset 0xd0, 171b): mstack-pushes
- *     g_data_0054204c/0054205c, calls ChainWalkPushPop_00405a40.
- *     On no-error: g_data_0054204c = g_data_0052ab10, computes
- *     [g_data_0054205c*4+0x58] += 0x9fd70; if greater than the new
+ *     g_pendingNodeType/0054205c, calls ChainWalkPushPop_00405a40.
+ *     On no-error: g_pendingNodeType = g_data_0052ab10, computes
+ *     [g_fightGroupHead*4+0x58] += 0x9fd70; if greater than the new
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
  *     mstack entries back.
  */
@@ -143,11 +143,11 @@ extern unsigned int g_data_004d75e0;
 extern unsigned int g_data_0052ab10;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void ChainWalkPushPop_00405a40(void);
 extern void MStackCall_004062f0(void);
@@ -164,24 +164,24 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_bsm_e1End
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_bsm_e1End
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [ecx*4 + 0x30], 0xa9
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_data_00535e6c]
         mov     dword ptr [edx*4 + 0x3c], eax
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0xffffb334
         mov     dword ptr [ecx*4 + 0x70], 0xffffaaab
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x80], eax
         call    SetJmp_00408d20
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_e1End
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, offset L_bsm_body
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x10], eax
@@ -189,8 +189,8 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_e1End
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [edx*4 + 0x58], eax
         jmp     MStackCall_004062f0
     L_bsm_e1End:
@@ -211,12 +211,12 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         nop
     L_bsm_body:
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
@@ -225,8 +225,8 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         test    eax, eax
         jne     short L_bsm_bodyEnd
         mov     ecx, dword ptr [g_data_0052ab10]
-        mov     edx, dword ptr [g_data_0054205c]
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     edx, dword ptr [g_fightGroupHead]
+        mov     dword ptr [g_pendingNodeType], ecx
         push    esi
         mov     eax, dword ptr [edx*4 + 0x58]
         add     eax, 0x9fd70
@@ -242,11 +242,11 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         pop     esi
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_bsm_bodyEnd:
         ret

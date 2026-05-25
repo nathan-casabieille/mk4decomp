@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,11 +125,11 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0042e800 (206b game) - scaledInit chain init with 2 phases.
  *   Phase 1: scaledInit[+0x54] = 0; +0x58 = 0; +0x5c += 0x41999; +0x68 = 0x62978;
  *   +0x74 = 0xffffaaab; +0x30 = arg1; g_walkCallback = arg1.
- *   call MStackCall_00406340; if !pause: phase 2: g_data_0054204c = g_x_00535e6c;
- *   second chain at g_data_0054204c[+0x54/0x58/0x5c]=0/0xfffc0000/0;
- *   g_scaledInit[+0x3c] = g_data_0054204c. pop+ret.
+ *   call MStackCall_00406340; if !pause: phase 2: g_pendingNodeType = g_x_00535e6c;
+ *   second chain at g_pendingNodeType[+0x54/0x58/0x5c]=0/0xfffc0000/0;
+ *   g_scaledInit[+0x3c] = g_pendingNodeType. pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e6c;
 extern void MStackCall_00406340(void);
@@ -161,15 +161,15 @@ __declspec(naked) void ScaledChainInit2Phase_0042e800(void) {
         _emit   75h
         _emit   47h
         mov     eax, dword ptr [g_x_00535e6c]
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [eax*4 + 0x54], esi
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [edx*4 + 0x58], 0xfffc0000
-        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x5c], esi
         mov     ecx, dword ptr [g_scaledInit_00542044]
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [ecx*4 + 0x3c], edx
         pop     esi
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,10 +130,10 @@ extern unsigned int g_data_00535e7c;
  *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
  *   byte, masking into output.
  */
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00ab4e34;
 extern void LeaScaledCall_004bd510(void);
 extern void Mem_Malloc(void);
@@ -141,7 +141,7 @@ extern void Mem_Malloc(void);
 __declspec(naked) void VertexQuadBuilder_004bc470(void) {
     __asm {
         push    ecx
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, [esp + 8]
         shl     eax, 4
         mov     edx, [ecx + 4]
@@ -155,9 +155,9 @@ __declspec(naked) void VertexQuadBuilder_004bc470(void) {
         test    ebp, ebp
         mov     [esp + 0x10], ecx
         jz      L_vqb_freeRet
-        mov     esi, dword ptr [g_data_0054205c]
+        mov     esi, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [g_data_00ab4e34]
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edi, ebp
         sar     esi, 0x10
         and     esi, 8
@@ -192,9 +192,9 @@ __declspec(naked) void VertexQuadBuilder_004bc470(void) {
         test    eax, eax
         jne     short L_vqb_store
     L_vqb_freeRet:
-        mov     edx, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         xor     eax, eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     [edx*4 + 0x48], eax
         pop     edi
         pop     esi
@@ -207,7 +207,7 @@ __declspec(naked) void VertexQuadBuilder_004bc470(void) {
         mov     [eax + 4], edi
     L_vqb_useExisting:
         mov     edx, ebx
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         shl     edx, 5
         or      edx, esi
         mov     [eax], edx

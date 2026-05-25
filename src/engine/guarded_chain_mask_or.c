@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00446790 (235b game) - triple-call guard then chain bit-mask update.
  *   call MStackBracket4_ListInsertZeroFill_00408600; if pause? ret.
- *   if bit2 of g_state_0054208c set? ret.
+ *   if bit2 of g_xformDirtyFlags set? ret.
  *   call MStackPush3LinkedListWalk_004088b0; if pause? ret.
  *   call MStackPushTwoEntryChainCall_004058c0; if pause? ret.
  *   then walk chain[+0x1c]; if 0 ret; chain[+0x08] if 0 ret; mask chain[+0x20]
- *   with 0xf0ffffff, then OR with 0x0b000000; set bit2 of g_state_0054208c;
+ *   with 0xf0ffffff, then OR with 0x0b000000; set bit2 of g_xformDirtyFlags;
  *   if scaledInit was 0 clear bit2 again (xor 4); ret.
  */
 extern unsigned int g_pause_00541e6c;
@@ -150,7 +150,7 @@ void GuardedChainMaskOr_00446790(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   0fh
         _emit   85h
         _emit   0b9h
@@ -199,16 +199,16 @@ void GuardedChainMaskOr_00446790(void) {
         or      eax, 0x0b000000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [g_scaledInit_00542044]
         or      ecx, 4
         test    eax, eax
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         _emit   74h
         _emit   0ah
         mov     eax, ecx
         xor     eax, 4
-        mov     dword ptr [g_state_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
 

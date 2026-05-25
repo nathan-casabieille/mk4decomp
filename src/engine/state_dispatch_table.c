@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0046f6b0 (139b) - 5-call chain w/ bit-test branch to DualScaledInitClear.
  *   g_walkCallback = 0x200b; [g_baseSel*4+0x74]=0x200b; then sequential
  *   guarded calls (ScaledMove48to58_00490720, DualGatedStateYield_0048fc80, SlotPhaseResetInstallChain_0048e0e0,
- *   DirtyToggleByGate_0048f350); if bit2 of g_state_0054208c: call DualScaledInitClear;
- *   call StateDispatchTable_00490fc0; if no pause: set g_state_00542088=0x3333,
+ *   DirtyToggleByGate_0048f350); if bit2 of g_xformDirtyFlags: call DualScaledInitClear;
+ *   call StateDispatchTable_00490fc0; if no pause: set g_xformScratch2088=0x3333,
  *   g_eventQueueEnd=g_walkCallback, then "jmp +6" past final ret.
  */
 extern void ScaledMove48to58_00490720(void);
@@ -160,7 +160,7 @@ void FiveCallGuardSetTail_0046f6b0(void) {
         test    eax, eax
         _emit   75h
         _emit   40h
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   0eh
         call    DualScaledInitClear_00433c10
@@ -174,7 +174,7 @@ void FiveCallGuardSetTail_0046f6b0(void) {
         _emit   75h
         _emit   1bh
         mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00542088], 0x3333
+        mov     dword ptr [g_xformScratch2088], 0x3333
         mov     dword ptr [g_eventQueueEnd], edx
         _emit   0e9h
         _emit   06h

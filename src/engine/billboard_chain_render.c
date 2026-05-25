@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,8 +123,8 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_004f6238;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_007af92c;
 extern unsigned int g_data_007af958;
 extern unsigned int g_data_007af95a;
@@ -161,7 +161,7 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         xor      ebx, ebx
         cmp      eax, ebx
         jne      L_b24a
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_data_00ab4398]
         mov      edx, dword ptr [g_data_00ab439c]
         push     edi
@@ -174,7 +174,7 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         sar      edx, 0x10
         cmp      eax, 0x10
         push     esi
-        mov      dword ptr [g_data_00542044], edi
+        mov      dword ptr [g_currentNodeIdx], edi
         mov      dword ptr [g_data_007af9a4], ecx
         mov      dword ptr [g_data_007af9a8], edx
         jl       L_b098
@@ -201,7 +201,7 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         mov      dword ptr [g_walkCallback], eax
         je       L_b233
         mov      edx, dword ptr [eax*4 + 4]
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         mov      ecx, dword ptr [eax*4 + 0x18]
         mov      eax, dword ptr [edx + 4]
         cmp      eax, ebx
@@ -285,11 +285,11 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         call     Helper_DrawCursor
         add      esp, 4
     L_b22d:
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
     L_b233:
         mov      edi, dword ptr [edi*4]
         cmp      edi, ebx
-        mov      dword ptr [g_data_00542044], edi
+        mov      dword ptr [g_currentNodeIdx], edi
         jne      L_b0b9
         pop      esi
         pop      edi

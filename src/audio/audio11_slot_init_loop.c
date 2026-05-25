@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,13 +125,13 @@ extern unsigned int g_data_00535e7c;
 /*
  * Audio11SlotInitLoop_004a5540 - 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
- *   chain[+0x5c]=0x18000; store g_x_00542044 to (g_table_00543404)[i].
+ *   chain[+0x5c]=0x18000; store g_currentNodeIdx to (g_table_00543404)[i].
  *   Stack-frame: sub esp, 0x58. Holds 11 const ptrs (0x004d24bc..0x004d2578) and 11 const vals
  *   (0xff9c0000..0x00930000 step 0x190000-ish).
  */
 extern unsigned int g_table_00543404;
 extern unsigned int g_table_00543408;
-extern unsigned int g_x_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
 
 __declspec(naked) void Audio11SlotInitLoop_004a5540(void)
@@ -177,14 +177,14 @@ __declspec(naked) void Audio11SlotInitLoop_004a5540(void)
         push    eax
         push    ecx
         call    GuardedSetupCallTailJmp_004a1fa0
-        mov     edx, dword ptr [g_x_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esi, 4
         add     esp, 8
         cmp     esi, 0x2c
         mov     dword ptr [edx*4 + 0x54], ebx
-        mov     eax, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x5c], edi
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [esi + g_table_00543404], ecx
         jb      short L_a5_iter
         pop     edi

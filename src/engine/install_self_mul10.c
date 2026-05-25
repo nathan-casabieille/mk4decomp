@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,16 +126,16 @@ extern unsigned int g_data_00535e7c;
  *   esi = base*4; flag = [esi+0x84]; clear.
  *   if (flag != 0): call MStackCall_00406740; pause? -> end; call CallSetPause_0041f830; ret.
  *   else: call Wrapper_0048a250; pause? -> end;
- *     eax = g_x_00542084 * 10; ecx = g_x_00542088 * 10;
- *     g_x_00542084 = eax; g_x_00542088 = ecx;
- *     chain[g_x_0054205c + 0x6c] = eax; chain[+0x74] = ecx;
+ *     eax = g_currentNodeFlags * 10; ecx = g_xformScratch2088 * 10;
+ *     g_currentNodeFlags = eax; g_xformScratch2088 = ecx;
+ *     chain[g_fightGroupHead + 0x6c] = eax; chain[+0x74] = ecx;
  *     g_walkCallback = 0x1999; chain[+0x80] = 0x1999;
- *     install self; g_x_0054204c = 0x2d; pause = 1.
+ *     install self; g_pendingNodeType = 0x2d; pause = 1.
  */
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542084;
-extern unsigned int g_x_00542088;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformScratch2088;
 extern void CallSetPause_0041f830(void);
 extern void MStackCall_00406740(void);
 extern void Wrapper_0048a250(void);
@@ -169,27 +169,27 @@ __declspec(naked) void InstallSelfMul10_00481c70(void) {
         test    eax, eax
         _emit   75h
         _emit   77h
-        mov     eax, dword ptr [g_x_00542084]
-        mov     ecx, dword ptr [g_x_00542088]
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     eax, dword ptr [g_currentNodeFlags]
+        mov     ecx, dword ptr [g_xformScratch2088]
+        mov     edx, dword ptr [g_fightGroupHead]
         lea     eax, [eax + eax*4]
         lea     ecx, [ecx + ecx*4]
         shl     eax, 1
         shl     ecx, 1
-        mov     dword ptr [g_x_00542084], eax
-        mov     dword ptr [g_x_00542088], ecx
+        mov     dword ptr [g_currentNodeFlags], eax
+        mov     dword ptr [g_xformScratch2088], ecx
         mov     [edx*4 + 0x6c], eax
-        mov     eax, dword ptr [g_x_0054205c]
-        mov     ecx, dword ptr [g_x_00542088]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     ecx, dword ptr [g_xformScratch2088]
         mov     [eax*4 + 0x74], ecx
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x1999
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x80], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00481c70
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], 0x2d
+        mov     dword ptr [g_pendingNodeType], 0x2d
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

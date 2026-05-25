@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,15 +128,15 @@ extern unsigned int g_data_00535e7c;
  *     call DualCallPauseDirtyJmp_00490c30; if pause? ret.
  *     push 0x00542960; call ArgScaledTestStore_00494140; if pause? ret.
  *     call DualScaledStoreZero_00491080; if pause? ret.
- *     cj[+0x24] = g_x_00542058; tail-jmp StackPopDispatchTagged_0041f780.
- *   If was nonzero: g_x_00542058 = cj[+0x24]; g_x_00542048 = 0x005009c8>>2;
+ *     cj[+0x24] = g_eventQueueIdx; tail-jmp StackPopDispatchTagged_0041f780.
+ *   If was nonzero: g_eventQueueIdx = cj[+0x24]; g_xformEntityIdx = 0x005009c8>>2;
  *     install-self at [eax+8]=0x0045feb0; chain[+0x84]=1;
  *     scaledInit-chain push 0x0045feb0+0x01000000;
  *     call ScaledStoreEntZeroJmp_00428e40; pause=1; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542058;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueIdx;
 extern void ArgScaledTestStore_00494140(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void DualScaledStoreZero_00491080(void);
@@ -193,15 +193,15 @@ __declspec(naked) void InstallSelfChainCascade_0045feb0(void) {
         _emit   00h
         _emit   00h
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_x_00542058]
+        mov     ecx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [edx*4 + 0x24], ecx
         jmp     StackPopDispatchTagged_0041f780
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x24]
         mov     ecx, 0x005009c8
         shr     ecx, 2
-        mov     dword ptr [g_x_00542058], edx
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [eax + 8], 0x0045feb0
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 1

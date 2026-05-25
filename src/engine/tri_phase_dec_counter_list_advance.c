@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void EsiInstallSetCallChain_0047aef0(void);
@@ -162,13 +162,13 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     ecx, dword ptr [g_data_00542060]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4]
-        mov     dword ptr [g_data_00542080], edx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [ecx*4 + 4], eax
-        mov     eax, dword ptr [g_data_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_data_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         jne     L_tpdcla_chain
         call    EsiInstallSetCallChain_0047aef0
         pop     esi
@@ -186,13 +186,13 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         jne     L_tpdcla_abort
         mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 5
+        mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_framePauseFlag], 1
         pop     esi
         pop     ebx
         ret
     L_tpdcla_phase0:
-        cmp     dword ptr [g_data_00542088], ebx
+        cmp     dword ptr [g_xformScratch2088], ebx
         jne     short L_tpdcla_phase0_dispatch
         call    InstallSelfPauseTwoCall_0047af70
         pop     esi
@@ -203,14 +203,14 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_tpdcla_abort
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         je      short L_tpdcla_p0_skip
         call    EsiInstallSetCallChain_0047aef0
         pop     esi
         pop     ebx
         ret
     L_tpdcla_p0_skip:
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x28]
         cmp     eax, 0x18
         mov     dword ptr [g_walkCallback], eax
@@ -219,19 +219,19 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         mov     dword ptr [g_walkCallback], eax
     L_tpdcla_storeBack:
         mov     dword ptr [ecx*4 + 0x28], eax
-        mov     dword ptr [g_data_00542080], 2
+        mov     dword ptr [g_eventQueueChild], 2
     L_tpdcla_chain:
         mov     eax, dword ptr [g_data_00542060]
-        mov     edx, dword ptr [g_data_00542080]
+        mov     edx, dword ptr [g_eventQueueChild]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], edx
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
-        mov     dword ptr [g_data_0054207c], 6
+        mov     dword ptr [g_eventQueueNotMask], 6
         call    EntryThunkBodyStateMachine_00457bb0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -242,7 +242,7 @@ __declspec(naked) void TriPhaseDecCounterListAdvance_0047ad20(void)
         jne     short L_tpdcla_abort
         mov     dword ptr [esi + 8], offset TriPhaseDecCounterListAdvance_0047ad20
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], 5
+        mov     dword ptr [g_pendingNodeType], 5
         mov     dword ptr [g_framePauseFlag], ebx
     L_tpdcla_abort:
         pop     esi

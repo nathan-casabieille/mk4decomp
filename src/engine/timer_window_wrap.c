@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_x_004d517c;
 extern unsigned int g_x_0053a7b4;
 extern unsigned int g_x_00541d68;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 /*
  * @addr 0x004310c0 (96b game) - timer-window wrap: stash globals into
@@ -137,14 +137,14 @@ void TimerWindowWrap_004310c0(void) {
     int edx_val;
     int ref;
     int eax_val;
-    g_x_00542074 = g_x_0053a7b4;
+    g_eventQueueWorkType = g_x_0053a7b4;
     g_acc_00542078 = g_x_00541d68;
     Atan2QuadrantLookup_004245b0();
     if (g_framePauseFlag != 0) return;
     edx_val = (int)((unsigned int)g_walkCallback + 0xfffe6de1u);
     ref = (int)g_x_004d517c;
     eax_val = ref - edx_val;
-    g_data_00542070 = (unsigned int)edx_val;
+    g_eventQueueCurrent = (unsigned int)edx_val;
     eax_val -= 0x3243f;
     g_walkCallback = (void (*)(void))(unsigned int)eax_val;
     if (eax_val >= 0) {

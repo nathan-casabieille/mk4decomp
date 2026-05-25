@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,11 +123,11 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
 extern void ScaledChainDouble_004911f0(void);
 
 __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
@@ -140,7 +140,7 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4], edx
@@ -150,15 +150,15 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         jne     L_v2ccs_ret
         mov     eax, dword ptr [g_state_004d57ac]
         push    esi
-        mov     esi, dword ptr [g_data_00542080]
+        mov     esi, dword ptr [g_eventQueueChild]
         mov     ecx, dword ptr [eax*4]
         dec     eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         add     edx, eax
         add     ecx, esi
         add     eax, edx
@@ -166,20 +166,20 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         push    eax
         push    eax
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_data_00542070], ecx
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueCurrent], ecx
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_data_00542078], esi
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_data_00542078]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         add     esp, 8
         add     eax, ecx
-        mov     dword ptr [g_data_00542074], 0x50000
+        mov     dword ptr [g_eventQueueWorkType], 0x50000
         push    0x50000
         push    0x50000
         mov     dword ptr [g_data_00542078], eax
@@ -187,48 +187,48 @@ __declspec(naked) void Vec2ChainComputeStores_00480b80(void)
         mov     ecx, dword ptr [g_data_00542078]
         add     esp, 8
         cmp     ecx, eax
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         jge     short L_v2ccs_skip
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         push    eax
         push    eax
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_data_00542078], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_data_00542078]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
         mov     edx, dword ptr [g_data_0053a180]
-        mov     esi, dword ptr [g_data_00542074]
+        mov     esi, dword ptr [g_eventQueueWorkType]
         add     eax, esi
         add     esp, 8
         lea     ecx, [edx - 0x140000]
         mov     dword ptr [g_data_00542078], eax
         cmp     eax, ecx
-        mov     dword ptr [g_data_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         jl      short L_v2ccs_neg
     L_v2ccs_skip:
-        mov     eax, dword ptr [g_data_0054207c]
+        mov     eax, dword ptr [g_eventQueueNotMask]
         mov     ecx, dword ptr [g_walkCallback]
         neg     eax
         lea     edx, [ecx + eax*2]
-        mov     eax, dword ptr [g_data_00542080]
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueChild]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], edx
         neg     eax
         lea     edx, [ecx + eax*2]
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
     L_v2ccs_neg:
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [g_walkCallback]
         pop     esi
         mov     dword ptr [eax*4 + 0x54], ecx
-        mov     eax, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 0x5c], edx
     L_v2ccs_ret:
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,22 +122,22 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00424a90 (223b game) - mstack-push g_x_00542074+g_x_00542078; chain subtraction Mul10Tail pair.
- *   load chain[g_x_00542074*4+0], chain[g_data_0054204c*4+0] → subtract → g_x_00542078;
- *   load chain[g_x_00542074*4+8], chain[g_data_0054204c*4+8] → subtract → g_x_00542074;
- *   Mul10Tail(eax, eax) twice; sum results into g_x_00542074; call FpuSqrtMul.
- *   if !pause: mstack-pop into g_x_00542078, g_x_00542074. pop esi; ret.
+/* @addr 0x00424a90 (223b game) - mstack-push g_eventQueueWorkType+g_x_00542078; chain subtraction Mul10Tail pair.
+ *   load chain[g_eventQueueWorkType*4+0], chain[g_pendingNodeType*4+0] → subtract → g_x_00542078;
+ *   load chain[g_eventQueueWorkType*4+8], chain[g_pendingNodeType*4+8] → subtract → g_eventQueueWorkType;
+ *   Mul10Tail(eax, eax) twice; sum results into g_eventQueueWorkType; call FpuSqrtMul.
+ *   if !pause: mstack-pop into g_x_00542078, g_eventQueueWorkType. pop esi; ret.
  */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_x_00542078;
 
 __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -147,8 +147,8 @@ __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
-        mov     ecx, dword ptr [g_x_00542074]
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_scaledInit_00542044], ecx
         mov     eax, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_x_00542078], eax
@@ -156,23 +156,23 @@ __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
         sub     eax, esi
         mov     dword ptr [g_x_00542078], eax
         mov     ecx, dword ptr [ecx*4 + 8]
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         mov     esi, dword ptr [edx*4 + 8]
         sub     ecx, esi
         push    eax
         push    eax
-        mov     dword ptr [g_x_00542074], ecx
+        mov     dword ptr [g_eventQueueWorkType], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_x_00542078], eax
-        mov     eax, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_eventQueueWorkType]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_x_00542078]
         add     esp, 8
         add     eax, ecx
-        mov     dword ptr [g_x_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         call    FpuSqrtMul_004ab350
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
@@ -185,7 +185,7 @@ __declspec(naked) void MStackPushMul10TailSqrt_00424a90(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     dword ptr [g_state_004d57ac], eax
         pop     esi
         ret

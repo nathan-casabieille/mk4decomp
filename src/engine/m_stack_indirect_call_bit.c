@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,37 +123,37 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470e20 (181b game) - mstack-push 3 + indirect call via global ptr + mstack-pop 3 + bit-1 dispatch.
- *   Push g_x_00542048, g_x_00542084, g_x_0054207c; g_walkCallback = g_x_0054207c;
- *   call [g_x_00542048] (indirect through memory); pause? -> end.
- *   mstack-pop into g_x_0054207c, g_x_00542084, g_x_00542048.
- *   if (g_state_0054208c & 1): g_x_00542084 = 0x10000.
+ *   Push g_xformEntityIdx, g_currentNodeFlags, g_eventQueueNotMask; g_walkCallback = g_eventQueueNotMask;
+ *   call [g_xformEntityIdx] (indirect through memory); pause? -> end.
+ *   mstack-pop into g_eventQueueNotMask, g_currentNodeFlags, g_xformEntityIdx.
+ *   if (g_xformDirtyFlags & 1): g_currentNodeFlags = 0x10000.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054207c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_currentNodeFlags;
 
 extern unsigned int g_data_004d57ac_arr;
 
 void MStackIndirectCallBit_00470e20(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542084]
+        mov     edx, dword ptr [g_currentNodeFlags]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_x_0054207c]
+        mov     ecx, dword ptr [g_eventQueueNotMask]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
-        mov     edx, dword ptr [g_x_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [g_walkCallback], edx
-        call    dword ptr [g_x_00542048]
+        call    dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -161,21 +161,21 @@ void MStackIndirectCallBit_00470e20(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
-        mov     dword ptr [g_x_00542084], edx
+        mov     dword ptr [g_currentNodeFlags], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_state_004d57ac], eax
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   0ah
-        mov     dword ptr [g_x_00542084], 0x00010000
+        mov     dword ptr [g_currentNodeFlags], 0x00010000
         }
 }
 

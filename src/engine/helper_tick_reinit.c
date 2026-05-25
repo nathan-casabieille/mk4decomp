@@ -5,9 +5,9 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_0052ab10;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_007af92c;
 extern unsigned int g_data_007af958;
 extern unsigned int g_data_007af95a;
@@ -89,7 +89,7 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      dword ptr [g_data_007af9a4], esi
         mov      dword ptr [g_data_007af9a8], esi
         mov      dword ptr [g_data_007af9ac], esi
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         mov      edi, dword ptr [ecx*4 + 0x58]
         shl      edi, 8
         sar      edi, 0x10
@@ -141,11 +141,11 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      eax, dword ptr [esp + 0x3c]
         mov      ecx, dword ptr [esp + 0x38]
         movsx    ebp, word ptr [g_data_00ab47f8]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edi
         neg      eax
         mov      esi, eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         imul     esi, ebp
         sar      esi, 0xc
         add      esi, ecx
@@ -155,7 +155,7 @@ __declspec(naked) void Helper_TickReinit(void)
         sar      eax, 0xc
         add      ebx, 6
         add      eax, edx
-        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_pendingNodeType], edx
         mov      dword ptr [esp + 0x28], eax
         movsx    edx, word ptr [ebx]
         movsx    eax, word ptr [ebx + 2]
@@ -172,11 +172,11 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      eax, dword ptr [esp + 0x54]
         mov      ecx, dword ptr [esp + 0x50]
         movsx    ebp, word ptr [g_data_00ab47f8]
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edi
         neg      eax
         mov      edi, eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         imul     edi, ebp
         sar      edi, 0xc
         add      edi, ecx
@@ -185,7 +185,7 @@ __declspec(naked) void Helper_TickReinit(void)
         imul     eax, ecx
         sar      eax, 0xc
         add      eax, edx
-        mov      dword ptr [g_data_0054204c], edx
+        mov      dword ptr [g_pendingNodeType], edx
         mov      ecx, eax
         mov      eax, edi
         sub      eax, esi

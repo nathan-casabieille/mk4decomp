@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,8 +125,8 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x004551f0 (330b game) - 3-thunk dispatcher + install-self body. */
 extern unsigned int g_data_005012b0;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_currentNodeFlags;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void InstallSelfWithSibling_00475490(void);
 extern void StoreLoadJmp_00404ef0(void);
@@ -186,9 +186,9 @@ void TripleThunkInstallBody_004551f0(void) {
         add     esp, 4
         ret
         mov     ecx, offset g_data_005012b0
-        mov     dword ptr [g_x_00542084], 0xccc
+        mov     dword ptr [g_currentNodeFlags], 0xccc
         shr     ecx, 2
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [eax + 8], offset body_290
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     dword ptr [edx*4 + 0x84], 1

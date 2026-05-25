@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,16 +123,16 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00494750 (165b game) - mstack-push bit-flag + 2 calls + cond push-arg call.
- *   g_x_00542080 = 0. g_scaledInit = chain[g_baseSel + 0x38].
+ *   g_eventQueueChild = 0. g_scaledInit = chain[g_baseSel + 0x38].
  *   g_walkCallback = eax = chain[g_scaledInit + 0x40].
- *   g_x_00542094 = (eax & 8); if non-zero: ecx = 1; g_x_00542080 = 1.
+ *   g_x_00542094 = (eax & 8); if non-zero: ecx = 1; g_eventQueueChild = 1.
  *   mstack-push ecx (= 0 or 1). call MStackPush3CmpCall_0048eec0. pause? -> ret.
  *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
- *   mstack-pop into g_x_00542080. counter--.
+ *   mstack-pop into g_eventQueueChild. counter--.
  *   if (popped == 0): ret.
  *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
  */
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueChild;
 extern unsigned int g_x_00542094;
 extern void IterLoad_0048fd30(void);
 extern void ScaledLitLoadCall_00480fe0(void);
@@ -143,7 +143,7 @@ void MStackBitFlagDispatch_00494750(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel_00542060]
         xor     ecx, ecx
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         mov     eax, [eax*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, [eax*4 + 0x40]
@@ -153,7 +153,7 @@ void MStackBitFlagDispatch_00494750(void) {
         _emit   74h
         _emit   0bh
         mov     ecx, 1
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
@@ -163,7 +163,7 @@ void MStackBitFlagDispatch_00494750(void) {
         test    eax, eax
         _emit   75h
         _emit   4ah
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   18h
         mov     dword ptr [g_walkCallback], 0x78
@@ -176,7 +176,7 @@ void MStackBitFlagDispatch_00494750(void) {
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         test    ecx, ecx
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_eventQueueChild], ecx
         mov     dword ptr [g_state_004d57ac], eax
         _emit   74h
         _emit   0dh

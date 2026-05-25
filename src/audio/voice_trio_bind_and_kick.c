@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -128,9 +128,9 @@ extern unsigned int g_data_004f3a38;
 extern unsigned int g_data_0050a0f0;
 extern unsigned int g_data_0050c618;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_xformDirtyFlags;
 extern void GuardedSetupCallTailJmp3_004a2000(void);
 extern void MStackPushComplexCallPop_00406430(void);
 extern void ScaledOr4DirtyClear_00409320(void);
@@ -145,7 +145,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         mov      esi, dword ptr [esp + 0x10]
         mov      bl, 1
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      cl, byte ptr [esi + 2]
         cmp      cl, bl
         push     edi
@@ -154,16 +154,16 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         add      ecx, eax
         mov      eax, dword ptr [ecx*4]
         and      eax, 0xffffff
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
         mov      edx, dword ptr [eax]
         sar      edx, 2
         and      edx, 0x3fffff
-        mov      dword ptr [g_data_00542048], edx
+        mov      dword ptr [g_xformEntityIdx], edx
         jmp      short L_5ef4
     L_5ee7:
         mov      eax, OFFSET g_data_0050c618
         shr      eax, 2
-        mov      dword ptr [g_data_00542048], eax
+        mov      dword ptr [g_xformEntityIdx], eax
     L_5ef4:
         call     DispatcherComplex260_00407400
         mov      eax, dword ptr [g_framePauseFlag]
@@ -173,7 +173,7 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_607a
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      ecx, dword ptr [esp + 0x20]
         mov      edx, dword ptr [esp + 0x1c]
         mov      ebp, dword ptr [esp + 0x18]
@@ -182,20 +182,20 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         mov      al, byte ptr [esi + 2]
         test     al, al
         jne      short L_5f44
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x64], 0x3243f
     L_5f44:
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         lea      eax, [ebp*4]
         mov      dword ptr [edi*4 + 0x54], eax
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         lea      eax, [edx*4]
         mov      dword ptr [edi*4 + 0x58], eax
-        mov      edi, dword ptr [g_data_00542044]
+        mov      edi, dword ptr [g_currentNodeIdx]
         lea      eax, [ecx*4 + 0xc0000]
         mov      dword ptr [edi*4 + 0x5c], eax
     L_5f80:
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [esi + 8], eax
         mov      al, byte ptr [esi + 2]
         cmp      al, bl
@@ -223,13 +223,13 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         push     ebx
         mov      eax, dword ptr [edx*4 + g_data_004f3a38]
         push     eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp3_004a2000
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         add      ebp, 0x10000
         add      esp, 0xc
         mov      dword ptr [edx*4 + 0x5c], ebp
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         movsx    ecx, byte ptr [esi + 3]
         lea      edx, [edi + 0xa0000]
         mov      dword ptr [esi + 0xc], eax
@@ -237,26 +237,26 @@ __declspec(naked) void VoiceTrioBindAndKick_004a5ea0(void)
         push     edx
         push     ebx
         push     eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp3_004a2000
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 0xc
         add      edi, 0x1e0000
         mov      dword ptr [eax*4 + 0x5c], ebp
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         movsx    edx, byte ptr [esi + 4]
         mov      dword ptr [esi + 0x10], ecx
         push     edi
         mov      eax, dword ptr [edx*4 + g_data_004f3220]
         push     ebx
         push     eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp3_004a2000
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         add      esp, 0xc
         mov      dword ptr [eax*4 + 0x5c], ebp
         mov      al, byte ptr [esi + 3]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         test     al, al
         mov      dword ptr [esi + 0x14], ecx
         je       short L_607a

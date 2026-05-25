@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,14 +123,14 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048abe0 (142b game) - lazy alloc + setup chain or fall back to push/call:
- *   If g_x_00542084 (= g_currentNodeFlags) < 0x30000: snapshot cj+0x18, g_x_00535cf8+0x15, cj+0x15
- *   to scaledInit/g_x_00542048/g_x_0054204c; tail-jmp PushStackAllocCall.
+ *   If g_currentNodeFlags (= g_currentNodeFlags) < 0x30000: snapshot cj+0x18, g_x_00535cf8+0x15, cj+0x15
+ *   to scaledInit/g_xformEntityIdx/g_pendingNodeType; tail-jmp PushStackAllocCall.
  *   Else: mstack-push g_currentNodeFlags; sar g_currentNodeFlags by 1 after adding 0xffff0000;
- *   g_x_00542048 = g_x_00535cf8; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
+ *   g_xformEntityIdx = g_x_00535cf8; call MStackAngleRatioSubchain_00476af0; pause? ret; mstack-pop into g_currentNodeFlags.
  */
 extern unsigned int g_x_00535cf8;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_0054204c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
 extern void MStackAngleRatioSubchain_00476af0(void);
 extern void PushStackAllocCall_00425900(void);
 
@@ -148,8 +148,8 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         lea     ecx, [eax + 0x18]
         add     eax, 0x15
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_x_00542048], edx
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_xformEntityIdx], edx
+        mov     dword ptr [g_pendingNodeType], eax
         jmp     PushStackAllocCall_00425900
         mov     eax, dword ptr [g_state_004d57ac]
         inc     eax
@@ -160,7 +160,7 @@ __declspec(naked) void LazyAllocOrPush_0048abe0(void) {
         add     eax, 0xffff0000
         sar     eax, 1
         mov     dword ptr [g_currentNodeFlags], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackAngleRatioSubchain_00476af0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

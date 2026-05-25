@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -131,17 +131,17 @@ extern void JumpTableDispatch_0043a550(void);
 
 /* @addr 0x00435df0 (302b game) - 3-block install-self + threshold cascade + masked dispatch.
  *   Block A (0..0x83): load state at [base*4+0x84]; clear state. If state!=0 jmp Wrapper_00438ee0.
- *     Else: g_x_00542084=0x5cccc; g_state_00542080=0x3c; install-self at entry+0x01000000.
+ *     Else: g_currentNodeFlags=0x5cccc; g_eventQueueChild=0x3c; install-self at entry+0x01000000.
  *     state=1; call CallPauseConstStoreJmp; pause=1; pop edi; ret.
  *   Block B (+0xa0): call Cmp2CallDirtyCall; if !=0 ret. Cascade on g_state_00535ddc:
  *     <0x10000 jmp CallPauseTestByteJmpCalls; <0x20000 jmp EntryThenDispatcherPair_00438cd0;
  *     <0x40000 jmp ProneFsmCluster_004355f0; else jmp InstallSelfPacked0x2005_00437a90.
- *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_data_00542070=[chain+0x40];
+ *   Block C (+0xe0): g_scaledInit=[baseSel*4+0x38]; g_eventQueueCurrent=[chain+0x40];
  *     and 0x200 -> g_state_00542094. If nonzero jmp PrefixThunkInstallSelf3State_00438f80.
  *     Else: g_walkCallback &= 0xff; push 0x004e4668; call JumpTableDispatch; pop; ret.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542084;
+extern unsigned int g_currentNodeFlags;
 extern void PrefixThunkInstallSelf3State_00438f80(void);
 extern void Wrapper_00438ee0(void);
 
@@ -156,8 +156,8 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         _emit   74h
         _emit   05h
         jmp     Wrapper_00438ee0
-        mov     dword ptr [g_x_00542084], 0x5cccc
-        mov     dword ptr [g_state_00542080], 0x3c
+        mov     dword ptr [g_currentNodeFlags], 0x5cccc
+        mov     dword ptr [g_eventQueueChild], 0x3c
         mov     dword ptr [eax + 8], offset TripleBlockInstallThresholdMasked_00435df0
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi
@@ -216,7 +216,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked_00435df0(void) {
         mov     eax, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, 0x200
         mov     dword ptr [g_state_00542094], eax
         _emit   74h

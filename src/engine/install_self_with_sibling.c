@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,18 +123,18 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00475490 (250b game) - dual-block install-self + sibling.
- *   B1 (0..221, +1 NOP): snapshot+clear chain[+0x84]. If was zero: cj[+0x24]=g_x_00542054,
- *     cj[+0x28]=0, g_x_00542054=baseSel[+0x64], g_x_00542058=baseSel[+0x68];
+ *   B1 (0..221, +1 NOP): snapshot+clear chain[+0x84]. If was zero: cj[+0x24]=g_eventQueueEnd,
+ *     cj[+0x28]=0, g_eventQueueEnd=baseSel[+0x64], g_eventQueueIdx=baseSel[+0x68];
  *     tail-jmp StackPopDispatchTagged.
- *     If was nonzero: g_state_00542088=g_x_00542084; g_x_00542058=0x00475570 (sibling);
- *     g_state_00542080=0; install-self at [eax+8]=0x00475490; chain[+0x84]=1;
+ *     If was nonzero: g_xformScratch2088=g_currentNodeFlags; g_eventQueueIdx=0x00475570 (sibling);
+ *     g_eventQueueChild=0; install-self at [eax+8]=0x00475490; chain[+0x84]=1;
  *     scaledInit-chain push 0x00475490+0x01000000; call SelfInstallPhaseDispatch_00428990; pause=1; ret.
  *   B2 (224..249): cj[+0x58] = cj[+0x48] (sibling at 0x00475570).
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_00542084;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_currentNodeFlags;
 extern void SelfInstallPhaseDispatch_00428990(void);
 
 __declspec(naked) void InstallSelfWithSibling_00475490(void) {
@@ -148,21 +148,21 @@ __declspec(naked) void InstallSelfWithSibling_00475490(void) {
         _emit   74h
         _emit   48h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     dword ptr [ecx*4 + 0x24], eax
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 0x28], edx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     edx, dword ptr [eax*4 + 0x64]
-        mov     dword ptr [g_x_00542054], edx
+        mov     dword ptr [g_eventQueueEnd], edx
         mov     eax, dword ptr [eax*4 + 0x68]
-        mov     dword ptr [g_x_00542058], eax
+        mov     dword ptr [g_eventQueueIdx], eax
         jmp     StackPopDispatchTagged_0041f780
-        mov     ecx, dword ptr [g_x_00542084]
-        mov     dword ptr [g_x_00542058], 0x00475570
-        mov     dword ptr [g_state_00542088], ecx
-        mov     dword ptr [g_state_00542080], edx
+        mov     ecx, dword ptr [g_currentNodeFlags]
+        mov     dword ptr [g_eventQueueIdx], 0x00475570
+        mov     dword ptr [g_xformScratch2088], ecx
+        mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [eax + 8], 0x00475490
         mov     ecx, dword ptr [g_baseSel_00542060]
         push    edi

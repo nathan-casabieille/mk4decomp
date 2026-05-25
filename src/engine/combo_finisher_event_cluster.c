@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,12 +127,12 @@ extern unsigned int g_data_004f1628;
 extern unsigned int g_data_004f163c;
 extern unsigned int g_data_00538158;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00542094;
 extern unsigned int g_data_005431b8;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -206,7 +206,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     ScaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        mov      eax, dword ptr [g_data_00542088]
+        mov      eax, dword ptr [g_xformScratch2088]
         cmp      eax, ebx
         je       L_5fe8
         jl       short L_5e90
@@ -220,21 +220,21 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     EsiEdiAliasDualMul10_004906b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        mov      dword ptr [g_data_00542088], 0x10000
+        mov      dword ptr [g_xformScratch2088], 0x10000
         call     PunchAnimCluster_00496d80
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         call     NotMaskStorePair_0045f440
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        mov      ecx, dword ptr [g_data_0054205c]
+        mov      ecx, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_data_00538158]
         mov      eax, 0x10
         cmp      ecx, edx
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         je       short L_5efb
         mov      eax, 0x1000
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
     L_5efb:
         and      eax, dword ptr [g_walkCallback]
         mov      dword ptr [g_data_00542094], eax
@@ -258,18 +258,18 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         add      esp, 4
         cmp      eax, edi
         jne      L_60d0
-        mov      dword ptr [g_data_00542080], 6
+        mov      dword ptr [g_eventQueueChild], 6
         mov      dword ptr [esi + 8], OFFSET L_5e10
         mov      edx, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_5e10
         add      ecx, 0x2000000
         mov      dword ptr [edx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
@@ -284,7 +284,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     ScaledInit_0048d490
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        cmp      dword ptr [g_data_00542088], ebx
+        cmp      dword ptr [g_xformScratch2088], ebx
         jne      short L_6067
     L_5fe8:
         push     OFFSET g_data_004f163c
@@ -293,18 +293,18 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         add      esp, 4
         cmp      eax, edi
         jne      L_60d0
-        mov      dword ptr [g_data_00542080], 8
+        mov      dword ptr [g_eventQueueChild], 8
         mov      dword ptr [esi + 8], OFFSET L_5e10
         mov      eax, dword ptr [g_data_00542060]
         mov      ecx, OFFSET L_5e10
         add      ecx, 0x3000000
         mov      dword ptr [eax*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi
@@ -327,11 +327,11 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         mov      dword ptr [eax*4 + 0x84], ebx
         mov      eax, dword ptr [esi + 4]
         add      ecx, 0x1000000
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      edx, dword ptr [g_data_00542060]
         mov      dword ptr [edx*4 + 0x84], edi

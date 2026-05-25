@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,22 +124,22 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0042e1d0 (188b game) - install-self counted-decrement with chain accumulator.
  *   eax = base*4; flag = [eax+0x84]; clear.
- *   if (flag != 0): g_x_00542054--; if (!= 0) install-with-snapshot;
+ *   if (flag != 0): g_eventQueueEnd--; if (!= 0) install-with-snapshot;
  *     else call StackPopDispatchTagged; pop edi/esi; ret.
  *   if (flag == 0): esi = [0x52ab10]; edx = packed_ptr(0x4e38d0);
- *     g_x_0054205c = esi; g_x_00542058 = edx; g_x_00542054 = 0xf; jmp install-with-snapshot.
- *   install-with-snapshot: esi = g_x_0054205c; edx = g_x_00542058;
+ *     g_fightGroupHead = esi; g_eventQueueIdx = edx; g_eventQueueEnd = 0xf; jmp install-with-snapshot.
+ *   install-with-snapshot: esi = g_fightGroupHead; edx = g_eventQueueIdx;
  *     ecx = chain[esi+0x5c]; edi = chain[(edx+1)*4 - 4]; ecx += edi;
- *     g_walkCallback = ecx; g_x_00542070 = edi; g_x_00542058 = edx+1;
+ *     g_walkCallback = ecx; g_eventQueueCurrent = edi; g_eventQueueIdx = edx+1;
  *     chain[esi+0x5c] = ecx. install self: [eax+8]=0x42e1d0, [eax+0x84]=1.
- *     g_x_0054204c = 2; pause = 1.
+ *     g_pendingNodeType = 2; pause = 1.
  */
 extern unsigned int g_x_0052ab10;
-extern unsigned int g_x_0054204c;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_00542058;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 
 __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
     __asm {
@@ -152,9 +152,9 @@ __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
         test    ecx, ecx
         _emit   74h
         _emit   17h
-        mov     ecx, dword ptr [g_x_00542054]
+        mov     ecx, dword ptr [g_eventQueueEnd]
         dec     ecx
-        mov     dword ptr [g_x_00542054], ecx
+        mov     dword ptr [g_eventQueueEnd], ecx
         _emit   75h
         _emit   2eh
         call    StackPopDispatchTagged_0041f780
@@ -164,27 +164,27 @@ __declspec(naked) void InstallSelfCountedAccum_0042e1d0(void) {
         mov     esi, dword ptr [g_x_0052ab10]
         mov     edx, 0x004e38d0
         shr     edx, 2
-        mov     dword ptr [g_x_0054205c], esi
-        mov     dword ptr [g_x_00542058], edx
-        mov     dword ptr [g_x_00542054], 0x0f
+        mov     dword ptr [g_fightGroupHead], esi
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_eventQueueEnd], 0x0f
         _emit   0ebh
         _emit   0ch
-        mov     esi, dword ptr [g_x_0054205c]
-        mov     edx, dword ptr [g_x_00542058]
+        mov     esi, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_eventQueueIdx]
         mov     ecx, [esi*4 + 0x5c]
         inc     edx
         mov     dword ptr [g_walkCallback], ecx
         mov     edi, [edx*4 - 4]
         add     ecx, edi
-        mov     dword ptr [g_x_00542070], edi
-        mov     dword ptr [g_x_00542058], edx
+        mov     dword ptr [g_eventQueueCurrent], edi
+        mov     dword ptr [g_eventQueueIdx], edx
         mov     dword ptr [g_walkCallback], ecx
         mov     [esi*4 + 0x5c], ecx
         mov     ecx, 1
         mov     dword ptr [eax + 8], 0x0042e1d0
         mov     dword ptr [eax + 0x84], ecx
         pop     edi
-        mov     dword ptr [g_x_0054204c], 2
+        mov     dword ptr [g_pendingNodeType], 2
         mov     dword ptr [g_framePauseFlag], ecx
         pop     esi
         ret

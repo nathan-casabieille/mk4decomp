@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,8 +124,8 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x0049a0f0 (122b game) - 2-axis scale pair store:
- *   load cj, set cj[+0x68]=walk; scale g_data_00542084 and
- *   g_state_00542088 by 0x2666 via Mul10Tail; store back; write into
+ *   load cj, set cj[+0x68]=walk; scale g_currentNodeFlags and
+ *   g_xformScratch2088 by 0x2666 via Mul10Tail; store back; write into
  *   cj[+0x6c] and cj[+0x74]; call ThreeChanPackClamp_00404cc0(0x23fb23) then
  *   CopyThreeFields(cj).
  */
@@ -144,22 +144,22 @@ __declspec(naked) void DualAxisScalePair_0049a0f0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         push    esi
         mov     dword ptr [eax*4 + 0x68], ecx
-        mov     edx, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_currentNodeFlags]
         lea     esi, [eax*4 + 0]
         push    edx
         push    0x2666
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_00542084], eax
-        mov     eax, dword ptr [g_state_00542088]
+        mov     dword ptr [g_currentNodeFlags], eax
+        mov     eax, dword ptr [g_xformScratch2088]
         push    eax
         push    0x2666
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_data_00542084]
+        mov     ecx, dword ptr [g_currentNodeFlags]
         add     esp, 8
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [esi + 0x6c], ecx
-        mov     edx, dword ptr [g_state_00542088]
+        mov     edx, dword ptr [g_xformScratch2088]
         push    0x0023fb23
         mov     dword ptr [esi + 0x74], edx
         call    ThreeChanPackClamp_00404cc0

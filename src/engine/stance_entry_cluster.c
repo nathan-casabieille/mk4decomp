@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,15 +129,15 @@ extern void InstallSelfChainSet13333Alt_004377d0(void);
 extern void StanceEntryCluster_00433f50(void);
 
 /* @addr 0x00433e90 (181b game) - 5-block dispatcher.
- *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_x_00542070 = (eax & 0xff) >> 2;
- *     g_x_00542048 = same; jmp AddDerefJmp_00433e70; else ret.
+ *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_eventQueueCurrent = (eax & 0xff) >> 2;
+ *     g_xformEntityIdx = same; jmp AddDerefJmp_00433e70; else ret.
  *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_00433bb0;
  *     else g_state_00535ddc<=0x30000? jmp Wrapper_00438ee0 else jmp InstallSelfChainSet13333Alt_004377d0.
  *   C (+0x80): threshold-dispatch g_state_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster_00433f50.
  */
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 extern void GuardedSeq_00433bb0(void);
 extern void Wrapper_00438ee0(void);
 
@@ -151,8 +151,8 @@ __declspec(naked) void FiveBlockDispatch_00433e90(void) {
         mov     ecx, 0x004e4d40
         and     eax, 0xff
         shr     ecx, 2
-        mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         jmp     AddDerefJmp_00433e70
         ret
         _emit   90h

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,11 +124,11 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00489d10 (380b game) - 2D squared-distance threshold + revert.
  *   Reads cached (x², y²) from [scaled+0x54]/[scaled+0x5c] via two
- *   Mul10Tail(x,x)+Mul10Tail(y,y) calls into g_data_00542070, stores
- *   into [g_data_00542050*4] as the cur radius. Compares against
+ *   Mul10Tail(x,x)+Mul10Tail(y,y) calls into g_eventQueueCurrent, stores
+ *   into [g_eventQueueTotal*4] as the cur radius. Compares against
  *   g_data_0053a180; if greater-or-equal proceeds to the success path
  *   (advance position), else first stashes the un-advanced position
- *   into a save-slot keyed by g_data_0054204c vs g_data_00538158 (either
+ *   into a save-slot keyed by g_pendingNodeType vs g_data_00538158 (either
  *   0x543560/8/4 or 0x543580/4/8) and continues.
  *
  *   Position advance: takes the cached (x,y)+(dx,dy) vector at
@@ -138,10 +138,10 @@ extern unsigned int g_data_00535e7c;
  *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
  */
 extern unsigned int g_data_00538158;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_data_00542094;
 extern unsigned int g_data_00543554;
 extern unsigned int g_data_00543558;
@@ -152,7 +152,7 @@ extern unsigned int g_data_00543588;
 
 __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
     __asm {
-        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_pendingNodeType]
         push    esi
         push    edi
         lea     esi, [eax*4]
@@ -161,18 +161,18 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     ecx, dword ptr [esi + 0x5c]
         push    eax
         push    eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_data_00542078], eax
-        mov     dword ptr [g_data_0054207c], ecx
+        mov     dword ptr [g_eventQueueNotMask], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_data_00542070]
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00542050]
+        mov     edx, dword ptr [g_eventQueueTotal]
         add     ecx, eax
         add     esp, 8
         mov     dword ptr [g_walkCallback], ecx
@@ -180,9 +180,9 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     eax, dword ptr [g_data_0053a180]
         mov     ecx, dword ptr [g_walkCallback]
         cmp     ecx, eax
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         jge     short L_sdt_advance
-        mov     edx, dword ptr [g_data_0054204c]
+        mov     edx, dword ptr [g_pendingNodeType]
         mov     edi, dword ptr [g_data_00538158]
         cmp     edx, edi
         mov     edx, dword ptr [esi + 0x54]
@@ -202,34 +202,34 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         jl      L_sdt_done
     L_sdt_advance:
         mov     eax, dword ptr [esi + 0x54]
-        mov     dword ptr [g_data_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         mov     ecx, dword ptr [esi + 0x5c]
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     edx, dword ptr [esi + 0x6c]
-        mov     dword ptr [g_data_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         mov     edi, dword ptr [esi + 0x74]
         add     eax, edx
         add     ecx, edi
         push    eax
         push    eax
         mov     dword ptr [g_data_00542078], edi
-        mov     dword ptr [g_data_0054207c], eax
-        mov     dword ptr [g_data_00542070], ecx
+        mov     dword ptr [g_eventQueueNotMask], eax
+        mov     dword ptr [g_eventQueueCurrent], ecx
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_data_0054207c], eax
-        mov     eax, dword ptr [g_data_00542070]
+        mov     dword ptr [g_eventQueueNotMask], eax
+        mov     eax, dword ptr [g_eventQueueCurrent]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     edx, dword ptr [g_data_0054207c]
+        mov     edx, dword ptr [g_eventQueueNotMask]
         mov     ecx, dword ptr [g_walkCallback]
         add     eax, edx
         add     esp, 8
         cmp     eax, ecx
-        mov     dword ptr [g_data_00542070], eax
+        mov     dword ptr [g_eventQueueCurrent], eax
         jle     short L_sdt_done
-        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_pendingNodeType]
         mov     ecx, dword ptr [g_data_00538158]
         cmp     eax, ecx
         jne     short L_sdt_restoreAlt
@@ -245,7 +245,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     dword ptr [esi + 0x5c], ecx
     L_sdt_checkBit:
         mov     eax, dword ptr [esi + 0x40]
-        mov     dword ptr [g_data_00542074], eax
+        mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 0x80
         mov     dword ptr [g_data_00542094], eax
         jne     short L_sdt_done

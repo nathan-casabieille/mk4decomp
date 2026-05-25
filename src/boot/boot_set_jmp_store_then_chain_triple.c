@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,19 +124,19 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * BootSetJmpStoreThenChainTriple_0040b970 - 250b boot SetJmp + StoreTwo + chain triple-step.
- *   Call SetJmp; if paused: ret. If !(g_state_0054208c & 4): ret. Call MStackPush8;
- *     if paused: ret. Snapshot g_x_00542044 → g_x_00542054; g_x_00542048 → g_x_00542050;
- *     g_cj_00542058 = (0x005420e8 >> 2); g_state_0054207c = 0xc1; push (0xc0, 0x0049db40);
+ *   Call SetJmp; if paused: ret. If !(g_xformDirtyFlags & 4): ret. Call MStackPush8;
+ *     if paused: ret. Snapshot g_currentNodeIdx → g_eventQueueEnd; g_xformEntityIdx → g_eventQueueTotal;
+ *     g_cj_00542058 = (0x005420e8 >> 2); g_eventQueueNotMask = 0xc1; push (0xc0, 0x0049db40);
  *     call StoreTwoCall. If al bit 0: tail-jmp MStackPop8. Else call MStackPushCallPop;
  *     if paused: ret. Three iterations: g_walkCallback = stream[++cursor]; chain[+0x44/+0x48/+0x4c] = it.
- *     g_x_00542050++. Tail-jmp MStackPop8.
+ *     g_eventQueueTotal++. Tail-jmp MStackPop8.
  */
 extern unsigned int g_data_005420e8;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542050;
-extern unsigned int g_x_00542054;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueEnd;
 extern void MStackPop8_004ab860(void);
 extern void MStackPush8_004ab790(void);
 extern void MStackPushCallPop_0040a830(void);
@@ -150,24 +150,24 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_b970_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      L_b970_ret
         call    MStackPush8_004ab790
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_b970_ret
-        mov     eax, dword ptr [g_x_00542044]
-        mov     ecx, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, offset g_data_005420e8
         push    0xc0
         shr     edx, 2
         push    0x0049db40
-        mov     dword ptr [g_x_00542054], eax
-        mov     dword ptr [g_x_00542050], ecx
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_cj_00542058], edx
-        mov     dword ptr [g_state_0054207c], 0xc1
+        mov     dword ptr [g_eventQueueNotMask], 0xc1
         call    StoreTwoCall_0049cb40
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 8
         test    al, 1
         jne     short L_b970_pop8
@@ -175,26 +175,26 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple_0040b970(void)
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_b970_ret
-        mov     eax, dword ptr [g_x_00542050]
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
-        mov     eax, dword ptr [g_x_00542050]
-        mov     edx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
-        mov     eax, dword ptr [g_x_00542050]
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_x_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
-        inc     dword ptr [g_x_00542050]
+        inc     dword ptr [g_eventQueueTotal]
     L_b970_pop8:
         jmp     MStackPop8_004ab860
     L_b970_ret:

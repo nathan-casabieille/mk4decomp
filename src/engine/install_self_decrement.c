@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,11 +127,11 @@ extern unsigned int g_data_00535e7c;
  *     edx = chain[sel].slot5c - 1; g_scaledInit = edx; if neg: jmp F4(0x47fcc0);
  *     else: call F1, ret.
  *   Else: g_walkCallback = 5; call F2; pause? ret;
- *     test bit0 of g_state_0054208c; if set: call F4(0x47fcc0); ret.
- *     Else: install self, set chain[sel].slot84 = 1, g_x_0054204c = 1,
+ *     test bit0 of g_xformDirtyFlags; if set: call F4(0x47fcc0); ret.
+ *     Else: install self, set chain[sel].slot84 = 1, g_pendingNodeType = 1,
  *     g_framePauseFlag = 1; ret.
  */
-extern unsigned int g_x_0054204c;
+extern unsigned int g_pendingNodeType;
 extern void ChainPathMul25_0047fb70(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void StageRoundFlowCluster_0047fcc0(void);
@@ -163,7 +163,7 @@ __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
         test    eax, eax
         _emit   75h
         _emit   2dh
-        mov     cl, byte ptr [g_state_0054208c]
+        mov     cl, byte ptr [g_xformDirtyFlags]
         mov     eax, 1
         _emit   84h
         _emit   0c8h
@@ -174,7 +174,7 @@ __declspec(naked) void InstallSelfDecrement_0047fc30(void) {
         ret
         mov     dword ptr [esi + 8], offset InstallSelfDecrement_0047fc30
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_x_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
         pop     esi
         ret

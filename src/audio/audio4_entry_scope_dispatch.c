@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,9 +124,9 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004a7e00 (333b audio) - 4-entry audio scope dispatcher.
  *   Entry 1 (offset 0): if g_data_005433c8 < g_data_004f3ae8 - 1, just bumps
- *     the counter; otherwise OR-sets bit 0 of g_data_0054208c.
+ *     the counter; otherwise OR-sets bit 0 of g_xformDirtyFlags.
  *   (10b NOP padding to 0x4a7e30.)
- *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_data_0054208c
+ *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_xformDirtyFlags
  *     into g_data_00541dc4, clears bit 0, calls DecOrDirty_004a7de0; if the
  *     slot[+0x30] == 3 restores from snapshot.
  *   (9b NOP padding to 0x4a7e70.)
@@ -143,9 +143,9 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
 extern unsigned int g_data_00541dc4;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_005433c8;
 extern void CallSetMultiGlobalsJmp_004a9230(void);
 extern void DecOrDirty_004a7d90(void);
@@ -168,9 +168,9 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     dword ptr [g_data_005433c8], eax
         ret
     L_a4s_setBit:
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         ret
         /* 10b NOP pad to 0x4a7e30 */
         nop
@@ -186,16 +186,16 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         /* entry 2 (offset 0x30) */
     L_a4s_entry2:
         call    DecOrDirty_004a7d90
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_data_00541dc4], eax
         and     al, 0xfe
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         call    DecOrDirty_004a7de0
         mov     eax, dword ptr [g_data_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e2End
         mov     ecx, dword ptr [g_data_00541dc4]
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e2End:
         ret
         /* 9b NOP pad to 0x4a7e70 */
@@ -211,16 +211,16 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         /* entry 3 (offset 0x70) */
     L_a4s_entry3:
         call    IncBoundedDirty_004a7db0
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_data_00541dc4], eax
         and     al, 0xfe
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         call    Audio4EntryScopeDispatch_004a7e00
         mov     eax, dword ptr [g_data_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e3End
         mov     ecx, dword ptr [g_data_00541dc4]
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e3End:
         ret
         /* 9b NOP pad to 0x4a7eb0 */
@@ -244,7 +244,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     ecx, dword ptr [g_data_00542060]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4]
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         add     esi, 0x24
         cmp     esi, 0x004f3d40
@@ -257,7 +257,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     eax, dword ptr [g_data_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x34]
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         mov     eax, dword ptr [g_data_004f3ae4]
         inc     esi
@@ -272,7 +272,7 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
         mov     eax, dword ptr [g_data_00542060]
         lea     ecx, [esi + eax]
         mov     edx, dword ptr [ecx*4 + 0x48]
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert_00406790
         mov     eax, dword ptr [g_data_004f3ae8]
         inc     esi

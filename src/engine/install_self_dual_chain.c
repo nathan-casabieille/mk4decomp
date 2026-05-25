@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,10 +123,10 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00433d80 (205b game) - dual-entry chained install-self. */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542070;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueCurrent;
 extern void AddDerefJmp_00433e70(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void CjInstallSelfRouter_00470480(void);
@@ -140,8 +140,8 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         mov     ecx, 0x004e4c98
         and     eax, 0xff
         shr     ecx, 2
-        mov     dword ptr [g_x_00542070], eax
-        mov     dword ptr [g_x_00542048], ecx
+        mov     dword ptr [g_eventQueueCurrent], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         jmp     AddDerefJmp_00433e70
         _emit   90h
         _emit   90h
@@ -175,7 +175,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         test    eax, eax
         _emit   75h
         _emit   5dh
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   07h
         call    PoseFsm4StateInstall_00437c10
@@ -201,7 +201,7 @@ __declspec(naked) void InstallSelfDualChain_00433d80(void) {
         mov     eax, 1
         mov     dword ptr [esi + 0x08], 0x00433db0
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], 0x0a
+        mov     dword ptr [g_pendingNodeType], 0x0a
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

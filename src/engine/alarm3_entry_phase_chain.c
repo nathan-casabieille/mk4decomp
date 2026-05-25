@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -137,16 +137,16 @@ extern unsigned int g_data_00535e7c;
  *     tail-call TriPhaseDualPathInstallChain_0047e420; else call TailJmpInstallSelfPair_0047e690.
  *     If g_walkCallback < 0x26666 (threshold) tail-installs Self.
  *     Else chains ScaledAndAldf_00490330 -> EsiEdiAliasDualMul10_004906b0,
- *     writes 0x28f into [g_data_0054205c*4+0x4c], calls
+ *     writes 0x28f into [g_fightGroupHead*4+0x4c], calls
  *     InstallSelfThresholdDispatch_0047e310.
  */
 extern unsigned int g_data_004ed590;
 extern unsigned int g_data_004ed5a8;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void ArgSarStoreJmp_004594f0(unsigned int *);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
@@ -192,7 +192,7 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a3b_doneNoPop
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         je      short L_a3b_e3InitChain
         call    TriPhaseDualPathInstallChain_0047e420
         pop     esi
@@ -214,7 +214,7 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a3b_doneNoPop
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4c], eax
@@ -225,7 +225,7 @@ __declspec(naked) void Alarm3PhaseChainBody_0047e230(void) {
     L_a3b_installPhase0:
         mov     dword ptr [esi + 8], offset Alarm3PhaseChainBody_0047e230
         mov     dword ptr [esi + 0x84], ebx
-        mov     dword ptr [g_data_0054204c], ebx
+        mov     dword ptr [g_pendingNodeType], ebx
         mov     dword ptr [g_framePauseFlag], ebx
     L_a3b_doneNoPop:
         pop     esi

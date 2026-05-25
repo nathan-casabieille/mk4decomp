@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -137,9 +137,9 @@ extern void SetJmp_00451b70(void);
 extern void SetJmp_00451b80(void);
 
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern void SetJmp_00405420(void);
 
 __declspec(naked) void AnimSequence4Way_004515c0(void)
@@ -162,7 +162,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_163f
         call     SetJmp_00451ac0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -176,7 +176,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 2
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
@@ -189,7 +189,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_16b2
         call     SetJmp_00451b60
         mov      eax, dword ptr [g_framePauseFlag]
@@ -203,7 +203,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 3
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
@@ -216,7 +216,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_17c7
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_1725
         call     SetJmp_00451b40
         mov      eax, dword ptr [g_framePauseFlag]
@@ -230,7 +230,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], 4
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret
@@ -251,7 +251,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_17c7
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_17a4
         call     SetJmp_00451ae0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -265,7 +265,7 @@ __declspec(naked) void AnimSequence4Way_004515c0(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET AnimSequence4Way_004515c0
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
         pop      esi
         ret

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -136,14 +136,14 @@ extern unsigned int g_data_0050b268;
 
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_00542074;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_xformDirtyFlags;
 extern void AudioMixerStep_004ab700(void);
 extern void MStackCall_00406340(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -155,15 +155,15 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
     __asm {
         /* === Helper 1 (0x474390): pre-fight slot install w/ char branch === */
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
         push     esi
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_pendingNodeType]
         cmp      eax, 0x96
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_walkCallback], 0x7ae
         je       short L_441c
         call     AudioMixerStep_004ab700
@@ -172,14 +172,14 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         jne      L_45d4
         mov      eax, dword ptr [g_walkCallback]
         add      eax, 0x23d7
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         call     MStackPushVec3Mul10_004767e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
         mov      ecx, OFFSET g_data_0050b268
         shr      ecx, 2
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         call     DispatcherComplex260_00407030
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -193,7 +193,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         jne      L_45d4
         mov      eax, dword ptr [g_walkCallback]
         add      eax, 0x23d7
-        mov      dword ptr [g_data_00542074], eax
+        mov      dword ptr [g_eventQueueWorkType], eax
         call     MStackPushVec3Mul10_004767e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -205,15 +205,15 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_449b
     L_4478:
-        test     byte ptr [g_data_0054208c], 4
+        test     byte ptr [g_xformDirtyFlags], 4
         je       short L_44c9
         mov      eax, dword ptr [g_data_004d57ac]
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_data_004d57ac], eax
         pop      esi
         ret
@@ -223,22 +223,22 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_45d4
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [g_walkCallback]
         mov      dword ptr [eax*4 + 0x80], ecx
     L_44c9:
         mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [g_data_004d57ac], eax
         mov      dword ptr [edx*4 + 0x30], ecx
-        mov      eax, dword ptr [g_data_00542058]
-        mov      edx, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_eventQueueIdx]
+        mov      edx, dword ptr [g_pendingNodeType]
         mov      esi, dword ptr [eax*4]
         lea      ecx, [eax*4]
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [g_walkCallback], esi
         shl      eax, 2
         shl      edx, 2
@@ -258,20 +258,20 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      edx, dword ptr [edx + 8]
         mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [eax + 0x74], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542074], 0x7ae
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueWorkType], 0x7ae
         add      ecx, 0x1b
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     TripleVecAccCallStore_00476880
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_45d4
-        mov      eax, dword ptr [g_data_00542044]
-        mov      ecx, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      ecx, dword ptr [g_pendingNodeType]
         sub      eax, 0x1b
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_00542044], eax
-        mov      dword ptr [g_data_0054205c], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_currentNodeIdx], eax
+        mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [eax*4 + 0x30]
         cmp      eax, 0x96
         mov      dword ptr [g_walkCallback], eax
@@ -311,7 +311,7 @@ __declspec(naked) void PreFightInstallCluster_00474390(void)
         mov      eax, 1
         mov      dword ptr [esi + 8], OFFSET func_004745e0
         mov      dword ptr [esi + 0x84], eax
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_framePauseFlag], eax
     L_4622:
         pop      esi

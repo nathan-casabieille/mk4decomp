@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,47 +124,47 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045d9b0 (194b game) - shift-right chain entries by one dword (8 slots).
  *   For ofs in [0x1c, 0x18, 0x14, 0x10, 0xc, 8, 4]:
- *     ecx = chain[g_x_00542050 + (ofs - 4)]; g_x_00542070 = ecx; chain[+ofs] = ecx.
- *   chain[g_x_00542050 + 0] = g_x_00542074.
+ *     ecx = chain[g_eventQueueTotal + (ofs - 4)]; g_eventQueueCurrent = ecx; chain[+ofs] = ecx.
+ *   chain[g_eventQueueTotal + 0] = g_eventQueueWorkType.
  */
-extern unsigned int g_x_00542050;
-extern unsigned int g_x_00542070;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_data_004d57ac_arr;
 
 void ChainShiftRight8_0045d9b0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x18]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x1c], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x14]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x18], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x10]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x14], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x0c]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x10], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x08]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x0c], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + 0x04]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x08], ecx
-        mov     eax, dword ptr [g_x_00542050]
+        mov     eax, dword ptr [g_eventQueueTotal]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         mov     [eax*4 + 0x04], ecx
-        mov     eax, dword ptr [g_x_00542050]
-        mov     ecx, dword ptr [g_x_00542074]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         }
 }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,13 +129,13 @@ extern void ScaledChain3c7c_0048f930(void);
 
 /* @addr 0x0047c8f0 (154b game) - install-self with 2-stage 3-way dispatch.
  *   Block A: standard install-self at +0x80 (self-addr 0x0047c8f0).
- *   Path on chain[+0x84]!=0: countdown g_x_00542080 (clearing g_state_00542088 first);
- *     when ==0 call PopCallBitCmpPushCall; pause-check then 2-way jmp dispatch on g_state_00542088
+ *   Path on chain[+0x84]!=0: countdown g_eventQueueChild (clearing g_xformScratch2088 first);
+ *     when ==0 call PopCallBitCmpPushCall; pause-check then 2-way jmp dispatch on g_xformScratch2088
  *     and g_walkCallback; otherwise call ScaledChain3c7c then 3-way dispatch on g_walkCallback.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542080;
+extern unsigned int g_eventQueueChild;
 
 __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
     __asm {
@@ -146,11 +146,11 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         test    ecx, ecx
         _emit   74h
         _emit   5fh
-        mov     ecx, dword ptr [g_x_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         xor     eax, eax
         dec     ecx
-        mov     dword ptr [g_state_00542088], eax
-        mov     dword ptr [g_x_00542080], ecx
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     dword ptr [g_eventQueueChild], ecx
         _emit   75h
         _emit   13h
         call    PopCallBitCmpPushCall_0047cb00
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         test    eax, eax
         _emit   75h
         _emit   59h
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         mov     ecx, 1
         cmp     eax, ecx
         _emit   75h
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfCountdown2Stage_0047c8f0(void) {
         mov     ecx, 1
         mov     dword ptr [eax + 0x08], 0x0047c8f0
         mov     dword ptr [eax + 0x84], ecx
-        mov     dword ptr [g_data_0054204c], ecx
+        mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_pause_00541e6c], ecx
         ret
     }

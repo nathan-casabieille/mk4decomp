@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,19 +130,19 @@ extern unsigned int g_state_0053a6e0;
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
  *   sub ecx,0 flags branch:
  *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_walkCallback=0; g_state_00537ea4=0;
- *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_x_00542044++; chain->state=0;
+ *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_currentNodeIdx++; chain->state=0;
  *       call Phase3InstallSelf_00403170; g_pause_00541e6c=1; pop+ret.
- *     state 1 → install-self; chain->state=2; g_data_0054204c=0xa0; g_pause_00541e6c=1; pop+ret.
- *     state 2 → install-self; chain->state=3; g_data_0054204c=0x384; g_pause_00541e6c=1;
+ *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_pause_00541e6c=1; pop+ret.
+ *     state 2 → install-self; chain->state=3; g_pendingNodeType=0x384; g_pause_00541e6c=1;
  *       g_walkCallback=1; g_data_00541dc8=1; pop+ret.
  *     state 3+ → tail-call BootDualStateInstallSelf_00403070; pop+ret.
  */
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_data_00541dc8;
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_state_00537ea4;
-extern unsigned int g_x_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void BootDualStateInstallSelf_00403070(void);
 
 __declspec(naked) void BootStateMachine4Way_00402f60(void)
@@ -172,7 +172,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         mov     dword ptr [g_data_00541dc8], esi
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 3
-        mov     dword ptr [g_data_0054204c], 0x384
+        mov     dword ptr [g_pendingNodeType], 0x384
         mov     dword ptr [g_pause_00541e6c], esi
         pop     edi
         pop     esi
@@ -180,7 +180,7 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
     L_s1:
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     dword ptr [eax + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 0xa0
+        mov     dword ptr [g_pendingNodeType], 0xa0
         mov     dword ptr [g_pause_00541e6c], 1
         pop     edi
         pop     esi
@@ -197,11 +197,11 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
         add     edi, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4], edi
-        mov     ecx, dword ptr [g_x_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_x_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     dword ptr [eax*4 + 0x84], edx

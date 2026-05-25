@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,14 +125,14 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_0049db40;
 extern unsigned int g_data_004d6590;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_00542054;
-extern unsigned int g_data_00542058;
-extern unsigned int g_data_0054205c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_eventQueueIdx;
+extern unsigned int g_fightGroupHead;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_data_00542094;
 extern void ChainListVecAdd_0049d200(void);
 extern void GuardedSeq_00471670(void);
@@ -149,24 +149,24 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
-        test    byte ptr [g_state_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         je      L_p2id_ret
         call    MStackPush8_004ab790
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
-        mov     eax, dword ptr [g_data_00542044]
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, offset g_data_004d6590
         push    0xC0
         shr     edx, 2
         push    offset g_data_0049db40
-        mov     dword ptr [g_data_00542054], eax
-        mov     dword ptr [g_data_00542050], ecx
-        mov     dword ptr [g_data_00542058], edx
-        mov     dword ptr [g_data_0054207c], 0xC1
+        mov     dword ptr [g_eventQueueEnd], eax
+        mov     dword ptr [g_eventQueueTotal], ecx
+        mov     dword ptr [g_eventQueueIdx], edx
+        mov     dword ptr [g_eventQueueNotMask], 0xC1
         call    StoreTwoCall_0049cb40
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         add     esp, 8
         test    al, 1
         jne     L_p2id_tailjmp
@@ -174,26 +174,26 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_ret
-        mov     eax, dword ptr [g_data_00542050]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x44], eax
-        mov     eax, dword ptr [g_data_00542050]
-        mov     edx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
-        mov     eax, dword ptr [g_data_00542050]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_eventQueueTotal]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_data_00542050], eax
+        mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x4C], eax
-        inc     dword ptr [g_data_00542050]
+        inc     dword ptr [g_eventQueueTotal]
     L_p2id_tailjmp:
         jmp     MStackPop8_004ab860
     L_p2id_ret:
@@ -212,17 +212,17 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     dword ptr [esi + 0x84], 0
         test    eax, eax
         je      L_p2id_helper_phase0
-        mov     ecx, dword ptr [g_data_0054205c]
+        mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [ecx*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jne     L_p2id_helper_have_18
         call    GuardedSeq_00471670
         pop     esi
         ret
     L_p2id_helper_have_18:
         mov     eax, dword ptr [eax*4 + 0x28]
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x400
@@ -238,7 +238,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
     L_p2id_helper_store_38:
         mov     dword ptr [ecx*4 + 0x38], eax
     L_p2id_helper_after_400:
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [edx*4 + 0x18]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -251,31 +251,31 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p2id_helper_pop_ret
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 0x40
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x28]
         mov     ecx, 0x10000
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x2C], ecx
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4]
         or      ecx, 0x0A
         mov     dword ptr [eax*4], ecx
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, 0x3333
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x48], eax
     L_p2id_helper_link:
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_data_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    ChainListVecAdd_0049d200
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -283,7 +283,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x0040BB70
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_framePauseFlag], eax
     L_p2id_helper_pop_ret:
         pop     esi

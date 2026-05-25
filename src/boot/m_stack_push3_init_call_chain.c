@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,44 +122,44 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004d5dd8;
-extern unsigned int g_x_00542048;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
 
 /*
  * MStackPush3InitCallChain_0040bcf0 - 239b boot 3-arg mstack-push + xfm chain.
- *   Push g_x_00542048, g_x_00542054, g_x_0054205c to mstack.
- *   Snapshot g_x_0054205c → g_x_00542054; g_walkCallback = (0x004d5dd8 >> 2).
+ *   Push g_xformEntityIdx, g_eventQueueEnd, g_fightGroupHead to mstack.
+ *   Snapshot g_fightGroupHead → g_eventQueueEnd; g_walkCallback = (0x004d5dd8 >> 2).
  *   Call PushSetXfmMaskCallPop_00407140; if paused: pop 3 + ret.
- *   If g_state_0054208c & 4: pop 3 + ret. Else call ScaledChainOr8_00404e50;
- *   chain[g_x_00542048+0x48] = g_walkCallback = 0x00018000;
+ *   If g_xformDirtyFlags & 4: pop 3 + ret. Else call ScaledChainOr8_00404e50;
+ *   chain[g_xformEntityIdx+0x48] = g_walkCallback = 0x00018000;
  *   call ScaledTripleCopy54_004ac040; if paused: pop+ret. Call MStackCall_004062f0;
- *   if paused: pop+ret. Pop 3 from mstack into g_x_0054205c, g_x_00542054, g_x_00542048; ret.
+ *   if paused: pop+ret. Pop 3 from mstack into g_fightGroupHead, g_eventQueueEnd, g_xformEntityIdx; ret.
  */
 void MStackPush3InitCallChain_0040bcf0(void) {
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_x_00542048;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_x_00542054;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueEnd;
     g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_x_0054205c;
-    g_x_00542054 = g_x_0054205c;
+    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
+    g_eventQueueEnd = g_fightGroupHead;
     g_walkCallback = (unsigned int)&g_data_004d5dd8 >> 2;
     PushSetXfmMaskCallPop_00407140();
     if (g_framePauseFlag != 0) return;
-    if (!(g_state_0054208c & 4)) {
+    if (!(g_xformDirtyFlags & 4)) {
         ScaledChainOr8_00404e50();
         g_walkCallback = 0x18000;
-        *(unsigned int *)(g_x_00542048 * 4 + 0x48) = 0x18000;
+        *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x18000;
         ScaledTripleCopy54_004ac040();
         if (g_framePauseFlag != 0) return;
         MStackCall_004062f0();
         if (g_framePauseFlag != 0) return;
     }
-    g_x_0054205c = *(unsigned int *)(g_state_004d57ac * 4);
+    g_fightGroupHead = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_x_00542054 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_eventQueueEnd = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
-    g_x_00542048 = *(unsigned int *)(g_state_004d57ac * 4);
+    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
     g_state_004d57ac--;
 }

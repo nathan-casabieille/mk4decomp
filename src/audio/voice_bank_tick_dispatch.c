@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -139,7 +139,7 @@ extern unsigned int g_data_004f4304;
 extern unsigned int g_data_004f4310;
 extern unsigned int g_data_004f4320;
 extern unsigned int g_data_004f432c;
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_00542060;
 extern unsigned int g_data_00543450;
 extern unsigned int g_data_005437f8;
@@ -160,7 +160,7 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         mov      ecx, dword ptr [g_data_00542060]
         add      ecx, eax
         mov      edx, dword ptr [ecx*4]
-        mov      dword ptr [g_data_00542044], edx
+        mov      dword ptr [g_currentNodeIdx], edx
         call     MStackPush2ChainLLInsert_00406790
         lea      eax, [edi - 1]
         cmp      eax, 5
@@ -211,19 +211,19 @@ __declspec(naked) void VoiceBankTickDispatch_004a3120(void)
         push     eax
         push     ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     GuardedSetupCallTailJmp_004a1fa0
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [esi + 0xc]
         add      esp, 8
         add      esi, 0x24
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [esi - 0x20], edx
         mov      edx, dword ptr [g_data_00542060]
         movsx    ecx, byte ptr [esi - 0x28]
-        mov      dword ptr [g_data_00542070], ecx
+        mov      dword ptr [g_eventQueueCurrent], ecx
         add      ecx, edx
         inc      edi
         cmp      esi, OFFSET g_data_004f33cc

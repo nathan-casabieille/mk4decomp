@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,9 +127,9 @@ extern unsigned int g_data_00535e7c;
  *     if (curr[0xd8] != 0 && arr1[curr>>2] == g_walkCallback &&
  *         arr2[curr>>2] == g_cj_0054205c): set bit 0, clear bit 2; return.
  *     curr = curr[0xe4]; }
- *   g_scaledInit = 0; clear bit 0, set bit 2 of g_state_0054208c.
+ *   g_scaledInit = 0; clear bit 0, set bit 2 of g_xformDirtyFlags.
  */
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_chain_arr_41f9c0;
 extern unsigned int g_chain_disp_0c_41f9c0;
@@ -156,7 +156,7 @@ loop41f9c0:
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     edx, [eax*4 + g_chain_disp_0c_41f9c0]
         cmp     edx, esi
-        mov     dword ptr [g_x_00542074], edx
+        mov     dword ptr [g_eventQueueWorkType], edx
         _emit   75h
         _emit   09h
         cmp     [eax*4 + g_chain_disp_2c_41f9c0], edi
@@ -166,20 +166,20 @@ loop41f9c0:
         test    ecx, ecx
         _emit   75h
         _emit   0c8h
-        mov     edx, dword ptr [g_state_0054208c]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_scaledInit_00542044], 0
         and     edx, 0xfffffffe
         or      edx, 4
-        mov     dword ptr [g_state_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         pop     edi
         pop     esi
         ret
-        mov     ecx, dword ptr [g_state_0054208c]
+        mov     ecx, dword ptr [g_xformDirtyFlags]
         pop     edi
         and     ecx, 0xfffffffb
         pop     esi
         or      ecx, 1
-        mov     dword ptr [g_state_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         ret
     }
 }

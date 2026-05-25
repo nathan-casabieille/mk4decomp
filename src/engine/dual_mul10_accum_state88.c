@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -126,15 +126,15 @@ extern void DualMul10AccumState88_00431dd0(void);
 
 /* @addr 0x00431f40 (178b game) - install-self with counter update.
  *   Block A (chain[+0x84]!=0): update state machine: g_walkCallback=-0x28f (sign-extended from 0xfd71),
- *     g_x_00542070=[g_x_0054205c*4+0x58] clamped to >=0xfffd8000; g_data_00542088 -= 0x51e;
- *     if g_data_00542088 still > 0xfffcdbc1: install-self path; else call ScaledInitWithCounterAndType_004314f0, pop+ret.
- *   Block B (chain[+0x84]==0): g_data_00542088=0x3243f; g_x_00542078=0x7cccc; call DualMul10AccumState88_00431dd0;
- *     if !pause: install-self at +0x08=0x00431f40, chain[+0x84]=1, g_data_0054204c=1, pause=1; pop+ret.
+ *     g_eventQueueCurrent=[g_fightGroupHead*4+0x58] clamped to >=0xfffd8000; g_xformScratch2088 -= 0x51e;
+ *     if g_xformScratch2088 still > 0xfffcdbc1: install-self path; else call ScaledInitWithCounterAndType_004314f0, pop+ret.
+ *   Block B (chain[+0x84]==0): g_xformScratch2088=0x3243f; g_x_00542078=0x7cccc; call DualMul10AccumState88_00431dd0;
+ *     if !pause: install-self at +0x08=0x00431f40, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_x_00542078;
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
@@ -148,27 +148,27 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         test    eax, eax
         _emit   74h
         _emit   50h
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0xfffffd71
         mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [edx*4 + 0x58]
         cmp     ecx, 0xfffd8000
-        mov     dword ptr [g_x_00542070], ecx
+        mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   7dh
         _emit   07h
         xor     eax, eax
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x70], eax
-        mov     eax, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_xformScratch2088]
         sub     eax, 0x051e
         cmp     eax, 0xfffcdbc1
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         _emit   7fh
         _emit   11h
         call    ScaledInitWithCounterAndType_004314f0
         pop     esi
         ret
-        mov     dword ptr [g_state_00542088], 0x0003243f
+        mov     dword ptr [g_xformScratch2088], 0x0003243f
         mov     dword ptr [g_x_00542078], 0x00070ccc
         call    DualMul10AccumState88_00431dd0
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -178,7 +178,7 @@ __declspec(naked) void InstallSelfState88_00431f40(void) {
         mov     eax, 1
         mov     dword ptr [esi + 0x08], 0x00431f40
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
         pop     esi
         ret

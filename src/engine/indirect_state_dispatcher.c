@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0049f6a0 (259b game) - indirect-call state dispatcher with retry loop.
  *   Init: table = (g_x_00541fc0 + g_x_00535e48); load [table*4 + 4]; call eax indirect.
  *   If pause: ret. If !bit0(0054208c): jmp tail-CallSetPause.
- *   Load state = [g_x_00542048*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
+ *   Load state = [g_xformEntityIdx*4 + 0]; if state in {5,0xa,0xf,0x12}: jmp tail-CallSetPause.
  *   Else inc state, call LinkedListIndirectDirtyToggle_0049f7b0; if pause: ret; if bit0 still set & state==5: loop;
  *   if bit0 cleared: store, call RoundWinTransition_0049e7e0; if pause ret; load [+8], call GuardedScaledCall;
  *   else fall to tail-CallSetPause; pop ebx; ret.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00535e48;
 extern unsigned int g_x_00541fc0;
-extern unsigned int g_x_00542048;
+extern unsigned int g_xformEntityIdx;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void LinkedListIndirectDirtyToggle_0049f7b0(void);
@@ -143,11 +143,11 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
     __asm {
         mov     eax, dword ptr [g_x_00541fc0]
         mov     ecx, dword ptr [g_x_00535e48]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         add     eax, ecx
         push    ebx
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_x_00542048], eax
+        mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 4]
         mov     dword ptr [g_scaledInit_00542044], eax
         call    eax
@@ -159,7 +159,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     al, byte ptr [g_state_0054208c]
+        mov     al, byte ptr [g_xformDirtyFlags]
         mov     bl, 1
         _emit   84h
         _emit   0c3h
@@ -169,7 +169,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_x_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     eax, dword ptr [eax*4 + 0]
@@ -202,7 +202,7 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         test    eax, eax
         _emit   75h
         _emit   6ah
-        test    byte ptr [g_state_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         _emit   74h
         _emit   11h
         mov     eax, dword ptr [g_walkCallback]
@@ -216,13 +216,13 @@ __declspec(naked) void IndirectStateDispatcher_0049f6a0(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_x_00535e48]
-        mov     dword ptr [g_data_00542070], edx
+        mov     dword ptr [g_eventQueueCurrent], edx
         call    RoundWinTransition_0049e7e0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   25h
-        mov     eax, dword ptr [g_x_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_walkCallback], ecx
         call    GuardedScaledCall_0048a020

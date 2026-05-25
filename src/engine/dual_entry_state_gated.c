@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,25 +123,25 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
- *   Block A: g_x_00542070=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
- *     g_state_00535ddc<=0xcccc: g_x_00542070=0x9. Then call MStackPush3CmpCall_0048eec0; if !pause: if bitfield set
- *     g_x_00542070=0xb; g_walkCallback=g_x_00542070; jmp StateDispatchYield_00471190.
+ *   Block A: g_eventQueueCurrent=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
+ *     g_state_00535ddc<=0xcccc: g_eventQueueCurrent=0x9. Then call MStackPush3CmpCall_0048eec0; if !pause: if bitfield set
+ *     g_eventQueueCurrent=0xb; g_walkCallback=g_eventQueueCurrent; jmp StateDispatchYield_00471190.
  *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield_00471190.
  */
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542070;
+extern unsigned int g_eventQueueCurrent;
 extern void ScaledChainAndF000DirtyToggle_0048e740(void);
 extern void StateDispatchYield_00471190(void);
 
 __declspec(naked) void DualEntryStateGated_00460fa0(void) {
     __asm {
-        mov     dword ptr [g_x_00542070], 0x0b
+        mov     dword ptr [g_eventQueueCurrent], 0x0b
         call    ScaledChainAndF000DirtyToggle_0048e740
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   54h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   3ch
         mov     eax, dword ptr [g_state_00535ddc]
@@ -149,17 +149,17 @@ __declspec(naked) void DualEntryStateGated_00460fa0(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh
         _emit   0ah
-        mov     dword ptr [g_x_00542070], 0x09
+        mov     dword ptr [g_eventQueueCurrent], 0x09
         call    MStackPush3CmpCall_0048eec0
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         _emit   75h
         _emit   22h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   0ah
-        mov     dword ptr [g_x_00542070], 0x0b
-        mov     eax, dword ptr [g_x_00542070]
+        mov     dword ptr [g_eventQueueCurrent], 0x0b
+        mov     eax, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], eax
         jmp     StateDispatchYield_00471190
         ret

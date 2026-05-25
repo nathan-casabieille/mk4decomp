@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -125,15 +125,15 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00430020 (115b)
  *   ecx = g_load_0052ab04; edx = g_load_0052ab08;
  *   push esi; esi = g_cj_0054205c;
- *   g_acc_00542078 = ecx; g_state_0054207c = edx;
- *   eax = [esi*4+0x54]; g_state_00542080 = eax;
+ *   g_acc_00542078 = ecx; g_eventQueueNotMask = edx;
+ *   eax = [esi*4+0x54]; g_eventQueueChild = eax;
  *   esi = [esi*4+0x5c]; eax -= ecx; esi -= edx;
- *   push eax; push eax; g_state_00542080 = eax;
- *   g_data_00542084 = esi; call Mul10Tail_00404af0; add esp,8;
- *   g_state_00542080 = eax; eax = g_data_00542084;
- *   push eax; push eax; call Mul10Tail; ecx = g_state_00542080;
- *   add esp,8; g_data_00542084 = eax; add eax,ecx;
- *   g_state_0054207c = eax; pop esi; ret.
+ *   push eax; push eax; g_eventQueueChild = eax;
+ *   g_currentNodeFlags = esi; call Mul10Tail_00404af0; add esp,8;
+ *   g_eventQueueChild = eax; eax = g_currentNodeFlags;
+ *   push eax; push eax; call Mul10Tail; ecx = g_eventQueueChild;
+ *   add esp,8; g_currentNodeFlags = eax; add eax,ecx;
+ *   g_eventQueueNotMask = eax; pop esi; ret.
  */
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
@@ -151,28 +151,28 @@ __declspec(naked) void DualMul10ChainAcc7C_00430020(void) {
         push    esi
         mov     esi, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_acc_00542078], ecx
-        mov     dword ptr [g_state_0054207c], edx
+        mov     dword ptr [g_eventQueueNotMask], edx
         mov     eax, dword ptr [esi*4 + 0x54]
-        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         mov     esi, dword ptr [esi*4 + 0x5c]
         sub     eax, ecx
         sub     esi, edx
         push    eax
         push    eax
-        mov     dword ptr [g_state_00542080], eax
-        mov     dword ptr [g_data_00542084], esi
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     dword ptr [g_currentNodeFlags], esi
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_state_00542080], eax
-        mov     eax, dword ptr [g_data_00542084]
+        mov     dword ptr [g_eventQueueChild], eax
+        mov     eax, dword ptr [g_currentNodeFlags]
         push    eax
         push    eax
         call    Mul10Tail_00404af0
-        mov     ecx, dword ptr [g_state_00542080]
+        mov     ecx, dword ptr [g_eventQueueChild]
         add     esp, 8
-        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_currentNodeFlags], eax
         add     eax, ecx
-        mov     dword ptr [g_state_0054207c], eax
+        mov     dword ptr [g_eventQueueNotMask], eax
         pop     esi
         ret
     }

@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -130,46 +130,46 @@ extern void MStackBracket2_TreeWalkRecursive_00405e70(void);
 extern void LinkedListInsert_004ab440(void);
 
 /* @addr 0x00406790 (377b boot) - mstack-push-2 scope + 2-call chain + LL insert.
- *   Sets bit 2 of g_data_0054208c. If g_data_00542044 is zero, takes the
+ *   Sets bit 2 of g_xformDirtyFlags. If g_currentNodeIdx is zero, takes the
  *   short path: clears bit 2 again and returns. Otherwise pushes
- *   g_data_00542048 / g_data_0054205c onto mstack, calls
+ *   g_xformEntityIdx / g_fightGroupHead onto mstack, calls
  *   GuardedChainPushSetCallPop_00406bb0 + ScaledLoadGuardedJmp_004066d0.
- *   Sets g_data_0054205c = old g_data_00542044, reads [scaled+0x1c]; if
+ *   Sets g_fightGroupHead = old g_currentNodeIdx, reads [scaled+0x1c]; if
  *   non-zero, toggles bit 2 off and calls PvsMergeDriver_00425db0. Zeroes
  *   g_walkCallback and [scaled+0x1c]. Reads [scaled+0x18]; if non-zero,
  *   toggles bit 2 off and calls MStackBracket2_TreeWalkRecursive_00405e70. Then writes g_data_00541e80
- *   into g_data_00542048 and calls LinkedListInsert_004ab440. Pops the 2
- *   mstack entries back and clears bit 0 of g_data_0054208c via and 0xfe.
+ *   into g_xformEntityIdx and calls LinkedListInsert_004ab440. Pops the 2
+ *   mstack entries back and clears bit 0 of g_xformDirtyFlags via and 0xfe.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 
 __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
     __asm {
-        mov     edx, dword ptr [g_data_0054208c]
-        mov     eax, dword ptr [g_data_00542044]
+        mov     edx, dword ptr [g_xformDirtyFlags]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    edi
         mov     edi, 4
         or      edx, edi
         test    eax, eax
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         je      L_mpl_finalAndFE
         mov     ecx, edx
         xor     ecx, edi
         test    eax, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         je      L_mpl_finalAndFE
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542048]
+        mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
@@ -181,47 +181,47 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_mpl_doneNoFE
-        mov     eax, dword ptr [g_data_00542044]
-        mov     edx, dword ptr [g_data_0054208c]
-        mov     dword ptr [g_data_0054205c], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     edx, dword ptr [g_xformDirtyFlags]
+        mov     dword ptr [g_fightGroupHead], eax
         or      edx, edi
         mov     eax, dword ptr [eax*4 + 0x1c]
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_xformDirtyFlags], edx
         test    eax, eax
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         je      short L_mpl_skipCall1
         mov     ecx, edx
         xor     ecx, edi
         test    eax, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         je      short L_mpl_skipCall1
         call    PvsMergeDriver_00425db0
     L_mpl_skipCall1:
-        mov     eax, dword ptr [g_data_0054205c]
+        mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x1c], 0
-        mov     ecx, dword ptr [g_data_0054205c]
-        mov     edx, dword ptr [g_data_0054208c]
+        mov     ecx, dword ptr [g_fightGroupHead]
+        mov     edx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [ecx*4 + 0x18]
         or      edx, edi
         test    eax, eax
-        mov     dword ptr [g_data_00542044], eax
-        mov     dword ptr [g_data_0054208c], edx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_xformDirtyFlags], edx
         je      short L_mpl_skipCall2
         mov     ecx, edx
         xor     ecx, edi
         test    eax, eax
-        mov     dword ptr [g_data_0054208c], ecx
+        mov     dword ptr [g_xformDirtyFlags], ecx
         je      short L_mpl_skipCall2
         call    MStackBracket2_TreeWalkRecursive_00405e70
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_mpl_doneNoFE
     L_mpl_skipCall2:
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_data_00541e80]
-        mov     dword ptr [g_data_00542044], edx
-        mov     dword ptr [g_data_00542048], eax
+        mov     dword ptr [g_currentNodeIdx], edx
+        mov     dword ptr [g_xformEntityIdx], eax
         call    LinkedListInsert_004ab440
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -229,16 +229,16 @@ __declspec(naked) void MStackPush2ChainLLInsert_00406790(void) {
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_mpl_finalAndFE:
-        mov     eax, dword ptr [g_data_0054208c]
+        mov     eax, dword ptr [g_xformDirtyFlags]
         and     al, 0xfe
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
     L_mpl_doneNoFE:
         pop     edi
         ret

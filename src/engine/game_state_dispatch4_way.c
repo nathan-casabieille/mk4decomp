@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -129,9 +129,9 @@ extern void Push80SetWalkNegDualCallPop_004393b0(void);
 extern void CjInstallSelfRouter_00470480(void);
 extern void AudioVolumeRescale_004ab690(void);
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 
-extern unsigned int g_data_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_data_00542060;
 
 __declspec(naked) void GameStateDispatch4Way_00436e50(void)
@@ -156,7 +156,7 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         mov      edx, OFFSET GameStateDispatch4Way_00436e50
         mov      dword ptr [ecx*4 + 0x84], 2
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x2000000
         jmp      L_6f9a
     L_6ebe:
@@ -164,7 +164,7 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         call     AudioVolumeRescale_004ab690
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_6fd2
-        test     byte ptr [g_data_0054208c], 1
+        test     byte ptr [g_xformDirtyFlags], 1
         jne      L_6fcd
         call     Push80SetWalkDualCallPop_00439350
         cmp      dword ptr [g_framePauseFlag], edi
@@ -174,7 +174,7 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         mov      edx, OFFSET GameStateDispatch4Way_00436e50
         mov      dword ptr [ecx*4 + 0x84], 3
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x3000000
         jmp      short L_6f9a
     L_6f24:
@@ -186,7 +186,7 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         mov      edx, OFFSET GameStateDispatch4Way_00436e50
         mov      dword ptr [ecx*4 + 0x84], 4
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x4000000
         jmp      short L_6f9a
     L_6f62:
@@ -198,13 +198,13 @@ __declspec(naked) void GameStateDispatch4Way_00436e50(void)
         mov      edx, OFFSET GameStateDispatch4Way_00436e50
         mov      dword ptr [ecx*4 + 0x84], 1
         mov      eax, dword ptr [esi + 4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         add      edx, 0x1000000
     L_6f9a:
         mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [esi + 4], eax
         mov      eax, dword ptr [g_data_00542060]
         mov      dword ptr [eax*4 + 0x84], edi

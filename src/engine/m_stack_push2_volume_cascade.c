@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -122,13 +122,13 @@ extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
-/* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_x_00542074; 3-stage AudioVolumeRescale
+/* @addr 0x00444e00 (226b game) - mstack-push g_scaledInit + g_eventQueueWorkType; 3-stage AudioVolumeRescale
  *   cascade with bit-0 tests selecting different shifted-pointer values for tail-jmp to PendingMatch_00444ef0.
  *   Values: 0x004e5df8/0x004e5dc8/0x004e5d90/0x004e5d58 (all >>2 to g_walkCallback).
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_eventQueueWorkType;
 extern void AudioVolumeRescale_004ab690(void);
 extern void PendingMatch_00444ef0(void);
 
@@ -140,7 +140,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_x_00542074]
+        mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
@@ -154,7 +154,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   12h
         mov     eax, 0x004e5df8
@@ -167,7 +167,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         test    eax, eax
         _emit   75h
         _emit   62h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   47h
         mov     dword ptr [g_walkCallback], 0x00000200
@@ -176,7 +176,7 @@ __declspec(naked) void MStackPush2VolumeCascade_00444e00(void) {
         test    eax, eax
         _emit   75h
         _emit   41h
-        test    byte ptr [g_state_0054208c], 1
+        test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   13h
         mov     ecx, 0x004e5dc8

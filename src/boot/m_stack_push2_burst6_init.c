@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,30 +123,30 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00405450 (348b boot) - mstack-push-2 + 6/13-dword burst init.
- *   Pushes g_data_00542044 and g_data_0053a1ac onto the mstack, snapshots
- *   g_data_00541eb0 to g_data_00542044, calls MStackPushChainStepIndex_004ab510.
- *   On no-error AND bit 2 of g_data_0054208c clear: bursts 6 dwords of 0 at
- *   the scaled g_data_00542044 base via unrolled 4-store loop with rep stosd
+ *   Pushes g_currentNodeIdx and g_data_0053a1ac onto the mstack, snapshots
+ *   g_data_00541eb0 to g_currentNodeIdx, calls MStackPushChainStepIndex_004ab510.
+ *   On no-error AND bit 2 of g_xformDirtyFlags clear: bursts 6 dwords of 0 at
+ *   the scaled g_currentNodeIdx base via unrolled 4-store loop with rep stosd
  *   tail; advances 0x542044 by 6, sets g_data_0053a1ac=0xd, bursts 13 dwords
  *   of 0 at the new scaled base (using a 12+remainder pattern); then restores
- *   from g_data_00542044-6 storing g_data_00542060 at offset +0x14.
+ *   from g_currentNodeIdx-6 storing g_data_00542060 at offset +0x14.
  *   Always: pops the 2 mstack entries back, sets bit 2 of 0x54208c then
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
 extern unsigned int g_data_0053a1ac;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541eb0;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_data_00542060;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void MStackPushChainStepIndex_004ab510(void);
 
 __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    esi
         mov     dword ptr [g_state_004d57ac], eax
@@ -158,15 +158,15 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         mov     eax, dword ptr [g_data_00541eb0]
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    MStackPushChainStepIndex_004ab510
         mov     eax, dword ptr [g_framePauseFlag]
         xor     edx, edx
         cmp     eax, edx
         jne     L_mpb_pop2
-        test    byte ptr [g_data_0054208c], 4
+        test    byte ptr [g_xformDirtyFlags], 4
         jne     L_mpb_skipBursts
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, 6
         lea     edi, [eax*4]
         mov     eax, 1
@@ -187,11 +187,11 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         xor     eax, eax
         rep stosd
     L_mpb_after1:
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, 0xd
         add     eax, 6
         mov     dword ptr [g_data_0053a1ac], ecx
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], edx
         lea     edi, [eax*4]
         mov     eax, 3
@@ -212,35 +212,35 @@ __declspec(naked) void MStackPush2Burst6Init_00405450(void) {
         xor     eax, eax
         rep stosd
     L_mpb_after2:
-        mov     eax, dword ptr [g_data_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_data_00542060]
         sub     eax, 6
-        mov     dword ptr [g_data_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x14], ecx
     L_mpb_skipBursts:
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     esi, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
         mov     dword ptr [g_data_0053a1ac], esi
         mov     dword ptr [g_state_004d57ac], eax
         mov     esi, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542044], esi
-        mov     esi, dword ptr [g_data_0054208c]
+        mov     dword ptr [g_currentNodeIdx], esi
+        mov     esi, dword ptr [g_xformDirtyFlags]
         or      esi, 4
         cmp     ecx, edx
         mov     dword ptr [g_state_004d57ac], eax
-        mov     dword ptr [g_data_0054208c], esi
+        mov     dword ptr [g_xformDirtyFlags], esi
         je      short L_mpb_zeroOut
         mov     eax, esi
         xor     eax, 4
         cmp     ecx, edx
-        mov     dword ptr [g_data_0054208c], eax
+        mov     dword ptr [g_xformDirtyFlags], eax
         jne     short L_mpb_pop2
     L_mpb_zeroOut:
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
     L_mpb_pop2:
         pop     edi
         pop     esi

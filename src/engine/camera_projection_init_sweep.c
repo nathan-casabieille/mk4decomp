@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -127,16 +127,16 @@ extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00535e50;
 extern unsigned int g_data_00537eb4;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_data_00542078;
-extern unsigned int g_data_0054207c;
-extern unsigned int g_data_00542080;
-extern unsigned int g_data_00542088;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_eventQueueNotMask;
+extern unsigned int g_eventQueueChild;
+extern unsigned int g_xformScratch2088;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_data_00542408;
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void Chain2CallMul10Accum_00426a30(void);
@@ -155,7 +155,7 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         push     ebx
         push     edi
         mov      dword ptr [g_walkCallback], 0x6487e
-        mov      dword ptr [g_data_00542070], 0x280000
+        mov      dword ptr [g_eventQueueCurrent], 0x280000
         call     RangeMulMod_004ab2a0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -163,95 +163,95 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      eax, dword ptr [g_walkCallback]
         mov      edi, OFFSET g_data_00542408
         shr      edi, 2
-        mov      dword ptr [g_data_00542084], eax
-        mov      dword ptr [g_data_0054204c], edi
+        mov      dword ptr [g_currentNodeFlags], eax
+        mov      dword ptr [g_pendingNodeType], edi
         call     BootPhaseGateBracketedInit_004060c0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      al, byte ptr [g_data_0054208c]
+        mov      al, byte ptr [g_xformDirtyFlags]
         mov      bl, 4
         test     al, bl
         jne      L_8430
-        mov      eax, dword ptr [g_data_00542044]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, OFFSET g_data_004e86d8
         shr      ecx, 2
-        mov      dword ptr [g_data_00542050], eax
+        mov      dword ptr [g_eventQueueTotal], eax
         mov      dword ptr [g_data_00537eb4], eax
-        mov      dword ptr [g_data_00542048], ecx
+        mov      dword ptr [g_xformEntityIdx], ecx
         call     FramePauseScaledStore_00406c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_840c
-        mov      edx, dword ptr [g_data_00542050]
-        mov      eax, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_eventQueueTotal]
+        mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [edx*4 + 0x18], eax
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      edx, dword ptr [g_data_00542050]
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      edx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [ecx*4 + 0x18], edx
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_00542050], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_eventQueueTotal], eax
         mov      dword ptr [g_data_00535e50], 0x28
         mov      dword ptr [g_data_00542078], 0
-        mov      dword ptr [g_data_0054207c], 0
-        mov      dword ptr [g_data_00542088], 0x3243f
-        mov      dword ptr [g_data_00542080], 0x50000
+        mov      dword ptr [g_eventQueueNotMask], 0
+        mov      dword ptr [g_xformScratch2088], 0x3243f
+        mov      dword ptr [g_eventQueueChild], 0x50000
         mov      dword ptr [g_data_00535e48], 1
     L_8267:
-        mov      eax, dword ptr [g_data_0054204c]
+        mov      eax, dword ptr [g_pendingNodeType]
         mov      ecx, dword ptr [eax*4]
         inc      eax
         test     ecx, ecx
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_pendingNodeType], eax
         jne      short L_829d
         mov      eax, edi
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_pendingNodeType], eax
         mov      ecx, dword ptr [eax*4]
         inc      eax
-        mov      dword ptr [g_data_00542048], ecx
-        mov      dword ptr [g_data_0054204c], eax
+        mov      dword ptr [g_xformEntityIdx], ecx
+        mov      dword ptr [g_pendingNodeType], eax
     L_829d:
         call     FramePauseScaledStore_00406c10
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        test     byte ptr [g_data_0054208c], bl
+        test     byte ptr [g_xformDirtyFlags], bl
         jne      L_840c
-        mov      edx, dword ptr [g_data_00542050]
-        mov      dword ptr [g_data_00542048], edx
+        mov      edx, dword ptr [g_eventQueueTotal]
+        mov      dword ptr [g_xformEntityIdx], edx
         call     MStackPush2ChainPrepend_00409970
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      eax, dword ptr [g_data_00542088]
-        mov      dword ptr [g_data_00542074], eax
+        mov      eax, dword ptr [g_xformScratch2088]
+        mov      dword ptr [g_eventQueueWorkType], eax
         call     Chain2CallMul10Accum_00426a30
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x30], edx
-        mov      ecx, dword ptr [g_data_00542044]
-        mov      eax, dword ptr [g_data_00542070]
+        mov      ecx, dword ptr [g_currentNodeIdx]
+        mov      eax, dword ptr [g_eventQueueCurrent]
         mov      edx, 0x3243f
         mov      dword ptr [ecx*4 + 0x38], eax
-        mov      ecx, dword ptr [g_data_00542088]
+        mov      ecx, dword ptr [g_xformScratch2088]
         sub      edx, ecx
         mov      dword ptr [g_walkCallback], edx
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_8430
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         mov      eax, dword ptr [g_walkCallback]
         mov      dword ptr [ecx*4 + 0x40], eax
-        mov      eax, dword ptr [g_data_00542088]
-        sub      eax, dword ptr [g_data_00542084]
-        mov      dword ptr [g_data_00542088], eax
+        mov      eax, dword ptr [g_xformScratch2088]
+        sub      eax, dword ptr [g_currentNodeFlags]
+        mov      dword ptr [g_xformScratch2088], eax
         mov      dword ptr [g_walkCallback], eax
         call     Thunk_00427460
         mov      eax, dword ptr [g_framePauseFlag]
@@ -259,9 +259,9 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         jne      L_8430
         mov      eax, dword ptr [g_data_00535e48]
         mov      edx, dword ptr [g_walkCallback]
-        mov      ecx, dword ptr [g_data_00542044]
+        mov      ecx, dword ptr [g_currentNodeIdx]
         inc      eax
-        mov      dword ptr [g_data_00542088], edx
+        mov      dword ptr [g_xformScratch2088], edx
         mov      dword ptr [g_data_00535e48], eax
         mov      dword ptr [ecx*4 + 0x1c], eax
         mov      eax, dword ptr [g_data_00535e50]
@@ -269,9 +269,9 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      dword ptr [g_data_00535e50], eax
         jne      L_8267
         mov      eax, dword ptr [g_data_00537eb4]
-        mov      dword ptr [g_data_00542044], eax
+        mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [eax*4 + 0x30], 0x270
-        mov      edx, dword ptr [g_data_00542044]
+        mov      edx, dword ptr [g_currentNodeIdx]
         mov      eax, 0x18000
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [edx*4 + 0x58], eax
@@ -279,8 +279,8 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430
-        mov      eax, dword ptr [g_data_00542044]
-        mov      dword ptr [g_data_0054205c], eax
+        mov      eax, dword ptr [g_currentNodeIdx]
+        mov      dword ptr [g_fightGroupHead], eax
         call     RegistryPushBindPop_00403c20
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -292,12 +292,12 @@ __declspec(naked) void CameraProjectionInitSweep_00458160(void)
         ret
     L_840c:
         mov      ecx, dword ptr [g_data_00537eb4]
-        mov      dword ptr [g_data_00542044], ecx
+        mov      dword ptr [g_currentNodeIdx], ecx
         call     MStackPush2ChainLLInsert_00406790
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8430
-        mov      dword ptr [g_data_00542044], 0
+        mov      dword ptr [g_currentNodeIdx], 0
     L_8430:
         pop      edi
         pop      ebx

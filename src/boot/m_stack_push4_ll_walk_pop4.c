@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -123,22 +123,22 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004090e0 (384b boot) - mstack-push-4 + linked-list walk + pop-4.
- *   Pushes g_data_00542044/00542048/0054204c/0054205c onto mstack, then
- *   walks the linked list rooted at g_data_00542048 stepping through
+ *   Pushes g_currentNodeIdx/00542048/0054204c/0054205c onto mstack, then
+ *   walks the linked list rooted at g_xformEntityIdx stepping through
  *   [cur*4]. For each non-zero entry:
  *     - SplitHi8Lo24_004abfc0 (with bl=4 sentinel for bit-2 toggle)
- *     - MStackInitCallToggle_00408ad0 (with g_data_00542070 primed)
- *     - if bit 2 of g_data_0054208c clear, also reads [scaled+0x28]; if
- *       non-zero advances g_data_00542048 to it (sar 2), saves the prior
+ *     - MStackInitCallToggle_00408ad0 (with g_eventQueueCurrent primed)
+ *     - if bit 2 of g_xformDirtyFlags clear, also reads [scaled+0x28]; if
+ *       non-zero advances g_xformEntityIdx to it (sar 2), saves the prior
  *       in 0x54206c, calls ScaledStoreThree_00409260.
  *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
  */
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542044;
-extern unsigned int g_data_00542048;
-extern unsigned int g_data_0054204c;
-extern unsigned int g_data_0054205c;
-extern unsigned int g_data_0054208c;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
+extern unsigned int g_pendingNodeType;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void MStackInitCallToggle_00408ad0(void);
 extern void ScaledStoreThree_00409260(void);
@@ -147,35 +147,35 @@ extern void SplitHi8Lo24_004abfc0(void);
 __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
     __asm {
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_00542048]
+        mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     ecx, dword ptr [g_data_0054204c]
+        mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
         mov     eax, dword ptr [g_state_004d57ac]
-        mov     edx, dword ptr [g_data_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_state_004d57ac], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
-        mov     eax, dword ptr [g_data_00542044]
-        mov     dword ptr [g_data_0054205c], eax
-        mov     eax, dword ptr [g_data_00542048]
-        mov     dword ptr [g_data_0054204c], eax
+        mov     eax, dword ptr [g_currentNodeIdx]
+        mov     dword ptr [g_fightGroupHead], eax
+        mov     eax, dword ptr [g_xformEntityIdx]
+        mov     dword ptr [g_pendingNodeType], eax
         mov     ecx, dword ptr [eax*4]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         je      L_m4w_pop4
         mov     bl, 4
     L_m4w_loopTop:
@@ -183,54 +183,54 @@ __declspec(naked) void MStackPush4LLWalkPop4_004090e0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop
-        mov     ecx, dword ptr [g_data_00542070]
+        mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_walkCallback], ecx
         call    MStackInitCallToggle_00408ad0
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_m4w_doneNoPop
-        test    byte ptr [g_data_0054208c], bl
+        test    byte ptr [g_xformDirtyFlags], bl
         jne     short L_m4w_loopAdv
-        mov     ecx, dword ptr [g_data_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x28]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_m4w_loopAdv
-        mov     eax, dword ptr [g_data_00542048]
+        mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x28]
         sar     eax, 2
-        mov     dword ptr [g_data_00542048], edx
+        mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], eax
         call    ScaledStoreThree_00409260
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_m4w_doneNoPop
     L_m4w_loopAdv:
-        mov     eax, dword ptr [g_data_0054204c]
+        mov     eax, dword ptr [g_pendingNodeType]
         mov     ecx, dword ptr [eax*4]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         jne     L_m4w_loopTop
     L_m4w_pop4:
         mov     eax, dword ptr [g_state_004d57ac]
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054205c], ecx
+        mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_0054204c], edx
+        mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_state_004d57ac], eax
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542048], ecx
+        mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_state_004d57ac], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
-        mov     dword ptr [g_data_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_state_004d57ac], eax
     L_m4w_doneNoPop:
         pop     ebx

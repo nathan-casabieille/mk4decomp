@@ -14,17 +14,17 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_data_00542050;
-extern unsigned int g_data_00542070;
-extern unsigned int g_data_00542084;
-extern unsigned int g_state_0054208c;
-extern unsigned int g_state_00542088;
+extern unsigned int g_eventQueueTotal;
+extern unsigned int g_eventQueueCurrent;
+extern unsigned int g_currentNodeFlags;
+extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_xformScratch2088;
 extern unsigned int g_state_00542094;
 extern unsigned int g_state_00535ddc;
 extern unsigned int g_state_00537e88;
 extern unsigned int g_state_0053a408;
 extern unsigned int g_state_00537f94;
-extern unsigned int g_state_00542080;
+extern unsigned int g_eventQueueChild;
 extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
@@ -68,7 +68,7 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_state_0054207c;
+extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_data_0053a180;
 extern unsigned int g_state_00541fa4;
@@ -124,26 +124,26 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * GameInstall2BodyMul10ScaledInit_00475590 - 347b 2-entry game state init.
- *   Entry 0x00475590: g_walkCallback = g_x_00542054[+0x30]; call SetJmp_0049cb90; if paused: ret.
- *     edx = g_x_00542044, eax = g_x_00542084; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
+ *   Entry 0x00475590: g_walkCallback = g_eventQueueEnd[+0x30]; call SetJmp_0049cb90; if paused: ret.
+ *     edx = g_currentNodeIdx, eax = g_currentNodeFlags; chain[edx*4 + 0x1c] = eax; push 0x004ec890;
  *     call IterLoad_0048e680; pop; ret.
  *   Body 0x004755d0 (16b-padded): chain = g_baseSel<<2; saved=chain->state; chain->state=0.
- *     If state == 0: setup g_x_00542074 = g_x_0054205c+0x15; eax = chain[+0x38];
- *       g_x_00542044 = eax; g_data_0054204c = eax+0x15. Call MStackPushMul10TailSqrt; if paused: ret.
- *       g_x_00542084 -= g_walkCallback; push (eax, 0x1999); g_x_00542088 = eax; Mul10Tail; restore;
- *       g_x_00542088 = result; g_x_00542080 = 0xa. Fall through.
- *     If state == 1: decrement g_x_00542080; if !=0 jump to chain-step.
- *     Otherwise install-self at body; chain->state=2; g_data_0054204c = 0x28; pause=1; ret.
- *     Chain-step: g_x_00542084 += g_x_00542088; g_data_00542070 = 0; g_walkCallback = g_x_00542084;
- *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_data_0054204c=1;
+ *     If state == 0: setup g_eventQueueWorkType = g_fightGroupHead+0x15; eax = chain[+0x38];
+ *       g_currentNodeIdx = eax; g_pendingNodeType = eax+0x15. Call MStackPushMul10TailSqrt; if paused: ret.
+ *       g_currentNodeFlags -= g_walkCallback; push (eax, 0x1999); g_xformScratch2088 = eax; Mul10Tail; restore;
+ *       g_xformScratch2088 = result; g_eventQueueChild = 0xa. Fall through.
+ *     If state == 1: decrement g_eventQueueChild; if !=0 jump to chain-step.
+ *     Otherwise install-self at body; chain->state=2; g_pendingNodeType = 0x28; pause=1; ret.
+ *     Chain-step: g_currentNodeFlags += g_xformScratch2088; g_eventQueueCurrent = 0; g_walkCallback = g_currentNodeFlags;
+ *       call Wrapper_0048ff30; if paused: ret. Install-self; chain->state=1; g_pendingNodeType=1;
  *       pause=1; ret.
  */
-extern unsigned int g_data_0054204c;
+extern unsigned int g_pendingNodeType;
 extern unsigned int g_pause_00541e6c;
-extern unsigned int g_x_00542044;
-extern unsigned int g_x_00542054;
-extern unsigned int g_x_0054205c;
-extern unsigned int g_x_00542074;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_eventQueueEnd;
+extern unsigned int g_fightGroupHead;
+extern unsigned int g_eventQueueWorkType;
 extern void IterLoad_0048e680(void);
 extern void MStackPushMul10TailSqrt_00424a90(void);
 extern void Wrapper_0048ff30(void);
@@ -152,15 +152,15 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_x_00542054]
+        mov     eax, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [eax*4 + 0x30]
         mov     dword ptr [g_walkCallback], ecx
         call    SetJmp_0049cb90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     short L_e1_ret
-        mov     edx, dword ptr [g_x_00542044]
-        mov     eax, dword ptr [g_data_00542084]
+        mov     edx, dword ptr [g_currentNodeIdx]
+        mov     eax, dword ptr [g_currentNodeFlags]
         push    0x004ec890
         mov     dword ptr [edx*4 + 0x1c], eax
         call    IterLoad_0048e680
@@ -177,47 +177,47 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         je      short L_state0
         dec     eax
         jne     short L_install2
-        mov     eax, dword ptr [g_state_00542080]
+        mov     eax, dword ptr [g_eventQueueChild]
         dec     eax
-        mov     dword ptr [g_state_00542080], eax
+        mov     dword ptr [g_eventQueueChild], eax
         jne     L_chainStep
     L_install2:
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], 2
-        mov     dword ptr [g_data_0054204c], 0x28
+        mov     dword ptr [g_pendingNodeType], 0x28
         mov     dword ptr [g_pause_00541e6c], 1
         pop     esi
         ret
     L_state0:
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     edx, dword ptr [g_x_0054205c]
+        mov     edx, dword ptr [g_fightGroupHead]
         add     edx, 0x15
         mov     eax, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_x_00542074], edx
-        mov     dword ptr [g_x_00542044], eax
+        mov     dword ptr [g_eventQueueWorkType], edx
+        mov     dword ptr [g_currentNodeIdx], eax
         add     eax, 0x15
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         call    MStackPushMul10TailSqrt_00424a90
         mov     eax, dword ptr [g_pause_00541e6c]
         test    eax, eax
         jne     L_b2_ret
-        mov     eax, dword ptr [g_data_00542084]
+        mov     eax, dword ptr [g_currentNodeFlags]
         mov     ecx, dword ptr [g_walkCallback]
         sub     eax, ecx
-        mov     dword ptr [g_data_00542084], ecx
+        mov     dword ptr [g_currentNodeFlags], ecx
         push    eax
         push    0x1999
-        mov     dword ptr [g_state_00542088], eax
+        mov     dword ptr [g_xformScratch2088], eax
         call    Mul10Tail_00404af0
         add     esp, 8
-        mov     dword ptr [g_state_00542088], eax
-        mov     dword ptr [g_state_00542080], 0xa
+        mov     dword ptr [g_xformScratch2088], eax
+        mov     dword ptr [g_eventQueueChild], 0xa
     L_chainStep:
-        mov     eax, dword ptr [g_data_00542084]
-        mov     ecx, dword ptr [g_state_00542088]
+        mov     eax, dword ptr [g_currentNodeFlags]
+        mov     ecx, dword ptr [g_xformScratch2088]
         add     eax, ecx
-        mov     dword ptr [g_data_00542070], 0
-        mov     dword ptr [g_data_00542084], eax
+        mov     dword ptr [g_eventQueueCurrent], 0
+        mov     dword ptr [g_currentNodeFlags], eax
         mov     dword ptr [g_walkCallback], eax
         call    Wrapper_0048ff30
         mov     eax, dword ptr [g_pause_00541e6c]
@@ -226,7 +226,7 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit_00475590(void)
         mov     eax, 1
         mov     dword ptr [esi + 8], offset L_body2
         mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_data_0054204c], eax
+        mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_pause_00541e6c], eax
     L_b2_ret:
         pop     esi
