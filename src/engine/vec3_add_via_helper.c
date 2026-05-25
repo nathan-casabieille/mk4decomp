@@ -130,6 +130,14 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_data_0054204c;
 
+/*
+ * NON-COAXABLE: orig loads raw indices into volatile regs (ecx/edx/eax) before
+ * pushing callee-saved, then pre-scales via LEA into edi/ebx/esi and uses
+ * [reg+disp8] (3b/6b) addressing throughout. MSVC /O2 instead pushes callee-saved
+ * first, loads raw indices directly into esi/edi/ebx, and uses [reg*4+disp32]
+ * (7b SIB) for all accesses. The load-before-push + LEA pre-scale pattern cannot
+ * be coaxed from pure C.
+ */
 __declspec(naked) void Vec3AddViaHelper_00425170(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
