@@ -7,20 +7,20 @@
 /* @addr 0x004b21d0 (272b engine.app) - per-char glyph emitter for HUD text.
  *   args: (esp+8)=screen_x, (esp+0xc)=string ptr, (esp+0x10)=screen_y, (esp+0x14) bp=z, (esp+0x18) sign_flag.
  *   For each printable char (0x21..0x7e): index = c - 0x21; sprite cell pos = (idx % 28, idx / 28).
- *   Builds quad descriptor at g_data_007af4e8..g_byte_007af508, calls Helper_DrawCursor.
+ *   Builds quad descriptor at g_dispatchSave1609_007af4e8..g_byte_007af508, calls Helper_DrawCursor.
  *   Advances screen_x by 9 per char; clears g_byte_007af508 at end.
  */
-extern unsigned int g_data_007af4e8;
-extern unsigned int g_data_007af4ea;
-extern unsigned int g_data_007af4f0;
-extern unsigned int g_data_007af4f2;
-extern unsigned int g_data_007af4f4;
-extern unsigned int g_data_007af4f5;
-extern unsigned int g_data_007af4f8;
-extern unsigned int g_data_007af4f9;
-extern unsigned int g_data_007af4fa;
-extern unsigned int g_data_007af4fc;
-extern unsigned int g_data_007af502;
+extern unsigned int g_dispatchSave1609_007af4e8;
+extern unsigned int g_dispatchSave1610_007af4ea;
+extern unsigned int g_dispatchSave1611_007af4f0;
+extern unsigned int g_dispatchSave1612_007af4f2;
+extern unsigned int g_dispatchSave1613_007af4f4;
+extern unsigned int g_dispatchSave1614_007af4f5;
+extern unsigned int g_dispatchSave1615_007af4f8;
+extern unsigned int g_dispatchSave1616_007af4f9;
+extern unsigned int g_dispatchSave1617_007af4fa;
+extern unsigned int g_dispatchSave1618_007af4fc;
+extern unsigned int g_dispatchSave1619_007af502;
 extern unsigned int g_byte_007af508;
 extern void Helper_DrawCursor(void);
 
@@ -52,17 +52,17 @@ __declspec(naked) void Helper_DrawMenuText(void) {
         jz      L_hpc_advance
         lea     edx, [esi + 9]
         lea     eax, [edi + 0xa]
-        mov     word ptr [g_data_007af4f0], dx
-        mov     word ptr [g_data_007af4f2], ax
+        mov     word ptr [g_dispatchSave1611_007af4f0], dx
+        mov     word ptr [g_dispatchSave1612_007af4f2], ax
         mov     eax, ecx
         xor     edx, edx
         mov     ebx, 0x1c
-        push    offset g_data_007af4e8
+        push    offset g_dispatchSave1609_007af4e8
         div     ebx
-        mov     word ptr [g_data_007af4e8], si
-        mov     word ptr [g_data_007af4ea], di
-        mov     word ptr [g_data_007af4fa], 0
-        mov     word ptr [g_data_007af4fc], bp
+        mov     word ptr [g_dispatchSave1609_007af4e8], si
+        mov     word ptr [g_dispatchSave1610_007af4ea], di
+        mov     word ptr [g_dispatchSave1617_007af4fa], 0
+        mov     word ptr [g_dispatchSave1618_007af4fc], bp
         mov     al, dl
         mov     dl, 9
         imul    dl
@@ -72,26 +72,26 @@ __declspec(naked) void Helper_DrawMenuText(void) {
         mov     eax, ecx
         mov     cl, 0x0a
         sub     eax, edx
-        mov     byte ptr [g_data_007af4f4], bl
+        mov     byte ptr [g_dispatchSave1613_007af4f4], bl
         shr     eax, 1
         add     eax, edx
         add     bl, 9
         shr     eax, 4
         imul    cl
-        mov     byte ptr [g_data_007af4f5], al
+        mov     byte ptr [g_dispatchSave1614_007af4f5], al
         add     al, cl
-        mov     byte ptr [g_data_007af4f9], al
+        mov     byte ptr [g_dispatchSave1616_007af4f9], al
         mov     al, [esp + 0x24]
         neg     al
         sbb     eax, eax
-        mov     byte ptr [g_data_007af4f8], bl
+        mov     byte ptr [g_dispatchSave1615_007af4f8], bl
         and     eax, 3
         and     eax, 3
         shl     eax, 7
         or      al, 0x0f
         or      ah, 2
         or      al, 0x20
-        mov     word ptr [g_data_007af502], ax
+        mov     word ptr [g_dispatchSave1619_007af502], ax
         call    Helper_DrawCursor
         add     esp, 4
     L_hpc_advance:

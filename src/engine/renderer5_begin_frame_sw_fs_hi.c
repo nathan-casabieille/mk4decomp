@@ -6,13 +6,13 @@
 
 /* @addr 0x004b28a0 (140b engine.app) - validated audio buffer setup:
  *   if (!g_renderer4_active || g_renderer4_surface || !arg2 || !arg3 || !arg4) return 0;
- *   *arg3 = 0x280; *arg2 = g_x_007af94c; *arg4 = 0; g_renderer4_surface = 1;
- *   if (arg1 && g_x_007af94c): memset(g_x_007af94c, 0x10001, *arg3 * 60 / 4).
+ *   *arg3 = 0x280; *arg2 = g_dispatchSave1624_007af94c; *arg4 = 0; g_renderer4_surface = 1;
+ *   if (arg1 && g_dispatchSave1624_007af94c): memset(g_dispatchSave1624_007af94c, 0x10001, *arg3 * 60 / 4).
  *   Return 1.
  */
 extern int g_renderer4_active;
 extern int g_renderer4_surface;
-extern unsigned int g_x_007af94c;
+extern unsigned int g_dispatchSave1624_007af94c;
 
 __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
     __asm {
@@ -41,7 +41,7 @@ __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
         _emit   74h
         _emit   5ah
         mov     dword ptr [eax], 0x280
-        mov     esi, dword ptr [g_x_007af94c]
+        mov     esi, dword ptr [g_dispatchSave1624_007af94c]
         mov     dword ptr [edx], esi
         mov     dword ptr [ecx], 0
         mov     ecx, dword ptr [ebp + 8]
@@ -49,7 +49,7 @@ __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
         test    ecx, ecx
         _emit   74h
         _emit   2ch
-        mov     ecx, dword ptr [g_x_007af94c]
+        mov     ecx, dword ptr [g_dispatchSave1624_007af94c]
         test    ecx, ecx
         _emit   74h
         _emit   22h
@@ -60,7 +60,7 @@ __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
         sar     eax, 2
         mov     dword ptr [ebp + 0x0c], eax
         cld
-        mov     edi, dword ptr [g_x_007af94c]
+        mov     edi, dword ptr [g_dispatchSave1624_007af94c]
         mov     ecx, dword ptr [ebp + 0x0c]
         mov     eax, 0x10001
         rep     stosd

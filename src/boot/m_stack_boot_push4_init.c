@@ -112,7 +112,7 @@ extern void MStackBootPush4Init_00408350(void);
 
 extern s32 g_vtxValid;
 extern s16 g_vtxMat[];
-extern unsigned int g_data_007af958[];
+extern unsigned int g_dispatchSave1626_007af958[];
 extern unsigned int g_mat3x3_007af992;
 extern s16 g_vtxIn1_y;
 extern s16 g_vtxIn2_y;
@@ -134,7 +134,7 @@ extern s16 g_vtxScreenP1Y;
 
 /* @addr 0x004b2d20 (338b engine.app) - 3D vertex transform + perspective project.
  *   Reads vertex idx ecx; applies 3x3 matrix at g_vtxMat..0x7af9a0 to
- *   (x,y,z) at g_data_007af958/95e/964[ecx]; adds translation 0x7af9a4/a8/ac.
+ *   (x,y,z) at g_dispatchSave1626_007af958/95e/964[ecx]; adds translation 0x7af9a4/a8/ac.
  *   Stores transformed XYZ at [0x7af96c/78/84][ecx*4].
  *   Perspective divide: if Z > 1, scale = 0x02000000/Z; project X via
  *   scale*0x19999a (offset 0x140 = 320 center); Y via scale * 15 * 8192/65536
@@ -145,7 +145,7 @@ __declspec(naked) void Helper_EmitLine(void) {
         mov     ecx, [esp + 4]
         mov     dword ptr [g_vtxValid], 1
         movsx   eax, word ptr [g_vtxMat]
-        movsx   edx, word ptr [ecx*2 + g_data_007af958]
+        movsx   edx, word ptr [ecx*2 + g_dispatchSave1626_007af958]
         imul    eax, edx
         movsx   edx, word ptr [g_mat3x3_007af992]
         push    esi
@@ -162,7 +162,7 @@ __declspec(naked) void Helper_EmitLine(void) {
         movsx   eax, ax
         mov     dword ptr [ecx*4 + g_vtxOut1_x], eax
         movsx   edx, word ptr [g_mat3x3_007af996]
-        movsx   eax, word ptr [ecx*2 + g_data_007af958]
+        movsx   eax, word ptr [ecx*2 + g_dispatchSave1626_007af958]
         movsx   esi, word ptr [ecx*2 + g_vtxIn1_y]
         imul    edx, eax
         movsx   eax, word ptr [g_mat3x3_007af998]
@@ -178,7 +178,7 @@ __declspec(naked) void Helper_EmitLine(void) {
         movsx   edx, dx
         mov     dword ptr [ecx*4 + g_vtxOut1_y], edx
         movsx   eax, word ptr [g_mat3x3_007af99c]
-        movsx   edx, word ptr [ecx*2 + g_data_007af958]
+        movsx   edx, word ptr [ecx*2 + g_dispatchSave1626_007af958]
         movsx   esi, word ptr [ecx*2 + g_vtxIn1_y]
         imul    eax, edx
         movsx   edx, word ptr [g_mat3x3_007af99e]

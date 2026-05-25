@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_iat_004d2030;
 extern unsigned int g_iat_004d21a8;
 extern unsigned int g_iat_004d2210;
-extern unsigned int g_x_007af934;
-extern unsigned int g_x_007af938;
-extern unsigned int g_x_007af93c;
+extern unsigned int g_dispatchSave1620_007af934;
+extern unsigned int g_dispatchSave1621_007af938;
+extern unsigned int g_dispatchSave1622_007af93c;
 extern int g_renderer4_active;
-extern unsigned int g_x_007af944;
-extern unsigned int g_x_007af950;
+extern unsigned int g_dispatchSave1623_007af944;
+extern unsigned int g_dispatchSave1625_007af950;
 
 /*
  * @addr 0x004b2a40 (115b engine.app) - SW renderer teardown:
@@ -126,21 +126,21 @@ extern unsigned int g_x_007af950;
 void RendererTeardownSW_004b2a40(void) {
     unsigned int zero = 0;
     Renderer4_EndScene_SW_Win();
-    if (g_x_007af934 != zero) {
-        FreeImpl_004c55f0((void *)g_x_007af934);
-        g_x_007af934 = zero;
+    if (g_dispatchSave1620_007af934 != zero) {
+        FreeImpl_004c55f0((void *)g_dispatchSave1620_007af934);
+        g_dispatchSave1620_007af934 = zero;
     }
-    if (g_x_007af938 != zero) {
-        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_004d21a8)(g_x_007af944, g_x_007af938);
-        g_x_007af938 = zero;
+    if (g_dispatchSave1621_007af938 != zero) {
+        ((void (__stdcall *)(unsigned int, unsigned int))g_iat_004d21a8)(g_dispatchSave1623_007af944, g_dispatchSave1621_007af938);
+        g_dispatchSave1621_007af938 = zero;
     }
-    if (g_x_007af93c != zero) {
-        ((void (__stdcall *)(unsigned int))g_iat_004d2030)(g_x_007af93c);
-        g_x_007af93c = zero;
+    if (g_dispatchSave1622_007af93c != zero) {
+        ((void (__stdcall *)(unsigned int))g_iat_004d2030)(g_dispatchSave1622_007af93c);
+        g_dispatchSave1622_007af93c = zero;
     }
     g_renderer4_active = zero;
-    if (g_x_007af950 != zero) {
+    if (g_dispatchSave1625_007af950 != zero) {
         ((void (__stdcall *)(unsigned int, unsigned int, unsigned int))g_iat_004d2210)(zero, zero, 1);
     }
-    g_x_007af950 = zero;
+    g_dispatchSave1625_007af950 = zero;
 }

@@ -16,8 +16,8 @@ extern unsigned int g_iat_004d21ac;
 extern unsigned int g_iat_indirect_007b0050;
 extern unsigned int g_iat_indirect_007b0054;
 extern unsigned int g_dispatchVar41_004f4b50;
-extern unsigned int g_x_007aff48;
-extern unsigned int g_x_007aff4c;
+extern unsigned int g_dispatchSave1630_007aff48;
+extern unsigned int g_dispatchSave1631_007aff4c;
 extern void DSoundSetAxisPan123_004b50a0(void);
 
 int Helper_GlidePostInit(void) {
@@ -37,7 +37,7 @@ int Helper_GlidePostInit(void) {
         mov     dword ptr [g_dispatchVar41_004f4b50], eax
         _emit   74h
         _emit   3fh
-        push    offset g_x_007aff48
+        push    offset g_dispatchSave1630_007aff48
         call    dword ptr [g_iat_004d21ac]
         push    0
         call    dword ptr [g_iat_004d219c]
@@ -59,8 +59,8 @@ int Helper_GlidePostInit(void) {
         mov     eax, 1
         ret
         call    dword ptr [g_iat_indirect_007b0050]
-        mov     eax, dword ptr [g_x_007aff4c]
-        mov     ecx, dword ptr [g_x_007aff48]
+        mov     eax, dword ptr [g_dispatchSave1631_007aff4c]
+        mov     ecx, dword ptr [g_dispatchSave1630_007aff48]
         push    eax
         push    ecx
         call    dword ptr [g_iat_004d21a4]

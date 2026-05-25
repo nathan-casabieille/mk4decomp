@@ -8,7 +8,7 @@
  *   then mask + or bits, set [0x007b41a8] = 0x007b41a0 (self-link list head).
  */
 extern u8 g_memHeapStart[];
-extern unsigned int g_state_007b41a8;
+extern unsigned int g_dispatchSave1654_007b41a8;
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
@@ -17,7 +17,7 @@ __declspec(naked) void AppInit_Misc2(void) {
         mov     edi, OFFSET g_memHeapStart
         rep stosd
         mov     eax, dword ptr [g_memHeapStart]
-        mov     dword ptr [g_state_007b41a8], OFFSET g_memHeapStart
+        mov     dword ptr [g_dispatchSave1654_007b41a8], OFFSET g_memHeapStart
         and     eax, 0xff2ffff4
         pop     edi
         or      eax, 0x002ffff4

@@ -12,7 +12,7 @@ extern unsigned int g_scaledInit_00542044;
  *   then mask + or bits, set [0x007b41a8] = 0x007b41a0 (self-link list head).
  */
 extern u8 g_memHeapStart[];
-extern unsigned int g_state_007b41a8;
+extern unsigned int g_dispatchSave1654_007b41a8;
 extern unsigned int g_dispatchSave1579_00ab5034;
 extern unsigned int g_table_004ab4e78;
 extern void LoadGeoAsset_Default(void);
@@ -25,7 +25,7 @@ __declspec(naked) void AppInit_Misc2(void) {
         mov     edi, OFFSET g_memHeapStart
         rep stosd
         mov     eax, dword ptr [g_memHeapStart]
-        mov     dword ptr [g_state_007b41a8], OFFSET g_memHeapStart
+        mov     dword ptr [g_dispatchSave1654_007b41a8], OFFSET g_memHeapStart
         and     eax, 0xff2ffff4
         pop     edi
         or      eax, 0x002ffff4

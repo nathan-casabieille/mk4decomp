@@ -119,10 +119,10 @@ extern unsigned int g_const_004d29b0;
 extern u32 g_ecmFrameIdx;
 extern u32 g_ecmFrameTotal;
 extern u8 g_ecmAudioSlots[];
-extern unsigned int g_data_007aa224;
-extern unsigned int g_data_007aa228;
-extern unsigned int g_data_007aa234;
-extern unsigned int g_data_007ab048;
+extern unsigned int g_dispatchSave1602_007aa224;
+extern unsigned int g_dispatchSave1603_007aa228;
+extern unsigned int g_dispatchSave1604_007aa234;
+extern unsigned int g_dispatchSave1605_007ab048;
 extern void  * g_ecmFile;
 extern u32 g_ecmFrameSizeDiv8;
 extern unsigned int g_ecmDSBuffer;
@@ -150,7 +150,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         push     edi
         je       L_1077
         mov      eax, dword ptr [g_ecmFrameSizeDiv8]
-        mov      ecx, dword ptr [g_data_007aa234]
+        mov      ecx, dword ptr [g_dispatchSave1604_007aa234]
         cmp      eax, ecx
         jae      L_1077
         cmp      dword ptr [esp + 0x1c], ebx
@@ -176,9 +176,9 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         fadd     qword ptr [g_const_004d29a8]
         call     DoubleToInt64_004c57d0
         sub      esi, eax
-        mov      dword ptr [g_data_007ab048], ebx
-        mov      dword ptr [g_data_007aa224], esi
-        mov      dword ptr [g_data_007aa228], ebx
+        mov      dword ptr [g_dispatchSave1605_007ab048], ebx
+        mov      dword ptr [g_dispatchSave1602_007aa224], esi
+        mov      dword ptr [g_dispatchSave1603_007aa228], ebx
     L_0e4d:
         mov      eax, dword ptr [g_ecmFrameSizeDiv8]
         xor      edx, edx
@@ -270,7 +270,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         jne      L_1077
         call     dword ptr [g_iat_004d2240]
         mov      edx, eax
-        mov      eax, dword ptr [g_data_007ab048]
+        mov      eax, dword ptr [g_dispatchSave1605_007ab048]
         sub      eax, edx
         dec      eax
         cmp      eax, ebx
@@ -322,10 +322,10 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         call     dword ptr [g_iat_004d2240]
         mov      edi, eax
         mov      dword ptr [g_ecmRunFlag], ebx
-        mov      dword ptr [g_data_007aa224], edi
+        mov      dword ptr [g_dispatchSave1602_007aa224], edi
         jmp      L_0fe3
     L_0fdd:
-        mov      edi, dword ptr [g_data_007aa224]
+        mov      edi, dword ptr [g_dispatchSave1602_007aa224]
     L_0fe3:
         mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         mov      dword ptr [esp + 0x14], ebx
@@ -336,18 +336,18 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         fsubr    qword ptr [g_const_004d29b0]
         call     DoubleToInt64_004c57d0
         sub      edi, eax
-        mov      eax, dword ptr [g_data_007aa228]
+        mov      eax, dword ptr [g_dispatchSave1603_007aa228]
         cmp      eax, ebx
-        mov      dword ptr [g_data_007ab048], edi
+        mov      dword ptr [g_dispatchSave1605_007ab048], edi
         jne      L_1048
         call     dword ptr [g_iat_004d2240]
-        mov      ecx, dword ptr [g_data_007ab048]
+        mov      ecx, dword ptr [g_dispatchSave1605_007ab048]
         mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         cmp      eax, ecx
         jb       L_1048
         cmp      esi, ebx
         je       L_1048
-        mov      eax, dword ptr [g_data_007aa234]
+        mov      eax, dword ptr [g_dispatchSave1604_007aa234]
         dec      eax
         cmp      esi, eax
         je       L_1048
@@ -361,7 +361,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         mul      esi
         shr      edx, 3
         cmp      ecx, ebx
-        mov      dword ptr [g_data_007aa228], ecx
+        mov      dword ptr [g_dispatchSave1603_007aa228], ecx
         mov      dword ptr [g_ecmFrameSizeDiv8], esi
         mov      dword ptr [g_ecmFrameTotal], edx
         je       L_106d

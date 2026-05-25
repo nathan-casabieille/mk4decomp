@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchSave531_004f6238;
 extern u32 g_inLoopStep;
-extern unsigned int g_data_007af958[];
+extern unsigned int g_dispatchSave1626_007af958[];
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -239,7 +239,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      byte ptr [esp + 0x55], cl
         mov      cx, di
         add      dl, al
-        mov      word ptr [g_data_007af958], di
+        mov      word ptr [g_dispatchSave1626_007af958], di
         mov      word ptr [g_vtxIn1_y], bp
         mov      word ptr [g_vtxIn2_y], 0
         add      cx, word ptr [esi + 4]
@@ -461,7 +461,7 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      ecx, ebx
     L_c261:
         mov      ebx, dword ptr [esp + 0x1c]
-        mov      word ptr [g_data_007af958], di
+        mov      word ptr [g_dispatchSave1626_007af958], di
         add      edx, ebx
         mov      word ptr [g_vtxIn1_y], bp
         mov      dword ptr [g_vtxTransX], edx

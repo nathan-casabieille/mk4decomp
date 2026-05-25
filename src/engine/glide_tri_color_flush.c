@@ -117,9 +117,9 @@ extern int g_renderer1_active;
 extern u8 g_glideE8;
 extern int g_renderer1_busy;
 extern int g_renderer1_surface;
-extern unsigned int g_data_007b0004;
-extern unsigned int g_data_007b0074;
-extern unsigned int g_data_007b0078;
+extern unsigned int g_dispatchSave1632_007b0004;
+extern unsigned int g_dispatchSave1652_007b0074;
+extern unsigned int g_dispatchSave1653_007b0078;
 
 __declspec(naked) void GlideTriColorFlush_004b46f0(void)
 {
@@ -150,7 +150,7 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         mov      ecx, dword ptr [eax*4 + g_glideTable2]
         push     ecx
         push     0
-        call     dword ptr [g_data_007b0074]
+        call     dword ptr [g_dispatchSave1652_007b0074]
         mov      byte ptr [g_byte_004f4b4c], bl
     L_4764:
         mov      ebx, dword ptr [esp + 0xc0]
@@ -183,7 +183,7 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         push     1
         push     5
     L_47a1:
-        call     dword ptr [g_data_007b0004]
+        call     dword ptr [g_dispatchSave1632_007b0004]
     L_47a7:
         mov      byte ptr [g_glideE8], bl
     L_47ad:
@@ -279,7 +279,7 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         lea      ecx, [esp + 0x84]
         fstp     dword ptr [esp + 0x70]
         push     ecx
-        call     dword ptr [g_data_007b0078]
+        call     dword ptr [g_dispatchSave1653_007b0078]
         pop      ebx
     L_4992:
         add      esp, 0xb4

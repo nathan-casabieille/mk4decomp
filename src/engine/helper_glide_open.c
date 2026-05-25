@@ -37,36 +37,36 @@ extern unsigned int g_dispatchSave864_004f4d9c;
 extern unsigned int g_dispatchSave865_004f4db8;
 extern int g_renderer1_active;
 extern unsigned int g_glideFnTable;
-extern unsigned int g_data_007b0004;
-extern unsigned int g_data_007b0008;
+extern unsigned int g_dispatchSave1632_007b0004;
+extern unsigned int g_dispatchSave1633_007b0008;
 extern unsigned int g_iat_007b000c;
 extern unsigned int g_iat_007b0010;
-extern unsigned int g_data_007b0014;
-extern unsigned int g_data_007b0018;
-extern unsigned int g_data_007b001c;
-extern unsigned int g_data_007b0020;
-extern unsigned int g_data_007b0024;
-extern unsigned int g_data_007b0028;
-extern unsigned int g_data_007b002c;
+extern unsigned int g_dispatchSave1634_007b0014;
+extern unsigned int g_dispatchSave1635_007b0018;
+extern unsigned int g_dispatchSave1636_007b001c;
+extern unsigned int g_dispatchSave1637_007b0020;
+extern unsigned int g_dispatchSave1638_007b0024;
+extern unsigned int g_dispatchSave1639_007b0028;
+extern unsigned int g_dispatchSave1640_007b002c;
 extern unsigned int g_iat_007b0030;
-extern unsigned int g_data_007b0034;
-extern unsigned int g_data_007b0038;
+extern unsigned int g_dispatchSave1641_007b0034;
+extern unsigned int g_dispatchSave1642_007b0038;
 extern unsigned int g_PeekMessageA_007b003c;
 extern unsigned int g_iat_007b0040;
-extern unsigned int g_data_007b0044;
-extern unsigned int g_data_007b0048;
-extern unsigned int g_data_007b004c;
+extern unsigned int g_dispatchSave1643_007b0044;
+extern unsigned int g_dispatchSave1644_007b0048;
+extern unsigned int g_dispatchSave1645_007b004c;
 extern unsigned int g_iat_indirect_007b0050;
 extern unsigned int g_iat_indirect_007b0054;
-extern unsigned int g_data_007b0058;
-extern unsigned int g_data_007b005c;
+extern unsigned int g_dispatchSave1646_007b0058;
+extern unsigned int g_dispatchSave1647_007b005c;
 extern unsigned int g_iat_indirect_007b0060;
-extern unsigned int g_data_007b0064;
-extern unsigned int g_data_007b0068;
-extern unsigned int g_data_007b006c;
-extern unsigned int g_data_007b0070;
-extern unsigned int g_data_007b0074;
-extern unsigned int g_data_007b0078;
+extern unsigned int g_dispatchSave1648_007b0064;
+extern unsigned int g_dispatchSave1649_007b0068;
+extern unsigned int g_dispatchSave1650_007b006c;
+extern unsigned int g_dispatchSave1651_007b0070;
+extern unsigned int g_dispatchSave1652_007b0074;
+extern unsigned int g_dispatchSave1653_007b0078;
 extern unsigned int g_iat_004d2050;
 extern unsigned int g_iat_004d2058;
 
@@ -90,14 +90,14 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0004], eax
+        mov      dword ptr [g_dispatchSave1632_007b0004], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave863_004f4d88
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0008], eax
+        mov      dword ptr [g_dispatchSave1633_007b0008], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave862_004f4d74
@@ -118,49 +118,49 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0014], eax
+        mov      dword ptr [g_dispatchSave1634_007b0014], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave859_004f4d3c
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0018], eax
+        mov      dword ptr [g_dispatchSave1635_007b0018], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave858_004f4d28
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b001c], eax
+        mov      dword ptr [g_dispatchSave1636_007b001c], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave857_004f4d14
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0020], eax
+        mov      dword ptr [g_dispatchSave1637_007b0020], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave856_004f4d04
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0024], eax
+        mov      dword ptr [g_dispatchSave1638_007b0024], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave855_004f4cec
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0028], eax
+        mov      dword ptr [g_dispatchSave1639_007b0028], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave854_004f4cdc
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b002c], eax
+        mov      dword ptr [g_dispatchSave1640_007b002c], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave853_004f4cc0
@@ -174,14 +174,14 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0034], eax
+        mov      dword ptr [g_dispatchSave1641_007b0034], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave851_004f4c9c
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0038], eax
+        mov      dword ptr [g_dispatchSave1642_007b0038], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave850_004f4c8c
@@ -202,21 +202,21 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0044], eax
+        mov      dword ptr [g_dispatchSave1643_007b0044], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave847_004f4c50
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0048], eax
+        mov      dword ptr [g_dispatchSave1644_007b0048], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave846_004f4c40
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b004c], eax
+        mov      dword ptr [g_dispatchSave1645_007b004c], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave845_004f4c2c
@@ -237,14 +237,14 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0058], eax
+        mov      dword ptr [g_dispatchSave1646_007b0058], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave842_004f4be8
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b005c], eax
+        mov      dword ptr [g_dispatchSave1647_007b005c], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave841_004f4bd0
@@ -258,42 +258,42 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0064], eax
+        mov      dword ptr [g_dispatchSave1648_007b0064], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave839_004f4ba8
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0068], eax
+        mov      dword ptr [g_dispatchSave1649_007b0068], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave838_004f4b94
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b006c], eax
+        mov      dword ptr [g_dispatchSave1650_007b006c], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave837_004f4b80
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0070], eax
+        mov      dword ptr [g_dispatchSave1651_007b0070], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave836_004f4b70
         push     eax
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0074], eax
+        mov      dword ptr [g_dispatchSave1652_007b0074], eax
         je       L_4f52
         mov      ecx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave835_004f4b54
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_data_007b0078], eax
+        mov      dword ptr [g_dispatchSave1653_007b0078], eax
         je       L_4f52
         mov      eax, 1
         pop      esi

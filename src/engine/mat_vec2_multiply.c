@@ -120,9 +120,9 @@ extern s16 g_vtxMat[];
 extern unsigned int g_arr_007af9c0;
 extern unsigned int g_arr_007af9c4;
 extern unsigned int g_arr_007af9c8;
-extern unsigned int g_data_007af9cc;
-extern unsigned int g_data_007af9d0;
-extern unsigned int g_data_007af9d4;
+extern unsigned int g_dispatchSave1627_007af9cc;
+extern unsigned int g_dispatchSave1628_007af9d0;
+extern unsigned int g_dispatchSave1629_007af9d4;
 extern s32 g_vtxLight0_x;
 extern s32 g_vtxLight0_y;
 extern s32 g_vtxLight0_z;
@@ -182,17 +182,17 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         movsx   ebp, word ptr [esp + 0x20]
         imul    edx, ebp
         add     eax, ecx
-        mov     ecx, dword ptr [g_data_007af9d0]
+        mov     ecx, dword ptr [g_dispatchSave1628_007af9d0]
         add     eax, edx
         movsx   edx, word ptr [esp + 0x12]
         sar     eax, 0x0c
         mov     dword ptr [g_vtxLight0_z], eax
-        mov     eax, dword ptr [g_data_007af9cc]
+        mov     eax, dword ptr [g_dispatchSave1627_007af9cc]
         mov     ebx, eax
         imul    ebx, esi
         mov     esi, ecx
         imul    esi, edx
-        mov     edx, dword ptr [g_data_007af9d4]
+        mov     edx, dword ptr [g_dispatchSave1629_007af9d4]
         add     ebx, esi
         movsx   esi, word ptr [esp + 0x14]
         mov     ebp, edx
