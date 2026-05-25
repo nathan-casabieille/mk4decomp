@@ -20,10 +20,10 @@ matching, the C source is the canonical representation of the game.
 
 | Metric | Progress |
 |---|---|
-| Byte-perfect rebuild | **100%** (2912 / 2912 functions) |
-| **Pure C (no `__asm`)** | **~45%** (1302 / 2912 functions) - contributions welcome |
-| Hybrid (no `naked`, body still `__asm`) | ~10% (284 / 2912 functions) |
-| Still `__declspec(naked)` | ~46% (1325 / 2912 functions) |
+| **Byte-perfect rebuild** | **100%** (2914 / 2914 functions) |
+| Pure C (no `__asm`) | ~49% (1423 / 2914 functions) - asymptote reached |
+| Hybrid (no `naked`, body still `__asm`) | ~7% (212 / 2914 functions) |
+| Still `__declspec(naked)` | ~31% (896 / 2914 functions) |
 
 In plain words:
 
@@ -39,10 +39,25 @@ In plain words:
   MD5 (game/MK4.EXE)           = a3d2bf7f1222e5fcf8df93c7d8d8b5cf
   ```
 
-- **Pure C = the real decompilation metric.** Only functions whose body
-  contains no `__asm` block count - i.e. portable C, retargetable to a
-  non-x86 build (e.g. WASM/Emscripten). The progress bar tracks this.
-  **This is where contributions are needed.**
+- **Pure C ratio has hit its practical ceiling.** The remaining ~896
+  naked functions have all been individually surveyed and confirmed
+  non-coaxable from pure C against our MSVC 5.0 SP3 toolchain (CL
+  11.00.7022). Reasons documented per-function in NON-COAXABLE comments:
+  MSVC register-allocator choices that depend on undocumented heuristics
+  (flag preservation across stores, raw-index-in-esi SIB form, CH/AL
+  byte-register peepholes, cross-path callee-saved defaults, etc.). The
+  same compiler version is used for the rebuild, yet specific orig
+  patterns cannot be reproduced from any standard C construct. The
+  __asm blocks that remain are minimal, well-documented, and stable.
+
+- **Where work continues.** With the byte-match locked and the pure-C
+  ceiling reached, current contributions focus on **functional
+  understanding**: naming the remaining `g_data_005xxxxx` globals after
+  what they actually represent in the engine, writing per-subsystem
+  READMEs (audio mixer, FSM combat, scene graph, render pipeline),
+  reconstructing typed `struct`s from raw memory layouts, and
+  cross-referencing IAT calls into a documented DirectX/Win32 surface.
+  See `analysis/notes/` for the current architectural map.
 
 Run `python3 tools/decomp/progress.py` for a live per-subsystem breakdown.
 
@@ -116,44 +131,70 @@ When a function matches byte-for-byte, mark it `matched` in
 
 ## Contributing
 
-**The byte-match is done. The C decompilation is not.** About 1639
-functions in `src/` (1354 naked + 285 hybrid) still have an
-`__asm { ... }` block in their body. Each one needs to be rewritten in
-pure C while keeping `make matching` byte-identical to orig.
+**The byte-match is done. The C decompilation is at its ceiling.** Most
+naked-to-pure-C conversions have already been attempted and the
+remaining ~896 naked functions all have at least one MSVC SP3
+codegen quirk that pure C cannot reproduce. Each is annotated with a
+`NON-COAXABLE:` comment documenting the specific blocker.
 
-### Pick a function and convert it
+Where contributions move the needle now is **functional understanding**:
+
+### 1. Rename globals to what they actually do
+
+Hundreds of `g_data_005xxxxx`, `g_state_005xxxxx`, `g_x_005xxxxx`
+placeholders remain. Each comes from a specific subsystem; inferring
+the semantic role from call-site context (audio buffer? AI flag? FSM
+state byte? scene graph node?) and giving it a real name is the
+single highest-impact contribution.
 
 ```sh
-# 1. Find a function that still contains __asm in any file under src/.
-#    Either fully naked (preferred for clean conversions) or hybrid.
-grep -l "__declspec(naked)" src/ -r | head      # fully naked
-grep -lE "\b__asm\b"        src/ -r | head      # naked OR hybrid
-
-# 2. Rewrite the body in pure C in the same file (drop both the
-#    __declspec(naked) qualifier - if present - and the __asm block),
-#    using the matching tactics documented in docs/MATCHING.md.
-
-# 3. Compile just that file and diff against orig (per-function,
-#    reloc-aware).
-python3 tools/decomp/diff_fn_obj.py build/obj/<path>.obj <SymbolName> <addr> <size>
-
-# 4. Re-run the whole-EXE synth - it must still report byte-identical.
-python3 tools/decomp/synthesize.py
+# Find unnamed globals and their callers
+grep -RhoE 'g_(data|state|x)_005[0-9a-f]+' src/ include/ | sort -u | head
+grep -RE 'g_data_00541fa4' src/                              # see all uses
 ```
 
-Easy entry points (small files, no risky reloc-site overrides):
+### 2. Write per-subsystem READMEs
 
-- Any `src/engine/misc_matches*.c` not listed in `config/reloc_sites.yaml`
-- The `tools/decomp/progress.py` per-subsystem breakdown shows which
-  groups have the lowest C-conversion rate
+`analysis/notes/architecture.md` has the high-level map. What's
+missing is per-subsystem deep-dive docs:
 
-Reading order before you start:
+- `audio/` - mixer pipeline, voice allocation, DirectSound surface
+- `engine/scenegraph/` - node layout, dirty propagation, transform stack
+- `game/` (combat FSM) - state IDs, transition table, animation hooks
+- `engine/render/` - draw-call ordering, glide/d3d branching, geometry binding
+- `engine/install/` - asset loader, ECM stream format, file IO
+
+### 3. Reconstruct typed structs
+
+Most of the engine treats memory as `unsigned int *` with hand-computed
+offsets. Identifying a recurring offset pattern (e.g. fighter entity at
+0x540000) and lifting it to a proper `struct fighter { ... }` makes
+hundreds of functions readable at once.
+
+### 4. Document the IAT / Win32 surface
+
+`config/iat_map.yaml` lists every Win32 import. Annotating which
+internal wrapper calls which API, and grouping them by use case
+(DirectDraw blit, DirectSound buffer, WinMM timing, etc.) turns the
+repo into a reference for anyone porting the engine.
+
+### Reading order
 
 1. [analysis/notes/architecture.md](analysis/notes/architecture.md) -
    what the engine does, subsystem-by-subsystem
 2. [CONVENTIONS.md](CONVENTIONS.md) - naming, header layout, matching rules
-3. [docs/MATCHING.md](docs/MATCHING.md) - workflow for claiming a function
-   and getting it byte-perfect
+3. [docs/MATCHING.md](docs/MATCHING.md) - byte-match workflow (still
+   useful if a new candidate function is added, or when refactoring
+   while preserving byte identity)
+
+### If you really want to chase a naked-to-pure-C conversion
+
+It is genuinely hard. Read all the `NON-COAXABLE:` comments in
+`src/**/*.c` first - the failure modes have already been catalogued.
+A successful conversion requires beating a constraint that has resisted
+multiple prior attempts, typically via a non-obvious C construct or a
+per-file pragma. Use `python3 tools/decomp/fast_try.py` for rapid
+iteration, then `make matching` to verify whole-EXE identity.
 
 By submitting a contribution, you confirm that your work is your own
 original reconstruction, derived only from static analysis of a

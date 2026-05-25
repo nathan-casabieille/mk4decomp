@@ -19,6 +19,9 @@
 *.swp
 *~
 
+# Agent prompts / internal docs
+tools/decomp/AGENT_*.md
+
 # Tool output / scratch
 *.log
 /tmp/
