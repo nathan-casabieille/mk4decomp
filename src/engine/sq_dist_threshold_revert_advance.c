@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Reads cached (x², y²) from [scaled+0x54]/[scaled+0x5c] via two
  *   Mul10Tail(x,x)+Mul10Tail(y,y) calls into g_eventQueueCurrent, stores
  *   into [g_eventQueueTotal*4] as the cur radius. Compares against
- *   g_data_0053a180; if greater-or-equal proceeds to the success path
+ *   g_rangeSqLimit_0053a180; if greater-or-equal proceeds to the success path
  *   (advance position), else first stashes the un-advanced position
  *   into a save-slot keyed by g_pendingNodeType vs g_player1NodeIdx (either
  *   0x543560/8/4 or 0x543580/4/8) and continues.
@@ -177,7 +177,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         add     esp, 8
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [edx*4], ecx
-        mov     eax, dword ptr [g_data_0053a180]
+        mov     eax, dword ptr [g_rangeSqLimit_0053a180]
         mov     ecx, dword ptr [g_walkCallback]
         cmp     ecx, eax
         mov     dword ptr [g_eventQueueCurrent], eax

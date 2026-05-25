@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -126,7 +126,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   call ScaledLoadCmpStoreXfm_0048f2a0; if pause: ret;
  *   eax = g_walkCallback; ecx = g_eventQueueCurrent;
  *   cmp ecx,eax; if gt: jmp clear;
- *   ecx = g_data_0053a180; edx = ecx;
+ *   ecx = g_rangeSqLimit_0053a180; edx = ecx;
  *   ecx += 0xfff60000; edx -= eax; cmp eax,ecx;
  *   g_eventQueueWorkType = edx; g_eventQueueCurrent = ecx;
  *   if le: jmp clear;
@@ -146,7 +146,7 @@ void GuardedRangeCmpToggle_0048f210(void) {
         cmp     ecx, eax
         _emit   7fh
         _emit   2dh
-        mov     ecx, dword ptr [g_data_0053a180]
+        mov     ecx, dword ptr [g_rangeSqLimit_0053a180]
         mov     edx, ecx
         add     ecx, 0xfff60000
         sub     edx, eax

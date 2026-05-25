@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -308,7 +308,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_d97c
-        mov      eax, dword ptr [g_data_0053a180]
+        mov      eax, dword ptr [g_rangeSqLimit_0053a180]
         mov      ecx, dword ptr [g_walkCallback]
         cmp      ecx, eax
         mov      dword ptr [g_eventQueueCurrent], eax

@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -265,7 +265,7 @@ extern unsigned int g_data_00535de4;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_data_00537efc;
 extern unsigned int g_data_0053813c;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_data_0053a19c;
 extern unsigned int g_data_0053a3c0;
 extern unsigned int g_data_0053a498;
@@ -1039,7 +1039,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute_0049bc60(void)
         push    eax
         call    Mul10Tail_00404af0
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_0053a180]
+        mov     edx, dword ptr [g_rangeSqLimit_0053a180]
         add     eax, ecx
         add     edx, 0xc0000
         add     esp, 8

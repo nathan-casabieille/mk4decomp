@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -126,14 +126,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_x_0053a178, g_x_0053a250} == 0xf: clear g_x_0053a51c & g_walkCallback,
  *   call F1. Then v3 = (data_4dfd48 >> 2) + g_x_0053a51c;
  *   g_scaledInit_00542044 = v3; arg = arr[v3];
- *   push arg twice; g_x_0053a46c = arg; call Mul10Tail; g_x_0053a180 = res; jmp F3.
+ *   push arg twice; g_x_0053a46c = arg; call Mul10Tail; g_rangeSqLimit_0053a180 = res; jmp F3.
  */
 extern unsigned int g_data_004dfd48;
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_005380e0;
 extern unsigned int g_x_0053a178;
-extern unsigned int g_x_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_x_0053a250;
 extern unsigned int g_x_0053a46c;
 extern unsigned int g_x_0053a51c;
@@ -174,7 +174,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_x_0053a180], eax
+        mov     dword ptr [g_rangeSqLimit_0053a180], eax
         jmp     ScenePostInitSequencer_00429b70
     }
 }

@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -201,7 +201,7 @@ __declspec(naked) void HitContactDispatcherCluster_00480240(void)
         mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         add      eax, ecx
-        mov      ecx, dword ptr [g_data_0053a180]
+        mov      ecx, dword ptr [g_rangeSqLimit_0053a180]
         cmp      eax, ecx
         mov      dword ptr [g_acc_00542078], eax
         mov      dword ptr [g_eventQueueWorkType], ecx

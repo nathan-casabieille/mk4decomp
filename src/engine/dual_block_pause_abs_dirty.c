@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -124,13 +124,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00439560 (97b) - two adjacent thunks (no padding between):
  *   Block1 (0..0x2f): call CondPlayerLookup; if pause? ret; compute
- *     g_walkCallback = abs(g_walkCallback - g_x_0053a180); store also at
+ *     g_walkCallback = abs(g_walkCallback - g_rangeSqLimit_0053a180); store also at
  *     g_eventQueueCurrent; ret.
  *   Block2 (0x30..0x60): call MStackPush3CmpCall_0048eec0; if pause? ret;
  *     toggle bit 0 of g_xformDirtyFlags based on al=1: if (al & state):
  *     clear bit, else: set bit; ret.
  */
-extern unsigned int g_x_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern void CondPlayerLookup_0048f270(void);
 
 void DualBlockPauseAbsDirty_00439560(void) {
@@ -140,7 +140,7 @@ void DualBlockPauseAbsDirty_00439560(void) {
         test    eax, eax
         _emit   75h
         _emit   21h
-        mov     ecx, dword ptr [g_x_0053a180]
+        mov     ecx, dword ptr [g_rangeSqLimit_0053a180]
         mov     eax, dword ptr [g_walkCallback]
         sub     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx

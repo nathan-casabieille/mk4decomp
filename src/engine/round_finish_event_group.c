@@ -70,7 +70,7 @@ extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
 extern unsigned int g_zero_00541fa8;
 extern unsigned int g_state_0053a7b0;
@@ -138,7 +138,7 @@ extern unsigned int g_data_004edae8;
 extern unsigned int g_data_004edb20;
 extern unsigned int g_data_00535d04;
 extern unsigned int g_player1NodeIdx;
-extern unsigned int g_data_0053a180;
+extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_data_0053a774;
 
 extern unsigned int g_framePauseFlag;
@@ -191,7 +191,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      ecx, dword ptr [g_data_00535d04]
         mov      dword ptr [g_walkCallback], ecx
     L_207e:
-        mov      edx, dword ptr [g_data_0053a180]
+        mov      edx, dword ptr [g_rangeSqLimit_0053a180]
         lea      eax, [edx - 0xa0000]
         cmp      ecx, eax
         mov      dword ptr [g_eventQueueCurrent], eax
