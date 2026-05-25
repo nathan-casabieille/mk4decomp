@@ -129,7 +129,7 @@ extern unsigned int g_data_0050b118;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_byte_005435a0;
 extern unsigned int g_byte_005435b8;
-extern unsigned int g_data_00543830;
+extern unsigned int g_audioPreloadState_00543830;
 
 
 __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
@@ -171,7 +171,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         cmp      eax, 4
         mov      eax, dword ptr [g_audioBankSel_00537f94]
         jne      short L_6f3d
-        mov      edx, dword ptr [g_data_00543830]
+        mov      edx, dword ptr [g_audioPreloadState_00543830]
         cmp      eax, 1
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_data_004f3a58]
@@ -187,14 +187,14 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
     L_6f3d:
         cmp      eax, 1
         jne      short L_6f5c
-        mov      eax, dword ptr [g_data_00543830]
+        mov      eax, dword ptr [g_audioPreloadState_00543830]
         shl      eax, 2
         mov      ecx, dword ptr [eax + g_data_004f3a70]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f79
     L_6f5c:
-        mov      edx, dword ptr [g_data_00543830]
+        mov      edx, dword ptr [g_audioPreloadState_00543830]
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_data_004f3a70]
         lea      ecx, [ecx + ecx*2]
@@ -208,11 +208,11 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         lea      eax, [edx*8 + g_byte_005435a0]
         push     eax
         call     MemcpyByteN_004a5680
-        mov      ecx, dword ptr [g_data_00543830]
+        mov      ecx, dword ptr [g_audioPreloadState_00543830]
         add      esp, 0xc
         inc      ecx
         mov      dword ptr [g_pendingNodeType], OFFSET PendingMatch_004a62b0
-        mov      dword ptr [g_data_00543830], ecx
+        mov      dword ptr [g_audioPreloadState_00543830], ecx
         mov      dword ptr [g_eventQueueWorkType], 0x1000
         call     AllocNode
         mov      eax, dword ptr [g_framePauseFlag]

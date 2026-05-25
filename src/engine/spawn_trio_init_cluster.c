@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_00541d6c;
 extern unsigned int g_data_0053a278;
 extern unsigned int g_data_005380a4;
-extern unsigned int g_data_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 extern void SpawnTrioInitCluster_00458440(void);
 extern void MStackPush2ClampLookup_00459160(void);
 extern void TripleEntryDispatch_00458810(void);
@@ -235,7 +235,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         nop
         nop
     L_gscp_sub3:
-        mov     eax, dword ptr [g_data_00537e98]
+        mov     eax, dword ptr [g_stateFlag_00537e98]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_gscp_sub3_jmp
@@ -251,7 +251,7 @@ __declspec(naked) void GuardedStateChangePair_00458630(void)
         nop
         nop
     L_gscp_sub4:
-        mov     eax, dword ptr [g_data_00537e98]
+        mov     eax, dword ptr [g_stateFlag_00537e98]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     short L_gscp_sub4_jmp

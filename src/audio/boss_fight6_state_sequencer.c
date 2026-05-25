@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d2320;
 extern unsigned int g_data_004d2330;
 extern unsigned int g_data_004d2340;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void GuardedSetupCallTailJmp_004a1fa0(void);
@@ -136,7 +136,7 @@ __declspec(naked) void BossFight6StateSequencer_004a3ce0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x74], edi
-        mov      eax, dword ptr [g_data_0053a430]
+        mov      eax, dword ptr [g_audioStreamState_0053a430]
         cmp      eax, edi
         jne      short L_3d63
         call     TwoCallsTwoBranchTail_004a3c50

@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00537f98;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern void InstallSelfStackReset_00421f40(void);
 extern void ScaledInitOrSelfPtr_00421f00(void);
 
@@ -147,7 +147,7 @@ __declspec(naked) void DualCounterPhaseGateInstall_00421d50(void)
         dec     ecx
         mov     dword ptr [g_eventQueueChild], ecx
         jne     L_dcpgi_install2
-        mov     ecx, dword ptr [g_data_0053a430]
+        mov     ecx, dword ptr [g_audioStreamState_0053a430]
         cmp     ecx, edx
         mov     dword ptr [g_walkCallback], ecx
         je      short L_dcpgi_resetSetup

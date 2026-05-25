@@ -120,7 +120,7 @@ extern unsigned int g_x_004f3818;
 extern unsigned int g_x_004f381c;
 extern unsigned int g_x_004f3820;
 extern unsigned int g_x_0053a1f0;
-extern unsigned int g_x_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_x_005433f0;
 extern unsigned int g_x_00543444;
 extern unsigned int g_state_0054355c_hh;
@@ -157,7 +157,7 @@ useB:
 after:
         add     eax, edx
 noScale:
-        mov     esi, dword ptr [g_x_00541fb0]
+        mov     esi, dword ptr [g_phaseCounter_00541fb0]
         mov     edx, dword ptr [g_x_0053a1f0]
         imul    edx, dword ptr [g_x_004f3820]
         imul    esi, ecx

@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern unsigned int g_data_00542bd4;
 extern void CjInstallSelfRouter_00470480(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
@@ -234,13 +234,13 @@ __declspec(naked) void GameLoaderHandlerCluster_004876f0(void)
         mov      eax, dword ptr [ecx*4 + 0x5c]
         dec      eax
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00541dc4], eax
+        mov      dword ptr [g_bootInitSaveSlot_00541dc4], eax
         jne      short L_7844
         mov      eax, 8
         mov      dword ptr [g_walkCallback], eax
     L_7844:
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_00541dc4]
+        mov      eax, dword ptr [g_bootInitSaveSlot_00541dc4]
         test     eax, eax
         je       short L_7859
         jmp      TripleEntryBitsetMStack_00487890

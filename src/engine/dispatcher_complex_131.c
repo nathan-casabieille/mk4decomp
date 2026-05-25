@@ -2,7 +2,7 @@
  * 2 "matrix-stack push with literal + scaled finalize" helpers (131b).
  *
  * Pattern:
- *   mov     eax, [g_state_0053a430]
+ *   mov     eax, [g_audioStreamState_0053a430]
  *   test    eax, eax
  *   mov     [g_eventQueueCurrent], eax
  *   jne     .check_x
@@ -41,7 +41,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_tickFlagF;
 extern void *g_lit_004e39d8;
 extern void *g_lit_004e3a28;
@@ -53,7 +53,7 @@ void DispatcherComplex131_00431530(void) {
     unsigned int top;
     unsigned int scaled;
     unsigned int popped;
-    v = g_state_0053a430;
+    v = g_audioStreamState_0053a430;
     g_eventQueueCurrent = v;
     if (v == 0) {
         v = g_tickFlagF;
@@ -84,7 +84,7 @@ void DispatcherComplex131_004315c0(void) {
     unsigned int top;
     unsigned int scaled;
     unsigned int popped;
-    v = g_state_0053a430;
+    v = g_audioStreamState_0053a430;
     g_eventQueueCurrent = v;
     if (v == 0) {
         v = g_tickFlagF;

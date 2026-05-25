@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_005420c8;
-extern unsigned int g_data_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void VoicePicker_00401000(void);
 extern void ChainNodeAdvanceCallback_00408e70(void);
 /* extern void AuxCapsBitFlagAggregate_004b5380(void); -- defined elsewhere with diff sig */

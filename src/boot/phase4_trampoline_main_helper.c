@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004d7878;
 extern unsigned int g_data_004d78b8;
-extern unsigned int g_data_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
 extern void ChainListVecAdd_0049d200(void);
@@ -206,7 +206,7 @@ __declspec(naked) void Phase4TrampolineMainHelper_00415180(void)
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p4tmh_M_call_4065b0
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_data_00541f98]
+        mov     edx, dword ptr [g_savedNode_00541f98]
         mov     eax, dword ptr [g_data_004d5324]
         dec     ecx
         mov     dword ptr [g_xformLoopCounter], ecx

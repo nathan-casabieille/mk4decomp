@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   TowerStageInitCluster_00430560; else build scaled chain (++cj, walk, [eax*4+r]
  *   = idx) and tail-jmp through g_eventQueueWorkType.
  */
-extern unsigned int g_x_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern void Cmp2DirtyToggle_00423870(void);
 extern void TowerStageInitCluster_00430560(void);
 
@@ -130,7 +130,7 @@ __declspec(naked) void StackPeekDispatchIndirect_004304e0(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         je      buildChain
         dec     eax
-        mov     dword ptr [g_x_00541dc4], ecx
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     TowerStageInitCluster_00430560
 buildChain:

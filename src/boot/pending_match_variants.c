@@ -123,7 +123,7 @@ extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a3e8;
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_data_00541df0;
@@ -133,7 +133,7 @@ extern unsigned int g_data_00541f9c;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
 extern unsigned int g_table_004d57b0;
-extern unsigned int g_x_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern u32 g_audioPreState;
 extern void AudioVolumeRescale_004ab690(void);
 extern void BootChainBidirRecurseWalk_00405ca0(void);
@@ -239,8 +239,8 @@ extern unsigned int g_data_00537efc;
 extern unsigned int g_data_0053813c;
 extern unsigned int g_data_0053a19c;
 extern unsigned int g_data_00541dc0;
-extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00541fb0;
+extern unsigned int g_savedNode_00541f98;
+extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005420c8;
 extern unsigned int g_data_00542378;
 extern unsigned int g_data_005433c0;
@@ -557,13 +557,13 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         mov     eax, dword ptr [ecx*4 + 0x74]
         dec     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         _emit   75h
         _emit   0ah
         mov     eax, 3
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        mov     eax, dword ptr [g_x_00541dc4]
+        mov     eax, dword ptr [g_bootInitSaveSlot_00541dc4]
         test    eax, eax
         _emit   75h
         _emit   0eh
@@ -2267,10 +2267,10 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         sar      eax, 2
         cmp      eax, 4
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_00541fb0], eax
+        mov      dword ptr [g_phaseCounter_00541fb0], eax
         mov      dword ptr [g_stateCountdown_0053a3c0], ecx
         jle      L_95e3
-        mov      dword ptr [g_data_00541fb0], 4
+        mov      dword ptr [g_phaseCounter_00541fb0], 4
     L_95e3:
         call     TwoStageAudioInit_004a6180
         pop      edi
@@ -2516,7 +2516,7 @@ __declspec(naked) void PendingMatch_0040cd50(void)
         mov      dword ptr [ecx*4 + 0x5c], eax
         mov      ecx, dword ptr [g_xformEntityIdx]
         mov      edx, dword ptr [g_eventQueueIdx]
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         add      ecx, 0xf
         add      edx, 0x15
         mov      dword ptr [g_xformEntityIdx], ecx
@@ -3051,7 +3051,7 @@ __declspec(naked) void PendingMatch_00403670(void)
         jne      L_3b07
         push     esi
         push     0x4a2180
-        mov      dword ptr [g_data_0053a50c], 9
+        mov      dword ptr [g_phaseIdx_0053a50c], 9
         call     StoreTwoCall_0049cb40
         add      esp, 8
         call     BootMultiAssetLoadStateInit_00403b10
@@ -3933,7 +3933,7 @@ __declspec(naked) void PendingMatch_00417840(void)
         add      ecx, 0xffff4ccd
         mov      dword ptr [eax*4 + 0x58], ecx
         mov      eax, dword ptr [g_eventQueueTotal]
-        mov      edx, dword ptr [g_data_00541f98]
+        mov      edx, dword ptr [g_savedNode_00541f98]
         mov      ecx, dword ptr [eax*4 + 0x58]
         add      eax, 0x15
         mov      dword ptr [g_walkCallback], ecx
@@ -4831,7 +4831,7 @@ __declspec(naked) void PendingMatch_00402540(void)
         mov      ebx, 4
         push     edi
         push     0x4a2180
-        mov      dword ptr [g_data_0053a50c], ebx
+        mov      dword ptr [g_phaseIdx_0053a50c], ebx
         call     StoreTwoCall_0049cb40
         mov      eax, 0x506c38
         add      esp, 8
@@ -5178,7 +5178,7 @@ __declspec(naked) void PendingMatch_004108a0(void)
         jne      L_0d7c
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_0d02
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      edx, dword ptr [ecx*4 + 0x18]
@@ -5542,7 +5542,7 @@ __declspec(naked) void PendingMatch_0040a8d0(void)
         mov      dword ptr [ecx*4 + 4], 0xffffe667
         mov      edx, dword ptr [g_pendingNodeType]
         mov      dword ptr [edx*4 + 8], ebp
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], 0x3243f
         call     StoreDoubleNegPauseSubStore_004ab750
@@ -5967,7 +5967,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      eax, 2
-        mov      dword ptr [g_data_0053a50c], ebp
+        mov      dword ptr [g_phaseIdx_0053a50c], ebp
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_tickFlagF], eax
         mov      dword ptr [g_eventQueueWorkType], ebp
@@ -6583,7 +6583,7 @@ __declspec(naked) void PendingMatch_004163c0(void)
         add      eax, 0x15
         mov      dword ptr [g_pendingNodeType], eax
         mov      edx, dword ptr [ecx*4 + 0x30]
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         add      edx, 0x15
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -6650,7 +6650,7 @@ __declspec(naked) void PendingMatch_004163c0(void)
         jne      L_68eb
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_68b5
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         mov      ebp, 0x45a
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_walkCallback], ebp

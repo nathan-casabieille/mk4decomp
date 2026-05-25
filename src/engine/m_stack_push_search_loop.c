@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fb8;
-extern unsigned int g_x_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 
 void MStackPushSearchLoop_00463ed0(void) {
     __asm {
@@ -127,7 +127,7 @@ void MStackPushSearchLoop_00463ed0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
-        mov     eax, dword ptr [g_x_00541fb0]
+        mov     eax, dword ptr [g_phaseCounter_00541fb0]
         mov     ecx, dword ptr [g_data_00541fb8]
         mov     dword ptr [g_eventQueueCurrent], 4
         shl     eax, 2

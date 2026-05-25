@@ -120,7 +120,7 @@ extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern unsigned int g_data_004ed138;
 extern unsigned int g_data_004ed15c;
-extern unsigned int g_data_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 
 extern unsigned int g_data_004e39c0;
 extern unsigned int g_load_0052ab10;
@@ -156,13 +156,13 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         mov      eax, dword ptr [ecx*4 + 0x5c]
         dec      eax
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00541dc4], eax
+        mov      dword ptr [g_bootInitSaveSlot_00541dc4], eax
         jne      short L_ab55
         mov      eax, 5
         mov      dword ptr [g_walkCallback], eax
     L_ab55:
         mov      dword ptr [ecx*4 + 0x5c], eax
-        mov      eax, dword ptr [g_data_00541dc4]
+        mov      eax, dword ptr [g_bootInitSaveSlot_00541dc4]
         test     eax, eax
         jne      short L_ab6a
         jmp      Wrapper_0048a300

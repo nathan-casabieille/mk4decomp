@@ -112,7 +112,7 @@ extern unsigned int g_data_004eb938;
 extern unsigned int g_data_004eb958;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_data_005433e8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
@@ -191,7 +191,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         jne      L_8019
         mov      eax, 0x20
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_0053a430], eax
+        mov      dword ptr [g_audioStreamState_0053a430], eax
         call     PushCallPauseSetMaxThenCallPauseJmp_0048e380
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax

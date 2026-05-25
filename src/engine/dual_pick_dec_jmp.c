@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
-extern unsigned int g_state_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 
 /* @addr 0x00470840 (96b)
  *   eax = g_player1NodeIdx; edx = g_cj_0054205c;
@@ -117,10 +117,10 @@ extern unsigned int g_state_00541dc4;
  *   g_scaledInit = eax; if eq: skip;
  *   ecx = g_dualB_0053803c; g_xformEntityIdx = ecx;
  *   skip: eax = [ecx*4+0x5c]; dec eax;
- *   g_walkCallback = eax; g_state_00541dc4 = eax;
+ *   g_walkCallback = eax; g_bootInitSaveSlot_00541dc4 = eax;
  *   if jns: skip2; eax=1; g_walkCallback=1;
  *   skip2: [ecx*4+0x5c] = eax;
- *   eax = g_state_00541dc4; if zero: jmp 0x4708a0; else ret.
+ *   eax = g_bootInitSaveSlot_00541dc4; if zero: jmp 0x4708a0; else ret.
  */
 void DualPickDecJmp_00470840(void) {
     unsigned int state;
@@ -138,12 +138,12 @@ void DualPickDecJmp_00470840(void) {
     }
     v = (int)*(int *)(idx * 4 + 0x5c) - 1;
     g_walkCallback = (void (*)(void))v;
-    g_state_00541dc4 = (unsigned int)v;
+    g_bootInitSaveSlot_00541dc4 = (unsigned int)v;
     if (v < 0) {
         v = 1;
         g_walkCallback = (void (*)(void))1;
     }
     *(int *)(idx * 4 + 0x5c) = v;
-    if (g_state_00541dc4 != 0) return;
+    if (g_bootInitSaveSlot_00541dc4 != 0) return;
     ScaledStoreCSet58Jmp_004708a0();
 }

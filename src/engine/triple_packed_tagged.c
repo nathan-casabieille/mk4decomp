@@ -120,9 +120,9 @@ extern unsigned int g_data_004d55e8;
 extern unsigned int g_data_004d55f8;
 extern unsigned int g_data_004d55c0;
 extern unsigned int g_data_004d55d8;
-extern unsigned int g_x_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 void TriplePackedTagged_004580a0(void) {
-    if (g_x_00537e98 == 0) {
+    if (g_stateFlag_00537e98 == 0) {
         g_xformEntityIdx = (unsigned int)&g_data_004d55e8 >> 2;
     } else {
         g_xformEntityIdx = (unsigned int)&g_data_004d55f8 >> 2;

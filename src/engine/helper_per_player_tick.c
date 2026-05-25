@@ -26,7 +26,7 @@ extern unsigned int g_data_0053a42c;
 extern unsigned int g_data_0053a730;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_data_00541d68;
-extern unsigned int g_data_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_00489cd0(void);
@@ -368,7 +368,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         test     eax, eax
-        mov      dword ptr [g_data_00541dc4], ecx
+        mov      dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         jge      L_977c
         xor      eax, eax
         mov      dword ptr [g_walkCallback], eax
@@ -407,7 +407,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, eax
         mov      dword ptr [g_eventQueueWorkType], eax
         test     eax, eax
-        mov      dword ptr [g_data_00541dc4], ecx
+        mov      dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         jge      L_980f
         xor      eax, eax
         mov      dword ptr [g_eventQueueWorkType], eax

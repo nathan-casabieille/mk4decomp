@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  * BootStateInitWithRecurseInstall_00402de0 - 230b boot self-installing state setup.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state = 0.
  *   If was nonzero: tail-call StackPopDispatchTagged_0041f780; pop+ret.
- *   Else: g_data_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
+ *   Else: g_phaseIdx_0053a50c=5; g_walkCallback=0xa; call StorePauseImulShr16; if paused: pop+ret.
  *     g_walkCallback++; g_data_00535de4 = g_walkCallback; call TripleCallCountdown; if paused: pop+ret.
  *     Call TwoStageSelectorInit; if paused: pop+ret. push 8; call TableWalkBoundedCmp;
  *     install-self at entry; chain->state=1; load chain[+4] = g_currentNodeIdx = old cursor;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     clear g_baseSel*4 + 0x84; call TwoCallStatePauseJmp; g_framePauseFlag=1; pop+ret.
  */
 extern unsigned int g_data_00535de4;
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern void StorePauseImulShr16_004ab630(void);
 extern void TableWalkBoundedCmp_004bd890(void);
 extern void TripleCallCountdown_00428080(void);
@@ -142,7 +142,7 @@ __declspec(naked) void BootStateInitWithRecurseInstall_00402de0(void)
         pop     esi
         ret
     L_init:
-        mov     dword ptr [g_data_0053a50c], 5
+        mov     dword ptr [g_phaseIdx_0053a50c], 5
         mov     dword ptr [g_walkCallback], 0xa
         call    StorePauseImulShr16_004ab630
         mov     eax, dword ptr [g_framePauseFlag]

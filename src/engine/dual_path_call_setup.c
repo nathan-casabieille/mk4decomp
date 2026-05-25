@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00458030 (104b)
- *   eax = g_state_00537e98; test+store g_walkCallback;
+ *   eax = g_stateFlag_00537e98; test+store g_walkCallback;
  *   if zero: eax = 0x50cd34>>2; g_xformEntityIdx = eax;
  *           jmp skip;
  *   else:   ecx = 0x50cd50>>2; g_xformEntityIdx = ecx;
@@ -121,9 +121,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned char g_data_0050cd34;
 extern unsigned char g_data_0050cd50;
-extern unsigned int g_state_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 void DualPathCallSetup_00458030(void) {
-    unsigned int v = g_state_00537e98;
+    unsigned int v = g_stateFlag_00537e98;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
         g_xformEntityIdx = (unsigned int)&g_data_0050cd34 >> 2;

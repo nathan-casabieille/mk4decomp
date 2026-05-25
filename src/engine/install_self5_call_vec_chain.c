@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_pendingNodeType=2, arms 0x541e6c=1.
  */
 extern unsigned int g_data_00541f8c;
-extern unsigned int g_data_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void QuadInterpolatorV2_004255b0(void);
 extern void ThreeClampLoop_00425a80(void);
 extern void ThreeMul10Stores_004252c0(void);
@@ -147,7 +147,7 @@ __declspec(naked) void InstallSelf5CallVecChain_00464660(void) {
         test    eax, eax
         mov     dword ptr [g_eventQueueTotal], eax
         je      L_isvc_install
-        mov     ecx, dword ptr [g_data_00541f98]
+        mov     ecx, dword ptr [g_savedNode_00541f98]
         add     eax, 0x15
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_currentNodeIdx], ecx

@@ -120,7 +120,7 @@ extern unsigned int g_data_00537f98;
 extern unsigned int g_data_005380d8;
 extern unsigned int g_data_0053a3e4;
 extern unsigned int g_data_0053a42c;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_data_0053a474;
 extern u32 g_dlSomeFlag1;
 extern unsigned int g_dst_0053a6e0;
@@ -228,7 +228,7 @@ __declspec(naked) void RoundReset_004223e0(void)
         mov      dword ptr [g_data_00537f98], ebx
         mov      dword ptr [g_data_0053a730], ebx
         mov      dword ptr [g_data_00541d84], ebx
-        mov      dword ptr [g_data_0053a430], ebx
+        mov      dword ptr [g_audioStreamState_0053a430], ebx
         mov      dword ptr [g_data_00537f04], ebx
         mov      dword ptr [g_dlSomeFlag1], ebx
         mov      dword ptr [g_dlSomeFlag2], ebx

@@ -16,10 +16,10 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern unsigned int g_state_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern void func_0049b619(void);
 void TestStoreConstJmp_004933b0(void) {
-    unsigned int s = g_state_0053a430;
+    unsigned int s = g_audioStreamState_0053a430;
     g_eventQueueCurrent = s;
     if (s) return;
     g_walkCallback = (void(*)(void))0x0e;

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_00506d7c;
 extern unsigned int g_particleEmitterNode_00535e6c;
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern void BootMultiAssetLoadStateInit_00403b10(void);
 extern void FiveTableWalkInit_00403c90(void);
 extern void InstallSelfPackedF80_00426000(void);
@@ -143,7 +143,7 @@ __declspec(naked) void BootInitVec3PhaseInstall_00402c10(void)
         call    FiveTableWalkInit_00403c90
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop
-        mov     dword ptr [g_data_0053a50c], 0xa
+        mov     dword ptr [g_phaseIdx_0053a50c], 0xa
         call    BootMultiAssetLoadStateInit_00403b10
         cmp     dword ptr [g_framePauseFlag], edi
         jne     L_bivpi_pop

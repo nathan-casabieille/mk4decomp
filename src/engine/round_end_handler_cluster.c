@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004e8698;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_data_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_counter_0053a51c;
@@ -206,7 +206,7 @@ __declspec(naked) void RoundEndHandlerCluster_00457de0(void)
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      eax, 0xc
         add      esp, 0x10
-        mov      dword ptr [g_data_00537e98], ecx
+        mov      dword ptr [g_stateFlag_00537e98], ecx
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_tickFlagF], eax
         call     SequencedInit3CallB_00458ae0

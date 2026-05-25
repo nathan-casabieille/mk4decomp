@@ -112,7 +112,7 @@ extern void AudioStreamFsm5Way_004a3f50(void);
 extern void TwoCallsTwoBranchTail_004a3c50(void);
 extern void RoundDisplayInitCluster_004a4f00(void);
 extern void CopyGlobal_004ac1f0(void);
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 
 extern void AudioInitInstallerPair_004a2140(void);
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -135,7 +135,7 @@ __declspec(naked) void AudioStreamFsm5Way_004a3f50(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [ecx*4 + 0x30]
         mov      dword ptr [edx*4 + 0x74], edi
-        mov      eax, dword ptr [g_data_0053a430]
+        mov      eax, dword ptr [g_audioStreamState_0053a430]
         cmp      eax, edi
         jne      short L_3fd3
         call     TwoCallsTwoBranchTail_004a3c50

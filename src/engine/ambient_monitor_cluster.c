@@ -133,7 +133,7 @@ extern unsigned int g_data_00537eec;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a468;
-extern unsigned int g_data_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_005433ec;
 extern unsigned int g_data_00543714;
 extern unsigned int g_data_00543728;
@@ -250,7 +250,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown_0053a3c0], ebx
         cmp      al, 1
-        mov      dword ptr [g_data_00541fb0], 4
+        mov      dword ptr [g_phaseCounter_00541fb0], 4
         jne      L_e097
         mov      dword ptr [g_dlNalt2], ebx
         jmp      L_e09d

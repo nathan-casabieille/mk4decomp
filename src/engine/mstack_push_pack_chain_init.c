@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d6718;
 extern unsigned int g_data_004f27f0;
-extern unsigned int g_data_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void CallSetPause_0041f830(void);
 extern void CmpDivJmp_0049d080(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -170,7 +170,7 @@ __declspec(naked) void MstackPushPackChainInit_00498c40(void)
         jne     L_mppci_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_mppci_join
-        mov     edx, dword ptr [g_data_00541f98]
+        mov     edx, dword ptr [g_savedNode_00541f98]
         mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4 + 0x6c]

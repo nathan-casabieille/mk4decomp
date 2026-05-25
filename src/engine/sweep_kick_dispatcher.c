@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f20c0;
 extern unsigned int g_data_004f20f0;
-extern unsigned int g_data_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void AiComboDispatcherCluster_00497470(void);
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
@@ -206,7 +206,7 @@ __declspec(naked) void SweepKickDispatcher_004970f0(void)
         test     byte ptr [g_xformDirtyFlags], 4
         jne      short L_729f
         mov      edx, dword ptr [g_pendingNodeType]
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         mov      dword ptr [g_xformEntityIdx], eax
         lea      edi, [edx*4]
         lea      esi, [eax*4]

@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004d78d8;
-extern unsigned int g_x_00541f98;
+extern unsigned int g_savedNode_00541f98;
 
 /*
  * BootInitTripleAddChain_00419bc0 - 203b boot pause-gated init.
  *   Call ModelRenderDispatch_004b9510; if paused: ret.
- *   Snapshot g_currentNodeIdx → g_xformEntityIdx; g_currentNodeIdx = g_x_00541f98; g_pendingNodeType = (0x004d78d8>>2).
+ *   Snapshot g_currentNodeIdx → g_xformEntityIdx; g_currentNodeIdx = g_savedNode_00541f98; g_pendingNodeType = (0x004d78d8>>2).
  *   Call QuadInterpolator_00425380; if paused: ret.
  *   g_eventQueueCurrent = 0xcccc; g_eventQueueWorkType = 0x13333; call TripleMul10TailIndexed; if paused: ret.
  *   g_xformEntityIdx = g_fightGroupHead + 0x15; call MStackBracket3_FieldSequentialCopy_00411d80; if paused or g_xformDirtyFlags & 4: ret.
@@ -126,7 +126,7 @@ void BootInitTripleAddChain_00419bc0(void)
     ModelRenderDispatch_004b9510();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_currentNodeIdx;
-    g_currentNodeIdx = g_x_00541f98;
+    g_currentNodeIdx = g_savedNode_00541f98;
     g_pendingNodeType = (unsigned int)&g_data_004d78d8 >> 2;
     QuadInterpolator_00425380();
     if (g_framePauseFlag != 0) return;

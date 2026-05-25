@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004750f0 (200b game) - linked-list search by value in chain.
  *   mstack-push g_xformEntityIdx, g_pendingNodeType; ecx = chain[g_xformEntityIdx++];
- *   g_x_00541dc4 = ecx; if (ecx == g_eventQueueCurrent) bit_set;
+ *   g_bootInitSaveSlot_00541dc4 = ecx; if (ecx == g_eventQueueCurrent) bit_set;
  *   loop: ecx = chain[eax]; g_pendingNodeType = ecx; if (ecx < 0) bit_clear;
- *     ecx = chain[eax++]; g_x_00541dc4 = ecx; if (ecx != edx) loop;
+ *     ecx = chain[eax++]; g_bootInitSaveSlot_00541dc4 = ecx; if (ecx != edx) loop;
  *   bit_set: g_xformDirtyFlags |= 4; jmp store_ret;
  *   bit_clear: g_xformDirtyFlags |= 4; g_pendingNodeType = -1; g_xformDirtyFlags ^= 4;
  *   store_ret: mstack-pop into g_pendingNodeType, g_xformEntityIdx.
  */
-extern unsigned int g_x_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -138,7 +138,7 @@ void LinkedListSearch_004750f0(void) {
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         cmp     ecx, edx
-        mov     dword ptr [g_x_00541dc4], ecx
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   28h
@@ -150,7 +150,7 @@ void LinkedListSearch_004750f0(void) {
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         inc     eax
         cmp     ecx, edx
-        mov     dword ptr [g_x_00541dc4], ecx
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   75h
         _emit   0d8h

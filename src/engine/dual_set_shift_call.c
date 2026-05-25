@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  * @addr 0x00473f90 (120b game) - call-call-shift-call:
  *   call ChainDirtyBitWalker_00408c10 then move (wt,g_acc) into (g_pendingNodeType,
  *   g_walkCallback); call ChainDirtyBitWalker_00408c10 again; on pause clear shift
- *   wt/g_pendingNodeType by +0xf, snapshot cj from g_x_00541f98, call
+ *   wt/g_pendingNodeType by +0xf, snapshot cj from g_savedNode_00541f98, call
  *   TripleSubVec3; pop walk -> g_pendingNodeType.
  */
-extern unsigned int g_x_00541f98;
+extern unsigned int g_savedNode_00541f98;
 extern void TripleSubVec3_004250f0(void);
 
 void DualSetShiftCall_00473f90(void) {
@@ -137,7 +137,7 @@ void DualSetShiftCall_00473f90(void) {
         add     edx, 0xf
         add     eax, 0xf
         mov     dword ptr [g_pendingNodeType], edx
-        mov     edx, dword ptr [g_x_00541f98]
+        mov     edx, dword ptr [g_savedNode_00541f98]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [g_cj_00542058], eax
         mov     dword ptr [g_walkCallback], edx

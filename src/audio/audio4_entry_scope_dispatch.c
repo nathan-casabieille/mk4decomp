@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     the counter; otherwise OR-sets bit 0 of g_xformDirtyFlags.
  *   (10b NOP padding to 0x4a7e30.)
  *   Entry 2 (offset 0x30): calls DecOrDirty_004a7d90, snapshots g_xformDirtyFlags
- *     into g_data_00541dc4, clears bit 0, calls DecOrDirty_004a7de0; if the
+ *     into g_bootInitSaveSlot_00541dc4, clears bit 0, calls DecOrDirty_004a7de0; if the
  *     slot[+0x30] == 3 restores from snapshot.
  *   (9b NOP padding to 0x4a7e70.)
  *   Entry 3 (offset 0x70): mirror of entry 2 but calls IncBoundedDirty_004a7db0
@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_004f3ae4;
 extern unsigned int g_data_004f3ae8;
-extern unsigned int g_data_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern unsigned int g_counter_005433c8;
 extern void CallSetMultiGlobalsJmp_004a9230(void);
 extern void DecOrDirty_004a7d90(void);
@@ -170,14 +170,14 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     L_a4s_entry2:
         call    DecOrDirty_004a7d90
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_data_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    DecOrDirty_004a7de0
         mov     eax, dword ptr [g_baseSel_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e2End
-        mov     ecx, dword ptr [g_data_00541dc4]
+        mov     ecx, dword ptr [g_bootInitSaveSlot_00541dc4]
         mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e2End:
         ret
@@ -195,14 +195,14 @@ __declspec(naked) void Audio4EntryScopeDispatch_004a7e00(void) {
     L_a4s_entry3:
         call    IncBoundedDirty_004a7db0
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_data_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         call    Audio4EntryScopeDispatch_004a7e00
         mov     eax, dword ptr [g_baseSel_00542060]
         cmp     dword ptr [eax*4 + 0x30], 3
         jne     short L_a4s_e3End
-        mov     ecx, dword ptr [g_data_00541dc4]
+        mov     ecx, dword ptr [g_bootInitSaveSlot_00541dc4]
         mov     dword ptr [g_xformDirtyFlags], ecx
     L_a4s_e3End:
         ret

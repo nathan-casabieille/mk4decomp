@@ -111,13 +111,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00421f40 (160b game) - install-self with stack-state reset:
  *   chain[sel].slot84 -> eax; clear. If !=0: zero walkCallback/0x537f98,
  *   set g_eventQueueChild=1, jmp StackPopDispatchTagged.
- *   Else: eax = g_x_0053a430; if 0: jmp StackPopDispatchTagged.
+ *   Else: eax = g_audioStreamState_0053a430; if 0: jmp StackPopDispatchTagged.
  *   walkCallback = max(eax-1, 0); key = (0x4dfc98>>2) + edx; g_scaledInit=key;
  *   g_pendingNodeType = arr[key]; install self; g_framePauseFlag=1; ret.
  */
 extern unsigned int g_data_004dfc98;
 extern unsigned int g_x_00537f98;
-extern unsigned int g_x_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 
 extern unsigned int g_arr_421f40;
 extern void FiveCallGuardSetTail_0046f6b0(void);
@@ -135,7 +135,7 @@ __declspec(naked) void InstallSelfStackReset_00421f40(void) {
         mov     dword ptr [g_x_00537f98], 0
         mov     dword ptr [g_eventQueueChild], 1
         jmp     StackPopDispatchTagged_0041f780
-        mov     eax, dword ptr [g_x_0053a430]
+        mov     eax, dword ptr [g_audioStreamState_0053a430]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h

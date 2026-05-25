@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_or_0052ab40;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern s32 g_dlChar13;
 extern s32 g_dlChar24;
 extern unsigned int g_data_00543200;
@@ -138,7 +138,7 @@ void StrikeAnim4Picker_00493100(void) {
         test     eax, eax
         jne      L_33a1
     L_3126:
-        mov      eax, dword ptr [g_data_0053a430]
+        mov      eax, dword ptr [g_audioStreamState_0053a430]
         mov      edx, dword ptr [g_baseSel_00542060]
         test     eax, eax
         jne      short L_314d

@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00463fb0 (220b game) - mstack-push g_scaledInit, copy g_walkCallback → g_eventQueueWorkType;
  *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_eventQueueWorkType) into eax;
- *   scaledInit = g_x_00541fb0*4 + g_data_00541fb8; g_eventQueueCurrent = [scaledInit*4+4];
+ *   scaledInit = g_phaseCounter_00541fb0*4 + g_data_00541fb8; g_eventQueueCurrent = [scaledInit*4+4];
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
  *   g_acc_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00541fb8;
-extern unsigned int g_x_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 extern void MStackPushSearchLoop_00463ed0(void);
 
 __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
@@ -145,7 +145,7 @@ __declspec(naked) void MStackChainCountdownLoop_00463fb0(void) {
         _emit   07h
         mov     eax, ecx
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     ecx, dword ptr [g_x_00541fb0]
+        mov     ecx, dword ptr [g_phaseCounter_00541fb0]
         mov     edx, dword ptr [g_data_00541fb8]
         shl     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], 4

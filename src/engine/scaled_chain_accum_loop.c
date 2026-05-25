@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0049cd40 (178b game) - init scaledInit chain with -7 offset and table accumulator loop. */
 extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_x_00537f24;
-extern unsigned int g_x_00541f98;
+extern unsigned int g_savedNode_00541f98;
 
 void ScaledChainAccumLoop_0049cd40(void) {
     __asm {
@@ -119,7 +119,7 @@ void ScaledChainAccumLoop_0049cd40(void) {
         mov     dword ptr [g_dispatchArg_00535e48], 0xfffffff9
         shr     eax, 2
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     eax, dword ptr [g_x_00541f98]
+        mov     eax, dword ptr [g_savedNode_00541f98]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0], 0xfffffff9
         mov     eax, dword ptr [g_scaledInit_00542044]

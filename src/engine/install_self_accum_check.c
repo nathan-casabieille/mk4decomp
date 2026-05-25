@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   if (g_eventQueueIdx != 0): call eax = g_eventQueueIdx. pause? -> end.
  *   install self: [esi+8] = 0x00428c20; [esi+0x84]=1; g_pendingNodeType=1; pause=1.
  */
-extern unsigned int g_x_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern void CallPauseDirty4ScaledSet_00419780(void);
 extern void GuardedClampStoreJmp_00428bd0(void);
 extern void StateDispatchTable_00490fc0(void);
@@ -169,7 +169,7 @@ __declspec(naked) void InstallSelfAccumCheck_00428c20(void) {
         _emit   35h
         mov     eax, dword ptr [g_eventQueueIdx]
         test    eax, eax
-        mov     dword ptr [g_x_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         _emit   74h
         _emit   02h
         call    eax

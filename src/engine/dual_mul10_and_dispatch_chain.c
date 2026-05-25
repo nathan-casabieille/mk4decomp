@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   B3 (0xf0..0x111): call BootOneShotSetup_0040bde0; if !pause: call PendingMatch_0040a8d0;
  *     if !pause: tail-jmp GuardedSeq_0049c340; ret.
  */
-extern unsigned int g_x_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern void BootOneShotSetup_0040bde0(void);
 extern void GuardedSeq_0049c340(void);
 extern void PendingMatch_0040a8d0(void);
@@ -163,13 +163,13 @@ __declspec(naked) void DualMul10AndDispatchChain_0049c220(void) {
         mov     eax, dword ptr [ecx*4 + 0x74]
         dec     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_x_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         _emit   75h
         _emit   0ah
         mov     eax, 3
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x74], eax
-        mov     eax, dword ptr [g_x_00541dc4]
+        mov     eax, dword ptr [g_bootInitSaveSlot_00541dc4]
         test    eax, eax
         _emit   75h
         _emit   0eh

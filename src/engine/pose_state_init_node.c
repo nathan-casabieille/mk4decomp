@@ -116,7 +116,7 @@ extern void TripleStringPauseChain_004468c0(void);
 extern void PoseStateInitNode_0043cd60(void);
 
 /* @addr 0x0043cc10 (326b game) - dual-block: state-0 chain-init + state-1 body.
- *   state==0: if g_tickFlagF==2: set byte g_byte_00538148=1. g_x_0053a430=g_walkCallback.
+ *   state==0: if g_tickFlagF==2: set byte g_byte_00538148=1. g_audioStreamState_0053a430=g_walkCallback.
  *     Call CallPauseScaledStoreCopyJmp; if pause ret. Call PushCallPauseSetMaxThenCallPauseJmp_0048e380; if pause ret.
  *     g_eventQueueIdx=g_cj; push 0x90, push body addr; g_eventQueueEnd=[baseSel*4+0x38]; call StoreTwoCall.
  *     Install-self at entry; state=1; g_pendingNodeType=0x64; pause=1; pop+ret. 15-NOP pad.
@@ -128,7 +128,7 @@ extern void PoseStateInitNode_0043cd60(void);
  */
 extern unsigned int g_tickFlagF;
 extern unsigned int g_byte_00538148;
-extern unsigned int g_x_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 
 __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
@@ -146,7 +146,7 @@ __declspec(naked) void DualBlockChainInitBody_0043cc10(void) {
         _emit   07h
         mov     byte ptr [g_byte_00538148], 1
         mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [g_x_0053a430], ecx
+        mov     dword ptr [g_audioStreamState_0053a430], ecx
         call    CallPauseScaledStoreCopyJmp_00461220
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

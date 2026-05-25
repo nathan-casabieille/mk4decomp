@@ -204,7 +204,7 @@ extern void PendingMatch_0042b930(void);
 extern void FpuSqrtMul_004ab350(void);
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
-extern unsigned int g_state_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern void TripleSubVec3_004250f0(void);
 extern void Mul10SumSqrt_00425830(void);
 extern void MStackPushTableWalk_00493a20(void);
@@ -223,7 +223,7 @@ extern void Scaled3StorePushCallJmp_00438220(void);
 extern void Thunk_00439e30(void);
 extern void StateDispatchYield_00471190(void);
 extern unsigned int g_data_0053a478;
-extern unsigned int g_state_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 extern void PushPopState70Mask_00490650(void);
 extern void Thunk_0049cba0(void);
 extern void CopyJmp_0048ee80(void);
@@ -505,7 +505,7 @@ extern s32 g_dlNalt4;
 extern unsigned int g_data_0053a2d0;
 extern unsigned int g_data_0053a324;
 extern unsigned int g_clamp_0053a328;
-extern unsigned int g_data_0053a430;
+extern unsigned int g_audioStreamState_0053a430;
 extern unsigned int g_data_0053a464;
 extern unsigned int g_data_0053a468;
 extern unsigned int g_clamp_0053a6dc;
@@ -515,8 +515,8 @@ extern unsigned int g_data_0053a7a8;
 extern unsigned int g_data_0053a7b4;
 extern unsigned int g_clamp_0053e348;
 extern unsigned int g_data_00541d68;
-extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00541fb0;
+extern unsigned int g_savedNode_00541f98;
+extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_00542188;
 extern unsigned int g_data_00542a58;
 extern unsigned int g_data_00542b68;
@@ -4711,7 +4711,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         mov      al, byte ptr [g_gtModeFlag]
         mov      dword ptr [g_stateCountdown_0053a3c0], ebx
         cmp      al, 1
-        mov      dword ptr [g_data_00541fb0], 4
+        mov      dword ptr [g_phaseCounter_00541fb0], 4
         jne      L_e097
         mov      dword ptr [g_dlNalt2], ebx
         jmp      L_e09d
@@ -5126,7 +5126,7 @@ __declspec(naked) void BackdashSetupCluster_00440dc0(void)
         mov      eax, dword ptr [edx*4 + 0x44]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 8], eax
-        mov      edx, dword ptr [g_data_00541f98]
+        mov      edx, dword ptr [g_savedNode_00541f98]
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      ecx, dword ptr [g_eventQueueTotal]
         mov      dword ptr [g_currentNodeIdx], edx
@@ -5911,7 +5911,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         jne      L_8019
         mov      eax, 0x20
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_0053a430], eax
+        mov      dword ptr [g_audioStreamState_0053a430], eax
         call     PushCallPauseSetMaxThenCallPauseJmp_0048e380
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -6570,7 +6570,7 @@ __declspec(naked) void PendingMatch_0043bdd0(void)
         mov      eax, dword ptr [g_walkCallback]
         add      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_0053a430], eax
+        mov      dword ptr [g_audioStreamState_0053a430], eax
         call     CallPauseScaledStoreCopyJmp_00461220
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -8287,7 +8287,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         dec      eax
         je       L_cb9c
     L_cad4:
-        mov      eax, dword ptr [g_data_0053a430]
+        mov      eax, dword ptr [g_audioStreamState_0053a430]
         test     eax, eax
         je       L_cae5
         call     CallSetPause_0041f830
@@ -8335,7 +8335,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         test     byte ptr [g_xformDirtyFlags], bl
         je       L_cad4
     L_cb9c:
-        mov      eax, dword ptr [g_data_0053a430]
+        mov      eax, dword ptr [g_audioStreamState_0053a430]
         test     eax, eax
         je       L_cbad
         call     CallSetPause_0041f830

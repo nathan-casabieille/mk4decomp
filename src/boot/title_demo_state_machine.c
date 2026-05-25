@@ -116,7 +116,7 @@ extern unsigned int g_data_00541dc0;
 
 extern unsigned int g_tickFlagF;
 extern unsigned int g_data_0053a3e8;
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_data_00541df0;
@@ -235,7 +235,7 @@ __declspec(naked) void PendingMatch_00401b70(void)
         cmp      dword ptr [g_framePauseFlag], ebp
         jne      L_1cb3
         mov      eax, 2
-        mov      dword ptr [g_data_0053a50c], ebp
+        mov      dword ptr [g_phaseIdx_0053a50c], ebp
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_tickFlagF], eax
         mov      dword ptr [g_eventQueueWorkType], ebp

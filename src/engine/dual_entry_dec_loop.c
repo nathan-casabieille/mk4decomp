@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00480f20 (144b game) - dual-entry chain decrement loop.
  *   Block A (+0x00): set [g_xformEntityIdx*4+0x5c]=7; g_walkCallback=0x29; jmp TableLookupCall_00489f60.
  *   Block A2 (+0x20): call CallPauseDirtyScaledSet7; if !pause: call CmpP1GTSetup; if !pause:
- *     ecx=g_xformEntityIdx; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_state_00541dc4=eax; if eax<0 set
- *     g_walkCallback=1; store back; if g_state_00541dc4!=0 self-jmp. ret.
+ *     ecx=g_xformEntityIdx; eax = --[ecx*4+0x5c]; g_walkCallback=eax; g_bootInitSaveSlot_00541dc4=eax; if eax<0 set
+ *     g_walkCallback=1; store back; if g_bootInitSaveSlot_00541dc4!=0 self-jmp. ret.
  *   Block B (+0x80): g_walkCallback=1; g_phaseTimer_00537e94=1; ret.
  */
 extern unsigned int g_phaseTimer_00537e94;
-extern unsigned int g_state_00541dc4;
+extern unsigned int g_bootInitSaveSlot_00541dc4;
 extern void CallPauseDirtyScaledSet7_00480ef0(void);
 extern void CmpP1GTSetup_00470980(void);
 extern void TableLookupCall_00489f60(void);
@@ -142,13 +142,13 @@ __declspec(naked) void DualEntryDecLoop_00480f20(void) {
         mov     eax, dword ptr [ecx*4 + 0x5c]
         dec     eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00541dc4], eax
+        mov     dword ptr [g_bootInitSaveSlot_00541dc4], eax
         _emit   79h
         _emit   0ah
         mov     eax, 1
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_state_00541dc4]
+        mov     eax, dword ptr [g_bootInitSaveSlot_00541dc4]
         test    eax, eax
         _emit   75h
         _emit   05h

@@ -135,12 +135,12 @@ extern unsigned int g_particleEmitterNode_00535e6c;
 extern s32 g_dlNalt1;
 extern unsigned int g_data_00538088;
 extern s32 g_dlNalt2;
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_data_0053a7a8;
 extern unsigned int g_audioCrewState_00541d8c;
-extern unsigned int g_data_00541f98;
-extern unsigned int g_data_00541fb0;
+extern unsigned int g_savedNode_00541f98;
+extern unsigned int g_phaseCounter_00541fb0;
 extern u32 g_dlMode;
 extern unsigned int g_state_0054355c_hh;
 extern u8 g_dlEnabledFlag;
@@ -204,7 +204,7 @@ extern unsigned int g_byte_00543724;
 extern unsigned int g_byte_0054372c;
 extern unsigned int g_byte_00543730;
 extern unsigned int g_data_005437f4;
-extern unsigned int g_data_00543830;
+extern unsigned int g_audioPreloadState_00543830;
 extern void AudioBindEntry_004a1e40(void);
 extern void AudioInitArgs3_004a1f20(void);
 extern void AudioInstallSelfStateMachine2_004a85c0(void);
@@ -690,7 +690,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         cmp      eax, 4
         mov      eax, dword ptr [g_audioBankSel_00537f94]
         jne      short L_6f3d
-        mov      edx, dword ptr [g_data_00543830]
+        mov      edx, dword ptr [g_audioPreloadState_00543830]
         cmp      eax, 1
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_data_004f3a58]
@@ -706,14 +706,14 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
     L_6f3d:
         cmp      eax, 1
         jne      short L_6f5c
-        mov      eax, dword ptr [g_data_00543830]
+        mov      eax, dword ptr [g_audioPreloadState_00543830]
         shl      eax, 2
         mov      ecx, dword ptr [eax + g_data_004f3a70]
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435a0]
         jmp      short L_6f79
     L_6f5c:
-        mov      edx, dword ptr [g_data_00543830]
+        mov      edx, dword ptr [g_audioPreloadState_00543830]
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_data_004f3a70]
         lea      ecx, [ecx + ecx*2]
@@ -727,11 +727,11 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         lea      eax, [edx*8 + g_byte_005435a0]
         push     eax
         call     MemcpyByteN_004a5680
-        mov      ecx, dword ptr [g_data_00543830]
+        mov      ecx, dword ptr [g_audioPreloadState_00543830]
         add      esp, 0xc
         inc      ecx
         mov      dword ptr [g_pendingNodeType], OFFSET PendingMatch_004a62b0
-        mov      dword ptr [g_data_00543830], ecx
+        mov      dword ptr [g_audioPreloadState_00543830], ecx
         mov      dword ptr [g_eventQueueWorkType], 0x1000
         call     AllocNode
         mov      eax, dword ptr [g_framePauseFlag]
@@ -799,7 +799,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         test     byte ptr [g_xformDirtyFlags], 4
         jne      L_724e
         mov      ecx, dword ptr [g_xformEntityIdx]
-        mov      eax, dword ptr [g_data_00541f98]
+        mov      eax, dword ptr [g_savedNode_00541f98]
         add      ecx, 0xf
         mov      dword ptr [g_currentNodeIdx], eax
         mov      dword ptr [g_xformEntityIdx], ecx
@@ -868,7 +868,7 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         ret      
     L_72fd:
         mov      dword ptr [g_tickFlagF], 2
-        mov      dword ptr [g_data_0053a50c], 1
+        mov      dword ptr [g_phaseIdx_0053a50c], 1
         call     BootInitGuardedCallChain_004265d0
         call     FiveTableWalkInit_00403c90
         cmp      dword ptr [g_framePauseFlag], edi
@@ -930,13 +930,13 @@ __declspec(naked) void PendingMatch_004a70f0(void)
         jne      L_75fb
         cmp      dword ptr [g_count_005433b8], 4
         jne      L_746c
-        mov      eax, dword ptr [g_data_00543830]
+        mov      eax, dword ptr [g_audioPreloadState_00543830]
         mov      eax, dword ptr [eax*4 + g_data_004f3a58]
         lea      ecx, [eax + eax*2]
         lea      esi, [ecx*8 + g_byte_005435a0]
         jmp      L_7483
     L_746c:
-        mov      edx, dword ptr [g_data_00543830]
+        mov      edx, dword ptr [g_audioPreloadState_00543830]
         mov      eax, dword ptr [edx*4 + g_data_004f3a70]
         lea      eax, [eax + eax*2]
         lea      esi, [eax*8 + g_byte_005435a0]
@@ -1180,7 +1180,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      eax, dword ptr [g_data_005437fc]
         mov      esi, 1
         mov      dword ptr [g_stateCountdown_0053a3c0], eax
-        mov      dword ptr [g_data_00541fb0], eax
+        mov      dword ptr [g_phaseCounter_00541fb0], eax
         mov      eax, dword ptr [g_gtConfig4f]
         mov      dword ptr [g_dlNalt1], ecx
         cmp      eax, esi
@@ -1235,7 +1235,7 @@ __declspec(naked) void PendingMatch_004a3400(void)
         mov      ebp, 1
         mov      dword ptr [g_gtState438], ebx
         mov      dword ptr [g_tickFlagF], 2
-        mov      dword ptr [g_data_0053a50c], ebp
+        mov      dword ptr [g_phaseIdx_0053a50c], ebp
         mov      dword ptr [g_data_005433f8], eax
         call     TripleCallSetCopy_004a4880
         mov      dword ptr [g_eventQueueWorkType], 9
@@ -1731,7 +1731,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
         cmp      esi, 0x543434
         jl       L_5cb1
         call     PendingMatch_004a56c0
-        mov      dword ptr [g_data_00543830], ebp
+        mov      dword ptr [g_audioPreloadState_00543830], ebp
         call     Memset18Step_004a56a0
         call     PendingMatch_004a62b0
         pop      edi
@@ -1767,7 +1767,7 @@ __declspec(naked) void PendingMatch_004a56c0(void)
     L_5d35:
         mov      ebp, 1
         mov      dword ptr [g_tickFlagF], 2
-        mov      dword ptr [g_data_0053a50c], 0xd
+        mov      dword ptr [g_phaseIdx_0053a50c], 0xd
         mov      dword ptr [g_state_0054355c_hh], ebp
         call     DrainQueueCallEach_004a1ec0
         call     Audio11SlotInitLoop_004a5540

@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   pause? -> end; (208c&4)? -> end.
  *   chain[g_scaledInit + 0x5c] = 0x14000; g_walkCallback = 0x14000.
  */
-extern unsigned int g_x_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 extern void SaveCallRestore_004049d0(void);
 
 extern unsigned int g_data_004d57ac_arr;
@@ -128,7 +128,7 @@ void PackedTableWalkChainStore_00463e20(void) {
     __asm {
         push    0x26f
         call    SaveCallRestore_004049d0
-        mov     eax, dword ptr [g_x_00541fb0]
+        mov     eax, dword ptr [g_phaseCounter_00541fb0]
         add     esp, 4
         lea     ecx, [eax + eax*2]
         mov     eax, 0x004ea670

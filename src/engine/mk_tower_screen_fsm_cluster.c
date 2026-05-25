@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00541fb0;
+extern unsigned int g_phaseCounter_00541fb0;
 extern unsigned int g_data_00541fb4;
 extern unsigned int g_data_00541fb8;
 extern void CallSetPause_0041f830(void);
@@ -123,7 +123,7 @@ __declspec(naked) void MkTowerScreenFsmCluster_00462560(void)
 {
     __asm {
         /* === Helper 1 (0x462560): row-process column-N w/ offset === */
-        mov      eax, dword ptr [g_data_00541fb0]
+        mov      eax, dword ptr [g_phaseCounter_00541fb0]
         mov      ecx, dword ptr [g_data_00541fb4]
         add      ecx, eax
         push     ebx

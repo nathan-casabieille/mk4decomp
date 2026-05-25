@@ -116,10 +116,10 @@ extern void IncCmp28StoreOrJmp_00458880(void);
 /* @addr 0x00458810 (104b game) - 3-entry-point dispatcher.
  *   Block A (+0x00): g_acc_00542078=g_state_0053a278; g_walkCallback=eax-1; if (eax-1) < 0 g_walkCallback=0x27;
  *     g_cj_00542054 = 0xffffffff; jmp CinematicStageCluster_004588b0.
- *   Block B (+0x30): g_walkCallback=g_state_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
- *   Block C (+0x50): g_walkCallback=g_state_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
+ *   Block B (+0x30): g_walkCallback=g_stateFlag_00537e98; if zero jmp IncCmp28StoreOrJmp_00458880 else jmp CallSetPause_0041f830.
+ *   Block C (+0x50): g_walkCallback=g_stateFlag_00537e98; if nonzero jmp IncCmp28StoreOrJmp else jmp CallSetPause.
  */
-extern unsigned int g_state_00537e98;
+extern unsigned int g_stateFlag_00537e98;
 
 __declspec(naked) void TripleEntryDispatch_00458810(void) {
     __asm {
@@ -136,7 +136,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00537e98]
+        mov     eax, dword ptr [g_stateFlag_00537e98]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
@@ -151,7 +151,7 @@ __declspec(naked) void TripleEntryDispatch_00458810(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00537e98]
+        mov     eax, dword ptr [g_stateFlag_00537e98]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

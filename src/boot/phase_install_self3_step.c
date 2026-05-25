@@ -120,7 +120,7 @@ extern unsigned int g_data_00508324;
 extern unsigned int g_data_004a2180;
 void PhaseInstallSelf3Step_00402350(void);
 
-extern unsigned int g_data_0053a50c;
+extern unsigned int g_phaseIdx_0053a50c;
 extern void BootInitGuardedCallChain_004265d0(void);
 
 __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
@@ -168,7 +168,7 @@ __declspec(naked) void PhaseInstallSelf3Step_00402350(void)
         jne     L_pis3_exit
         push    0
         push    offset g_data_004a2180
-        mov     dword ptr [g_data_0053a50c], 3
+        mov     dword ptr [g_phaseIdx_0053a50c], 3
         call    StoreTwoCall_0049cb40
         mov     ecx, offset g_data_00506c2c
         add     esp, 8
