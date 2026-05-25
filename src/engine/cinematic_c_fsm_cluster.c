@@ -119,8 +119,8 @@ extern void CinematicCFsmCluster_004884a0(void);
 extern void InstallSelfIndirectJmp_0048f3f0(void);
 extern void InstallSelfIndirectJmpNeg_0048f4f0(void);
 extern void InstallSelfOrCmpJmp_0048f570(void);
-extern unsigned int g_data_004eefd8;
-extern unsigned int g_data_004ef010;
+extern unsigned int g_dispatchSave645_004eefd8;
+extern unsigned int g_dispatchSave644_004ef010;
 extern unsigned int g_dispatchTableArr6_00500710;
 
 extern void ArgSarStoreJmp_004594f0(void);
@@ -275,7 +275,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8446
-        push     OFFSET g_data_004eefd8
+        push     OFFSET g_dispatchSave645_004eefd8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_8446:
@@ -290,7 +290,7 @@ __declspec(naked) void BossRoarCluster_00488210(void)
         nop
         nop
         /* === Helper 5: event 004ef010 forwarder === */
-        push     OFFSET g_data_004ef010
+        push     OFFSET g_dispatchSave644_004ef010
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret

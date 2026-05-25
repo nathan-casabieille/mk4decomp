@@ -112,7 +112,7 @@ extern void ModelRenderDispatch_004b9510(void);
 extern void TripleMul10TailIndexed_00425970(void);
 extern void TripleAddVec3_00425130(void);
 extern void MStackBracket3_FieldSequentialCopy_00411d80(void);
-extern unsigned int g_data_004d78d8;
+extern unsigned int g_dispatchSave607_004d78d8;
 extern unsigned int g_savedNode_00541f98;
 
 /*
@@ -132,7 +132,7 @@ void BootInitTripleAddChain_00419bc0(void)
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_currentNodeIdx;
     g_currentNodeIdx = g_savedNode_00541f98;
-    g_pendingNodeType = (unsigned int)&g_data_004d78d8 >> 2;
+    g_pendingNodeType = (unsigned int)&g_dispatchSave607_004d78d8 >> 2;
     QuadInterpolator_00425380();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0xcccc;

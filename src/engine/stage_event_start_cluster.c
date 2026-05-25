@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed800;
+extern unsigned int g_dispatchSave596_004ed800;
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
 extern void ArgSarStoreJmp_004594f0(void);
@@ -178,7 +178,7 @@ __declspec(naked) void StageEventStartCluster_0047ff80(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_0017
-        push     OFFSET g_data_004ed800
+        push     OFFSET g_dispatchSave596_004ed800
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_0017:

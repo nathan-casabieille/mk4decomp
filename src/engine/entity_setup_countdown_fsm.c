@@ -124,7 +124,7 @@ extern void MStackPush2BitLoop_00476670(void);
 extern void GuardedSeq_00476de0(void);
 extern void GuardedSeq_00476f10(void);
 extern void GuardedSeq_00476fc0(void);
-extern unsigned int g_data_004e51c8;
+extern unsigned int g_dispatchSave603_004e51c8;
 
 extern void ArgSarStoreJmp_004594f0(void);
 
@@ -222,7 +222,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
-        push     OFFSET g_data_004e51c8
+        push     OFFSET g_dispatchSave603_004e51c8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_fb81:

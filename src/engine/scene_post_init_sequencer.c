@@ -114,7 +114,7 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_rangeBase_0053a46c;
-extern unsigned char g_data_004dfd48;
+extern unsigned char g_dispatchSave623_004dfd48;
 extern void TablePushAccumTailJmp_00429e30(void);
 extern unsigned int g_data_004d5308;
 extern unsigned int g_data_004d530c;

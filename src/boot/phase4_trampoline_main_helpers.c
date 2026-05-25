@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d77b0;
+extern unsigned int g_dispatchSave610_004d77b0;
 extern unsigned int g_tickFlagF;
 extern void CallPauseInc_004ab670(void);
 extern void CallSetPause_0041f830(void);
@@ -254,7 +254,7 @@ __declspec(naked) void Phase4TrampolineMainHelpers_00414b90(void)
         jne     L_p4tmh2_H_pop_ret
         mov     eax, dword ptr [g_walkCallback]
         lea     ecx, [eax + eax*4]
-        mov     eax, offset g_data_004d77b0
+        mov     eax, offset g_dispatchSave610_004d77b0
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx

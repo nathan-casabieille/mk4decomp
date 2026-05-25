@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_0049db40;
-extern unsigned int g_data_004d6590;
+extern unsigned int g_dispatchSave616_004d6590;
 extern void ChainListVecAdd_0049d200(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackPop8_004ab860(void);
@@ -133,7 +133,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         jne     L_p2id_ret
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
-        mov     edx, offset g_data_004d6590
+        mov     edx, offset g_dispatchSave616_004d6590
         push    0xC0
         shr     edx, 2
         push    offset g_const_0049db40

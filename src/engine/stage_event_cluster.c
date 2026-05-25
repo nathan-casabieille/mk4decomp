@@ -124,9 +124,9 @@ extern void StageEventCluster_00497e80(void);
 extern void SweepCluster_004984e0(void);
 extern void Vec2SumMul10ChainCompute_0049bc60(void);
 extern void TripleBlockChainDiffMStackThunks_0049ca10(void);
-extern unsigned int g_data_004f2178;
-extern unsigned int g_data_004f2190;
-extern unsigned int g_data_004f21a0;
+extern unsigned int g_dispatchSave643_004f2178;
+extern unsigned int g_dispatchSave642_004f2190;
+extern unsigned int g_dispatchSave641_004f21a0;
 
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ArgSar_Set0_Jmp_0049c6f0(void);
@@ -158,7 +158,7 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_7bb8
-        push     OFFSET g_data_004f2178
+        push     OFFSET g_dispatchSave643_004f2178
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_7bb8:
@@ -300,10 +300,10 @@ __declspec(naked) void PunchDispatcherCluster_00497b50(void)
         mov      dword ptr [eax*4 + 0x6c], ecx
         mov      edx, dword ptr [g_fightGroupHead]
         mov      eax, dword ptr [g_xformScratch2088]
-        push     OFFSET g_data_004f2190
+        push     OFFSET g_dispatchSave642_004f2190
         mov      dword ptr [edx*4 + 0x74], eax
         mov      edx, dword ptr [g_eventQueueChild]
-        mov      eax, OFFSET g_data_004f21a0
+        mov      eax, OFFSET g_dispatchSave641_004f21a0
         shr      eax, 2
         add      eax, edx
         mov      edx, dword ptr [g_fightGroupHead]

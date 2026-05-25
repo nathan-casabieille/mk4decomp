@@ -126,7 +126,7 @@ extern void TaggedSceneDispatch_004be690(void);
 extern void QuadCallPhase2_004be800(void);
 extern void RoundCleanupCluster_00427690(void);
 extern unsigned int g_data_004e2868;
-extern unsigned int g_data_004f29c0;
+extern unsigned int g_dispatchSave637_004f29c0;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_dispatchSave49_00535e44;
 extern unsigned int g_audioInstall2Slot_00537eec;
@@ -155,7 +155,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         push     OFFSET AmbientMonitorCluster_0049e3c0 + 0xd0
         call     StoreTwoCall_0049cb40
         add      esp, 8
-        mov      ecx, OFFSET g_data_004f29c0
+        mov      ecx, OFFSET g_dispatchSave637_004f29c0
         shr      ecx, 2
         push     0x262
         push     OFFSET RoundCleanupCluster_00427690 + 0xf0

@@ -116,7 +116,7 @@ extern void CmpEqInitCallElseJmp_0048d4b0(void);
 extern void EsiInstallClampAddCall_0048fe40(void);
 extern void MStackPushSet0008_004901a0(void);
 extern void ScaledZeroFour_00490740(void);
-extern unsigned int g_data_004ed1d8;
+extern unsigned int g_dispatchSave598_004ed1d8;
 
 extern unsigned int g_dispatchSave125_0050f22c;
 extern unsigned int g_dispatchWalkVar_0053a404;
@@ -220,7 +220,7 @@ __declspec(naked) void RoundStartCluster_0047b900(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x211
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004ed1d8
+        push     OFFSET g_dispatchSave598_004ed1d8
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4

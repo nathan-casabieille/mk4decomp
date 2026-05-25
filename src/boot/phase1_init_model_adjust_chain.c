@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_pendingMatchVar3_004d5320;
-extern unsigned int g_data_004d59e8;
+extern unsigned int g_dispatchSave620_004d59e8;
 extern unsigned int g_phase1ModelArr_00512538;
 extern unsigned int g_phase1ModelChain_0053e35c;
 extern void FramePauseScaledStore_00406c10(void);
@@ -124,7 +124,7 @@ extern void Thunk_00405ac0(void);
 __declspec(naked) void Phase1InitModelAdjustChain_00410fb0(void)
 {
     __asm {
-        mov     eax, offset g_data_004d59e8
+        mov     eax, offset g_dispatchSave620_004d59e8
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_0049db40;
 extern unsigned int g_dispatchSave521_004d6c50;
-extern unsigned int g_data_004d6c58;
+extern unsigned int g_dispatchSave614_004d6c58;
 extern void CallSetPause_0041f830(void);
 extern void CopyThreeFields_00404df0(void);
 extern void MStackPop8_004ab860(void);
@@ -146,7 +146,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers_0040d990(void)
         jne     L_p13_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p13_after_select
-        mov     ecx, offset g_data_004d6c58
+        mov     ecx, offset g_dispatchSave614_004d6c58
         shr     ecx, 2
         mov     dword ptr [g_eventQueueIdx], ecx
     L_p13_after_select:

@@ -115,20 +115,20 @@ extern unsigned int g_phaseThunkInst_004d50ac;
 extern unsigned int g_renderer2_var5_004f4e98;
 extern unsigned int g_dispatchSave537_004f4dc8;
 extern unsigned int g_dispatchSave536_004f4dcc;
-extern unsigned int g_data_004f4dd0;
-extern unsigned int g_data_004f4dd4;
+extern unsigned int g_dispatchSave630_004f4dd0;
+extern unsigned int g_dispatchSave629_004f4dd4;
 extern unsigned int g_dispatchSave535_004f4dd8;
 extern unsigned int g_dispatchSave534_004f4ddc;
-extern unsigned int g_data_004f4de0;
-extern unsigned int g_data_004f4de4;
+extern unsigned int g_dispatchSave628_004f4de0;
+extern unsigned int g_dispatchSave627_004f4de4;
 extern unsigned int g_renderer2_var7_004f4de8;
 extern unsigned int g_renderer2_var6_004f4dec;
 extern unsigned int g_dispatchSave518_004f4df0;
 extern unsigned int g_dispatchSave517_004f4df4;
 extern unsigned int g_dispatchSave533_004f4df8;
 extern unsigned int g_dispatchSave532_004f4dfc;
-extern unsigned int g_data_004f4e00;
-extern unsigned int g_data_004f4e04;
+extern unsigned int g_dispatchSave626_004f4e00;
+extern unsigned int g_dispatchSave625_004f4e04;
 extern unsigned int g_dispatchSave27_00543368;
 extern unsigned int g_dispatchSave26_0054336c;
 extern unsigned int g_dispatchSave25_00543370;
@@ -221,12 +221,12 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip1:
-        mov     ecx, dword ptr [g_data_004f4dd4]
-        mov     eax, dword ptr [g_data_004f4dd0]
+        mov     ecx, dword ptr [g_dispatchSave629_004f4dd4]
+        mov     eax, dword ptr [g_dispatchSave630_004f4dd0]
         test    dword ptr [ecx], eax
         je      L_idep_skip2
-        mov     eax, dword ptr [g_data_004f4de4]
-        mov     edx, dword ptr [g_data_004f4de0]
+        mov     eax, dword ptr [g_dispatchSave627_004f4de4]
+        mov     edx, dword ptr [g_dispatchSave628_004f4de0]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip2:
@@ -243,8 +243,8 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         mov     eax, dword ptr [g_dispatchSave518_004f4df0]
         test    dword ptr [ecx], eax
         je      L_idep_skip4
-        mov     eax, dword ptr [g_data_004f4e04]
-        mov     edx, dword ptr [g_data_004f4e00]
+        mov     eax, dword ptr [g_dispatchSave625_004f4e04]
+        mov     edx, dword ptr [g_dispatchSave626_004f4e00]
         not     edx
         and     dword ptr [eax], edx
     L_idep_skip4:

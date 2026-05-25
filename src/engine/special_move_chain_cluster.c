@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e51c8;
+extern unsigned int g_dispatchSave603_004e51c8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ComboLoopCluster_00440070(void);
 extern void EntitySetupCountdownFsm_0043fcf0(void);
@@ -213,7 +213,7 @@ __declspec(naked) void SpecialMoveChainCluster_0043f9c0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_fb81
-        push     OFFSET g_data_004e51c8
+        push     OFFSET g_dispatchSave603_004e51c8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_fb81:

@@ -215,12 +215,12 @@ extern unsigned int g_pendingMatchVar_004d5324;
 extern unsigned int g_dispatchSave564_004d5354;
 extern unsigned int g_dispatchSave563_004d5358;
 extern unsigned int g_data_004d535c;
-extern unsigned int g_data_004d5ad8;
+extern unsigned int g_dispatchSave619_004d5ad8;
 extern unsigned int g_dispatchSave522_004d61d8;
 extern unsigned int g_phaseChainArr2_004d62e8;
 extern unsigned int g_data_004d7ce8;
 extern unsigned int g_data_004d7d00;
-extern unsigned int g_data_004ded68;
+extern unsigned int g_dispatchSave606_004ded68;
 extern unsigned int g_dispatchSave505_004e3ac8;
 extern unsigned int g_data_004f2020;
 extern unsigned int g_data_004f2068;
@@ -1266,7 +1266,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy_00411d80(void)
         jne     L_mb3fsc_abort
         test    byte ptr [g_xformDirtyFlags], bl
         je      L_mb3fsc_pop3
-        mov     eax, offset g_data_004d5ad8
+        mov     eax, offset g_dispatchSave619_004d5ad8
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140
@@ -1712,7 +1712,7 @@ __declspec(naked) void StageEntityInitCluster_004216a0(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_182b
-        push     OFFSET g_data_004ded68
+        push     OFFSET g_dispatchSave606_004ded68
         call     IterLoad_0048fd30
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

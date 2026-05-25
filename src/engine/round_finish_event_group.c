@@ -118,10 +118,10 @@ extern void TableLookupCall_00489ff0(void);
 extern void TableLookupCall_0048a160(void);
 extern void Wrapper_0048fbc0(void);
 extern void Wrapper_0048ff30(void);
-extern unsigned int g_data_004eda60;
-extern unsigned int g_data_004edaa0;
-extern unsigned int g_data_004edae8;
-extern unsigned int g_data_004edb20;
+extern unsigned int g_dispatchSave595_004eda60;
+extern unsigned int g_dispatchSave594_004edaa0;
+extern unsigned int g_dispatchSave593_004edae8;
+extern unsigned int g_dispatchSave592_004edb20;
 extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
 
@@ -131,7 +131,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
 {
     __asm {
         /* H1: */
-        push     OFFSET g_data_004eda60
+        push     OFFSET g_dispatchSave595_004eda60
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -186,7 +186,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_20c6
-        push     OFFSET g_data_004edaa0
+        push     OFFSET g_dispatchSave594_004edaa0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_20c6:
@@ -219,7 +219,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_2129
-        push     OFFSET g_data_004edae8
+        push     OFFSET g_dispatchSave593_004edae8
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_2129:
@@ -241,7 +241,7 @@ __declspec(naked) void GameModeAdvanceCluster_00482000(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_216d
-        push     OFFSET g_data_004edb20
+        push     OFFSET g_dispatchSave592_004edb20
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_216d:

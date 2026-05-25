@@ -115,7 +115,7 @@ extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_rangeBase_0053a46c;
-extern unsigned char g_data_004dfd48;
+extern unsigned char g_dispatchSave623_004dfd48;
 extern void TablePushAccumTailJmp_00429e30(void);
 extern void Mul10Tail_00404af0(int, int);
 extern void ScenePostInitSequencer_00429b70(void);
@@ -147,7 +147,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         mov     dword ptr [g_walkCallback], eax
         call    TablePushAccumTailJmp_00429e30
         mov     ecx, dword ptr [g_counter_0053a51c]
-        mov     eax, offset g_data_004dfd48
+        mov     eax, offset g_dispatchSave623_004dfd48
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx

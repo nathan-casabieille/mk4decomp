@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e5808;
+extern unsigned int g_dispatchSave602_004e5808;
 extern void MStackPush1MagicMod2_004244d0(void);
 extern void MStackPush3CallChainBit2_004431e0(void);
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
@@ -124,7 +124,7 @@ __declspec(naked) void SpawnFreezeProjectileChain_00442530(void)
         push     edi
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]
-        mov      eax, OFFSET g_data_004e5808
+        mov      eax, OFFSET g_dispatchSave602_004e5808
         mov      dword ptr [g_eventQueueIdx], edx
         shr      eax, 2
         mov      dword ptr [g_eventQueueTotal], eax

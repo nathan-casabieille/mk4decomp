@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d5364;
+extern unsigned int g_dispatchSave621_004d5364;
 extern unsigned int g_phase1ChainArr_00507118;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
@@ -181,7 +181,7 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     eax, dword ptr [g_data_004d5364]
+        mov     eax, dword ptr [g_dispatchSave621_004d5364]
         add     eax, dword ptr [ecx*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax

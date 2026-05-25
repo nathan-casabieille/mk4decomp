@@ -110,8 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern s32 g_installValidated;
 extern u8 g_configBuffer[];
-extern unsigned char g_data_004f4710;
-extern unsigned char g_data_004f4740;
+extern unsigned char g_dispatchSave632_004f4710;
+extern unsigned char g_dispatchSave631_004f4740;
 /* g_iat_004d2000/2010/2004 declared as unsigned int below */
 extern void AudioSnapshotGlobals_004ace60(void);
 extern s32 ComputeConfigHash(void);
@@ -156,7 +156,7 @@ void RegistryInstallEntry_004ad410(void) {
         push    0
         push    0
         push    0
-        push    offset g_data_004f4710
+        push    offset g_dispatchSave632_004f4710
         push    0x80000002
         call    dword ptr [g_iat_004d2000]
         _emit   8bh
@@ -170,7 +170,7 @@ void RegistryInstallEntry_004ad410(void) {
         push    offset g_configBuffer
         push    3
         push    0
-        push    offset g_data_004f4740
+        push    offset g_dispatchSave631_004f4740
         push    eax
         call    dword ptr [g_iat_004d2010]
         _emit   8bh

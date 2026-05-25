@@ -113,7 +113,7 @@ extern void PoseCopyIdleCluster_004537a0(void);
 extern void Bit2GatedChainInit_00453620(void);
 extern void GDispatch4_004089c0(void);
 
-extern unsigned char g_data_004ebee0;
+extern unsigned char g_dispatchSave622_004ebee0;
 extern unsigned int g_arr_491350;
 extern unsigned int g_gtPlayerProbe2;
 extern unsigned int g_gtPlayerProbe1;

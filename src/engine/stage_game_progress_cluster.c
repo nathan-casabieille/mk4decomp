@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004edfd0;
-extern unsigned int g_data_004ee030;
+extern unsigned int g_dispatchSave591_004edfd0;
+extern unsigned int g_dispatchSave590_004ee030;
 extern unsigned int g_dispatchSave588_004ee098;
 extern unsigned int g_dispatchSave587_004ee0c8;
 extern unsigned int g_dispatchSave586_004ee0f8;
@@ -137,7 +137,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27ab
-        push     OFFSET g_data_004edfd0
+        push     OFFSET g_dispatchSave591_004edfd0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_27ab:
@@ -151,7 +151,7 @@ __declspec(naked) void StageGameProgressCluster_00482780(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_27cb
-        push     OFFSET g_data_004ee030
+        push     OFFSET g_dispatchSave590_004ee030
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
     L_27cb:

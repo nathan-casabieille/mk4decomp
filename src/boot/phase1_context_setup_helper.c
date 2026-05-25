@@ -108,9 +108,9 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f25d8;
-extern unsigned int g_data_004f2640;
-extern unsigned int g_data_004f2650;
+extern unsigned int g_dispatchSave640_004f25d8;
+extern unsigned int g_dispatchSave639_004f2640;
+extern unsigned int g_dispatchSave638_004f2650;
 extern void DualCmpSwapStore_0049c5a0(void);
 extern void CondPickDualStore_0049c670(void);
 extern void ScaledStackCallPause_0049c360(void);
@@ -180,7 +180,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_a5e_e2End
-        push    offset g_data_004f25d8
+        push    offset g_dispatchSave640_004f25d8
         call    ArgSarStoreJmp_004594f0
         add     esp, 4
     L_a5e_e2End:
@@ -205,7 +205,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_a5e_e3End
-        push    offset g_data_004f2640
+        push    offset g_dispatchSave639_004f2640
         call    ScaledStackCallPause_0049c360
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -240,7 +240,7 @@ __declspec(naked) void Alarm5EntryScopedChain_0049be10(void) {
         mov     eax, 0x30
         mov     dword ptr [g_fightGroupHead], edx
         mov     dword ptr [g_walkCallback], eax
-        push    offset g_data_004f2650
+        push    offset g_dispatchSave638_004f2650
         mov     dword ptr [ecx*4 + 0x5c], eax
         call    ArgSar_Set0_Jmp_0049c6f0
         add     esp, 4

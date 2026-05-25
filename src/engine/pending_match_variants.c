@@ -475,8 +475,8 @@ extern unsigned int g_data_004ed2c8;
 extern unsigned int g_data_004ed2f0;
 extern unsigned int g_data_004ed2f8;
 extern unsigned int g_data_004ed308;
-extern unsigned int g_data_004ed3d0;
-extern unsigned int g_data_004f29c0;
+extern unsigned int g_dispatchSave597_004ed3d0;
+extern unsigned int g_dispatchSave637_004f29c0;
 extern unsigned int g_dispatchSave151_005007c4;
 extern unsigned int g_dispatchSave150_0050104c;
 extern unsigned int g_dispatchSave61_00501070;
@@ -2397,7 +2397,7 @@ __declspec(naked) void StageEventExitCluster_0047cd50(void)
 {
     __asm {
         /* H1: stage-exit sound */
-        push     OFFSET g_data_004ed3d0
+        push     OFFSET g_dispatchSave597_004ed3d0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -4616,7 +4616,7 @@ __declspec(naked) void SceneEvalFsm_0049dea0(void)
         push     OFFSET AmbientMonitorCluster_0049e3c0 + 0xd0
         call     StoreTwoCall_0049cb40
         add      esp, 8
-        mov      ecx, OFFSET g_data_004f29c0
+        mov      ecx, OFFSET g_dispatchSave637_004f29c0
         shr      ecx, 2
         push     0x262
         push     OFFSET RoundCleanupCluster_00427690 + 0xf0

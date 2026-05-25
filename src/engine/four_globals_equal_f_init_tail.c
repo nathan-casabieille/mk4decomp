@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   g_scaledInit_00542044 = v3; arg = arr[v3];
  *   push arg twice; g_rangeBase_0053a46c = arg; call Mul10Tail; g_rangeSqLimit_0053a180 = res; jmp F3.
  */
-extern unsigned int g_data_004dfd48;
+extern unsigned int g_dispatchSave623_004dfd48;
 extern unsigned int g_data_004d57ac_arr;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -146,7 +146,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail_004236a0(void) {
         mov     dword ptr [g_walkCallback], eax
         call    TablePushAccumTailJmp_00429e30
         mov     ecx, dword ptr [g_counter_0053a51c]
-        mov     eax, offset g_data_004dfd48
+        mov     eax, offset g_dispatchSave623_004dfd48
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx

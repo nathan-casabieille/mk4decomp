@@ -124,7 +124,7 @@ extern void QuadCallPhase2_004be800(void);
 extern unsigned int g_audioPreloadVar2_004f3a58;
 extern unsigned int g_audioPreloadVar_004f3a70;
 extern unsigned int g_dispatchSave519_004f3a98;
-extern unsigned int g_data_004f3aa8;
+extern unsigned int g_dispatchSave633_004f3aa8;
 extern unsigned int g_audioPreloadBase_0050b118;
 extern unsigned int g_count_005433b8;
 extern unsigned int g_byte_005435a0;
@@ -200,7 +200,7 @@ __declspec(naked) void AudioPreloadStreamingTrack_004a6e70(void)
         lea      ecx, [ecx + ecx*2]
         lea      ecx, [ecx*8 + g_byte_005435b8]
     L_6f79:
-        mov      eax, dword ptr [eax + g_data_004f3aa8]
+        mov      eax, dword ptr [eax + g_dispatchSave633_004f3aa8]
     L_6f7f:
         lea      edx, [eax + eax*2]
         push     0x18

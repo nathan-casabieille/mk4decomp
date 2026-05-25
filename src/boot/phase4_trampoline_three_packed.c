@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_dispatchVar42_004d5ed0;
-extern unsigned int g_data_004d6610;
+extern unsigned int g_dispatchSave615_004d6610;
 extern unsigned int g_load_0052ab10;
 extern void CallSetPause_0041f830(void);
 extern void ClampMulShiftStore_004ba0e0(void);
@@ -262,7 +262,7 @@ __declspec(naked) void Phase4TrampolineThreePacked_0040fa20(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
-        mov     eax, offset g_data_004d6610
+        mov     eax, offset g_dispatchSave615_004d6610
         shr     eax, 2
         mov     dword ptr [g_walkCallback], eax
         call    PushSetXfmMaskCallPop_00407140

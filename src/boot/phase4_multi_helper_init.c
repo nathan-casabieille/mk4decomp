@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_byte_004d5714;
-extern unsigned int g_data_004d74d8;
-extern unsigned int g_data_004d75a0;
-extern unsigned int g_data_004d7610;
+extern unsigned int g_dispatchSave613_004d74d8;
+extern unsigned int g_dispatchSave612_004d75a0;
+extern unsigned int g_dispatchSave611_004d7610;
 extern unsigned int g_dispatchSave95_0053a29c;
 extern unsigned int g_phase4HelperSlot_0053a400;
 extern void BootSetupWithMStackBody_00418e00(void);
@@ -135,7 +135,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         test    eax, eax
         jne     L_p4mh_A_ret
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     ecx, offset g_data_004d75a0
+        mov     ecx, offset g_dispatchSave612_004d75a0
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_walkCallback], ecx
@@ -238,7 +238,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      L_p4mh_C_set_install
-        mov     ecx, offset g_data_004d7610
+        mov     ecx, offset g_dispatchSave611_004d7610
         shr     ecx, 2
         mov     dword ptr [g_walkCallback], ecx
         call    PushSetXfmMaskCallPop_00407140
@@ -283,7 +283,7 @@ __declspec(naked) void Phase4MultiHelperInit_00418af0(void)
         pop     esi
         ret
     L_p4mh_C_loop_done:
-        mov     eax, offset g_data_004d74d8
+        mov     eax, offset g_dispatchSave613_004d74d8
         shr     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
     L_p4mh_C_have_target:

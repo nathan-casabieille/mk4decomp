@@ -108,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ed1b0;
-extern unsigned int g_data_004ed1b8;
+extern unsigned int g_dispatchSave600_004ed1b0;
+extern unsigned int g_dispatchSave599_004ed1b8;
 extern unsigned int g_audioBank2State_00537f98;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CmpEqInitCallElseJmp_0048d4b0(void);
@@ -124,7 +124,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
 {
     __asm {
         /* H1 */
-        push     OFFSET g_data_004ed1b0
+        push     OFFSET g_dispatchSave600_004ed1b0
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
         ret
@@ -134,7 +134,7 @@ __declspec(naked) void RoundEndCelebrationCluster_0047b6e0(void)
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      eax, 0x213
         mov      dword ptr [g_walkCallback], eax
-        push     OFFSET g_data_004ed1b8
+        push     OFFSET g_dispatchSave599_004ed1b8
         mov      dword ptr [ecx*4 + 0x74], eax
         call     ArgSarStoreJmp_004594f0
         add      esp, 4
