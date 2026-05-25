@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,12 +124,12 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00477400 (167b game) - mstack push 2 + 2-state global swap + pop 2:
  *   push scaledInit, g_xformEntityIdx;
- *   eax = chain[base].slot64; g_xformEntityIdx = g_x_00538158; g_scaledInit = eax;
- *   if (eax == g_x_00538158): g_scaledInit = g_x_00538158 = 0.
+ *   eax = chain[base].slot64; g_xformEntityIdx = g_player1NodeIdx; g_scaledInit = eax;
+ *   if (eax == g_player1NodeIdx): g_scaledInit = g_player1NodeIdx = 0.
  *   else: g_xformEntityIdx = g_x_0053815c; if (g_x_0053815c == eax): g_scaledInit = g_x_0053815c = 0.
  *   Then pop 2 into g_xformEntityIdx, g_scaledInit.
  */
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_0053815c;
 extern unsigned int g_xformEntityIdx;
 
@@ -149,7 +149,7 @@ void MStackPush2GlobalSwap_00477400(void) {
         mov     dword ptr [g_state_004d57ac], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     ecx, dword ptr [g_x_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, [eax*4 + 0x64]
         mov     dword ptr [g_xformEntityIdx], ecx
         cmp     ecx, eax
@@ -158,7 +158,7 @@ void MStackPush2GlobalSwap_00477400(void) {
         _emit   0eh
         xor     eax, eax
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_x_00538158], eax
+        mov     dword ptr [g_player1NodeIdx], eax
         _emit   0ebh
         _emit   1ch
         mov     ecx, dword ptr [g_x_0053815c]

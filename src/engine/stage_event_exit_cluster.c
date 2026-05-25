@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -137,13 +137,13 @@ extern void ScaledChainJmp_00429470(void);
  *   no-error sets g_xformScratch2088=0x11999, calls PunchAnimCluster_00496d80. Pops
  *   back into g_eventQueueChild, then calls NotMaskStorePair_0045f440.
  *   Selects 0x542074 = 1 or 0x10 based on g_fightGroupHead ==
- *   g_data_00538158, AND with g_eventQueueCurrent → g_data_00542094: if
+ *   g_player1NodeIdx, AND with g_eventQueueCurrent → g_xformScratch94: if
  *   nonzero tail-calls InstallSelfCountdown2Stage_0047c8f0; else writes
  *   &g_data_004ffe04>>2 into g_currentNodeIdx / [ecx*4+0x24] and installs
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
@@ -151,7 +151,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_004d57b0;
 extern void EsiEdiAliasDualMul10_004906b0(void);
 extern void NotMaskStorePair_0045f440(void);
@@ -203,7 +203,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         test    eax, eax
         jne     L_ism_done
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00538158]
+        mov     edx, dword ptr [g_player1NodeIdx]
         mov     eax, 1
         cmp     ecx, edx
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -212,7 +212,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow_0047c990(void) {
         mov     dword ptr [g_eventQueueWorkType], eax
     L_ism_pickEax:
         and     eax, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      short L_ism_installSelf
         call    InstallSelfCountdown2Stage_0047c8f0
         pop     esi

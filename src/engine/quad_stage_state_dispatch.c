@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   A: call ScaledChain3c74; if !pause: if g_walkCallback==0x1003: clear bit-0; ret.
  *   B (+0x27): call DirtyToggleByGate; if !pause: if bit-2 clear: clear bit-0; ret.
  *   C (+0x4b): call DirtyToggleByBaseSel_0048f2e0; if !pause: if bit-2 set: clear bit-0; ret.
- *   D (+0x6f): cmp g_fightGroupHead, g_state_00538158; default g_walkCallback=g_x_0053a6dc;
+ *   D (+0x6f): cmp g_fightGroupHead, g_player1NodeIdx; default g_walkCallback=g_x_0053a6dc;
  *     if not equal: g_walkCallback=g_x_00537f2c. If still zero: clear bit-0; ret.
  *     Else: jmp WeightedSumClampHelper_00439920.
  */
@@ -177,7 +177,7 @@ __declspec(naked) void QuadStageStateDispatch_0042c3e0(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_state_00538158]
+        mov     edx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_x_0053a6dc]
         cmp     ecx, edx
         mov     dword ptr [g_walkCallback], eax

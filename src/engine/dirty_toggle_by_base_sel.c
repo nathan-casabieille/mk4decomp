@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -121,7 +121,7 @@ extern unsigned int g_data_00535e70;
 extern unsigned int g_data_00535e74;
 extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 
 /*
  * @addr 0x0048f2e0 (111b game) - twin of DirtyToggleByGate_0048f350
@@ -135,12 +135,12 @@ void DirtyToggleByBaseSel_0048f2e0(void) {
     p38 = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x38);
     g_xformDirtyFlags |= 4;
     g_walkCallback = (void(*)(void))p38;
-    if (p38 == g_x_00538158) {
+    if (p38 == g_player1NodeIdx) {
         DirtyFlagsManipB_0048f3c0();
         return;
     }
     g_xformDirtyFlags ^= 4;
-    if (p38 == g_x_00538158) {
+    if (p38 == g_player1NodeIdx) {
         DirtyFlagsManipB_0048f3c0();
         return;
     }

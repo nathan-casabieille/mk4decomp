@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -129,11 +129,11 @@ extern unsigned int g_data_00535e7c;
  *   or 0x53815c>>2 depending on whether _58 still matches [0x538158];
  *   store [cj*4 + reloc] = walk.
  */
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern void PendingMatch_0041d770(void);
 
 /*
- * NON-COAXABLE: MSVC /O2 assigns g_x_0053815c to eax (b8) and g_x_00538158
+ * NON-COAXABLE: MSVC /O2 assigns g_x_0053815c to eax (b8) and g_player1NodeIdx
  * to ecx (b9), regardless of declaration order. Orig has them reversed:
  * eax=0x538158 (a3 store to g_currentNodeIdx), ecx=0x53815c (89 0d store
  * to g_xformEntityIdx). Register-to-symbol binding is not coaxable from C.
@@ -152,7 +152,7 @@ __declspec(naked) void CjDispatchCommit_004818e0(void) {
         jne     done
         mov     edx, dword ptr [g_cj_00542058]
         push    esi
-        mov     esi, dword ptr [g_x_00538158]
+        mov     esi, dword ptr [g_player1NodeIdx]
         mov     eax, 0x00538158
         mov     ecx, 0x0053815c
         shr     eax, 2

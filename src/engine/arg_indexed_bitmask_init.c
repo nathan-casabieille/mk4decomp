@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045f310 (303b game) - arg-table indexed setup with conditional double-init + bitmask result.
  *   Init: eax=[esp+4]>>2; g_eventQueueTotal=eax. Load 4 from [eax*4+0]: g_eventQueueWorkType, g_acc, g_eventQueueNotMask, g_eventQueueChild.
- *   Load g_state_00538158 into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
+ *   Load g_player1NodeIdx into g_scaledInit. If g_cj_0054205c==ecx (538158): skip second-init, jmp call.
  *   Else load 4 more from [eax*4+0] into same globals. Call NotMaskStorePair.
  *   If pause: ret. Compute (g_walkCallback & g_eventQueueNotMask) and (g_eventQueueCurrent & g_eventQueueChild).
  *   If g_data_005424c0 != 0: jmp set-bit branch (or al,1).
@@ -154,7 +154,7 @@ void ArgIndexedBitmaskInit_0045f310(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     ecx, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_eventQueueChild], edx

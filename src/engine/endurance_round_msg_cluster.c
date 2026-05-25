@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -133,7 +133,7 @@ extern unsigned int g_data_00541e20;
 
 /* @addr 0x0043aab0 (313b game) - state-machine: 4-arm cascade dispatcher + install-self.
  *   state==0: g_xformEntityIdx=(0x0053a408>>2); g_pendingNodeType=(0x00537e88>>2).
- *     If g_cj!=g_state_00538158: g_xformEntityIdx=g_pendingNodeType. eax=[*4+0].
+ *     If g_cj!=g_player1NodeIdx: g_xformEntityIdx=g_pendingNodeType. eax=[*4+0].
  *     If eax!=0: call SlotPhaseResetInstallChain_0048e0e0; if pause ret. Tail-call ZeroScaledZeroCallPauseJmp; pop+ret.
  *     Else: g_walkCallback=[0x00541e20]; cmp 0x78; if >: jmp body.
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
@@ -161,7 +161,7 @@ __declspec(naked) void StateMachine4ArmCascade_0043aab0(void) {
         _emit   75h
         _emit   6bh
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     edi, dword ptr [g_state_00538158]
+        mov     edi, dword ptr [g_player1NodeIdx]
         mov     eax, offset g_active_0053a408
         mov     ecx, offset g_active_00537e88
         shr     eax, 2

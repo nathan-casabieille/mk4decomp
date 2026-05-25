@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -123,12 +123,12 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00460eb0 (98b)
- *   ecx = g_state_00538158; edx = g_cj_0054205c; eax = 4;
+ *   ecx = g_player1NodeIdx; edx = g_cj_0054205c; eax = 4;
  *   cmp edx,ecx; g_eventQueueCurrent = eax; g_scaledInit = ecx;
  *   if eq: skip; eax = 0x40; g_eventQueueCurrent = 0x40;
  *   skip: ecx = g_state_004d50a8; edx = g_xformDirtyFlags;
  *   ~ecx; edx &= 0xfffffffe; eax &= ecx;
- *   g_state_00542094 = eax; g_walkCallback = ecx;
+ *   g_xformScratch94 = eax; g_walkCallback = ecx;
  *   g_xformDirtyFlags = edx; eax = edx;
  *   if (not equal flag): jmp clear;
  *   eax |= 4; g_xformDirtyFlags = eax; ret;
@@ -138,7 +138,7 @@ extern unsigned int g_state_004d50a8;
 
 void DualCmpSetFlagBitToggle_00460eb0(void) {
     __asm {
-        mov     ecx, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, 4
         cmp     edx, ecx
@@ -153,7 +153,7 @@ void DualCmpSetFlagBitToggle_00460eb0(void) {
         not     ecx
         and     edx, 0xfffffffe
         and     eax, ecx
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_xformDirtyFlags], edx
         mov     eax, edx

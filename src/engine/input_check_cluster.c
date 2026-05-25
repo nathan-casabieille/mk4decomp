@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -135,14 +135,14 @@ extern void InputCheckCluster_0045e1e0(void);
 extern unsigned int g_data_004d50a4;
 extern unsigned int g_data_0053a498;
 
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 
 __declspec(naked) void EventPacketDecoder_0045de60(void)
 {
@@ -220,10 +220,10 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         shr      eax, 0x10
         mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 0x40
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      short L_dfc9
         mov      esi, dword ptr [g_fightGroupHead]
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      ecx, 0x20
         cmp      esi, eax
         mov      dword ptr [g_eventQueueCurrent], ecx
@@ -236,7 +236,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         and      eax, 0xffff
         and      ecx, eax
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_dfcf
     L_dfc0:
         call     IncJmp_0045e1d0
@@ -273,7 +273,7 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      eax, dword ptr [esi*4 + 0x40]
         mov      dword ptr [g_eventQueueWorkType], eax
         and      eax, 0x200
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      short L_e061
         mov      eax, dword ptr [esi*4 + 0x48]
         mov      dword ptr [g_eventQueueWorkType], eax
@@ -291,10 +291,10 @@ __declspec(naked) void EventPacketDecoder_0045de60(void)
         mov      ecx, eax
         mov      dword ptr [g_eventQueueWorkType], eax
         and      ecx, 1
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         jne      short L_e084
         and      eax, 4
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_e092
     L_e084:
         mov      dword ptr [g_walkCallback], 0

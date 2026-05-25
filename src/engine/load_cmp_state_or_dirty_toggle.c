@@ -16,7 +16,7 @@ extern u32 g_pendingNodeType;
 extern u32 g_eventQueueNotMask;
 
 /* @addr 0x0048e330 (70b)
- *   load g_fightGroupHead, g_state_00538158; cmp; load g_state_00537f48;
+ *   load g_fightGroupHead, g_player1NodeIdx; cmp; load g_state_00537f48;
  *   jne skip; load g_state_005380e0 → walk;
  *   load dirty | 4; cmp eax,6; if eq: dirty stays; else: dirty ^= 4;
  *   ret.

@@ -39,7 +39,7 @@ __declspec(naked) void AppInit_Misc2(void) {
 /* @addr 0x0042fea0 (64b)
  *   load g_state_0053815c; set g_eventQueueWorkType = 0x4ccc;
  *   store eax → g_scaledInit; call F; pause → ret;
- *   load g_walkCallback, g_state_00538158;
+ *   load g_walkCallback, g_player1NodeIdx;
  *   store both into g_eventQueueCurrent and g_scaledInit; jmp T.
  */
 void LoadSetCallPauseStoreJmp_0042fea0(void) {

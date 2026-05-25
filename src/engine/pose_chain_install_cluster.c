@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -147,13 +147,13 @@ extern unsigned int g_data_00543888;
 
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_baseSel_00542060;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void CallSetPause_0041f830(void);
 extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void GateDispatch6c_00494580(void);
@@ -257,7 +257,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         mov      edx, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_player1NodeIdx]
         mov      eax, dword ptr [g_data_00537f48]
         cmp      edx, ecx
         mov      dword ptr [g_walkCallback], eax
@@ -274,7 +274,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      eax, dword ptr [g_data_0052ab40]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_1336
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]

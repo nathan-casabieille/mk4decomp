@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /*
  * @addr 0x0042fbc0 (116b game) - chain field-test then 2-branch:
- *   walk = walk[+0x40]; g_state_00542094 = walk & 0x40; if zero exit.
+ *   walk = walk[+0x40]; g_xformScratch94 = walk & 0x40; if zero exit.
  *   Else: mov eax,ecx (copy old_scaled from ecx to eax); load g_x_538158
  *   into ecx; cmp eax,ecx; store both (g_xformEntityIdx=eax a3, g_scaledInit=ecx
  *   89 0d) between cmp and jne; conditionally replace with g_x_53815c.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   eax (a1 5b) and keeps old_scaled in ecx, saving 3 bytes in the cmp block
  *   (compensated by 3 nop pads at end). Reg-allocation divergence; non-coaxable.
  */
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_0053815c;
 extern unsigned int g_eventQueueWorkType;
 extern void MStackSignedMod_0042fee0(void);
@@ -146,10 +146,10 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     eax, dword ptr [ecx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x40
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      L_exit
         mov     eax, ecx
-        mov     ecx, dword ptr [g_x_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_scaledInit_00542044], ecx

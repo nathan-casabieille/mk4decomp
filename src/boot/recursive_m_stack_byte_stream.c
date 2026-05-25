@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,7 +128,7 @@ extern void RecursiveMStackByteStream_00406d00(void);
 
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
  *   push g_scaledInit_00542044 and g_xformEntityIdx onto mstack (2x inc g_state_004d57ac).
- *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_data_00538158
+ *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_player1NodeIdx
  *     use g_data_00537f48 else use g_data_005380e0; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
  *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle_004ac150; if pause? ret.
@@ -159,7 +159,7 @@ void MStackPushPairTriCall_0048ce60(void) {
         mov     eax, dword ptr [g_state_00537f48]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], eax
-        cmp     ecx, dword ptr [g_state_00538158]
+        cmp     ecx, dword ptr [g_player1NodeIdx]
         _emit   74h
         _emit   0ch
         mov     edx, dword ptr [g_state_005380e0]

@@ -19,14 +19,14 @@ extern packed_ptr g_fightGroupHead;
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
 extern unsigned int g_baseSel_00542060;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     *(unsigned int *)(base + 0x84) = 0;
     do {
-        if (g_fightGroupHead == g_data_00538158) break;
+        if (g_fightGroupHead == g_player1NodeIdx) break;
         if (g_fightGroupHead == g_data_0053815c) break;
         *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet_0048d070;
         *(unsigned int *)(base + 0x84) = 1;

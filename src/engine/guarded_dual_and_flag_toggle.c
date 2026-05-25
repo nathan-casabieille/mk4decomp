@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -127,10 +127,10 @@ extern unsigned int g_data_00535e7c;
  *   call MStackPush2ChainSwap_0048f090; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1; test al,cl;
  *   if zero: jmp clear_path;
- *   edx = g_walkCallback & 1; g_state_00542094 = edx;
+ *   edx = g_walkCallback & 1; g_xformScratch94 = edx;
  *   if zero: jmp set;
  *   g_xformDirtyFlags &= 0xfe; ret;
- *   clear_path: ecx = g_walkCallback & 1; g_state_00542094 = ecx;
+ *   clear_path: ecx = g_walkCallback & 1; g_xformScratch94 = ecx;
  *   if nonzero: jmp set;
  *   g_xformDirtyFlags &= 0xfe; ret;
  *   set: g_xformDirtyFlags |= 1; ret.
@@ -155,7 +155,7 @@ void GuardedDualAndFlagToggle_0048f020(void) {
         _emit   1dh
         mov     edx, dword ptr [g_walkCallback]
         and     edx, eax
-        mov     dword ptr [g_state_00542094], edx
+        mov     dword ptr [g_xformScratch94], edx
         _emit   74h
         _emit   2ah
         mov     eax, dword ptr [g_xformDirtyFlags]
@@ -164,7 +164,7 @@ void GuardedDualAndFlagToggle_0048f020(void) {
         ret
         mov     ecx, dword ptr [g_walkCallback]
         and     ecx, eax
-        mov     dword ptr [g_state_00542094], ecx
+        mov     dword ptr [g_xformScratch94], ecx
         _emit   75h
         _emit   0dh
         mov     eax, dword ptr [g_xformDirtyFlags]

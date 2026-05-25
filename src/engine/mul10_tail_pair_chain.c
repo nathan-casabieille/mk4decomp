@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -123,7 +123,7 @@ extern unsigned int g_data_00535e78;
 extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00470390 (232b game) - Mul10Tail pair with chain init + indirect via scaledInit pair.
- *   Pick scaledInit from 0x005380c0>>2 (if g_fightGroupHead==g_state_00538158) or 0x0052d728>>2;
+ *   Pick scaledInit from 0x005380c0>>2 (if g_fightGroupHead==g_player1NodeIdx) or 0x0052d728>>2;
  *   chain[+0]=g_walkCallback=[g_fightGroupHead*4+0x54], chain[+4]=g_eventQueueCurrent=[g_fightGroupHead*4+0x5c];
  *   call ScaledChainDouble_004911f0; pause-check.
  *   Two Mul10Tail calls with 0x00027333 multiplier:
@@ -143,7 +143,7 @@ __declspec(naked) void Mul10TailPairChain_00470390(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
         push    esi
-        mov     esi, dword ptr [g_state_00538158]
+        mov     esi, dword ptr [g_player1NodeIdx]
         mov     eax, 0x005380c0
         mov     ecx, 0x0052d728
         shr     eax, 2

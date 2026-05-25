@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00535e7c;
  *     g_walkCallback=0x13; call TableLookupCall; push 0x004ed420; call
  *     ScaledDualPropagateJmp; if !pause: tail-jmp FiveCallGuardSetTail; ret.
  *   B2 (80..230): read cj[+0x58]; if eax<0x9999: select g_data_00538038 or
- *     [0053803c] based on edx == g_state_00538158; copy [+0x5c]/[+0x60]; clear
+ *     [0053803c] based on edx == g_player1NodeIdx; copy [+0x5c]/[+0x60]; clear
  *     cj[+0x58] = 0xfffc0000; set cj[+0x4c] = 0xa3d; tail-jmp ScaledZero44.
  */
 extern unsigned int g_data_00538038;
@@ -179,7 +179,7 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   7ch
         _emit   7dh
-        mov     ecx, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_data_00538038]
         cmp     edx, ecx
         mov     dword ptr [g_scaledInit_00542044], eax

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -131,7 +131,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void DirtyFlagsManip_0048de00(void);
 extern void DualEntryBitFlagDispatch_0048e820(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
@@ -161,7 +161,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         shr      eax, 0x18
         mov      dword ptr [g_walkCallback], eax
         and      eax, 2
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_d55d
         mov      ecx, 0x10
         mov      dword ptr [g_xformScratch2088], ecx
@@ -173,7 +173,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      esi, eax
         mov      dword ptr [g_walkCallback], eax
         and      esi, 0x20
-        mov      dword ptr [g_data_00542094], esi
+        mov      dword ptr [g_xformScratch94], esi
         je       short L_d591
         call     DirtyFlagsManip_0048de00
         pop      esi
@@ -190,7 +190,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         mov      eax, dword ptr [eax*4 + 0x40]
         mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 8
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_d6a7
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, OFFSET DualEntryBitFlagDispatch_0048e820 + 0x40
@@ -200,7 +200,7 @@ __declspec(naked) void MStackChainInstallDispatch_0048d500(void)
         shr      eax, 0x18
         mov      dword ptr [g_walkCallback], eax
         and      eax, ebx
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_d605
         mov      dword ptr [g_xformEntityIdx], edx
     L_d605:

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,10 +126,10 @@ extern void GuardedWalkSwitchDirty_0048ea40(void);
 extern void MStackChainBit2Cascade_0048e8f0(void);
 
 /* @addr 0x0048e820 (205b game) - dual-entry bit-flag dispatcher.
- *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_state_00542094 = & 4; toggle bit-0 based on result. ret.
+ *   A: load chain via baseSel[*4+0x38] then *4+0x40; g_xformScratch94 = & 4; toggle bit-0 based on result. ret.
  *   B (+0x40): call DirtyToggleByBaseSel; pause-check; if bit-2 set jmp GuardedWalkSwitchDirty_0048ea40;
  *     call MStackChainBit2Cascade_0048e8f0; pause-check; if bit-0 clear ret. call PushPopState70Mask_00490650; pause-check;
- *     load g_state_00538158 vs g_fightGroupHead; if eq eax=0x200 else eax=2; g_state_00542094=eax & g_walkCallback;
+ *     load g_player1NodeIdx vs g_fightGroupHead; if eq eax=0x200 else eax=2; g_xformScratch94=eax & g_walkCallback;
  *     toggle bit-0; ret.
  */
 extern unsigned int g_pause_00541e6c;
@@ -147,7 +147,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         mov     eax, dword ptr [eax*4 + 0x40]
         mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, 4
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h
@@ -183,7 +183,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         test    eax, eax
         _emit   75h
         _emit   4bh
-        mov     ecx, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x00000200
         cmp     edx, ecx
@@ -194,7 +194,7 @@ __declspec(naked) void DualEntryBitFlagDispatch_0048e820(void) {
         mov     eax, 2
         mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h

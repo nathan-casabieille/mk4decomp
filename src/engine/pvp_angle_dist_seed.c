@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,7 +128,7 @@ extern unsigned int g_data_0053803c;
 extern unsigned int g_data_00538040;
 extern unsigned int g_data_00538044;
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
@@ -151,7 +151,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
 {
     __asm {
         /* === h1 (0x4232e0): main diff/ratio + angle install === */
-        mov      ecx, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_player1NodeIdx]
         mov      edx, dword ptr [g_data_0053815c]
         push     esi
         mov      dword ptr [g_currentNodeIdx], ecx
@@ -222,7 +222,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         nop
         /* === h2 (0x4233f0): p1→p2 seed → 4235f0 === */
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [g_data_00537f48]
@@ -258,7 +258,7 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538038]

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -142,13 +142,13 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
  *     and calls EsiEdiAliasDualMul10_004906b0, sets g_xformScratch2088=0x9999,
  *     calls PunchAnimCluster_00496d80, then NotMaskStorePair_0045f440. Selects
- *     g_eventQueueWorkType = 1 (if 0x54205c == g_data_00538158) or 0x10,
- *     AND's with g_eventQueueCurrent → g_data_00542094; if zero tail-jmp
+ *     g_eventQueueWorkType = 1 (if 0x54205c == g_player1NodeIdx) or 0x10,
+ *     AND's with g_eventQueueCurrent → g_xformScratch94; if zero tail-jmp
  *     FiveCallGuardSetTail_0046f6b0; else continues loop iteration by
  *     re-reading phase and jumping back if non-zero. Install tail:
  *     [eax+8]=Self, slot[+0x84]=1, g_pendingNodeType=1, 0x541e6c=1.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
@@ -156,7 +156,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void EsiEdiAliasDualMul10_004906b0(void);
 
 __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
@@ -215,7 +215,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         cmp     dword ptr [g_framePauseFlag], edi
         jne     short L_cis_done
         mov     ecx, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_data_00538158]
+        mov     edx, dword ptr [g_player1NodeIdx]
         mov     eax, ebx
         cmp     ecx, edx
         mov     dword ptr [g_eventQueueChild], esi
@@ -225,7 +225,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         mov     dword ptr [g_eventQueueWorkType], eax
     L_cis_pickEax:
         and     eax, dword ptr [g_eventQueueCurrent]
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      short L_cis_call6b0
         mov     edx, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [edx*4 + 0x84]

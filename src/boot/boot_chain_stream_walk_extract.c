@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -129,9 +129,9 @@ extern unsigned int g_data_00535e7c;
  *   Loop: eax = chain[ecx*4]; g_walkCallback=eax. If eax < 0: skip pos branch.
  *     Else: g_state_00542098 = (eax == 0); if != 0: skip to loop test.
  *       eax = chain[eax*4 + 0x20]; g_walkCallback=eax; g_pendingNodeType += 0xf; eax &= 0x100;
- *       g_state_00542094 = eax; if 0: skip to loop test.
+ *       g_xformScratch94 = eax; if 0: skip to loop test.
  *       g_walkCallback = g_xformEntityIdx[0]; call ExtractBitsToVec3; if paused: ret-noPop.
- *     edx = g_xformEntityIdx+1; eax = (esi > ecx); g_x_00542094 = eax; if 0: pop+ret;
+ *     edx = g_xformEntityIdx+1; eax = (esi > ecx); g_xformScratch94 = eax; if 0: pop+ret;
  *       g_eventQueueTotal--; if sign: pop+ret; else loop back.
  *   Loop test: if esi > ecx: loop.
  *   Pop1 mstack into g_eventQueueTotal; pop esi; ret.
@@ -186,7 +186,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         add     edx, 0xf
         and     eax, 0x100
         mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      short L_7ae_loopTest
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4]

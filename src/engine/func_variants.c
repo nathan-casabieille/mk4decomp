@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
 extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004e3ac8;
 extern unsigned int g_data_004f2240;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
@@ -691,7 +691,7 @@ __declspec(naked) void func_0047c530(void)
         mov      eax, dword ptr [g_data_0053815c]
         mov      ecx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         cmp      ecx, eax
         je       short L_c54e
         mov      dword ptr [g_currentNodeIdx], eax

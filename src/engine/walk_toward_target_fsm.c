@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -141,7 +141,7 @@ extern void GuardedSeq_0042fb80(void);
  *   interpolation tails. Phase 0: installs Self at [eax+8] with slot[+0x84]=1
  *   and arms g_framePauseFlag.
  *   Phase 1+ path: chains Distance2DSaturationClamp_004300a0 → load
- *   g_data_00538158 → ChainFieldTest2Branch_0042fbc0 → load g_data_0053815c
+ *   g_player1NodeIdx → ChainFieldTest2Branch_0042fbc0 → load g_data_0053815c
  *   → ChainFieldTest2Branch_0042fbc0 → LoadSetCallPauseStoreJmp_0042fea0 →
  *   MStackPush4DualCallAbsPop4_00430d30. After the chain:
  *     - if g_acc_00542078 > 0xa3d, tail-call WalkTowardTargetFsm_004301e0.
@@ -157,7 +157,7 @@ extern void GuardedSeq_0042fb80(void);
  *           g_currentNodeIdx)
  *         - else (>= 0x542074): GuardedSeq_0042fb80 or SubCmpCallPauseJmp.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingNodeType;
@@ -177,7 +177,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch_0042f8a0(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        mov     ecx, dword ptr [g_data_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_currentNodeIdx], ecx
         call    ChainFieldTest2Branch_0042fbc0
         mov     eax, dword ptr [g_framePauseFlag]

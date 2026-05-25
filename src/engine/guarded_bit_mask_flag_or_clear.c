@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   call CopyJmp_0048ef90; if pause: ret;
  *   cl = byte [g_xformDirtyFlags]; eax = 1;
  *   if (al & cl): jmp clear_and_ret;
- *   ecx = g_cj_0054205c; edx = [ecx*4 + 0x40] & 1; g_state_00542094 = edx;
+ *   ecx = g_cj_0054205c; edx = [ecx*4 + 0x40] & 1; g_xformScratch94 = edx;
  *   if zero: g_walkCallback = 1, ret;
  *   clear_and_ret: g_walkCallback = 0, ret.
  */
@@ -153,7 +153,7 @@ void GuardedBitMaskFlagOrClear_0048c510(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [ecx*4 + 0x40]
         and     edx, eax
-        mov     dword ptr [g_state_00542094], edx
+        mov     dword ptr [g_xformScratch94], edx
         _emit   74h
         _emit   0bh
         mov     dword ptr [g_walkCallback], 0

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -125,10 +125,10 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0048ed70 (105b)
  *   g_eventQueueCurrent = 8; g_eventQueueWorkType = 0x800;
  *   call PushPopState70Mask_00490650; if pause: ret;
- *   eax = g_state_00538158; ecx = g_cj_0054205c;
+ *   eax = g_player1NodeIdx; ecx = g_cj_0054205c;
  *   cmp ecx,eax; g_scaledInit = eax;
  *   if eq: eax = g_eventQueueCurrent; else: eax = g_eventQueueWorkType, g_eventQueueCurrent = eax;
- *   eax &= g_walkCallback; g_state_00542094 = eax;
+ *   eax &= g_walkCallback; g_xformScratch94 = eax;
  *   eax = g_xformDirtyFlags; if je: clear-bit0; else: set-bit0; ret.
  */
 extern void PushPopState70Mask_00490650(void);
@@ -142,7 +142,7 @@ void DualConstMaskFlagToggle8_0048ed70(void) {
         test    eax, eax
         _emit   75h
         _emit   46h
-        mov     eax, dword ptr [g_state_00538158]
+        mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_cj_0054205c]
         cmp     ecx, eax
         mov     dword ptr [g_scaledInit_00542044], eax
@@ -154,7 +154,7 @@ void DualConstMaskFlagToggle8_0048ed70(void) {
         _emit   05h
         mov     eax, dword ptr [g_eventQueueCurrent]
         and     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h
         _emit   08h

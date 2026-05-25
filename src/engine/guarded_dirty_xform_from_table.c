@@ -19,7 +19,7 @@ extern packed_ptr g_fightGroupHead;
  *   xformEntityIdx = eax; edx = g_scaledInit_00542044;
  *   [eax*4+0] = edx; ret.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00542038;
 extern unsigned int g_data_0054203c;
 extern void DirtyToggleByGate_0048f350(void);
@@ -30,7 +30,7 @@ void GuardedDirtyXformFromTable_0048f6d0(void) {
     if (g_xformDirtyFlags & 4) return;
     v = g_data_00542038;
     g_xformEntityIdx = v;
-    if (g_fightGroupHead != g_data_00538158) {
+    if (g_fightGroupHead != g_player1NodeIdx) {
         v = g_data_0054203c;
         g_xformEntityIdx = v;
     }

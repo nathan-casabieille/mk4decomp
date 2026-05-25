@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,7 +126,7 @@ extern unsigned int g_data_00535e7c;
  *   Sub esi=g_cj. dx=[cj*4+0x54]-g_load_0052ab04; dy=[cj*4+0x5c]-g_load_0052ab08.
  *   Mul10Tail(dx,dx)+Mul10Tail(dy,dy)->g_acc.
  *   If sum > 0x370000: jump to saturation_high.
- *   Else: load g_state_00538158 / g_x_0053815c (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
+ *   Else: load g_player1NodeIdx / g_x_0053815c (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
  *     if a>c: a=c. If a<=-0x20000: jump to saturation_low. Else jump to high path.
  *   saturation_high: cmp [cj*4+0x58], -0x18000; if >=: store -0x18000, set fields=0, ret.
  *     Else: ecx=0x7ae, store at cj[+0x70]=ecx; pop+ret.
@@ -170,7 +170,7 @@ __declspec(naked) void Distance2DSaturationClamp_004300a0(void) {
         mov     dword ptr [g_acc_00542078], eax
         _emit   7fh
         _emit   41h
-        mov     eax, dword ptr [g_state_00538158]
+        mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_x_0053815c]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     dword ptr [g_xformEntityIdx], ecx

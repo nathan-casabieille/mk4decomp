@@ -14,9 +14,9 @@ extern u32 g_eventQueueEnd;
 
 /* @addr 0x0046a1e0 (65b)
  *   set 0xa → walk; call F; pause → ret;
- *   load g_fightGroupHead, g_state_00538158; cmp; set 0x26 (or 0x27 if !eq); jmp T.
+ *   load g_fightGroupHead, g_player1NodeIdx; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern void SpecialAnimBuilder_004937b0(void);
 extern void func_00489ff0_aa(void);
 void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
@@ -24,7 +24,7 @@ void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {
     SpecialAnimBuilder_004937b0();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))0x26;
-    if (g_fightGroupHead != g_state_00538158) {
+    if (g_fightGroupHead != g_player1NodeIdx) {
         g_walkCallback = (void(*)(void))0x27;
     }
     func_00489ff0_aa();

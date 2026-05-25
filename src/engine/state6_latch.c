@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -125,7 +125,7 @@ extern unsigned char g_byte_0054389c;
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_00537f94;
 extern unsigned int g_x_005380e0;
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
 
@@ -145,7 +145,7 @@ void State6Latch_0048e240(void) {
     unsigned int chain_34;
     v = g_x_00537f48;
     g_walkCallback = v;
-    if (g_fightGroupHead != g_x_00538158) {
+    if (g_fightGroupHead != g_player1NodeIdx) {
         v = g_x_005380e0;
         g_walkCallback = v;
     }

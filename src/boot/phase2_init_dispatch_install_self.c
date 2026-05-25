@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -133,7 +133,7 @@ extern unsigned int g_eventQueueIdx;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void ChainListVecAdd_0049d200(void);
 extern void GuardedSeq_00471670(void);
 extern void MStackPop8_004ab860(void);
@@ -226,7 +226,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf_0040ba70(void)
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x400
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      L_p2id_helper_after_400
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     eax, dword ptr [ecx*4 + 0x38]

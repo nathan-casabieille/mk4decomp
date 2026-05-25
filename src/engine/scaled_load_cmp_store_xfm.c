@@ -16,11 +16,11 @@ extern u32 g_eventQueueEnd;
  *   load 3 globals; push esi (saving callee reg); cmp/conditional store dance;
  *   pop esi; ret.
  */
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_state_00535d04;
 extern unsigned int g_state_0053a774;
 void ScaledLoadCmpStoreXfm_0048f2a0(void) {
-    unsigned int s1 = g_state_00538158;
+    unsigned int s1 = g_player1NodeIdx;
     unsigned int fg = g_fightGroupHead;
     unsigned int s2 = g_state_00535d04;
     unsigned int s3 = g_state_0053a774;

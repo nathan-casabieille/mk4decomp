@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,7 +128,7 @@ extern unsigned int g_pendingNodeType;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void CallPauseCallTestStackPushJmp_00460c60(void);
 extern void CallPauseMStackPushSet0Jmp_0045fcf0(void);
 extern void CallPauseTriCmpJmp_00460910(void);
@@ -199,7 +199,7 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch_0045fac0(void)
         mov     dword ptr [g_eventQueueCurrent], ecx
         je      L_spdbs_b4a
         and     eax, 2
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         jne     L_spdbs_b2
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_walkCallback], edi

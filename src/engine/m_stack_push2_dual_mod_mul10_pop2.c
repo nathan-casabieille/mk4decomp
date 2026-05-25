@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -130,14 +130,14 @@ extern unsigned int g_eventQueueIdx;
 extern unsigned int g_x_00541f94;
 extern unsigned int g_x_004d5320;
 extern unsigned int g_x_0052ab10;
-extern unsigned int g_x_00542094;
+extern unsigned int g_xformScratch94;
 
 /* @addr 0x004107d0 (198b boot) - 2-arg cdecl call + neg-chain + signed-bit branch + final tail-jmp.
  *   g_eventQueueIdx = g_walkCallback; push 0x2f, 0x4109b0; call StoreTwoCall;
  *   g_baseSel = g_scaledInit; g_scaledInit = [0x52ab10];
  *   ecx = -chain[g_scaledInit + 0x64]; g_walkCallback = ecx;
  *   eax = chain[g_fightGroupHead + 0x34]; g_eventQueueCurrent = eax;
- *   g_x_00542094 = eax & 1; if (bit clear) skip the add;
+ *   g_xformScratch94 = eax & 1; if (bit clear) skip the add;
  *   else: g_walkCallback = ecx + g_x_004d5320;
  *   call BootMod6487eClampAndChainMul10_00407510; pause? ret;
  *   g_eventQueueWorkType = g_walkCallback; g_pendingNodeType = g_x_00541f94;
@@ -170,7 +170,7 @@ __declspec(naked) void StoreTailJmpSigned_004107d0(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, 1
-        mov     dword ptr [g_x_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         _emit   74h
         _emit   0ch
         add     ecx, dword ptr [g_x_004d5320]

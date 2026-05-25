@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  */
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_00537f78;
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_0053a510;
 extern unsigned int g_fightGroupHead;
 extern unsigned int g_eventQueueCurrent;
@@ -167,7 +167,7 @@ void DownloadDualPush_00422e20(void) {
         _emit   6dh
         mov     eax, dword ptr [g_fightGroupHead]
         mov     ecx, 1
-        mov     dword ptr [g_x_00538158], eax
+        mov     dword ptr [g_player1NodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x30], ecx
         mov     eax, dword ptr [g_fightGroupHead]

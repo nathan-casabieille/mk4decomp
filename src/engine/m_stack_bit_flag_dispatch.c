@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x00494750 (165b game) - mstack-push bit-flag + 2 calls + cond push-arg call.
  *   g_eventQueueChild = 0. g_scaledInit = chain[g_baseSel + 0x38].
  *   g_walkCallback = eax = chain[g_scaledInit + 0x40].
- *   g_x_00542094 = (eax & 8); if non-zero: ecx = 1; g_eventQueueChild = 1.
+ *   g_xformScratch94 = (eax & 8); if non-zero: ecx = 1; g_eventQueueChild = 1.
  *   mstack-push ecx (= 0 or 1). call MStackPush3CmpCall_0048eec0. pause? -> ret.
  *   if (208c & 1): skip first call. else: g_walkCallback = 0x78; call ScaledLitLoadCall_00480fe0; pause? -> ret.
  *   mstack-pop into g_eventQueueChild. counter--.
@@ -133,7 +133,7 @@ extern unsigned int g_data_00535e7c;
  *   else: push 0x004f1400; call IterLoad_0048fd30; add esp, 4; ret.
  */
 extern unsigned int g_eventQueueChild;
-extern unsigned int g_x_00542094;
+extern unsigned int g_xformScratch94;
 extern void IterLoad_0048fd30(void);
 extern void ScaledLitLoadCall_00480fe0(void);
 
@@ -149,7 +149,7 @@ void MStackBitFlagDispatch_00494750(void) {
         mov     eax, [eax*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
-        mov     dword ptr [g_x_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         _emit   74h
         _emit   0bh
         mov     ecx, 1

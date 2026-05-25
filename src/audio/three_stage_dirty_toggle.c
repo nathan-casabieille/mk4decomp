@@ -12,7 +12,7 @@ extern u32 g_eventQueueEnd;
 extern u32 g_tickW1;
 extern packed_ptr g_fightGroupHead;
 
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 
 /* @addr 0x004ac1a0 (80b)
@@ -23,10 +23,10 @@ extern unsigned int g_data_0053815c;
 void ThreeStageDirtyToggle_004ac1a0(void) {
     unsigned int dirty;
     g_xformDirtyFlags |= 4;
-    if (g_walkCallback == g_data_00538158) return;
+    if (g_walkCallback == g_player1NodeIdx) return;
     dirty = g_xformDirtyFlags ^ 4;
     g_xformDirtyFlags = dirty;
-    if (g_walkCallback == g_data_00538158) return;
+    if (g_walkCallback == g_player1NodeIdx) return;
     dirty |= 4;
     g_xformDirtyFlags = dirty;
     if (g_data_0053815c == (unsigned int)g_walkCallback) return;

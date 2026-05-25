@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,14 +124,14 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004929e0 (185b game) - mstack-push 3 + call + bit-set/clear bit 0 by mask 0x100.
  *   Push g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType; call MStackPush2TableNot_00426230; pause? -> end.
- *   edx = g_walkCallback & 0x100; eax = g_xformDirtyFlags; g_x_00542094 = edx;
+ *   edx = g_walkCallback & 0x100; eax = g_xformDirtyFlags; g_xformScratch94 = edx;
  *   if (edx != 0): or al, 1; else: and al, 0xfe.
  *   g_xformDirtyFlags = eax.
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback.
  */
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00542094;
+extern unsigned int g_xformScratch94;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -160,7 +160,7 @@ void MStackPush3MaskBit0_004929e0(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_xformDirtyFlags]
         and     edx, 0x00000100
-        mov     dword ptr [g_x_00542094], edx
+        mov     dword ptr [g_xformScratch94], edx
         _emit   75h
         _emit   04h
         and     al, 0xfe

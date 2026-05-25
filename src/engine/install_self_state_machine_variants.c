@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,13 +126,13 @@ extern unsigned int g_data_00535e7c;
  *   chain[sel].slot84 -> eax; clear it; sub eax,0 (test).
  *   If 0: call BootInitGuardedCallChain_004265d0; pause? ret; install self; return.
  *   If 1: call SwapOrPassSet_0048fbf0; pause? ret;
- *     g_eventQueueNotMask = (g_pendingNodeType == g_x_00538158) ? g_x_00537f48 : g_x_005380e0.
+ *     g_eventQueueNotMask = (g_pendingNodeType == g_player1NodeIdx) ? g_x_00537f48 : g_x_005380e0.
  *   Then call StackPopDispatchTagged; ret.
  */
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_x_00537f48;
 extern unsigned int g_x_005380e0;
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueNotMask;
@@ -165,7 +165,7 @@ __declspec(naked) void InstallSelfStateMachine_00464280(void) {
         _emit   75h
         _emit   5bh
         mov     edx, dword ptr [g_pendingNodeType]
-        mov     eax, dword ptr [g_x_00538158]
+        mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_x_00537f48]
         cmp     edx, eax
         mov     dword ptr [g_eventQueueNotMask], ecx

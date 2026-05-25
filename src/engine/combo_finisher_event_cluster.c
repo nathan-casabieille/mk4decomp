@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_004f1610;
 extern unsigned int g_data_004f1628;
 extern unsigned int g_data_004f163c;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_fightGroupHead;
@@ -133,7 +133,7 @@ extern unsigned int g_baseSel_00542060;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_data_005431b8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualGatedStateYield_0048fc80(void);
@@ -228,7 +228,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         mov      ecx, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00538158]
+        mov      edx, dword ptr [g_player1NodeIdx]
         mov      eax, 0x10
         cmp      ecx, edx
         mov      dword ptr [g_eventQueueWorkType], eax
@@ -237,7 +237,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         mov      dword ptr [g_eventQueueWorkType], eax
     L_5efb:
         and      eax, dword ptr [g_walkCallback]
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_6067
         call     PushPopWalkSet1006_00470ee0
         cmp      dword ptr [g_framePauseFlag], edi

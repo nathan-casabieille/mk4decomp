@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0049c670 (91b)
  *   edx = g_data_00535e7c; eax = g_baseSel;
- *   ecx = g_data_00535e78; push esi; esi = g_state_00538158;
+ *   ecx = g_data_00535e78; push esi; esi = g_player1NodeIdx;
  *   g_eventQueueCurrent = edx; edx = g_cj_0054205c;
  *   g_walkCallback = ecx; eax <<= 2; cmp edx,esi;
  *   if eq: jmp store; ecx = g_data_00535e70; cmp edx,esi;
@@ -140,7 +140,7 @@ __declspec(naked) void CondPickDualStore_0049c670(void) {
         mov     eax, dword ptr [g_baseSel_00542060]
         mov     ecx, dword ptr [g_data_00535e78]
         push    esi
-        mov     esi, dword ptr [g_state_00538158]
+        mov     esi, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], ecx

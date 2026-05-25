@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -129,7 +129,7 @@ extern unsigned int g_data_00535e7c;
  *   mask based on cj == 0x538158; AND with walk; set bit 0 of
  *   state if result non-zero, else clear bit 0.
  */
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_eventQueueWorkType;
 extern void PushPopState70Mask_00490650(void);
 
@@ -148,7 +148,7 @@ void CjMaskedFlagProbe_0048ecf0(void) {
         test    eax, eax
         jne     done
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_x_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         je      useMask
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -158,7 +158,7 @@ useMask:
         mov     eax, dword ptr [g_eventQueueCurrent]
 applyMask:
         and     eax, dword ptr [g_walkCallback]
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      clearBit
         mov     eax, dword ptr [g_xformDirtyFlags]
         or      al, 1

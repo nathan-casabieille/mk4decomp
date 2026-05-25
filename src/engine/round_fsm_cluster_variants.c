@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -136,7 +136,7 @@ extern unsigned int g_data_004ed138;
 extern unsigned int g_data_004ed15c;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00541dc4;
 
 extern unsigned int g_data_004d57ac;
@@ -175,7 +175,7 @@ __declspec(naked) void CinematicFsmCluster_0047aaf0(void)
         nop
         /* === Helper 2: cinematic frame counter === */
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      edx, dword ptr [g_data_00538158]
+        mov      edx, dword ptr [g_player1NodeIdx]
         mov      ecx, dword ptr [g_data_00538038]
         cmp      eax, edx
         mov      dword ptr [g_currentNodeIdx], ecx
@@ -316,7 +316,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
 {
     __asm {
     L_08a0:
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      ecx, dword ptr [g_data_0052ab10]
         mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [g_fightGroupHead], ecx
@@ -402,7 +402,7 @@ __declspec(naked) void RoundFsmCluster_004308a0(void)
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_xformScratch2088], ecx
         mov      dword ptr [edx*4 + 0x74], ecx
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [g_eventQueueIdx], eax
         jmp      L_0a36
     L_09ff:

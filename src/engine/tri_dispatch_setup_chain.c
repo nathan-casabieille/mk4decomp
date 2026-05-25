@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -127,7 +127,7 @@ extern unsigned int g_data_00537ea4;
 extern unsigned int g_data_00537f2c;
 extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_0053a6dc;
 extern unsigned int g_data_0053a6e0;
@@ -227,7 +227,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
     L_tdsc_sub2:
         mov     eax, dword ptr [g_data_0053815c]
         mov     ecx, dword ptr [g_data_0053803c]
-        mov     edx, dword ptr [g_data_00538158]
+        mov     edx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -249,7 +249,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         nop
         nop
     L_tdsc_sub3:
-        mov     eax, dword ptr [g_data_00538158]
+        mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_data_00538038]
         mov     edx, dword ptr [g_data_0053815c]
         mov     dword ptr [g_currentNodeIdx], eax

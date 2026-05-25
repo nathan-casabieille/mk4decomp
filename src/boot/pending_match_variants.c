@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -137,7 +137,7 @@ extern unsigned int g_data_0052aac4;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537f48;
 extern unsigned int g_data_005380e0;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_0053a1ac;
 extern unsigned int g_data_0053a3e8;
@@ -153,7 +153,7 @@ extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_table_004d57b0;
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_00541dc4;
 extern unsigned int g_eventQueueEnd;
 extern unsigned int g_currentNodeFlags;
@@ -289,7 +289,7 @@ extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_data_005420c8;
 extern unsigned int g_data_00542378;
 extern unsigned int g_data_005433c0;
@@ -472,7 +472,7 @@ __declspec(naked) void CjDispatchCommit_004818e0(void) {
         jne     done
         mov     edx, dword ptr [g_cj_00542058]
         push    esi
-        mov     esi, dword ptr [g_x_00538158]
+        mov     esi, dword ptr [g_player1NodeIdx]
         mov     eax, 0x00538158
         mov     ecx, 0x0053815c
         shr     eax, 2
@@ -2108,7 +2108,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_1336
         mov      edx, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_player1NodeIdx]
         mov      eax, dword ptr [g_data_00537f48]
         cmp      edx, ecx
         mov      dword ptr [g_walkCallback], eax
@@ -2125,7 +2125,7 @@ __declspec(naked) void MainTickChain_00481070(void)
         mov      eax, dword ptr [g_data_0052ab40]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_1336
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [eax*4 + 0x80]
@@ -5087,7 +5087,7 @@ __declspec(naked) void PendingMatch_004108a0(void)
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       L_097c
         call     NegateThree_00425360
         mov      eax, dword ptr [g_framePauseFlag]

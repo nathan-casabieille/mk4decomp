@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,12 +128,12 @@ extern void Mul10Triple0xd999Interp_0042fa10(void);
 
 /*
  * @addr 0x0042fbc0 (116b game) - chain field-test then 2-branch:
- *   walk = walk[+0x40]; g_state_00542094 = walk & 0x40; if zero exit.
+ *   walk = walk[+0x40]; g_xformScratch94 = walk & 0x40; if zero exit.
  *   Else stash walk into wt, swap to 0x538158 (or 0x53815c if equal),
  *   call MStackSignedMod_0042fee0; on pause clear, walk=0x4ccc; if walk <= old
  *   tail-jmp SubCmpCallPauseJmp else tail-jmp Mul10Triple0xd999Interp_0042fa10.
  */
-extern unsigned int g_x_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_x_0053815c;
 extern unsigned int g_eventQueueWorkType;
 
@@ -143,10 +143,10 @@ __declspec(naked) void ChainFieldTest2Branch_0042fbc0(void) {
         mov     eax, dword ptr [ecx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x40
-        mov     dword ptr [g_state_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         je      done
         mov     eax, ecx
-        mov     ecx, dword ptr [g_x_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_scaledInit_00542044], ecx

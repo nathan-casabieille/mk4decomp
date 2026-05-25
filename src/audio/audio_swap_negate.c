@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,7 +126,7 @@ extern unsigned int g_x_0052ab10;
 /*
  * @addr 0x004ac080 (126b audio) - audio swap and negate:
  *   push wt; load 0x52ab10 into wt; load wt[+0x64], negate -> walk;
- *   read cj_5c[+0x34]; store its bit 0 into g_state_00542094; if
+ *   read cj_5c[+0x34]; store its bit 0 into g_xformScratch94; if
  *   bit was set, replace walk with original (positive) wt[+0x64];
  *   store walk into cj[+0x64]; pop wt back.
  */
@@ -141,7 +141,7 @@ void AudioSwapNegate_004ac080(void) {
     chain = *(unsigned int *)(g_cj_0054205c * 4 + 0x34);
     g_eventQueueCurrent = chain;
     chain &= 1;
-    g_state_00542094 = chain;
+    g_xformScratch94 = chain;
     if (chain != 0) {
         v = *(unsigned int *)(g_x_0052ab10 * 4 + 0x64);
         g_walkCallback = (void(*)(void))v;

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x004904c0 (273b game) - bit-driven dispatch with 2-call cascade + mstack-push.
  *   Negate g_walkCallback -> g_eventQueueCurrent. scaledInit = baseSel[+0x38];
- *   g_eventQueueWorkType = scaledInit[+0x34]; bit0 -> g_x_00542094.
+ *   g_eventQueueWorkType = scaledInit[+0x34]; bit0 -> g_xformScratch94.
  *   If bit0 set: "1-bit" branch; else "0-bit" branch.
  *   Both branches: call DoublePushCallDoublePop; if pause? ret. Then conditional
  *   mstack-push, optional GuardedSeq, mstack-pop, tail-jmp MStackFrameCdeclDouble_004903f0.
@@ -132,7 +132,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00542094;
+extern unsigned int g_xformScratch94;
 extern void DoublePushCallDoublePop_004905e0(void);
 extern void GuardedSeq_00490c60(void);
 
@@ -147,7 +147,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush_004904c0(void) {
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 1
-        mov     dword ptr [g_x_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         _emit   75h
         _emit   77h
         call    DoublePushCallDoublePop_004905e0

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0048e450 (88b)
  *   ecx = g_walkCallback; edx = g_cj_0054205c; eax = 0x541ee8;
- *   push esi; esi = g_state_00538158; eax >>= 2;
+ *   push esi; esi = g_player1NodeIdx; eax >>= 2;
  *   eax = eax + ecx*2; ecx = 0; cmp edx,esi; g_walkCallback = ecx;
  *   if eq: skip; ecx=1; g_walkCallback=1;
  *   skip: eax += ecx; ecx = g_data_0053a498; g_scaledInit = eax;
@@ -140,7 +140,7 @@ void CmpCondIdxArrLookup_0048e450(void) {
     idx = ((unsigned int)&g_data_00541ee8 >> 2) + (unsigned int)g_walkCallback * 2;
     adj = 0;
     g_walkCallback = (void(*)(void))0;
-    if (g_cj_0054205c != g_state_00538158) {
+    if (g_cj_0054205c != g_player1NodeIdx) {
         adj = 1;
         g_walkCallback = (void(*)(void))1;
     }

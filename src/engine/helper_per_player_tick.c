@@ -22,7 +22,7 @@ extern unsigned int g_data_00535e7c;
 extern unsigned int g_data_00537e94;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00538068;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_0053a42c;
 extern unsigned int g_data_0053a730;
@@ -39,7 +39,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_eventQueueChild;
 extern unsigned int g_currentNodeFlags;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_00489cd0(void);
 extern void DualInstallCallSwap_00490c80(void);
 extern void FpuSqrtMul_004ab350(void);
@@ -51,7 +51,7 @@ extern void ScaledStateNegCallPauseLoad_00489e90(void);
 __declspec(naked) void Helper_PerPlayerTick(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         mov      ecx, dword ptr [g_data_0053815c]
         push     esi
         push     edi
@@ -110,7 +110,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         or       eax, ecx
         mov      dword ptr [g_eventQueueWorkType], eax
         and      eax, 0x80
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_9569
         mov      ecx, dword ptr [g_eventQueueNotMask]
         mov      dword ptr [g_currentNodeFlags], edx
@@ -147,7 +147,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_eventQueueCurrent], eax
         or       eax, edx
         and      eax, 0x80
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         jne      L_9569
         mov      edx, dword ptr [g_data_0053a42c]
         lea      eax, [edx - 1]

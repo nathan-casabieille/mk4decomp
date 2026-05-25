@@ -18,14 +18,14 @@ extern packed_ptr g_fightGroupHead;
  *   eax = [ecx*4+0]; store → walk; ret.
  */
 extern u32 g_eventQueueTotal;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 void ScaledIndexCondCopy_0048e590(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;
     v = *(unsigned int *)(packed * 4 + 0);
     g_scaledInit_00542044 = v;
-    if (g_fightGroupHead != g_data_00538158) {
+    if (g_fightGroupHead != g_player1NodeIdx) {
         v = *(unsigned int *)(packed * 4 + 4);
         g_scaledInit_00542044 = v;
     }

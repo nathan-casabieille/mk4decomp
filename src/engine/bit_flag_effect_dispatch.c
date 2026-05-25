@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 extern unsigned int g_data_0052ab40;
 extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern void Helper_SetState_02(void);
 extern void Helper_SetState_03(void);
 extern void Helper_SetState_04(void);
@@ -149,7 +149,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x4000
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_13e1
         call     Helper_SetState_1A
         mov      eax, dword ptr [g_framePauseFlag]
@@ -160,7 +160,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 0x1000
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_140d
         call     Helper_SetState_0E
         mov      eax, dword ptr [g_framePauseFlag]
@@ -171,7 +171,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x800
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_1439
         call     Helper_SetState_0C
         mov      eax, dword ptr [g_framePauseFlag]
@@ -182,7 +182,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 0x200
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_1465
         call     TenThunkDualSave_004616e0
         mov      eax, dword ptr [g_framePauseFlag]
@@ -193,7 +193,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x100
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_1491
         call     Helper_SetState_09
         mov      eax, dword ptr [g_framePauseFlag]
@@ -204,7 +204,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 2
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_14ba
         call     TripleBlockInstallSelfThunk_00461930
         mov      eax, dword ptr [g_framePauseFlag]
@@ -215,7 +215,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 4
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_14e3
         call     Helper_SetState_03
         mov      eax, dword ptr [g_framePauseFlag]
@@ -226,7 +226,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 0x400
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_150f
         call     Helper_SetState_0B
         mov      eax, dword ptr [g_framePauseFlag]
@@ -237,7 +237,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 8
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_1538
         call     Helper_SetState_04
         mov      eax, dword ptr [g_framePauseFlag]
@@ -248,7 +248,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 0x10
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_1561
         call     Helper_SetState_05
         mov      eax, dword ptr [g_framePauseFlag]
@@ -259,7 +259,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x20
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_158a
         call     Helper_SetState_06
         mov      eax, dword ptr [g_framePauseFlag]
@@ -270,7 +270,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 0x40
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_15b3
         call     Helper_SetState_07
         mov      eax, dword ptr [g_framePauseFlag]
@@ -281,7 +281,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      ecx, eax
         mov      dword ptr [g_walkCallback], eax
         and      ecx, 0x80
-        mov      dword ptr [g_data_00542094], ecx
+        mov      dword ptr [g_xformScratch94], ecx
         je       short L_15db
         call     TableWalk3StrideCall_00461640
         mov      eax, dword ptr [g_framePauseFlag]
@@ -297,7 +297,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
         mov      edx, eax
         mov      dword ptr [g_walkCallback], eax
         and      edx, 1
-        mov      dword ptr [g_data_00542094], edx
+        mov      dword ptr [g_xformScratch94], edx
         je       short L_1616
         call     Helper_SetState_02
         mov      eax, dword ptr [g_framePauseFlag]
@@ -307,7 +307,7 @@ __declspec(naked) void BitFlagEffectDispatch_004613b0(void)
     L_1616:
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x2000
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_1631
         call     Helper_SetState_0F
         mov      eax, dword ptr [g_framePauseFlag]

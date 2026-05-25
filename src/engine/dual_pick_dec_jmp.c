@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -126,7 +126,7 @@ extern unsigned int g_dualB_0053803c;
 extern unsigned int g_state_00541dc4;
 
 /* @addr 0x00470840 (96b)
- *   eax = g_state_00538158; edx = g_cj_0054205c;
+ *   eax = g_player1NodeIdx; edx = g_cj_0054205c;
  *   ecx = g_dualB_00538038; cmp edx,eax; g_xformEntityIdx = ecx;
  *   g_scaledInit = eax; if eq: skip;
  *   ecx = g_dualB_0053803c; g_xformEntityIdx = ecx;
@@ -141,7 +141,7 @@ void DualPickDecJmp_00470840(void) {
     unsigned int cj;
     unsigned int idx;
     int v;
-    state = g_state_00538158;
+    state = g_player1NodeIdx;
     cj = g_cj_0054205c;
     idx = g_dualB_00538038;
     g_xformEntityIdx = idx;

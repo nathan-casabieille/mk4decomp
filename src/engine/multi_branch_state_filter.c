@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -151,7 +151,7 @@ void MultiBranchStateFilter_00439a40(void) {
     }
     x40 = ((unsigned int *)&g_chain_disp_40_439a40)[g_cj_0054205c];
     g_eventQueueWorkType = x40;
-    g_state_00542094 = x40 & 2;
+    g_xformScratch94 = x40 & 2;
     if ((x40 & 2) != 0) {
         TwoConditionalJmp_00439b80();
         return;

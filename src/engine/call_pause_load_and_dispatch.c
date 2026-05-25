@@ -37,13 +37,13 @@ void AppShutdown(void) {
 
 /* @addr 0x004235f0 (64b)
  *   call F; pause → ret;
- *   load g_state_0052ab40 → walk; and 4 → g_state_00542094;
+ *   load g_state_0052ab40 → walk; and 4 → g_xformScratch94;
  *   jz → call F2; pause → ret;
  *   set [g_eventQueueNotMask] = 0x1002f; jmp T.
  */
 extern void ZeroSlotsGatedDispatch_00423720(void);
 extern unsigned int g_state_0052ab40;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern void ScaledLoadCmp0fJmp_004930e0(void);
 extern void HitReactionDispatcher_0045f650(void);
 void CallPauseLoadAndDispatch_004235f0(void) {
@@ -53,7 +53,7 @@ void CallPauseLoadAndDispatch_004235f0(void) {
     v = g_state_0052ab40;
     g_walkCallback = (void (*)(void))v;
     v = v & 4;
-    g_state_00542094 = v;
+    g_xformScratch94 = v;
     if (v != 0) {
         ScaledLoadCmp0fJmp_004930e0();
         if (g_framePauseFlag != 0) return;

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x00494670 (219b game) - 2-call cascade + state-based chain selection + indirect call.
  *   call ScaledLoadCmp0fJmp; if !pause: call MStackBitFlagDispatch; if !pause:
- *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_fightGroupHead==g_state_00538158;
+ *   pick chain from 0x0053a3e4>>2 or 0x0053a474>>2 based on g_fightGroupHead==g_player1NodeIdx;
  *   g_walkCallback=[chain*4+0]; scaledInit=baseSel[*4+0x3c]; g_eventQueueCurrent=[scaledInit*4+0x7c];
  *   if > 3: ecx=0x4ccc, g_walkCallback=ecx; store ecx to [chain*4+0].
  *   eax = baseSel[*4+0x30]; scaledInit=eax; ecx=[eax*4+0]; sub 0x60;
@@ -159,7 +159,7 @@ __declspec(naked) void StateChainIndirect_00494670(void) {
         _emit   00h
         mov     edx, dword ptr [g_fightGroupHead]
         push    esi
-        mov     esi, dword ptr [g_state_00538158]
+        mov     esi, dword ptr [g_player1NodeIdx]
         mov     ecx, 0x0053a3e4
         mov     eax, 0x0053a474
         shr     ecx, 2

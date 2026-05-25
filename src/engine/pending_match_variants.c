@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -112,7 +112,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -157,7 +157,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -404,7 +404,7 @@ extern unsigned int g_data_0052d758;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00537f04;
 extern unsigned int g_data_0053a514;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_pause_00541e6c;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_pendingNodeType;
@@ -549,7 +549,7 @@ extern unsigned int g_data_00538038;
 extern unsigned int g_data_0053803c;
 extern unsigned int g_data_005380e0;
 extern unsigned int g_data_00538148;
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_data_00538160;
 extern unsigned int g_data_00538164;
@@ -2070,7 +2070,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         mov     dword ptr [g_data_0052d724], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         jne     short L_pis2_skipCall
         call    TwinMStackPushScaledChain_00422110
         mov     eax, dword ptr [g_framePauseFlag]
@@ -3329,7 +3329,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [eax*4 + 0x34]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_16bd
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_16bd:
@@ -3447,7 +3447,7 @@ __declspec(naked) void PoseFsmTriHelpers_00431650(void)
         mov      eax, dword ptr [edx*4 + 0x34]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       short L_1894
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_1894:
@@ -6147,7 +6147,7 @@ __declspec(naked) void StoryCharIntroFsmCluster_00467ed0(void)
         mov      eax, dword ptr [eax*4 + 0x34]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 1
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       L_8235
         mov      dword ptr [g_xformScratch2088], 0xffff0000
     L_8235:
@@ -7800,11 +7800,11 @@ __declspec(naked) void PendingMatch_004694b0(void)
         cmp      ecx, eax
         mov      dword ptr [g_fightGroupHead], ecx
         jne      L_96c1
-        mov      edx, dword ptr [g_data_00538158]
+        mov      edx, dword ptr [g_player1NodeIdx]
         mov      eax, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_eventQueueTotal], edx
         mov      edx, dword ptr [g_data_0053803c]
-        mov      dword ptr [g_data_00538158], ecx
+        mov      dword ptr [g_player1NodeIdx], ecx
         mov      ecx, dword ptr [g_data_0053a178]
         mov      dword ptr [g_currentNodeIdx], edx
         mov      edx, dword ptr [g_data_0053815c]
@@ -7823,7 +7823,7 @@ __declspec(naked) void PendingMatch_004694b0(void)
         mov      dword ptr [g_data_0053815c], ecx
         mov      ecx, dword ptr [g_data_0053a250]
         mov      dword ptr [g_currentNodeIdx], edx
-        mov      edx, dword ptr [g_data_00538158]
+        mov      edx, dword ptr [g_player1NodeIdx]
         mov      dword ptr [g_data_00535db0], edi
         mov      dword ptr [g_data_0053803c], eax
         mov      dword ptr [g_data_00538164], edi
@@ -8141,7 +8141,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         shr      eax, 2
         mov      edx, 0x537f48
         mov      dword ptr [g_eventQueueEnd], eax
-        mov      eax, dword ptr [g_data_00538158]
+        mov      eax, dword ptr [g_player1NodeIdx]
         shr      edx, 2
         cmp      ecx, eax
         mov      dword ptr [g_eventQueueIdx], edx
@@ -8378,7 +8378,7 @@ __declspec(naked) void PendingMatch_0048c570(void)
         test     eax, eax
         jne      L_cb75
         mov      eax, dword ptr [g_walkCallback]
-        mov      ecx, dword ptr [g_data_00538158]
+        mov      ecx, dword ptr [g_player1NodeIdx]
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_eventQueueEnd], 0x12c
@@ -11694,7 +11694,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      eax, dword ptr [eax*4 + 0x40]
         mov      dword ptr [g_walkCallback], eax
         and      eax, 0x200
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       L_b716
         jmp      MoveListCursorCluster_0045b420
     L_b6e9:
@@ -11704,7 +11704,7 @@ __declspec(naked) void PendingMatch_0045b620(void)
         mov      eax, dword ptr [eax*4 + 0x40]
         mov      dword ptr [g_eventQueueCurrent], eax
         and      eax, 4
-        mov      dword ptr [g_data_00542094], eax
+        mov      dword ptr [g_xformScratch94], eax
         je       L_b716
         jmp      MoveListCursorCluster_0045b420
     L_b716:

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -125,7 +125,7 @@ extern unsigned int g_data_00535e7c;
 /* @addr 0x0045f470 (251b game) - cdecl arg-1 + 8-field copy + AND chain + bit toggle.
  *   arg1 = [esp+4]; eax = arg1>>2 -> g_eventQueueTotal.
  *   Copy [eax*4 +0/+4/+8/+0xc] -> g_eventQueueWorkType/g_acc_00542078/g_eventQueueNotMask/g_eventQueueChild.
- *   If g_cj_0054205c == g_state_00538158: skip second 8-field load; else copy
+ *   If g_cj_0054205c == g_player1NodeIdx: skip second 8-field load; else copy
  *     [eax*4 +0x10/+0x14/+0x18/+0x1c] -> same dests. eax += 8, store; call
  *     NotMaskStorePair_0045f440; if pause? ret.
  *   AND g_walkCallback &= g_eventQueueNotMask; AND g_eventQueueCurrent &= g_eventQueueChild;
@@ -151,7 +151,7 @@ void CdeclArgScaledLookupAndStore_0045f470(void) {
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x0c]
-        mov     ecx, dword ptr [g_state_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], ecx

@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -128,7 +128,7 @@ extern unsigned int g_data_00535e7c;
  *   into [g_eventQueueTotal*4] as the cur radius. Compares against
  *   g_data_0053a180; if greater-or-equal proceeds to the success path
  *   (advance position), else first stashes the un-advanced position
- *   into a save-slot keyed by g_pendingNodeType vs g_data_00538158 (either
+ *   into a save-slot keyed by g_pendingNodeType vs g_player1NodeIdx (either
  *   0x543560/8/4 or 0x543580/4/8) and continues.
  *
  *   Position advance: takes the cached (x,y)+(dx,dy) vector at
@@ -137,12 +137,12 @@ extern unsigned int g_data_00535e7c;
  *   the save-slot (revert advance) and conditionally clears velocity
  *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_pendingNodeType;
 extern unsigned int g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_data_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_data_00543554;
 extern unsigned int g_data_00543558;
 extern unsigned int g_data_00543560;
@@ -183,7 +183,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         jge     short L_sdt_advance
         mov     edx, dword ptr [g_pendingNodeType]
-        mov     edi, dword ptr [g_data_00538158]
+        mov     edi, dword ptr [g_player1NodeIdx]
         cmp     edx, edi
         mov     edx, dword ptr [esi + 0x54]
         jne     short L_sdt_stashAlt
@@ -230,7 +230,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         jle     short L_sdt_done
         mov     eax, dword ptr [g_pendingNodeType]
-        mov     ecx, dword ptr [g_data_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         jne     short L_sdt_restoreAlt
         mov     ecx, dword ptr [g_data_00543560]
@@ -247,7 +247,7 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     eax, dword ptr [esi + 0x40]
         mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 0x80
-        mov     dword ptr [g_data_00542094], eax
+        mov     dword ptr [g_xformScratch94], eax
         jne     short L_sdt_done
         xor     eax, eax
         mov     dword ptr [esi + 0x6c], eax

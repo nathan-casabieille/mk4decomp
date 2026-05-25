@@ -19,7 +19,7 @@ extern unsigned int g_eventQueueCurrent;
 extern unsigned int g_currentNodeFlags;
 extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_xformScratch2088;
-extern unsigned int g_state_00542094;
+extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
@@ -111,7 +111,7 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_state_0053a3c0;
-extern unsigned int g_state_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_data_005437f0;
@@ -124,7 +124,7 @@ extern unsigned int g_data_00535e7c;
 
 /* @addr 0x0045ede0 (356b game) - 2-entry packed dual-stream diff+mul wrapper.
  *   Entry 1 (offset 0, 301b): for each of two streams identified by
- *   g_data_00538158 and g_data_0053815c, stores into g_currentNodeIdx and
+ *   g_player1NodeIdx and g_data_0053815c, stores into g_currentNodeIdx and
  *   calls MatchPredicateCluster_0045ef50. If both succeed and bit 0 of g_xformDirtyFlags is
  *   set on each, computes the per-component (x,y,z) differences between
  *   the two stream slot's +0x54/+0x58/+0x5c fields, multiplies each diff
@@ -137,7 +137,7 @@ extern unsigned int g_data_00535e7c;
  *     compares to 0xfffe3334: if greater clears bit 0 of g_xformDirtyFlags
  *     and returns; else sets g_eventQueueCurrent=4 and tail-jmp SixSubdispatchSpan_0045ec10.
  */
-extern unsigned int g_data_00538158;
+extern unsigned int g_player1NodeIdx;
 extern unsigned int g_data_0053815c;
 extern unsigned int g_framePauseFlag;
 extern unsigned int g_currentNodeIdx;
@@ -150,7 +150,7 @@ extern void SixSubdispatchSpan_0045ec10(void);
 
 __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00538158]
+        mov     eax, dword ptr [g_player1NodeIdx]
         push    esi
         push    edi
         mov     dword ptr [g_currentNodeIdx], eax
@@ -168,7 +168,7 @@ __declspec(naked) void DualStreamSqDistThresh_0045ede0(void) {
         jne     L_dsd_skip
         test    byte ptr [g_xformDirtyFlags], 1
         je      L_dsd_skip
-        mov     ecx, dword ptr [g_data_00538158]
+        mov     ecx, dword ptr [g_player1NodeIdx]
         mov     edx, dword ptr [g_data_0053815c]
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], edx
