@@ -114,8 +114,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
  */
 extern unsigned int g_load_0052ab10;
-extern unsigned int g_state_0053a350;
-extern unsigned int g_state_0053a734;
+extern unsigned int g_dispatchSave42_0053a350;
+extern unsigned int g_dispatchSave40_0053a734;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
 extern void Init4Globals_0042ae10(void);
@@ -142,9 +142,9 @@ __declspec(naked) void SequencedInit3Call_00464190(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_load_0052ab10]
-        mov     dword ptr [g_state_0053a734], esi
+        mov     dword ptr [g_dispatchSave40_0053a734], esi
         mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_state_0053a350], esi
+        mov     dword ptr [g_dispatchSave42_0053a350], esi
         shl     eax, 2
         mov     dword ptr [eax + 0x54], esi
         mov     dword ptr [eax + 0x58], 0xfffe199a

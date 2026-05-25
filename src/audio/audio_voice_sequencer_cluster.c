@@ -113,7 +113,7 @@ extern unsigned int g_dispatchArg_00535e48;
 extern unsigned int g_audioVoiceCounter_00535e50;
 extern unsigned int g_audioBitField_00541fc0;
 extern unsigned int g_audioSequencerSlot_00541fc4;
-extern unsigned int g_data_00543320;
+extern unsigned int g_dispatchTab65_00543320;
 extern void AudioInitChainTag_004a1000(void);
 extern void Eleven404b90_404c00_004266d0(void);
 extern void GuardedScaledCall_0048a020(void);
@@ -202,7 +202,7 @@ __declspec(naked) void AudioVoiceSequencerCluster_004a0d60(void)
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_eventQueueIdx], ecx
         mov      edx, dword ptr [eax*4 + 0x14]
-        mov      eax, OFFSET g_data_00543320
+        mov      eax, OFFSET g_dispatchTab65_00543320
         mov      dword ptr [edx*4], ebx
         mov      edx, dword ptr [g_eventQueueCurrent]
         shr      eax, 2

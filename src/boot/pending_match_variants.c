@@ -228,7 +228,7 @@ extern unsigned int g_data_004f2880;
 extern unsigned int g_crtHeapMaxPtr_00522154;
 extern unsigned int g_dispatchSave12_00523ae0;
 extern unsigned int g_dispatchSave19_00523ae4;
-extern unsigned int g_data_00523b18;
+extern unsigned int g_dispatchSave54_00523b18;
 extern unsigned int g_dispatchSave11_00523b1c;
 extern unsigned int g_dispatchSave5_00523b20;
 extern unsigned int g_phaseThunkSave_00523b24;
@@ -247,7 +247,7 @@ extern unsigned int g_audioBankPick_005433c0;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_byte_005435a0;
-extern unsigned int g_data_00543618;
+extern unsigned int g_dispatchTab62_00543618;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_byte_00543834;
 extern unsigned int g_pendingMatchCmp_00543888;
@@ -2187,7 +2187,7 @@ __declspec(naked) void PendingMatch_004a93c0(void)
         mov      eax, dword ptr [g_counter_005433c8]
         add      esp, 4
         lea      edx, [eax + eax*2]
-        lea      eax, [edx*8 + g_data_00543618]
+        lea      eax, [edx*8 + g_dispatchTab62_00543618]
         push     eax
         mov      eax, dword ptr [g_counter_0054359c]
         lea      ecx, [eax + eax*2]

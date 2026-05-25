@@ -120,7 +120,7 @@ extern unsigned int g_data_004ed1d8;
 
 extern unsigned int g_data_0050f22c;
 extern unsigned int g_dispatchWalkVar_0053a404;
-extern unsigned int g_data_00543100;
+extern unsigned int g_dispatchTab70_00543100;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void AudioInstallSelfStatePush_004aa8a0(void);
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -463,7 +463,7 @@ __declspec(naked) void RoundStartCluster_004919c0(void)
         mov      dword ptr [eax*4 + 0x24], edx
         jmp      L_1e11
     L_1ccc:
-        mov      eax, OFFSET g_data_00543100
+        mov      eax, OFFSET g_dispatchTab70_00543100
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax*4]

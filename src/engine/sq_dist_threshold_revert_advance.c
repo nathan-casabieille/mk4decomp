@@ -123,12 +123,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   the save-slot (revert advance) and conditionally clears velocity
  *   bytes at [scaled+0x6c]/+0x74 if bit 7 of [scaled+0x40] is clear.
  */
-extern unsigned int g_data_00543554;
+extern unsigned int g_dispatchTab64_00543554;
 extern unsigned int g_dispatchVar32_00543558;
 extern unsigned int g_installCountdownVar2_00543560;
 extern unsigned int g_installCountdownVar_00543580;
 extern unsigned int g_dispatchVar31_00543584;
-extern unsigned int g_data_00543588;
+extern unsigned int g_dispatchTab63_00543588;
 
 __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
     __asm {
@@ -170,13 +170,13 @@ __declspec(naked) void SqDistThresholdRevertAdvance_00489d10(void) {
         mov     dword ptr [g_installCountdownVar2_00543560], edx
         mov     edx, dword ptr [esi + 0x5c]
         mov     dword ptr [g_dispatchVar32_00543558], edx
-        mov     dword ptr [g_data_00543554], ecx
+        mov     dword ptr [g_dispatchTab64_00543554], ecx
         jmp     short L_sdt_cmpRadius
     L_sdt_stashAlt:
         mov     dword ptr [g_installCountdownVar_00543580], edx
         mov     edx, dword ptr [esi + 0x5c]
         mov     dword ptr [g_dispatchVar31_00543584], edx
-        mov     dword ptr [g_data_00543588], ecx
+        mov     dword ptr [g_dispatchTab63_00543588], ecx
     L_sdt_cmpRadius:
         cmp     ecx, eax
         jl      L_sdt_done

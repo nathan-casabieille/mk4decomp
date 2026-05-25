@@ -479,14 +479,14 @@ extern unsigned int g_data_004ed3d0;
 extern unsigned int g_data_004f29c0;
 extern unsigned int g_data_005007c4;
 extern unsigned int g_data_0050104c;
-extern unsigned int g_data_00501070;
+extern unsigned int g_dispatchSave61_00501070;
 extern unsigned int g_dispatchTableArr5_00501088;
 extern unsigned int g_data_005010c4;
 extern unsigned int g_data_005010d0;
 extern unsigned int g_data_0050122c;
-extern unsigned int g_data_00501250;
-extern unsigned int g_data_0050b604;
-extern unsigned int g_data_005117c4;
+extern unsigned int g_dispatchSave59_00501250;
+extern unsigned int g_dispatchSave58_0050b604;
+extern unsigned int g_dispatchSave57_005117c4;
 extern unsigned int g_quadEntryGate_0052d724;
 extern unsigned int g_data_00535d58;
 extern unsigned int g_walkBoundsLimit_00535d60;
@@ -2929,7 +2929,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5a1d:
         /* case 3: install + state 4 */
-        mov      eax, OFFSET g_data_00501250
+        mov      eax, OFFSET g_dispatchSave59_00501250
         mov      edx, OFFSET L_5950
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
@@ -3866,7 +3866,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         je       short L_d327
         jmp      short L_d2fe
     L_d2d7:
-        mov      edx, OFFSET g_data_005117c4
+        mov      edx, OFFSET g_dispatchSave57_005117c4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     FramePauseScaledStore_00406c10
@@ -3950,7 +3950,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        mov      ecx, OFFSET g_data_00501070
+        mov      ecx, OFFSET g_dispatchSave61_00501070
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_d3a0
@@ -4065,7 +4065,7 @@ __declspec(naked) void CharSelectSetupCluster_004565a0(void)
 {
     __asm {
         /* === h1 (0x4565a0): main init chain → tail 408600 === */
-        mov      eax, OFFSET g_data_0050b604
+        mov      eax, OFFSET g_dispatchSave58_0050b604
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         call     DispatcherComplex260_00407030

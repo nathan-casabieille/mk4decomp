@@ -114,7 +114,7 @@ extern unsigned int g_eventMusicSlot2_0053a318;
 extern unsigned int g_eventMusicVar_00541dd8;
 extern unsigned int g_dispatchVar3_00543564;
 extern unsigned int g_eventMusicSlot_00543594;
-extern unsigned int g_data_00550000;
+extern unsigned int g_dispatchTab61_00550000;
 extern unsigned int g_data_008c0000;
 extern void CallSetPause_0041f830(void);
 extern void Cmp7DirtyToggle_0042ee10(void);
@@ -166,7 +166,7 @@ __declspec(naked) void Event23bMusicCluster_0042f540(void)
         jne      L_f691
         mov      dword ptr [g_eventQueueCurrent], 4
         mov      dword ptr [g_eventQueueWorkType], 0x23b
-        mov      dword ptr [g_acc_00542078], OFFSET g_data_00550000
+        mov      dword ptr [g_acc_00542078], OFFSET g_dispatchTab61_00550000
         mov      dword ptr [g_eventQueueNotMask], OFFSET g_data_008c0000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_00426310

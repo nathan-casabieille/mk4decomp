@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004f1610;
 extern unsigned int g_data_004f1628;
 extern unsigned int g_data_004f163c;
-extern unsigned int g_data_005431b8;
+extern unsigned int g_dispatchTab69_005431b8;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DualGatedStateYield_0048fc80(void);
 extern void EsiEdiAliasDualMul10_004906b0(void);
@@ -229,7 +229,7 @@ __declspec(naked) void ComboFinisherEventCluster_00495dc0(void)
         call     TableLookupCall_00489ff0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
-        push     OFFSET g_data_005431b8
+        push     OFFSET g_dispatchTab69_005431b8
         call     GuardedPackedSlotInit_00428760
         mov      eax, dword ptr [g_framePauseFlag]
         add      esp, 4

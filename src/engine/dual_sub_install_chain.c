@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00501094;
+extern unsigned int g_dispatchSave60_00501094;
 extern unsigned int g_installOwner2_0053a7a0;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void DoubleCallChainInit_0043d780(void);
@@ -200,7 +200,7 @@ __declspec(naked) void DualSubInstallChain_0044f4b0(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_dsic_sub2_ret
-        mov     edx, offset g_data_00501094
+        mov     edx, offset g_dispatchSave60_00501094
         mov     ecx, offset L_dsic_sub2
         shr     edx, 2
         mov     dword ptr [g_eventQueueEnd], edx

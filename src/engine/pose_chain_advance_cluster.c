@@ -132,8 +132,8 @@ extern void PoseChainAdvanceCluster_0044ef50(void);
 extern unsigned int g_data_004e6580;
 extern unsigned int g_data_004e6590;
 extern unsigned int g_data_004e65a0;
-extern unsigned int g_data_00501070;
-extern unsigned int g_data_005117c4;
+extern unsigned int g_dispatchSave61_00501070;
+extern unsigned int g_dispatchSave57_005117c4;
 
 extern void ArgSarStoreJmp_004594f0(void);
 extern void FramePauseScaledStore_00406c10(void);
@@ -166,7 +166,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         je       short L_d327
         jmp      short L_d2fe
     L_d2d7:
-        mov      edx, OFFSET g_data_005117c4
+        mov      edx, OFFSET g_dispatchSave57_005117c4
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         call     FramePauseScaledStore_00406c10
@@ -250,7 +250,7 @@ __declspec(naked) void IntroInitCluster_0044d280(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_d4f9
-        mov      ecx, OFFSET g_data_00501070
+        mov      ecx, OFFSET g_dispatchSave61_00501070
         shr      ecx, 2
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      dword ptr [esi + 8], OFFSET L_d3a0

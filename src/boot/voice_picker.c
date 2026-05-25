@@ -142,7 +142,7 @@ extern unsigned int g_dispatchSave12_00523ae0;
 extern unsigned int g_dispatchSave11_00523b1c;
 extern unsigned int g_dispatchSave5_00523b20;
 extern unsigned int g_phaseThunkSave_00523b24;
-extern unsigned char g_data_00523b18;
+extern unsigned char g_dispatchSave54_00523b18;
 extern void PendingMatch_004013a0(void);
 extern void StoreTwoCall_0049cb40(void);
 extern void DispatcherComplex260_00407400(void);

@@ -123,7 +123,7 @@ extern unsigned int g_data_004e7f40;
 extern unsigned int g_data_004e7f50;
 extern unsigned int g_data_004e7f60;
 extern unsigned int g_data_004e7f70;
-extern unsigned int g_data_00501250;
+extern unsigned int g_dispatchSave59_00501250;
 extern unsigned int g_gameCountdown_0053a718;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void ChainGatedNegAccum_0048b740(void);
@@ -430,7 +430,7 @@ __declspec(naked) void RoundCleanupCluster_00455920(void)
         ret
     L_5a1d:
         /* case 3: install + state 4 */
-        mov      eax, OFFSET g_data_00501250
+        mov      eax, OFFSET g_dispatchSave59_00501250
         mov      edx, OFFSET L_5950
         shr      eax, 2
         mov      dword ptr [g_eventQueueEnd], eax
