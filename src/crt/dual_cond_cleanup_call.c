@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004cc030 (61b)
- *   if (g_state_00f9f84c == 1 || (==0 && g_state_00520064 == 1)):
+ *   if (g_state_00f9f84c_ee == 1 || (==0 && g_state_00520064 == 1)):
  *     call F2(0xfc); call (g_state_00f9fbfc); call F2(0xff).
  */
 extern unsigned int g_state_00f9f84c_gg;

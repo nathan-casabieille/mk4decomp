@@ -6,12 +6,12 @@
 
 extern unsigned int g_data_004f4f30;
 extern unsigned int g_data_004f4f34;
-extern unsigned int g_data_00543820;
+extern u32 g_gsmOut4;
 extern unsigned int g_data_00ab42cc;
 extern unsigned int g_data_00ab42dc;
-extern unsigned int g_data_00ab4374;
-extern unsigned int g_data_00ab4378;
-extern unsigned int g_data_00ab437c;
+extern u32 g_gsmDirty1;
+extern u32 g_gsmDirty2;
+extern u32 g_gsmDirty3;
 extern unsigned int g_data_00ab4380;
 extern void DrawMenu(void);
 extern void MenuInputPoll_004b7020(void);
@@ -84,7 +84,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         je       short L_8af7
         mov      dword ptr [g_data_00ab4380], edx
     L_8af7:
-        mov      ecx, dword ptr [g_data_00543820]
+        mov      ecx, dword ptr [g_gsmOut4]
         test     ecx, ecx
         jne      short L_8b07
         mov      dword ptr [g_data_00ab4380], edx
@@ -100,7 +100,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         test     bl, 0x10
         je       short L_8ba2
         mov      dword ptr [g_data_00ab4380], edx
-        mov      dword ptr [g_data_00ab4374], 1
+        mov      dword ptr [g_gsmDirty1], 1
         jmp      short L_8ba2
     L_8b3d:
         test     esi, esi
@@ -108,7 +108,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         test     bl, 0x10
         je       short L_8ba2
         mov      dword ptr [g_data_00ab4380], edx
-        mov      dword ptr [g_data_00ab4378], 1
+        mov      dword ptr [g_gsmDirty2], 1
         jmp      short L_8ba2
     L_8b58:
         test     esi, esi
@@ -116,7 +116,7 @@ __declspec(naked) void Helper_GSM_Sub1C(void)
         test     bl, 0x10
         je       short L_8ba2
         mov      dword ptr [g_data_00ab4380], edx
-        mov      dword ptr [g_data_00ab437c], 1
+        mov      dword ptr [g_gsmDirty3], 1
         jmp      short L_8ba2
     L_8b73:
         test     esi, esi

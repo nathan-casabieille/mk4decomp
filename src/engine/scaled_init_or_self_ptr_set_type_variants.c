@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_pendingNodeType;
-extern packed_ptr g_fightGroupHead;
 
 /* === ScaledInitOrSelfPtrSetType cluster (68b each) === */
 

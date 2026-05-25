@@ -20,7 +20,6 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern unsigned int g_state_0053a278;
 extern unsigned int g_acc_00542078;
-extern u32 g_eventQueueEnd;
 extern void func_00458886(void);
 void IncCmp28StoreOrJmp_00458880(void) {
     int v = (int)g_state_0053a278;

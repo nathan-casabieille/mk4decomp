@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -139,14 +125,11 @@ extern void Cmp2DirtyToggle_00423870(void);
 extern unsigned char g_data_004ea070;
 extern unsigned int g_arr_461640;
 extern unsigned char g_str_00461980;
-extern unsigned int g_x_0053a748;
 
 extern void PreFightInstallCluster_00474390(void);
 
-extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_chain_disp_30_439a40;
 extern unsigned int g_chain_disp_40_439a40;
-extern unsigned int g_x_0053a498;
 extern unsigned int g_x_005380d8;
 extern void TwoStageWalkGate_00439ae0(void);
 extern void TwoConditionalJmp_00439b80(void);
@@ -165,8 +148,8 @@ extern unsigned char g_data_004ebee0;
 extern unsigned int g_arr_491350;
 extern unsigned int g_x_00538038_fwd;
 extern unsigned int g_x_0053803c_fwd;
-#define g_x_00538038 g_x_00538038_fwd
-#define g_x_0053803c g_x_0053803c_fwd
+#define g_gtPlayerProbe2 g_x_00538038_fwd
+#define g_gtPlayerProbe1 g_x_0053803c_fwd
 extern void Thunk_0049cbd0(void);
 extern void FiveCallScaledChainTailJmp_0045f8d0(void);
 
@@ -192,7 +175,7 @@ extern void GuardedClampStoreJmp_00428bd0(void);
 extern void MStackPushZeroCallPop_00407d00(void);
 
 extern unsigned int g_x_0053a51c_v2;
-#define g_x_0053a51c g_x_0053a51c_v2
+#define g_counter_0053a51c g_x_0053a51c_v2
 extern void SixCallSeqPushImm_004a1d80(void);
 extern unsigned int g_x_00537e94_v2;
 #define g_x_00537e94 g_x_00537e94_v2
@@ -209,7 +192,6 @@ extern unsigned int g_arr_chain_4348f0_main;
  *   At tail: arr[ecx] = g_x_00537f24; g_x_00537f24 = chain[scaledInit].slot2c;
  *   mstack-pop g_xformEntityIdx.
  */
-extern unsigned int g_xformEntityIdx;
 
 extern unsigned int g_data_004d57ac_arr;
 
@@ -225,10 +207,10 @@ void LinkedListSwapHead_0049d0a0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -252,11 +234,11 @@ loopWalk:
         mov     eax, [edx*4 + g_arr_chain_4348f0_2c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_x_00537f24], eax
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         }
 }
 

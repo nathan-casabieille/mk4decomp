@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern void Helper_GlidePostInit(void);
-extern unsigned int g_x_007b0000;
-extern unsigned int g_x_007affff8;
+extern unsigned int g_glideFnTable;
+extern u32 g_glideF8;
 extern unsigned int g_x_007b0038;
 extern unsigned int g_iat_004d205c;
-extern unsigned int g_x_007affff4;
+extern int g_renderer1_active;
 
 /*
  * @addr 0x004b5120 (97b engine.geo) - DirectDraw release helper:
@@ -21,17 +21,17 @@ void Helper_GlideError(void) {
     Renderer1_EndScene_Glide();
     EarlyOutDualPushIATStore_004b4600();
     ((int(*)(int))Helper_GlidePostInit)(0);
-    if (g_x_007b0000 != 0) {
-        if (g_x_007affff8 != 0) {
+    if (g_glideFnTable != 0) {
+        if (g_glideF8 != 0) {
             if (g_x_007b0038 != 0) {
                 ((void(*)(void))g_x_007b0038)();
             }
         }
-        ((void(__stdcall *)(unsigned int))g_iat_004d205c)(g_x_007b0000);
-        g_x_007b0000 = 0;
+        ((void(__stdcall *)(unsigned int))g_iat_004d205c)(g_glideFnTable);
+        g_glideFnTable = 0;
     }
     DSoundBufferInit146_004b5190();
-    g_x_007affff8 = 0;
-    g_x_007affff4 = 0;
+    g_glideF8 = 0;
+    g_renderer1_active = 0;
 }
 

@@ -6,17 +6,11 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueEnd;
 
 /* @addr 0x0046a1e0 (65b)
  *   set 0xa → walk; call F; pause → ret;
  *   load g_fightGroupHead, g_player1NodeIdx; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
-extern unsigned int g_player1NodeIdx;
 extern void SpecialAnimBuilder_004937b0(void);
 extern void func_00489ff0_aa(void);
 void Set0xaCmpEqSet0x26Jmp_0046a1e0(void) {

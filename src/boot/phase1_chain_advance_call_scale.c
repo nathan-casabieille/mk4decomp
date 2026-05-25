@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,11 +110,6 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5364;
 extern unsigned int g_data_00507118;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00543800;
 extern void AudioVolumeRescale_004ab690(void);
 extern void ChainWalkPushPop_00405a40(void);
 extern void DirtyDoubleDeref_00408cb0(void);
@@ -148,10 +129,10 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         jne     L_p1c2_ret
         test    byte ptr [g_xformDirtyFlags], 4
         jne     L_p1c2_ret
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x40], 0xFFFE6DE1
@@ -166,11 +147,11 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         jne     L_p1c2_ret
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         jmp     PushPopScaled1cDoubleCall_00408510
     L_p1c2_ret:
         ret
@@ -186,14 +167,14 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         nop
         nop
     L_p1c2_helper:
-        mov     eax, dword ptr [g_data_00543800]
+        mov     eax, dword ptr [g_gameMode]
         push    esi
         test    eax, eax
         jne     L_p1c2_helper_pop_ret
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_fightGroupHead]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         call    ChainWalkPushPop_00405a40
         mov     eax, dword ptr [g_framePauseFlag]
@@ -263,11 +244,11 @@ __declspec(naked) void Phase1ChainAdvanceCallScale_00418f80(void)
         jne     L_p1c2_helper_pop_ret
         mov     dword ptr [g_currentNodeIdx], 0
     L_p1c2_helper_pop1:
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_fightGroupHead], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
     L_p1c2_helper_pop_ret:
         pop     esi
         ret

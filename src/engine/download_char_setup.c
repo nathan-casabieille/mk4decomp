@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,24 +108,20 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-/* @addr 0x00422ef0 (199b game) - load g_x_005380e0 + flags, call F1; pause? ret;
+/* @addr 0x00422ef0 (199b game) - load g_dlNalt2 + flags, call F1; pause? ret;
  *   prep two-arg state, call F2; pause? ret;
  *   chain[g_fightGroupHead +0x30]=2, +0x54=0x14ccc, +0x5c=0;
  *   chain[+0x34] |= 0x001c0001; chain[+0x3c] = g_x_00541de0.
  */
-extern unsigned int g_x_0052aafc;
-extern unsigned int g_x_005380e0;
-extern unsigned int g_player2NodeIdx;
+extern u32 g_dlSomeFlag2;
+extern s32 g_dlNalt2;
 extern unsigned int g_x_00541de0;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
 
 void DownloadCharSetup_00422ef0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_005380e0]
+        mov     eax, dword ptr [g_dlNalt2]
         mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
@@ -151,8 +133,8 @@ void DownloadCharSetup_00422ef0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_005380e0]
-        mov     edx, dword ptr [g_x_0052aafc]
+        mov     ecx, dword ptr [g_dlNalt2]
+        mov     edx, dword ptr [g_dlSomeFlag2]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_eventQueueWorkType], edx

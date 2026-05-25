@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,20 +109,19 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004d5140;
-extern unsigned int g_data_0052ab10;
+extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535e6c;
 extern unsigned int g_data_00537e8c;
 extern unsigned int g_data_00537f78;
 extern unsigned int g_data_0053a520;
 extern unsigned int g_data_00541de0;
-extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541e7c;
 extern unsigned int g_data_00541e80;
 extern unsigned int g_data_00541e84;
 extern unsigned int g_data_00541e88;
 extern unsigned int g_data_00541e8c;
-extern unsigned int g_data_00541e90;
-extern unsigned int g_data_00541e94;
+extern unsigned int g_lit_00541e90;
+extern unsigned int g_lit_00541e94;
 extern unsigned int g_data_00541e98;
 extern unsigned int g_data_00541e9c;
 extern unsigned int g_data_00541ea0;
@@ -144,10 +129,6 @@ extern unsigned int g_data_00541ea4;
 extern unsigned int g_data_00541ea8;
 extern unsigned int g_data_00541eac;
 extern unsigned int g_data_00541eb0;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueEnd;
 extern unsigned int g_data_0054343c;
 extern void AndShlStore_00409280(void);
 extern void BootPhaseGateBracketedInit_004060c0(void);
@@ -204,13 +185,13 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_data_00541e90]
+        mov     eax, dword ptr [g_lit_00541e90]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
         call    VertexSlotInitFlagWalk_00409740
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_data_00541e94]
+        mov     ecx, dword ptr [g_lit_00541e94]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
         call    VertexSlotInitFlagWalk_00409740
@@ -260,7 +241,7 @@ __declspec(naked) void BootInitChainHeavy_00404f20(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_currentNodeIdx]
-        mov     dword ptr [g_data_0052ab10], eax
+        mov     dword ptr [g_load_0052ab10], eax
         call    MStackCall_004063e0
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit

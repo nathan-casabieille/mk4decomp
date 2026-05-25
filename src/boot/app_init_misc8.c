@@ -8,12 +8,12 @@
  *   Frame: sub esp, 0x3c; push esi, edi.
  *   Init 15-dword reference window on stack: buf[0]=0, buf[1..8]=0x5c,
  *   buf[9]=0x7a, buf[10]=0x10, buf[11]=0x38, buf[12..14]=0x5c, buf[15]=0x5a.
- *   Clear g_x_004ffd7c; call Helper_AuxAudio_PostInit.
+ *   Clear g_demoModeFlag; call Helper_AuxAudio_PostInit.
  *   If success, call DSoundQueryProperty; require rv==0xf.
  *   Loop esi=1..14: rv=AuxAudioDevCapsQuery(esi); abs(rv - buf[esi-1]) must be <= 5.
- *   If all pass, set g_x_004ffd7c = 1.
+ *   If all pass, set g_demoModeFlag = 1.
  */
-extern unsigned int g_x_004ffd7c;
+extern u32 g_demoModeFlag;
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern void DSoundQueryProperty_004ac3a0(void);
 extern void Helper_AuxAudio_PostInit(void);
@@ -40,7 +40,7 @@ __declspec(naked) void AppInit_Misc8(void) {
         mov     dword ptr [esp + 0x38], eax
         mov     dword ptr [esp + 0x3c], eax
         mov     dword ptr [esp + 0x40], 0x5a
-        mov     dword ptr [g_x_004ffd7c], ecx
+        mov     dword ptr [g_demoModeFlag], ecx
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      short L_c51_done
@@ -64,7 +64,7 @@ __declspec(naked) void AppInit_Misc8(void) {
         add     edi, 4
         cmp     esi, 0x0f
         jle     short L_c51_loop
-        mov     dword ptr [g_x_004ffd7c], 1
+        mov     dword ptr [g_demoModeFlag], 1
     L_c51_done:
         pop     edi
         pop     esi

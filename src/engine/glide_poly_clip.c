@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -129,10 +115,10 @@ extern unsigned int g_const_004d2968;
 extern unsigned int g_const_004d296c;
 extern unsigned int g_data_004f4790;
 extern unsigned int g_data_0058c7d0;
-extern unsigned int g_data_0058c7e0;
-extern unsigned int g_data_0058c7e4;
-extern unsigned int g_data_0058c7ec;
-extern unsigned int g_data_0058c7f0;
+extern int g_renderer2_active;
+extern int g_renderer2_surface;
+extern int g_renderer2_paused;
+extern s32 g_renderer2_batchCount;
 extern unsigned int g_data_0058c7f4;
 extern unsigned int g_data_0058c7f8;
 extern unsigned int g_data_0058c7fc;
@@ -158,10 +144,10 @@ extern unsigned int g_data_00543fcc;
 extern unsigned int g_data_00543fd0;
 extern unsigned int g_data_00543fd4;
 extern unsigned int g_data_00543fd8;
-extern unsigned int g_data_00544158;
-extern unsigned int g_data_00544308;
+extern unsigned int g_palette_00544158;
+extern f32 g_renderer2_lutTable[];
 extern unsigned int g_data_00544708;
-extern unsigned int g_data_00544718;
+extern u8 g_renderer2_vertexBatch[];
 extern unsigned int g_data_0054471c;
 extern unsigned int g_data_00544720;
 extern unsigned int g_data_00544724;
@@ -183,32 +169,32 @@ extern unsigned int g_data_00544768;
 extern unsigned int g_data_00544770;
 extern unsigned int g_data_00544774;
 
-extern unsigned int g_data_0058c768;
-extern unsigned int g_data_0058c7c0;
-extern unsigned int g_data_0058c7dc;
+extern u8 g_renderer2_buf1[];
+extern unsigned int g_renderer2_obj;
+extern int g_renderer2_present_rc;
 extern void DoubleToInt64_004c57d0(void);
 
 __declspec(naked) void GlideTriBatchEmit_004adca0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_0058c7e0]
+        mov      eax, dword ptr [g_renderer2_active]
         push     ebx
         push     ebp
         push     esi
         test     eax, eax
         push     edi
         je       L_e55b
-        mov      eax, dword ptr [g_data_0058c7e4]
+        mov      eax, dword ptr [g_renderer2_surface]
         test     eax, eax
         je       L_e55b
-        mov      eax, dword ptr [g_data_0058c7ec]
+        mov      eax, dword ptr [g_renderer2_paused]
         test     eax, eax
         jne      L_e55b
         cmp      byte ptr [esp + 0x14], 0x10
         jb       L_dcd7
         mov      byte ptr [esp + 0x14], 0
     L_dcd7:
-        mov      eax, dword ptr [g_data_0058c7f0]
+        mov      eax, dword ptr [g_renderer2_batchCount]
         mov      ebx, dword ptr [esp + 0x18]
         add      eax, 7
         cmp      eax, 0xc00
@@ -224,20 +210,20 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         mov      dl, byte ptr [esp + 0x14]
         mov      al, byte ptr [g_data_004f4790]
         cmp      dl, al
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      eax, dword ptr [g_renderer2_obj]
         je       L_dd4c
         test     eax, eax
         je       L_dd42
         mov      edx, dword ptr [esp + 0x14]
         mov      ecx, dword ptr [eax]
         and      edx, 0xff
-        mov      edx, dword ptr [edx*4 + g_data_0058c768]
+        mov      edx, dword ptr [edx*4 + g_renderer2_buf1]
         push     edx
         push     1
         push     eax
         call     dword ptr [ecx + 0x5c]
-        mov      dword ptr [g_data_0058c7dc], eax
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      dword ptr [g_renderer2_present_rc], eax
+        mov      eax, dword ptr [g_renderer2_obj]
     L_dd42:
         mov      cl, byte ptr [esp + 0x14]
         mov      byte ptr [g_data_004f4790], cl
@@ -265,8 +251,8 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         push     0x1b
         push     eax
         call     dword ptr [ecx + 0x5c]
-        mov      dword ptr [g_data_0058c7dc], eax
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      dword ptr [g_renderer2_present_rc], eax
+        mov      eax, dword ptr [g_renderer2_obj]
     L_dd96:
         test     eax, eax
         je       L_de0e
@@ -275,8 +261,8 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         push     0x13
         push     eax
         call     dword ptr [edx + 0x5c]
-        mov      dword ptr [g_data_0058c7dc], eax
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      dword ptr [g_renderer2_present_rc], eax
+        mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_de0e
         mov      ecx, dword ptr [eax]
@@ -300,8 +286,8 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         push     0x1b
         push     eax
         call     dword ptr [edx + 0x5c]
-        mov      dword ptr [g_data_0058c7dc], eax
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      dword ptr [g_renderer2_present_rc], eax
+        mov      eax, dword ptr [g_renderer2_obj]
     L_dde3:
         test     eax, eax
         je       L_de0e
@@ -310,8 +296,8 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         push     0x13
         push     eax
         call     dword ptr [ecx + 0x5c]
-        mov      dword ptr [g_data_0058c7dc], eax
-        mov      eax, dword ptr [g_data_0058c7c0]
+        mov      dword ptr [g_renderer2_present_rc], eax
+        mov      eax, dword ptr [g_renderer2_obj]
         test     eax, eax
         je       L_de0e
         mov      edx, dword ptr [eax]
@@ -321,7 +307,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         push     eax
         call     dword ptr [edx + 0x5c]
     L_de09:
-        mov      dword ptr [g_data_0058c7dc], eax
+        mov      dword ptr [g_renderer2_present_rc], eax
     L_de0e:
         mov      byte ptr [g_data_0058c7d0], bl
     L_de14:
@@ -455,7 +441,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      ecx, 0xffff
         add      eax, ecx
         jne      L_e1da
-        mov      eax, dword ptr [g_data_0058c7f0]
+        mov      eax, dword ptr [g_renderer2_batchCount]
         mov      edx, dword ptr [esp + 0x1c]
         mov      ecx, dword ptr [esp + 0x20]
         and      ebx, 0xff
@@ -464,7 +450,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         shl      eax, 5
         xor      ebx, ebx
         mov      edi, 0x3f800000
-        mov      dword ptr [eax + g_data_00544718], edx
+        mov      dword ptr [eax + g_renderer2_vertexBatch], edx
         mov      dword ptr [eax + g_data_0054471c], ecx
         movsx    ecx, word ptr [esp + 0x2c]
         mov      edx, ecx
@@ -473,29 +459,29 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      edx, 0xf8
         and      ecx, 0x1f
         sar      ebp, 2
-        mov      bl, byte ptr [edx + g_data_00544158]
+        mov      bl, byte ptr [edx + g_palette_00544158]
         and      ebp, 0xf8
         shl      esi, 8
         or       ebx, esi
         xor      edx, edx
-        mov      dl, byte ptr [ebp + g_data_00544158]
+        mov      dl, byte ptr [ebp + g_palette_00544158]
         mov      dword ptr [eax + g_data_00544724], edi
         shl      ebx, 8
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_data_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
         mov      ecx, dword ptr [esp + 0x24]
         shl      ebx, 8
         and      ecx, 0xff
         or       ebx, edx
         mov      dword ptr [eax + g_data_00544720], edi
         mov      dword ptr [eax + g_data_00544728], ebx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x28]
         and      ecx, 0xff
         mov      dword ptr [eax + g_data_00544730], edx
         xor      ebx, ebx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x30]
         mov      dword ptr [eax + g_data_00544734], edx
         mov      edx, dword ptr [esp + 0x34]
@@ -508,27 +494,27 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      edx, 0xf8
         and      ecx, 0x1f
         sar      ebp, 2
-        mov      bl, byte ptr [edx + g_data_00544158]
+        mov      bl, byte ptr [edx + g_palette_00544158]
         and      ebp, 0xf8
         or       ebx, esi
         xor      edx, edx
-        mov      dl, byte ptr [ebp + g_data_00544158]
+        mov      dl, byte ptr [ebp + g_palette_00544158]
         mov      dword ptr [eax + g_data_00544744], edi
         shl      ebx, 8
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_data_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
         mov      ecx, dword ptr [esp + 0x38]
         shl      ebx, 8
         and      ecx, 0xff
         or       ebx, edx
         mov      dword ptr [eax + g_data_00544740], edi
         mov      dword ptr [eax + g_data_00544748], ebx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x3c]
         and      ecx, 0xff
         mov      dword ptr [eax + g_data_00544750], edx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x44]
         mov      dword ptr [eax + g_data_00544754], edx
         mov      edx, dword ptr [esp + 0x48]
@@ -541,7 +527,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         xor      ebx, ebx
         sar      edx, 7
         and      edx, 0xf8
-        mov      bl, byte ptr [edx + g_data_00544158]
+        mov      bl, byte ptr [edx + g_palette_00544158]
         xor      edx, edx
         or       ebx, esi
         mov      esi, ecx
@@ -549,24 +535,24 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      esi, 0xf8
         and      ecx, 0x1f
         shl      ebx, 8
-        mov      dl, byte ptr [esi + g_data_00544158]
+        mov      dl, byte ptr [esi + g_palette_00544158]
         or       ebx, edx
         xor      edx, edx
-        mov      dl, byte ptr [ecx*8 + g_data_00544158]
+        mov      dl, byte ptr [ecx*8 + g_palette_00544158]
         mov      ecx, dword ptr [esp + 0x4c]
         shl      ebx, 8
         and      ecx, 0xff
         or       ebx, edx
         mov      dword ptr [eax + g_data_00544768], ebx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x50]
         and      ecx, 0xff
         mov      dword ptr [eax + g_data_00544770], edx
-        mov      edx, dword ptr [ecx*4 + g_data_00544308]
+        mov      edx, dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      dword ptr [eax + g_data_00544774], edx
-        mov      eax, dword ptr [g_data_0058c7f0]
+        mov      eax, dword ptr [g_renderer2_batchCount]
         inc      eax
-        mov      dword ptr [g_data_0058c7f0], eax
+        mov      dword ptr [g_renderer2_batchCount], eax
         pop      edi
         pop      esi
         pop      ebp
@@ -579,11 +565,11 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      edx, 0xff
         mov      dword ptr [g_data_00543f88], eax
         mov      eax, dword ptr [esp + 0x28]
-        fld      dword ptr [edx*4 + g_data_00544308]
+        fld      dword ptr [edx*4 + g_renderer2_lutTable]
         and      eax, 0xff
         mov      dword ptr [g_data_00543f8c], ecx
         fstp     dword ptr [g_data_00543f90]
-        fld      dword ptr [eax*4 + g_data_00544308]
+        fld      dword ptr [eax*4 + g_renderer2_lutTable]
         mov      eax, dword ptr [esp + 0x38]
         mov      ecx, dword ptr [esp + 0x30]
         fstp     dword ptr [g_data_00543f94]
@@ -591,11 +577,11 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      eax, 0xff
         mov      dword ptr [g_data_00543fa4], ecx
         mov      ecx, dword ptr [esp + 0x3c]
-        fld      dword ptr [eax*4 + g_data_00544308]
+        fld      dword ptr [eax*4 + g_renderer2_lutTable]
         mov      eax, dword ptr [esp + 0x48]
         and      ecx, 0xff
         fstp     dword ptr [g_data_00543fac]
-        fld      dword ptr [ecx*4 + g_data_00544308]
+        fld      dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, dword ptr [esp + 0x4c]
         mov      dword ptr [g_data_00543fa8], edx
         mov      edx, dword ptr [esp + 0x44]
@@ -605,16 +591,16 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         and      ecx, 0xff
         mov      dword ptr [g_data_00543fc0], edx
         mov      edx, dword ptr [esp + 0x50]
-        fld      dword ptr [ecx*4 + g_data_00544308]
+        fld      dword ptr [ecx*4 + g_renderer2_lutTable]
         mov      ecx, eax
         and      edx, 0xff
         fstp     dword ptr [g_data_00543fc8]
-        fld      dword ptr [edx*4 + g_data_00544308]
+        fld      dword ptr [edx*4 + g_renderer2_lutTable]
         sar      ecx, 7
         and      ecx, 0xf8
         xor      edx, edx
         fstp     dword ptr [g_data_00543fcc]
-        mov      dl, byte ptr [ecx + g_data_00544158]
+        mov      dl, byte ptr [ecx + g_palette_00544158]
         mov      ecx, eax
         sar      ecx, 2
         mov      dword ptr [esp + 0x2c], edx
@@ -622,9 +608,9 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      edx, edx
         and      eax, 0x1f
-        mov      dl, byte ptr [ecx + g_data_00544158]
+        mov      dl, byte ptr [ecx + g_palette_00544158]
         xor      ecx, ecx
-        mov      cl, byte ptr [eax*8 + g_data_00544158]
+        mov      cl, byte ptr [eax*8 + g_palette_00544158]
         mov      dword ptr [esp + 0x2c], edx
         movsx    eax, word ptr [esp + 0x40]
         fstp     dword ptr [g_data_00543f98]
@@ -636,7 +622,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         and      edx, 0xf8
         xor      ecx, ecx
-        mov      cl, byte ptr [edx + g_data_00544158]
+        mov      cl, byte ptr [edx + g_palette_00544158]
         mov      edx, eax
         fstp     dword ptr [g_data_00543fa0]
         sar      edx, 2
@@ -645,10 +631,10 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      ecx, ecx
         and      eax, 0x1f
-        mov      cl, byte ptr [edx + g_data_00544158]
+        mov      cl, byte ptr [edx + g_palette_00544158]
         xor      edx, edx
         fstp     dword ptr [g_data_00543fb4]
-        mov      dl, byte ptr [eax*8 + g_data_00544158]
+        mov      dl, byte ptr [eax*8 + g_palette_00544158]
         mov      dword ptr [esp + 0x2c], ecx
         fild     dword ptr [esp + 0x2c]
         mov      dword ptr [esp + 0x2c], edx
@@ -660,7 +646,7 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         xor      edx, edx
         sar      ecx, 7
         and      ecx, 0xf8
-        mov      dl, byte ptr [ecx + g_data_00544158]
+        mov      dl, byte ptr [ecx + g_palette_00544158]
         mov      ecx, eax
         sar      ecx, 2
         mov      dword ptr [esp + 0x2c], edx
@@ -668,10 +654,10 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         fild     dword ptr [esp + 0x2c]
         xor      edx, edx
         and      eax, 0x1f
-        mov      dl, byte ptr [ecx + g_data_00544158]
+        mov      dl, byte ptr [ecx + g_palette_00544158]
         xor      ecx, ecx
         fstp     dword ptr [g_data_00543fd0]
-        mov      cl, byte ptr [eax*8 + g_data_00544158]
+        mov      cl, byte ptr [eax*8 + g_palette_00544158]
         mov      dword ptr [esp + 0x2c], edx
         fild     dword ptr [esp + 0x2c]
         mov      dword ptr [esp + 0x2c], ecx
@@ -683,11 +669,11 @@ __declspec(naked) void GlideTriBatchEmit_004adca0(void)
         jl       L_e55b
         cmp      eax, 7
         jg       L_e55b
-        mov      ecx, dword ptr [g_data_0058c7f0]
+        mov      ecx, dword ptr [g_renderer2_batchCount]
         lea      edx, [ecx + eax - 2]
         sub      eax, 3
         lea      esi, [ecx + ecx*2]
-        mov      dword ptr [g_data_0058c7f0], edx
+        mov      dword ptr [g_renderer2_batchCount], edx
         js       L_e55b
         mov      ebp, dword ptr [g_data_00544708]
         mov      ecx, eax

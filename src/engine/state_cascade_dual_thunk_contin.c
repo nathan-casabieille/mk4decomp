@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -129,14 +115,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Else: chain[scaledInit*4]=g_walkCallback; copy g_state_00535e48 to g_eventQueueCurrent;
  *     call RoundWinTransition_0049e7e0; if pause CallSetPause; load chain[g_xformEntityIdx*4+8];
  *     call GuardedScaledCall; if !pause CallSetPause; pop esi/ebx; ret.
- *   Tail thunk_1 (+0xe0): if g_data_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
- *   Tail thunk_2 (+0x110): if g_state_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_1 (+0xe0): if g_state2_00541d88!=0 jmp CallSetPause else g_state_00535e48=0; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
+ *   Tail thunk_2 (+0x110): if g_state2_00537ea8!=0 jmp CallSetPause else g_state_00535e48=1; jmp IndirectOpcodeDispatch3Entry_0049f3a0.
  */
-extern unsigned int g_data_00541d88;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_00537ea8;
+extern unsigned int g_state2_00541d88;
+extern unsigned int g_state2_00537ea8;
 extern unsigned int g_x_00535e48;
-extern unsigned int g_xformEntityIdx;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void IndirectOpcodeDispatch3Entry_0049f3a0(void);
@@ -251,7 +235,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         ret
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_data_00541d88]
+        mov     eax, dword ptr [g_state2_00541d88]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
@@ -273,7 +257,7 @@ __declspec(naked) void StateCascadeDualThunkContin_0049f260(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_state_00537ea8]
+        mov     eax, dword ptr [g_state2_00537ea8]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h

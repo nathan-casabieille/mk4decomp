@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,37 +109,33 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f6238;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95a;
-extern unsigned int g_data_007af95c;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af960;
-extern unsigned int g_data_007af962;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af966;
-extern unsigned int g_data_007af968;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af9ac;
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b6;
-extern unsigned int g_data_007af9b8;
-extern unsigned int g_data_007af9ba;
-extern unsigned int g_data_007af9bc;
-extern unsigned int g_data_007af9be;
+extern u32 g_inLoopStep;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn2_x;
+extern unsigned int g_triStripX0;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn1_z;
+extern unsigned int g_triStripX1;
+extern s16 g_vtxIn2_y;
+extern s16 g_vtxIn2_z;
+extern unsigned int g_triStripX2;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxTransX;
+extern s32 g_vtxTransY;
+extern s32 g_vtxTransZ;
+extern s32 g_vtxValid;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP1Y;
+extern s16 g_vtxScreenP2X;
+extern s16 g_vtxScreenP2Y;
+extern s16 g_vtxScreenX;
+extern s16 g_vtxScreenY;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab439c;
 extern unsigned int g_data_00ab43a0;
 extern unsigned int g_data_00ab4d9c;
-extern unsigned int g_data_00ab4e20;
 extern unsigned int g_data_00ab4e60;
 extern void CopyArgs16ToGlobals_004b2ff0(void);
 extern void Helper_DrawCursor(void);
@@ -164,7 +146,7 @@ extern void ProjectVertex(void);
 __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007af92c]
+        mov      eax, dword ptr [g_inLoopStep]
         sub      esp, 0x58
         test     eax, eax
         push     ebx
@@ -195,23 +177,23 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      edx, dword ptr [g_data_00ab4398]
         mov      ecx, dword ptr [g_data_00ab439c]
         sar      edx, 0x10
-        mov      dword ptr [g_data_007af9a4], edx
+        mov      dword ptr [g_vtxTransX], edx
         mov      edx, dword ptr [g_data_00ab43a0]
         sar      ecx, 0x10
         sar      edx, 7
-        mov      dword ptr [g_data_007af9a8], ecx
-        mov      dword ptr [g_data_007af9ac], edx
+        mov      dword ptr [g_vtxTransY], ecx
+        mov      dword ptr [g_vtxTransZ], edx
         jmp      L_be3f
     L_be12:
         mov      ecx, dword ptr [g_data_00ab4398]
         mov      edx, dword ptr [g_data_00ab439c]
         sar      ecx, 7
-        mov      dword ptr [g_data_007af9a4], ecx
+        mov      dword ptr [g_vtxTransX], ecx
         mov      ecx, dword ptr [g_data_00ab43a0]
         sar      edx, 7
         sar      ecx, 7
-        mov      dword ptr [g_data_007af9a8], edx
-        mov      dword ptr [g_data_007af9ac], ecx
+        mov      dword ptr [g_vtxTransY], edx
+        mov      dword ptr [g_vtxTransZ], ecx
     L_be3f:
         mov      ecx, dword ptr [g_xformEntityIdx]
         mov      esi, dword ptr [esp + 0x6c]
@@ -257,31 +239,31 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      byte ptr [esp + 0x55], cl
         mov      cx, di
         add      dl, al
-        mov      word ptr [g_data_007af958], di
-        mov      word ptr [g_data_007af95e], bp
-        mov      word ptr [g_data_007af964], 0
+        mov      word ptr [g_vtxIn_x], di
+        mov      word ptr [g_vtxIn1_y], bp
+        mov      word ptr [g_vtxIn2_y], 0
         add      cx, word ptr [esi + 4]
         mov      byte ptr [esp + 0x36], dl
         mov      byte ptr [esp + 0x38], dl
         mov      byte ptr [esp + 0x56], dl
         mov      dx, di
-        mov      word ptr [g_data_007af95a], cx
-        mov      word ptr [g_data_007af960], bp
-        mov      word ptr [g_data_007af966], 0
+        mov      word ptr [g_vtxIn2_x], cx
+        mov      word ptr [g_vtxIn1_z], bp
+        mov      word ptr [g_vtxIn2_z], 0
         add      dx, word ptr [esi + 4]
         mov      byte ptr [esp + 0x34], al
         mov      byte ptr [esp + 0x54], al
         mov      byte ptr [esp + 0x58], al
         mov      ax, bp
-        mov      word ptr [g_data_007af95c], dx
+        mov      word ptr [g_triStripX0], dx
         add      ax, word ptr [esi + 6]
         mov      byte ptr [esp + 0x39], bl
         mov      byte ptr [esp + 0x57], bl
         mov      byte ptr [esp + 0x59], bl
-        mov      word ptr [g_data_007af962], ax
-        mov      word ptr [g_data_007af968], 0
+        mov      word ptr [g_triStripX1], ax
+        mov      word ptr [g_triStripX2], 0
         call     ProjectTwoVertices
-        mov      ax, word ptr [g_data_00ab4e20]
+        mov      ax, word ptr [g_tickCurMask]
         test     ax, ax
         jne      L_bf84
         call     MaxOfThree_004b3d90
@@ -297,43 +279,43 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      word ptr [esp + 0x5a], ax
         test     byte ptr [g_currentNodeFlags], 0x40
         jne      L_c15a
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, ebx
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [esp + 0x28], ecx
         mov      ecx, dword ptr [esp + 0x42]
         mov      dword ptr [esp + 0x2c], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         mov      dword ptr [esp + 0x30], eax
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         and      ecx, 0xfbff
         shl      edx, 0xa
         or       ecx, edx
         test     eax, eax
         mov      word ptr [esp + 0x42], cx
         jle      L_c15a
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_c15a
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_c15a
         mov      ax, bp
@@ -344,43 +326,43 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         call     CopyArgs16ToGlobals_004b2ff0
         add      esp, 0xc
         call     ProjectVertex
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, ebx
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [esp + 0x48], ecx
         mov      ecx, dword ptr [esp + 0x62]
         mov      dword ptr [esp + 0x4c], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         mov      dword ptr [esp + 0x50], eax
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         and      ecx, 0xfbff
         shl      edx, 0xa
         or       ecx, edx
         test     eax, eax
         mov      word ptr [esp + 0x62], cx
         jle      L_c15a
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_c15a
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_c15a
         mov      ax, word ptr [esp + 0x2a]
@@ -424,10 +406,10 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         test     ecx, ecx
         mov      dword ptr [g_currentNodeIdx], ecx
         je       L_c45f
-        mov      edx, dword ptr [g_data_007af9a4]
-        mov      eax, dword ptr [g_data_007af9a8]
+        mov      edx, dword ptr [g_vtxTransX]
+        mov      eax, dword ptr [g_vtxTransY]
         mov      dword ptr [esp + 0x1c], edx
-        mov      edx, dword ptr [g_data_007af9ac]
+        mov      edx, dword ptr [g_vtxTransZ]
         mov      dword ptr [esp + 0x20], eax
         mov      dword ptr [esp + 0x24], edx
     L_c192:
@@ -479,68 +461,68 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         mov      ecx, ebx
     L_c261:
         mov      ebx, dword ptr [esp + 0x1c]
-        mov      word ptr [g_data_007af958], di
+        mov      word ptr [g_vtxIn_x], di
         add      edx, ebx
-        mov      word ptr [g_data_007af95e], bp
-        mov      dword ptr [g_data_007af9a4], edx
+        mov      word ptr [g_vtxIn1_y], bp
+        mov      dword ptr [g_vtxTransX], edx
         mov      edx, dword ptr [esp + 0x20]
         add      eax, edx
         mov      dx, di
-        mov      dword ptr [g_data_007af9a8], eax
+        mov      dword ptr [g_vtxTransY], eax
         mov      eax, dword ptr [esp + 0x24]
         add      ecx, eax
         xor      eax, eax
-        mov      dword ptr [g_data_007af9ac], ecx
+        mov      dword ptr [g_vtxTransZ], ecx
         mov      cx, di
-        mov      word ptr [g_data_007af964], ax
+        mov      word ptr [g_vtxIn2_y], ax
         add      cx, word ptr [esi + 4]
-        mov      word ptr [g_data_007af960], bp
-        mov      word ptr [g_data_007af966], ax
-        mov      word ptr [g_data_007af95a], cx
+        mov      word ptr [g_vtxIn1_z], bp
+        mov      word ptr [g_vtxIn2_z], ax
+        mov      word ptr [g_vtxIn2_x], cx
         add      dx, word ptr [esi + 4]
         mov      cx, bp
-        mov      word ptr [g_data_007af95c], dx
+        mov      word ptr [g_triStripX0], dx
         add      cx, word ptr [esi + 6]
-        mov      word ptr [g_data_007af968], ax
-        mov      word ptr [g_data_007af962], cx
+        mov      word ptr [g_triStripX2], ax
+        mov      word ptr [g_triStripX1], cx
         call     ProjectTwoVertices
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, ebx
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [esp + 0x28], ecx
         mov      ecx, dword ptr [esp + 0x42]
         mov      dword ptr [esp + 0x2c], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         mov      dword ptr [esp + 0x30], eax
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         and      ecx, 0xfbff
         shl      edx, 0xa
         or       ecx, edx
         test     eax, eax
         mov      word ptr [esp + 0x42], cx
         jle      L_c384
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_c384
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_c384
         lea      eax, [esp + 0x28]
@@ -556,43 +538,43 @@ __declspec(naked) void BillboardSheetDualEmit_004bbda0(void)
         call     CopyArgs16ToGlobals_004b2ff0
         add      esp, 0xc
         call     ProjectVertex
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, ebx
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [esp + 0x48], ecx
         mov      ecx, dword ptr [esp + 0x62]
         mov      dword ptr [esp + 0x4c], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         mov      dword ptr [esp + 0x50], eax
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         and      ecx, 0xfbff
         shl      edx, 0xa
         or       ecx, edx
         test     eax, eax
         mov      word ptr [esp + 0x62], cx
         jle      L_c444
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_c444
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_c444
         lea      eax, [esp + 0x48]

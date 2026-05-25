@@ -16,7 +16,6 @@
  *   jmp     func_00433e80
  */
 extern void func_00433e80(void);
-extern unsigned int g_eventQueueCurrent;
 __declspec(naked) void ShrShrStoreJmp_00433e50(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]

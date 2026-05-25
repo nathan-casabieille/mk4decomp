@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,24 +109,23 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004616e0 (345b game) - init thunk + 10 state-tag thunks (each jmps DualSave_00461840).
- *   Init (0..0x1f): g_walkCallback=[g_state_0053a51c]; if !=4, set g_walkCallback=g_data_0053a748=0xa; ret. 1-NOP pad.
+ *   Init (0..0x1f): g_walkCallback=[g_counter_0053a51c]; if !=4, set g_walkCallback=g_walkStateIndex=0xa; ret. 1-NOP pad.
  *   Thunks 0..8 (offsets 0x20+i*0x20): g_walkCallback=0x11+i; g_eventQueueCurrent=1+i; jmp DualSave; 7-NOP pad.
  *   Thunk 9 (+0x140): g_walkCallback=0x1b (skips 0x1a); g_eventQueueCurrent=0xa; jmp DualSave (no NOP pad).
  */
-extern unsigned int g_data_0053a748;
-extern unsigned int g_state_0053a51c;
+extern unsigned int g_counter_0053a51c;
 extern void DualSave_00461840(void);
 
 __declspec(naked) void TenThunkDualSave_004616e0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0053a51c]
+        mov     eax, dword ptr [g_counter_0053a51c]
         cmp     eax, 4
         mov     dword ptr [g_walkCallback], eax
         _emit   75h
         _emit   0fh
         mov     eax, 0xa
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_data_0053a748], eax
+        mov     dword ptr [g_walkStateIndex], eax
         ret
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x11

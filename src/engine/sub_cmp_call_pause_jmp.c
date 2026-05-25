@@ -22,7 +22,6 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T2
  *   ret
  */
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern void func_0042fb6c(void);
 extern void func_0042fc62(void);

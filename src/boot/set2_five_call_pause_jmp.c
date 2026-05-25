@@ -6,10 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x0041fd10 (91b)
  *   call F0; set g_state_0053a1f0=2; call F1; pause → ret;

@@ -7,8 +7,8 @@
 /* @addr 0x004b21d0 (272b engine.app) - per-char glyph emitter for HUD text.
  *   args: (esp+8)=screen_x, (esp+0xc)=string ptr, (esp+0x10)=screen_y, (esp+0x14) bp=z, (esp+0x18) sign_flag.
  *   For each printable char (0x21..0x7e): index = c - 0x21; sprite cell pos = (idx % 28, idx / 28).
- *   Builds quad descriptor at g_data_007af4e8..g_data_007af508, calls Helper_DrawCursor.
- *   Advances screen_x by 9 per char; clears g_data_007af508 at end.
+ *   Builds quad descriptor at g_data_007af4e8..g_byte_007af508, calls Helper_DrawCursor.
+ *   Advances screen_x by 9 per char; clears g_byte_007af508 at end.
  */
 extern unsigned int g_data_007af4e8;
 extern unsigned int g_data_007af4ea;
@@ -21,7 +21,7 @@ extern unsigned int g_data_007af4f9;
 extern unsigned int g_data_007af4fa;
 extern unsigned int g_data_007af4fc;
 extern unsigned int g_data_007af502;
-extern unsigned int g_data_007af508;
+extern unsigned int g_byte_007af508;
 extern void Helper_DrawCursor(void);
 
 __declspec(naked) void Helper_DrawMenuText(void) {
@@ -105,13 +105,13 @@ __declspec(naked) void Helper_DrawMenuText(void) {
         pop     ebx
         pop     ebp
         pop     edi
-        mov     byte ptr [g_data_007af508], cl
+        mov     byte ptr [g_byte_007af508], cl
         mov     eax, esi
         pop     esi
         ret
     L_hpc_emptyTail:
         mov     esi, [esp + 8]
-        mov     byte ptr [g_data_007af508], 0
+        mov     byte ptr [g_byte_007af508], 0
         mov     eax, esi
         pop     esi
         ret

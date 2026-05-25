@@ -6,7 +6,6 @@
 
 extern unsigned int g_data_004f4f60;
 extern unsigned int g_data_004f4f64;
-extern unsigned int g_data_004ffd78;
 extern unsigned int g_data_00ab42d8;
 extern unsigned int g_data_00ab42f8;
 extern unsigned int g_data_00ab4384;
@@ -81,7 +80,7 @@ __declspec(naked) void Helper_GSM_Sub_Other1(void)
         call     Renderer_GetMode
         cmp      eax, 4
         jne      short L_8ca2
-        mov      eax, dword ptr [g_data_004ffd78]
+        mov      eax, dword ptr [g_mode4PauseGate]
         test     eax, eax
         je       short L_8ca8
     L_8ca2:

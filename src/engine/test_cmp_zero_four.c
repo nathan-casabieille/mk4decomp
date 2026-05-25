@@ -15,20 +15,19 @@ extern unsigned int g_scaledInit_00542044;
  *   jne     +5
  *   mov     [0x0052ab40], eax
  *   mov     byte ptr [g_byte_00542040], al
- *   mov     [g_state_0053a7d8], eax
- *   mov     [g_state_0053a748], eax
+ *   mov     [g_save_0053a7d8], eax
+ *   mov     [g_walkStateIndex], eax
  *   ret
  */
 extern unsigned char g_byte_00542040;
-extern unsigned int g_state_0052ab40;
-extern unsigned int g_state_0053a7d8;
-extern unsigned int g_state_0053a748;
+extern unsigned int g_or_0052ab40;
+extern unsigned int g_save_0053a7d8;
 void TestCmpZeroFour_004238b0(void) {
     g_walkCallback = (void (*)(void))0;
     if (g_byte_00542040 == 0) {
-        g_state_0052ab40 = 0;
+        g_or_0052ab40 = 0;
     }
     g_byte_00542040 = 0;
-    g_state_0053a7d8 = 0;
-    g_state_0053a748 = 0;
+    g_save_0053a7d8 = 0;
+    g_walkStateIndex = 0;
 }

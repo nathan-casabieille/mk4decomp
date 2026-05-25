@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,13 +109,13 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004c3be0 (286b engine.render) - twin of Snd3DSourceCleanup_004c3ad0 with extra flag-check.
- *   Same structure but adds `shl ecx,2; cmp [ecx+g_data_00f8fac8], 0; je;
- *   test [ecx+g_data_00f8fade], 1; je` before the vtbl calls (extra "in-use" filter).
+ *   Same structure but adds `shl ecx,2; cmp [ecx+g_audioChannelTable], 0; je;
+ *   test [ecx+g_flags_00f8fade], 1; je` before the vtbl calls (extra "in-use" filter).
  */
-extern unsigned int g_data_00f8fac8;
-extern unsigned int g_data_00f8fade;
-extern unsigned int g_data_00f8fadf;
-extern unsigned int g_data_00f9eb80;
+extern u8 g_audioChannelTable[];
+extern unsigned int g_flags_00f8fade;
+extern unsigned int g_flags_00f8fadf;
+extern u16 g_audioChannelQueue[];
 
 __declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
     __asm {
@@ -145,7 +131,7 @@ __declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
         jae     L_s3df_done
         movsx   esi, al
         shl     esi, 2
-        mov     ax, word ptr [esi + g_data_00f9eb80]
+        mov     ax, word ptr [esi + g_audioChannelQueue]
         cmp     ax, 0xffff
         jz      L_s3df_done
         movsx   eax, ax
@@ -153,36 +139,36 @@ __declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
         lea     ecx, [eax*8]
         sub     ecx, eax
         shl     ecx, 2
-        cmp     dword ptr [ecx + g_data_00f8fac8], ebx
+        cmp     dword ptr [ecx + g_audioChannelTable], ebx
         jz      L_s3df_done
-        test    byte ptr [ecx + g_data_00f8fade], 1
+        test    byte ptr [ecx + g_flags_00f8fade], 1
         jz      L_s3df_done
-        movsx   edx, word ptr [esi + g_data_00f9eb80 + 2]
+        movsx   edx, word ptr [esi + g_audioChannelQueue + 2]
         lea     ecx, [eax*8]
         sub     ecx, eax
         add     ecx, edx
-        mov     eax, dword ptr [ecx*4 + g_data_00f8fac8]
+        mov     eax, dword ptr [ecx*4 + g_audioChannelTable]
         push    eax
         mov     ecx, [eax]
         call    dword ptr [ecx + 0x48]
-        movsx   eax, word ptr [esi + g_data_00f9eb80]
+        movsx   eax, word ptr [esi + g_audioChannelQueue]
         mov     edx, eax
         push    ebx
         shl     edx, 3
         sub     edx, eax
-        movsx   eax, word ptr [esi + g_data_00f9eb80 + 2]
+        movsx   eax, word ptr [esi + g_audioChannelQueue + 2]
         add     edx, eax
-        mov     eax, dword ptr [edx*4 + g_data_00f8fac8]
+        mov     eax, dword ptr [edx*4 + g_audioChannelTable]
         push    eax
         mov     ecx, [eax]
         call    dword ptr [ecx + 0x34]
-        movsx   eax, word ptr [esi + g_data_00f9eb80]
+        movsx   eax, word ptr [esi + g_audioChannelQueue]
         mov     edx, eax
         shl     edx, 3
         sub     edx, eax
-        movsx   eax, word ptr [esi + g_data_00f9eb80 + 2]
-        mov     word ptr [esi + g_data_00f9eb80], 0xffff
-        mov     byte ptr [eax + edx*4 + g_data_00f8fadf], bl
+        movsx   eax, word ptr [esi + g_audioChannelQueue + 2]
+        mov     word ptr [esi + g_audioChannelQueue], 0xffff
+        mov     byte ptr [eax + edx*4 + g_flags_00f8fadf], bl
         pop     edi
         pop     esi
         pop     ebp
@@ -195,15 +181,15 @@ __declspec(naked) void Snd3DSourceCleanupFiltered_004c3be0(void) {
         shl     ebp, 3
         sub     ebp, eax
         shl     ebp, 2
-        mov     eax, dword ptr [ebp + g_data_00f8fac8]
-        lea     edi, [ebp + g_data_00f8fac8]
+        mov     eax, dword ptr [ebp + g_audioChannelTable]
+        lea     edi, [ebp + g_audioChannelTable]
         cmp     eax, ebx
         jz      short L_s3df_done
-        test    byte ptr [ebp + g_data_00f8fade], 1
+        test    byte ptr [ebp + g_flags_00f8fade], 1
         jz      short L_s3df_done
         xor     esi, esi
     L_s3df_loop:
-        mov     byte ptr [esi + ebp + g_data_00f8fadf], bl
+        mov     byte ptr [esi + ebp + g_flags_00f8fadf], bl
         mov     eax, [edi]
         push    eax
         mov     ecx, [eax]

@@ -6,10 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern u32 g_eventQueueCurrent;
-extern u32 g_eventQueueWorkType;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x0048e4f0 (84b)
  *   arg sar 2 → g_scaledInit; load baseSel*4+0x34 → walk; cmp 0x10;

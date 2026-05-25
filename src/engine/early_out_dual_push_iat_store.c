@@ -36,24 +36,24 @@ void AppShutdown(void) {
 }
 
 /* @addr 0x004b4600 (65b)
- *   if (g_state_007affe4 != 0 && g_state_007afff0 != 0):
- *     if eax == 2: push 1, push 1, call IAT, clear g_state_007afff0;
- *     else:        push 0, push 0, call IAT, clear g_state_007afff0;
+ *   if (g_renderer1_active != 0 && g_renderer1_busy != 0):
+ *     if eax == 2: push 1, push 1, call IAT, clear g_renderer1_busy;
+ *     else:        push 0, push 0, call IAT, clear g_renderer1_busy;
  *   ret.
  */
-extern unsigned int g_state_007affe4;
-extern unsigned int g_state_007afff0;
+extern int g_renderer1_active;
+extern int g_renderer1_busy;
 extern void (__stdcall *g_iat_007b0040)(int, int);
 void EarlyOutDualPushIATStore_004b4600(void) {
     unsigned int v;
-    if (g_state_007affe4 == 0) return;
-    v = g_state_007afff0;
+    if (g_renderer1_active == 0) return;
+    v = g_renderer1_busy;
     if (v == 0) return;
     if (v == 2) {
         g_iat_007b0040(1, 1);
-        g_state_007afff0 = 0;
+        g_renderer1_busy = 0;
         return;
     }
     g_iat_007b0040(0, 0);
-    g_state_007afff0 = 0;
+    g_renderer1_busy = 0;
 }

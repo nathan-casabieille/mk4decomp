@@ -12,15 +12,15 @@
  *   GUID; returns 1 on full success, 0 otherwise.
  */
 extern unsigned int g_x_00544298;
-extern unsigned int g_x_0058c7ac;
+extern unsigned int g_comptr_0058c7ac;
 extern unsigned int g_x_0058c7c8;
 extern unsigned int g_x_0058c7cc;
-extern unsigned int g_x_0058c7dc;
+extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init9(void) {
     __asm {
         sub     esp, 0x6c
-        mov     eax, dword ptr [g_x_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         push    esi
         push    edi
         mov     ecx, 0x1b
@@ -37,7 +37,7 @@ __declspec(naked) void R2_Init9(void) {
         push    edx
         push    eax
         call    dword ptr [ecx + 0x18]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
 step2:
         mov     eax, dword ptr [g_x_0058c7c8]
         test    eax, eax
@@ -47,7 +47,7 @@ step2:
         push    0x004d28f0
         push    eax
         call    dword ptr [ecx]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         mov     eax, dword ptr [g_x_0058c7c8]
         test    eax, eax
         je      failPath

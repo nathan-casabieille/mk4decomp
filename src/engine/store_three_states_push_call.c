@@ -4,7 +4,6 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern u32 g_eventQueueWorkType;
 
 /* @addr 0x00450680 (53b)
  *   mov     ecx, [g_eventQueueCurrent]

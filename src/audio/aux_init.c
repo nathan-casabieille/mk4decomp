@@ -9,7 +9,6 @@
 /*
  * @addr 0x004ac8f0
  *
-extern unsigned int g_auxChannels;
 
  * Naked + __asm: the prologue zeros 10 globals via xor edi + 89 3d
  * (5 bytes / store) instead of c7 imm32 (10 bytes / store) - MSVC

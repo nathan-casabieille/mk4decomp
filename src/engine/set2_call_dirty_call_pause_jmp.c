@@ -18,7 +18,7 @@
  *   jmp     T
  *   ret
  */
-extern unsigned int g_framePauseFlag;
+extern u32 g_framePauseFlag;
 extern void func_00455746(void);
 extern void func_00455760(void);
 extern void func_0042038f(void);

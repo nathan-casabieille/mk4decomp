@@ -8,19 +8,18 @@
 extern unsigned int g_data_004d57ac_arr;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
 
 void Helper_DownloadSetup(void) {
     __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_data_00535e48]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], edx
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, 0x004f02d0
@@ -44,17 +43,17 @@ void Helper_DownloadSetup(void) {
         mov     dword ptr [g_data_00535e48], ecx
         _emit   0ebh
         _emit   0d6h
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         add     edx, ecx
         mov     dword ptr [g_scaledInit_00542044], edx
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_data_00535e48], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         }
 }
 

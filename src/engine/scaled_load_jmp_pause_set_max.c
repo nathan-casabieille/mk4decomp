@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern packed_ptr g_fightGroupHead;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x00446880 (62b)
  *   mov     eax, [g_baseSel_00542060]
@@ -22,7 +20,7 @@ extern packed_ptr g_fightGroupHead;
  *   jne     +0x0f
  *   mov     eax, 0xfff
  *   mov     [g_walkCallback], eax
- *   mov     [g_state_00537e94], eax
+ *   mov     [g_x_00537e94_v2], eax
  *   ret
  */
 extern void MStackCall_00406340(void);
@@ -36,7 +34,7 @@ void ScaledLoadJmpPauseSetMax_00446880(void) {
 }
 
 /* @addr 0x004468a0 (30b): call Cmp2OrSet0b, then if !pause set both
- * g_walkCallback and g_state_00537e94 to 0xfff. Orphan sub-entry of the
+ * g_walkCallback and g_x_00537e94_v2 to 0xfff. Orphan sub-entry of the
  * original packed 62-byte block. */
 void func_004468a0(void) {
     int v;
@@ -44,5 +42,5 @@ void func_004468a0(void) {
     if (g_framePauseFlag != 0) return;
     v = 0xfff;
     g_walkCallback = (void (*)(void))v;
-    g_state_00537e94 = v;
+    g_x_00537e94_v2 = v;
 }

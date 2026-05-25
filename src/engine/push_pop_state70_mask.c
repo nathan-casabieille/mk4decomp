@@ -6,27 +6,22 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern u32 g_eventQueueCurrent;
-extern u32 g_eventQueueWorkType;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x00490650 (84b)
  *   PushPopWrapper saving g_eventQueueCurrent;
  *   does (state_004d50a8 << 16) | (state_004d50a4 & 0xffff);
  *   stores to current and ~that to walk; restores current.
  */
-extern unsigned int g_state_004d50a8;
-extern unsigned int g_state_004d50a4;
 void PushPopState70Mask_00490650(void) {
     unsigned int hi;
     unsigned int packed;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueCurrent;
-    hi = g_state_004d50a8 << 0x10;
-    packed = (g_state_004d50a4 & 0xffff) | hi;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueCurrent;
+    hi = g_fightTableC1 << 0x10;
+    packed = (g_fightTableC0 & 0xffff) | hi;
     g_eventQueueCurrent = hi;
     g_walkCallback = (void (*)(void))~packed;
-    g_eventQueueCurrent = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_eventQueueCurrent = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }

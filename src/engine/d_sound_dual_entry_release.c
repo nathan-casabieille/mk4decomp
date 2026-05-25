@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,10 +108,10 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_x_0058c7ac;
-extern unsigned int g_x_0058c7dc;
-extern unsigned int g_x_0058c7e0;
-extern unsigned int g_x_0058c7e8;
+extern unsigned int g_comptr_0058c7ac;
+extern int g_renderer2_present_rc;
+extern int g_renderer2_active;
+extern int g_renderer2_initOk;
 extern void Renderer2_EndScene_D3D(void);
 extern void VtRelease_Modal_004ad590(void);
 extern void ReleaseVtableSlots_004af130(int);
@@ -142,8 +128,8 @@ extern void R2_Init4(void);
 
 /* @addr 0x004ad7c0 (141b engine.install) - shutdown sequence:
  *   Renderer2_EndScene_D3D, VtRelease_Modal, ReleaseVtableSlot 0..15;
- *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_x_0058c7e8:
- *   SetEvent via IAT@4d2210; clear g_x_0058c7e8; ret.
+ *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_renderer2_initOk:
+ *   SetEvent via IAT@4d2210; clear g_renderer2_initOk; ret.
  */
 extern unsigned int g_iat_004d2210;
 
@@ -152,14 +138,14 @@ __declspec(naked) void R2_Cleanup(void) {
         push    esi
         call    Renderer2_EndScene_D3D
         call    VtRelease_Modal_004ad590
-        mov     eax, dword ptr [g_x_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         _emit   74h
         _emit   0bh
         mov     ecx, dword ptr [eax]
         push    eax
         call    dword ptr [ecx + 0x28]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         xor     esi, esi
 loop4ad7c0:
         push    esi
@@ -180,8 +166,8 @@ loop4ad7c0:
         call    ComRelease_004aef30
         call    ComReleaseCapture_004aeee0
         call    DSoundBufferInit146_004aea40
-        mov     eax, dword ptr [g_x_0058c7e8]
-        mov     dword ptr [g_x_0058c7e0], 0
+        mov     eax, dword ptr [g_renderer2_initOk]
+        mov     dword ptr [g_renderer2_active], 0
         test    eax, eax
         _emit   74h
         _emit   0ch
@@ -189,7 +175,7 @@ loop4ad7c0:
         push    0
         push    0
         call    dword ptr [g_iat_004d2210]
-        mov     dword ptr [g_x_0058c7e8], 0
+        mov     dword ptr [g_renderer2_initOk], 0
         pop     esi
         ret
     }

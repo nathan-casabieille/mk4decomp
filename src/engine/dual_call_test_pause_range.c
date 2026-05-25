@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern packed_ptr g_fightGroupHead;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x004353f0 (65b)
  *   call F1; test eax → jne ret

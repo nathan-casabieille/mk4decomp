@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,18 +112,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   A: call Wrapper_0048a300; if !pause: g_eventQueueChild=0xd; ret.
  *   B (+0x20): g_walkCallback=0x4000; jmp OrDualStore.
  *   C (+0x30): g_walkCallback=0x2000; jmp OrDualStore.
- *   D (+0x40): g_walkCallback=0x1000, g_eventQueueCurrent=5, g_data_0053a7d8=5; jmp OrDualStore.
- *   E (+0x60): byte[g_x_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
+ *   D (+0x40): g_walkCallback=0x1000, g_eventQueueCurrent=5, g_save_0053a7d8=5; jmp OrDualStore.
+ *   E (+0x60): byte[g_byte_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
  *   F (+0x80): call FiveSetWalkJmp_00461360; if !pause: g_walkCallback=0x400; jmp OrDualStore.
  *   G (+0xa0): g_walkCallback=0x200; jmp OrDualStore.
  *   H (+0xb0): g_walkCallback=0x40; jmp OrDualStore.
  *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp_00461340; ret.
  */
-extern unsigned int g_data_0053a7d8;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_x_00543730;
+extern unsigned int g_save_0053a7d8;
+extern unsigned int g_byte_00543730;
 extern void FiveSetWalkJmp_00461360(void);
 extern void OrDualStore_0048e4b0(void);
 extern void Set1JmpSet2Jmp_00461340(void);
@@ -168,11 +151,11 @@ __declspec(naked) void NineEntryFlagDispatch_00461260(void) {
         mov     eax, 5
         mov     dword ptr [g_walkCallback], 0x00001000
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_data_0053a7d8], eax
+        mov     dword ptr [g_save_0053a7d8], eax
         jmp     OrDualStore_0048e4b0
         _emit   90h
         _emit   90h
-        mov     byte ptr [g_x_00543730], 1
+        mov     byte ptr [g_byte_00543730], 1
         mov     dword ptr [g_walkCallback], 0x00000800
         jmp     OrDualStore_0048e4b0
         _emit   90h

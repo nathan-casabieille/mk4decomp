@@ -15,9 +15,6 @@
 /*
  * @addr 0x004b49a0
  *
-extern unsigned int g_glideTable1;
-extern unsigned int g_glideTable2;
-extern unsigned int g_glideTable3;
 
  * Naked + __asm: long sequence of indirect-thru-IAT-style calls
  * via [g_glideFnTable + N] plus the 256-element fill loop's

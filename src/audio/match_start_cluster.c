@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,26 +108,17 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00535cfc;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_005380e0;
-extern unsigned int g_data_0053a3e0;
-extern unsigned int g_active_0053a408;
-extern unsigned int g_data_0053a51c;
-extern unsigned int g_data_0053a700;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00542004;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_data_00535cfc_arr;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
+extern unsigned int g_state4_0053a3e0;
+extern unsigned int g_counter_0053a51c;
+extern unsigned int g_state4_0053a700;
+extern u32 g_dlMode;
 extern unsigned int g_data_005433ec;
 extern unsigned int g_data_00543568;
 extern unsigned int g_data_00543714;
-extern unsigned int g_data_0054371c;
+extern u8 g_dlEnabledFlag;
 extern void AudioInstallSelfStatePush_004aa8a0(void);
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void DownloadPlayerChar(void);
@@ -160,7 +137,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         /* === Helper 1 (0x4a23c0): match init === */
         mov      edx, dword ptr [g_xformDirtyFlags]
         mov      eax, OFFSET g_active_0053a408
-        mov      ecx, OFFSET g_data_0053a3e0
+        mov      ecx, OFFSET g_state4_0053a3e0
         and      edx, 0xfffffffe
         shr      eax, 2
         shr      ecx, 2
@@ -169,14 +146,14 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformEntityIdx], ecx
         call     DualScaledStoreConst_004a22c0
         mov      edx, OFFSET g_active_00537e88
-        mov      eax, OFFSET g_data_0053a700
+        mov      eax, OFFSET g_state4_0053a700
         shr      edx, 2
         shr      eax, 2
         mov      dword ptr [g_currentNodeIdx], edx
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst_004a22c0
         call     ClearTwoCallSetStore_004a2270
-        mov      dword ptr [g_data_00542004], 0
+        mov      dword ptr [g_dlMode], 0
         call     SixCallSeqPushImm_004a1d80
         mov      dword ptr [g_eventQueueWorkType], 0
         call     Push16Call_00489f50
@@ -217,7 +194,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         call     Push16Call_00489f50
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
-        mov      ecx, dword ptr [g_data_0053a51c]
+        mov      ecx, dword ptr [g_counter_0053a51c]
         mov      dword ptr [g_walkCallback], ecx
         call     TablePushAccumTailJmp_00429e30
         cmp      dword ptr [g_framePauseFlag], edi
@@ -225,24 +202,24 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         call     TestCmpZeroFour_004238b0
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_260c
-        mov      eax, dword ptr [g_data_00537f48]
-        mov      edx, OFFSET g_data_00535cfc
+        mov      eax, dword ptr [g_dlNalt1]
+        mov      edx, OFFSET g_data_00535cfc_arr
         shr      edx, 2
         mov      ebx, 1
         mov      dword ptr [g_eventQueueEnd], edx
-        mov      byte ptr [g_data_0054371c], bl
+        mov      byte ptr [g_dlEnabledFlag], bl
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueCurrent], edi
         call     DownloadPlayerChar
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
-        mov      ecx, dword ptr [g_data_005380e0]
+        mov      ecx, dword ptr [g_dlNalt2]
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_walkCallback], ecx
         call     DownloadPlayerChar
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_260c
-        mov      byte ptr [g_data_0054371c], 0
+        mov      byte ptr [g_dlEnabledFlag], 0
         call     ScaledClearTripleCallJmp_004202c0
         pop      edi
         pop      esi
@@ -255,7 +232,7 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformDirtyFlags], ebx
         call     TableWalkBoundedCmp_004bd890
         mov      edx, OFFSET g_active_0053a408
-        mov      eax, OFFSET g_data_0053a3e0
+        mov      eax, OFFSET g_state4_0053a3e0
         mov      ebx, 1
         add      esp, 4
         shr      edx, 2
@@ -267,16 +244,16 @@ __declspec(naked) void MatchStartCluster_004a23c0(void)
         mov      dword ptr [g_xformEntityIdx], eax
         call     DualScaledStoreConst_004a22c0
         mov      ecx, OFFSET g_active_00537e88
-        mov      edx, OFFSET g_data_0053a700
+        mov      edx, OFFSET g_state4_0053a700
         shr      ecx, 2
         shr      edx, 2
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], edx
         call     DualScaledStoreConst_004a22c0
         call     ClearTwoCallSetStore_004a2270
-        mov      dword ptr [g_data_00542004], edi
-        mov      dword ptr [g_data_00537f48], edi
-        mov      dword ptr [g_data_005380e0], edi
+        mov      dword ptr [g_dlMode], edi
+        mov      dword ptr [g_dlNalt1], edi
+        mov      dword ptr [g_dlNalt2], edi
         call     IncOrZero9_00422080
         call     SixCallSeqPushImm_004a1d80
         mov      dword ptr [esi + 8], OFFSET L_2450

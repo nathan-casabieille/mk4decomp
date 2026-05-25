@@ -19,7 +19,7 @@ extern unsigned int g_iat_004d2068;
 extern unsigned int g_iat_004d206c;
 extern unsigned int g_iat_004d208c;
 extern unsigned int g_iat_004d2094;
-extern unsigned int g_x_007ab06c;
+extern HANDLE g_ecmThread;
 extern unsigned int g_x_007ab07c;
 extern unsigned int g_x_007ab080;
 extern unsigned int g_x_007ab084;
@@ -58,7 +58,7 @@ __declspec(naked) void Helper_ECM_PostCleanup(void) {
         call    edi
         push    eax
         call    ebp
-        mov     eax, dword ptr [g_x_007ab06c]
+        mov     eax, dword ptr [g_ecmThread]
         test    eax, eax
         _emit   74h
         _emit   05h

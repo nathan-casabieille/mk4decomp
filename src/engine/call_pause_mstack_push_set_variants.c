@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
-extern packed_ptr g_xformEntityIdx;
 extern void SelfInstallPhaseDispatch_0045fd30(void);
 extern void LeaPlus22StoreSelf_0048e4d0(void);
 

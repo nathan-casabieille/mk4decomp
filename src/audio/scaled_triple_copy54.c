@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueEnd;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ac040 (54b): triple cross-store at offsets 0x54/0x58/0x5c */
 void ScaledTripleCopy54_004ac040(void) {

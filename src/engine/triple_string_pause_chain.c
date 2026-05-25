@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,11 +110,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004468c0 (116b game) - dual-entry pause-gated 3-string chain.
  *   Block A: push 3 strings (0x4e5468/70/78) each followed by call PackedAdvance + pause-check ret;
- *     finally call Cmp2OrSet0b; if !pause: g_walkCallback = g_state_00537e94 = 0x0fff; ret.
+ *     finally call Cmp2OrSet0b; if !pause: g_walkCallback = g_x_00537e94_v2 = 0x0fff; ret.
  *   Block B (+0x60): call GateDispatch6c; if !pause: jmp ScaledInitWithCounterAndType_00446940; ret.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_00537e94;
+extern unsigned int g_x_00537e94_v2;
 extern void Cmp2OrSet0b_0048e3e0(void);
 extern void GateDispatch6c_00494580(void);
 extern void PackedAdvanceCallContinue_0048e630(void);
@@ -164,7 +149,7 @@ __declspec(naked) void TripleStringPauseChain_004468c0(void) {
         _emit   0fh
         mov     eax, 0x00000fff
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_state_00537e94], eax
+        mov     dword ptr [g_x_00537e94_v2], eax
         ret
         call    GateDispatch6c_00494580
         mov     eax, dword ptr [g_framePauseFlag]

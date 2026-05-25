@@ -24,12 +24,12 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, 1
  *   ret
  */
-extern unsigned int g_state_004d50b4;
-extern unsigned int g_state_004d50b8;
-extern unsigned int g_state_004d50c0;
+extern unsigned int g_byte_004d50b4;
+extern unsigned int g_byte_004d50b8;
+extern unsigned int g_byte_004d50c0;
 extern unsigned int g_state_004d50bc;
 int Test4StatesAny_004a1d20(void) {
-    if (g_state_004d50b4 || g_state_004d50b8 || g_state_004d50c0 || g_state_004d50bc) {
+    if (g_byte_004d50b4 || g_byte_004d50b8 || g_byte_004d50c0 || g_state_004d50bc) {
         return 1;
     }
     return 0;

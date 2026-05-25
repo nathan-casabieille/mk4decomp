@@ -4,15 +4,8 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
-extern unsigned int g_player1NodeIdx;
 
 /* @addr 0x00439c60 (79b)
  *   if g_fightGroupHead == [0x538158]: walk = 0x46; else walk = 0x45.

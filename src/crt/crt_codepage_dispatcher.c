@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,15 +112,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Frame: sub esp, 0x3c; push esi, edi.
  *   Init 15-dword reference window on stack: buf[0]=0, buf[1..8]=0x5c,
  *   buf[9]=0x7a, buf[10]=0x10, buf[11]=0x38, buf[12..14]=0x5c, buf[15]=0x5a.
- *   Clear g_x_004ffd7c; call Helper_AuxAudio_PostInit.
+ *   Clear g_demoModeFlag; call Helper_AuxAudio_PostInit.
  *   If success, call DSoundQueryProperty; require rv==0xf.
  *   Loop esi=1..14: rv=AuxAudioDevCapsQuery(esi); abs(rv - buf[esi-1]) must be <= 5.
- *   If all pass, set g_x_004ffd7c = 1.
+ *   If all pass, set g_demoModeFlag = 1.
  */
 extern unsigned int g_iat_004d20b8;
 extern unsigned int g_iat_004d20bc;
 extern unsigned int g_iat_004d20e4;
-extern unsigned int g_x_004ffd7c;
+extern u32 g_demoModeFlag;
 extern void AuxAudioDevCapsQuery_004ac3f0(void);
 extern void DSoundQueryProperty_004ac3a0(void);
 extern void FreeImpl_004c55f0(void);
@@ -166,36 +152,32 @@ extern unsigned int g_data_00523600;
 extern unsigned int g_data_005236ac;
 extern unsigned int g_data_005236b8;
 extern unsigned int g_data_005236e8;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00544258;
+extern u8 g_renderer2_buf3[];
 extern unsigned int g_data_00544298;
 extern unsigned int g_data_0054429c;
 extern unsigned int g_data_005442a0;
 extern unsigned int g_data_005442a4;
 extern unsigned int g_data_005442e0;
 extern unsigned int g_data_00544300;
-extern unsigned int g_data_0058c720;
+extern u8 g_renderer2_buf2[];
 extern unsigned int g_data_0058c760;
 extern unsigned int g_data_0058c764;
-extern unsigned int g_data_0058c768;
-extern unsigned int g_data_0058c7ac;
-extern unsigned int g_data_0058c7c0;
-extern unsigned int g_data_0058c7d8;
-extern unsigned int g_data_0058c7dc;
+extern u8 g_renderer2_buf1[];
+extern unsigned int g_comptr_0058c7ac;
+extern unsigned int g_renderer2_obj;
+extern unsigned int g_990_iface;
+extern int g_renderer2_present_rc;
 extern unsigned int g_data_0058c7dc_2;
 extern unsigned int g_data_0058c858;
 extern unsigned int g_data_0058c85c;
-extern unsigned int g_data_0058c860;
-extern unsigned int g_data_0058c878;
-extern unsigned int g_data_0058c87c;
+extern unsigned int g_dsmi_b70_main;
+extern unsigned int g_dsmi_b70_ret;
+extern unsigned int g_960_iface;
 extern unsigned int g_data_0058c8d8;
 extern unsigned int g_data_0058c8dc;
-extern unsigned int g_data_0058c8e0;
-extern unsigned int g_data_0058c8f8;
-extern unsigned int g_data_0058c8fc;
+extern unsigned int g_dsmi_3a0_main;
+extern unsigned int g_dsmi_3a0_ret;
+extern unsigned int g_190_iface;
 extern unsigned int g_data_007af4e8;
 extern unsigned int g_data_007af4ea;
 extern unsigned int g_data_007af4f0;
@@ -207,34 +189,34 @@ extern unsigned int g_data_007af4f9;
 extern unsigned int g_data_007af4fa;
 extern unsigned int g_data_007af4fc;
 extern unsigned int g_data_007af502;
-extern unsigned int g_data_007af508;
+extern unsigned int g_byte_007af508;
 extern unsigned int g_data_007af934;
 extern unsigned int g_data_007af938;
 extern unsigned int g_data_007af93c;
-extern unsigned int g_data_007af940;
+extern int g_renderer4_active;
 extern unsigned int g_data_007af944;
-extern unsigned int g_data_007af948;
+extern int g_renderer4_surface;
 extern unsigned int g_data_007af94c;
 extern unsigned int g_data_00ab4e34;
-extern unsigned int g_data_00f4d050;
+extern u16 g_texStripeBuf[];
 extern unsigned int g_data_00f6ce50;
 extern unsigned int g_data_00f85b34;
-extern unsigned int g_data_00f85b60;
+extern unsigned int g_table_00f85b60;
 extern unsigned int g_data_00f8fac4;
-extern unsigned int g_data_00f8fac8;
-extern unsigned int g_data_00f8fade;
-extern unsigned int g_data_00f8fadf;
+extern u8 g_audioChannelTable[];
+extern unsigned int g_flags_00f8fade;
+extern unsigned int g_flags_00f8fadf;
 extern unsigned int g_data_00f9eb68;
-extern unsigned int g_data_00f9eb80;
+extern u16 g_audioChannelQueue[];
 extern unsigned int g_data_00f9ebc0;
 extern unsigned int g_data_00f9ebc8;
-extern unsigned int g_data_00f9efcc;
+extern void * g_dsoundPrimary;
 extern unsigned int g_data_00f9eff4;
 extern unsigned int g_data_00f9eff8;
 extern unsigned int g_data_00f9effc;
 extern unsigned int g_data_00f9f000;
 extern unsigned int g_data_00f9f820;
-extern unsigned int g_data_00f9f844;
+extern u32 g_initRet;
 extern unsigned int g_data_00f9fc10;
 extern unsigned int g_data_00f9fc14;
 extern unsigned int g_data_00f9fc1c;
@@ -243,7 +225,7 @@ extern unsigned int g_data_00f9fc30;
 extern unsigned int g_data_00f9fc64;
 extern unsigned int g_data_00f9fc74;
 extern unsigned int g_data_00f9fd9c;
-extern unsigned int g_data_00fa0de0;
+extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_iid_004d28f0;
 extern void Calloc_004c6110(void);
 extern void CfltcvtFormat_004c8650(void);
@@ -293,7 +275,7 @@ __declspec(naked) void AppInit_Misc8(void) {
         mov     dword ptr [esp + 0x38], eax
         mov     dword ptr [esp + 0x3c], eax
         mov     dword ptr [esp + 0x40], 0x5a
-        mov     dword ptr [g_x_004ffd7c], ecx
+        mov     dword ptr [g_demoModeFlag], ecx
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      short L_c51_done
@@ -317,7 +299,7 @@ __declspec(naked) void AppInit_Misc8(void) {
         add     edi, 4
         cmp     esi, 0x0f
         jle     short L_c51_loop
-        mov     dword ptr [g_x_004ffd7c], 1
+        mov     dword ptr [g_demoModeFlag], 1
     L_c51_done:
         pop     edi
         pop     esi

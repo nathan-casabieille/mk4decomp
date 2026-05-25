@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueNotMask;
 
 /* @addr 0x00490140 */
 void MStackPushSet0200_00490140(void) {

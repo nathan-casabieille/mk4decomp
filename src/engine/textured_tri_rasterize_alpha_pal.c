@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ffd44;
-extern unsigned int g_data_004ffd48;
+extern unsigned int g_viewportW;
+extern unsigned int g_viewportH;
 extern unsigned int g_data_004ffd4c;
 extern unsigned int g_data_00f4d018;
 extern unsigned int g_data_00f4d01c;
@@ -139,9 +125,9 @@ extern unsigned int g_data_00f70f60;
 extern unsigned int g_data_00f70f64;
 extern unsigned int g_data_00f70f68;
 extern unsigned int g_data_00f70f6c;
-extern unsigned int g_data_00f70f70;
+extern s32 g_clipMinScratch;
 extern unsigned int g_data_00f70f74;
-extern unsigned int g_data_00f70f78;
+extern s32 g_clipMaxScratch;
 extern unsigned int g_data_00f70f84;
 extern unsigned int g_data_00f70f88;
 extern unsigned int g_data_00f70f8c;
@@ -164,14 +150,14 @@ extern unsigned int g_data_00f712f8;
 extern unsigned int g_data_00f712fc;
 extern unsigned int g_data_00f85b34;
 extern unsigned int g_data_00f85b4c;
-extern unsigned int g_data_00f85b50;
-extern unsigned int g_data_00f85b54;
+extern unsigned int g_viewportX;
+extern unsigned int g_viewportY;
 extern unsigned int g_data_00f85b58;
 
 __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00f85b50]
+        mov      eax, dword ptr [g_viewportX]
         push     ebx
         push     ebp
         push     esi
@@ -192,7 +178,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         imul     ecx, edi
         sub      ecx, edx
         test     ecx, ecx
-        mov      dword ptr [g_data_00f70f70], ecx
+        mov      dword ptr [g_clipMinScratch], ecx
         jle      L_2641
         mov      edx, dword ptr [g_data_00f70f90]
         mov      eax, dword ptr [g_data_00f70f88]
@@ -282,7 +268,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      dword ptr [g_data_00f70f6c], esi
         mov      edx, esi
     L_2139:
-        mov      ecx, dword ptr [g_data_004ffd48]
+        mov      ecx, dword ptr [g_viewportH]
         mov      edi, dword ptr [g_data_00f712fc]
         cmp      edi, ecx
         jle      L_214f
@@ -291,12 +277,12 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      ecx, dword ptr [g_data_00f85b4c]
         mov      ebx, dword ptr [g_data_00f85b34]
         and      ecx, 0xf
-        mov      edi, dword ptr [g_data_00f85b50]
+        mov      edi, dword ptr [g_viewportX]
         shl      ecx, 0x11
         add      ecx, ebx
         mov      dword ptr [g_data_00f70f74], eax
         mov      dword ptr [g_data_00f85b58], ecx
-        mov      ecx, dword ptr [g_data_00f85b54]
+        mov      ecx, dword ptr [g_viewportY]
         imul     ecx, edx
         add      ecx, edi
         mov      dword ptr [g_data_00f70fcc], esi
@@ -363,7 +349,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         sub      eax, edi
         mov      dword ptr [g_data_00f70f64], ecx
         mov      dword ptr [g_data_00f70f5c], ebp
-        mov      dword ptr [g_data_00f70f78], eax
+        mov      dword ptr [g_clipMaxScratch], eax
         je       L_22b1
         mov      edi, eax
         imul     edi, dword ptr [g_data_00f4d020]
@@ -415,7 +401,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         shl      ecx, 0x10
         sub      eax, edi
         mov      dword ptr [g_data_00f70fc8], ecx
-        mov      dword ptr [g_data_00f70f78], eax
+        mov      dword ptr [g_clipMaxScratch], eax
         je       L_2350
         imul     eax, dword ptr [g_data_00f4d024]
         add      ecx, eax
@@ -436,7 +422,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      ebx, eax
         sub      ebx, edx
         cmp      eax, ecx
-        mov      dword ptr [g_data_00f70f70], eax
+        mov      dword ptr [g_clipMinScratch], eax
         mov      dword ptr [g_data_00f712f8], ebx
         mov      dword ptr [g_data_00f70f6c], eax
         jle      L_239f
@@ -455,13 +441,13 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      edi, ecx
         mov      dword ptr [g_data_00f70f84], ecx
         sub      edi, eax
-        mov      dword ptr [g_data_00f70f70], eax
+        mov      dword ptr [g_clipMinScratch], eax
         test     edi, edi
-        mov      dword ptr [g_data_00f70f78], edi
+        mov      dword ptr [g_clipMaxScratch], edi
         jle      L_25bf
         test     ecx, ecx
         jl       L_25bf
-        mov      ecx, dword ptr [g_data_004ffd44]
+        mov      ecx, dword ptr [g_viewportW]
         cmp      eax, ecx
         jge      L_25bf
         mov      esi, dword ptr [g_data_00f70f60]
@@ -469,7 +455,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         test     eax, eax
         mov      dword ptr [g_data_00f70fd8], ebp
         mov      dword ptr [g_data_00f70fdc], esi
-        mov      dword ptr [g_data_00f70f78], edi
+        mov      dword ptr [g_clipMaxScratch], edi
         jge      L_2433
         mov      esi, eax
         imul     eax, dword ptr [g_data_00f4d034]
@@ -488,11 +474,11 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      dword ptr [g_data_00f4d040], edx
         jle      L_244e
         mov      edi, ecx
-        mov      dword ptr [g_data_00f70f78], edi
+        mov      dword ptr [g_clipMaxScratch], edi
     L_244e:
         sub      edi, eax
         test     edi, edi
-        mov      dword ptr [g_data_00f70f70], edi
+        mov      dword ptr [g_clipMinScratch], edi
         jle      L_25bf
         mov      eax, dword ptr [g_data_004ffd4c]
         test     eax, eax
@@ -526,7 +512,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         or       eax, ecx
         and      eax, 0xf7de
         mov      word ptr [edx], ax
-        mov      edi, dword ptr [g_data_00f70f70]
+        mov      edi, dword ptr [g_clipMinScratch]
         mov      esi, dword ptr [g_data_00f70fdc]
         mov      edx, dword ptr [g_data_00f4d040]
     L_24dc:
@@ -537,7 +523,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         add      ebp, eax
         add      esi, ebx
         add      edx, 2
-        mov      dword ptr [g_data_00f70f70], edi
+        mov      dword ptr [g_clipMinScratch], edi
         test     edi, edi
         mov      dword ptr [g_data_00f70fd8], ebp
         mov      dword ptr [g_data_00f70fdc], esi
@@ -568,7 +554,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         or       eax, ecx
         and      eax, 0x7bde
         mov      word ptr [edx], ax
-        mov      edi, dword ptr [g_data_00f70f70]
+        mov      edi, dword ptr [g_clipMinScratch]
         mov      esi, dword ptr [g_data_00f70fdc]
         mov      edx, dword ptr [g_data_00f4d040]
     L_2579:
@@ -579,7 +565,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         add      ebp, ecx
         add      esi, ebx
         add      edx, 2
-        mov      dword ptr [g_data_00f70f70], edi
+        mov      dword ptr [g_clipMinScratch], edi
         test     edi, edi
         mov      dword ptr [g_data_00f70fd8], ebp
         mov      dword ptr [g_data_00f70fdc], esi
@@ -589,7 +575,7 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal_004c1fe0(void)
         mov      ebx, dword ptr [g_data_00f712f8]
         mov      ebp, dword ptr [g_data_00f70f5c]
     L_25bf:
-        mov      edx, dword ptr [g_data_00f85b54]
+        mov      edx, dword ptr [g_viewportY]
         mov      eax, dword ptr [g_data_00f4d044]
         mov      ecx, dword ptr [g_data_00f4d024]
         mov      esi, dword ptr [g_data_00f70fc8]

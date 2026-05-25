@@ -16,10 +16,10 @@ extern unsigned int g_scaledInit_00542044;
  *   nop * 8
  *   mov     eax, 2
  *   mov     [g_walkCallback], eax
- *   mov     [g_state_00537e94], eax
+ *   mov     [g_x_00537e94_v2], eax
  *   ret
  */
-extern unsigned int g_state_00537e94;
+extern unsigned int g_x_00537e94_v2;
 extern void func_0042c3d0(void);
 
 /* @addr 0x0042c3b0 (24b): store OFFSET func_0042c3d0 (entry B at +0x20)

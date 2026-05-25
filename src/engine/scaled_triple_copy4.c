@@ -6,11 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueEnd;
 
 /* @addr 0x0049d2d0 (52b)
  *   triple copy from a[0..8] into b[4..0xc] with each pass

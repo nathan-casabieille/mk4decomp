@@ -71,8 +71,6 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_pendingNodeType;
-extern packed_ptr g_xformEntityIdx;
 
 extern void BootPhaseGateBracketedInit_004060c0(void);
 extern void MStackBracket1_TreeWalkRecursive2_00406dd0(void);

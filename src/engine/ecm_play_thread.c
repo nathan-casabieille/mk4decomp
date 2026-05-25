@@ -19,7 +19,6 @@ extern void *g_iat_SuspendThread;   /* 0x004d2090 */
 /*
  * @addr 0x004b0a50
  *
-extern unsigned int g_ecmDSBuffer;
 
  * Naked + __asm: thread infinite-loop with a "yield" suspend at
  * the bottom (cannot exit normally), magic-divide-by-8 frame

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,13 +114,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Otherwise: ensure buffer allocated (StreamAllocInit) or reset to [esi+8].
  *   Read via IOWrapper(buf=[esi+0x10], size=[esi+8], fd=[esi+0x18]) → eax.
  *   If 0 or -1: set EOF/error flag, ret -1.
- *   Otherwise: check device flags via fd lookup table (g_data_00fa0de0 or default 0x5222e0):
+ *   Otherwise: check device flags via fd lookup table (g_arr_00fa0de0 or default 0x5222e0):
  *     if 0x82 device flags set, OR 0x2000 into flags.
  *   If buf-size == 0x200 and flag-bit 8 set and flag-bit 0x400 clear: bump size to 0x1000.
  *   Decrement count, return first byte.
  */
 extern unsigned int g_data_005222e0;
-extern unsigned int g_data_00fa0de0;
+extern unsigned int g_arr_00fa0de0;
 extern void IOWrapper_004c8fc0(void);
 extern void StreamAllocInit_004cc250(void);
 
@@ -191,7 +177,7 @@ __declspec(naked) void Filbuf_004c8ed0(void) {
         mov     edi, ecx
         sar     edi, 5
         and     ecx, 0x1f
-        mov     edi, dword ptr [edi*4 + g_data_00fa0de0]
+        mov     edi, dword ptr [edi*4 + g_arr_00fa0de0]
         lea     ecx, [ecx + ecx*8]
         lea     ecx, [edi + ecx*4]
         jmp     short L_fb_checkFlags

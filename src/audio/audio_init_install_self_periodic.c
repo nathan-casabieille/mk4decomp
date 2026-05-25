@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,9 +110,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioInitInstallSelfPeriodic_004a0610 - 216b audio 2-body install/periodic.
- *   Entry 0x004a0610: g_walkCallback=g_data_00542004. If eax==0 OR g_data_0053a354 != 0:
+ *   Entry 0x004a0610: g_walkCallback=g_dlMode. If eax==0 OR g_state2_0053a354 != 0:
  *     tail-call CallSetPause; pop+ret. Else: chain=g_baseSel_00542060;
- *     g_data_0053a354=1, g_x_00537ea8=0, g_x_0053a2e8=0, g_state_00537e90=4,
+ *     g_state2_0053a354=1, g_state2_00537ea8=0, g_x_0053a2e8=0, g_state_00537e90=4,
  *     g_walkCallback=0, chain[+0xc]=0; call RoundWinTransition_0049e7e0; if !paused: pop+ret;
  *     else CallSetPause; pop+ret.
  *   Entry 0x004a0680 (body): chain = g_baseSel_00542060*4; saved=chain->state; chain->state=0.
@@ -134,15 +120,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     Else: ecx=g_x_00538090; g_walkCallback=ecx; if 0: tail-jmp InstallSelfStride5_004a06f0.
  *     Else: install-self at body; chain->state=1; g_pendingNodeType=2; g_framePauseFlag=1; ret.
  */
-extern unsigned int g_data_0053a354;
-extern unsigned int g_data_00542004;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_framePauseFlag;
+extern unsigned int g_state2_0053a354;
+extern u32 g_dlMode;
 extern unsigned int g_state_00537e90;
-extern unsigned int g_x_00537ea8;
+extern unsigned int g_state2_00537ea8;
 extern unsigned int g_x_00538090;
 extern unsigned int g_x_0053a2e8;
-extern unsigned int g_eventQueueEnd;
 extern void CallSetPause_0041f830(void);
 extern void InstallSelfStride5_004a06f0(void);
 extern void RoundWinTransition_0049e7e0(void);
@@ -151,19 +134,19 @@ __declspec(naked) void AudioInitInstallSelfPeriodic_004a0610(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_00542004]
+        mov     eax, dword ptr [g_dlMode]
         push    esi
         xor     esi, esi
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, esi
         je      short L_pause
-        mov     eax, dword ptr [g_data_0053a354]
+        mov     eax, dword ptr [g_state2_0053a354]
         cmp     eax, esi
         mov     dword ptr [g_walkCallback], eax
         jne     short L_pause
         mov     eax, dword ptr [g_baseSel_00542060]
-        mov     dword ptr [g_data_0053a354], 1
-        mov     dword ptr [g_x_00537ea8], esi
+        mov     dword ptr [g_state2_0053a354], 1
+        mov     dword ptr [g_state2_00537ea8], esi
         mov     dword ptr [g_x_0053a2e8], esi
         mov     dword ptr [g_state_00537e90], 4
         mov     dword ptr [g_walkCallback], esi

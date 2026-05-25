@@ -18,7 +18,6 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  *   ret
  */
-extern u32 g_xformScratch2088;
 extern void func_0047d960(void);
 void DirtyTestScaledCmpJmp_0046ea70(void) {
     unsigned int v;

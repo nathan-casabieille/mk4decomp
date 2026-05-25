@@ -6,10 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x0049d8e0 (89b)
  *   load g_baseSel and g_fightGroupHead, scaled by 4;

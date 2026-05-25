@@ -18,7 +18,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], 0    (g_framePauseFlag area)
  *   ret
  */
-extern u32 g_pendingNodeType;
 void ScaledInitWithCounterAndType_0041f1b0(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);
     *(unsigned int *)(base + 0x84) = 0;

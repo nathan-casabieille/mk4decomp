@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,30 +114,26 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_0052aab4;
 extern unsigned int g_data_0052ab44;
-extern unsigned int g_data_00535e68;
+extern unsigned int g_extra_00535e68;
 extern unsigned int g_data_00535e80;
 extern unsigned int g_data_00537ef4;
 extern unsigned int g_data_00538128;
-extern unsigned int g_data_0053a280;
+extern unsigned int g_extra_0053a280;
 extern unsigned int g_data_0053a2d8;
 extern unsigned int g_data_0053a2dc;
 extern unsigned int g_data_0053a358;
-extern unsigned int g_data_0053a3e0;
+extern unsigned int g_state4_0053a3e0;
 extern unsigned int g_data_0053a3e8;
 extern unsigned int g_data_0053a6d8;
-extern unsigned int g_data_0053a6e0;
-extern unsigned int g_data_0053a700;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_player2NodeIdx;
+extern unsigned int g_dst_0053a6e0;
+extern unsigned int g_state4_0053a700;
 extern unsigned int g_load_0052ab04;
 extern unsigned int g_load_0052ab08;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_00537e94;
-extern unsigned int g_state_00537ea4;
-extern unsigned int g_state_0053a51c;
+extern unsigned int g_x_00537e94_v2;
+extern unsigned int g_dst_00537ea4;
+extern unsigned int g_counter_0053a51c;
 extern unsigned int g_x_00541dc0;
 extern unsigned int g_x_00541e4c;
-extern unsigned int g_eventQueueWorkType;
 extern void ResetSceneCallbacks_00420090(void);
 
 __declspec(naked) void GlobalsResetInit_004222a0(void) {
@@ -171,21 +153,21 @@ __declspec(naked) void GlobalsResetInit_004222a0(void) {
         _emit   00h
         _emit   00h
         mov     eax, 0x0c
-        mov     dword ptr [g_state_0053a51c], esi
+        mov     dword ptr [g_counter_0053a51c], esi
         mov     dword ptr [g_data_0052ab44], esi
         mov     dword ptr [g_data_0053a6d8], esi
         mov     dword ptr [g_player1NodeIdx], esi
         mov     dword ptr [g_player2NodeIdx], esi
-        mov     dword ptr [g_state_00537e94], esi
+        mov     dword ptr [g_x_00537e94_v2], esi
         mov     dword ptr [g_data_00537ef4], esi
-        mov     dword ptr [g_data_00535e68], esi
-        mov     dword ptr [g_data_0053a280], esi
+        mov     dword ptr [g_extra_00535e68], esi
+        mov     dword ptr [g_extra_0053a280], esi
         mov     dword ptr [g_data_00535e80], esi
         mov     dword ptr [g_data_00538128], esi
-        mov     dword ptr [g_data_0053a3e0], esi
-        mov     dword ptr [g_data_0053a700], esi
-        mov     dword ptr [g_data_0053a6e0], esi
-        mov     dword ptr [g_state_00537ea4], esi
+        mov     dword ptr [g_state4_0053a3e0], esi
+        mov     dword ptr [g_state4_0053a700], esi
+        mov     dword ptr [g_dst_0053a6e0], esi
+        mov     dword ptr [g_dst_00537ea4], esi
         mov     dword ptr [g_data_0053a358], esi
         mov     dword ptr [g_data_0052aab4], 8
         mov     dword ptr [g_walkCallback], eax

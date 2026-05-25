@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -134,20 +120,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   14b NOP align pad.
  *   Entry 2 / body (offset 0xd0, 171b): mstack-pushes
  *     g_pendingNodeType/0054205c, calls ChainWalkPushPop_00405a40.
- *     On no-error: g_pendingNodeType = g_data_0052ab10, computes
+ *     On no-error: g_pendingNodeType = g_load_0052ab10, computes
  *     [g_fightGroupHead*4+0x58] += 0x9fd70; if greater than the new
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
  *     mstack entries back.
  */
 extern unsigned int g_data_004d75e0;
-extern unsigned int g_data_0052ab10;
+extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_xformDirtyFlags;
 extern unsigned int g_table_004d57b0;
 extern void ChainWalkPushPop_00405a40(void);
 extern void MStackCall_004062f0(void);
@@ -210,21 +190,21 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         nop
         nop
     L_bsm_body:
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_table_004d57b0], edx
         call    ChainWalkPushPop_00405a40
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_bodyEnd
-        mov     ecx, dword ptr [g_data_0052ab10]
+        mov     ecx, dword ptr [g_load_0052ab10]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_pendingNodeType], ecx
         push    esi
@@ -238,16 +218,16 @@ __declspec(naked) void BootSetupWithMStackBody_00418e00(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x58], eax
     L_bsm_skipAdd:
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         pop     esi
         mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_table_004d57b0]
         dec     eax
         mov     dword ptr [g_pendingNodeType], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
     L_bsm_bodyEnd:
         ret
     }

@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004b5c90 (80b)
  *   Walks a packed list at 0x7b41a0 (entries 12+ bytes each):
@@ -20,14 +14,14 @@ extern packed_ptr g_fightGroupHead;
  *   Calls helper(entry+0xc) on match. Loops until offset
  *   exceeds 0xab4194.
  */
-extern unsigned int g_data_007b41a0;
+extern u8 g_memHeapStart[];
 extern void Mem_Free_004b5b10(void *);
 __declspec(naked) void PackedListVisitor_004b5c90(void) {
     __asm {
         push    esi
         push    edi
         mov     edi, dword ptr [esp + 0x0c]
-        mov     esi, OFFSET g_data_007b41a0
+        mov     esi, OFFSET g_memHeapStart
 loop_top:
         mov     eax, dword ptr [esi]
         test    eax, 0xc0000000

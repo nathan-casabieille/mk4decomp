@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,27 +109,26 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f623c;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95a;
-extern unsigned int g_data_007af95c;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af960;
-extern unsigned int g_data_007af962;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af966;
-extern unsigned int g_data_007af968;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b6;
-extern unsigned int g_data_007af9b8;
-extern unsigned int g_data_007af9ba;
-extern unsigned int g_data_007af9bc;
-extern unsigned int g_data_007af9be;
+extern u32 g_inLoopStep;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn2_x;
+extern unsigned int g_triStripX0;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn1_z;
+extern unsigned int g_triStripX1;
+extern s16 g_vtxIn2_y;
+extern s16 g_vtxIn2_z;
+extern unsigned int g_triStripX2;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxValid;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP1Y;
+extern s16 g_vtxScreenP2X;
+extern s16 g_vtxScreenP2Y;
+extern s16 g_vtxScreenX;
+extern s16 g_vtxScreenY;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab4d9c;
 extern unsigned int g_data_00ab4e28;
@@ -160,7 +145,7 @@ extern void ProjectVertex(void);
 __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007af92c]
+        mov      eax, dword ptr [g_inLoopStep]
         sub      esp, 0xc
         test     eax, eax
         push     ebx
@@ -229,21 +214,21 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         cmp      ebx, eax
         mov      dword ptr [esp + 0x18], ecx
         jl       L_b920
-        mov      word ptr [g_data_007af958], ax
-        mov      word ptr [g_data_007af95e], ax
-        mov      word ptr [g_data_007af964], ax
+        mov      word ptr [g_vtxIn_x], ax
+        mov      word ptr [g_vtxIn1_y], ax
+        mov      word ptr [g_vtxIn2_y], ax
         mov      cx, word ptr [edi]
-        mov      word ptr [g_data_007af95a], cx
+        mov      word ptr [g_vtxIn2_x], cx
         mov      dx, word ptr [edi + 2]
-        mov      word ptr [g_data_007af960], dx
+        mov      word ptr [g_vtxIn1_z], dx
         mov      ax, word ptr [edi + 4]
-        mov      word ptr [g_data_007af966], ax
+        mov      word ptr [g_vtxIn2_z], ax
         mov      cx, word ptr [edi + 0xc]
-        mov      word ptr [g_data_007af95c], cx
+        mov      word ptr [g_triStripX0], cx
         mov      dx, word ptr [edi + 0xe]
-        mov      word ptr [g_data_007af962], dx
+        mov      word ptr [g_triStripX1], dx
         mov      ax, word ptr [edi + 0x10]
-        mov      word ptr [g_data_007af968], ax
+        mov      word ptr [g_triStripX2], ax
         call     ProjectTwoVertices
         add      edi, 0x18
         inc      ebx
@@ -258,16 +243,16 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         call     AdvanceTriStripRing
         add      esp, 0xc
         call     ProjectVertex
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
@@ -275,30 +260,30 @@ __declspec(naked) void TristripBatchEmit3Cap_004bb680(void)
         test     edx, edx
         setle    al
         xor      edx, edx
-        mov      dword ptr [g_data_007af9b0], eax
+        mov      dword ptr [g_vtxValid], eax
         test     eax, eax
         movsx    eax, bp
         sete     dl
         cmp      eax, edx
         je       L_b8f8
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         test     eax, eax
         jle      L_b8f8
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_b8f8
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_b8f8
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         mov      dword ptr [esi], ecx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      cx, word ptr [esi + 0x1a]
         mov      dword ptr [esi + 4], edx
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      ecx, 0xfbff
         mov      dword ptr [esi + 8], eax
-        mov      dl, byte ptr [g_data_007af9b0]
+        mov      dl, byte ptr [g_vtxValid]
         mov      eax, dword ptr [esp + 0x28]
         and      edx, 1
         shl      edx, 0xa

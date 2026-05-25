@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -129,24 +115,19 @@ extern void MStackDualDiffSequencer_00477040(void);
  *   mstack-push g_cj_0054205c; g_cj_0054205c = g_scaledInit_00542044;
  *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster_0043e3e0; if pause? final-ret.
  *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
- *   then g_xformEntityIdx = g_x_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
+ *   then g_xformEntityIdx = g_load_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
  *   g_eventQueueWorkType = 0x20; call MStackDualDiffSequencer_00477040; if pause? final-ret.
  *   mstack-pop g_cj_0054205c; ret.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_x_0052ab10;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_load_0052ab10;
 
 __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_cj_0054205c]
         inc     eax
         push    esi
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_scaledInit_00542044]
         mov     eax, dword ptr [g_baseSel_00542060]
@@ -187,7 +168,7 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         call    Mul10Tail_00404af0
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x80], eax
-        mov     eax, dword ptr [g_x_0052ab10]
+        mov     eax, dword ptr [g_load_0052ab10]
         add     esp, 8
         add     eax, 0x15
         mov     dword ptr [g_eventQueueCurrent], 0x2b85
@@ -198,11 +179,11 @@ __declspec(naked) void HelperCallTripleMul10_0043e2d0(void) {
         test    eax, eax
         _emit   75h
         _emit   18h
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_cj_0054205c], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         pop     esi
         ret
     }

@@ -6,12 +6,10 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x004396c0 (51b)
- *   mov     eax, [g_state_00535df0]
+ *   mov     eax, [g_cj_00535df0]
  *   mov     [g_eventQueueIdx], eax
  *   call    F
  *   mov     eax, [g_framePauseFlag]
@@ -24,12 +22,12 @@ extern packed_ptr g_xformEntityIdx;
  *   jmp     +0x0e
  *   ret
  */
-extern unsigned int g_state_00535df0;
+extern unsigned int g_cj_00535df0;
 extern unsigned int g_state_0053a2c0;
 extern void func_004396f1(void);
 extern void func_004396ff(void);
 void StoreCallPauseDirtyStoreJmp_004396c0(void) {
-    g_eventQueueIdx = g_state_00535df0;
+    g_eventQueueIdx = g_cj_00535df0;
     func_004396f1();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 1) != 0) return;

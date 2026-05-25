@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x00428560 (85b)
  *   inc fightGroupHead[+0x28]; load fightGroupHead[+0x24] → scaled;

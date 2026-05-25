@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,21 +108,14 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004e2860;
+extern unsigned int g_word_004e2860;
 extern unsigned int g_data_004e2864;
 extern unsigned int g_data_00535e48;
 extern unsigned int g_data_00537e90;
 extern unsigned int g_data_00537f88;
-extern unsigned int g_data_0053a1bc;
-extern unsigned int g_framePauseFlag;
+extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_data_00541fc0;
-extern unsigned int g_data_00542004;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_xformDirtyFlags;
+extern u32 g_dlMode;
 extern void DualPushSetCallDualPop_00404b10(void);
 extern void RoundWinTransition_0049e7e0(void);
 extern void SetOnePairJmp_004a0110(void);
@@ -147,20 +126,20 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueEnd]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], edx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_data_00535e48]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     ecx, dword ptr [g_data_00541fc0]
         mov     eax, dword ptr [g_eventQueueNotMask]
@@ -179,7 +158,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         jne     short L_amspp_else
         push    0x22f
         call    TripleStageRollback_00404a50
-        mov     dx, word ptr [g_data_004e2860]
+        mov     dx, word ptr [g_word_004e2860]
         add     esp, 4
         push    edx
         jmp     short L_amspp_callBe690
@@ -200,19 +179,19 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_amspp_ret
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_data_00535e48], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
     L_amspp_ret:
         ret
         nop
@@ -243,7 +222,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         cmp     edx, ecx
         je      short L_amspp_sub2_install
     L_amspp_sub2_check:
-        mov     eax, dword ptr [g_data_00542004]
+        mov     eax, dword ptr [g_dlMode]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     short L_amspp_sub2_check2
@@ -251,7 +230,7 @@ __declspec(naked) void AudioMStackPushHandlerPair_0049ff30(void)
         pop     esi
         ret
     L_amspp_sub2_check2:
-        mov     eax, dword ptr [g_data_0053a1bc]
+        mov     eax, dword ptr [g_state2_0053a1bc]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     short L_amspp_sub2_callPair

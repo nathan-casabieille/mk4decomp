@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,21 +114,21 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     out[0..2] = M_row0 . v0,  M_row0 . v1
  *     out[3..5] = M_row1 . v0,  M_row1 . v1
  *   (where v0 is words at +0x18, v1 at +0x1c). Matrix is in
- *   g_data_007af9c0..d4. Results stored to g_data_007af9d8..ec.
+ *   g_arr_007af9c0..d4. Results stored to g_vtxLight0_x..ec.
  */
-extern unsigned int g_data_007af990;
-extern unsigned int g_data_007af9c0;
-extern unsigned int g_data_007af9c4;
-extern unsigned int g_data_007af9c8;
+extern s16 g_vtxMat[];
+extern unsigned int g_arr_007af9c0;
+extern unsigned int g_arr_007af9c4;
+extern unsigned int g_arr_007af9c8;
 extern unsigned int g_data_007af9cc;
 extern unsigned int g_data_007af9d0;
 extern unsigned int g_data_007af9d4;
-extern unsigned int g_data_007af9d8;
-extern unsigned int g_data_007af9dc;
-extern unsigned int g_data_007af9e0;
-extern unsigned int g_data_007af9e4;
-extern unsigned int g_data_007af9e8;
-extern unsigned int g_data_007af9ec;
+extern s32 g_vtxLight0_x;
+extern s32 g_vtxLight0_y;
+extern s32 g_vtxLight0_z;
+extern s32 g_vtxLight1_x;
+extern s32 g_vtxLight1_z;
+extern s32 g_vtxLight1_y;
 extern void Word9Reorder_004b3b30(void);
 
 __declspec(naked) void MatVec2Multiply_004b31e0(void) {
@@ -157,18 +143,18 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         push    esi
         push    edi
         push    eax
-        push    offset g_data_007af990
+        push    offset g_vtxMat
         call    Word9Reorder_004b3b30
         movsx   esi, word ptr [esp + 0x18]
         movsx   edx, word ptr [esp + 0x1a]
-        mov     eax, dword ptr [g_data_007af9c0]
-        mov     ecx, dword ptr [g_data_007af9c4]
+        mov     eax, dword ptr [g_arr_007af9c0]
+        mov     ecx, dword ptr [g_arr_007af9c4]
         mov     ebx, eax
         mov     ebp, ecx
         imul    ebx, esi
         imul    ebp, edx
         movsx   edi, word ptr [esp + 0x1c]
-        mov     edx, dword ptr [g_data_007af9c8]
+        mov     edx, dword ptr [g_arr_007af9c8]
         add     ebx, ebp
         mov     ebp, edx
         add     esp, 8
@@ -178,7 +164,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         mov     ebp, eax
         sar     ebx, 0x0c
         imul    ebp, edi
-        mov     dword ptr [g_data_007af9d8], ebx
+        mov     dword ptr [g_vtxLight0_x], ebx
         mov     edi, ecx
         movsx   ebx, word ptr [esp + 0x18]
         imul    edi, ebx
@@ -191,7 +177,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         sar     ebp, 0x0c
         imul    eax, ebx
         movsx   ebx, word ptr [esp + 0x1e]
-        mov     dword ptr [g_data_007af9dc], ebp
+        mov     dword ptr [g_vtxLight0_y], ebp
         imul    ecx, ebx
         movsx   ebp, word ptr [esp + 0x20]
         imul    edx, ebp
@@ -200,7 +186,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         add     eax, edx
         movsx   edx, word ptr [esp + 0x12]
         sar     eax, 0x0c
-        mov     dword ptr [g_data_007af9e0], eax
+        mov     dword ptr [g_vtxLight0_z], eax
         mov     eax, dword ptr [g_data_007af9cc]
         mov     ebx, eax
         imul    ebx, esi
@@ -215,7 +201,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         add     ebx, ebp
         mov     ebp, ecx
         sar     ebx, 0x0c
-        mov     dword ptr [g_data_007af9e4], ebx
+        mov     dword ptr [g_vtxLight1_x], ebx
         mov     ebx, eax
         imul    ebx, esi
         movsx   esi, word ptr [esp + 0x18]
@@ -229,7 +215,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         movsx   esi, word ptr [esp + 0x1e]
         imul    ecx, esi
         sar     ebx, 0x0c
-        mov     dword ptr [g_data_007af9e8], ebx
+        mov     dword ptr [g_vtxLight1_z], ebx
         add     eax, ecx
         movsx   ecx, word ptr [esp + 0x20]
         imul    edx, ecx
@@ -238,7 +224,7 @@ __declspec(naked) void MatVec2Multiply_004b31e0(void) {
         sar     eax, 0x0c
         pop     esi
         pop     ebp
-        mov     dword ptr [g_data_007af9ec], eax
+        mov     dword ptr [g_vtxLight1_y], eax
         pop     ebx
         add     esp, 0x20
         ret

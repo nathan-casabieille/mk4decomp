@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,25 +110,25 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004ad4a0 (234b engine.install) - DSound capture buffer setup gate.
  *   Frame: sub esp, 0x6c; push ebx/ebp/esi/edi.
- *   Validate: g_data_0058c7e0!=0, arg1!=0, arg2!=0, arg3!=0, g_data_0058c7ec==0; else fail.
+ *   Validate: g_renderer2_active!=0, arg1!=0, arg2!=0, arg3!=0, g_renderer2_paused==0; else fail.
  *   Zero local 108-byte struct ([esp+0x10]); set struct[0]=0x6c (size).
  *   Depending on arg0 (esi): if esi!=0 use [0x58c7b4]; else use [0x58c7b0].
  *   vtbl call ([ecx+0x64]: object_ptr, 0, struct_ptr, flag, 0) and store result
- *   in g_data_0058c7dc.
+ *   in g_renderer2_present_rc.
  *   If [esp+0x34] (returned blob) != 0 and [esp+0x20] >= 0x280:
- *     *arg1 = blob; *arg2 = field; *arg3 = [0x004f4788]; g_data_0058c7ec = (esi?2:1).
+ *     *arg1 = blob; *arg2 = field; *arg3 = [0x004f4788]; g_renderer2_paused = (esi?2:1).
  *     Return 1. Else return 0.
  */
 extern unsigned int g_data_004f4788;
-extern unsigned int g_data_0058c7b0;
-extern unsigned int g_data_0058c7b4;
-extern unsigned int g_data_0058c7dc;
-extern unsigned int g_data_0058c7e0;
-extern unsigned int g_data_0058c7ec;
+extern unsigned int g_comptr_0058c7b0;
+extern unsigned int g_comptr_0058c7b4;
+extern int g_renderer2_present_rc;
+extern int g_renderer2_active;
+extern int g_renderer2_paused;
 
 __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
     __asm {
-        mov     eax, dword ptr [g_data_0058c7e0]
+        mov     eax, dword ptr [g_renderer2_active]
         sub     esp, 0x6c
         test    eax, eax
         push    ebx
@@ -159,7 +145,7 @@ __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
         mov     ebx, [esp + 0x8c]
         test    ebx, ebx
         jz      L_dcg_fail
-        mov     eax, dword ptr [g_data_0058c7ec]
+        mov     eax, dword ptr [g_renderer2_paused]
         test    eax, eax
         jne     L_dcg_fail
         mov     esi, [esp + 0x80]
@@ -170,7 +156,7 @@ __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
         test    esi, esi
         mov     dword ptr [esp + 0x10], 0x6c
         jz      short L_dcg_pickB
-        mov     eax, dword ptr [g_data_0058c7b4]
+        mov     eax, dword ptr [g_comptr_0058c7b4]
         test    eax, eax
         jz      short L_dcg_skipCall
         mov     ecx, [eax]
@@ -178,7 +164,7 @@ __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
         push    0x21
         jmp     short L_dcg_doCall
     L_dcg_pickB:
-        mov     eax, dword ptr [g_data_0058c7b0]
+        mov     eax, dword ptr [g_comptr_0058c7b0]
         test    eax, eax
         jz      short L_dcg_skipCall
         mov     ecx, [eax]
@@ -190,7 +176,7 @@ __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
         push    0
         push    eax
         call    dword ptr [ecx + 0x64]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dcg_skipCall:
         mov     eax, [esp + 0x34]
         test    eax, eax
@@ -207,7 +193,7 @@ __declspec(naked) void DSoundCaptureSetupGate_004ad4a0(void) {
         setne   cl
         inc     ecx
         mov     [ebx], eax
-        mov     dword ptr [g_data_0058c7ec], ecx
+        mov     dword ptr [g_renderer2_paused], ecx
         mov     eax, 1
         pop     edi
         pop     esi

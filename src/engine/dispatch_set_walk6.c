@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* === Five 78b clones: dispatch at 0x004926e0 / 30 / 80 / d0 / 20 ===
  *
@@ -24,12 +18,11 @@ extern packed_ptr g_fightGroupHead;
  *       eventQueueCurrent = 1.
  *   walk = N (literal); jmp T.
  */
-extern unsigned int g_data_0054356c;
 extern unsigned int g_data_0053a404;
 extern void MStackPush3MaskBit_00492920(void);
 void DispatchSetWalk6_004926e0(void) {
     unsigned int v;
-    if (g_data_0054356c) return;
+    if (g_gtOtherFlag) return;
     v = g_data_0053a404;
     g_walkCallback = (void(*)(void))v;
     if (v) return;

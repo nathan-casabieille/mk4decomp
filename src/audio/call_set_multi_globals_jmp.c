@@ -39,20 +39,20 @@ void AppShutdown(void) {
 extern void DrainQueueCallEach_004a1ec0(void);
 extern unsigned int g_state_0052aac4_cc;
 extern unsigned int g_state_0053a50c;
-extern unsigned int g_state_0054355c;
-extern unsigned int g_state_00543710;
-extern unsigned int g_state_0054359c;
-extern unsigned int g_state_005433c8;
+extern unsigned int g_state_0054355c_hh;
+extern unsigned int g_state_00543710_hh;
+extern unsigned int g_counter_0054359c;
+extern unsigned int g_counter_005433c8;
 extern unsigned char g_byte_00543834;
 extern void PendingMatch_004a93c0(void);
 void CallSetMultiGlobalsJmp_004a9230(void) {
     DrainQueueCallEach_004a1ec0();
     g_state_0052aac4_cc = 2;
     g_state_0053a50c = 0x0e;
-    g_state_0054355c = 1;
-    g_state_00543710 = 1;
-    g_state_0054359c = 0;
-    g_state_005433c8 = 0;
+    g_state_0054355c_hh = 1;
+    g_state_00543710_hh = 1;
+    g_counter_0054359c = 0;
+    g_counter_005433c8 = 0;
     g_byte_00543834 = 1;
     PendingMatch_004a93c0();
 }

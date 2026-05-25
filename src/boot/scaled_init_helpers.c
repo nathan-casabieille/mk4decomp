@@ -9,8 +9,6 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 
 /* @addr 0x004084b0 (81b)
  *   load scaled, eventQueueCurrent; load scaled[+0x1c] into eax;

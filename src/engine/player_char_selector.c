@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -130,15 +116,13 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_00535cfc_arr;
 extern unsigned int g_data_00535d10;
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_005380e0;
-extern unsigned int g_data_0053a178;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
+extern s32 g_dlNalt3;
 extern unsigned int g_data_0053a1d0_arr;
-extern unsigned int g_data_0053a250;
-extern unsigned int g_data_00541ec4;
-extern unsigned int g_data_00541ec8;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_eventQueueEnd;
+extern s32 g_dlNalt4;
+extern s32 g_dlChar13;
+extern s32 g_dlChar24;
 extern void BitShiftExtract_00464090(void);
 extern void DownloadPlayerChar(void);
 
@@ -162,8 +146,8 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_data_005380e0]
-        mov     dword ptr [g_data_00541ec4], esi
+        mov     eax, dword ptr [g_dlNalt2]
+        mov     dword ptr [g_dlChar13], esi
         cmp     eax, 0xf
         mov     eax, dword ptr [g_walkCallback]
         _emit   75h
@@ -174,7 +158,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, 6
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, 6
-        mov     dword ptr [g_data_00537f48], eax
+        mov     dword ptr [g_dlNalt1], eax
         _emit   75h
         _emit   0ah
         mov     dword ptr [g_data_00535d10], 8
@@ -189,15 +173,15 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, dword ptr [g_data_00535d10]
         mov     ecx, offset g_data_00535cfc_arr
         shr     ecx, 2
-        mov     dword ptr [g_data_0053a178], eax
+        mov     dword ptr [g_dlNalt3], eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_eventQueueCurrent], esi
         call    DownloadPlayerChar
         mov     eax, dword ptr [g_framePauseFlag]
         pop     esi
         ret
-        mov     eax, dword ptr [g_data_00537f48]
-        mov     dword ptr [g_data_00541ec8], esi
+        mov     eax, dword ptr [g_dlNalt1]
+        mov     dword ptr [g_dlChar24], esi
         cmp     eax, 0xf
         mov     eax, dword ptr [g_walkCallback]
         _emit   75h
@@ -208,7 +192,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     eax, 6
         mov     dword ptr [g_walkCallback], eax
         cmp     eax, 6
-        mov     dword ptr [g_data_005380e0], eax
+        mov     dword ptr [g_dlNalt2], eax
         _emit   75h
         _emit   0ah
         mov     dword ptr [g_data_00535d10], 8
@@ -223,7 +207,7 @@ __declspec(naked) void PlayerCharSelector_004636d0(void) {
         mov     edx, dword ptr [g_data_00535d10]
         mov     eax, offset g_data_0053a1d0_arr
         shr     eax, 2
-        mov     dword ptr [g_data_0053a250], edx
+        mov     dword ptr [g_dlNalt4], edx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_eventQueueCurrent], 1
         call    DownloadPlayerChar

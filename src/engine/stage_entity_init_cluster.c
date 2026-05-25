@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,42 +108,30 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f3608;
-extern unsigned int g_data_0053a6dc;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_data_00537f2c;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_00538038;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_data_0053803c;
-extern unsigned int g_player2NodeIdx;
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_fightGroupHead;
+extern unsigned int g_loaded_004f3608;
+extern unsigned int g_clamp_0053a6dc;
+extern unsigned int g_clamp_00537f2c;
 extern void Thunk_0049cbd0(void);
 extern void CallSetPause_0041f830(void);
 extern void StageEntityInitCluster_004216a0(void);
 
-extern unsigned int g_data_00537ea4;
-extern unsigned int g_data_0053a6e0;
+extern unsigned int g_dst_00537ea4;
+extern unsigned int g_dst_0053a6e0;
 
 __declspec(naked) void TriDispatchSetupChain_00421500(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_data_0053a6e0]
-        mov     ecx, dword ptr [g_data_004f3608]
+        mov     eax, dword ptr [g_dst_0053a6e0]
+        mov     ecx, dword ptr [g_loaded_004f3608]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret
-        mov     eax, dword ptr [g_data_00537ea4]
+        mov     eax, dword ptr [g_dst_00537ea4]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax
         je      L_tdsc_ret
-        mov     eax, dword ptr [g_data_0053a6dc]
+        mov     eax, dword ptr [g_clamp_0053a6dc]
         mov     dword ptr [g_eventQueueWorkType], 0x26
         test    eax, eax
         mov     dword ptr [g_pendingNodeType], offset L_tdsc_sub2
@@ -169,7 +143,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         test    eax, eax
         jne     L_tdsc_ret
     L_tdsc_a1:
-        mov     eax, dword ptr [g_data_00537f2c]
+        mov     eax, dword ptr [g_clamp_00537f2c]
         mov     dword ptr [g_pendingNodeType], offset L_tdsc_sub3
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -187,7 +161,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_eventQueueChild]
         test    eax, eax
         je      short L_tdsc_a4
-        mov     eax, dword ptr [g_data_00538038]
+        mov     eax, dword ptr [g_gtPlayerProbe2]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
@@ -205,7 +179,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         mov     eax, dword ptr [g_eventQueueNotMask]
         test    eax, eax
         je      short L_tdsc_ret
-        mov     eax, dword ptr [g_data_0053803c]
+        mov     eax, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2012
@@ -228,7 +202,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         nop
     L_tdsc_sub2:
         mov     eax, dword ptr [g_player2NodeIdx]
-        mov     ecx, dword ptr [g_data_0053803c]
+        mov     ecx, dword ptr [g_gtPlayerProbe1]
         mov     edx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
@@ -252,7 +226,7 @@ __declspec(naked) void TriDispatchSetupChain_00421500(void)
         nop
     L_tdsc_sub3:
         mov     eax, dword ptr [g_player1NodeIdx]
-        mov     ecx, dword ptr [g_data_00538038]
+        mov     ecx, dword ptr [g_gtPlayerProbe2]
         mov     edx, dword ptr [g_player2NodeIdx]
         mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax

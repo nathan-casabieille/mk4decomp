@@ -5,14 +5,14 @@
 #include "game/tick.h"
 
 /* @addr 0x004cbb30 (238b crt) - CRT environment-string parser (envp builder).
- *   Reads NUL-separated env string at [g_data_00f9f844]; counts non-'=' tokens.
+ *   Reads NUL-separated env string at [g_initRet]; counts non-'=' tokens.
  *   Allocates (count+1)*4 byte ptr array, stores at [g_data_00f9f820].
  *   Iterates env: for each token (until '='), allocates buffer, copies chars
  *   via rep movsd/movsb, stores ptr in next slot.
  *   Frees the env source string; writes NULL terminator at end of array.
  */
 extern unsigned int g_data_00f9f820;
-extern unsigned int g_data_00f9f844;
+extern u32 g_initRet;
 extern void CmpCallPushIATCall_004c6e60(void);
 extern void FreeImpl_004c55f0(void);
 extern void LoadArgPushCall_004c54b0(void);
@@ -20,7 +20,7 @@ extern void LoadArgPushCall_004c54b0(void);
 __declspec(naked) void _init_main(void) {
     __asm {
         push    ecx
-        mov     edx, dword ptr [g_data_00f9f844]
+        mov     edx, dword ptr [g_initRet]
         push    ebx
         push    ebp
         push    esi
@@ -58,7 +58,7 @@ __declspec(naked) void _init_main(void) {
         call    CmpCallPushIATCall_004c6e60
         add     esp, 4
     L_ep_haveBuf:
-        mov     ebp, dword ptr [g_data_00f9f844]
+        mov     ebp, dword ptr [g_initRet]
         mov     dl, [ebp]
         test    dl, dl
         jz      short L_ep_finalize
@@ -107,11 +107,11 @@ __declspec(naked) void _init_main(void) {
         test    dl, dl
         jne     short L_ep_outer
     L_ep_finalize:
-        mov     eax, dword ptr [g_data_00f9f844]
+        mov     eax, dword ptr [g_initRet]
         push    eax
         call    FreeImpl_004c55f0
         add     esp, 4
-        mov     dword ptr [g_data_00f9f844], 0
+        mov     dword ptr [g_initRet], 0
         mov     dword ptr [esi], 0
         pop     edi
         pop     esi

@@ -10,9 +10,6 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004059a0 (90b)
  *   Push g_scaledInit on stack[idx*4]; load scaled[+0x18];
@@ -22,8 +19,8 @@ extern packed_ptr g_fightGroupHead;
 extern void ScaledAndMaskInitJmp_00405a00(void);
 void PushPopScaled18_004059a0(void) {
     unsigned int v;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
     v = *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x18);
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
@@ -33,16 +30,16 @@ void PushPopScaled18_004059a0(void) {
             return;
         }
     }
-    g_scaledInit_00542044 = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }
 
 /* @addr 0x00405ad0 (90b): same shape but uses g_xformEntityIdx, field +0x14 */
 extern void MStackPush2ChainPrepend_00409970(void);
 void PushPopScaled14_00405ad0(void) {
     unsigned int v;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     v = *(unsigned int *)(g_xformEntityIdx * 4 + 0x14);
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
@@ -52,8 +49,8 @@ void PushPopScaled14_00405ad0(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }
 
 /* @addr 0x00408510 (99b): variant with double pause check + g_fightGroupHead +0x1c */
@@ -61,8 +58,8 @@ extern void func_00409970_ii(void);
 extern void PushSetCallCleanup_00408580(void);
 void PushPopScaled1cDoubleCall_00408510(void) {
     unsigned int v;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_xformEntityIdx;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     func_00409970_ii();
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_fightGroupHead * 4 + 0x1c);
@@ -71,6 +68,6 @@ void PushPopScaled1cDoubleCall_00408510(void) {
         PushSetCallCleanup_00408580();
         if (g_framePauseFlag != 0) return;
     }
-    g_xformEntityIdx = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }

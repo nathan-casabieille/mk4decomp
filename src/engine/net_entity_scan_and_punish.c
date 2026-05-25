@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,13 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ecac8;
-extern unsigned int g_data_00535df0;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_cj_00535df0;
 extern void MStackCall_00406340(void);
 extern void MStackPush2ChainLLInsert_00406790(void);
 extern void PushSetXfmMaskCallPop_00407140(void);
@@ -137,7 +118,7 @@ extern void ScaledInitOrSelfPtr_00474b10(void);
 __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00535df0]
+        mov      eax, dword ptr [g_cj_00535df0]
         push     ebx
         push     esi
         push     edi
@@ -175,18 +156,18 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         jl       short L_4b6c
         mov      ecx, dword ptr [eax*4]
         mov      dword ptr [g_xformEntityIdx], ecx
-        mov      ecx, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_matrixStackTop]
         mov      eax, dword ptr [eax*4 + 0x54]
         inc      ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_004d57ac], ecx
+        mov      dword ptr [g_matrixStackTop], ecx
         mov      dword ptr [ecx*4], eax
         mov      edx, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [g_data_004d57ac]
+        mov      ecx, dword ptr [g_matrixStackTop]
         mov      eax, dword ptr [edx*4 + 0x5c]
         inc      ecx
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_004d57ac], ecx
+        mov      dword ptr [g_matrixStackTop], ecx
         mov      dword ptr [ecx*4], eax
         call     MStackPush2ChainLLInsert_00406790
         mov      eax, dword ptr [g_framePauseFlag]
@@ -201,14 +182,14 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         jne      L_4d31
         test     byte ptr [g_xformDirtyFlags], 4
         je       short L_4cac
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      eax, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], edx
         jmp      L_4b73
@@ -220,17 +201,17 @@ __declspec(naked) void NetEntityScanAndPunish_00474b50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_4d31
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      edx, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [edx*4 + 0x5c], ecx
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      dword ptr [eax*4 + 0x54], ecx
         mov      ecx, dword ptr [g_currentNodeIdx]

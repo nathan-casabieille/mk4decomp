@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,14 +108,11 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
 extern unsigned int g_data_0054388c;
 extern unsigned int g_data_00543890;
 extern unsigned int g_data_004ec040;
 extern unsigned int g_data_004ec050;
 extern unsigned int g_data_00542a58;
-extern unsigned int g_eventQueueTotal;
 extern void ScaledIndexConditionalAdd_0048e400(void);
 extern void GuardedDualConst2AndToggle_0048eba0(void);
 extern void Mul10SumStoreNegCommit_00490970(void);
@@ -142,10 +125,10 @@ extern void ScaledClearJmp_00428d60(void);
  *   TableLookupCall_00489ff0; on no-error sets 0x54206c=0xa, calls
  *   ScaledIndexConditionalAdd_0048e400. Then dispatches on
  *   g_baseSel_00542060:
- *     - matches g_data_00538038: if g_data_0054388c is set, picks
+ *     - matches g_gtPlayerProbe2: if g_data_0054388c is set, picks
  *       &g_data_004ec050>>2 (state 1) or &g_data_004ec040>>2 (other)
  *       into g_eventQueueTotal, clears g_data_0054388c, jumps to next.
- *     - matches g_data_0053803c: mirror with g_data_00543890.
+ *     - matches g_gtPlayerProbe1: mirror with g_data_00543890.
  *     - default: both g_eventQueueTotal and 0x54204c set to the two
  *       packed_ptrs, zeroes g_eventQueueChild, calls
  *       GuardedDualConst2AndToggle_0048eba0. If bit 0 of 0x54208c set,
@@ -157,12 +140,6 @@ extern void ScaledClearJmp_00428d60(void);
  *   PendingMatch_004694b0. Then tail-jmp ScaledChainJmp_00429470 or
  *   ScaledClearJmp_00428d60 depending on g_eventQueueChild.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_xformDirtyFlags;
 extern void GuardedPackedSlotInit_00428760(void);
 extern void ScaledChainJmp_00429470(void);
 extern void TableLookupCall_00489ff0(void);
@@ -180,7 +157,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         test    eax, eax
         jne     L_sfp_done
         mov     ecx, dword ptr [g_baseSel_00542060]
-        mov     eax, dword ptr [g_data_00538038]
+        mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     ecx, eax
         jne     short L_sfp_check2
         mov     eax, dword ptr [g_data_0054388c]
@@ -196,7 +173,7 @@ __declspec(naked) void StreamFlagPackedSelectChain_00469340(void) {
         mov     dword ptr [g_data_0054388c], 0
         jmp     L_sfp_callBlock
     L_sfp_check2:
-        cmp     ecx, dword ptr [g_data_0053803c]
+        cmp     ecx, dword ptr [g_gtPlayerProbe1]
         jne     short L_sfp_defaultPath
         mov     eax, dword ptr [g_data_00543890]
         test    eax, eax

@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00482740 (62b)
  *   3-level scaled chain (0x3c, 0x30, 0); cmp 0x61 → jmp T1; cmp 0x69 → jmp T2.

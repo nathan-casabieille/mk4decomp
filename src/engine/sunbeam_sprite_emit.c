@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,17 +110,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f6398;
 extern unsigned int g_data_004f6580;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_00543550;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af9ac;
-extern unsigned int g_data_007af9bc;
-extern unsigned int g_data_007af9be;
+extern u32 g_inLoopStep;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxTransX;
+extern s32 g_vtxTransY;
+extern s32 g_vtxTransZ;
+extern s16 g_vtxScreenX;
+extern s16 g_vtxScreenY;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab439c;
 extern unsigned int g_data_00ab43a0;
@@ -167,7 +151,7 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         mov      dword ptr [g_data_004f6580], 0x100
         mov      dword ptr [g_data_00ab51fc], 0xfffffff8
     L_d2be:
-        mov      eax, dword ptr [g_data_007af92c]
+        mov      eax, dword ptr [g_inLoopStep]
         test     eax, eax
         jne      L_d48f
         mov      eax, dword ptr [g_xformEntityIdx]
@@ -180,9 +164,9 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         sar      edx, 0x10
         sar      eax, 7
         shl      edi, 4
-        mov      dword ptr [g_data_007af9a4], ecx
-        mov      dword ptr [g_data_007af9a8], edx
-        mov      dword ptr [g_data_007af9ac], eax
+        mov      dword ptr [g_vtxTransX], ecx
+        mov      dword ptr [g_vtxTransY], edx
+        mov      dword ptr [g_vtxTransZ], eax
         add      edi, OFFSET g_data_004f6398
         mov      ebp, 4
     L_d310:
@@ -194,8 +178,8 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         call     AdvanceTriStripRing
         add      esp, 0xc
         call     ProjectVertex
-        mov      ax, word ptr [g_data_007af9bc]
-        mov      cx, word ptr [g_data_007af9be]
+        mov      ax, word ptr [g_vtxScreenX]
+        mov      cx, word ptr [g_vtxScreenY]
         mov      word ptr [esi - 2], ax
         mov      word ptr [esi], cx
         dec      word ptr [esi]
@@ -203,16 +187,16 @@ __declspec(naked) void SunbeamSpriteEmit_004bd270(void)
         add      esi, 4
         dec      ebp
         jne      L_d310
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         test     eax, eax
         jle      L_d48f
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_d48f
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_d48f
-        mov      eax, dword ptr [g_data_00543550]
+        mov      eax, dword ptr [g_tickW1]
         cmp      eax, 0x10
         jl       L_d385
         cdq

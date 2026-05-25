@@ -4,29 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004f7888;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_fightGroupHead;
 extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_data_00542098;
-extern unsigned int g_data_00543550;
-extern unsigned int g_data_007af990;
-extern unsigned int g_data_007af994;
-extern unsigned int g_data_007af998;
-extern unsigned int g_data_007af99c;
-extern unsigned int g_data_007af9a0;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af9ac;
+extern unsigned int g_eq_00542098;
+extern s16 g_vtxMat[];
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af9a0;
+extern s32 g_vtxTransX;
+extern s32 g_vtxTransY;
+extern s32 g_vtxTransZ;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab439c;
 extern unsigned int g_data_00ab43a0;
@@ -40,15 +27,12 @@ extern unsigned int g_data_00ab4d5c;
 extern unsigned int g_data_00ab4d60;
 extern unsigned int g_data_00ab4d64;
 extern unsigned int g_data_00ab4d68;
-extern unsigned int g_data_00ab4d98;
 extern unsigned int g_data_00ab4d9c;
 extern unsigned int g_data_00ab4e28;
 extern unsigned int g_data_00ab4e34;
 extern unsigned int g_data_00ab4e38;
-extern unsigned int g_data_00ab4e40;
 extern unsigned int g_data_00ab4e5c;
 extern unsigned int g_data_00ab4e60;
-extern unsigned int g_data_00ab4e64;
 extern unsigned int g_data_00ab4e6c;
 extern unsigned int g_data_00f00004;
 extern void BboxProjectAndStash_004bc5a0(void);
@@ -92,7 +76,7 @@ __declspec(naked) void RenderSceneNode(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ae73
-        mov      eax, dword ptr [g_data_00542098]
+        mov      eax, dword ptr [g_eq_00542098]
         test     eax, eax
         jne      L_ae7b
         mov      eax, dword ptr [g_currentNodeIdx]
@@ -125,15 +109,15 @@ __declspec(naked) void RenderSceneNode(void)
         lea      eax, [esi*4]
         mov      dword ptr [g_eventQueueEnd], eax
         mov      ecx, dword ptr [eax]
-        mov      dword ptr [g_data_007af990], ecx
+        mov      dword ptr [g_vtxMat], ecx
         mov      edx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_007af994], edx
+        mov      dword ptr [g_mat3x3_007af994], edx
         mov      ecx, dword ptr [eax + 8]
-        mov      dword ptr [g_data_007af998], ecx
+        mov      dword ptr [g_mat3x3_007af998], ecx
         mov      edx, dword ptr [eax + 0xc]
-        mov      dword ptr [g_data_007af99c], edx
+        mov      dword ptr [g_mat3x3_007af99c], edx
         mov      ax, word ptr [eax + 0x10]
-        mov      word ptr [g_data_007af9a0], ax
+        mov      word ptr [g_mat3x3_007af9a0], ax
         mov      eax, dword ptr [g_xformDirtyFlags]
         and      al, 0xef
         mov      dword ptr [g_xformDirtyFlags], eax
@@ -150,7 +134,7 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_a842
         add      eax, 8
     L_a842:
-        mov      edx, OFFSET g_data_004f7888
+        mov      edx, OFFSET g_nodeDispatchTable
         sar      edx, 2
         add      eax, edx
         mov      dword ptr [g_currentNodeIdx], eax
@@ -188,20 +172,20 @@ __declspec(naked) void RenderSceneNode(void)
         test     cl, 0x60
         je       L_a8f8
         sar      edx, 0x11
-        mov      dword ptr [g_data_007af9a4], edx
+        mov      dword ptr [g_vtxTransX], edx
         mov      edx, dword ptr [g_data_00ab439c]
         sar      edx, 0x11
         jmp      L_a90a
     L_a8f8:
         sar      edx, 8
-        mov      dword ptr [g_data_007af9a4], edx
+        mov      dword ptr [g_vtxTransX], edx
         mov      edx, dword ptr [g_data_00ab439c]
         sar      edx, 8
     L_a90a:
-        mov      dword ptr [g_data_007af9a8], edx
+        mov      dword ptr [g_vtxTransY], edx
         mov      edx, dword ptr [g_data_00ab43a0]
         sar      edx, 8
-        mov      dword ptr [g_data_007af9ac], edx
+        mov      dword ptr [g_vtxTransZ], edx
         mov      edx, dword ptr [g_eventQueueEnd]
         sar      edx, 2
         mov      dword ptr [g_pendingNodeType], edx
@@ -273,17 +257,17 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_aa7d
         mov      edx, dword ptr [g_data_00ab4d5c]
         mov      ecx, dword ptr [g_data_00ab4d58]
-        mov      dword ptr [g_data_007af994], edx
+        mov      dword ptr [g_mat3x3_007af994], edx
         mov      edx, dword ptr [g_data_00ab4d64]
-        mov      dword ptr [g_data_007af990], ecx
+        mov      dword ptr [g_vtxMat], ecx
         mov      ecx, dword ptr [g_data_00ab4d60]
-        mov      dword ptr [g_data_007af99c], edx
-        mov      dword ptr [g_data_007af998], ecx
+        mov      dword ptr [g_mat3x3_007af99c], edx
+        mov      dword ptr [g_mat3x3_007af998], ecx
         mov      cx, word ptr [g_data_00ab4d68]
         lea      edx, [eax*4]
         push     OFFSET g_data_00ab4838
         push     edx
-        mov      word ptr [g_data_007af9a0], cx
+        mov      word ptr [g_mat3x3_007af9a0], cx
         call     MatrixTransform3x3Q12_004b3b80
         add      esp, 8
         jmp      L_aa9b
@@ -303,10 +287,10 @@ __declspec(naked) void RenderSceneNode(void)
         sar      eax, 2
         mov      dword ptr [g_pendingNodeType], eax
     L_aab4:
-        mov      edx, dword ptr [g_data_00543550]
+        mov      edx, dword ptr [g_tickW1]
         mov      ecx, dword ptr [g_data_00ab4e6c]
         mov      dword ptr [g_data_00ab4e60], edx
-        mov      edx, dword ptr [g_data_00ab4e64]
+        mov      edx, dword ptr [g_tickDecay]
         test     edx, edx
         mov      dword ptr [g_data_00ab4e5c], ecx
         je       L_aadc
@@ -354,14 +338,14 @@ __declspec(naked) void RenderSceneNode(void)
         call     DirtyBitTripleWriteOrCall_004ba630
         mov      eax, dword ptr [g_pendingNodeType]
     L_ab72:
-        mov      ecx, dword ptr [g_data_00ab4e40]
+        mov      ecx, dword ptr [g_tickFlagZ]
         test     ecx, ecx
         je       L_ab9c
         push     ebx
         call     VibrationFrameUpdate_004b9640
         jmp      L_ab94
     L_ab84:
-        mov      ecx, dword ptr [g_data_00ab4d98]
+        mov      ecx, dword ptr [g_tickX1]
         test     ecx, ecx
         je       L_ab9c
         push     ecx
@@ -374,15 +358,15 @@ __declspec(naked) void RenderSceneNode(void)
         je       L_abd5
         shl      eax, 2
         mov      ecx, dword ptr [eax]
-        mov      dword ptr [g_data_007af990], ecx
+        mov      dword ptr [g_vtxMat], ecx
         mov      edx, dword ptr [eax + 4]
-        mov      dword ptr [g_data_007af994], edx
+        mov      dword ptr [g_mat3x3_007af994], edx
         mov      ecx, dword ptr [eax + 8]
-        mov      dword ptr [g_data_007af998], ecx
+        mov      dword ptr [g_mat3x3_007af998], ecx
         mov      edx, dword ptr [eax + 0xc]
-        mov      dword ptr [g_data_007af99c], edx
+        mov      dword ptr [g_mat3x3_007af99c], edx
         mov      ax, word ptr [eax + 0x10]
-        mov      word ptr [g_data_007af9a0], ax
+        mov      word ptr [g_mat3x3_007af9a0], ax
     L_abd5:
         mov      dword ptr [g_currentNodeIdx], ebx
         mov      eax, dword ptr [ebx*4 + 0x24]

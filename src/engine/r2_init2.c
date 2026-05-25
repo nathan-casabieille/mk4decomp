@@ -12,7 +12,7 @@
  *   push    0x004d2870
  *   push    eax
  *   call    [ecx]
- *   mov     [g_state_0058c7dc], eax
+ *   mov     [g_renderer2_present_rc], eax
  *   mov     ecx, [g_iface_0058c7bc]
  *   xor     eax, eax
  *   test    ecx, ecx
@@ -20,14 +20,14 @@
  *   ret
  */
 extern void *g_iface_0058c7ac;
-extern unsigned int g_state_0058c7dc;
+extern int g_renderer2_present_rc;
 extern void *g_iface_0058c7bc;
 extern void *g_data_004d2870;
-extern void *g_data_004d287c;
+extern void *g_comptr_0058c7bc;
 int R2_Init2(void) {
     void *p = g_iface_0058c7ac;
     if (p != 0) {
-        g_state_0058c7dc = ((unsigned int (__stdcall **)(void *, void *, void *))(*(void **)p))[0](p, &g_data_004d2870, &g_data_004d287c);
+        g_renderer2_present_rc = ((unsigned int (__stdcall **)(void *, void *, void *))(*(void **)p))[0](p, &g_data_004d2870, &g_comptr_0058c7bc);
     }
     return g_iface_0058c7bc != 0;
 }

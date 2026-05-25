@@ -6,7 +6,7 @@
 
 /* @addr 0x004aec90 (274b engine.install) - DSound primary buffer + format callback pair.
  *   Sub-1 (112b): zero g_data_00544298 (108-byte WAVEFORMAT), call vtbl[0x24]
- *     on g_data_0058c7c0 with the format callback at L_psn_cb (= 0x4aed00).
+ *     on g_renderer2_obj with the format callback at L_psn_cb (= 0x4aed00).
  *     If g_data_0054429c stays 0, return 0; else fill format defaults
  *     (size, frequency 0x100, flags, channels) and return 1.
  *   Sub-2 (162b, "L_psn_cb"): per-format probe; checks mask bits 0xf800 / 0x7c00
@@ -19,7 +19,7 @@ extern unsigned int g_data_005442a0;
 extern unsigned int g_data_005442a4;
 extern unsigned int g_data_005442e0;
 extern unsigned int g_data_00544300;
-extern unsigned int g_data_0058c7c0;
+extern unsigned int g_renderer2_obj;
 
 __declspec(naked) void R2_Init8(void) {
     __asm {
@@ -28,7 +28,7 @@ __declspec(naked) void R2_Init8(void) {
         xor     eax, eax
         mov     edi, offset g_data_00544298
         rep     stosd
-        mov     eax, dword ptr [g_data_0058c7c0]
+        mov     eax, dword ptr [g_renderer2_obj]
         test    eax, eax
         jz      short L_psn_check
         mov     ecx, [eax]

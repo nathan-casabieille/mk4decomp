@@ -24,7 +24,7 @@
 extern void GuardedChainCmpDualBitXor_004299a0(void);
 extern void func_004296d8(void);
 extern void func_004296fb(void);
-extern unsigned int g_framePauseFlag;
+extern u32 g_framePauseFlag;
 
 __declspec(naked) void CallPauseScaledDecJmp_00429750(void) {
     __asm {

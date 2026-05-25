@@ -13,16 +13,16 @@
  *     Set flag 0x543904 on success. Tail-call timeGetTime via IAT[0x4d2240];
  *     save in 0x5438fc.
  */
-extern unsigned int g_data_005438ec;
-extern unsigned int g_data_005438f0;
-extern unsigned int g_data_005438f4;
-extern unsigned int g_data_005438f8;
-extern unsigned int g_data_005438fc;
-extern unsigned int g_data_00543904;
-extern unsigned int g_data_0054390c;
+extern u32 g_timerActive;
+extern u32 g_timerStartSec;
+extern u32 g_timerEndSec;
+extern u32 g_timerHandle;
+extern u32 g_timerLastNow;
+extern u32 g_timerFlag;
+extern u32 g_audioState0C;
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
-extern unsigned int g_x_005438e8;
+extern u32 g_audioPreState;
 extern void Audio_TimerTeardown_004ac5f0(void);
 extern void Helper_AuxAudio_PostInit(void);
 
@@ -37,20 +37,20 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     ebx, [esp + 0x28]
         mov     esi, [esp + 0x2c]
         mov     edi, [esp + 0x30]
-        mov     dword ptr [g_data_005438f8], eax
-        mov     eax, dword ptr [g_data_0054390c]
+        mov     dword ptr [g_timerHandle], eax
+        mov     eax, dword ptr [g_audioState0C]
         test    eax, eax
-        mov     dword ptr [g_data_005438ec], ebx
-        mov     dword ptr [g_data_005438f0], esi
-        mov     dword ptr [g_data_005438f4], edi
+        mov     dword ptr [g_timerActive], ebx
+        mov     dword ptr [g_timerStartSec], esi
+        mov     dword ptr [g_timerEndSec], edi
         jne     L_mp_tailCall
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      L_mp_tailCall
-        mov     eax, dword ptr [g_data_00543904]
+        mov     eax, dword ptr [g_timerFlag]
         test    eax, eax
         jne     L_mp_tailCall
-        mov     edx, dword ptr [g_x_005438e8]
+        mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
         mov     ebp, dword ptr [g_iat_004d2244]
@@ -96,7 +96,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         or      ebx, ecx
         mov     [esp + 0x14], ebx
         mov     ah, dl
-        mov     edx, dword ptr [g_x_005438e8]
+        mov     edx, dword ptr [g_audioPreState]
         or      esi, eax
         shl     esi, 8
         or      esi, ecx
@@ -111,12 +111,12 @@ __declspec(naked) void Audio_TimerSet(void) {
         sbb     eax, eax
         pop     ebp
         inc     eax
-        mov     dword ptr [g_data_00543904], eax
+        mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
         call    dword ptr [g_iat_004d2240]
         pop     edi
         pop     esi
-        mov     dword ptr [g_data_005438fc], eax
+        mov     dword ptr [g_timerLastNow], eax
         pop     ebx
         add     esp, 0x18
         ret

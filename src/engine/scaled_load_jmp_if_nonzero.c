@@ -22,7 +22,6 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     eax
  *   ret
  */
-extern u32 g_pendingNodeType;
 void ScaledLoadJmpIfNonzero_00490e00(void) {
     unsigned int idx = g_xformEntityIdx;
     unsigned int v = *(unsigned int *)(idx * 4 + 0x4c);

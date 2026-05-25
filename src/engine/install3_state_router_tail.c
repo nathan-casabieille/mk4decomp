@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,16 +114,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     Install-self at entry+0x01000000; state=1; call EsiInstallClampAddCall; pause=1; ret.
  *   state==1 (dec,je): tail-call CallPauseScaledStoreCopyJmp; if pause ret.
  *     Install-self at entry; state=2; g_pendingNodeType=1; pause=1; ret.
- *   state>=2 (fall): cmp g_x_0052aac4 with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
+ *   state>=2 (fall): cmp g_state_0052aac4_aa with 2: if neq tail-call CjInstallSelfRouter; pop+ret.
  *     Else: g_walkCallback=g_data_00541dc8; if zero jmp state=2 install; else tail-call CjInstallSelfRouter; pop+ret.
  *   Tail (+0x120, 2-NOP pad): chain[baseSel*4+0x74]=0x104; push 0x004eb008; call ArgSarStoreJmp; pop; ret.
  */
 extern unsigned int g_data_00541dc8;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_x_0052aac4;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_currentNodeFlags;
+extern unsigned int g_state_0052aac4_aa;
 extern void ArgSarStoreJmp_004594f0(void);
 extern void CallPauseScaledStoreCopyJmp_00461220(void);
 extern void CjInstallSelfRouter_00470480(void);
@@ -159,7 +141,7 @@ __declspec(naked) void Install3StateRouterTail_0046b4e0(void) {
         dec     eax
         _emit   74h
         _emit   2bh
-        mov     eax, dword ptr [g_x_0052aac4]
+        mov     eax, dword ptr [g_state_0052aac4_aa]
         cmp     eax, 2
         mov     dword ptr [g_walkCallback], eax
         _emit   75h

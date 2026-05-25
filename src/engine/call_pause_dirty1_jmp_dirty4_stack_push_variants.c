@@ -6,15 +6,12 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern u32 g_eventQueueCurrent;
-extern u32 g_eventQueueWorkType;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x00428850 (84b)
  *   call F1; pause → ret; testb 1,[dirty]; je +5 → jmp T1;
  *   call F2; pause → ret; testb 4,[dirty]; je +0x1b →ret-tail;
- *   inc g_state_004d57ac; push 0x00428950 onto stack[idx*4]; jmp T2.
+ *   inc g_matrixStackTop; push 0x00428950 onto stack[idx*4]; jmp T2.
  */
 extern void GuardedSeq_004297b0(void);
 extern void func_00436670(void);
@@ -42,9 +39,9 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00428850(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   1bh
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET func_00428950_oo
         jmp     func_004939a0
         _emit   0e9h
@@ -80,9 +77,9 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_00483a80(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   74h
         _emit   1bh
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], OFFSET InstallSelfCallBitGate_00483ae0
         jmp     func_0042b988_oo
         _emit   0e9h

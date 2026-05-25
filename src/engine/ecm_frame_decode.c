@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -130,21 +116,21 @@ extern unsigned int g_const_004d2998;
 extern unsigned int g_const_004d29a0;
 extern unsigned int g_const_004d29a8;
 extern unsigned int g_const_004d29b0;
-extern unsigned int g_data_004f47b4;
-extern unsigned int g_data_004f47b8;
-extern unsigned int g_data_0058f428;
+extern u32 g_ecmFrameIdx;
+extern u32 g_ecmFrameTotal;
+extern u8 g_ecmAudioSlots[];
 extern unsigned int g_data_007aa224;
 extern unsigned int g_data_007aa228;
 extern unsigned int g_data_007aa234;
 extern unsigned int g_data_007ab048;
-extern unsigned int g_data_007ab04c;
-extern unsigned int g_data_007ab050;
-extern unsigned int g_data_007ab05c;
-extern unsigned int g_data_007ab060;
-extern unsigned int g_data_007ab064;
-extern unsigned int g_data_007ab06c;
-extern unsigned int g_data_007ab070;
-extern unsigned int g_data_007ab074;
+extern void  * g_ecmFile;
+extern u32 g_ecmFrameSizeDiv8;
+extern unsigned int g_ecmDSBuffer;
+extern u32 g_ecmRunFlag;
+extern u32 g_ecmReserved;
+extern HANDLE g_ecmThread;
+extern u32 g_ecmVolumeFromFtol;
+extern u32 g_ecmPlayState;
 
 extern unsigned int g_iat_004d2074;
 extern unsigned int g_iat_004d2084;
@@ -154,7 +140,7 @@ extern void DoubleToInt64_004c57d0(void);
 __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007ab04c]
+        mov      eax, dword ptr [g_ecmFile]
         sub      esp, 8
         push     ebx
         xor      ebx, ebx
@@ -163,7 +149,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         cmp      eax, ebx
         push     edi
         je       L_1077
-        mov      eax, dword ptr [g_data_007ab050]
+        mov      eax, dword ptr [g_ecmFrameSizeDiv8]
         mov      ecx, dword ptr [g_data_007aa234]
         cmp      eax, ecx
         jae      L_1077
@@ -174,13 +160,13 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         je       L_1077
         push     1
         call     Helper_ECM_PostCleanup
-        mov      eax, dword ptr [g_data_007ab064]
+        mov      eax, dword ptr [g_ecmReserved]
         add      esp, 4
         cmp      eax, ebx
         je       L_0e4d
-        mov      dword ptr [g_data_007ab064], ebx
+        mov      dword ptr [g_ecmReserved], ebx
         call     dword ptr [g_iat_004d2240]
-        mov      ecx, dword ptr [g_data_007ab050]
+        mov      ecx, dword ptr [g_ecmFrameSizeDiv8]
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], ecx
         mov      esi, eax
@@ -194,35 +180,35 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         mov      dword ptr [g_data_007aa224], esi
         mov      dword ptr [g_data_007aa228], ebx
     L_0e4d:
-        mov      eax, dword ptr [g_data_007ab050]
+        mov      eax, dword ptr [g_ecmFrameSizeDiv8]
         xor      edx, edx
         mov      ecx, 0xf
         div      ecx
         test     edx, edx
         jne      L_0e6f
-        mov      eax, dword ptr [g_data_007ab06c]
+        mov      eax, dword ptr [g_ecmThread]
         cmp      eax, ebx
         je       L_0e6f
         push     eax
         call     dword ptr [g_iat_004d2084]
     L_0e6f:
-        mov      edx, dword ptr [g_data_004f47b8]
-        mov      eax, dword ptr [g_data_004f47b4]
+        mov      edx, dword ptr [g_ecmFrameTotal]
+        mov      eax, dword ptr [g_ecmFrameIdx]
         mov      edi, dword ptr [g_iat_004d2074]
         cmp      edx, eax
         jle      L_0ee6
-        mov      edx, dword ptr [g_data_007ab064]
-        mov      eax, dword ptr [g_data_007ab05c]
+        mov      edx, dword ptr [g_ecmReserved]
+        mov      eax, dword ptr [g_ecmDSBuffer]
         inc      edx
         cmp      eax, ebx
-        mov      dword ptr [g_data_007ab064], edx
+        mov      dword ptr [g_ecmReserved], edx
         je       L_0ea0
         mov      ecx, dword ptr [eax]
         push     eax
         call     dword ptr [ecx + 0x48]
     L_0ea0:
-        mov      edx, dword ptr [g_data_004f47b8]
-        mov      eax, dword ptr [g_data_004f47b4]
+        mov      edx, dword ptr [g_ecmFrameTotal]
+        mov      eax, dword ptr [g_ecmFrameIdx]
         xor      esi, esi
         cmp      edx, eax
         jle      L_0ecf
@@ -231,8 +217,8 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         jge      L_0eee
         push     0xa
         call     edi
-        mov      eax, dword ptr [g_data_004f47b8]
-        mov      ecx, dword ptr [g_data_004f47b4]
+        mov      eax, dword ptr [g_ecmFrameTotal]
+        mov      ecx, dword ptr [g_ecmFrameIdx]
         add      esi, 0xa
         cmp      eax, ecx
         jg       L_0eb1
@@ -248,7 +234,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         add      esp, 8
         ret
     L_0ee6:
-        cmp      dword ptr [g_data_007ab074], ebx
+        cmp      dword ptr [g_ecmPlayState], ebx
         je       L_0efd
     L_0eee:
         call     ECM_Cleanup
@@ -261,13 +247,13 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         ret
     L_0efd:
         mov      ecx, dword ptr [esp + 0x1c]
-        mov      eax, dword ptr [g_data_007ab050]
+        mov      eax, dword ptr [g_ecmFrameSizeDiv8]
         push     ecx
         xor      edx, edx
         mov      ecx, 0xf
         push     ebp
         div      ecx
-        mov      eax, dword ptr [g_data_004f47b8]
+        mov      eax, dword ptr [g_ecmFrameTotal]
         push     edx
         cdq
         xor      eax, edx
@@ -276,7 +262,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         xor      eax, edx
         sub      eax, edx
         imul     eax, eax, 0x5ab5c
-        add      eax, OFFSET g_data_0058f428
+        add      eax, OFFSET g_ecmAudioSlots
         push     eax
         call     EcmFrameDecode_004bec30
         add      esp, 0x10
@@ -292,7 +278,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         push     eax
         call     edi
     L_0f56:
-        mov      eax, dword ptr [g_data_007ab05c]
+        mov      eax, dword ptr [g_ecmDSBuffer]
         cmp      eax, ebx
         je       L_0fbf
         mov      ecx, dword ptr [eax]
@@ -302,15 +288,15 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         call     dword ptr [ecx + 0x24]
         test     byte ptr [esp + 0x1c], 1
         jne      L_0fbf
-        mov      eax, dword ptr [g_data_007ab05c]
-        mov      edx, dword ptr [g_data_007ab070]
+        mov      eax, dword ptr [g_ecmDSBuffer]
+        mov      edx, dword ptr [g_ecmVolumeFromFtol]
         push     edx
         push     eax
         mov      ecx, dword ptr [eax]
         call     dword ptr [ecx + 0x3c]
-        mov      ecx, dword ptr [g_data_007ab050]
+        mov      ecx, dword ptr [g_ecmFrameSizeDiv8]
         xor      edx, edx
-        mov      esi, dword ptr [g_data_007ab05c]
+        mov      esi, dword ptr [g_ecmDSBuffer]
         lea      eax, [ecx + ecx*2]
         shl      eax, 4
         add      eax, ecx
@@ -323,7 +309,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         push     edx
         push     esi
         call     dword ptr [edi + 0x34]
-        mov      eax, dword ptr [g_data_007ab05c]
+        mov      eax, dword ptr [g_ecmDSBuffer]
         push     1
         push     ebx
         push     ebx
@@ -331,17 +317,17 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         push     eax
         call     dword ptr [edx + 0x30]
     L_0fbf:
-        cmp      dword ptr [g_data_007ab060], ebx
+        cmp      dword ptr [g_ecmRunFlag], ebx
         je       L_0fdd
         call     dword ptr [g_iat_004d2240]
         mov      edi, eax
-        mov      dword ptr [g_data_007ab060], ebx
+        mov      dword ptr [g_ecmRunFlag], ebx
         mov      dword ptr [g_data_007aa224], edi
         jmp      L_0fe3
     L_0fdd:
         mov      edi, dword ptr [g_data_007aa224]
     L_0fe3:
-        mov      esi, dword ptr [g_data_007ab050]
+        mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], esi
         fild     qword ptr [esp + 0x10]
@@ -356,7 +342,7 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         jne      L_1048
         call     dword ptr [g_iat_004d2240]
         mov      ecx, dword ptr [g_data_007ab048]
-        mov      esi, dword ptr [g_data_007ab050]
+        mov      esi, dword ptr [g_ecmFrameSizeDiv8]
         cmp      eax, ecx
         jb       L_1048
         cmp      esi, ebx
@@ -376,8 +362,8 @@ __declspec(naked) void EcmStreamTickAdvance_004b0db0(void)
         shr      edx, 3
         cmp      ecx, ebx
         mov      dword ptr [g_data_007aa228], ecx
-        mov      dword ptr [g_data_007ab050], esi
-        mov      dword ptr [g_data_004f47b8], edx
+        mov      dword ptr [g_ecmFrameSizeDiv8], esi
+        mov      dword ptr [g_ecmFrameTotal], edx
         je       L_106d
         neg      esi
     L_106d:

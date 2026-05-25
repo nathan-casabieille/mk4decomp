@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ffd44;
-extern unsigned int g_data_004ffd48;
+extern unsigned int g_viewportW;
+extern unsigned int g_viewportH;
 extern unsigned int g_data_00b2d008;
 extern unsigned int g_data_00b2d00c;
 extern unsigned int g_data_00f4d044;
@@ -141,25 +127,25 @@ extern unsigned int g_data_00f70fc0;
 extern unsigned int g_data_00f70fd8;
 extern unsigned int g_data_00f85b34;
 extern unsigned int g_data_00f85b4c;
-extern unsigned int g_data_00f85b50;
-extern unsigned int g_data_00f85b54;
+extern unsigned int g_viewportX;
+extern unsigned int g_viewportY;
 extern unsigned int g_data_00f85b58;
 
 __declspec(naked) void ScanlineTexBlit_004c0920(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00f85b50]
+        mov      eax, dword ptr [g_viewportX]
         push     ebx
         push     esi
         push     edi
         test     eax, eax
         je       L_0b63
         mov      edi, dword ptr [g_data_00f70fa8]
-        mov      eax, dword ptr [g_data_004ffd44]
+        mov      eax, dword ptr [g_viewportW]
         cmp      edi, eax
         jge      L_0b63
         mov      eax, dword ptr [g_data_00f70fb8]
-        mov      ecx, dword ptr [g_data_004ffd48]
+        mov      ecx, dword ptr [g_viewportH]
         cmp      eax, ecx
         jge      L_0b63
         mov      ecx, dword ptr [g_data_00f70fb0]
@@ -222,14 +208,14 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         mov      dword ptr [g_data_00f70f98], edx
         mov      dword ptr [g_data_00b2d008], esi
     L_0a46:
-        mov      eax, dword ptr [g_data_004ffd44]
+        mov      eax, dword ptr [g_viewportW]
         mov      edx, dword ptr [g_data_00f70fb0]
         cmp      edx, eax
         jl       L_0a5c
         sub      eax, edi
         mov      dword ptr [g_data_00b2d00c], eax
     L_0a5c:
-        mov      eax, dword ptr [g_data_004ffd48]
+        mov      eax, dword ptr [g_viewportH]
         mov      edx, dword ptr [g_data_00f70fc0]
         cmp      edx, eax
         jl       L_0a75
@@ -237,8 +223,8 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         mov      esi, eax
         mov      dword ptr [g_data_00b2d008], esi
     L_0a75:
-        mov      edx, dword ptr [g_data_00f85b54]
-        mov      eax, dword ptr [g_data_00f85b50]
+        mov      edx, dword ptr [g_viewportY]
+        mov      eax, dword ptr [g_viewportX]
         imul     edx, ecx
         add      eax, edx
         lea      eax, [eax + edi*2]
@@ -289,7 +275,7 @@ __declspec(naked) void ScanlineTexBlit_004c0920(void)
         mov      edx, dword ptr [g_data_00f70f50]
         mov      esi, dword ptr [g_data_00f70f98]
         mov      eax, dword ptr [g_data_00b2d008]
-        mov      ecx, dword ptr [g_data_00f85b54]
+        mov      ecx, dword ptr [g_viewportY]
         add      esi, edx
         mov      edx, dword ptr [g_data_00f4d044]
         dec      eax

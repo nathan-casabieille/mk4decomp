@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -134,8 +120,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     (eax | edx where edx = result*0x3c (= eax * 5 * 4 * 3? Actually lea+shl gives *60))
  *   Wait: eax_low *= 3; eax *= 5 ((eax + eax*4)); shl 2 → *60 total. So eax_low * 60 + (caps >> 8 & 0xff).
  */
-extern unsigned int g_x_004d2244;
-extern unsigned int g_x_005438e8;
+extern unsigned int g_iat_004d2244;
+extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
 __declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
@@ -151,9 +137,9 @@ __declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_005438e8]
+        mov     ecx, dword ptr [g_audioPreState]
         mov     edi, [esp + 0x28]
-        mov     esi, dword ptr [g_x_004d2244]
+        mov     esi, dword ptr [g_iat_004d2244]
         lea     eax, [esp + 0x14]
         push    eax
         push    0x110
@@ -168,7 +154,7 @@ __declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
         cmp     dword ptr [esp + 0x18], 0x00000440
         _emit   75h
         _emit   67h
-        mov     eax, dword ptr [g_x_005438e8]
+        mov     eax, dword ptr [g_audioPreState]
         lea     edx, [esp + 0x08]
         push    edx
         push    0x400
@@ -176,7 +162,7 @@ __declspec(naked) void AuxAudioDevCapsQuery_004ac3f0(void) {
         push    eax
         mov     dword ptr [esp + 0x1c], 2
         call    esi
-        mov     edx, dword ptr [g_x_005438e8]
+        mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x14]
         push    ecx
         push    0x110

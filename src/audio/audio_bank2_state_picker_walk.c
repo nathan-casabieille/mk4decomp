@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -125,16 +111,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * AudioBank2StatePickerWalk_004a9270 - 324b audio 2-bank state picker and roundrobin walk.
  *   g_walkCallback=0; CopyGlobal_004ac1f0; func_004a2080.
- *   eax = g_audioBankSel_00537f94; edx = g_data_0054359c; edi = g_x_005433c8.
+ *   eax = g_audioBankSel_00537f94; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
  *   ++g_data_00535de4. esi=1. ecx=g_x_004f3ae4; walk g_byte_005435a2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_data_005433c0=2; tail to cleanup.
  *   Else: ebp=g_x_004f3ae8; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_data_005433c0=1;
- *     cleanup: zero g_data_0054359c, g_x_005433c8; call PendingMatch_004a93c0; pop+ret.
+ *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call PendingMatch_004a93c0; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel_00537f94 again.
- *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_data_0054359c.
- *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_x_005433c8.
+ *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
+ *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
  *     call PendingMatch_004a93c0; pop+ret.
  */
 extern unsigned int g_byte_005435a1;
@@ -143,10 +129,10 @@ extern unsigned int g_byte_00543619;
 extern unsigned int g_byte_0054361a;
 extern unsigned int g_data_00535de4;
 extern unsigned int g_data_005433c0;
-extern unsigned int g_data_0054359c;
+extern unsigned int g_counter_0054359c;
 extern unsigned int g_x_004f3ae4;
 extern unsigned int g_x_004f3ae8;
-extern unsigned int g_x_005433c8;
+extern unsigned int g_counter_005433c8;
 extern void CopyGlobal_004ac1f0(void);
 extern void PendingMatch_004a93c0(void);
 extern void func_004a2080(void);
@@ -162,8 +148,8 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         call    CopyGlobal_004ac1f0
         call    func_004a2080
         mov     eax, dword ptr [g_audioBankSel_00537f94]
-        mov     edx, dword ptr [g_data_0054359c]
-        mov     edi, dword ptr [g_x_005433c8]
+        mov     edx, dword ptr [g_counter_0054359c]
+        mov     edi, dword ptr [g_counter_005433c8]
         cmp     eax, 1
         jne     short L_a92_highBank
         lea     eax, [edi + edi*2]
@@ -222,8 +208,8 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         je      short L_a92_walkPicks
         mov     dword ptr [g_data_005433c0], 1
     L_a92_cleanup:
-        mov     dword ptr [g_data_0054359c], 0
-        mov     dword ptr [g_x_005433c8], 0
+        mov     dword ptr [g_counter_0054359c], 0
+        mov     dword ptr [g_counter_005433c8], 0
         call    PendingMatch_004a93c0
         pop     edi
         pop     esi
@@ -243,7 +229,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         lea     ecx, [edx + edx*2]
         cmp     byte ptr [ecx*8 + g_byte_005435a2], 0
         jne     short L_a92_rrHigh
-        mov     dword ptr [g_data_0054359c], edx
+        mov     dword ptr [g_counter_0054359c], edx
     L_a92_checkLowPick:
         cmp     eax, 1
         jne     short L_a92_callEnd
@@ -257,7 +243,7 @@ __declspec(naked) void AudioBank2StatePickerWalk_004a9270(void)
         mov     al, byte ptr [edx*8 + g_byte_0054361a]
         test    al, al
         jne     short L_a92_rrLow
-        mov     dword ptr [g_x_005433c8], edi
+        mov     dword ptr [g_counter_005433c8], edi
     L_a92_callEnd:
         call    PendingMatch_004a93c0
         pop     edi

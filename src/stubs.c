@@ -1097,8 +1097,6 @@ unsigned int g_x_0053a178_v2;
 unsigned int g_x_0053a250_v2;
 unsigned int g_x_0053a51c_v2;
 unsigned int g_x_00542058_v2;
-unsigned int g_x_007affff4;
-unsigned int g_x_007affff8;
 unsigned int g_xformChainTable;
 unsigned int g_xformDirtyFlags;
 unsigned int g_xformEntityIdx;

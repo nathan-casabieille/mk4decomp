@@ -4,16 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_data_00543550;
 extern unsigned int g_data_00ab4db8;
 extern unsigned int g_data_00ab4e5c;
 extern unsigned int g_data_00ab4e60;
-extern unsigned int g_data_00ab4e64;
 extern void ZeroEightFields_004b8f20(void);
 
 __declspec(naked) void Helper_TickAlt(void)
@@ -86,7 +79,7 @@ __declspec(naked) void Helper_TickAlt(void)
     L_amw_entry:
         mov     eax, dword ptr [g_xformEntityIdx]
         push    ebx
-        mov     ebx, dword ptr [g_data_00543550]
+        mov     ebx, dword ptr [g_tickW1]
         push    esi
         mov     esi, dword ptr [eax*4 + 0x14]
         mov     eax, ebx
@@ -99,7 +92,7 @@ __declspec(naked) void Helper_TickAlt(void)
         sar     eax, 1
         mov     dword ptr [g_data_00ab4e5c], eax
         lea     eax, [esi + esi*4]
-        mov     dword ptr [g_data_00ab4e64], 2
+        mov     dword ptr [g_tickDecay], 2
         lea     edx, [eax + eax*4]
         lea     eax, [esi + edx*8]
         shl     eax, 4

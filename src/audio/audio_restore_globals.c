@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -135,15 +121,14 @@ extern unsigned int g_byte_00543a3e;
 extern unsigned int g_byte_00543ab4;
 extern unsigned int g_data_004f31cc;
 extern unsigned int g_data_004f31d0;
-extern unsigned int g_data_004f3234;
 extern unsigned int g_data_004f3404;
-extern unsigned int g_data_004f3608;
+extern unsigned int g_loaded_004f3608;
 extern unsigned int g_data_004f361c;
 extern unsigned int g_data_004f3814;
 extern unsigned int g_data_004f3818;
 extern unsigned int g_data_004f381c;
 extern unsigned int g_data_004f3820;
-extern unsigned int g_data_0052ab40;
+extern unsigned int g_or_0052ab40;
 extern unsigned int g_data_0053a1f0;
 extern unsigned int g_data_00543734;
 extern unsigned int g_data_00543738;
@@ -151,7 +136,7 @@ extern unsigned int g_data_0054373c;
 extern unsigned int g_data_00543740;
 extern unsigned int g_data_005437f8;
 extern unsigned int g_data_005437fc;
-extern unsigned int g_data_00543930;
+extern u32 g_gsmFlag;
 extern unsigned int g_data_00543a28;
 extern unsigned int g_data_00543a2c;
 extern unsigned int g_data_00543a30;
@@ -184,7 +169,7 @@ extern void AudioSnapshotGlobals_004ace60(void);
 __declspec(naked) void AudioRestoreGlobals_004acce0(void)
 {
     __asm {
-        mov     eax, dword ptr [g_data_00543930]
+        mov     eax, dword ptr [g_gsmFlag]
         push    esi
         test    eax, eax
         push    edi
@@ -195,7 +180,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
     L_arg_setboth:
         mov     ecx, 1
         test    eax, eax
-        mov     dword ptr [g_data_00543930], ecx
+        mov     dword ptr [g_gsmFlag], ecx
         mov     dword ptr [g_data_00543f7c], ecx
         jne     L_arg_main
         call    AudioSnapshotGlobals_004ace60
@@ -221,7 +206,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     al, byte ptr [g_byte_00543a3c]
         mov     dword ptr [g_data_005437fc], ecx
         mov     cl, byte ptr [g_byte_00543a3d]
-        mov     dword ptr [g_data_004f3234], edx
+        mov     dword ptr [g_gtConfig4f], edx
         mov     dl, byte ptr [g_byte_00543a3e]
         mov     byte ptr [g_byte_00543724], al
         mov     eax, dword ptr [g_data_00543a40]
@@ -248,7 +233,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     dword ptr [g_x_004f3ae4], edx
         movsb
         mov     dword ptr [g_x_004f3ae8], eax
-        mov     dword ptr [g_data_0052ab40], ecx
+        mov     dword ptr [g_or_0052ab40], ecx
     L_arg_tail:
         mov     al, byte ptr [g_byte_00543ab4]
         mov     edx, dword ptr [g_data_00543ab0]
@@ -256,7 +241,7 @@ __declspec(naked) void AudioRestoreGlobals_004acce0(void)
         mov     byte ptr [g_byte_004f360c], al
         mov     byte ptr [g_byte_004f3610], al
         mov     eax, dword ptr [g_data_00543aac]
-        mov     dword ptr [g_data_004f3608], edx
+        mov     dword ptr [g_loaded_004f3608], edx
         mov     edx, dword ptr [g_data_00543aa0]
         pop     edi
         mov     dword ptr [g_data_004f3404], eax

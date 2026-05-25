@@ -13,9 +13,6 @@
 /*
  * @addr 0x004ad6a0
  *
-extern unsigned int g_renderer2_lutStep;
-extern unsigned int g_renderer2_lutTable;
-extern unsigned int g_renderer2_obj;
 
  * Naked + __asm: the 11-helper chain has a specific layout where
  * each test eax/jz redirects to the same R2_Cleanup tail; the FPU

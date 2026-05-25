@@ -7,8 +7,6 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
 extern void MStackPush2RunCountdown_004089e0(void);
 extern void MStackBracket7_DispatchAndChain_004b8fa0(void);
 

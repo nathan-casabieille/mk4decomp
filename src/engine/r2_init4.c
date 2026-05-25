@@ -17,9 +17,9 @@
 extern unsigned int g_data_004f47a0;
 extern unsigned int g_data_0058c760;
 extern unsigned int g_data_0058c764;
-extern unsigned int g_data_0058c7ac;
-extern unsigned int g_data_0058c7d8;
-extern unsigned int g_data_0058c7dc;
+extern unsigned int g_comptr_0058c7ac;
+extern unsigned int g_990_iface;
+extern int g_renderer2_present_rc;
 extern unsigned int g_iat_004d219c;
 extern unsigned int g_iat_004d21a4;
 extern unsigned int g_iat_004d21ac;
@@ -46,17 +46,17 @@ __declspec(naked) void R2_Init4(void) {
         push    0
         call    dword ptr [g_iat_004d219c]
         call    DSoundSetAxisPan123_004aec10
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         jz      short L_dms_skipPair
-        mov     edx, dword ptr [g_data_0058c7d8]
+        mov     edx, dword ptr [g_990_iface]
         mov     ecx, [eax]
         push    0x55
         push    edx
         push    eax
         call    dword ptr [ecx + 0x50]
-        mov     dword ptr [g_data_0058c7dc], eax
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     dword ptr [g_renderer2_present_rc], eax
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         jz      short L_dms_skipPair
         mov     ecx, [eax]
@@ -65,14 +65,14 @@ __declspec(naked) void R2_Init4(void) {
         push    0x280
         push    eax
         call    dword ptr [ecx + 0x54]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dms_skipPair:
         call    DSoundSetAxisPan123_004aec10
         mov     ecx, 0x1b
         xor     eax, eax
         lea     edi, [esp + 4]
         rep     stosd
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         mov     dword ptr [esp + 4], 0x6c
         test    eax, eax
         jz      short L_dms_validate
@@ -81,7 +81,7 @@ __declspec(naked) void R2_Init4(void) {
         push    ecx
         push    eax
         call    dword ptr [edx + 0x30]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dms_validate:
         cmp     dword ptr [esp + 0x10], 0x280
         jne     short L_dms_fail
@@ -93,23 +93,23 @@ __declspec(naked) void R2_Init4(void) {
         add     esp, 0x6c
         ret
     L_dms_release:
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         jz      short L_dms_restoreCursor
         mov     edx, [eax]
         push    eax
         call    dword ptr [edx + 0x4c]
-        mov     dword ptr [g_data_0058c7dc], eax
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     dword ptr [g_renderer2_present_rc], eax
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         jz      short L_dms_restoreCursor
-        mov     edx, dword ptr [g_data_0058c7d8]
+        mov     edx, dword ptr [g_990_iface]
         mov     ecx, [eax]
         push    0xc
         push    edx
         push    eax
         call    dword ptr [ecx + 0x50]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dms_restoreCursor:
         mov     eax, dword ptr [g_data_0058c764]
         mov     ecx, dword ptr [g_data_0058c760]

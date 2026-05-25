@@ -4,18 +4,18 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_0058c7bc;
-extern unsigned int g_data_0058c7c0;
+extern unsigned int g_comptr_0058c7bc;
+extern unsigned int g_renderer2_obj;
 extern unsigned int g_data_0058c7c4;
 extern unsigned int g_data_0058c7d4;
-extern unsigned int g_data_0058c7dc;
+extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init7(void)
 {
     __asm {
         sub     esp, 0x80
         push    ebx
-        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     ebx, dword ptr [g_comptr_0058c7bc]
         push    esi
         push    edi
         test    ebx, ebx
@@ -26,11 +26,11 @@ __declspec(naked) void R2_Init7(void)
         push    offset g_data_0058c7c4
         push    ebx
         call    dword ptr [eax + 0x18]
-        mov     ebx, dword ptr [g_data_0058c7bc]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     ebx, dword ptr [g_comptr_0058c7bc]
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dxic_after_obj1:
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     esi, dword ptr [g_data_0058c7c0]
+        mov     esi, dword ptr [g_renderer2_obj]
         test    edx, edx
         je      L_dxic_after_obj2
         test    esi, esi
@@ -39,10 +39,10 @@ __declspec(naked) void R2_Init7(void)
         push    edx
         push    esi
         call    dword ptr [ecx + 0x18]
-        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     ebx, dword ptr [g_comptr_0058c7bc]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     esi, dword ptr [g_data_0058c7c0]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     esi, dword ptr [g_renderer2_obj]
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dxic_after_obj2:
         mov     ecx, 0x0B
         xor     eax, eax
@@ -63,9 +63,9 @@ __declspec(naked) void R2_Init7(void)
         push    edx
         call    dword ptr [eax + 0x44]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     ebx, dword ptr [g_data_0058c7bc]
-        mov     esi, dword ptr [g_data_0058c7c0]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     ebx, dword ptr [g_comptr_0058c7bc]
+        mov     esi, dword ptr [g_renderer2_obj]
+        mov     dword ptr [g_renderer2_present_rc], eax
         test    edx, edx
         je      L_dxic_after_obj3
         test    esi, esi
@@ -74,10 +74,10 @@ __declspec(naked) void R2_Init7(void)
         push    edx
         push    esi
         call    dword ptr [eax + 0x34]
-        mov     ebx, dword ptr [g_data_0058c7bc]
+        mov     ebx, dword ptr [g_comptr_0058c7bc]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     esi, dword ptr [g_data_0058c7c0]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     esi, dword ptr [g_renderer2_obj]
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dxic_after_obj3:
         test    ebx, ebx
         je      L_dxic_after_obj4
@@ -87,8 +87,8 @@ __declspec(naked) void R2_Init7(void)
         push    ebx
         call    dword ptr [ecx + 0x14]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     esi, dword ptr [g_data_0058c7c0]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     esi, dword ptr [g_renderer2_obj]
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dxic_after_obj4:
         mov     ecx, 0x14
         xor     eax, eax
@@ -104,8 +104,8 @@ __declspec(naked) void R2_Init7(void)
         push    eax
         call    dword ptr [edx + 0x0C]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     esi, dword ptr [g_data_0058c7c0]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     esi, dword ptr [g_renderer2_obj]
+        mov     dword ptr [g_renderer2_present_rc], eax
         mov     eax, dword ptr [g_data_0058c7d4]
     L_dxic_after_obj5:
         test    esi, esi
@@ -119,7 +119,7 @@ __declspec(naked) void R2_Init7(void)
         push    eax
         call    dword ptr [edx + 0x14]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         mov     eax, dword ptr [g_data_0058c7d4]
     L_dxic_after_obj6:
         mov     ecx, dword ptr [esp + 0x0C]
@@ -132,7 +132,7 @@ __declspec(naked) void R2_Init7(void)
         push    edx
         call    dword ptr [eax + 0x20]
         mov     edx, dword ptr [g_data_0058c7c4]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         mov     eax, dword ptr [g_data_0058c7d4]
     L_dxic_after_obj7:
         test    edx, edx

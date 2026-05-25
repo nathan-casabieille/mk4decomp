@@ -10,8 +10,8 @@
  *   style) to set up a timer; returns 1 on success, 0 on failure.
  *   Stashes audio pre-state and start-of-period markers.
  */
-extern unsigned int g_audioPreState;
-extern unsigned int g_audioState08;
+extern u32 g_audioPreState;
+extern u32 g_audioState08;
 extern unsigned int g_iat_004d2244;
 
 __declspec(naked) void Helper_AuxAudio_PostInit(void) {

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,17 +108,17 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-/* @addr 0x004ad410 (138b) - if g_x_00543f78: setup install regs via 3 calls;
+/* @addr 0x004ad410 (138b) - if g_installValidated: setup install regs via 3 calls;
  *   open key (IAT@4d2000); if success: query (IAT@4d2010), close (IAT@4d2004);
- *   clear g_x_00543f78; ret.
+ *   clear g_installValidated; ret.
  */
 extern unsigned int g_data_004f4710;
 extern unsigned int g_data_004f4740;
 extern unsigned int g_iat_004d2000;
 extern unsigned int g_iat_004d2004;
 extern unsigned int g_iat_004d2010;
-extern unsigned int g_x_00543928;
-extern unsigned int g_x_00543f78;
+extern u8 g_configBuffer[];
+extern s32 g_installValidated;
 extern void AudioSnapshotGlobals_004ace60(void);
 extern void ComputeConfigHash(void);
 extern void DeobfuscateConfig(void);
@@ -140,7 +126,7 @@ extern void DeobfuscateConfig(void);
 void RegistryInstallEntry_004ad410(void) {
     __asm {
         sub     esp, 8
-        mov     eax, dword ptr [g_x_00543f78]
+        mov     eax, dword ptr [g_installValidated]
         _emit   0c7h
         _emit   044h
         _emit   024h
@@ -154,7 +140,7 @@ void RegistryInstallEntry_004ad410(void) {
         _emit   72h
         call    AudioSnapshotGlobals_004ace60
         call    ComputeConfigHash
-        mov     dword ptr [g_x_00543928], eax
+        mov     dword ptr [g_configBuffer], eax
         call    DeobfuscateConfig
         lea     eax, [esp + 4]
         _emit   8dh
@@ -179,7 +165,7 @@ void RegistryInstallEntry_004ad410(void) {
         _emit   74h
         _emit   2fh
         push    0x24c
-        push    offset g_x_00543928
+        push    offset g_configBuffer
         push    3
         push    0
         push    offset g_data_004f4740
@@ -191,7 +177,7 @@ void RegistryInstallEntry_004ad410(void) {
         _emit   00h
         push    edx
         call    dword ptr [g_iat_004d2004]
-        mov     dword ptr [g_x_00543f78], 0
+        mov     dword ptr [g_installValidated], 0
         add     esp, 8
         }
 }

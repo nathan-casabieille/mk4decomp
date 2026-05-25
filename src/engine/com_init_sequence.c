@@ -28,9 +28,9 @@
 
 extern void (__stdcall *g_iat_004d2210)(int, int, int);
 
-extern void *g_state_0058c884;
+extern int g_renderer3_surface_active;
 extern void *g_lock_0058c874;
-extern void *g_state_0058c904;
+extern int g_renderer5_surface_active;
 extern void *g_lock_0058c8f4;
 
 extern void Renderer3_EndScene_SW_FS(void);
@@ -56,12 +56,12 @@ void DDraw3_Cleanup(void) {
     DDraw3_CreateSurface(0);
     ComReleaseCapture_004afb50();
     DSoundBufferInit146_004afa60();
-    state = g_state_0058c884;
+    state = g_renderer3_surface_active;
     g_lock_0058c874 = (void *)0;
     if (state != 0) {
         g_iat_004d2210(0, 0, 1);
     }
-    g_state_0058c884 = (void *)0;
+    g_renderer3_surface_active = (void *)0;
 }
 
 /* @addr 0x004b0240 */
@@ -73,10 +73,10 @@ void DDraw5_Cleanup(void) {
     DDraw5_CreateSurface(0);
     ComReleaseCapture_004b0380();
     DSoundBufferInit146_004b0290();
-    state = g_state_0058c904;
+    state = g_renderer5_surface_active;
     g_lock_0058c8f4 = (void *)0;
     if (state != 0) {
         g_iat_004d2210(0, 0, 1);
     }
-    g_state_0058c904 = (void *)0;
+    g_renderer5_surface_active = (void *)0;
 }

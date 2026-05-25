@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -134,19 +120,7 @@ extern void func_0047fa30(void);
 extern unsigned int g_data_004ed778;
 extern unsigned int g_data_0050b8dc;
 
-extern unsigned int g_data_004d57ac;
-extern unsigned int g_data_0052ab10;
-extern unsigned int g_table_00535ddc;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_load_0052ab10;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void InstallSelfIndirectJmp_0048f3f0(void);
 extern void MStackPushDispatchBitGate_00407330(void);
@@ -168,9 +142,9 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         add      esp, 4
         test     eax, eax
         jne      short L_f529
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         inc      eax
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], OFFSET func_0047ef70
         jmp      InstallSelfIndirectJmp_0048f3f0
     L_f529:
@@ -200,21 +174,21 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [g_walkCallback], eax
         mov      edx, OFFSET g_data_0050b8dc
         mov      dword ptr [ecx*4 + 0x74], eax
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_fightGroupHead]
         shr      edx, 2
         inc      eax
         mov      dword ptr [g_xformEntityIdx], edx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         call     MStackPushDispatchBitGate_00407330
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_f72f
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      al, byte ptr [g_xformDirtyFlags]
         test     al, 4
         mov      dword ptr [g_fightGroupHead], edx
@@ -266,7 +240,7 @@ __declspec(naked) void ThrowGrabPoseCopyCluster_0047f4e0(void)
         mov      dword ptr [eax + 0x28], edx
         mov      edx, dword ptr [ecx + 0x3c]
         mov      dword ptr [eax + 0x3c], edx
-        mov      ecx, dword ptr [g_data_0052ab10]
+        mov      ecx, dword ptr [g_load_0052ab10]
         mov      dword ptr [g_walkCallback], ecx
         mov      dword ptr [eax + 0x3c], ecx
         mov      eax, dword ptr [g_currentNodeIdx]

@@ -9,7 +9,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x004465c0 (56b)
  *   mov     eax, [g_baseSel_00542060]

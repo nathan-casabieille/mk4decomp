@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,21 +110,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioTriEntryFlagPairInit_004a22f0 - 207b audio 3-entry init variant of AudioModeInit_004a2610.
- *   Entry 0x004a22f0: same FlagPair logic, but g_data_00542004=0 and tail-jmp InstallSelfTableWalk_004200d0.
+ *   Entry 0x004a22f0: same FlagPair logic, but g_dlMode=0 and tail-jmp InstallSelfTableWalk_004200d0.
  *   Entry 0x004a2370: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1; jmp entry1.
- *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1, g_x_0054356c=1;
+ *   Entry 0x004a2390: push 6; TableWalkBoundedCmp; g_x_00543714=1, g_x_005433ec=1, g_gtOtherFlag=1;
  *     g_x_005433a8=0, g_x_005433e8=0; jmp entry1.
  */
-extern unsigned int g_data_00542004;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_dlMode;
 extern unsigned int g_x_005433a8;
 extern unsigned int g_x_005433e8;
 extern unsigned int g_x_005433ec;
-extern unsigned int g_x_0054356c;
-extern unsigned int g_x_00543590;
 extern unsigned int g_x_00543714;
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void DualScaledStoreConst_004a22c0(void);
@@ -150,7 +130,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
 {
     __asm
     {
-        cmp     byte ptr [g_x_00543590], 1
+        cmp     byte ptr [g_gtModeFlag], 1
         jne     short L_modeB
         mov     eax, 0x0053a408
         mov     ecx, 0x0053a3e0
@@ -169,7 +149,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
     L_common:
         call    DualScaledStoreConst_004a22c0
         call    ClearTwoCallSetStore_004a2270
-        mov     dword ptr [g_data_00542004], 0
+        mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm_004a1d80
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50
@@ -202,7 +182,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit_004a22f0(void)
         add     esp, 4
         mov     dword ptr [g_x_00543714], eax
         mov     dword ptr [g_x_005433ec], eax
-        mov     dword ptr [g_x_0054356c], eax
+        mov     dword ptr [g_gtOtherFlag], eax
         xor     eax, eax
         mov     dword ptr [g_x_005433a8], eax
         mov     dword ptr [g_x_005433e8], eax

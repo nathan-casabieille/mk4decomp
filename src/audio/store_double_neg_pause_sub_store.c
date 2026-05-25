@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueEnd;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ab750 (62b)
  *   load walk; store g_state_00538130; double eax; if neg → neg eax;

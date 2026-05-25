@@ -13,8 +13,8 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 extern void func_004bdcb0(void);
-extern unsigned int g_state_00ab5748;
+extern unsigned int g_rendererCheckVal;
 void CallZero_004bea30(void) {
     func_004bdcb0();
-    g_state_00ab5748 = 0;
+    g_rendererCheckVal = 0;
 }

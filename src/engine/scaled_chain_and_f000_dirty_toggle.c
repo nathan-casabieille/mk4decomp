@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x0048e740 (62b)
  *   scaled chain 0x3c → 0x74; and 0xf000; cmp 0x4000;

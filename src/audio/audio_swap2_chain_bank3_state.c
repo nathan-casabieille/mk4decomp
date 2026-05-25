@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -125,18 +111,16 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /*
  * AudioSwap2ChainBank3State_004a8490 - 293b audio chain double-zero + 3-state setup.
  *   chain1 = base[+0x7c]: zero chain1[+0x54], +0x58, +0x5c. chain2 = base[+0x80]: zero same fields.
- *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_x_0054359c+0xd; edx=base[+0x7c].
- *                              case 1 → g_walkCallback = g_x_005433c8+0x12; edx=base[+0x80].
+ *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_counter_0054359c+0xd; edx=base[+0x7c].
+ *                              case 1 → g_walkCallback = g_counter_005433c8+0x12; edx=base[+0x80].
  *                              default → ret.
  *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_walkCallback]; g_currentNodeIdx=chain3;
  *   copy chain3[+0x54/+0x58/+0x5c] → g_walkCallback/g_eventQueueCurrent/g_eventQueueWorkType → chain2[+0x54/+0x58/+0x5c].
  *   Pop+ret.
  */
 extern unsigned int g_byte_0053a498;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_005433c8;
-extern unsigned int g_x_0054359c;
+extern unsigned int g_counter_005433c8;
+extern unsigned int g_counter_0054359c;
 
 __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
 {
@@ -167,13 +151,13 @@ __declspec(naked) void AudioSwap2ChainBank3State_004a8490(void)
         je      short L_a84_case3
         dec     ecx
         jne     L_a84_ret
-        mov     edx, dword ptr [g_x_005433c8]
+        mov     edx, dword ptr [g_counter_005433c8]
         lea     ecx, [edx + 0x12]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x80]
         jmp     short L_a84_common
     L_a84_case3:
-        mov     ecx, dword ptr [g_x_0054359c]
+        mov     ecx, dword ptr [g_counter_0054359c]
         add     ecx, 0xd
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x7c]

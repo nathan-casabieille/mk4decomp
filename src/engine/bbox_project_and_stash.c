@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,31 +114,27 @@ extern unsigned int g_data_004f63ea;
 extern unsigned int g_data_004f63ec;
 extern unsigned int g_data_004f63ee;
 extern unsigned int g_data_004f63f0;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af96c;
-extern unsigned int g_data_007af978;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af992;
-extern unsigned int g_data_007af994;
-extern unsigned int g_data_007af998;
-extern unsigned int g_data_007af99a;
-extern unsigned int g_data_007af99e;
-extern unsigned int g_data_007af9a0;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af9ac;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn2_y;
+extern s32 g_vtxOut1_x;
+extern s32 g_vtxOut1_y;
+extern unsigned int g_triStripRingB;
+extern unsigned int g_mat3x3_007af992;
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99a;
+extern unsigned int g_mat3x3_007af99e;
+extern unsigned int g_mat3x3_007af9a0;
+extern s32 g_vtxTransX;
+extern s32 g_vtxTransY;
+extern s32 g_vtxTransZ;
 extern unsigned int g_data_00ab44f8;
 extern unsigned int g_data_00ab44fa;
 extern unsigned int g_data_00ab44fc;
 extern unsigned int g_data_00ab44fe;
 extern unsigned int g_data_00ab4500;
 extern unsigned int g_data_00ab4502;
-extern unsigned int g_data_00ab4e2c;
-extern unsigned int g_data_00ab51f4;
 extern unsigned int g_data_00ab51f8;
 
 __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
@@ -174,7 +156,7 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      al, byte ptr [edi + g_data_004f63e8]
         test     al, al
         jne      L_c7d1
-        mov      eax, dword ptr [g_data_00ab4e2c]
+        mov      eax, dword ptr [g_tickCurConfig]
         cmp      eax, OFFSET g_data_004f6264
         jne      L_c5f6
         mov      eax, dword ptr [g_data_00ab51f8]
@@ -189,20 +171,20 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
     L_c60b:
         mov      cx, word ptr [edi + g_data_004f63ea]
         mov      dx, word ptr [edi + g_data_004f63ee]
-        movsx    eax, word ptr [g_data_007af992]
-        movsx    ebp, word ptr [g_data_007af994]
+        movsx    eax, word ptr [g_mat3x3_007af992]
+        movsx    ebp, word ptr [g_mat3x3_007af994]
         movsx    ebx, cx
         movsx    ecx, dx
         mov      dword ptr [esp + 0x10], ebx
         mov      dword ptr [esp + 0x14], ecx
         imul     ebx, eax
         mov      eax, dword ptr [esp + 0x14]
-        mov      word ptr [g_data_007af958], 0
+        mov      word ptr [g_vtxIn_x], 0
         imul     eax, ebp
-        movsx    ecx, word ptr [g_data_007af998]
-        movsx    esi, word ptr [g_data_007af99a]
+        movsx    ecx, word ptr [g_mat3x3_007af998]
+        movsx    esi, word ptr [g_mat3x3_007af99a]
         add      ebx, eax
-        mov      eax, dword ptr [g_data_007af9a4]
+        mov      eax, dword ptr [g_vtxTransX]
         sar      ebx, 0xc
         add      ebx, eax
         mov      ebp, esi
@@ -212,13 +194,13 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      ebx, ecx
         imul     ebp, eax
         imul     ebx, dword ptr [esp + 0x10]
-        movsx    edx, word ptr [g_data_007af99e]
+        movsx    edx, word ptr [g_mat3x3_007af99e]
         add      ebx, ebp
-        mov      ebp, dword ptr [g_data_007af9a8]
+        mov      ebp, dword ptr [g_vtxTransY]
         sar      ebx, 0xc
         add      ebx, ebp
         mov      dword ptr [esp + 0x18], edx
-        movsx    edx, word ptr [g_data_007af9a0]
+        movsx    edx, word ptr [g_mat3x3_007af9a0]
         movsx    ebx, bx
         mov      dword ptr [g_xformEntityIdx], ebx
         mov      ebx, edx
@@ -227,10 +209,10 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      bp, word ptr [g_currentNodeIdx]
         imul     eax, dword ptr [esp + 0x10]
         add      ebx, eax
-        mov      eax, dword ptr [g_data_007af9ac]
+        mov      eax, dword ptr [g_vtxTransZ]
         sar      ebx, 0xc
         add      ebx, eax
-        mov      eax, dword ptr [g_data_00ab51f4]
+        mov      eax, dword ptr [g_tickX2]
         movsx    ebx, bx
         lea      eax, [eax + eax*2]
         shl      eax, 1
@@ -240,19 +222,19 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      word ptr [eax + g_data_00ab44fc], bx
         mov      bx, word ptr [edi + g_data_004f63ec]
         mov      di, word ptr [edi + g_data_004f63f0]
-        mov      word ptr [g_data_007af95e], bx
-        mov      word ptr [g_data_007af964], di
+        mov      word ptr [g_vtxIn1_y], bx
+        mov      word ptr [g_vtxIn2_y], di
         movsx    ebx, bx
         mov      dword ptr [esp + 0x10], ebx
         mov      ebp, ebx
-        movsx    ebx, word ptr [g_data_007af992]
+        movsx    ebx, word ptr [g_mat3x3_007af992]
         movsx    edi, di
         imul     ebp, ebx
         mov      dword ptr [esp + 0x14], edi
         mov      ebx, edi
-        movsx    edi, word ptr [g_data_007af994]
+        movsx    edi, word ptr [g_mat3x3_007af994]
         imul     ebx, edi
-        mov      edi, dword ptr [g_data_007af9a4]
+        mov      edi, dword ptr [g_vtxTransX]
         add      ebp, ebx
         mov      ebx, dword ptr [esp + 0x14]
         sar      ebp, 0xc
@@ -261,34 +243,34 @@ __declspec(naked) void BboxProjectAndStash_004bc5a0(void)
         mov      edi, dword ptr [esp + 0x10]
         imul     ecx, edi
         add      ecx, esi
-        mov      esi, dword ptr [g_data_007af9a8]
+        mov      esi, dword ptr [g_vtxTransY]
         sar      ecx, 0xc
         add      ecx, esi
         movsx    ebp, bp
         movsx    esi, cx
-        mov      dword ptr [g_data_007af96c], ebp
-        mov      dword ptr [g_data_007af978], esi
+        mov      dword ptr [g_vtxOut1_x], ebp
+        mov      dword ptr [g_vtxOut1_y], esi
         mov      ecx, dword ptr [esp + 0x18]
         imul     edx, ebx
         imul     ecx, edi
         add      edx, ecx
-        mov      ecx, dword ptr [g_data_007af9ac]
+        mov      ecx, dword ptr [g_vtxTransZ]
         sar      edx, 0xc
         add      edx, ecx
         mov      dword ptr [g_currentNodeIdx], ebp
         movsx    ecx, dx
-        mov      dx, word ptr [g_data_007af978]
-        mov      dword ptr [g_data_007af984], ecx
+        mov      dx, word ptr [g_vtxOut1_y]
+        mov      dword ptr [g_triStripRingB], ecx
         mov      dword ptr [g_eventQueueCurrent], ecx
-        mov      cx, word ptr [g_data_007af96c]
+        mov      cx, word ptr [g_vtxOut1_x]
         mov      word ptr [eax + g_data_00ab44fe], cx
-        mov      cx, word ptr [g_data_007af984]
+        mov      cx, word ptr [g_triStripRingB]
         mov      word ptr [eax + g_data_00ab4500], dx
         mov      word ptr [eax + g_data_00ab4502], cx
-        mov      eax, dword ptr [g_data_00ab51f4]
+        mov      eax, dword ptr [g_tickX2]
         mov      dword ptr [g_xformEntityIdx], esi
         add      eax, 2
-        mov      dword ptr [g_data_00ab51f4], eax
+        mov      dword ptr [g_tickX2], eax
     L_c7d1:
         pop      edi
         pop      esi

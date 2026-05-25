@@ -20,11 +20,11 @@ extern unsigned int g_scaledInit_00542044;
  * .skip2:
  *   ret
  */
-extern unsigned int g_state_0053a51c;
+extern unsigned int g_counter_0053a51c;
 extern void func_00439ba1(void);
 extern void func_00439ba6(void);
 void TwoConditionalJmp_00439b80(void) {
-    unsigned int v = g_state_0053a51c;
+    unsigned int v = g_counter_0053a51c;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
         func_00439ba1();

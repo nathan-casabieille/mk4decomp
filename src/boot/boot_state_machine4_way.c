@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  * BootStateMachine4Way_00402f60 - 257b boot 4-state install-self machine.
  *   chain = g_baseSel_00542060<<2; saved = chain->state; chain->state=0.
  *   sub ecx,0 flags branch:
- *     state 0 → init full: g_data_0053a50c=7; g_state_0053a6e0=1; g_walkCallback=0; g_state_00537ea4=0;
+ *     state 0 → init full: g_data_0053a50c=7; g_dst_0053a6e0=1; g_walkCallback=0; g_dst_00537ea4=0;
  *       install-self; chain->state=1; mstack-push (entry+0x01000000); g_currentNodeIdx++; chain->state=0;
  *       call Phase3InstallSelf_00403170; g_framePauseFlag=1; pop+ret.
  *     state 1 → install-self; chain->state=2; g_pendingNodeType=0xa0; g_framePauseFlag=1; pop+ret.
@@ -136,11 +122,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  */
 extern unsigned int g_data_0053a50c;
 extern unsigned int g_data_00541dc8;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_00537ea4;
-extern unsigned int g_state_0053a6e0;
-extern unsigned int g_currentNodeIdx;
+extern unsigned int g_dst_00537ea4;
+extern unsigned int g_dst_0053a6e0;
 extern void BootDualStateInstallSelf_00403070(void);
 extern void Phase3InstallSelf_00403170(void);
 
@@ -187,9 +170,9 @@ __declspec(naked) void BootStateMachine4Way_00402f60(void)
     L_s0:
         mov     esi, 1
         mov     dword ptr [g_data_0053a50c], 7
-        mov     dword ptr [g_state_0053a6e0], esi
+        mov     dword ptr [g_dst_0053a6e0], esi
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_state_00537ea4], edx
+        mov     dword ptr [g_dst_00537ea4], edx
         mov     dword ptr [eax + 8], offset BootStateMachine4Way_00402f60
         mov     ecx, dword ptr [g_baseSel_00542060]
         mov     edi, offset BootStateMachine4Way_00402f60

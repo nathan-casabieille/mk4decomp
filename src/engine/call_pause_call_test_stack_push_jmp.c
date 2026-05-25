@@ -6,11 +6,10 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00460c60 (61b)
  *   call F1; pause → ret; call F2; if eax != 0 → ret;
- *   inc g_state_004d57ac; set walk=2; push 0x46f6b0 to stack[idx*4]; jmp T.
+ *   inc g_matrixStackTop; set walk=2; push 0x46f6b0 to stack[idx*4]; jmp T.
  */
 extern void LeaPlus22StoreSelf_0048e4d0(void);
 extern int DualGatedStateYield_0048fc80(void);

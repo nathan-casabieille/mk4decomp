@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_0053a51c;
+extern unsigned int g_counter_0053a51c;
 extern unsigned int g_data_004a2090;
 extern unsigned int g_data_004a2180;
 extern int GuardedScaledLookupCallJmp_004220a0(void);
@@ -142,8 +128,8 @@ extern void MatchInitMonsterChain_004228b0(void);
  *     - phase 0 / 1: jump to the heavy "first-time init" path that pushes 4
  *       on TableWalkBoundedCmp_004bd890, calls BootInitGuardedCallChain_004265d0,
  *       DualScaledLitInitJmp_00464800, TableWalkPause_004bd850, then runs
- *       QuadCallPhase2_004be800 with args (g_data_00537f48, g_data_005380e0,
- *       g_data_0053a51c + 0x12, 0x1d). Pushes two StoreTwoCall_0049cb40 calls
+ *       QuadCallPhase2_004be800 with args (g_dlNalt1, g_dlNalt2,
+ *       g_counter_0053a51c + 0x12, 0x1d). Pushes two StoreTwoCall_0049cb40 calls
  *       with table pointers 0x004a2090 / 0x004a2180. Installs self at
  *       [esi+8]=0x403170 and sets [eax*4+0x84]=2 (with packed_ptr +
  *       0x02000000 tag), then calls MatchInitMonsterChain_004228b0 and asserts the error
@@ -154,13 +140,9 @@ extern void MatchInitMonsterChain_004228b0(void);
  *       g_walkCallback=3, call AndShlStore_00409280, call
  *       StackPopDispatchTagged_0041f780, return.
  */
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_005380e0;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
 extern unsigned int g_data_00541dc8;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_baseSel_00542060;
 
 __declspec(naked) void Phase3InstallSelf_00403170(void) {
     __asm {
@@ -207,9 +189,9 @@ __declspec(naked) void Phase3InstallSelf_00403170(void) {
         jne     L_p3i_done
         call    DualScaledLitInitJmp_00464800
         call    TableWalkPause_004bd850
-        mov     ecx, dword ptr [g_data_0053a51c]
-        mov     edx, dword ptr [g_data_005380e0]
-        mov     eax, dword ptr [g_data_00537f48]
+        mov     ecx, dword ptr [g_counter_0053a51c]
+        mov     edx, dword ptr [g_dlNalt2]
+        mov     eax, dword ptr [g_dlNalt1]
         add     ecx, 0x12
         push    0x1d
         push    ecx

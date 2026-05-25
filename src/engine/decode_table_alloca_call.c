@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,15 +109,15 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004b4450 (146b engine.geo) - decode 16-bit lookup table:
- *   _alloca(0x20000); if !g_x_007affe4: ret 0;
+ *   _alloca(0x20000); if !g_renderer1_active: ret 0;
  *   if arg1 >= 0x10 or arg2 == NULL: ret 0;
  *   Reads 0x10000 words from arg2, rotates each (al<<1 | (al & 0x3f-bits)),
  *   stores into local stack buffer. Then calls IAT[007b0060](0, fn, 3, str_7affd0).
  */
-extern unsigned int g_data_007affd0;
+extern u32 g_glideD0;
 extern unsigned int g_iat_indirect_007b0060;
-extern unsigned int g_x_007affe0;
-extern unsigned int g_x_007affe4;
+extern u32 g_glideE0;
+extern int g_renderer1_active;
 extern void Helper_ChkStk(void);
 
 extern unsigned int g_arr_007afa28;
@@ -140,7 +126,7 @@ __declspec(naked) int DecodeTableAllocaCall_004b4450(void) {
     __asm {
         mov     eax, 0x20000
         call    Helper_ChkStk
-        mov     eax, dword ptr [g_x_007affe4]
+        mov     eax, dword ptr [g_renderer1_active]
         push    ebx
         push    esi
         push    edi
@@ -171,11 +157,11 @@ loop4b4450:
         _emit   75h
         _emit   0e7h
         and     edx, 0xff
-        push    offset g_data_007affd0
+        push    offset g_glideD0
         push    3
         lea     eax, [esp + 0x14]
         mov     ecx, [edx*4 + g_arr_007afa28]
-        mov     dword ptr [g_x_007affe0], eax
+        mov     dword ptr [g_glideE0], eax
         push    ecx
         push    0
         call    dword ptr [g_iat_indirect_007b0060]

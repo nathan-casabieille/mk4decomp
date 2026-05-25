@@ -38,7 +38,7 @@ void _init_premain(void) {
 }
 
 /* @addr 0x004c6e90 (39b)
- *   if g_state_00f9f84c == 1, call F; then call F2(arg);
+ *   if g_state_00f9f84c_ee == 1, call F; then call F2(arg);
  *   call IAT [g_iat_004d2154](0xff); ret.
  *   (variant of 0x004c6e60 with different IAT.)
  */

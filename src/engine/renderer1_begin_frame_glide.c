@@ -11,24 +11,24 @@
  *   if arg0 != 0: call IAT[0x7b000c](0, 0, 0xffff)
  *   set byte [0x4f4b4c] = 0xff; set [0x7afff4] = 1; ret.
  */
-extern unsigned int g_data_007affe4;
-extern unsigned int g_data_007afff4;
-extern unsigned int g_data_007afff0;
+extern int g_renderer1_active;
+extern int g_renderer1_surface;
+extern int g_renderer1_busy;
 extern unsigned char g_byte_004f4b4c;
 extern void (__stdcall *g_iat_007b000c)(int, int, int);
 void Renderer1_BeginFrame_Glide(int arg) {
-    if (g_data_007affe4 == 0) {
+    if (g_renderer1_active == 0) {
         return;
     }
-    if (g_data_007afff4 != 0) {
+    if (g_renderer1_surface != 0) {
         return;
     }
-    if (g_data_007afff0 != 0) {
+    if (g_renderer1_busy != 0) {
         return;
     }
     if (arg != 0) {
         g_iat_007b000c(0, 0, 0xffff);
     }
     g_byte_004f4b4c = 0xff;
-    g_data_007afff4 = 1;
+    g_renderer1_surface = 1;
 }

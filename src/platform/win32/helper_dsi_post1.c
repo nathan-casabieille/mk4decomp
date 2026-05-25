@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004c4110 (252b platform.win32) - DirectSound buffer create+release dispatcher.
- *   Reads IDirectSound* from g_data_00f9efcc (return if null).
+ *   Reads IDirectSound* from g_dsoundPrimary (return if null).
  *   If arg0 != 0 (init path): calls vtbl methods +0x14/+0x20/+0x1c/+0x18, sets
  *     four "owned" byte-flags (g_data_00f9f000, _effc, _eff8, _eff4) on success.
  *   If arg0 == 0 (release path): for each owned flag, calls release vtbl +0x38,
@@ -15,7 +15,7 @@ extern unsigned int g_data_00f8fac4;
 extern unsigned int g_data_00f9eb68;
 extern unsigned int g_data_00f9ebc0;
 extern unsigned int g_data_00f9ebc8;
-extern unsigned int g_data_00f9efcc;
+extern void * g_dsoundPrimary;
 extern unsigned int g_data_00f9eff4;
 extern unsigned int g_data_00f9eff8;
 extern unsigned int g_data_00f9effc;
@@ -23,7 +23,7 @@ extern unsigned int g_data_00f9f000;
 
 __declspec(naked) void Helper_DSI_post1(void) {
     __asm {
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
         push    ebx
         xor     ebx, ebx
         cmp     eax, ebx
@@ -41,7 +41,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    offset g_data_00f9ebc0
         inc     eax
         mov     byte ptr [g_data_00f9f000], al
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
         push    eax
         mov     edx, [eax]
         call    dword ptr [edx + 0x20]
@@ -50,7 +50,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    offset g_data_00f8fac4
         inc     eax
         mov     byte ptr [g_data_00f9effc], al
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
         push    eax
         mov     ecx, [eax]
         call    dword ptr [ecx + 0x1c]
@@ -59,7 +59,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    offset g_data_00f9eb68
         inc     eax
         mov     byte ptr [g_data_00f9eff8], al
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
         push    eax
         mov     edx, [eax]
         call    dword ptr [edx + 0x18]
@@ -76,7 +76,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    offset g_data_00f9ebc8
         push    eax
         call    dword ptr [ecx + 0x38]
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
     L_dbd_r2:
         cmp     byte ptr [g_data_00f9effc], bl
         jz      short L_dbd_r3
@@ -85,7 +85,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    ecx
         push    eax
         call    dword ptr [edx + 0x44]
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
     L_dbd_r3:
         cmp     byte ptr [g_data_00f9eff8], bl
         jz      short L_dbd_r4
@@ -94,7 +94,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
         push    ecx
         push    eax
         call    dword ptr [edx + 0x40]
-        mov     eax, dword ptr [g_data_00f9efcc]
+        mov     eax, dword ptr [g_dsoundPrimary]
     L_dbd_r4:
         cmp     byte ptr [g_data_00f9eff4], bl
         jz      short L_dbd_r_end

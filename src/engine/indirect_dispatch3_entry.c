@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -134,22 +120,18 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     RoundWinTransition_0049e7e0 then GuardedScaledCall_0048a020 with [scaled+8] prep.
  *     Both successful tails fall through to CallSetPause_0041f830.
  *   (12b NOP align pad.)
- *   Entry 2 (offset 0x110, 34b): if g_data_00541d88 != 0 tail-jmp
+ *   Entry 2 (offset 0x110, 34b): if g_state2_00541d88 != 0 tail-jmp
  *     CallSetPause_0041f830; else zero g_data_00535e48 and tail-jmp
  *     IndirectStateDispatcher_0049f6a0.
  *   (14b NOP align pad.)
- *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_data_00537ea8.
+ *   Entry 3 (offset 0x140, 34b): mirror of entry 2 on g_state2_00537ea8.
  *     If non-zero tail-jmp CallSetPause_0041f830; else set g_data_00535e48
  *     to 1 and tail-jmp IndirectStateDispatcher_0049f6a0.
  */
 extern unsigned int g_data_00535e48;
-extern unsigned int g_data_00537ea8;
-extern unsigned int g_data_00541d88;
-extern unsigned int g_framePauseFlag;
+extern unsigned int g_state2_00537ea8;
+extern unsigned int g_state2_00541d88;
 extern unsigned int g_data_00541fc0;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_xformDirtyFlags;
 extern void CallSetPause_0041f830(void);
 extern void GuardedScaledCall_0048a020(void);
 extern void IndirectStateDispatcher_0049f6a0(void);
@@ -240,7 +222,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         nop
         /* entry 2 (offset 0x110) */
     L_id3_entry2:
-        mov     eax, dword ptr [g_data_00541d88]
+        mov     eax, dword ptr [g_state2_00541d88]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_id3_e2zero
@@ -265,7 +247,7 @@ __declspec(naked) void IndirectDispatch3Entry_0049f530(void) {
         nop
         /* entry 3 (offset 0x140) */
     L_id3_entry3:
-        mov     eax, dword ptr [g_data_00537ea8]
+        mov     eax, dword ptr [g_state2_00537ea8]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         je      short L_id3_e3one

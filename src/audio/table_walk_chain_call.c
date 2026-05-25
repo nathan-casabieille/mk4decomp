@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueEnd;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004a30f0 (48b)
  *   table-walk: esi iterates over 0x004f3260..0x004f33c8 step 0x24;

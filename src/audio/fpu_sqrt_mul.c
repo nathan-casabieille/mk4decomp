@@ -18,7 +18,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_walkCallback], eax
  *   ret
  */
-extern u32 g_eventQueueWorkType;
 extern double g_const_004d27b0;
 extern double g_const_004d27b8;
 extern int func_004cb7b0(void);

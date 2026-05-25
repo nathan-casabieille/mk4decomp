@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,31 +110,31 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MStackBootPush4Init_00408350(void);
 
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af990;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af992;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af994;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af96c;
-extern unsigned int g_data_007af996;
-extern unsigned int g_data_007af998;
-extern unsigned int g_data_007af99a;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af978;
-extern unsigned int g_data_007af99c;
-extern unsigned int g_data_007af99e;
-extern unsigned int g_data_007af9a0;
-extern unsigned int g_data_007af9ac;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b6;
+extern s32 g_vtxValid;
+extern s16 g_vtxMat[];
+extern s16 g_vtxIn_x;
+extern unsigned int g_mat3x3_007af992;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn2_y;
+extern unsigned int g_mat3x3_007af994;
+extern s32 g_vtxTransX;
+extern s32 g_vtxOut1_x;
+extern unsigned int g_mat3x3_007af996;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99a;
+extern s32 g_vtxTransY;
+extern s32 g_vtxOut1_y;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af99e;
+extern unsigned int g_mat3x3_007af9a0;
+extern s32 g_vtxTransZ;
+extern unsigned int g_triStripRingB;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP1Y;
 
 /* @addr 0x004b2d20 (338b engine.app) - 3D vertex transform + perspective project.
- *   Reads vertex idx ecx; applies 3x3 matrix at g_data_007af990..0x7af9a0 to
- *   (x,y,z) at g_data_007af958/95e/964[ecx]; adds translation 0x7af9a4/a8/ac.
+ *   Reads vertex idx ecx; applies 3x3 matrix at g_vtxMat..0x7af9a0 to
+ *   (x,y,z) at g_vtxIn_x/95e/964[ecx]; adds translation 0x7af9a4/a8/ac.
  *   Stores transformed XYZ at [0x7af96c/78/84][ecx*4].
  *   Perspective divide: if Z > 1, scale = 0x02000000/Z; project X via
  *   scale*0x19999a (offset 0x140 = 320 center); Y via scale * 15 * 8192/65536
@@ -157,57 +143,57 @@ extern unsigned int g_data_007af9b6;
 __declspec(naked) void Helper_EmitLine(void) {
     __asm {
         mov     ecx, [esp + 4]
-        mov     dword ptr [g_data_007af9b0], 1
-        movsx   eax, word ptr [g_data_007af990]
-        movsx   edx, word ptr [ecx*2 + g_data_007af958]
+        mov     dword ptr [g_vtxValid], 1
+        movsx   eax, word ptr [g_vtxMat]
+        movsx   edx, word ptr [ecx*2 + g_vtxIn_x]
         imul    eax, edx
-        movsx   edx, word ptr [g_data_007af992]
+        movsx   edx, word ptr [g_mat3x3_007af992]
         push    esi
-        movsx   esi, word ptr [ecx*2 + g_data_007af95e]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn1_y]
         imul    edx, esi
-        movsx   esi, word ptr [ecx*2 + g_data_007af964]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn2_y]
         add     eax, edx
-        movsx   edx, word ptr [g_data_007af994]
+        movsx   edx, word ptr [g_mat3x3_007af994]
         imul    edx, esi
         add     eax, edx
-        mov     edx, dword ptr [g_data_007af9a4]
+        mov     edx, dword ptr [g_vtxTransX]
         sar     eax, 0x0c
         add     eax, edx
         movsx   eax, ax
-        mov     dword ptr [ecx*4 + g_data_007af96c], eax
-        movsx   edx, word ptr [g_data_007af996]
-        movsx   eax, word ptr [ecx*2 + g_data_007af958]
-        movsx   esi, word ptr [ecx*2 + g_data_007af95e]
+        mov     dword ptr [ecx*4 + g_vtxOut1_x], eax
+        movsx   edx, word ptr [g_mat3x3_007af996]
+        movsx   eax, word ptr [ecx*2 + g_vtxIn_x]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn1_y]
         imul    edx, eax
-        movsx   eax, word ptr [g_data_007af998]
+        movsx   eax, word ptr [g_mat3x3_007af998]
         imul    eax, esi
-        movsx   esi, word ptr [ecx*2 + g_data_007af964]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn2_y]
         add     edx, eax
-        movsx   eax, word ptr [g_data_007af99a]
+        movsx   eax, word ptr [g_mat3x3_007af99a]
         imul    eax, esi
         add     edx, eax
-        mov     eax, dword ptr [g_data_007af9a8]
+        mov     eax, dword ptr [g_vtxTransY]
         sar     edx, 0x0c
         add     edx, eax
         movsx   edx, dx
-        mov     dword ptr [ecx*4 + g_data_007af978], edx
-        movsx   eax, word ptr [g_data_007af99c]
-        movsx   edx, word ptr [ecx*2 + g_data_007af958]
-        movsx   esi, word ptr [ecx*2 + g_data_007af95e]
+        mov     dword ptr [ecx*4 + g_vtxOut1_y], edx
+        movsx   eax, word ptr [g_mat3x3_007af99c]
+        movsx   edx, word ptr [ecx*2 + g_vtxIn_x]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn1_y]
         imul    eax, edx
-        movsx   edx, word ptr [g_data_007af99e]
+        movsx   edx, word ptr [g_mat3x3_007af99e]
         imul    edx, esi
-        movsx   esi, word ptr [ecx*2 + g_data_007af964]
+        movsx   esi, word ptr [ecx*2 + g_vtxIn2_y]
         add     eax, edx
-        movsx   edx, word ptr [g_data_007af9a0]
+        movsx   edx, word ptr [g_mat3x3_007af9a0]
         imul    edx, esi
-        mov     esi, dword ptr [g_data_007af9ac]
+        mov     esi, dword ptr [g_vtxTransZ]
         add     eax, edx
         sar     eax, 0x0c
         add     eax, esi
         movsx   esi, ax
         cmp     esi, 1
-        mov     dword ptr [ecx*4 + g_data_007af984], esi
+        mov     dword ptr [ecx*4 + g_triStripRingB], esi
         mov     eax, 0x02000000
         jle     short L_vp3_skipDiv
         cdq
@@ -215,20 +201,20 @@ __declspec(naked) void Helper_EmitLine(void) {
     L_vp3_skipDiv:
         mov     edx, eax
         pop     esi
-        imul    edx, dword ptr [ecx*4 + g_data_007af96c]
+        imul    edx, dword ptr [ecx*4 + g_vtxOut1_x]
         sar     edx, 0x10
         imul    edx, 0x0001999a
         sar     edx, 0x10
         add     edx, 0x140
-        mov     word ptr [ecx*4 + g_data_007af9b4], dx
-        imul    eax, dword ptr [ecx*4 + g_data_007af978]
+        mov     word ptr [ecx*4 + g_triStripRingA], dx
+        imul    eax, dword ptr [ecx*4 + g_vtxOut1_y]
         sar     eax, 0x10
         lea     eax, [eax + eax*2]
         lea     eax, [eax + eax*4]
         shl     eax, 0x0d
         sar     eax, 0x10
         add     eax, 0xf0
-        mov     word ptr [ecx*4 + g_data_007af9b6], ax
+        mov     word ptr [ecx*4 + g_vtxScreenP1Y], ax
         ret
     }
 }

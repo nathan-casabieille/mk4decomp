@@ -23,7 +23,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x5c], ecx
  *   ret
  */
-extern u32 g_pendingNodeType;
 void Copy3Fields3c4044_00404e90(void) {
     unsigned char *dst = (unsigned char *)(g_fightGroupHead * 4);
     unsigned char *src = (unsigned char *)(g_pendingNodeType * 4);

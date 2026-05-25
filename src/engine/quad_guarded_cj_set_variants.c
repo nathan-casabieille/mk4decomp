@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -129,17 +115,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
  *   call TwoStateLookupDirty_004237d0; if !pause: cj[+0x3c] = g_data_00537f78; ret.
  */
-extern unsigned int g_data_00541e34;
-extern unsigned int g_data_00541e38;
-extern unsigned int g_framePauseFlag;
+extern u32 g_dlState;
+extern u32 g_dlAux;
 extern unsigned int g_x_00537f78;
-extern unsigned int g_x_00538160;
-extern unsigned int g_x_00538164;
-extern unsigned int g_x_0053a178;
-extern unsigned int g_x_0053a250;
+extern s32 g_dlNalt3;
+extern s32 g_dlNalt4;
 extern unsigned int g_x_00541de0;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
 extern void DownloadPlayerChar(void);
 extern void GuardedDualPushTailJmp_004231f0(void);
 extern void ScaledOr4DirtyClear_00409320(void);
@@ -147,7 +128,7 @@ extern void TwoStateLookupDirty_004237d0(void);
 
 void QuadGuardedCjSet_00422fc0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0053a178]
+        mov     eax, dword ptr [g_dlNalt3]
         mov     dword ptr [g_eventQueueCurrent], 2
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
@@ -159,8 +140,8 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0053a178]
-        mov     edx, dword ptr [g_data_00541e34]
+        mov     ecx, dword ptr [g_dlNalt3]
+        mov     edx, dword ptr [g_dlState]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 2
         mov     dword ptr [g_eventQueueWorkType], edx
@@ -173,22 +154,22 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], edx
         call    ScaledOr4DirtyClear_00409320
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 3
-        mov     dword ptr [g_x_00538160], eax
+        mov     dword ptr [g_player3NodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x30], ecx
         mov     eax, dword ptr [g_cj_0054205c]
@@ -216,7 +197,7 @@ void QuadGuardedCjSet_00422fc0(void) {
 }
 
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).
- *   Set up locals (g_eventQueueCurrent=3, g_walkCallback=g_x_0053a250); call DownloadPlayerChar.
+ *   Set up locals (g_eventQueueCurrent=3, g_walkCallback=g_dlNalt4); call DownloadPlayerChar.
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
  *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
@@ -224,7 +205,7 @@ void QuadGuardedCjSet_00422fc0(void) {
  */
 void QuadGuardedCjSet_004230b0(void) {
     __asm {
-        mov     eax, dword ptr [g_x_0053a250]
+        mov     eax, dword ptr [g_dlNalt4]
         mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [g_walkCallback], eax
         call    DownloadPlayerChar
@@ -236,8 +217,8 @@ void QuadGuardedCjSet_004230b0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_x_0053a250]
-        mov     edx, dword ptr [g_data_00541e38]
+        mov     ecx, dword ptr [g_dlNalt4]
+        mov     edx, dword ptr [g_dlAux]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_eventQueueCurrent], 3
         mov     dword ptr [g_eventQueueWorkType], edx
@@ -250,22 +231,22 @@ void QuadGuardedCjSet_004230b0(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_scaledInit_00542044]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_scaledInit_00542044], edx
         call    ScaledOr4DirtyClear_00409320
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_scaledInit_00542044], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 4
-        mov     dword ptr [g_x_00538164], eax
+        mov     dword ptr [g_player4NodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x30], ecx
         call    TwoStateLookupDirty_004237d0

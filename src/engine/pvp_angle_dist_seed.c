@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,27 +108,12 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
+extern s32 g_dlNalt1;
 extern unsigned int g_data_00538040;
 extern unsigned int g_data_00538044;
-extern unsigned int g_data_005380e0;
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_player2NodeIdx;
-extern unsigned int g_data_00538160;
-extern unsigned int g_data_00538164;
-extern unsigned int g_data_0053a178;
-extern unsigned int g_data_0053a250;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_acc_00542078;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_eventQueueChild;
+extern s32 g_dlNalt2;
+extern s32 g_dlNalt3;
+extern s32 g_dlNalt4;
 extern void CallPauseLoadAndDispatch_004235f0(void);
 extern void InstallSelfPause2_00423630(void);
 extern void RangeMulMod_004ab2a0(void);
@@ -225,14 +196,14 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      eax, dword ptr [g_player1NodeIdx]
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
-        mov      eax, dword ptr [g_data_00537f48]
+        mov      eax, dword ptr [g_dlNalt1]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_player2NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
-        mov      edx, dword ptr [g_data_0053803c]
+        mov      edx, dword ptr [g_gtPlayerProbe1]
         mov      eax, OFFSET g_fightAxisPosX_00535e78
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_baseSel_00542060]
@@ -254,14 +225,14 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         mov      eax, dword ptr [g_player2NodeIdx]
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
-        mov      eax, dword ptr [g_data_005380e0]
+        mov      eax, dword ptr [g_dlNalt2]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_baseSel_00542060]
         mov      eax, dword ptr [g_player1NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
-        mov      edx, dword ptr [g_data_00538038]
+        mov      edx, dword ptr [g_gtPlayerProbe2]
         mov      eax, OFFSET g_fightAxisNegX_00535e70
         mov      dword ptr [ecx*4 + 0x3c], edx
         mov      ecx, dword ptr [g_baseSel_00542060]
@@ -280,14 +251,14 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         nop
         /* === h4 (0x4234f0): p3→p4 seed → 423630 === */
-        mov      eax, dword ptr [g_data_00538160]
+        mov      eax, dword ptr [g_player3NodeIdx]
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
-        mov      eax, dword ptr [g_data_0053a178]
+        mov      eax, dword ptr [g_dlNalt3]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, dword ptr [g_data_00538164]
+        mov      eax, dword ptr [g_player4NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538044]
@@ -309,14 +280,14 @@ __declspec(naked) void PvpAngleDistSeed_004232e0(void)
         nop
         nop
         /* === h5 (0x423570): p4→p3 seed → 423630 === */
-        mov      eax, dword ptr [g_data_00538164]
+        mov      eax, dword ptr [g_player4NodeIdx]
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      dword ptr [g_fightGroupHead], eax
-        mov      eax, dword ptr [g_data_0053a250]
+        mov      eax, dword ptr [g_dlNalt4]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [ecx*4 + 0x34], eax
         mov      edx, dword ptr [g_baseSel_00542060]
-        mov      eax, dword ptr [g_data_00538160]
+        mov      eax, dword ptr [g_player3NodeIdx]
         mov      dword ptr [edx*4 + 0x38], eax
         mov      ecx, dword ptr [g_baseSel_00542060]
         mov      edx, dword ptr [g_data_00538040]

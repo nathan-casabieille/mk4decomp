@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,20 +110,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
  * AudioFlagPair3EntryDeinit_004a2720 - 149b audio deinit variant of AudioModeInit_004a2610.
- *   Main (0x004a2720): if g_x_00543590 == 1 → store (0x53a408,0x53a3e0)>>2 to
+ *   Main (0x004a2720): if g_gtModeFlag == 1 → store (0x53a408,0x53a3e0)>>2 to
  *     (g_currentNodeIdx,g_xformEntityIdx); else (0x537e88,0x53a700)>>2; call
- *     DualScaledStoreConst, ClearTwoCallSetStore; g_data_00542004=0; call
+ *     DualScaledStoreConst, ClearTwoCallSetStore; g_dlMode=0; call
  *     SixCallSeqPushImm; g_eventQueueWorkType=0; call Push16Call; if !paused
  *     tail-jmp PendingMatch_004a3400; ret.
  *   Pad-aligned bare-ret entry (0x004a27a0).
  *   Pad-aligned tail-jmp Thunk_004c48b0 (0x004a27b0).
  */
-extern unsigned int g_data_00542004;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_x_00543590;
+extern u32 g_dlMode;
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void DualScaledStoreConst_004a22c0(void);
 extern void PendingMatch_004a3400(void);
@@ -148,7 +129,7 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
 {
     __asm
     {
-        cmp     byte ptr [g_x_00543590], 1
+        cmp     byte ptr [g_gtModeFlag], 1
         jne     short L_modeB
         mov     eax, 0x0053a408
         mov     ecx, 0x0053a3e0
@@ -167,7 +148,7 @@ __declspec(naked) void AudioFlagPair3EntryDeinit_004a2720(void)
     L_common:
         call    DualScaledStoreConst_004a22c0
         call    ClearTwoCallSetStore_004a2270
-        mov     dword ptr [g_data_00542004], 0
+        mov     dword ptr [g_dlMode], 0
         call    SixCallSeqPushImm_004a1d80
         mov     dword ptr [g_eventQueueWorkType], 0
         call    Push16Call_00489f50

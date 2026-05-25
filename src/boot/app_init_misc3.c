@@ -12,10 +12,10 @@
  *   pop     edi
  *   ret
  */
-extern unsigned int g_data_007af958[];
+extern s16 g_vtxIn_x;
 extern void *memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 void AppInit_Misc3(void) {
-    memset(g_data_007af958, 0, 0x2a * 4);
+    memset(g_vtxIn_x, 0, 0x2a * 4);
 }
 

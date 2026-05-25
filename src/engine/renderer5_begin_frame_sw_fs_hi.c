@@ -5,26 +5,26 @@
 #include "game/tick.h"
 
 /* @addr 0x004b28a0 (140b engine.app) - validated audio buffer setup:
- *   if (!g_x_007af940 || g_x_007af948 || !arg2 || !arg3 || !arg4) return 0;
- *   *arg3 = 0x280; *arg2 = g_x_007af94c; *arg4 = 0; g_x_007af948 = 1;
+ *   if (!g_renderer4_active || g_renderer4_surface || !arg2 || !arg3 || !arg4) return 0;
+ *   *arg3 = 0x280; *arg2 = g_x_007af94c; *arg4 = 0; g_renderer4_surface = 1;
  *   if (arg1 && g_x_007af94c): memset(g_x_007af94c, 0x10001, *arg3 * 60 / 4).
  *   Return 1.
  */
-extern unsigned int g_x_007af940;
-extern unsigned int g_x_007af948;
+extern int g_renderer4_active;
+extern int g_renderer4_surface;
 extern unsigned int g_x_007af94c;
 
 __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
     __asm {
         push    ebp
         mov     ebp, esp
-        mov     eax, dword ptr [g_x_007af940]
+        mov     eax, dword ptr [g_renderer4_active]
         push    esi
         test    eax, eax
         push    edi
         _emit   74h
         _emit   78h
-        mov     eax, dword ptr [g_x_007af948]
+        mov     eax, dword ptr [g_renderer4_surface]
         test    eax, eax
         _emit   75h
         _emit   6fh
@@ -45,7 +45,7 @@ __declspec(naked) int Renderer5_BeginFrame_SW_FS_Hi(void) {
         mov     dword ptr [edx], esi
         mov     dword ptr [ecx], 0
         mov     ecx, dword ptr [ebp + 8]
-        mov     dword ptr [g_x_007af948], 1
+        mov     dword ptr [g_renderer4_surface], 1
         test    ecx, ecx
         _emit   74h
         _emit   2ch

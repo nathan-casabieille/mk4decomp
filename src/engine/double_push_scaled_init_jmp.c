@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x00444db0 (66b)
  *   Pushes g_currentNodeIdx (0x542044) and g_eventQueueWorkType
@@ -20,10 +14,10 @@ extern packed_ptr g_fightGroupHead;
 extern void PendingMatch_00444ef0(void);
 extern unsigned int g_table_004e5e28;
 void DoublePushScaledInitJmp_00444db0(void) {
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_scaledInit_00542044;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueWorkType;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
     g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e5e28 >> 2);
     PendingMatch_00444ef0();
 }

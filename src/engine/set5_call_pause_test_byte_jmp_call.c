@@ -6,14 +6,9 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueEnd;
 
 /* @addr 0x00491950 (54b)
- *   set 5 to walk and g_state_0052aac4; call F1; pause → ret;
+ *   set 5 to walk and g_state_0052aac4_aa; call F1; pause → ret;
  *   testb 1, dirty; jne ret-skip; jmp T;
  *   call F2; jmp T2.
  */

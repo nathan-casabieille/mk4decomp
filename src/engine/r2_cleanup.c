@@ -6,14 +6,14 @@
 
 /* @addr 0x004ad7c0 (141b engine.install) - shutdown sequence:
  *   Renderer2_EndScene_D3D, VtRelease_Modal, ReleaseVtableSlot 0..15;
- *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_x_0058c7e8:
- *   SetEvent via IAT@4d2210; clear g_x_0058c7e8; ret.
+ *   ComRelease 4x, DSoundBufferInit146(0), 3 more releases; if g_renderer2_initOk:
+ *   SetEvent via IAT@4d2210; clear g_renderer2_initOk; ret.
  */
 extern unsigned int g_iat_004d2210;
-extern unsigned int g_x_0058c7ac;
-extern unsigned int g_x_0058c7dc;
-extern unsigned int g_x_0058c7e0;
-extern unsigned int g_x_0058c7e8;
+extern unsigned int g_comptr_0058c7ac;
+extern int g_renderer2_present_rc;
+extern int g_renderer2_active;
+extern int g_renderer2_initOk;
 extern void ComReleaseCapture_004aeee0(void);
 extern void ComReleasePair_004af440(void);
 extern void ComRelease_004aedc0(void);
@@ -32,14 +32,14 @@ __declspec(naked) void R2_Cleanup(void) {
         push    esi
         call    Renderer2_EndScene_D3D
         call    VtRelease_Modal_004ad590
-        mov     eax, dword ptr [g_x_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         _emit   74h
         _emit   0bh
         mov     ecx, dword ptr [eax]
         push    eax
         call    dword ptr [ecx + 0x28]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         xor     esi, esi
 loop4ad7c0:
         push    esi
@@ -60,8 +60,8 @@ loop4ad7c0:
         call    ComRelease_004aef30
         call    ComReleaseCapture_004aeee0
         call    DSoundBufferInit146_004aea40
-        mov     eax, dword ptr [g_x_0058c7e8]
-        mov     dword ptr [g_x_0058c7e0], 0
+        mov     eax, dword ptr [g_renderer2_initOk]
+        mov     dword ptr [g_renderer2_active], 0
         test    eax, eax
         _emit   74h
         _emit   0ch
@@ -69,7 +69,7 @@ loop4ad7c0:
         push    0
         push    0
         call    dword ptr [g_iat_004d2210]
-        mov     dword ptr [g_x_0058c7e8], 0
+        mov     dword ptr [g_renderer2_initOk], 0
         pop     esi
         ret
     }

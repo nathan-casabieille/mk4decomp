@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,15 +108,15 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004f4b4c;
-extern unsigned int g_data_007afa28;
-extern unsigned int g_data_007afaa8;
-extern unsigned int g_data_007aff50;
-extern unsigned int g_data_007affd0;
-extern unsigned int g_data_007affe4;
-extern unsigned int g_data_007affe8;
-extern unsigned int g_data_007afff0;
-extern unsigned int g_data_007afff4;
+extern unsigned int g_byte_004f4b4c;
+extern f32 g_glideTable2[];
+extern f32 g_glideTable1[];
+extern f32 g_glideTable3[];
+extern u32 g_glideD0;
+extern int g_renderer1_active;
+extern u8 g_glideE8;
+extern int g_renderer1_busy;
+extern int g_renderer1_surface;
 extern unsigned int g_data_007b0004;
 extern unsigned int g_data_007b0074;
 extern unsigned int g_data_007b0078;
@@ -138,14 +124,14 @@ extern unsigned int g_data_007b0078;
 __declspec(naked) void GlideTriColorFlush_004b46f0(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007affe4]
+        mov      eax, dword ptr [g_renderer1_active]
         sub      esp, 0xb4
         test     eax, eax
         je       L_4992
-        mov      eax, dword ptr [g_data_007afff4]
+        mov      eax, dword ptr [g_renderer1_surface]
         test     eax, eax
         je       L_4992
-        mov      eax, dword ptr [g_data_007afff0]
+        mov      eax, dword ptr [g_renderer1_busy]
         test     eax, eax
         jne      L_4992
         push     ebx
@@ -155,20 +141,20 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         xor      bl, bl
         mov      byte ptr [esp + 0xbc], bl
     L_4733:
-        cmp      byte ptr [g_data_004f4b4c], bl
+        cmp      byte ptr [g_byte_004f4b4c], bl
         je       L_4764
         mov      eax, dword ptr [esp + 0xbc]
-        push     OFFSET g_data_007affd0
+        push     OFFSET g_glideD0
         and      eax, 0xff
         push     3
-        mov      ecx, dword ptr [eax*4 + g_data_007afa28]
+        mov      ecx, dword ptr [eax*4 + g_glideTable2]
         push     ecx
         push     0
         call     dword ptr [g_data_007b0074]
-        mov      byte ptr [g_data_004f4b4c], bl
+        mov      byte ptr [g_byte_004f4b4c], bl
     L_4764:
         mov      ebx, dword ptr [esp + 0xc0]
-        mov      al, byte ptr [g_data_007affe8]
+        mov      al, byte ptr [g_glideE8]
         cmp      bl, al
         je       L_47ad
         test     bl, bl
@@ -199,14 +185,14 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
     L_47a1:
         call     dword ptr [g_data_007b0004]
     L_47a7:
-        mov      byte ptr [g_data_007affe8], bl
+        mov      byte ptr [g_glideE8], bl
     L_47ad:
         mov      eax, dword ptr [esp + 0xc8]
         mov      edx, dword ptr [esp + 0xc4]
         mov      dword ptr [esp + 0x80], eax
         and      ebx, 0xff
         movsx    eax, word ptr [esp + 0xd4]
-        fld      dword ptr [ebx*4 + g_data_007afaa8]
+        fld      dword ptr [ebx*4 + g_glideTable1]
         fst      dword ptr [esp + 0x5c]
         fst      dword ptr [esp + 0x20]
         fstp     dword ptr [esp + 0x98]
@@ -216,15 +202,15 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         and      ecx, 0x1f
         mov      edx, eax
         sar      edx, 5
-        fld      dword ptr [ecx*4 + g_data_007aff50]
+        fld      dword ptr [ecx*4 + g_glideTable3]
         and      edx, 0x1f
         and      eax, 0x1f
         fstp     dword ptr [esp + 0x88]
-        fld      dword ptr [edx*4 + g_data_007aff50]
+        fld      dword ptr [edx*4 + g_glideTable3]
         mov      ecx, dword ptr [esp + 0xd0]
         mov      edx, dword ptr [esp + 0xd8]
         fstp     dword ptr [esp + 0x8c]
-        fld      dword ptr [eax*4 + g_data_007aff50]
+        fld      dword ptr [eax*4 + g_glideTable3]
         mov      eax, dword ptr [esp + 0xcc]
         and      ecx, 0xff
         fstp     dword ptr [esp + 0x90]
@@ -232,11 +218,11 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         mov      dword ptr [esp + 4], edx
         mov      dword ptr [esp + 0x60], 0x3f800000
         mov      dword ptr [esp + 0x24], 0x3f800000
-        fld      dword ptr [eax*4 + g_data_007afaa8]
+        fld      dword ptr [eax*4 + g_glideTable1]
         mov      eax, dword ptr [esp + 0xdc]
         mov      dword ptr [esp + 0x9c], 0x3f800000
         fstp     dword ptr [esp + 0xa0]
-        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        fld      dword ptr [ecx*4 + g_glideTable1]
         mov      dword ptr [esp + 8], eax
         movsx    eax, word ptr [esp + 0xe8]
         fstp     dword ptr [esp + 0xa4]
@@ -246,23 +232,23 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         and      ecx, 0x1f
         and      eax, 0x1f
         sar      edx, 5
-        fld      dword ptr [ecx*4 + g_data_007aff50]
+        fld      dword ptr [ecx*4 + g_glideTable3]
         and      edx, 0x1f
         mov      ecx, dword ptr [esp + 0xe4]
         fstp     dword ptr [esp + 0x10]
-        fld      dword ptr [edx*4 + g_data_007aff50]
+        fld      dword ptr [edx*4 + g_glideTable3]
         mov      edx, dword ptr [esp + 0xec]
         and      ecx, 0xff
         fstp     dword ptr [esp + 0x14]
-        fld      dword ptr [eax*4 + g_data_007aff50]
+        fld      dword ptr [eax*4 + g_glideTable3]
         mov      eax, dword ptr [esp + 0xe0]
         mov      dword ptr [esp + 0x40], edx
         fstp     dword ptr [esp + 0x18]
         and      eax, 0xff
-        fld      dword ptr [eax*4 + g_data_007afaa8]
+        fld      dword ptr [eax*4 + g_glideTable1]
         mov      eax, dword ptr [esp + 0xf0]
         fstp     dword ptr [esp + 0x28]
-        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        fld      dword ptr [ecx*4 + g_glideTable1]
         mov      dword ptr [esp + 0x44], eax
         movsx    eax, word ptr [esp + 0xfc]
         fstp     dword ptr [esp + 0x2c]
@@ -272,16 +258,16 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         and      ecx, 0x1f
         and      eax, 0x1f
         sar      edx, 5
-        fld      dword ptr [ecx*4 + g_data_007aff50]
+        fld      dword ptr [ecx*4 + g_glideTable3]
         and      edx, 0x1f
         fstp     dword ptr [esp + 0x4c]
-        fld      dword ptr [edx*4 + g_data_007aff50]
+        fld      dword ptr [edx*4 + g_glideTable3]
         fstp     dword ptr [esp + 0x50]
-        fld      dword ptr [eax*4 + g_data_007aff50]
+        fld      dword ptr [eax*4 + g_glideTable3]
         mov      eax, dword ptr [esp + 0xf4]
         fstp     dword ptr [esp + 0x54]
         and      eax, 0xff
-        fld      dword ptr [eax*4 + g_data_007afaa8]
+        fld      dword ptr [eax*4 + g_glideTable1]
         mov      ecx, dword ptr [esp + 0xf8]
         lea      edx, [esp + 0x40]
         fstp     dword ptr [esp + 0x64]
@@ -289,7 +275,7 @@ __declspec(naked) void GlideTriColorFlush_004b46f0(void)
         lea      eax, [esp + 4]
         push     edx
         push     eax
-        fld      dword ptr [ecx*4 + g_data_007afaa8]
+        fld      dword ptr [ecx*4 + g_glideTable1]
         lea      ecx, [esp + 0x84]
         fstp     dword ptr [esp + 0x70]
         push     ecx

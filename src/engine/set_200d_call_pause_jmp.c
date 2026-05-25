@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0047c5e0 (57b)
  *   mov     ecx, [g_baseSel_00542060]

@@ -21,13 +21,13 @@ extern unsigned int g_scaledInit_00542044;
  *   shr     eax, 5
  *   ret
  */
-extern unsigned int g_state_004d50b4;
+extern unsigned int g_byte_004d50b4;
 extern unsigned int g_byte_004d50b8;
 extern unsigned int g_byte_004d50c0;
 
 int TripleByteCheck20_004a1c80(void) {
     if (g_byte_004d50b8 & 0x10) return 1;
-    if (g_state_004d50b4 & 0x1000) return 1;
+    if (g_byte_004d50b4 & 0x1000) return 1;
     __asm {
         movsx   eax, byte ptr [g_byte_004d50c0]
         and     eax, 0x20

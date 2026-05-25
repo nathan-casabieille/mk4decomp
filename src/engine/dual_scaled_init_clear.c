@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x00433c10 (74b)
  *   Dual scaled-init helper: stores 0x53a1a0>>2 into g_scaledInit
@@ -18,7 +12,6 @@ extern packed_ptr g_fightGroupHead;
  *   [0x538158], also overrides g_scaledInit with the second value.
  *   Then clears g_walkCallback and the indexed slot.
  */
-extern unsigned int g_player1NodeIdx;
 
 __declspec(naked) void DualScaledInitClear_00433c10(void) {
     __asm {

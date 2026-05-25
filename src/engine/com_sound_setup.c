@@ -41,11 +41,11 @@
  *   ret
  */
 
-extern unsigned int g_state_0058c874;
+extern unsigned int g_dsqc_730_state874;
 extern unsigned int g_iface_0058c870;
 extern unsigned int g_retSlot_0058c878;
 
-extern unsigned int g_state_0058c8f4;
+extern unsigned int g_dsqc_f60_state874;
 extern unsigned int g_iface_0058c8f0;
 extern unsigned int g_retSlot_0058c8f8;
 
@@ -53,7 +53,7 @@ extern unsigned int g_retSlot_0058c8f8;
 
 __declspec(naked) void ComSoundSetup_004af6c0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0058c874]
+        mov     eax, dword ptr [g_dsqc_730_state874]
         sub     esp, 0x28
         test    eax, eax
         push    esi
@@ -97,7 +97,7 @@ __declspec(naked) void ComSoundSetup_004af6c0(void) {
 /* @addr 0x004afef0 */
 __declspec(naked) void ComSoundSetup_004afef0(void) {
     __asm {
-        mov     eax, dword ptr [g_state_0058c8f4]
+        mov     eax, dword ptr [g_dsqc_f60_state874]
         sub     esp, 0x28
         test    eax, eax
         push    esi

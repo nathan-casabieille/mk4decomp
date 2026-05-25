@@ -18,11 +18,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [g_eventQueueCurrent], ecx
  *   ret
  */
-extern unsigned int g_state_004d50a4;
-extern unsigned int g_state_004d50a8;
 void NotMaskStorePair_0045f440(void) {
-    unsigned int a = ~g_state_004d50a4 & 0xffff;
-    unsigned int b = ~g_state_004d50a8 & 0xffff;
+    unsigned int a = ~g_fightTableC0 & 0xffff;
+    unsigned int b = ~g_fightTableC1 & 0xffff;
     g_walkCallback      = (void(*)(void))a;
     g_eventQueueCurrent = b;
 }

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,12 +114,6 @@ extern void InstallSelfWithBody_00438780(void);
 
 /* @addr 0x00438690 (226b game) - state-threshold gate + mstack-push with overlap rewrite. */
 extern unsigned int g_data_004d57ac_arr;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_currentNodeFlags;
 
 __declspec(naked) void StateGateMStackOverlap_00438690(void) {
     __asm {
@@ -147,10 +127,10 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         call    StackPopDispatchTagged_0041f780
         pop     esi
         ret
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_data_004d57ac_arr], ecx
         mov     dword ptr [g_walkCallback], 0x00002147
         call    MStackFrameCdeclDouble_004903f0
@@ -162,14 +142,14 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_state_004d57ac]
+        mov     ecx, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, 0x00500c50
         mov     esi, dword ptr [ecx*4 + g_data_004d57ac_arr]
         dec     ecx
         shr     eax, 2
         mov     dword ptr [g_eventQueueChild], esi
-        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [g_matrixStackTop], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [edx*4 + 0x24]
         cmp     eax, edx
@@ -181,7 +161,7 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         ret
         inc     ecx
         push    0x005422e8
-        mov     dword ptr [g_state_004d57ac], ecx
+        mov     dword ptr [g_matrixStackTop], ecx
         mov     dword ptr [ecx*4 + g_data_004d57ac_arr], esi
         mov     dword ptr [g_eventQueueNotMask], 0x0d
         call    GuardedPackedSlotInit_00428760
@@ -190,11 +170,11 @@ __declspec(naked) void StateGateMStackOverlap_00438690(void) {
         test    eax, eax
         _emit   75h
         _emit   1dh
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_eventQueueChild], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         call    InstallSelfWithBody_00438780
         pop     esi
         ret

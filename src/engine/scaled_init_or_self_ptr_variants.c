@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00474b10 (64b): ScaledInitOrSelfPtr, store=own, jmp=0x474b50 */
 extern void NetEntityScanAndPunish_00474b50(void);

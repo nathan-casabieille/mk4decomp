@@ -9,7 +9,6 @@
 /*
  * @addr 0x004b0cb0
  *
-extern unsigned int g_ecmDSBuffer;
 
  * Naked + __asm: the function is a chain of side-effecting Win32 /
  * COM calls with very specific scheduling (push esi/edi early so

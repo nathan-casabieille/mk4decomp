@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00542098;
+extern unsigned int g_eq_00542098;
 extern void DualGatedStateYield_0048fc80(void);
 extern void Set1dCallSet16Jmp_004809b0(void);
 extern void ScaledChain3c7c_0048f930(void);
@@ -135,8 +121,8 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *   On phase = [scaled g_baseSel_00542060+0x84] == 0 jumps direct to install
  *   tail. Else runs a polling loop:
  *     DualGatedStateYield_0048fc80 → on success decrement g_eventQueueChild
- *     and update g_data_00542098 (sete on dec result), if <= 0 sets it
- *     to 0xc. If g_data_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
+ *     and update g_eq_00542098 (sete on dec result), if <= 0 sets it
+ *     to 0xc. If g_eq_00542098 != 0 calls Set1dCallSet16Jmp_004809b0.
  *     If g_xformScratch2088 == 1 tail-jmp Install3WayChainCounter_004809e0.
  *     Else calls ScaledChain3c7c_0048f930. If g_walkCallback >= 3
  *     tail-jmp Install3WayChainCounter; else sets g_walkCallback=0xb333
@@ -148,15 +134,6 @@ extern void FiveCallGuardSetTail_0046f6b0(void);
  *     re-reading phase and jumping back if non-zero. Install tail:
  *     [eax+8]=Self, slot[+0x84]=1, g_pendingNodeType=1, 0x541e6c=1.
  */
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_xformScratch2088;
-extern unsigned int g_xformScratch94;
 extern void EsiEdiAliasDualMul10_004906b0(void);
 
 __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
@@ -184,7 +161,7 @@ __declspec(naked) void CountdownInstallSelfMultiTail_00480840(void) {
         sete    cl
         cmp     eax, edi
         mov     dword ptr [g_eventQueueChild], eax
-        mov     dword ptr [g_data_00542098], ecx
+        mov     dword ptr [g_eq_00542098], ecx
         jg      short L_cis_skipReset
         mov     eax, 0xc
         mov     dword ptr [g_eventQueueChild], eax

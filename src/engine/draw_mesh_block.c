@@ -5,31 +5,30 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_004f623c;
-extern unsigned int g_pendingNodeType;
 extern unsigned int g_data_00543aa8;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95a;
-extern unsigned int g_data_007af95c;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af960;
-extern unsigned int g_data_007af962;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af966;
-extern unsigned int g_data_007af968;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b6;
-extern unsigned int g_data_007af9b8;
-extern unsigned int g_data_007af9ba;
-extern unsigned int g_data_007af9bc;
-extern unsigned int g_data_007af9be;
-extern unsigned int g_data_007af9f8;
-extern unsigned int g_data_007af9fa;
-extern unsigned int g_data_007af9fc;
+extern u32 g_inLoopStep;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn2_x;
+extern unsigned int g_triStripX0;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn1_z;
+extern unsigned int g_triStripX1;
+extern s16 g_vtxIn2_y;
+extern s16 g_vtxIn2_z;
+extern unsigned int g_triStripX2;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxValid;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP1Y;
+extern s16 g_vtxScreenP2X;
+extern s16 g_vtxScreenP2Y;
+extern s16 g_vtxScreenX;
+extern s16 g_vtxScreenY;
+extern u16 g_vtxColorCopy;
+extern u16 g_vtxColorSaved;
+extern u16 g_vtxColor;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab4d9c;
 extern unsigned int g_data_00ab4e28;
@@ -49,7 +48,7 @@ extern void TristripBatchEmit3Cap_004bb680(void);
 __declspec(naked) void DrawMeshBlock(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007af92c]
+        mov      eax, dword ptr [g_inLoopStep]
         sub      esp, 0xc
         test     eax, eax
         push     ebx
@@ -134,15 +133,15 @@ __declspec(naked) void DrawMeshBlock(void)
         mov      dword ptr [esp + 0x14], eax
         mov      dword ptr [esp + 0x18], ebx
         jl       L_b280
-        mov      word ptr [g_data_007af958], cx
-        mov      word ptr [g_data_007af95e], cx
-        mov      word ptr [g_data_007af964], cx
+        mov      word ptr [g_vtxIn_x], cx
+        mov      word ptr [g_vtxIn1_y], cx
+        mov      word ptr [g_vtxIn2_y], cx
         mov      cx, word ptr [edi]
-        mov      word ptr [g_data_007af95a], cx
+        mov      word ptr [g_vtxIn2_x], cx
         mov      dx, word ptr [edi + 2]
-        mov      word ptr [g_data_007af960], dx
+        mov      word ptr [g_vtxIn1_z], dx
         mov      ax, word ptr [edi + 4]
-        mov      word ptr [g_data_007af966], ax
+        mov      word ptr [g_vtxIn2_z], ax
         mov      cx, word ptr [edi + 6]
         mov      dx, word ptr [edi + 0xa]
         mov      ax, word ptr [edi + 8]
@@ -152,11 +151,11 @@ __declspec(naked) void DrawMeshBlock(void)
         call     TransformVertex
         mov      cx, word ptr [edi + 0xc]
         add      esp, 0xc
-        mov      word ptr [g_data_007af95c], cx
+        mov      word ptr [g_triStripX0], cx
         mov      dx, word ptr [edi + 0xe]
-        mov      word ptr [g_data_007af962], dx
+        mov      word ptr [g_triStripX1], dx
         mov      ax, word ptr [edi + 0x10]
-        mov      word ptr [g_data_007af968], ax
+        mov      word ptr [g_triStripX2], ax
         mov      cx, word ptr [edi + 0x1e]
         mov      dx, word ptr [edi + 0x16]
         mov      ax, word ptr [edi + 0x14]
@@ -188,16 +187,16 @@ __declspec(naked) void DrawMeshBlock(void)
         call     TransformVertex
         add      esp, 0xc
         call     ProjectVertex
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
@@ -205,40 +204,40 @@ __declspec(naked) void DrawMeshBlock(void)
         test     edx, edx
         setle    al
         xor      edx, edx
-        mov      dword ptr [g_data_007af9b0], eax
+        mov      dword ptr [g_vtxValid], eax
         test     eax, eax
         movsx    eax, bp
         sete     dl
         cmp      eax, edx
         je       L_b656
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         test     eax, eax
         jle      L_b656
-        mov      eax, dword ptr [g_data_007af988]
+        mov      eax, dword ptr [g_vtxOut2_z]
         test     eax, eax
         jle      L_b656
-        mov      eax, dword ptr [g_data_007af98c]
+        mov      eax, dword ptr [g_vtxOut_z]
         test     eax, eax
         jle      L_b656
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         mov      dword ptr [esi], ecx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      cx, word ptr [esi + 0x1a]
         mov      dword ptr [esi + 4], edx
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      ecx, 0xfbff
         mov      dword ptr [esi + 8], eax
-        mov      dl, byte ptr [g_data_007af9b0]
+        mov      dl, byte ptr [g_vtxValid]
         and      edx, 1
         shl      edx, 0xa
         or       ecx, edx
         mov      word ptr [esi + 0x1a], cx
-        mov      ax, word ptr [g_data_007af9f8]
+        mov      ax, word ptr [g_vtxColorCopy]
         mov      word ptr [esi + 0x14], ax
-        mov      cx, word ptr [g_data_007af9fa]
+        mov      cx, word ptr [g_vtxColorSaved]
         mov      eax, dword ptr [esp + 0x10]
         mov      word ptr [esi + 0x16], cx
-        mov      dx, word ptr [g_data_007af9fc]
+        mov      dx, word ptr [g_vtxColor]
         cmp      ax, 0x20
         mov      word ptr [esi + 0x18], dx
         jge      L_b5cd

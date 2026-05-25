@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,15 +112,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   B1 (0..66): clear g_eventQueueNotMask; call EntryThunkBodyStateMachine_00457bb0; if !pause: set
  *     g_walkCallback=0x13; call TableLookupCall; push 0x004ed420; call
  *     ScaledDualPropagateJmp; if !pause: tail-jmp FiveCallGuardSetTail; ret.
- *   B2 (80..230): read cj[+0x58]; if eax<0x9999: select g_data_00538038 or
+ *   B2 (80..230): read cj[+0x58]; if eax<0x9999: select g_gtPlayerProbe2 or
  *     [0053803c] based on edx == g_player1NodeIdx; copy [+0x5c]/[+0x60]; clear
  *     cj[+0x58] = 0xfffc0000; set cj[+0x4c] = 0xa3d; tail-jmp ScaledZero44.
  */
-extern unsigned int g_data_00538038;
-extern unsigned int g_data_0053803c;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueNotMask;
 extern void EntryThunkBodyStateMachine_00457bb0(void);
 extern void FiveCallGuardSetTail_0046f6b0(void);
 extern void ScaledDualPropagateJmp_004287b0(void);
@@ -180,12 +161,12 @@ __declspec(naked) void GuardedThenCjCascade_0047d560(void) {
         _emit   7ch
         _emit   7dh
         mov     ecx, dword ptr [g_player1NodeIdx]
-        mov     eax, dword ptr [g_data_00538038]
+        mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     edx, ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   74h
         _emit   0ah
-        mov     eax, dword ptr [g_data_0053803c]
+        mov     eax, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_scaledInit_00542044], eax
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_walkCallback], ecx

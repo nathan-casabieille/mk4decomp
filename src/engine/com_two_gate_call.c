@@ -19,8 +19,8 @@
  *   ret
  */
 
-extern unsigned int g_state_0058c874;
-extern unsigned int g_state_0058c8f4;
+extern unsigned int g_dsqc_730_state874;
+extern unsigned int g_dsqc_f60_state874;
 extern void *g_comptr_0058c864;
 extern void *g_comptr_0058c8e4;
 extern unsigned int g_comret_0058c878;
@@ -32,7 +32,7 @@ extern void Renderer5_EndScene_SW_FS_Hi(void);
 /* @addr 0x004af690 */
 void Renderer3_PresentFrame(void) {
     void *p;
-    if (!g_state_0058c874) return;
+    if (!g_dsqc_730_state874) return;
     Renderer3_EndScene_SW_FS();
     p = g_comptr_0058c864;
     if (!p) return;
@@ -42,7 +42,7 @@ void Renderer3_PresentFrame(void) {
 /* @addr 0x004afec0 */
 void Renderer5_PresentFrame(void) {
     void *p;
-    if (!g_state_0058c8f4) return;
+    if (!g_dsqc_f60_state874) return;
     Renderer5_EndScene_SW_FS_Hi();
     p = g_comptr_0058c8e4;
     if (!p) return;

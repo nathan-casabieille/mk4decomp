@@ -6,14 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x00473070 (73b)
  *   Push g_eventQueueCurrent on stack[idx*4]; set g_eventQueueCurrent = -1;
@@ -22,13 +14,13 @@ extern u32 g_eventQueueNotMask;
 extern void Thunk_0049cc00(void);
 void PushPopCurrentSetFFFFFFFF_00473070(void) {
     unsigned int top;
-    top = g_state_004d57ac + 1;
-    g_state_004d57ac = top;
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueCurrent;
     g_eventQueueCurrent = 0xffffffff;
     Thunk_0049cc00();
     if (g_framePauseFlag != 0) return;
-    top = g_state_004d57ac;
+    top = g_matrixStackTop;
     g_eventQueueCurrent = *(unsigned int *)(top * 4);
-    g_state_004d57ac = top - 1;
+    g_matrixStackTop = top - 1;
 }

@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00490030 (54b)
  *   mov     eax, [g_fightGroupHead]

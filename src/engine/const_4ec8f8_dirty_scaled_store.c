@@ -22,7 +22,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [ecx*4 + 0x60], edx
  *   ret
  */
-extern packed_ptr g_xformEntityIdx;
 extern void FramePauseScaledStore_00406c10(void);
 extern int g_data_004ec8f8;
 void Const4ec8f8DirtyScaledStore_00446580(void) {

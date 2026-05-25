@@ -20,7 +20,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, 1
  *   ret
  */
-extern unsigned int g_eventQueueNotMask;
 extern void func_00439998(void);
 int ScaledCmp200eCallBool_004398f0(void) {
     unsigned int v = *(unsigned int *)(g_baseSel_00542060 * 4 + 0x74);

@@ -18,7 +18,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x0c], ecx
  *   ret
  */
-extern packed_ptr g_xformEntityIdx;
 void ScaledStoreThree_00409260(void) {
     unsigned int *base = (unsigned int *)(g_xformEntityIdx * 4);
     base[1] = (unsigned int)g_walkCallback;

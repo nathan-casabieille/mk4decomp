@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -127,7 +113,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Push g_eventQueueTotal to mstack. g_pendingNodeType--; esi = chain[g_currentNodeIdx*4] + g_currentNodeIdx+1;
  *   g_currentNodeIdx++. If esi <= ecx: pop+ret.
  *   Loop: eax = chain[ecx*4]; g_walkCallback=eax. If eax < 0: skip pos branch.
- *     Else: g_state_00542098 = (eax == 0); if != 0: skip to loop test.
+ *     Else: g_eq_00542098 = (eax == 0); if != 0: skip to loop test.
  *       eax = chain[eax*4 + 0x20]; g_walkCallback=eax; g_pendingNodeType += 0xf; eax &= 0x100;
  *       g_xformScratch94 = eax; if 0: skip to loop test.
  *       g_walkCallback = g_xformEntityIdx[0]; call ExtractBitsToVec3; if paused: ret-noPop.
@@ -136,24 +122,18 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Loop test: if esi > ecx: loop.
  *   Pop1 mstack into g_eventQueueTotal; pop esi; ret.
  */
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_00542098;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueWorkType;
+extern unsigned int g_eq_00542098;
 extern void ExtractBitsToVec3_00407c00(void);
 
 __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         push    esi
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_pendingNodeType]
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -178,7 +158,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         test    eax, eax
         sete    dl
         test    edx, edx
-        mov     dword ptr [g_state_00542098], edx
+        mov     dword ptr [g_eq_00542098], edx
         jne     L_7ae_loopTest
         mov     eax, dword ptr [eax*4 + 0x20]
         mov     edx, dword ptr [g_pendingNodeType]
@@ -203,7 +183,7 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         cmp     esi, ecx
         setg    al
         inc     edx
-        mov     dword ptr [g_state_00542098], eax
+        mov     dword ptr [g_eq_00542098], eax
         test    eax, eax
         mov     dword ptr [g_xformEntityIdx], edx
         je      short L_7ae_pop1
@@ -216,11 +196,11 @@ __declspec(naked) void BootChainStreamWalkExtract_00407ae0(void)
         cmp     esi, ecx
         jg      L_7ae_loop
     L_7ae_pop1:
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4]
         dec     eax
         mov     dword ptr [g_eventQueueTotal], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
     L_7ae_justRet:
         pop     esi
         ret

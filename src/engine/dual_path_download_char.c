@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,26 +110,26 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00463810 (94b)
  *   if g_active_0053a408 != 0:
- *     g_walkCallback = g_state_00537f48; g_eventQueueEnd = 0x535cfc>>2;
+ *     g_walkCallback = g_dlNalt1; g_eventQueueEnd = 0x535cfc>>2;
  *     g_eventQueueCurrent = 0; call DownloadPlayerChar;
  *     g_framePauseFlag = g_framePauseFlag (load); ret;
  *   else:
- *     g_walkCallback = g_state_005380e0; g_eventQueueEnd = 0x53a1d0>>2;
+ *     g_walkCallback = g_dlNalt2; g_eventQueueEnd = 0x53a1d0>>2;
  *     g_eventQueueCurrent = 1; jmp DownloadPlayerChar.
  */
 extern unsigned int g_data_00535cfc_pdc;
 extern unsigned int g_data_0053a1d0_pdc;
-extern unsigned int g_state_00537f48;
-extern unsigned int g_state_005380e0;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
 int DualPathDownloadChar_00463810(void) {
     if (g_active_0053a408 != 0) {
-        g_walkCallback = (void (*)(void))g_state_00537f48;
+        g_walkCallback = (void (*)(void))g_dlNalt1;
         g_eventQueueEnd = (unsigned int)&g_data_00535cfc_pdc >> 2;
         g_eventQueueCurrent = 0;
         DownloadPlayerChar();
         return g_framePauseFlag;
     }
-    g_walkCallback = (void (*)(void))g_state_005380e0;
+    g_walkCallback = (void (*)(void))g_dlNalt2;
     g_eventQueueEnd = (unsigned int)&g_data_0053a1d0_pdc >> 2;
     g_eventQueueCurrent = 1;
     return ((int (*)(void))DownloadPlayerChar)();

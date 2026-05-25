@@ -11,8 +11,6 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern void SlotInitAndChainLink_004191b0(void);
 extern void BootGatedInitInstallPair_00412280(void);
 

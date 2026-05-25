@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,43 +108,42 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned char g_data_00535cfc;
-extern unsigned char g_data_0053a1d0;
-extern unsigned char g_x_0054371c;
-extern unsigned int g_eventQueueEnd;
+extern unsigned char g_data_00535cfc_arr;
+extern unsigned char g_data_0053a1d0_arr;
+extern u8 g_dlEnabledFlag;
 extern void TableWalkBoundedCmp_004bd890(int);
 extern void TripleCallCountdown_00428080(void);
 extern void DownloadPlayerChar(void);
 extern void TableWalkPause_004bd850(void);
-extern unsigned int g_x_00537f48;
-extern unsigned int g_x_005380e0;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
 
 /* @addr 0x00402ed0 (141b boot) - 2-stage selector init:
  *   TableWalkBoundedCmp(6); TripleCallCountdown_00428080; pause? ret.
- *   Stage1: write g_eventQueueEnd = (0x535cfc >> 2); g_x_0054371c = 1;
- *   g_walkCallback = g_x_00537f48; g_eventQueueCurrent = 0; call DownloadPlayerChar.
- *   Stage2 (after pause check): g_walkCallback = g_x_005380e0; g_eventQueueEnd = (0x53a1d0 >> 2);
+ *   Stage1: write g_eventQueueEnd = (0x535cfc >> 2); g_dlEnabledFlag = 1;
+ *   g_walkCallback = g_dlNalt1; g_eventQueueCurrent = 0; call DownloadPlayerChar.
+ *   Stage2 (after pause check): g_walkCallback = g_dlNalt2; g_eventQueueEnd = (0x53a1d0 >> 2);
  *   g_eventQueueCurrent = 1; call DownloadPlayerChar.
- *   Then: g_x_0054371c = 0; jmp TableWalkPause.
+ *   Then: g_dlEnabledFlag = 0; jmp TableWalkPause.
  */
 void TwoStageSelectorInit_00402ed0(void) {
     TableWalkBoundedCmp_004bd890(6);
     TripleCallCountdown_00428080();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_data_00535cfc >> 2;
-    g_x_0054371c = 1;
-    g_walkCallback = (void (*)(void))g_x_00537f48;
+    g_eventQueueEnd = (unsigned int)&g_data_00535cfc_arr >> 2;
+    g_dlEnabledFlag = 1;
+    g_walkCallback = (void (*)(void))g_dlNalt1;
     g_eventQueueCurrent = 0;
     DownloadPlayerChar();
     if (g_framePauseFlag != 0) return;
     {
-        unsigned int wv = g_x_005380e0;
-        g_eventQueueEnd = (unsigned int)&g_data_0053a1d0 >> 2;
+        unsigned int wv = g_dlNalt2;
+        g_eventQueueEnd = (unsigned int)&g_data_0053a1d0_arr >> 2;
         g_walkCallback = (void (*)(void))wv;
         g_eventQueueCurrent = 1;
     }
     DownloadPlayerChar();
     if (g_framePauseFlag != 0) return;
-    g_x_0054371c = 0;
+    g_dlEnabledFlag = 0;
     TableWalkPause_004bd850();
 }

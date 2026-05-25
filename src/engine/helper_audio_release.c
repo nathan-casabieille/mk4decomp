@@ -5,14 +5,14 @@
 #include "game/tick.h"
 
 extern unsigned int g_data_004ffd50;
-extern unsigned int g_data_00f8fac8;
-extern unsigned int g_data_00f8fad8;
+extern u8 g_audioChannelTable[];
+extern unsigned int g_obj_size_00f8fad8;
 extern unsigned int g_data_00f8fadc;
-extern unsigned int g_data_00f8fade;
-extern unsigned int g_data_00f9efc8;
+extern unsigned int g_flags_00f8fade;
+extern void * g_dsoundContext;
 extern unsigned int g_data_00f9efd8;
-extern unsigned int g_data_00f9efe4;
-extern unsigned int g_data_00f9efe8;
+extern u32 g_dsoundFieldE4;
+extern u32 g_dsoundFieldE8;
 extern void ESF_Close(void);
 extern void ESF_Open(void);
 extern void ESF_ReadData(void);
@@ -40,11 +40,11 @@ __declspec(naked) void Helper_AudioRelease(void)
         shl      esi, 3
         sub      esi, eax
         shl      esi, 2
-        mov      al, byte ptr [esi + g_data_00f8fade]
+        mov      al, byte ptr [esi + g_flags_00f8fade]
         test     al, 2
         je       L_34e0
         and      al, 0xfd
-        mov      byte ptr [esi + g_data_00f8fade], al
+        mov      byte ptr [esi + g_flags_00f8fade], al
         pop      edi
         pop      esi
         pop      ebp
@@ -52,8 +52,8 @@ __declspec(naked) void Helper_AudioRelease(void)
         add      esp, 0x138
         ret
     L_34e0:
-        mov      eax, dword ptr [esi + g_data_00f8fac8]
-        lea      ebp, [esi + g_data_00f8fac8]
+        mov      eax, dword ptr [esi + g_audioChannelTable]
+        lea      ebp, [esi + g_audioChannelTable]
         cmp      eax, edx
         jne      L_3700
         mov      ecx, 7
@@ -62,7 +62,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         rep stosd
         cmp      dword ptr [g_data_00f9efd8], 0x64
         jle      L_351d
-        mov      eax, dword ptr [g_data_00f9efc8]
+        mov      eax, dword ptr [g_dsoundContext]
         mov      dword ptr [g_data_00f9efd8], edx
         cmp      eax, edx
         je       L_351d
@@ -87,9 +87,9 @@ __declspec(naked) void Helper_AudioRelease(void)
         push     eax
         call     ESF_Open
         mov      edx, dword ptr [esp + 0x3c]
-        mov      dword ptr [esi + g_data_00f8fad8], eax
+        mov      dword ptr [esi + g_obj_size_00f8fad8], eax
         mov      word ptr [esi + g_data_00f8fadc], 0
-        mov      al, byte ptr [esi + g_data_00f8fade]
+        mov      al, byte ptr [esi + g_flags_00f8fade]
         add      esp, 0x10
         and      al, 0xf9
         xor      ecx, ecx
@@ -102,7 +102,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         mov      dword ptr [esp + 0x18], edx
         xor      cl, al
         mov      dword ptr [esp + 0x1c], edx
-        mov      byte ptr [esi + g_data_00f8fade], cl
+        mov      byte ptr [esi + g_flags_00f8fade], cl
         mov      ecx, dword ptr [esp + 0x44]
         mov      dword ptr [esp + 0x20], edx
         mov      eax, dword ptr [esp + 0x28]
@@ -116,11 +116,11 @@ __declspec(naked) void Helper_AudioRelease(void)
         imul     eax, ecx
         mov      dword ptr [esp + 0x30], edx
         mov      dword ptr [esp + 0x20], eax
-        mov      eax, dword ptr [esi + g_data_00f8fad8]
+        mov      eax, dword ptr [esi + g_obj_size_00f8fad8]
         mov      dword ptr [esp + 0x34], edx
         mov      dword ptr [esp + 0x38], edx
         mov      dword ptr [esp + 0x38], eax
-        mov      eax, dword ptr [g_data_00f9efc8]
+        mov      eax, dword ptr [g_dsoundContext]
         mov      dword ptr [esp + 0x3c], edx
         lea      ecx, [esp + 0x18]
         mov      dword ptr [esp + 0x40], edx
@@ -178,7 +178,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         test     ecx, ecx
         je       L_368d
         mov      edx, dword ptr [esp + 0x10]
-        mov      eax, dword ptr [esi + g_data_00f8fad8]
+        mov      eax, dword ptr [esi + g_obj_size_00f8fad8]
         cmp      edx, eax
         jb       L_368d
         push     ecx
@@ -197,7 +197,7 @@ __declspec(naked) void Helper_AudioRelease(void)
         call     dword ptr [edx + 0x4c]
         lea      edi, [esi + g_data_00f8facc]
     L_36a6:
-        mov      eax, dword ptr [g_data_00f9efc8]
+        mov      eax, dword ptr [g_dsoundContext]
         mov      edx, dword ptr [ebp]
         push     edi
         push     edx
@@ -219,13 +219,13 @@ __declspec(naked) void Helper_AudioRelease(void)
     L_36d6:
         cmp      dword ptr [ebp], 0
         je       L_36fb
-        mov      ecx, dword ptr [esi + g_data_00f8fad8]
-        mov      edx, dword ptr [g_data_00f9efe4]
-        mov      eax, dword ptr [g_data_00f9efe8]
+        mov      ecx, dword ptr [esi + g_obj_size_00f8fad8]
+        mov      edx, dword ptr [g_dsoundFieldE4]
+        mov      eax, dword ptr [g_dsoundFieldE8]
         add      edx, ecx
         inc      eax
-        mov      dword ptr [g_data_00f9efe4], edx
-        mov      dword ptr [g_data_00f9efe8], eax
+        mov      dword ptr [g_dsoundFieldE4], edx
+        mov      dword ptr [g_dsoundFieldE8], eax
     L_36fb:
         call     ESF_Close
     L_3700:

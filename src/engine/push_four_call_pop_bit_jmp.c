@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,11 +109,11 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x00461020 (103b)
- *   eax = g_state_004d57ac; g_eventQueueCurrent = 4;
- *   ++eax; g_state_004d57ac = eax; [eax*4] = 4;
+ *   eax = g_matrixStackTop; g_eventQueueCurrent = 4;
+ *   ++eax; g_matrixStackTop = eax; [eax*4] = 4;
  *   call FlagCascadeStateSet_0048ec30; if pause: ret;
- *   ecx = g_state_004d57ac; eax = [ecx*4]; --ecx;
- *   g_state_004d57ac = ecx; cl = byte [g_xformDirtyFlags];
+ *   ecx = g_matrixStackTop; eax = [ecx*4]; --ecx;
+ *   g_matrixStackTop = ecx; cl = byte [g_xformDirtyFlags];
  *   test cl,1; g_eventQueueCurrent = eax;
  *   if zero: skip; eax = 6; g_eventQueueCurrent = 6;
  *   skip: g_walkCallback = eax; jmp 0x471190.
@@ -135,12 +121,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 void PushFourCallPopBitJmp_00461020(void) {
     unsigned int v;
     g_eventQueueCurrent = 4;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = 4;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = 4;
     FlagCascadeStateSet_0048ec30();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    v = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
     g_eventQueueCurrent = v;
     if ((g_xformDirtyFlags & 1) != 0) {
         v = 6;

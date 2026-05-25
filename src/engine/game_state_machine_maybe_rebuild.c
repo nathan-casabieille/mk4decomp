@@ -4,10 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_data_004d50a4;
-extern unsigned int g_data_004d50a8;
 extern unsigned int g_data_004d50ac;
-extern unsigned int g_data_004d50b0;
 extern unsigned int g_data_004f4dc8;
 extern unsigned int g_data_004f4dcc;
 extern unsigned int g_data_004f4dd0;
@@ -25,13 +22,12 @@ extern unsigned int g_data_004f4dfc;
 extern unsigned int g_data_004f4e00;
 extern unsigned int g_data_004f4e04;
 extern unsigned int g_data_004f4e98;
-extern unsigned int g_data_004ffd7c;
+extern u32 g_demoModeFlag;
 extern unsigned int g_data_00543368;
 extern unsigned int g_data_0054336c;
 extern unsigned int g_data_00543370;
 extern unsigned int g_data_0054357c;
-extern unsigned int g_data_007af918;
-extern unsigned int g_data_007af920;
+extern u32 g_appInitFlag1;
 extern void Helper_JoyButtonInit(void);
 extern void InputBitMaskDispatcher_004b5470(void);
 extern void PadPollDispatcher_004b5650(void);
@@ -39,16 +35,16 @@ extern void PadPollDispatcher_004b5650(void);
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
     __asm {
-        mov     eax, dword ptr [g_data_004ffd7c]
+        mov     eax, dword ptr [g_demoModeFlag]
         push    esi
         xor     esi, esi
         cmp     eax, esi
-        mov     dword ptr [g_data_004d50b0], esi
-        mov     dword ptr [g_data_004d50a4], esi
-        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_fightTableC2], esi
+        mov     dword ptr [g_fightTableC0], esi
+        mov     dword ptr [g_fightTableC1], esi
         mov     dword ptr [g_data_004d50ac], esi
         je      L_idep_after_clear_masks
-        cmp     dword ptr [g_data_007af918], esi
+        cmp     dword ptr [g_gameStateResult], esi
         jne     L_idep_after_clear_masks
         push    esi
         call    PadPollDispatcher_004b5650
@@ -65,11 +61,11 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         add     esp, 4
         cmp     eax, esi
         je      L_idep_pause_gate2
-        cmp     dword ptr [g_data_004d50b0], esi
+        cmp     dword ptr [g_fightTableC2], esi
         jne     L_idep_clear_loop
-        cmp     dword ptr [g_data_004d50a4], esi
+        cmp     dword ptr [g_fightTableC0], esi
         jne     L_idep_clear_loop
-        cmp     dword ptr [g_data_004d50a8], esi
+        cmp     dword ptr [g_fightTableC1], esi
         jne     L_idep_clear_loop
         cmp     dword ptr [g_data_004d50ac], esi
         jne     L_idep_clear_loop
@@ -90,12 +86,12 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         jne     L_idep_clear_loop
         mov     dword ptr [g_data_004f4e98], esi
     L_idep_clear_loop:
-        mov     dword ptr [g_data_004d50b0], esi
-        mov     dword ptr [g_data_004d50a4], esi
-        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_fightTableC2], esi
+        mov     dword ptr [g_fightTableC0], esi
+        mov     dword ptr [g_fightTableC1], esi
         mov     dword ptr [g_data_004d50ac], esi
     L_idep_pause_gate2:
-        cmp     dword ptr [g_data_007af920], esi
+        cmp     dword ptr [g_appInitFlag1], esi
         je      L_idep_after_clear_masks
         mov     eax, dword ptr [g_data_004f4dec]
         mov     ecx, dword ptr [g_data_004f4de8]
@@ -147,18 +143,18 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         and     dword ptr [eax], edx
     L_idep_skip4:
         mov     esi, dword ptr [g_data_004d50ac]
-        mov     eax, dword ptr [g_data_004d50b0]
-        mov     ecx, dword ptr [g_data_004d50a4]
-        mov     edx, dword ptr [g_data_004d50a8]
+        mov     eax, dword ptr [g_fightTableC2]
+        mov     ecx, dword ptr [g_fightTableC0]
+        mov     edx, dword ptr [g_fightTableC1]
         not     esi
         not     eax
         not     ecx
         not     edx
         mov     dword ptr [g_data_004d50ac], esi
         mov     dword ptr [g_data_00543368], esi
-        mov     dword ptr [g_data_004d50b0], eax
-        mov     dword ptr [g_data_004d50a4], ecx
-        mov     dword ptr [g_data_004d50a8], edx
+        mov     dword ptr [g_fightTableC2], eax
+        mov     dword ptr [g_fightTableC0], ecx
+        mov     dword ptr [g_fightTableC1], edx
         mov     dword ptr [g_data_0054357c], eax
         mov     dword ptr [g_data_0054336c], ecx
         mov     dword ptr [g_data_00543370], edx

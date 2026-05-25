@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -131,14 +117,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *      to drive_out via FgetsImpl_004c9a30(out, src, 2), advances ebp
  *      past the drive. Else nulls drive_out if non-null.
  *   3. Walks the path identifying alphanumeric chars via the ctype
- *      table at g_data_00f9f8c1 (bit 4 = "valid path char"), records
+ *      table at g_byte_00f9f8c1 (bit 4 = "valid path char"), records
  *      the LAST '/' or '\' position into ebp (for dir-end), and the
  *      LAST '.' position into esp+0x10 (for ext-start).
  *   4. Copies the dir (capped at 0xff) to dir_out, then name and ext
  *      similarly. Null-terminates each output as needed.
  *   Returns nothing (void).
  */
-extern unsigned int g_data_00f9f8c1;
+extern unsigned int g_byte_00f9f8c1;
 extern void FgetsImpl_004c9a30(void);
 
 __declspec(naked) void SplitPath_004c5e00(void) {
@@ -189,7 +175,7 @@ __declspec(naked) void SplitPath_004c5e00(void) {
         mov     al, byte ptr [esi]
         mov     edx, eax
         and     edx, 0xff
-        test    byte ptr [edx + g_data_00f9f8c1], cl
+        test    byte ptr [edx + g_byte_00f9f8c1], cl
         je      short L_sp_checkSeps
         inc     esi
         jmp     short L_sp_scanNext

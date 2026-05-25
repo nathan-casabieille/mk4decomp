@@ -5,20 +5,20 @@
 #include "game/tick.h"
 
 /* @addr 0x004b2950 (232b engine.app) - SW renderer one-shot init.
- *   If g_data_007af940 != 0: already initialized -> return 1.
+ *   If g_renderer4_active != 0: already initialized -> return 1.
  *   If arg0 == 0: return 0.
- *   Save arg0 into g_data_007af944, clear g_data_007af948.
+ *   Save arg0 into g_data_007af944, clear g_renderer4_surface.
  *   RegisterWindowMessage via IAT[0x4d21b8] -> g_data_007af938; if 0 -> teardown.
  *   Allocate 0x42c bytes (LoadArgPushCall_004c54b0) -> g_data_007af934; if 0 -> teardown.
  *   Zero struct (rep stosd 0x10b). Fill fields and call IAT[0x4d202c] (CreateWindow).
- *   Set g_data_007af940 = 1; return 1.
+ *   Set g_renderer4_active = 1; return 1.
  */
 extern unsigned int g_data_007af934;
 extern unsigned int g_data_007af938;
 extern unsigned int g_data_007af93c;
-extern unsigned int g_data_007af940;
+extern int g_renderer4_active;
 extern unsigned int g_data_007af944;
-extern unsigned int g_data_007af948;
+extern int g_renderer4_surface;
 extern unsigned int g_data_007af94c;
 extern unsigned int g_iat_004d202c;
 extern unsigned int g_iat_004d21b8;
@@ -27,7 +27,7 @@ extern void RendererTeardownSW_004b2a40(void);
 
 __declspec(naked) void Helper_GfxInit2(void) {
     __asm {
-        mov     eax, dword ptr [g_data_007af940]
+        mov     eax, dword ptr [g_renderer4_active]
         push    esi
         xor     esi, esi
         push    edi
@@ -47,7 +47,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         ret
     L_si_doInit:
         push    eax
-        mov     dword ptr [g_data_007af948], esi
+        mov     dword ptr [g_renderer4_surface], esi
         mov     dword ptr [g_data_007af944], eax
         call    dword ptr [g_iat_004d21b8]
         cmp     eax, esi
@@ -62,7 +62,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         jne     short L_si_zero
     L_si_teardown:
         call    RendererTeardownSW_004b2a40
-        mov     dword ptr [g_data_007af940], esi
+        mov     dword ptr [g_renderer4_active], esi
         xor     eax, eax
         pop     edi
         pop     esi
@@ -95,7 +95,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
         mov     dword ptr [g_data_007af94c], esi
         call    dword ptr [g_iat_004d202c]
         mov     dword ptr [g_data_007af93c], eax
-        mov     dword ptr [g_data_007af940], edi
+        mov     dword ptr [g_renderer4_active], edi
         mov     eax, edi
         pop     edi
         pop     esi

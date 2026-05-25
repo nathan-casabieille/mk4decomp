@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,10 +114,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     non-null operand). Sets [esi+0x4/0x8/0xc] from g_walkCallback. Walk: esi=[esi]; eax=esi;
  *     scaledInit=eax; loop if nonzero. ret.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_x_00542098;
+extern unsigned int g_eq_00542098;
 extern void StoreDoubleNegPauseSubStore_004ab750(void);
 
 __declspec(naked) void LinkedListFieldAdd_0049d380(void) {
@@ -249,7 +232,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         setne   cl
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_x_00542098], ecx
+        mov     dword ptr [g_eq_00542098], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   74h
         _emit   76h
@@ -280,7 +263,7 @@ __declspec(naked) void LinkedListFieldAdd_0049d450(void) {
         setne   cl
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_x_00542098], ecx
+        mov     dword ptr [g_eq_00542098], ecx
         mov     dword ptr [g_scaledInit_00542044], eax
         _emit   75h
         _emit   8ah

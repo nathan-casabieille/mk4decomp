@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,9 +110,9 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004b9840 (367b engine.render) - alt-camera-matrix project pass.
  *   On arg [esp+8] non-zero (use-alt-matrix flag): snapshots current
- *   camera matrix at g_data_007af990..7af9a0 into local stack 0x10/0x14/
+ *   camera matrix at g_vtxMat..7af9a0 into local stack 0x10/0x14/
  *   0x18/0x1c (and high-bytes), loads alternate camera matrix from
- *   g_data_00ab4d58/5c/60/64/68 into g_data_007af990..7af9a0, then calls
+ *   g_data_00ab4d58/5c/60/64/68 into g_vtxMat..7af9a0, then calls
  *   Mat3x3VecMul6Bit_004b3590(arg, &local_vec) to project the vertex
  *   buffer at [esp+0x40] through it.
  *
@@ -141,12 +127,12 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   (0, 0x1e0) before storing into g_data_004f623c as a u16.
  */
 extern unsigned int g_data_004f623c;
-extern unsigned int g_data_007af990;
-extern unsigned int g_data_007af994;
-extern unsigned int g_data_007af998;
-extern unsigned int g_data_007af99c;
-extern unsigned int g_data_007af9a0;
-extern unsigned int g_data_00ab4878;
+extern s16 g_vtxMat[];
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af9a0;
+extern unsigned int g_table_00ab4878;
 extern unsigned int g_data_00ab487c;
 extern unsigned int g_data_00ab4880;
 extern unsigned int g_data_00ab4884;
@@ -169,26 +155,26 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         push    esi
         push    edi
         je      short L_acm_noAlt
-        mov     eax, dword ptr [g_data_007af990]
+        mov     eax, dword ptr [g_vtxMat]
         mov     ecx, dword ptr [g_data_00ab4d58]
-        mov     ebx, dword ptr [g_data_007af998]
-        mov     edi, dword ptr [g_data_007af99c]
+        mov     ebx, dword ptr [g_mat3x3_007af998]
+        mov     edi, dword ptr [g_mat3x3_007af99c]
         mov     edx, dword ptr [g_data_00ab4d5c]
-        mov     ebp, dword ptr [g_data_007af994]
-        mov     si, word ptr [g_data_007af9a0]
+        mov     ebp, dword ptr [g_mat3x3_007af994]
+        mov     si, word ptr [g_mat3x3_007af9a0]
         mov     dword ptr [esp + 0x1c], eax
         mov     eax, dword ptr [g_data_00ab4d60]
-        mov     dword ptr [g_data_007af990], ecx
+        mov     dword ptr [g_vtxMat], ecx
         mov     ecx, dword ptr [g_data_00ab4d64]
-        mov     dword ptr [g_data_007af998], eax
-        mov     dword ptr [g_data_007af99c], ecx
+        mov     dword ptr [g_mat3x3_007af998], eax
+        mov     dword ptr [g_mat3x3_007af99c], ecx
         mov     ecx, dword ptr [esp + 0x40]
         lea     eax, [esp + 0x10]
-        mov     dword ptr [g_data_007af994], edx
+        mov     dword ptr [g_mat3x3_007af994], edx
         mov     dx, word ptr [g_data_00ab4d68]
         push    eax
         push    ecx
-        mov     word ptr [g_data_007af9a0], dx
+        mov     word ptr [g_mat3x3_007af9a0], dx
         call    Mat3x3VecMul6Bit_004b3590
         add     esp, 8
         jmp     short L_acm_postCall
@@ -204,33 +190,33 @@ __declspec(naked) void AltCamMatrixProject_004b9840(void) {
         mov     dword ptr [esp + 0x18], eax
     L_acm_postCall:
         mov     ecx, dword ptr [g_data_00ab4e24]
-        mov     edx, dword ptr [g_data_00ab4878]
+        mov     edx, dword ptr [g_table_00ab4878]
         mov     eax, dword ptr [g_data_00ab487c]
-        mov     dword ptr [g_data_007af990], edx
+        mov     dword ptr [g_vtxMat], edx
         mov     edx, dword ptr [g_data_00ab4884]
-        mov     dword ptr [g_data_007af994], eax
+        mov     dword ptr [g_mat3x3_007af994], eax
         neg     ecx
         mov     ax, word ptr [g_data_00ab4888]
         mov     dword ptr [esp + 0x14], ecx
         mov     ecx, dword ptr [g_data_00ab4880]
-        mov     dword ptr [g_data_007af99c], edx
-        mov     dword ptr [g_data_007af998], ecx
+        mov     dword ptr [g_mat3x3_007af99c], edx
+        mov     dword ptr [g_mat3x3_007af998], ecx
         lea     ecx, [esp + 0x10]
         lea     edx, [esp + 0x10]
         push    ecx
         push    edx
-        mov     word ptr [g_data_007af9a0], ax
+        mov     word ptr [g_mat3x3_007af9a0], ax
         call    Mat3x3VecMul6Bit_004b3590
         mov     eax, dword ptr [esp + 0x4c]
         add     esp, 8
         test    eax, eax
         je      short L_acm_skipRestore
         mov     eax, dword ptr [esp + 0x1c]
-        mov     dword ptr [g_data_007af994], ebp
-        mov     dword ptr [g_data_007af990], eax
-        mov     dword ptr [g_data_007af998], ebx
-        mov     dword ptr [g_data_007af99c], edi
-        mov     word ptr [g_data_007af9a0], si
+        mov     dword ptr [g_mat3x3_007af994], ebp
+        mov     dword ptr [g_vtxMat], eax
+        mov     dword ptr [g_mat3x3_007af998], ebx
+        mov     dword ptr [g_mat3x3_007af99c], edi
+        mov     word ptr [g_mat3x3_007af9a0], si
     L_acm_skipRestore:
         mov     ecx, dword ptr [esp + 0x18]
         mov     word ptr [g_data_004f623c], 0x1e0

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,7 +110,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004ccfa0 (360b crt) - _ioinit-style file-table extend / find.
  *   Enters crit-sec lock 0x12 (Lock_004c6f50(0x12)), then walks the
- *   array of 0x480-byte file-table blocks at g_data_00fa0de0. For each
+ *   array of 0x480-byte file-table blocks at g_arr_00fa0de0. For each
  *   block, scans 0x24-byte entries looking for one with bit-0 of [+4]
  *   set or count [+8] zero - lazy-initializes the InitializeCriticalSection
  *   slot at [esi+0xc] via IAT [0x4d215c] on first use, then locks via
@@ -135,10 +121,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   LoadArgPushCall_004c54b0(0x480), seeds entries with type=0xa, then
  *   calls CritSecLazyEnter_004cd2b0(idx*0x20). Exits crit-sec 0x12.
  */
-extern unsigned int g_data_004d213c;
-extern unsigned int g_data_004d2140;
-extern unsigned int g_data_004d215c;
-extern unsigned int g_data_00fa0de0;
+extern unsigned int g_iat_004d213c;
+extern unsigned int g_iat_004d2140;
+extern unsigned int g_iat_004d215c;
+extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_data_00fa0ee0;
 extern void CritSecLazyEnter_004cd2b0(void);
 extern void LoadArgPushCall_004c54b0(void);
@@ -159,7 +145,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         add     esp, 4
         mov     dword ptr [esp + 0x14], edi
         xor     ebx, ebx
-        mov     ebp, offset g_data_00fa0de0
+        mov     ebp, offset g_arr_00fa0de0
     L_fte_outer:
         mov     esi, dword ptr [ebp]
         test    esi, esi
@@ -181,7 +167,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         jne     short L_fte_relCrit
         lea     ecx, [esi + 0xc]
         push    ecx
-        call    dword ptr [g_data_004d215c]
+        call    dword ptr [g_iat_004d215c]
         inc     dword ptr [esi + 8]
     L_fte_relCrit:
         push    0x11
@@ -190,11 +176,11 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
     L_fte_initDone:
         lea     edi, [esi + 0xc]
         push    edi
-        call    dword ptr [g_data_004d2140]
+        call    dword ptr [g_iat_004d2140]
         test    byte ptr [esi + 4], 1
         je      short L_fte_foundFree
         push    edi
-        call    dword ptr [g_data_004d213c]
+        call    dword ptr [g_iat_004d213c]
     L_fte_advanceEntry:
         mov     edx, dword ptr [ebp]
         add     esi, 0x24
@@ -236,7 +222,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         lea     ecx, [eax + 0x480]
         add     ebx, 0x20
         cmp     eax, ecx
-        mov     dword ptr [edi*4 + g_data_00fa0de0], eax
+        mov     dword ptr [edi*4 + g_arr_00fa0de0], eax
         mov     dword ptr [g_data_00fa0ee0], ebx
         jae     short L_fte_postSeed
         mov     cl, 0xa
@@ -245,7 +231,7 @@ __declspec(naked) void FileTableExtendOrFind_004ccfa0(void) {
         mov     dword ptr [eax], 0xffffffff
         mov     byte ptr [eax + 5], cl
         mov     dword ptr [eax + 8], edx
-        mov     esi, dword ptr [edi*4 + g_data_00fa0de0]
+        mov     esi, dword ptr [edi*4 + g_arr_00fa0de0]
         add     eax, 0x24
         add     esi, 0x480
         cmp     eax, esi

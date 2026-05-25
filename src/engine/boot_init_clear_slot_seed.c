@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -125,7 +111,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x0042ee40 (370b game) - boot-init: clears slot 0x52ab10, seeds
  *   bookkeeping globals, and zero-fills a counted region.
  *   Calls BootInitGuardedCallChain_004265d0 first. On no-error: reads the
- *   slot index from g_data_0052ab10 into g_currentNodeIdx, calls
+ *   slot index from g_load_0052ab10 into g_currentNodeIdx, calls
  *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
  *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_data_00535e6c slot getting
  *   (0, 0, 0x10000, 0). Then sets globals: 0x535de0=0, 0x541dd8=0,
@@ -137,27 +123,23 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *
  *   Calls CopyGlobal_004ac1f0; on no-error pushes 2 onto
  *   TableWalkBoundedCmp_004bd890, sets byte 0x54371c=1, sets 0x54206c
- *   from g_data_00537f48, calls DownloadPlayerChar; on no-error sets
- *   0x542070=1 and 0x54206c from g_data_005380e0, calls DownloadPlayerChar
+ *   from g_dlNalt1, calls DownloadPlayerChar; on no-error sets
+ *   0x542070=1 and 0x54206c from g_dlNalt2, calls DownloadPlayerChar
  *   again; on no-error sets 0x542044 = &g_data_0050b214>>2 (packed_ptr),
  *   clears 0x54371c, calls LoadGeoAsset_Default; on no-error reloads
  *   &g_data_0050b214>>2 and calls LoadGeoAsset_Default a second time.
  */
 extern unsigned int g_data_0050b214;
 extern unsigned int g_data_0052aabc;
-extern unsigned int g_data_0052ab10;
+extern unsigned int g_load_0052ab10;
 extern unsigned int g_data_00535de0;
 extern unsigned int g_data_00535e6c;
-extern unsigned int g_data_00537f48;
-extern unsigned int g_data_005380e0;
+extern s32 g_dlNalt1;
+extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a170;
-extern unsigned int g_data_0053a1ac;
 extern unsigned int g_data_00541dd8;
-extern unsigned int g_framePauseFlag;
 extern unsigned int g_data_00541fbc;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_data_0054371c;
+extern u8 g_dlEnabledFlag;
 extern void BootInitGuardedCallChain_004265d0(void);
 extern void CopyGlobal_004ac1f0(void);
 extern void DownloadPlayerChar(void);
@@ -174,7 +156,7 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         xor     ebx, ebx
         cmp     eax, ebx
         jne     L_bic_done
-        mov     eax, dword ptr [g_data_0052ab10]
+        mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_currentNodeIdx], eax
         lea     esi, [eax*4]
         call    ZeroThreeFields_00404ed0
@@ -195,17 +177,17 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     dword ptr [g_data_00541dd8], ebx
         mov     dword ptr [g_data_0053a170], 2
         mov     dword ptr [g_walkCallback], ebx
-        mov     dword ptr [g_data_0053a1ac], eax
+        mov     dword ptr [g_xformLoopCounter], eax
     L_bic_zeroLoop:
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4], ecx
         mov     edx, dword ptr [g_currentNodeIdx]
-        mov     ecx, dword ptr [g_data_0053a1ac]
+        mov     ecx, dword ptr [g_xformLoopCounter]
         inc     edx
         dec     ecx
         mov     dword ptr [g_currentNodeIdx], edx
-        mov     dword ptr [g_data_0053a1ac], ecx
+        mov     dword ptr [g_xformLoopCounter], ecx
         jns     short L_bic_zeroLoop
         mov     dword ptr [g_data_0052aabc], eax
         mov     dword ptr [g_walkCallback], ebx
@@ -216,22 +198,22 @@ __declspec(naked) void BootInitClearSlotSeed_0042ee40(void) {
         mov     edi, dword ptr [g_eventQueueCurrent]
         push    2
         call    TableWalkBoundedCmp_004bd890
-        mov     eax, dword ptr [g_data_00537f48]
+        mov     eax, dword ptr [g_dlNalt1]
         add     esp, 4
-        mov     byte ptr [g_data_0054371c], 1
+        mov     byte ptr [g_dlEnabledFlag], 1
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_eventQueueCurrent], ebx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
-        mov     ecx, dword ptr [g_data_005380e0]
+        mov     ecx, dword ptr [g_dlNalt2]
         mov     dword ptr [g_eventQueueCurrent], 1
         mov     dword ptr [g_walkCallback], ecx
         call    DownloadPlayerChar
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_bic_done
         mov     edx, offset g_data_0050b214
-        mov     byte ptr [g_data_0054371c], bl
+        mov     byte ptr [g_dlEnabledFlag], bl
         shr     edx, 2
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_eventQueueCurrent], edi

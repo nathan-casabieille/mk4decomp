@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x004ce1f0 (35b)
  *   arg1 = [esp+4]; arg2 = [esp+0xc]; ecx = arg2 + arg1;

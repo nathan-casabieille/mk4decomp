@@ -39,16 +39,16 @@ void AppShutdown(void) {
  *   load two dword globals, then move 16-bit args at [esp+4],[esp+8],[esp+0xc]
  *   into 16-bit globals; flush the dwords back too.
  */
-extern unsigned int g_state_007af9bc;
-extern unsigned int g_state_007af98c;
-extern unsigned int g_state_007af9b8;
-extern unsigned int g_state_007af988;
+extern s16 g_vtxScreenX;
+extern s32 g_vtxOut_z;
+extern s16 g_vtxScreenP2X;
+extern s32 g_vtxOut2_z;
 extern unsigned short g_word_007af95c;
 extern unsigned short g_word_007af962;
 extern unsigned short g_word_007af968;
 void CopyArgs16ToGlobals_004b2ff0(unsigned short a, unsigned short b, unsigned short c) {
-    g_state_007af9b8 = g_state_007af9bc;
-    g_state_007af988 = g_state_007af98c;
+    g_vtxScreenP2X = g_vtxScreenX;
+    g_vtxOut2_z = g_vtxOut_z;
     g_word_007af95c = a;
     g_word_007af962 = b;
     g_word_007af968 = c;

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,7 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00542004;
+extern u32 g_dlMode;
 extern void DualScaledStoreConst_004a22c0(void);
 extern void ClearTwoCallSetStore_004a2270(void);
 extern void SixCallSeqPushImm_004a1d80(void);
@@ -131,28 +117,24 @@ extern void InstallSelfTableWalk_004200d0(void);
 
 /*
  * @addr 0x004a2610 (120b audio) - audio init two-mode setup:
- *   if g_x_00543590 == 1 use slot 0x53a408/0x53a3e0 else 0x537e88/
+ *   if g_gtModeFlag == 1 use slot 0x53a408/0x53a3e0 else 0x537e88/
  *   0x53a700; call DualScaledStoreConst, ClearTwoCallSetStore, set
- *   g_data_00542004=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
+ *   g_dlMode=1, call SixCallSeqPushImm; clear g_eventQueueWorkType;
  *   call Push16Call; if pause clear tail-jmp InstallSelfTableWalk_004200d0.
  */
-extern unsigned int g_active_0053a408;
-extern unsigned int g_data_0053a3e0;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_data_0053a700;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned char g_x_00543590;
+extern unsigned int g_state4_0053a3e0;
+extern unsigned int g_state4_0053a700;
 void AudioModeInit_004a2610(void) {
-    if (g_x_00543590 == 1) {
+    if (g_gtModeFlag == 1) {
         g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_data_0053a3e0 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_state4_0053a3e0 >> 2;
     } else {
         g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_data_0053a700 >> 2;
+        g_xformEntityIdx = (unsigned int)&g_state4_0053a700 >> 2;
     }
     DualScaledStoreConst_004a22c0();
     ClearTwoCallSetStore_004a2270();
-    g_data_00542004 = 1;
+    g_dlMode = 1;
     SixCallSeqPushImm_004a1d80();
     g_eventQueueWorkType = 0;
     Push16Call_00489f50();

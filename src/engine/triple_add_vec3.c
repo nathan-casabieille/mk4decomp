@@ -6,10 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_pendingNodeType;
-extern const int g_sinTable[];
 extern void Mul10Tail_00404af0(void);
 
 /* @addr 0x00425130 (61b)

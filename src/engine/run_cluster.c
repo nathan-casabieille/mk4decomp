@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,18 +108,7 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_00537e94;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_acc_00542078;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_eventQueueChild;
-extern unsigned int g_xformScratch2088;
-extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_x_00537e94_v2;
 extern void CallDualStoreXorBit_004285e0(void);
 extern void DualHelperCallStoreCjFields_0048ff40(void);
 extern void DualMul10AccCj_00491230(void);
@@ -181,7 +156,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
         /* === Helper 2 (0x47d740): ev0x14 trigger === */
         mov      eax, 2
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00537e94], eax
+        mov      dword ptr [g_x_00537e94_v2], eax
         call     CallDualStoreXorBit_004285e0
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
@@ -331,7 +306,7 @@ __declspec(naked) void RunCluster_0047d6e0(void)
     L_d954:
         mov      eax, 3
         mov      dword ptr [g_walkCallback], eax
-        mov      dword ptr [g_data_00537e94], eax
+        mov      dword ptr [g_x_00537e94_v2], eax
         mov      dword ptr [esi + 8], OFFSET L_d850
         mov      dword ptr [esi + 0x84], edi
         mov      dword ptr [g_pendingNodeType], edi

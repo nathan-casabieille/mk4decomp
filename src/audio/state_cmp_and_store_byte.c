@@ -6,18 +6,10 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x004a98f0 (70b)
- *   load g_audioBankSel_00537f94; cmp 1; if !=, load g_state_00537f48 → walk;
- *   else load walk; cmp 2; jne skip; load g_state_005380e0 → walk;
+ *   load g_audioBankSel_00537f94; cmp 1; if !=, load g_dlNalt1 → walk;
+ *   else load walk; cmp 2; jne skip; load g_dlNalt2 → walk;
  *   if walk==7 set byte g_byte_0054372c=dl; if walk==6 set g_byte_00543724=dl.
  */
 extern unsigned int g_audioBankSel_00537f94;

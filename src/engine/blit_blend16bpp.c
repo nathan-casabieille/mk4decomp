@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,15 +110,14 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* extern void DecodeTableAllocaCall_004b4450(void); -- defined elsewhere with diff sig */
 extern void BlitBlend16bpp_004c05e0(void);
-extern unsigned int g_data_00f6d050;
+extern u32 g_drawQueueBuckets[];
 extern unsigned int g_data_00f6d052;
 extern unsigned int g_data_00f6e050;
 extern unsigned int g_data_00f6e058;
 extern unsigned int g_data_00f6e068;
 extern unsigned int g_data_00f70fbc;
-extern unsigned int g_data_00f70ff8;
 extern unsigned int g_data_00f71322;
-extern unsigned int g_data_00f85b40;
+extern u32 g_drawQueueSize;
 
 extern unsigned int g_data_00f70f7c;
 extern unsigned int g_data_00f70f7d;
@@ -150,8 +135,8 @@ extern unsigned int g_data_00f70fb8;
 extern unsigned int g_data_00f70fc0;
 extern unsigned int g_data_00f85b34;
 extern unsigned int g_data_00f85b4c;
-extern unsigned int g_data_00f85b50;
-extern unsigned int g_data_00f85b54;
+extern unsigned int g_viewportX;
+extern unsigned int g_viewportY;
 extern void DecodeTableAllocaCall_004b4450(void);
 extern void GlideTriBatchEmit_004adca0(void);
 extern void GlideTriColorFlush_004b46f0(void);
@@ -175,7 +160,7 @@ __declspec(naked) void FlushDrawQueue(void)
         push     ebp
         mov      al, 0xff
         push     esi
-        mov      esi, dword ptr [g_data_00f85b40]
+        mov      esi, dword ptr [g_drawQueueSize]
         push     edi
         xor      ebx, ebx
         mov      byte ptr [esp + 0x11], al
@@ -185,7 +170,7 @@ __declspec(naked) void FlushDrawQueue(void)
         mov      byte ptr [esp + 0x17], al
         mov      ecx, 0x400
         xor      eax, eax
-        mov      edi, OFFSET g_data_00f6d050
+        mov      edi, OFFSET g_drawQueueBuckets
         cmp      esi, ebx
         mov      byte ptr [esp + 0x10], bl
         mov      byte ptr [esp + 0x13], 0x80
@@ -198,7 +183,7 @@ __declspec(naked) void FlushDrawQueue(void)
         xor      eax, eax
         mov      ax, word ptr [ecx]
         add      ecx, 0x1c
-        inc      word ptr [eax*2 + g_data_00f6d050]
+        inc      word ptr [eax*2 + g_drawQueueBuckets]
         dec      edx
         jne      L_f4ab
     L_f4be:
@@ -222,8 +207,8 @@ __declspec(naked) void FlushDrawQueue(void)
         lea      esi, [ecx - 0x12]
         mov      ax, word ptr [ecx]
         sub      ecx, 0x1c
-        dec      word ptr [eax*2 + g_data_00f6d050]
-        mov      ax, word ptr [eax*2 + g_data_00f6d050]
+        dec      word ptr [eax*2 + g_drawQueueBuckets]
+        mov      ax, word ptr [eax*2 + g_drawQueueBuckets]
         and      eax, 0xffff
         dec      edx
         mov      dword ptr [eax*4 + g_data_00f6e068], esi
@@ -249,7 +234,7 @@ __declspec(naked) void FlushDrawQueue(void)
         inc      esi
         cmp      edi, 0x200000
         jl       L_f528
-        mov      ecx, dword ptr [g_data_00f85b40]
+        mov      ecx, dword ptr [g_drawQueueSize]
         lea      eax, [ecx - 1]
         cmp      eax, ebx
         jl       L_033d
@@ -527,8 +512,8 @@ __declspec(naked) void FlushDrawQueue(void)
         dec      eax
         mov      dword ptr [esp + 0x14], eax
         jne      L_f573
-        mov      dword ptr [g_data_00f85b50], ebx
-        mov      dword ptr [g_data_00f85b54], ebx
+        mov      dword ptr [g_viewportX], ebx
+        mov      dword ptr [g_viewportY], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -556,7 +541,7 @@ __declspec(naked) void FlushDrawQueue(void)
         inc      esi
         cmp      edi, 0x200000
         jl       L_f8bf
-        mov      ecx, dword ptr [g_data_00f85b40]
+        mov      ecx, dword ptr [g_drawQueueSize]
         lea      eax, [ecx - 1]
         cmp      eax, ebx
         jl       L_033d
@@ -834,8 +819,8 @@ __declspec(naked) void FlushDrawQueue(void)
         dec      eax
         mov      dword ptr [esp + 0x10], eax
         jne      L_f90a
-        mov      dword ptr [g_data_00f85b50], ebx
-        mov      dword ptr [g_data_00f85b54], ebx
+        mov      dword ptr [g_viewportX], ebx
+        mov      dword ptr [g_viewportY], ebx
         pop      edi
         pop      esi
         pop      ebp
@@ -846,7 +831,7 @@ __declspec(naked) void FlushDrawQueue(void)
         call     Renderer_GetMode
         cmp      eax, 5
         jne      L_ff9e
-        mov      eax, dword ptr [g_data_00f85b40]
+        mov      eax, dword ptr [g_drawQueueSize]
         dec      eax
         cmp      eax, ebx
         jl       L_033d
@@ -876,7 +861,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      eax, 5
         add      esi, edi
         and      eax, 0x1f
-        mov      al, byte ptr [esi + eax + g_data_00f70ff8]
+        mov      al, byte ptr [esi + eax + g_div3Table]
         shl      al, 3
         mov      byte ptr [g_data_00f70f7c], al
         mov      al, byte ptr [ecx + 0x1a]
@@ -925,7 +910,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 5
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7e], cl
         xor      ecx, ecx
@@ -938,7 +923,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 0xa
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7d], cl
         jmp      L_fe4f
@@ -974,7 +959,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 5
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7d], cl
         xor      ecx, ecx
@@ -987,7 +972,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 0xa
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7e], cl
     L_fe4f:
@@ -1097,7 +1082,7 @@ __declspec(naked) void FlushDrawQueue(void)
         jne      L_fc70
         jmp      L_033b
     L_ff9e:
-        mov      edx, dword ptr [g_data_00f85b40]
+        mov      edx, dword ptr [g_drawQueueSize]
         lea      eax, [edx - 1]
         cmp      eax, ebx
         jl       L_033d
@@ -1127,7 +1112,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      eax, 5
         add      esi, edi
         and      eax, 0x1f
-        mov      al, byte ptr [esi + eax + g_data_00f70ff8]
+        mov      al, byte ptr [esi + eax + g_div3Table]
         shl      al, 3
         mov      byte ptr [g_data_00f70f7c], al
         mov      al, byte ptr [ecx + 0x1a]
@@ -1176,7 +1161,7 @@ __declspec(naked) void FlushDrawQueue(void)
         and      ebp, 0x1f
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7e], cl
         xor      ecx, ecx
@@ -1189,7 +1174,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 5
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7d], cl
         jmp      L_019e
@@ -1225,7 +1210,7 @@ __declspec(naked) void FlushDrawQueue(void)
         and      ebp, 0x1f
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7d], cl
         xor      ecx, ecx
@@ -1238,7 +1223,7 @@ __declspec(naked) void FlushDrawQueue(void)
         shr      ecx, 5
         add      ebx, ebp
         and      ecx, 0x1f
-        mov      cl, byte ptr [ebx + ecx + g_data_00f70ff8]
+        mov      cl, byte ptr [ebx + ecx + g_div3Table]
         shl      cl, 3
         mov      byte ptr [g_data_00f70f7e], cl
     L_019e:
@@ -1372,8 +1357,8 @@ __declspec(naked) void FlushDrawQueue(void)
     L_033d:
         pop      edi
         pop      esi
-        mov      dword ptr [g_data_00f85b50], ebx
-        mov      dword ptr [g_data_00f85b54], ebx
+        mov      dword ptr [g_viewportX], ebx
+        mov      dword ptr [g_viewportY], ebx
         pop      ebp
         pop      ebx
         add      esp, 0x10

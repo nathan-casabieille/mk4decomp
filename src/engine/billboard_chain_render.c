@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,28 +109,26 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_data_004f6238;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95a;
-extern unsigned int g_data_007af95c;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af960;
-extern unsigned int g_data_007af962;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af966;
-extern unsigned int g_data_007af968;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9a4;
-extern unsigned int g_data_007af9a8;
-extern unsigned int g_data_007af9ac;
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b8;
-extern unsigned int g_data_007af9bc;
+extern u32 g_inLoopStep;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn2_x;
+extern unsigned int g_triStripX0;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn1_z;
+extern unsigned int g_triStripX1;
+extern s16 g_vtxIn2_y;
+extern s16 g_vtxIn2_z;
+extern unsigned int g_triStripX2;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxTransX;
+extern s32 g_vtxTransY;
+extern s32 g_vtxTransZ;
+extern s32 g_vtxValid;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP2X;
+extern s16 g_vtxScreenX;
 extern unsigned int g_data_00ab4398;
 extern unsigned int g_data_00ab439c;
 extern unsigned int g_data_00ab43a0;
@@ -155,7 +139,7 @@ extern void ProjectTwoVertices(void);
 __declspec(naked) void BillboardChainRender_004bb030(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_007af92c]
+        mov      eax, dword ptr [g_inLoopStep]
         sub      esp, 0x20
         push     ebx
         xor      ebx, ebx
@@ -168,15 +152,15 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         mov      edi, dword ptr [eax*4 + 0x2c]
         mov      eax, dword ptr [g_data_00ab43a0]
         sar      eax, 7
-        mov      dword ptr [g_data_007af9ac], eax
+        mov      dword ptr [g_vtxTransZ], eax
         mov      eax, dword ptr [g_data_00ab4e60]
         sar      ecx, 0x10
         sar      edx, 0x10
         cmp      eax, 0x10
         push     esi
         mov      dword ptr [g_currentNodeIdx], edi
-        mov      dword ptr [g_data_007af9a4], ecx
-        mov      dword ptr [g_data_007af9a8], edx
+        mov      dword ptr [g_vtxTransX], ecx
+        mov      dword ptr [g_vtxTransY], edx
         jl       L_b098
         cdq
         and      edx, 7
@@ -239,15 +223,15 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         mov      dx, word ptr [esi + 4]
         add      dx, cx
         add      di, ax
-        mov      word ptr [g_data_007af958], cx
-        mov      word ptr [g_data_007af95e], ax
-        mov      word ptr [g_data_007af964], bx
-        mov      word ptr [g_data_007af95a], dx
-        mov      word ptr [g_data_007af960], ax
-        mov      word ptr [g_data_007af966], bx
-        mov      word ptr [g_data_007af95c], dx
-        mov      word ptr [g_data_007af962], di
-        mov      word ptr [g_data_007af968], bx
+        mov      word ptr [g_vtxIn_x], cx
+        mov      word ptr [g_vtxIn1_y], ax
+        mov      word ptr [g_vtxIn2_y], bx
+        mov      word ptr [g_vtxIn2_x], dx
+        mov      word ptr [g_vtxIn1_z], ax
+        mov      word ptr [g_vtxIn2_z], bx
+        mov      word ptr [g_triStripX0], dx
+        mov      word ptr [g_triStripX1], di
+        mov      word ptr [g_triStripX2], bx
         call     ProjectTwoVertices
         mov      dl, byte ptr [esi + 0xc]
         mov      byte ptr [esp + 0x18], dl
@@ -258,11 +242,11 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         mov      byte ptr [esp + 0x1c], cl
         mov      dl, byte ptr [esi + 0xf]
         mov      al, byte ptr [esi + 0xd]
-        mov      ecx, dword ptr [g_data_007af9b8]
+        mov      ecx, dword ptr [g_vtxScreenP2X]
         add      dl, al
-        mov      eax, dword ptr [g_data_007af9b4]
+        mov      eax, dword ptr [g_triStripRingA]
         mov      dword ptr [esp + 0x10], ecx
-        mov      cl, byte ptr [g_data_007af9b0]
+        mov      cl, byte ptr [g_vtxValid]
         mov      dword ptr [esp + 0xc], eax
         mov      eax, dword ptr [esp + 0x26]
         and      ecx, 1
@@ -270,15 +254,15 @@ __declspec(naked) void BillboardChainRender_004bb030(void)
         shl      ecx, 0xa
         or       eax, ecx
         mov      byte ptr [esp + 0x1d], dl
-        mov      edx, dword ptr [g_data_007af9bc]
+        mov      edx, dword ptr [g_vtxScreenX]
         mov      word ptr [esp + 0x26], ax
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         mov      dword ptr [esp + 0x14], edx
         cmp      eax, ebx
         jle      L_b22d
-        cmp      dword ptr [g_data_007af988], ebx
+        cmp      dword ptr [g_vtxOut2_z], ebx
         jle      L_b22d
-        cmp      dword ptr [g_data_007af98c], ebx
+        cmp      dword ptr [g_vtxOut_z], ebx
         jle      L_b22d
         lea      edx, [esp + 0xc]
         push     edx

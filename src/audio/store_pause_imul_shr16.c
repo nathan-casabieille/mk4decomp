@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueEnd;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004ab630 (53b)
  *   load g_walkCallback; store to g_state_00538150;

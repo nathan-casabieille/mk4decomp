@@ -6,11 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x004c5740 (65b): __aullshl 64-bit shift-left + fnclex init helper
  *   joined with int3 + nop padding. Whole stub is 65b.

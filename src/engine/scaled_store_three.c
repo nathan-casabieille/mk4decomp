@@ -19,7 +19,6 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax + 0x0c], ecx
  *   ret
  */
-extern u32 g_eventQueueWorkType;
 void ScaledStoreThree_0049d310(void) {
     unsigned char *base = (unsigned char *)(g_scaledInit_00542044 * 4);
     unsigned int v;

@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00421be0 (61b)
  *   load g_state_0053a718; set g_eventQueueChild = 0x28;

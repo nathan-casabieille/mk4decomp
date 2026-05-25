@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,35 +109,33 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_x_00541dd4;
-extern unsigned int g_x_00537f48;
-extern unsigned char g_x_004d50a4;
-extern unsigned char g_x_004d50a8;
-extern unsigned char g_x_00543724;
+extern s32 g_dlNalt1;
+extern unsigned char g_byte_00543724;
 extern unsigned char g_x_00543728;
-extern unsigned char g_x_0054372c;
-extern unsigned char g_x_00543730;
+extern unsigned char g_byte_0054372c;
+extern unsigned char g_byte_00543730;
 extern void AudioInstallSelfShiftedChainInit_004a0210(void);
 
 /*
  * @addr 0x004a0190 (120b audio) - audio state remap-then-tail-jmp:
- *   stash g_acc_00542078 into g_x_00537f48; if guard at 0x541dd4 set
+ *   stash g_acc_00542078 into g_dlNalt1; if guard at 0x541dd4 set
  *   and certain bit-flags are clear, possibly remap eax==6 to 0xf
  *   (and bump 0x543728); possibly remap eax==7 to 0x11; then tail-
  *   jmp AudioInstallSelfShiftedChainInit_004a0210.
  */
 void AudioStateRemap_004a0190(void) {
     unsigned int v = g_acc_00542078;
-    g_x_00537f48 = v;
+    g_dlNalt1 = v;
     if (g_x_00541dd4 != 0 &&
-        (g_x_004d50a4 & 0x20) == 0 &&
-        (g_x_004d50a8 & 0x04) == 0) {
-        if (g_x_00543724 != 0 && v == 6 && g_x_00543728 == 0) {
+        (g_fightTableC0 & 0x20) == 0 &&
+        (g_fightTableC1 & 0x04) == 0) {
+        if (g_byte_00543724 != 0 && v == 6 && g_x_00543728 == 0) {
             v = 0xf;
             g_x_00543728 = 1;
-            g_x_00537f48 = v;
+            g_dlNalt1 = v;
         }
-        if (g_x_0054372c != 0 && g_x_00543730 != 0 && v == 7) {
-            g_x_00537f48 = 0x11;
+        if (g_byte_0054372c != 0 && g_byte_00543730 != 0 && v == 7) {
+            g_dlNalt1 = 0x11;
         }
     }
     AudioInstallSelfShiftedChainInit_004a0210();

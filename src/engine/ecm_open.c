@@ -18,7 +18,6 @@ extern const char $SG_rb[];   /* "rb" - shared with ValidateInstall */
 /*
  * @addr 0x004b06f0
  *
-extern unsigned int g_ecmDSBuffer;
 extern void ECM_PlayThread(void);
 
  * Naked + __asm: SEH-style stack-built struct setup, FP volume

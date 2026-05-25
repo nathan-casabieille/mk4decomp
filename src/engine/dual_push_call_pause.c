@@ -6,8 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00482eb0 (36b): push F1-arg + call + pause + push F2-arg + call.
  * Entry A of the original 53-byte packed block; the 5-byte tail-jmp

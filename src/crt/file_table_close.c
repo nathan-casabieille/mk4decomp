@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,12 +109,12 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
-extern unsigned int g_data_004d209c;
+extern unsigned int g_iat_004d209c;
 extern unsigned int g_data_004d20f0;
-extern unsigned int g_data_00f9f838;
+extern unsigned int g_byte_00f9f838;
 extern unsigned int g_data_00f9fdb4;
 extern unsigned int g_data_00fa0dc0;
-extern unsigned int g_data_00fa0de0;
+extern unsigned int g_arr_00fa0de0;
 extern unsigned int g_data_00fa0ee0;
 extern void CRTHandleLookup_004cd260(void);
 extern void Calloc_004c6110(void);
@@ -151,7 +137,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         jae     short L_ftc_failEBADF
         mov     eax, edi
         sar     eax, 5
-        lea     ebp, [eax*4 + g_data_00fa0de0]
+        lea     ebp, [eax*4 + g_arr_00fa0de0]
         mov     eax, edi
         and     eax, 0x1f
         mov     ecx, dword ptr [ebp]
@@ -172,7 +158,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         call    dword ptr [g_data_004d20f0]
         test    eax, eax
         jne     short L_ftc_clearErr
-        call    dword ptr [g_data_004d209c]
+        call    dword ptr [g_iat_004d209c]
         mov     esi, eax
         jmp     short L_ftc_checkErr
     L_ftc_clearErr:
@@ -258,7 +244,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         mov     eax, ecx
         sar     esi, 5
         and     eax, 0x1f
-        mov     esi, dword ptr [esi*4 + g_data_00fa0de0]
+        mov     esi, dword ptr [esi*4 + g_arr_00fa0de0]
         lea     eax, [eax + eax*8]
         mov     eax, dword ptr [esi + eax*4]
         cmp     eax, -1
@@ -281,7 +267,7 @@ __declspec(naked) void FileTableClose_004cb700(void) {
         /* entry 3 (offset 0x160) */
     L_ftc_entry3:
         call    PushConstCall_004c6a10
-        mov     al, byte ptr [g_data_00f9f838]
+        mov     al, byte ptr [g_byte_00f9f838]
         test    al, al
         je      short L_ftc_e3End
         jmp     StreamCleanupLoop_004ce0b0

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -125,11 +111,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 /* @addr 0x00421380 (378b game) - 2-entry packed phase install + 6-call chain.
  *   Entry 1 (offset 0, 277b): phase-state install.
  *     Phase 1+: SwapOrPassSet_0048fbf0; on no-error compares
- *       g_walkCallback with g_data_004f3608. If equal, tail-call
+ *       g_walkCallback with g_loaded_004f3608. If equal, tail-call
  *       PendingMatch_0042d240. Else bumps g_data_00537f30 by 1, calls
  *       CallPauseClear3CallTriple_00428030, then chains
  *       ScenegraphWalk_0041f7d0 + PendingMatch_00420300.
- *     Phase 0: g_data_0052d724=1, reads g_data_0052ab40 and tests
+ *     Phase 0: g_data_0052d724=1, reads g_or_0052ab40 and tests
  *       bit 3; if clear calls TwinMStackPushScaledChain_00422110. Either way installs Self
  *       at body with slot[+0x84]=1, packs (Self + 0x01000000) at the
  *       bumped scaled slot, calls RoundEndFsm_0042b2f0, arms 0x541e6c=1.
@@ -140,14 +126,10 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     gated by 0x541e6c. On full success, tail-jmps
  *     ScaledInitWithCounterAndType_004314f0.
  */
-extern unsigned int g_data_004f3608;
-extern unsigned int g_data_0052ab40;
+extern unsigned int g_loaded_004f3608;
+extern unsigned int g_or_0052ab40;
 extern unsigned int g_data_0052d724;
 extern unsigned int g_data_00537f30;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_xformScratch94;
 extern void CallPauseClear3CallTriple_00428030(void);
 extern void CopyJmp_00406ba0(void);
 extern void MStackPushSet0001_00490260(void);
@@ -176,7 +158,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         test    eax, eax
         jne     L_pis2_done
         mov     ecx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_data_004f3608]
+        mov     eax, dword ptr [g_loaded_004f3608]
         cmp     ecx, eax
         jne     short L_pis2_advance
         call    PendingMatch_0042d240
@@ -199,7 +181,7 @@ __declspec(naked) void Phase3InstallSelfChain_00421380(void) {
         pop     esi
         ret
     L_pis2_phase0:
-        mov     eax, dword ptr [g_data_0052ab40]
+        mov     eax, dword ptr [g_or_0052ab40]
         mov     dword ptr [g_data_0052d724], 1
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8

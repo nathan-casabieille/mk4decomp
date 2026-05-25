@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,12 +110,8 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void PadPollDispatcher_004b5650(int player);
 /* extern void Helper_JoyButtonInit(int key); -- defined elsewhere with diff sig */
-extern unsigned int g_data_007af918;
-extern unsigned int g_data_007af920;
-extern unsigned int g_data_004d50a4;
-extern unsigned int g_data_004d50a8;
+extern u32 g_appInitFlag1;
 extern unsigned int g_data_004d50ac;
-extern unsigned int g_data_004d50b0;
 extern unsigned int g_data_004f4e98;
 extern unsigned int g_data_004f4dc8;
 extern unsigned int g_data_004f4dcc;
@@ -152,23 +134,23 @@ extern unsigned int g_data_0054336c;
 extern unsigned int g_data_00543370;
 extern unsigned int g_data_0054357c;
 
-extern unsigned int g_data_004ffd7c;
+extern u32 g_demoModeFlag;
 extern void Helper_JoyButtonInit(void);
 extern void InputBitMaskDispatcher_004b5470(void);
 
 __declspec(naked) void GameStateMachineMaybeRebuild(void)
 {
     __asm {
-        mov     eax, dword ptr [g_data_004ffd7c]
+        mov     eax, dword ptr [g_demoModeFlag]
         push    esi
         xor     esi, esi
         cmp     eax, esi
-        mov     dword ptr [g_data_004d50b0], esi
-        mov     dword ptr [g_data_004d50a4], esi
-        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_fightTableC2], esi
+        mov     dword ptr [g_fightTableC0], esi
+        mov     dword ptr [g_fightTableC1], esi
         mov     dword ptr [g_data_004d50ac], esi
         je      L_idep_after_clear_masks
-        cmp     dword ptr [g_data_007af918], esi
+        cmp     dword ptr [g_gameStateResult], esi
         jne     L_idep_after_clear_masks
         push    esi
         call    PadPollDispatcher_004b5650
@@ -185,11 +167,11 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         add     esp, 4
         cmp     eax, esi
         je      L_idep_pause_gate2
-        cmp     dword ptr [g_data_004d50b0], esi
+        cmp     dword ptr [g_fightTableC2], esi
         jne     L_idep_clear_loop
-        cmp     dword ptr [g_data_004d50a4], esi
+        cmp     dword ptr [g_fightTableC0], esi
         jne     L_idep_clear_loop
-        cmp     dword ptr [g_data_004d50a8], esi
+        cmp     dword ptr [g_fightTableC1], esi
         jne     L_idep_clear_loop
         cmp     dword ptr [g_data_004d50ac], esi
         jne     L_idep_clear_loop
@@ -210,12 +192,12 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         jne     L_idep_clear_loop
         mov     dword ptr [g_data_004f4e98], esi
     L_idep_clear_loop:
-        mov     dword ptr [g_data_004d50b0], esi
-        mov     dword ptr [g_data_004d50a4], esi
-        mov     dword ptr [g_data_004d50a8], esi
+        mov     dword ptr [g_fightTableC2], esi
+        mov     dword ptr [g_fightTableC0], esi
+        mov     dword ptr [g_fightTableC1], esi
         mov     dword ptr [g_data_004d50ac], esi
     L_idep_pause_gate2:
-        cmp     dword ptr [g_data_007af920], esi
+        cmp     dword ptr [g_appInitFlag1], esi
         je      L_idep_after_clear_masks
         mov     eax, dword ptr [g_data_004f4dec]
         mov     ecx, dword ptr [g_data_004f4de8]
@@ -267,18 +249,18 @@ __declspec(naked) void GameStateMachineMaybeRebuild(void)
         and     dword ptr [eax], edx
     L_idep_skip4:
         mov     esi, dword ptr [g_data_004d50ac]
-        mov     eax, dword ptr [g_data_004d50b0]
-        mov     ecx, dword ptr [g_data_004d50a4]
-        mov     edx, dword ptr [g_data_004d50a8]
+        mov     eax, dword ptr [g_fightTableC2]
+        mov     ecx, dword ptr [g_fightTableC0]
+        mov     edx, dword ptr [g_fightTableC1]
         not     esi
         not     eax
         not     ecx
         not     edx
         mov     dword ptr [g_data_004d50ac], esi
         mov     dword ptr [g_data_00543368], esi
-        mov     dword ptr [g_data_004d50b0], eax
-        mov     dword ptr [g_data_004d50a4], ecx
-        mov     dword ptr [g_data_004d50a8], edx
+        mov     dword ptr [g_fightTableC2], eax
+        mov     dword ptr [g_fightTableC0], ecx
+        mov     dword ptr [g_fightTableC1], edx
         mov     dword ptr [g_data_0054357c], eax
         mov     dword ptr [g_data_0054336c], ecx
         mov     dword ptr [g_data_00543370], edx

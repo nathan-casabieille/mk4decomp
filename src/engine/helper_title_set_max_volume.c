@@ -4,18 +4,18 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x004c3eb0 (60b)
- *   if g_state_00f9efcc != 0:
+ *   if g_dsoundPrimary != 0:
  *     bl = clamp(arg, 0..0x64); ecx = sbyte(bl); eax = (ecx*16 + ecx)*3 = 51*ecx;
  *     ecx = (short)g_table_00f85b60[eax*8]; call vtable[edx, +0x3c](edx, ecx);
  *     g_state_00f9efec = bl.
  */
-extern unsigned int *g_state_00f9efcc;
+extern void * g_dsoundPrimary;
 extern unsigned char g_byte_00f9efec;
 extern short g_table_00f85b60[];
 
 __declspec(naked) void Helper_TitleSetMaxVolume(void) {
     __asm {
-        mov     edx, dword ptr [g_state_00f9efcc]
+        mov     edx, dword ptr [g_dsoundPrimary]
         test    edx, edx
         _emit   74h
         _emit   31h

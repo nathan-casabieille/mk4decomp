@@ -14,12 +14,12 @@
  *   [g_data_00ab42d0*8 + 0x4f4fd4] (entry-type tag), subtracts 0x11 and
  *   dispatches: type 0x11 (eax==0) → call Thunk_004c48b0; type 0x12 →
  *   fallthrough; type 0x13 → AppInit_Misc8, and on
- *   g_data_004ffd7c non-zero transition to state 0x45. Tail-calls
+ *   g_demoModeFlag non-zero transition to state 0x45. Tail-calls
  *   DrawMenu(0x4f4fd0, g_data_00ab42d0) and returns the current state.
  */
 extern unsigned int g_data_004f4fd0;
 extern unsigned int g_data_004f4fd4;
-extern unsigned int g_data_004ffd7c;
+extern u32 g_demoModeFlag;
 extern unsigned int g_data_00ab42d0;
 extern unsigned int g_data_00ab431c;
 extern unsigned int g_data_00ab4388;
@@ -114,7 +114,7 @@ __declspec(naked) void Helper_GSM_Sub_Other2(void) {
         test    bl, 0x10
         je      short L_mps_drawTail
         call    AppInit_Misc8
-        mov     eax, dword ptr [g_data_004ffd7c]
+        mov     eax, dword ptr [g_demoModeFlag]
         test    eax, eax
     L_mps_type11_check:
         je      short L_mps_drawTail

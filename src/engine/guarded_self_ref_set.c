@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x0048d070 (80b)
  *   eax = g_baseSel * 4; clear [eax+0x84]; if g_fightGroupHead ==
@@ -19,8 +13,6 @@ extern packed_ptr g_fightGroupHead;
  *   pendingNodeType = 0xa; framePauseFlag = 1; ret.
  */
 extern unsigned int g_baseSel_00542060;
-extern unsigned int g_player1NodeIdx;
-extern unsigned int g_player2NodeIdx;
 extern void GuardedSelfRefSet_0048d070(void);
 void GuardedSelfRefSet_0048d070(void) {
     unsigned char *base = (unsigned char *)(g_baseSel_00542060 * 4);

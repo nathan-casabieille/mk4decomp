@@ -6,15 +6,12 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueEnd;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004a1790 (54b)
  *   load fightGroupHead; set g_eventQueueWorkType=0x01020000;
  *   set [eax*4 + 0x30]=0x25b; reload fightGroupHead → ecx;
  *   mov eax,0xfffb0000; store walk and [ecx*4 + 0x6c]=eax; jmp T.
  */
-extern u32 g_eventQueueWorkType;
 extern void AudioInstall3StateSubXform_004a17d0(void);
 void SetWorkType02CountFFB_004a1790(void) {
     g_eventQueueWorkType = 0x01020000;

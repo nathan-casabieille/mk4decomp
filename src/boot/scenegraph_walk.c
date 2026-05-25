@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0041f7d0 (61b)
  *   walk a fixed-stride scenegraph chain from 0x0053e368 to 0x00541d68 step 0xe8;
@@ -14,10 +13,9 @@ extern packed_ptr g_xformEntityIdx;
  *   and call F if it differs from g_baseSel_00542060.
  */
 extern void NodeUnlink_0041f710(void *p);
-extern unsigned int g_data_0053e368;
 extern unsigned int g_data_00541d68;
 void ScenegraphWalk_0041f7d0(void) {
-    unsigned char *p = (unsigned char *)&g_data_0053e368;
+    unsigned char *p = (unsigned char *)&g_nodeSlotsArea;
     do {
         unsigned int v;
         if (*(unsigned int *)(p + 0xd8) == 0) goto advance;

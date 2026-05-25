@@ -12,9 +12,9 @@
 extern unsigned int g_data_004f47a8;
 extern unsigned int g_data_0058c858;
 extern unsigned int g_data_0058c85c;
-extern unsigned int g_data_0058c860;
-extern unsigned int g_data_0058c878;
-extern unsigned int g_data_0058c87c;
+extern unsigned int g_dsmi_b70_main;
+extern unsigned int g_dsmi_b70_ret;
+extern unsigned int g_960_iface;
 extern unsigned int g_iat_004d219c;
 extern unsigned int g_iat_004d21a4;
 extern unsigned int g_iat_004d21ac;
@@ -41,17 +41,17 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         push    0
         call    dword ptr [g_iat_004d219c]
         call    DialogProbeDispatch_004afe40
-        mov     eax, dword ptr [g_data_0058c860]
+        mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
         jz      short L_dms2_skipPair
-        mov     edx, dword ptr [g_data_0058c87c]
+        mov     edx, dword ptr [g_960_iface]
         mov     ecx, [eax]
         push    0x55
         push    edx
         push    eax
         call    dword ptr [ecx + 0x50]
-        mov     dword ptr [g_data_0058c878], eax
-        mov     eax, dword ptr [g_data_0058c860]
+        mov     dword ptr [g_dsmi_b70_ret], eax
+        mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
         jz      short L_dms2_skipPair
         mov     ecx, [eax]
@@ -60,14 +60,14 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         push    0x140
         push    eax
         call    dword ptr [ecx + 0x54]
-        mov     dword ptr [g_data_0058c878], eax
+        mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_skipPair:
         call    DialogProbeDispatch_004afe40
         mov     ecx, 0x1b
         xor     eax, eax
         lea     edi, [esp + 4]
         rep     stosd
-        mov     eax, dword ptr [g_data_0058c860]
+        mov     eax, dword ptr [g_dsmi_b70_main]
         mov     dword ptr [esp + 4], 0x6c
         test    eax, eax
         jz      short L_dms2_validate
@@ -76,7 +76,7 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         push    ecx
         push    eax
         call    dword ptr [edx + 0x30]
-        mov     dword ptr [g_data_0058c878], eax
+        mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_validate:
         cmp     dword ptr [esp + 0x10], 0x140
         jne     short L_dms2_fail
@@ -88,23 +88,23 @@ __declspec(naked) void DDraw3_CreateSurface(void) {
         add     esp, 0x6c
         ret
     L_dms2_release:
-        mov     eax, dword ptr [g_data_0058c860]
+        mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
         jz      short L_dms2_restoreCursor
         mov     edx, [eax]
         push    eax
         call    dword ptr [edx + 0x4c]
-        mov     dword ptr [g_data_0058c878], eax
-        mov     eax, dword ptr [g_data_0058c860]
+        mov     dword ptr [g_dsmi_b70_ret], eax
+        mov     eax, dword ptr [g_dsmi_b70_main]
         test    eax, eax
         jz      short L_dms2_restoreCursor
-        mov     edx, dword ptr [g_data_0058c87c]
+        mov     edx, dword ptr [g_960_iface]
         mov     ecx, [eax]
         push    0xc
         push    edx
         push    eax
         call    dword ptr [ecx + 0x50]
-        mov     dword ptr [g_data_0058c878], eax
+        mov     dword ptr [g_dsmi_b70_ret], eax
     L_dms2_restoreCursor:
         mov     eax, dword ptr [g_data_0058c85c]
         mov     ecx, dword ptr [g_data_0058c858]

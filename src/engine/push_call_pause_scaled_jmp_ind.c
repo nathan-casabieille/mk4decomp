@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x0048e2f0 (60b)
  *   push lit; call F; pause-test → ret;

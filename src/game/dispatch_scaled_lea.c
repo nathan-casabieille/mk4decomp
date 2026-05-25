@@ -4,13 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x004b8f50 (70b)
  *   ecx = [0xab4e2c]; edx = [0xab4e30]; eax = [0x52aac4];
@@ -19,16 +13,15 @@ extern packed_ptr g_fightGroupHead;
  *     store ecx → [0xab4e2c]; ret.
  *   else: edx = eax*3; eax = edx*2 + 0x4f62a8; store → [0xab4e2c]; ret.
  */
-extern unsigned int g_data_00ab4e2c;
 extern unsigned int g_data_00ab4e30;
 extern unsigned int g_data_0053a50c;
-extern unsigned int g_data_0052aac4;
+extern unsigned int g_state_0052aac4_aa;
 
 void DispatchScaledLEA_004b8f50(void) {
     __asm {
-        mov     ecx, dword ptr [g_data_00ab4e2c]
+        mov     ecx, dword ptr [g_tickCurConfig]
         mov     edx, dword ptr [g_data_00ab4e30]
-        mov     eax, dword ptr [g_data_0052aac4]
+        mov     eax, dword ptr [g_state_0052aac4_aa]
         cmp     ecx, edx
         _emit   74h
         _emit   06h
@@ -39,11 +32,11 @@ void DispatchScaledLEA_004b8f50(void) {
         mov     eax, dword ptr [g_data_0053a50c]
         lea     eax, [eax + eax*2]
         lea     ecx, [eax*2 + 0x004f6240]
-        mov     dword ptr [g_data_00ab4e2c], ecx
+        mov     dword ptr [g_tickCurConfig], ecx
         ret
         lea     edx, [eax + eax*2]
         lea     eax, [edx*2 + 0x004f62a8]
-        mov     dword ptr [g_data_00ab4e2c], eax
+        mov     dword ptr [g_tickCurConfig], eax
         }
 }
 

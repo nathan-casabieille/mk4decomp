@@ -16,7 +16,6 @@
  *   mov     [ecx*4 + 0], eax
  *   jmp     T
  */
-extern packed_ptr g_xformEntityIdx;
 extern void SwapOrPassSet_0048fbf0(void);
 extern void func_00478328(void);
 void CallPauseEvtPushJmp_00422880(void) {

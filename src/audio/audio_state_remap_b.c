@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -128,19 +114,17 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   tests ch instead of al for the 0x20 flag, and bit 0x40 instead
  *   of 0x04 in the second gate; tail-jmp AudioInstallSelfChannel8_004a0520.
  */
-extern unsigned int g_x_004d50a4;
-extern unsigned int g_x_004d50a8;
-extern unsigned int g_x_005380e0;
+extern s32 g_dlNalt2;
 extern unsigned int g_x_0053a2e8;
-extern unsigned int g_x_00543724;
+extern unsigned int g_byte_00543724;
 extern unsigned int g_x_00543728;
-extern unsigned int g_x_0054372c;
-extern unsigned int g_x_00543730;
+extern unsigned int g_byte_0054372c;
+extern unsigned int g_byte_00543730;
 extern void AudioInstallSelfChannel8_004a0520(void);
 
 /*
  * NON-COAXABLE: orig uses `test ch, 0x20` (3b, F6 C5 20) to check bit 13 of
- * g_x_004d50a4 by indexing the CH byte register (bits 8-15 of ecx). MSVC /O2
+ * g_fightTableC0 by indexing the CH byte register (bits 8-15 of ecx). MSVC /O2
  * from pure C `flags & 0x2000` emits the 6b 32-bit form `f7 c1 00 20 00 00`.
  * MSVC SP3 won't choose CH byte addressing for a 32-bit unsigned masked test
  * (no equivalent C construct). The 3b vs 6b delta breaks byte identity.
@@ -150,14 +134,14 @@ __declspec(naked) void AudioStateRemapB_004a04a0(void) {
         mov     ecx, dword ptr [g_x_0053a2e8]
         mov     eax, dword ptr [g_acc_00542078]
         test    ecx, ecx
-        mov     dword ptr [g_x_005380e0], eax
+        mov     dword ptr [g_dlNalt2], eax
         je      tail
-        mov     ecx, dword ptr [g_x_004d50a4]
+        mov     ecx, dword ptr [g_fightTableC0]
         test    ch, 0x20
         jne     tail
-        test    byte ptr [g_x_004d50a8], 0x40
+        test    byte ptr [g_fightTableC1], 0x40
         jne     tail
-        mov     cl, byte ptr [g_x_00543724]
+        mov     cl, byte ptr [g_byte_00543724]
         test    cl, cl
         je      skip6
         cmp     eax, 6
@@ -167,17 +151,17 @@ __declspec(naked) void AudioStateRemapB_004a04a0(void) {
         jne     skip6
         mov     eax, 0xf
         mov     byte ptr [g_x_00543728], 1
-        mov     dword ptr [g_x_005380e0], eax
+        mov     dword ptr [g_dlNalt2], eax
 skip6:
-        mov     cl, byte ptr [g_x_0054372c]
+        mov     cl, byte ptr [g_byte_0054372c]
         test    cl, cl
         je      tail
-        mov     cl, byte ptr [g_x_00543730]
+        mov     cl, byte ptr [g_byte_00543730]
         test    cl, cl
         je      tail
         cmp     eax, 7
         jne     tail
-        mov     dword ptr [g_x_005380e0], 0x11
+        mov     dword ptr [g_dlNalt2], 0x11
 tail:
         jmp     AudioInstallSelfChannel8_004a0520
     }

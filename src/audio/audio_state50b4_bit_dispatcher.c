@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /*
- * AudioState50b4BitDispatcher_004a32c0 - 309b 4-bit dispatcher on g_state_004d50b4 (cl/ch).
+ * AudioState50b4BitDispatcher_004a32c0 - 309b 4-bit dispatcher on g_byte_004d50b4 (cl/ch).
  *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
  *     if !=-1: store back at chain[+0x30]; SetJmp_004a1ad0. Then g_eventQueueChild = edi.
  *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_currentNodeIdx): if !=0: clear
@@ -131,9 +117,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *     call 0x004a1ac0 (sister). Then g_eventQueueChild = edi.
  *   Pop+ret.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_state_004d50b4;
-extern unsigned int g_currentNodeIdx;
+extern unsigned int g_byte_004d50b4;
 extern void SetJmp_004a1ac0(void);
 extern void SetJmp_004a1ad0(void);
 
@@ -141,7 +125,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
 {
     __asm
     {
-        mov     ecx, dword ptr [g_state_004d50b4]
+        mov     ecx, dword ptr [g_byte_004d50b4]
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi
@@ -160,7 +144,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         je      short L_a32_b1_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_004a1ad0
-        mov     ecx, dword ptr [g_state_004d50b4]
+        mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b1_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b1_outerSkip:
@@ -178,7 +162,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         je      short L_a32_b2_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_004a1ad0
-        mov     ecx, dword ptr [g_state_004d50b4]
+        mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b2_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b2_outerSkip:
@@ -203,7 +187,7 @@ __declspec(naked) void AudioState50b4BitDispatcher_004a32c0(void)
         jne     short L_a32_b4_skipSetJmp
         call    SetJmp_004a1ac0
     L_a32_b4_skipSetJmp:
-        mov     ecx, dword ptr [g_state_004d50b4]
+        mov     ecx, dword ptr [g_byte_004d50b4]
     L_a32_b4_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b4_outerSkip:

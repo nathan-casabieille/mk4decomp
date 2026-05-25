@@ -19,12 +19,12 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [0x00ab4e58], eax
  *   ret
  */
-extern unsigned int g_state_00ab4e50;
-extern unsigned int g_state_00ab4e54;
-extern unsigned int g_state_00ab4e58;
+extern unsigned int g_struct_00ab4e50;
+extern unsigned int g_struct_00ab4e54;
+extern unsigned int g_struct_00ab4e58;
 void CopyThreeFields_00404df0(unsigned int arg) {
     if (arg == 0) return;
-    g_state_00ab4e50 = *(unsigned int *)(arg * 4 + 0x54);
-    g_state_00ab4e54 = *(unsigned int *)(arg * 4 + 0x58);
-    g_state_00ab4e58 = *(unsigned int *)(arg * 4 + 0x5c);
+    g_struct_00ab4e50 = *(unsigned int *)(arg * 4 + 0x54);
+    g_struct_00ab4e54 = *(unsigned int *)(arg * 4 + 0x58);
+    g_struct_00ab4e58 = *(unsigned int *)(arg * 4 + 0x5c);
 }

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -125,21 +111,17 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_005420c8;
 extern unsigned int g_data_00541f98;
 extern void VoicePicker_00401000(void);
-extern unsigned int g_xformScratch94;
 extern void ChainNodeAdvanceCallback_00408e70(void);
 /* extern void AuxCapsBitFlagAggregate_004b5380(void); -- defined elsewhere with diff sig */
 extern void Helper_AudioStartMusic(void);
 extern unsigned int g_data_00543b68;
 extern unsigned int g_data_00543b6c;
 extern unsigned int g_data_00ab4338;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueNotMask;
 extern void GuardedSeq_00471670(void);
 extern void ChainListVecAdd_0049d200(void);
 extern void Filbuf_004c8ed0(void);
 extern void Thunk_0049cb70(void);
 extern void Thunk_0049cb80(void);
-extern unsigned int g_eventQueueWorkType;
 extern void Transform9Words_004b3a90(void);
 extern void CrtGetLocaleInfo_004d0bc0(void);
 extern void StringDigitConvert_004d03c0(void);
@@ -164,7 +146,6 @@ extern unsigned char g_data_00523b18;
 extern void PendingMatch_004013a0(void);
 extern void StoreTwoCall_0049cb40(void);
 extern void DispatcherComplex260_00407400(void);
-extern unsigned int g_eventQueueIdx;
 extern void CopyGlobal_004ac1f0(void);
 extern void Test4StatesAny_004a1d20(void);
 extern void BootInitGuardedCallChain_004265d0(void);
@@ -174,13 +155,13 @@ extern void ScenegraphWalk_0041f7d0(void);
 extern void CallSetPause_0041f830(void);
 
 extern void Audio_TimerTeardown_004ac5f0(void);
-extern unsigned int g_data_005438f8;
-extern unsigned int g_data_005438ec;
-extern unsigned int g_data_005438f0;
-extern unsigned int g_data_005438f4;
-extern unsigned int g_data_005438fc;
-extern unsigned int g_data_0054390c;
-extern unsigned int g_data_00543904;
+extern u32 g_timerHandle;
+extern u32 g_timerActive;
+extern u32 g_timerStartSec;
+extern u32 g_timerEndSec;
+extern u32 g_timerLastNow;
+extern u32 g_audioState0C;
+extern u32 g_timerFlag;
 
 /* @addr 0x004ac650 (290b audio) - MIDI MCI playback position setter.
  *   Calls Audio_TimerTeardown. Saves 4 args into globals (5438f8/ec/f0/f4).
@@ -193,7 +174,7 @@ extern unsigned int g_data_00543904;
  */
 extern unsigned int g_iat_004d2240;
 extern unsigned int g_iat_004d2244;
-extern unsigned int g_x_005438e8;
+extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
 __declspec(naked) void Audio_TimerSet(void) {
@@ -207,20 +188,20 @@ __declspec(naked) void Audio_TimerSet(void) {
         mov     ebx, [esp + 0x28]
         mov     esi, [esp + 0x2c]
         mov     edi, [esp + 0x30]
-        mov     dword ptr [g_data_005438f8], eax
-        mov     eax, dword ptr [g_data_0054390c]
+        mov     dword ptr [g_timerHandle], eax
+        mov     eax, dword ptr [g_audioState0C]
         test    eax, eax
-        mov     dword ptr [g_data_005438ec], ebx
-        mov     dword ptr [g_data_005438f0], esi
-        mov     dword ptr [g_data_005438f4], edi
+        mov     dword ptr [g_timerActive], ebx
+        mov     dword ptr [g_timerStartSec], esi
+        mov     dword ptr [g_timerEndSec], edi
         jne     L_mp_tailCall
         call    Helper_AuxAudio_PostInit
         test    eax, eax
         jz      L_mp_tailCall
-        mov     eax, dword ptr [g_data_00543904]
+        mov     eax, dword ptr [g_timerFlag]
         test    eax, eax
         jne     L_mp_tailCall
-        mov     edx, dword ptr [g_x_005438e8]
+        mov     edx, dword ptr [g_audioPreState]
         lea     ecx, [esp + 0x18]
         push    ebp
         mov     ebp, dword ptr [g_iat_004d2244]
@@ -266,7 +247,7 @@ __declspec(naked) void Audio_TimerSet(void) {
         or      ebx, ecx
         mov     [esp + 0x14], ebx
         mov     ah, dl
-        mov     edx, dword ptr [g_x_005438e8]
+        mov     edx, dword ptr [g_audioPreState]
         or      esi, eax
         shl     esi, 8
         or      esi, ecx
@@ -281,12 +262,12 @@ __declspec(naked) void Audio_TimerSet(void) {
         sbb     eax, eax
         pop     ebp
         inc     eax
-        mov     dword ptr [g_data_00543904], eax
+        mov     dword ptr [g_timerFlag], eax
     L_mp_tailCall:
         call    dword ptr [g_iat_004d2240]
         pop     edi
         pop     esi
-        mov     dword ptr [g_data_005438fc], eax
+        mov     dword ptr [g_timerLastNow], eax
         pop     ebx
         add     esp, 0x18
         ret

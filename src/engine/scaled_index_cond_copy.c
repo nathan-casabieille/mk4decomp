@@ -4,21 +4,13 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern u32 g_eventQueueWorkType;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
-extern u32 g_tickW1;
-extern packed_ptr g_fightGroupHead;
 
 /* @addr 0x0048e590 (69b)
  *   eax = arg0 >> 2 → g_eventQueueTotal; ecx = [eax*4+0] → scaled;
  *   if g_fightGroupHead != [0x538158]: ecx = [eax*4+4] → scaled;
  *   eax = [ecx*4+0]; store → walk; ret.
  */
-extern u32 g_eventQueueTotal;
-extern unsigned int g_player1NodeIdx;
 void ScaledIndexCondCopy_0048e590(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;

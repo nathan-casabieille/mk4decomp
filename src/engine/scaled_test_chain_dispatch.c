@@ -6,11 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x00424ba0 (65b)
  *   3-cell scaled-load test chain: deref [eax*4+0..8] in turn into walk;

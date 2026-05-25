@@ -6,10 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern u32 g_eventQueueCurrent;
-extern u32 g_eventQueueWorkType;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x0048e380 (62b): push lit + call PackedAdvanceCallContinue;
  * if !pause set workType=0x3c, call func_00489fd0; if !pause set walk
@@ -30,5 +27,5 @@ void PushCallPauseSetMaxThenCallPauseJmp_0048e380(void) {
     if (g_framePauseFlag != 0) return;
     v = 0xfff;
     g_walkCallback = (void (*)(void))v;
-    g_state_00537e94 = v;
+    g_x_00537e94_v2 = v;
 }

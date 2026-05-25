@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_007affe4;
+extern int g_renderer1_active;
 extern float g_data_004d29c8;
 extern void (__stdcall *g_iat_007b0030)(float);
 
@@ -39,7 +39,7 @@ void AppShutdown(void) {
 }
 
 void AbsClampIATCall_004b44f0(int arg) {
-    if (g_state_007affe4 == 0) return;
+    if (g_renderer1_active == 0) return;
     if (abs(arg) > 0x64) arg = 0x64;
     g_iat_007b0030((float)arg * g_data_004d29c8);
 }

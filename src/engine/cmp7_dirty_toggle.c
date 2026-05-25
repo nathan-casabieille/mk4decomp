@@ -16,9 +16,9 @@
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_state_0052aac4;
+extern unsigned int g_state_0052aac4_aa;
 void Cmp7DirtyToggle_0042ee10(void) {
-    unsigned int state = g_state_0052aac4;
+    unsigned int state = g_state_0052aac4_aa;
     g_walkCallback = (void (*)(void))state;
     if (state != 7) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;

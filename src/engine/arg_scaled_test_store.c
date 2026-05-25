@@ -6,11 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueNotMask;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueEnd;
 
 /* @addr 0x00494140 (61b)
  *   arg sar 2 → g_eventQueueTotal; scaled load [baseSel*4 + 0x30] → g_walkCallback

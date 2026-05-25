@@ -20,9 +20,9 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     [eax], cl
  *   ret
  */
-extern unsigned int g_data_00f8fade;
+extern unsigned int g_flags_00f8fade;
 void TableSetBit_004c4420(short idx) {
     if ((unsigned short)idx < 0x0898) {
-        *(unsigned char *)((&g_data_00f8fade) + idx * 7) |= 4;
+        *(unsigned char *)((&g_flags_00f8fade) + idx * 7) |= 4;
     }
 }

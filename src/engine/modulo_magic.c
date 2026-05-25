@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0042afc0 (64b)
  *   modulo using 32x32->64 magic-number division: ecx %= 0x6487e (range modulus).

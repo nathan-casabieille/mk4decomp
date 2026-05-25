@@ -13,8 +13,8 @@ extern unsigned int g_data_00541e9c;
 extern unsigned int g_data_00541e88;
 extern unsigned int g_data_00541e84;
 extern unsigned int g_data_00541e8c;
-extern unsigned int g_data_00541e90;
-extern unsigned int g_data_00541e94;
+extern unsigned int g_lit_00541e90;
+extern unsigned int g_lit_00541e94;
 extern unsigned int g_data_00541ea0;
 
 void Helper_TickFrameTail(void)
@@ -39,11 +39,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_data_004d511c;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_data_00541e90;
+    g_scaledInit_00542044 = g_lit_00541e90;
     g_walkCallback = g_data_004d511c;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_data_00541e94;
+    g_scaledInit_00542044 = g_lit_00541e94;
     g_walkCallback = g_data_004d511c;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
@@ -67,11 +67,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_data_004d5138;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_data_00541e90;
+    g_scaledInit_00542044 = g_lit_00541e90;
     g_walkCallback = g_data_004d5138;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_data_00541e94;
+    g_scaledInit_00542044 = g_lit_00541e94;
     g_walkCallback = g_data_004d5138;
     Helper_TickAlt();
 }

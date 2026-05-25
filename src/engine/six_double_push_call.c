@@ -6,10 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x004be630 (91b)
  *   6× push 0, push imm; call F; add esp 8; ret. Pattern of 6 unique 2-arg calls.

@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  *   pop     esi
  *   ret
  */
-extern unsigned int g_state_00f9f7bc;
+extern s32 g_clientHeight;
 extern unsigned int g_iat_004d21b0;
 
 void CallThreeSumLea_004c45d0(void) {
@@ -35,5 +35,5 @@ void CallThreeSumLea_004c45d0(void) {
     s = fn(0x2e);
     s += fn(8);
     c = fn(4);
-    g_state_00f9f7bc = c + s * 2;
+    g_clientHeight = c + s * 2;
 }

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,20 +112,10 @@ extern unsigned int g_data_004d5324;
 extern unsigned int g_data_004d7b88;
 extern unsigned int g_data_004ec8f8;
 extern unsigned int g_data_004f00d0;
-extern unsigned int g_data_0052ab04;
-extern unsigned int g_data_0052ab08;
-extern unsigned int g_data_0053a51c;
+extern unsigned int g_load_0052ab04;
+extern unsigned int g_load_0052ab08;
+extern unsigned int g_counter_0053a51c;
 extern unsigned int g_data_0053a7a0;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_baseSel_00542060;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_data_00542ce8;
 extern void AudioMixerStep_004ab700(void);
 extern void CallSetPause_0041f830(void);
@@ -193,7 +169,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         call    StoreLoadJmp_00404ef0
-        mov     ecx, dword ptr [g_data_0053a51c]
+        mov     ecx, dword ptr [g_counter_0053a51c]
         mov     eax, offset g_data_004d7b88
         shr     eax, 2
         add     eax, ecx
@@ -212,7 +188,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         mov     dword ptr [g_eventQueueIdx], eax
         mov     eax, dword ptr [eax*4]
         mov     dword ptr [g_eventQueueIdx], eax
-        mov     eax, dword ptr [g_data_0053a51c]
+        mov     eax, dword ptr [g_counter_0053a51c]
         cmp     eax, 3
         jne     L_p4tpis_A_after_3
         mov     ecx, offset g_data_004f00d0
@@ -268,7 +244,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_data_0052ab04]
+        mov     eax, dword ptr [g_load_0052ab04]
         push    eax
         push    0x3333
         mov     dword ptr [g_eventQueueCurrent], eax
@@ -287,7 +263,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf_0041a610(void)
         call    Mul10Tail_00404af0
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_data_0052ab08]
+        mov     eax, dword ptr [g_load_0052ab08]
         push    eax
         push    0x3333
         mov     dword ptr [g_eventQueueCurrent], eax

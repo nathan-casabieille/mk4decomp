@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,31 +110,25 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 extern unsigned int g_data_004ecea0;
 extern unsigned int g_data_004eceb0;
 extern unsigned int g_data_00535db0;
-extern unsigned int g_data_00537f2c;
+extern unsigned int g_clamp_00537f2c;
 extern unsigned int g_data_0053a2d0;
-extern unsigned int g_data_0053a6dc;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_acc_00542078;
-extern unsigned int g_eventQueueNotMask;
-extern unsigned int g_xformDirtyFlags;
+extern unsigned int g_clamp_0053a6dc;
 
 void MStackBracket6_DualGate_004788e0(void) {
     unsigned int v;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_xformDirtyFlags;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_walkCallback;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_acc_00542078;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueNotMask;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_currentNodeIdx;
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_fightGroupHead;
-    v = g_data_0053a6dc;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_xformDirtyFlags;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_walkCallback;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_acc_00542078;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueNotMask;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
+    v = g_clamp_0053a6dc;
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_data_0053a2d0;
         if (g_data_0053a2d0 == 0) {
@@ -158,7 +138,7 @@ void MStackBracket6_DualGate_004788e0(void) {
             g_data_0053a2d0 = 1;
         }
     }
-    v = g_data_00537f2c;
+    v = g_clamp_00537f2c;
     g_walkCallback = v;
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_data_00535db0;
@@ -170,16 +150,16 @@ void MStackBracket6_DualGate_004788e0(void) {
             g_data_00535db0 = 1;
         }
     }
-    g_fightGroupHead = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
-    g_currentNodeIdx = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
-    g_eventQueueNotMask = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
-    g_acc_00542078 = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
-    g_walkCallback = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
-    g_xformDirtyFlags = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_fightGroupHead = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
+    g_eventQueueNotMask = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
+    g_acc_00542078 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
+    g_walkCallback = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
+    g_xformDirtyFlags = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }

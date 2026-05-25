@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,7 +112,7 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   ecx = g_player1NodeIdx; edx = g_cj_0054205c; eax = 4;
  *   cmp edx,ecx; g_eventQueueCurrent = eax; g_scaledInit = ecx;
  *   if eq: skip; eax = 0x40; g_eventQueueCurrent = 0x40;
- *   skip: ecx = g_state_004d50a8; edx = g_xformDirtyFlags;
+ *   skip: ecx = g_fightTableC1; edx = g_xformDirtyFlags;
  *   ~ecx; edx &= 0xfffffffe; eax &= ecx;
  *   g_xformScratch94 = eax; g_walkCallback = ecx;
  *   g_xformDirtyFlags = edx; eax = edx;
@@ -134,7 +120,6 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   eax |= 4; g_xformDirtyFlags = eax; ret;
  *   clear: eax &= 0xfb; g_xformDirtyFlags = eax; ret.
  */
-extern unsigned int g_state_004d50a8;
 
 void DualCmpSetFlagBitToggle_00460eb0(void) {
     __asm {
@@ -148,7 +133,7 @@ void DualCmpSetFlagBitToggle_00460eb0(void) {
         _emit   0ah
         mov     eax, 0x40
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     ecx, dword ptr [g_state_004d50a8]
+        mov     ecx, dword ptr [g_fightTableC1]
         mov     edx, dword ptr [g_xformDirtyFlags]
         not     ecx
         and     edx, 0xfffffffe

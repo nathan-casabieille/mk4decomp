@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,7 +109,7 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern void MStackBracket3Init4bd5e0Tail_0042e550(void);
-extern unsigned int g_x_0052ab10;
+extern unsigned int g_load_0052ab10;
 
 /* @addr 0x0042e480 (200b game) - mstack-push 2, counted call-loop, restore globals.
  *   Push g_eventQueueCurrent, g_eventQueueWorkType; set 70=10, 74=0x5a0000; call F1; pause? ret;
@@ -131,23 +117,20 @@ extern unsigned int g_x_0052ab10;
  *   After: g_fightGroupHead = [0x52ab10]; g_walkCallback = chain[+0x74] = 0xffffaaab;
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent.
  */
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_eventQueueWorkType;
 
 extern unsigned int g_data_004d57ac_arr;
 
 void CountedLoopMStack_0042e480(void) {
     __asm {
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_eventQueueCurrent], 0xa
         mov     dword ptr [g_eventQueueWorkType], 0x005a0000
@@ -170,20 +153,20 @@ void CountedLoopMStack_0042e480(void) {
         _emit   74h
         _emit   0d3h
         ret
-        mov     eax, dword ptr [g_x_0052ab10]
+        mov     eax, dword ptr [g_load_0052ab10]
         mov     ecx, 0xffffaaab
         mov     dword ptr [g_fightGroupHead], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x74], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         }
 }
 

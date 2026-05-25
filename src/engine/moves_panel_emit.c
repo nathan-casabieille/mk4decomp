@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -126,28 +112,26 @@ extern unsigned int g_data_004ed000;
 extern unsigned int g_data_004ed020;
 extern unsigned int g_data_004ed040;
 extern unsigned int g_data_004ed060;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_data_00543550;
-extern unsigned int g_data_007af92c;
-extern unsigned int g_data_007af958;
-extern unsigned int g_data_007af95a;
-extern unsigned int g_data_007af95c;
-extern unsigned int g_data_007af95e;
-extern unsigned int g_data_007af960;
-extern unsigned int g_data_007af962;
-extern unsigned int g_data_007af964;
-extern unsigned int g_data_007af966;
-extern unsigned int g_data_007af968;
-extern unsigned int g_data_007af984;
-extern unsigned int g_data_007af988;
-extern unsigned int g_data_007af98c;
-extern unsigned int g_data_007af9b0;
-extern unsigned int g_data_007af9b4;
-extern unsigned int g_data_007af9b6;
-extern unsigned int g_data_007af9b8;
-extern unsigned int g_data_007af9ba;
-extern unsigned int g_data_007af9bc;
-extern unsigned int g_data_007af9be;
+extern u32 g_inLoopStep;
+extern s16 g_vtxIn_x;
+extern s16 g_vtxIn2_x;
+extern unsigned int g_triStripX0;
+extern s16 g_vtxIn1_y;
+extern s16 g_vtxIn1_z;
+extern unsigned int g_triStripX1;
+extern s16 g_vtxIn2_y;
+extern s16 g_vtxIn2_z;
+extern unsigned int g_triStripX2;
+extern unsigned int g_triStripRingB;
+extern s32 g_vtxOut2_z;
+extern s32 g_vtxOut_z;
+extern s32 g_vtxValid;
+extern unsigned int g_triStripRingA;
+extern s16 g_vtxScreenP1Y;
+extern s16 g_vtxScreenP2X;
+extern s16 g_vtxScreenP2Y;
+extern s16 g_vtxScreenX;
+extern s16 g_vtxScreenY;
 extern unsigned int g_data_00ab48b8;
 extern unsigned int g_data_00ab48bc;
 extern unsigned int g_data_00ab48c0;
@@ -160,7 +144,6 @@ extern unsigned int g_data_00ab48c9;
 extern unsigned int g_data_00ab48ca;
 extern unsigned int g_data_00ab48cc;
 extern unsigned int g_data_00ab48d2;
-extern unsigned int g_data_00ab4e20;
 extern void GamepadSeqRecord_004bcc70(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
@@ -183,7 +166,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         pop      ebx
         ret
     L_cf83:
-        mov      edx, dword ptr [g_data_007af92c]
+        mov      edx, dword ptr [g_inLoopStep]
         xor      edi, edi
         cmp      edx, edi
         jne      L_d260
@@ -197,7 +180,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         cmp      eax, OFFSET g_data_004ed000
         jne      L_d260
     L_cfb6:
-        mov      eax, dword ptr [g_data_00543550]
+        mov      eax, dword ptr [g_tickW1]
         cmp      eax, 0x10
         jl       L_cfcc
         cdq
@@ -216,7 +199,7 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         sete     cl
         neg      cl
         sbb      ecx, ecx
-        mov      dx, word ptr [g_data_00ab4e20]
+        mov      dx, word ptr [g_tickCurMask]
         and      ecx, 0xfffffff4
         mov      word ptr [g_data_00ab48ca], dx
         add      ecx, 0x16
@@ -236,54 +219,54 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         mov      word ptr [g_data_00ab48cc], cx
         mov      eax, dword ptr [esi + 4]
         mov      ecx, eax
-        mov      word ptr [g_data_007af964], di
+        mov      word ptr [g_vtxIn2_y], di
         shl      ecx, 0x10
         sar      ecx, 0x13
         sar      eax, 0x13
-        mov      word ptr [g_data_007af958], cx
-        mov      word ptr [g_data_007af95e], ax
+        mov      word ptr [g_vtxIn_x], cx
+        mov      word ptr [g_vtxIn1_y], ax
         mov      eax, dword ptr [esi + 0xc]
-        mov      word ptr [g_data_007af966], di
+        mov      word ptr [g_vtxIn2_z], di
         mov      ecx, eax
         shl      ecx, 0x10
         sar      ecx, 0x13
         sar      eax, 0x13
-        mov      word ptr [g_data_007af95a], cx
-        mov      word ptr [g_data_007af960], ax
+        mov      word ptr [g_vtxIn2_x], cx
+        mov      word ptr [g_vtxIn1_z], ax
         mov      eax, dword ptr [esi + 0x14]
-        mov      word ptr [g_data_007af968], di
+        mov      word ptr [g_triStripX2], di
         mov      ecx, eax
         shl      ecx, 0x10
         sar      ecx, 0x13
         sar      eax, 0x13
-        mov      word ptr [g_data_007af95c], cx
-        mov      word ptr [g_data_007af962], ax
+        mov      word ptr [g_triStripX0], cx
+        mov      word ptr [g_triStripX1], ax
         call     ProjectTwoVertices
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    ebx, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    ebx, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      ebx, eax
         imul     edx, ebx
-        movsx    ebx, word ptr [g_data_007af9ba]
+        movsx    ebx, word ptr [g_vtxScreenP2Y]
         sub      ebx, ecx
         push     edi
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     ebx, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, ebx
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [g_data_00ab48b8], ecx
         mov      cx, word ptr [g_data_00ab48d2]
         mov      dword ptr [g_data_00ab48bc], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         and      ecx, 0xfbff
         mov      dword ptr [g_data_00ab48c0], eax
@@ -294,52 +277,52 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         lea      ecx, [eax*4]
         push     ecx
         call     GamepadSeqRecord_004bcc70
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         add      esp, 8
         cmp      eax, edi
         jle      L_d172
-        cmp      dword ptr [g_data_007af988], edi
+        cmp      dword ptr [g_vtxOut2_z], edi
         jle      L_d172
-        cmp      dword ptr [g_data_007af98c], edi
+        cmp      dword ptr [g_vtxOut_z], edi
         jle      L_d172
         push     OFFSET g_data_00ab48b8
         call     Helper_DrawCursor
         add      esp, 4
     L_d172:
         mov      esi, dword ptr [esi + 0x1c]
-        mov      word ptr [g_data_007af966], di
+        mov      word ptr [g_vtxIn2_z], di
         mov      eax, esi
         shl      eax, 0x10
         sar      eax, 0x13
         sar      esi, 0x13
-        mov      word ptr [g_data_007af95a], ax
-        mov      word ptr [g_data_007af960], si
+        mov      word ptr [g_vtxIn2_x], ax
+        mov      word ptr [g_vtxIn1_z], si
         call     ProjectTwoVertices
-        movsx    eax, word ptr [g_data_007af9b4]
-        movsx    ecx, word ptr [g_data_007af9b6]
-        movsx    edx, word ptr [g_data_007af9be]
-        movsx    esi, word ptr [g_data_007af9b8]
+        movsx    eax, word ptr [g_triStripRingA]
+        movsx    ecx, word ptr [g_vtxScreenP1Y]
+        movsx    edx, word ptr [g_vtxScreenY]
+        movsx    esi, word ptr [g_vtxScreenP2X]
         sub      edx, ecx
         sub      esi, eax
         imul     edx, esi
-        movsx    esi, word ptr [g_data_007af9ba]
+        movsx    esi, word ptr [g_vtxScreenP2Y]
         sub      esi, ecx
         push     1
-        movsx    ecx, word ptr [g_data_007af9bc]
+        movsx    ecx, word ptr [g_vtxScreenX]
         sub      ecx, eax
         xor      eax, eax
         imul     esi, ecx
-        mov      ecx, dword ptr [g_data_007af9b4]
+        mov      ecx, dword ptr [g_triStripRingA]
         sub      edx, esi
         test     edx, edx
-        mov      edx, dword ptr [g_data_007af9b8]
+        mov      edx, dword ptr [g_vtxScreenP2X]
         mov      dword ptr [g_data_00ab48b8], ecx
         mov      cx, word ptr [g_data_00ab48d2]
         mov      dword ptr [g_data_00ab48bc], edx
         setle    al
-        mov      dword ptr [g_data_007af9b0], eax
-        mov      dl, byte ptr [g_data_007af9b0]
-        mov      eax, dword ptr [g_data_007af9bc]
+        mov      dword ptr [g_vtxValid], eax
+        mov      dl, byte ptr [g_vtxValid]
+        mov      eax, dword ptr [g_vtxScreenX]
         and      edx, 1
         and      ecx, 0xfbff
         mov      dword ptr [g_data_00ab48c0], eax
@@ -350,13 +333,13 @@ __declspec(naked) void MovesPanelEmit_004bcf60(void)
         lea      ecx, [eax*4]
         push     ecx
         call     GamepadSeqRecord_004bcc70
-        mov      eax, dword ptr [g_data_007af984]
+        mov      eax, dword ptr [g_triStripRingB]
         add      esp, 8
         cmp      eax, edi
         jle      L_d260
-        cmp      dword ptr [g_data_007af988], edi
+        cmp      dword ptr [g_vtxOut2_z], edi
         jle      L_d260
-        cmp      dword ptr [g_data_007af98c], edi
+        cmp      dword ptr [g_vtxOut_z], edi
         jle      L_d260
         push     OFFSET g_data_00ab48b8
         call     Helper_DrawCursor

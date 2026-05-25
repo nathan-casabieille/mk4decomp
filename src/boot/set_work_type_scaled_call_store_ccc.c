@@ -6,14 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_eventQueueEnd;
-extern u32 g_eventQueueIdx;
-extern u32 g_eventQueueWorkType;
-extern u32 g_pendingNodeType;
-extern u32 g_eventQueueNotMask;
 
 /* @addr 0x0041aa80 (70b)
  *   set workType = 2; pendingNodeType = 0x4d7b28>>2; call F;

@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x00446000 (61b)
  *   set g_xformEntityIdx = 0x51140c >> 2; call F; pause → ret;

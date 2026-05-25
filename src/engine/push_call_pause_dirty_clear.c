@@ -15,7 +15,7 @@
  *   mov     [g_xformDirtyFlags], eax
  *   ret
  */
-extern unsigned int g_framePauseFlag;
+extern u32 g_framePauseFlag;
 extern int ArgSarStoreJmp_004594f0(void *);
 extern void *g_data_004e3540;
 void PushCallPauseDirtyClear_0042c9c0(void) {

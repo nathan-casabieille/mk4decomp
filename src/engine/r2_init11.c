@@ -12,14 +12,14 @@
  *   has valid pointers, register via [+0x0c]. Return 1 if all slots valid, 0 else.
  */
 extern unsigned int g_data_00544298;
-extern unsigned int g_data_0058c768;
-extern unsigned int g_data_0058c7ac;
-extern unsigned int g_data_0058c7c0;
-extern unsigned int g_data_0058c7dc;
+extern u8 g_renderer2_buf1[];
+extern unsigned int g_comptr_0058c7ac;
+extern unsigned int g_renderer2_obj;
+extern int g_renderer2_present_rc;
 extern unsigned int g_iid_004d28f0;
 
-extern unsigned int g_data_00544258;
-extern unsigned int g_data_0058c720;
+extern u8 g_renderer2_buf3[];
+extern u8 g_renderer2_buf2[];
 
 __declspec(naked) void R2_Init11(void) {
     __asm {
@@ -33,8 +33,8 @@ __declspec(naked) void R2_Init11(void) {
         and     eax, 0xff
         shl     eax, 2
         mov     ebx, eax
-        mov     ecx, dword ptr [ebx + g_data_0058c768]
-        lea     eax, [ebx + g_data_0058c768]
+        mov     ecx, dword ptr [ebx + g_renderer2_buf1]
+        lea     eax, [ebx + g_renderer2_buf1]
         test    ecx, ecx
         mov     [esp + 0xc], eax
         jz      short L_dss_setup
@@ -45,12 +45,12 @@ __declspec(naked) void R2_Init11(void) {
         add     esp, 0x78
         ret
     L_dss_setup:
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         mov     ecx, 0x1b
         mov     esi, offset g_data_00544298
         lea     edi, [esp + 0x18]
         rep     movsd
-        lea     esi, [ebx + g_data_0058c720]
+        lea     esi, [ebx + g_renderer2_buf2]
         test    eax, eax
         mov     dword ptr [esi], 0
         jz      short L_dss_step2
@@ -61,7 +61,7 @@ __declspec(naked) void R2_Init11(void) {
         push    edx
         push    eax
         call    dword ptr [ecx + 0x18]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dss_step2:
         mov     eax, [esi]
         mov     dword ptr [esp + 0x10], 0
@@ -74,10 +74,10 @@ __declspec(naked) void R2_Init11(void) {
         push    8
         push    eax
         call    dword ptr [ecx + 0x74]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dss_step3:
         mov     eax, [esi]
-        lea     edi, [ebx + g_data_00544258]
+        lea     edi, [ebx + g_renderer2_buf3]
         test    eax, eax
         mov     dword ptr [edi], 0
         jz      short L_dss_step4
@@ -86,9 +86,9 @@ __declspec(naked) void R2_Init11(void) {
         push    offset g_iid_004d28f0
         push    eax
         call    dword ptr [ecx]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dss_step4:
-        mov     ecx, dword ptr [g_data_0058c7c0]
+        mov     ecx, dword ptr [g_renderer2_obj]
         test    ecx, ecx
         jz      short L_dss_validate
         mov     eax, [edi]
@@ -100,7 +100,7 @@ __declspec(naked) void R2_Init11(void) {
         push    ecx
         push    eax
         call    dword ptr [edx + 0x0c]
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dss_validate:
         cmp     dword ptr [esi], 0
         jz      short L_dss_fail

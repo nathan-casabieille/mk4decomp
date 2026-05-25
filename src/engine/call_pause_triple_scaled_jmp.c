@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_acc_00542078;
-extern packed_ptr g_xformEntityIdx;
 
 /* @addr 0x0046c520 (51b)
  *   call    F

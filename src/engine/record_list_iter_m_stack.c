@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -130,11 +116,6 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   Mstack-pop: g_xformEntityIdx, g_eventQueueCurrent, g_eventQueueWorkType. If g_eventQueueWorkType!=0: [g_cj*4+0x58]=g_eventQueueWorkType.
  *   Re-read next field from g_eventQueueIdx stream, if !=0xffff0000 loop. Pop edi/esi; ret.
  */
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_eventQueueIdx;
-extern unsigned int g_eventQueueWorkType;
-extern unsigned int g_currentNodeFlags;
 extern void StateMachineInit_00493000(void);
 
 extern unsigned int g_data_004d57ac_arr;
@@ -164,24 +145,24 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         _emit   00h
         _emit   00h
     loop_top:
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edi, 0x6c
         mov     esi, dword ptr [ecx*4 + 0]
         inc     ecx
         inc     eax
         mov     dword ptr [g_xformScratch2088], esi
         mov     dword ptr [g_eventQueueIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], ecx
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_data_004d57ac_arr], edx
         mov     dword ptr [g_walkCallback], edi
         call    StateMachineInit_00493000
@@ -189,26 +170,26 @@ __declspec(naked) void RecordListIterMStack_00422ce0(void) {
         test    eax, eax
         _emit   75h
         _emit   7fh
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]
         dec     eax
         test    edx, edx
         mov     dword ptr [g_eventQueueWorkType], edx
-        mov     dword ptr [g_state_004d57ac], eax
+        mov     dword ptr [g_matrixStackTop], eax
         _emit   74h
         _emit   17h
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [eax*4 + 0x58], edx
         mov     edx, dword ptr [g_eventQueueWorkType]
-        mov     eax, dword ptr [g_state_004d57ac]
+        mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueIdx]
         mov     esi, dword ptr [ecx*4 + 0]
         inc     ecx

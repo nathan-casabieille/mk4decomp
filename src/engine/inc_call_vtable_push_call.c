@@ -21,11 +21,11 @@ extern unsigned int g_scaledInit_00542044;
  *   add     esp, 4
  *   ret
  */
-extern unsigned int g_state_007ab064;
+extern u32 g_ecmReserved;
 extern void *g_iface_007ab05c;
 extern int func_004b0982(int);
 void IncCallVtablePushCall_004b0d80(void) {
-    g_state_007ab064++;
+    g_ecmReserved++;
     if (g_iface_007ab05c != 0) {
         ((void (__stdcall *)(void *))((void **)*(void **)g_iface_007ab05c)[0x12])(g_iface_007ab05c);
     }

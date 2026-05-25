@@ -14,7 +14,7 @@ extern unsigned int g_data_004d505c;
 extern unsigned int g_data_004f5398;
 extern unsigned int g_data_004f5798;
 extern unsigned int g_data_004f613c;
-extern unsigned int g_data_00f4d050;
+extern u16 g_texStripeBuf[];
 extern unsigned int g_data_00f6ce50;
 extern unsigned int g_iat_004d21c4;
 extern void FSYS_fclose(void);
@@ -68,7 +68,7 @@ __declspec(naked) void AppInit_Misc1(void) {
         call    FSYS_fread
         sub     esi, 0x200
         add     esp, 0x10
-        cmp     esi, offset g_data_00f4d050
+        cmp     esi, offset g_texStripeBuf
         jge     short L_hfp_readlp
         push    edi
         call    FSYS_fclose

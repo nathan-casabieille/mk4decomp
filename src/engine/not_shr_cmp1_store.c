@@ -6,9 +6,7 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern unsigned int g_state_00537e94;
-extern packed_ptr g_fightGroupHead;
+extern unsigned int g_x_00537e94_v2;
 
 /* @addr 0x00460d80 (65b)
  *   load g_state_00538094; if non-zero zero g_walkCallback and ret.
@@ -17,7 +15,6 @@ extern packed_ptr g_fightGroupHead;
  *   if equal ret, else shr eax,8; store walk; ret.
  */
 extern unsigned int g_state_00538094;
-extern u32 g_fightTableC0;
 void NotShrCmp1Store_00460d80(void) {
     unsigned int e;
     unsigned int chain;

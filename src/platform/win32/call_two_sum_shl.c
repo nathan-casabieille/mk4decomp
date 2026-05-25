@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  *   nop
  *   jmp     +0x0b
  */
-extern unsigned int g_state_00f9f7b8;
+extern s32 g_clientWidth;
 extern void func_004c45c1(void);
 extern unsigned int g_iat_004d21b0;
 
@@ -45,7 +45,7 @@ __declspec(naked) void CallTwoSumShl_004c45a0(void) {
         call    esi
         add     edi, eax
         shl     edi, 1
-        mov     dword ptr [g_state_00f9f7b8], edi
+        mov     dword ptr [g_clientWidth], edi
         pop     edi
         pop     esi
         ret

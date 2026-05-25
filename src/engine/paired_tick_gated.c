@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -121,12 +107,9 @@ extern unsigned int g_fightAxisNegX_00535e70;
 extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
-extern unsigned int g_eventQueueEnd;
-extern unsigned int g_x_0052aac4;
-extern unsigned int g_audioBankSel_00537f94;
-extern unsigned char g_x_00538148;
+extern unsigned int g_state_0052aac4_aa;
+extern unsigned char g_byte_00538148;
 extern unsigned int g_x_005433e8;
-extern unsigned int g_x_00543590;
 
 /*
  * @addr 0x00467e60 (111b game) - paired-mode tick: if both byte
@@ -138,12 +121,12 @@ extern unsigned int g_x_00543590;
 void PairedTickGated_00467e60(void) {
     unsigned char a;
     unsigned int c;
-    a = g_x_00543590;
+    a = g_gtModeFlag;
     c = g_audioBankSel_00537f94;
     if (a == 1 && c == 1) g_x_005433e8++;
     if (a == 2 && c == 2) g_x_005433e8++;
     Wrapper_0041fcf0();
-    if (g_x_0052aac4 == 2) g_x_00538148 = 1;
+    if (g_state_0052aac4_aa == 2) g_byte_00538148 = 1;
     PushCallPauseSetMaxThenCallPauseJmp_0048e380();
     if (g_framePauseFlag != 0) return;
     g_cj_00542058 = g_cj_0054205c;

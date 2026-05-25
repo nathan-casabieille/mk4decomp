@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,8 +108,8 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004ffd44;
-extern unsigned int g_data_004ffd48;
+extern unsigned int g_viewportW;
+extern unsigned int g_viewportH;
 extern unsigned int g_data_00b2d008;
 extern unsigned int g_data_00b2d00c;
 extern unsigned int g_data_00f4d028;
@@ -131,7 +117,7 @@ extern unsigned int g_data_00f4d040;
 extern unsigned int g_data_00f4d044;
 extern unsigned int g_data_00f70f4c;
 extern unsigned int g_data_00f70f50;
-extern unsigned int g_data_00f70f70;
+extern s32 g_clipMinScratch;
 extern unsigned int g_data_00f70f7c;
 extern unsigned int g_data_00f70f88;
 extern unsigned int g_data_00f70f90;
@@ -146,14 +132,14 @@ extern unsigned int g_data_00f70fd8;
 extern unsigned int g_data_00f70fda;
 extern unsigned int g_data_00f85b34;
 extern unsigned int g_data_00f85b4c;
-extern unsigned int g_data_00f85b50;
-extern unsigned int g_data_00f85b54;
+extern unsigned int g_viewportX;
+extern unsigned int g_viewportY;
 extern unsigned int g_data_00f85b58;
 
 __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
 {
     __asm {
-        mov      eax, dword ptr [g_data_00f85b50]
+        mov      eax, dword ptr [g_viewportX]
         push     ebx
         push     ebp
         push     esi
@@ -161,11 +147,11 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         push     edi
         je       L_05d4
         mov      ecx, dword ptr [g_data_00f70fa8]
-        mov      eax, dword ptr [g_data_004ffd44]
+        mov      eax, dword ptr [g_viewportW]
         cmp      ecx, eax
         jge      L_05d4
         mov      ebx, dword ptr [g_data_00f70fb8]
-        mov      eax, dword ptr [g_data_004ffd48]
+        mov      eax, dword ptr [g_viewportH]
         cmp      ebx, eax
         jge      L_05d4
         mov      esi, dword ptr [g_data_00f70fb0]
@@ -229,7 +215,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      dword ptr [g_data_00b2d008], edi
         mov      dword ptr [g_data_00f70fb8], ebx
     L_047b:
-        mov      eax, dword ptr [g_data_004ffd44]
+        mov      eax, dword ptr [g_viewportW]
         mov      edx, dword ptr [g_data_00f70fb0]
         cmp      edx, eax
         jl       L_0494
@@ -237,7 +223,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      esi, eax
         mov      dword ptr [g_data_00b2d00c], esi
     L_0494:
-        mov      eax, dword ptr [g_data_004ffd48]
+        mov      eax, dword ptr [g_viewportH]
         mov      edx, dword ptr [g_data_00f70fc0]
         cmp      edx, eax
         jl       L_04ad
@@ -245,8 +231,8 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      edi, eax
         mov      dword ptr [g_data_00b2d008], edi
     L_04ad:
-        mov      edx, dword ptr [g_data_00f85b54]
-        mov      eax, dword ptr [g_data_00f85b50]
+        mov      edx, dword ptr [g_viewportY]
+        mov      eax, dword ptr [g_viewportX]
         imul     edx, ebx
         add      eax, edx
         mov      ebx, dword ptr [g_data_00f4d028]
@@ -269,7 +255,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      dword ptr [g_data_00f70fd8], edx
         xor      edx, edx
         mov      dh, byte ptr [g_data_00f70f9a]
-        mov      dword ptr [g_data_00f70f70], esi
+        mov      dword ptr [g_clipMinScratch], esi
         add      edx, eax
         test     esi, esi
         lea      edx, [ebx + edx*2]
@@ -291,14 +277,14 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         mov      esi, dword ptr [g_data_00b2d00c]
         mov      edi, dword ptr [g_data_00b2d008]
     L_0566:
-        mov      eax, dword ptr [g_data_00f70f70]
+        mov      eax, dword ptr [g_clipMinScratch]
         mov      edx, dword ptr [g_data_00f70f4c]
         mov      ebp, dword ptr [g_data_00f70fd8]
         mov      ebx, dword ptr [g_data_00f4d040]
         dec      eax
         add      ebp, edx
         add      ebx, 2
-        mov      dword ptr [g_data_00f70f70], eax
+        mov      dword ptr [g_clipMinScratch], eax
         test     eax, eax
         mov      dword ptr [g_data_00f70fd8], ebp
         mov      dword ptr [g_data_00f4d040], ebx
@@ -311,7 +297,7 @@ __declspec(naked) void ScanlineTexBlitPaletted_004c0360(void)
         add      edx, ebp
         dec      edi
         mov      dword ptr [g_data_00f70f98], edx
-        mov      edx, dword ptr [g_data_00f85b54]
+        mov      edx, dword ptr [g_viewportY]
         add      ebx, edx
         mov      dword ptr [g_data_00b2d008], edi
         test     edi, edi

@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -124,16 +110,11 @@ extern unsigned int g_fightAxisPosY_00535e7c;
 
 extern unsigned int g_const_004d2a20;
 extern unsigned int g_const_004d2a28;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_pendingNodeType;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_data_00543550;
-extern unsigned int g_data_007af990;
-extern unsigned int g_data_007af994;
-extern unsigned int g_data_007af998;
-extern unsigned int g_data_007af99c;
-extern unsigned int g_data_007af9a0;
+extern s16 g_vtxMat[];
+extern unsigned int g_mat3x3_007af994;
+extern unsigned int g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99c;
+extern unsigned int g_mat3x3_007af9a0;
 extern unsigned int g_data_00ab44d8;
 extern unsigned int g_data_00ab44da;
 extern unsigned int g_data_00ab44dc;
@@ -143,9 +124,9 @@ extern unsigned int g_data_00ab44e2;
 extern unsigned int g_data_00ab44e4;
 extern unsigned int g_data_00ab44e6;
 extern unsigned int g_data_00ab44e8;
-extern unsigned int g_data_00ab47f8;
-extern unsigned int g_data_00ab47fa;
-extern unsigned int g_data_00ab47fc;
+extern unsigned int g_word_00ab47f8;
+extern unsigned int g_word_00ab47fa;
+extern unsigned int g_word_00ab47fc;
 extern unsigned int g_data_00ab47fe;
 extern unsigned int g_data_00ab4800;
 extern unsigned int g_data_00ab4802;
@@ -163,16 +144,11 @@ extern unsigned int g_data_00ab4d64;
 extern unsigned int g_data_00ab4d68;
 extern unsigned int g_data_00ab4dc4;
 extern unsigned int g_data_00ab4e3c;
-extern unsigned int g_data_00ab4e40;
-extern unsigned int g_data_00ab4e44;
-extern unsigned int g_data_00ab4e48;
-extern unsigned int g_data_00ab4e4c;
-extern unsigned int g_data_00ab4e50;
-extern unsigned int g_data_00ab4e54;
-extern unsigned int g_data_00ab4e58;
+extern unsigned int g_struct_00ab4e50;
+extern unsigned int g_struct_00ab4e54;
+extern unsigned int g_struct_00ab4e58;
 extern unsigned int g_data_00ab4e5c;
 extern unsigned int g_data_00ab4e60;
-extern unsigned int g_data_00ab4e68;
 extern unsigned int g_data_00ab4e6c;
 extern void AltCamMatrixProject_004b9840(void);
 extern void Color15BitPacker_004b3030(void);
@@ -188,7 +164,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      eax, dword ptr [g_pendingNodeType]
         push     ebx
         mov      dword ptr [esp + 0x18], eax
-        mov      eax, dword ptr [g_data_00ab4e68]
+        mov      eax, dword ptr [g_tickX3]
         push     ebp
         push     esi
         lea      eax, [eax + eax*2]
@@ -199,7 +175,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      edi, dword ptr [g_xformEntityIdx]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_data_00ab4e5c], eax
-        mov      eax, dword ptr [g_data_00543550]
+        mov      eax, dword ptr [g_tickW1]
         mov      dword ptr [esp + 0x20], edx
         mov      dword ptr [g_data_00ab4e60], eax
         mov      ecx, dword ptr [edi*4 + 0x3c]
@@ -261,13 +237,13 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         sar      ecx, 8
         mov      dword ptr [g_data_00ab4840], ecx
         mov      ecx, dword ptr [g_data_00ab4d60]
-        mov      dword ptr [g_data_007af990], edx
+        mov      dword ptr [g_vtxMat], edx
         mov      edx, dword ptr [g_data_00ab4d64]
-        mov      dword ptr [g_data_007af994], eax
+        mov      dword ptr [g_mat3x3_007af994], eax
         mov      ax, word ptr [g_data_00ab4d68]
-        mov      dword ptr [g_data_007af998], ecx
-        mov      dword ptr [g_data_007af99c], edx
-        mov      word ptr [g_data_007af9a0], ax
+        mov      dword ptr [g_mat3x3_007af998], ecx
+        mov      dword ptr [g_mat3x3_007af99c], edx
+        mov      word ptr [g_mat3x3_007af9a0], ax
         call     Mat3x3VecMul6Bit_004b3590
         mov      edi, dword ptr [g_data_00ab4838]
         mov      ecx, dword ptr [g_data_00ab483c]
@@ -320,13 +296,13 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      eax, dword ptr [g_data_00ab4800]
         mov      dx, di
         neg      dx
-        mov      word ptr [g_data_00ab47f8], dx
+        mov      word ptr [g_word_00ab47f8], dx
         mov      cx, bx
         neg      eax
         movsx    edx, bx
         neg      cx
-        mov      word ptr [g_data_00ab47fa], ax
-        mov      word ptr [g_data_00ab47fc], cx
+        mov      word ptr [g_word_00ab47fa], ax
+        mov      word ptr [g_word_00ab47fc], cx
         movsx    eax, word ptr [g_data_00ab4800]
         neg      edx
         movsx    ecx, di
@@ -347,12 +323,12 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         push     0
         call     PackColor_004b30c0
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_data_00ab4e50]
-        mov      esi, dword ptr [g_data_00ab4e54]
+        mov      ecx, dword ptr [g_struct_00ab4e50]
+        mov      esi, dword ptr [g_struct_00ab4e54]
         add      esp, 0x10
         mov      edi, dword ptr [eax*4]
         sub      ecx, edi
-        mov      edi, dword ptr [g_data_00ab4e58]
+        mov      edi, dword ptr [g_struct_00ab4e58]
         sar      ecx, 8
         mov      dword ptr [g_data_00ab4838], ecx
         mov      edx, dword ptr [eax*4 + 4]
@@ -429,10 +405,10 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         jle      L_9d51
         mov      ebx, 0x100
     L_9d51:
-        imul     ebx, dword ptr [g_data_00ab4e68]
-        mov      edx, dword ptr [g_data_00ab4e44]
-        mov      eax, dword ptr [g_data_00ab4e48]
-        mov      ecx, dword ptr [g_data_00ab4e4c]
+        imul     ebx, dword ptr [g_tickX3]
+        mov      edx, dword ptr [g_gtAxisX]
+        mov      eax, dword ptr [g_gtAxisY]
+        mov      ecx, dword ptr [g_gtAxisZ]
         and      edx, 0xffff
         and      eax, 0xffff
         sub      edx, 0x8000
@@ -471,7 +447,7 @@ __declspec(naked) void CameraSetupAndCullFan_004b99b0(void)
         mov      eax, dword ptr [g_fightGroupHead]
         test     eax, 0x180000
         je       L_9e10
-        mov      ecx, dword ptr [g_data_00ab4e40]
+        mov      ecx, dword ptr [g_tickFlagZ]
         test     ecx, ecx
         je       L_9e10
         add      dword ptr [g_data_00ab4dc4], 0x2b85

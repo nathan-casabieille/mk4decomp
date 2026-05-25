@@ -20,16 +20,14 @@ extern unsigned int g_scaledInit_00542044;
  *   jmp     T
  */
 extern unsigned int g_state_0053a188;
-extern unsigned int g_state_0053a498;
-extern unsigned int g_state_0053a79c;
 extern unsigned int g_state_00537f08;
 extern unsigned int g_state_0053a380;
 extern unsigned int g_state_00535d08;
 extern void func_00404efb(void);
 void Init6Globals_004051b0(void) {
     g_state_0053a188 = 0;
-    g_state_0053a498 = 0;
-    g_state_0053a79c = 0;
+    g_gtFightTickCounter = 0;
+    g_logicFrameCounter = 0;
     g_state_00537f08 = 0;
     g_state_0053a380 = 0;
     g_walkCallback = (void (*)(void))1;

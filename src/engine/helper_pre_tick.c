@@ -14,8 +14,7 @@
  *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
  */
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_x_0052ab10;
-extern unsigned int g_xformEntityIdx;
+extern unsigned int g_load_0052ab10;
 extern unsigned int g_x_00ab4d18;
 extern unsigned int g_x_00ab4d1c;
 extern unsigned int g_x_00ab4d20;
@@ -28,7 +27,7 @@ extern unsigned int g_data_004d57ac_arr;
 void Helper_PreTick(void) {
     __asm {
         call    DispatchScaledLEA_004b8f50
-        mov     ecx, dword ptr [g_x_0052ab10]
+        mov     ecx, dword ptr [g_load_0052ab10]
         mov     eax, 0x00ab4878
         sar     eax, 2
         add     ecx, 0x18
@@ -67,7 +66,7 @@ void Helper_PreTick(void) {
         cmp     eax, 0x00ab4d6a
         _emit   7ch
         _emit   0ebh
-        mov     ecx, dword ptr [g_x_0052ab10]
+        mov     ecx, dword ptr [g_load_0052ab10]
         lea     eax, [ecx + 0x15]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + g_data_004d57ac_arr]

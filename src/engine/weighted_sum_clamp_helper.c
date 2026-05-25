@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -129,17 +115,15 @@ extern unsigned int g_fightAxisPosY_00535e7c;
  *   pick of multiplier (0x5433f0 if baseSel==0x538038, else 0x543444);
  *   call func_004ab620.
  */
-extern unsigned int g_data_00538038;
 extern unsigned int g_x_004f3814;
 extern unsigned int g_x_004f3818;
 extern unsigned int g_x_004f381c;
 extern unsigned int g_x_004f3820;
 extern unsigned int g_x_0053a1f0;
-extern unsigned int g_stateCountdown_0053a3c0;
 extern unsigned int g_x_00541fb0;
 extern unsigned int g_x_005433f0;
 extern unsigned int g_x_00543444;
-extern unsigned int g_x_0054355c;
+extern unsigned int g_state_0054355c_hh;
 extern void AudioVolumeRescale_004ab690(void);
 
 /*
@@ -155,14 +139,14 @@ __declspec(naked) void WeightedSumClampHelper_00439920(void) {
         mov     eax, dword ptr [g_stateCountdown_0053a3c0]
         mov     edx, dword ptr [g_x_004f3814]
         imul    eax, dword ptr [g_x_004f381c]
-        mov     ecx, dword ptr [g_x_0054355c]
+        mov     ecx, dword ptr [g_state_0054355c_hh]
         add     eax, edx
         test    ecx, ecx
         mov     ecx, dword ptr [g_x_004f3818]
         push    esi
         je      noScale
         mov     edx, dword ptr [g_baseSel_00542060]
-        mov     esi, dword ptr [g_data_00538038]
+        mov     esi, dword ptr [g_gtPlayerProbe2]
         cmp     edx, esi
         mov     edx, ecx
         jne     useB

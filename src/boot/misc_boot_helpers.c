@@ -11,22 +11,18 @@
 #include "game/tick.h"
 
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_fightGroupHead;
-extern unsigned int g_state_004d57ac;
-extern u32 g_eventQueueEnd;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x0040a7e0 (69b)
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
  */
 extern void Copy3Fields38_0040a870(void);
 void StackPushAdd15CallPop_0040a7e0(void) {
-    g_state_004d57ac++;
-    *(unsigned int *)(g_state_004d57ac * 4) = g_eventQueueEnd;
+    g_matrixStackTop++;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueEnd;
     g_eventQueueEnd = g_eventQueueEnd + 0x15;
     Copy3Fields38_0040a870();
-    g_eventQueueEnd = *(unsigned int *)(g_state_004d57ac * 4);
-    g_state_004d57ac--;
+    g_eventQueueEnd = *(unsigned int *)(g_matrixStackTop * 4);
+    g_matrixStackTop--;
 }
 
 /* @addr 0x0040bf20 (66b)

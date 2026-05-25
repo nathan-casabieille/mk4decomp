@@ -6,9 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_state_004d57ac;
-extern packed_ptr g_fightGroupHead;
-extern u32 g_pendingNodeType;
 
 /* @addr 0x00446bf0 (85b)
  *   push g_eventQueueCurrent, push 0x6666; call F; add esp 8; store eax → eventQueueCurrent;
@@ -16,7 +13,6 @@ extern u32 g_pendingNodeType;
  *   load walk, current; walk += 0x10000; push current, push walk; store walk;
  *   call F3; add esp 8; store eax → eventQueueCurrent.
  */
-extern u32 g_eventQueueCurrent;
 extern int func_00404ae0(int, int);
 extern int func_00404ad0(int, int);
 extern void func_004ab730(void);

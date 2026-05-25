@@ -8,14 +8,14 @@
  * R2_Init6 - 175b stage-1 install (engine.install).
  *   Allocates 0x208 stack frame, zeros two regions (esp+4 size 0x5c, esp+0x60 size 0x1ac),
  *   fills struct fields with hard-coded device caps (0x1005 flags, sizes 0x38/8, magic 0x1ac at +0x60).
- *   If g_iface_0058c7bc != 0: vtable call [ecx+0x1c] (this+capsout); stash HRESULT to g_x_0058c7dc.
- *   If still != 0: vtable call [ecx+0x20] (this+pinst+g_x_0058c7b4+&g_iface_0058c7c0); stash HRESULT.
+ *   If g_iface_0058c7bc != 0: vtable call [ecx+0x1c] (this+capsout); stash HRESULT to g_renderer2_present_rc.
+ *   If still != 0: vtable call [ecx+0x20] (this+pinst+g_comptr_0058c7b4+&g_iface_0058c7c0); stash HRESULT.
  *   Return: (g_iface_0058c7c0 != 0) as 0/1.
  */
 extern unsigned int g_iface_0058c7bc;
 extern unsigned int g_iface_0058c7c0;
-extern unsigned int g_x_0058c7b4;
-extern unsigned int g_x_0058c7dc;
+extern unsigned int g_comptr_0058c7b4;
+extern int g_renderer2_present_rc;
 
 __declspec(naked) void R2_Init6(void)
 {
@@ -47,11 +47,11 @@ __declspec(naked) void R2_Init6(void)
         push    edx
         push    eax
         call    dword ptr [ecx + 0x1c]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
         mov     eax, dword ptr [g_iface_0058c7bc]
         test    eax, eax
         je      short L_ret_check
-        mov     edx, dword ptr [g_x_0058c7b4]
+        mov     edx, dword ptr [g_comptr_0058c7b4]
         mov     ecx, dword ptr [eax]
         push    offset g_iface_0058c7c0
         push    edx
@@ -59,7 +59,7 @@ __declspec(naked) void R2_Init6(void)
         push    edx
         push    eax
         call    dword ptr [ecx + 0x20]
-        mov     dword ptr [g_x_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_ret_check:
         mov     ecx, dword ptr [g_iface_0058c7c0]
         xor     eax, eax

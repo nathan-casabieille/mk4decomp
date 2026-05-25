@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -123,35 +109,35 @@ extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
 /* @addr 0x004aede0 (241b engine.install) - DSound enumeration + open helper pair.
- *   First sub-function (0x4aede0, 62b): call DSCreate(g_data_0058c7ac, callback=L_fn2);
+ *   First sub-function (0x4aede0, 62b): call DSCreate(g_comptr_0058c7ac, callback=L_fn2);
  *     store result; if [0x58c7ac] still null, retry via DSEnum(0, ptr, 0); ret bool.
  *   Second sub-function (0x4aee20, 177b): DSCreate(p): allocates 0x2dc-byte caps buffer
  *     on stack, queries device caps via vtbl[+0x2c], validates total memory >= 0x32c000;
  *     on success: stores object pointer; ret 0 success / 1 fail.
  *   Both are bundled as a single symbols.yaml entry (size 241 includes 2 nop pad).
  */
-extern unsigned int g_data_0058c7ac;
-extern unsigned int g_data_0058c7dc;
+extern unsigned int g_comptr_0058c7ac;
+extern int g_renderer2_present_rc;
 extern void DSCreateThunk_004d12d2(void);
 extern void DSEnumeratorThunk_004d12cc(void);
 
 __declspec(naked) void DSoundInstallerPair_004aede0(void) {
     __asm {
         /* sub-function 1 (0x4aede0 .. 0x4aee1d, plus 90h padding) */
-        push    offset g_data_0058c7ac
+        push    offset g_comptr_0058c7ac
         push    offset L_dsfn2
         call    DSCreateThunk_004d12d2
-        mov     dword ptr [g_data_0058c7dc], eax
-        mov     eax, dword ptr [g_data_0058c7ac]
+        mov     dword ptr [g_renderer2_present_rc], eax
+        mov     eax, dword ptr [g_comptr_0058c7ac]
         test    eax, eax
         jne     short L_dsr_done
         push    0
-        push    offset g_data_0058c7ac
+        push    offset g_comptr_0058c7ac
         push    0
         call    DSEnumeratorThunk_004d12cc
-        mov     dword ptr [g_data_0058c7dc], eax
+        mov     dword ptr [g_renderer2_present_rc], eax
     L_dsr_done:
-        mov     ecx, dword ptr [g_data_0058c7ac]
+        mov     ecx, dword ptr [g_comptr_0058c7ac]
         xor     eax, eax
         test    ecx, ecx
         setne   al

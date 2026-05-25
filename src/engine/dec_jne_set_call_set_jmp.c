@@ -6,7 +6,6 @@
 
 extern unsigned int g_baseSel_00542060;
 extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_eventQueueNotMask;
 
 /* @addr 0x004389b0 (48b)
  *   mov     eax, [g_eventQueueNotMask]

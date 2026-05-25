@@ -4,28 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_state_004d57ac;
 extern unsigned int g_scaledInit_00542044;
-extern packed_ptr g_xformEntityIdx;
-extern u32 g_eventQueueEnd;
 extern unsigned int g_baseSel_00542060;
-extern u32 g_eventQueueWorkType;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
-extern u32 g_framePauseFlag;
 extern unsigned int g_state_0053a718;
-extern unsigned int g_eventQueueTotal;
-extern unsigned int g_eventQueueCurrent;
-extern unsigned int g_currentNodeFlags;
-extern unsigned int g_xformDirtyFlags;
-extern unsigned int g_xformScratch2088;
 extern unsigned int g_xformScratch94;
 extern unsigned int g_table_00535ddc;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_eventQueueChild;
-extern u32 g_pendingNodeType;
 
 extern void StoreTwoCall_0049cb40(int, int);
 extern void SetJmp_0049cb90(void);
@@ -68,7 +56,6 @@ extern void Push16Call_00489f50(void);
 extern void DispatcherComplex260_00407030(void);
 extern void ScaledLoadCmpStoreXfm_0048f2a0(void);
 extern void StackPopDispatchTagged_0041f780(void);
-extern unsigned int g_eventQueueNotMask;
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit_0053a180;
 extern unsigned int g_zero_00541fa4;
@@ -111,7 +98,6 @@ extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_00407400(void);
 extern void PushSetCallPop_00406530(void);
 extern unsigned int g_stateCountdown_0053a3c0;
-extern unsigned int g_player1NodeIdx;
 extern unsigned int g_installOwnerNode_00535cf8;
 extern unsigned int g_cj_00542054;
 extern unsigned int g_audioBoundNode_005437f0;
@@ -122,25 +108,16 @@ extern unsigned int g_fightAxisNegY_00535e74;
 extern unsigned int g_fightAxisPosX_00535e78;
 extern unsigned int g_fightAxisPosY_00535e7c;
 
-extern unsigned int g_data_004d57ac;
 extern unsigned int g_data_004ffe4c;
 extern unsigned int g_data_00501970;
-extern unsigned int g_data_0052aafc;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_data_00537f48;
+extern u32 g_dlSomeFlag2;
+extern s32 g_dlNalt1;
 extern unsigned int g_data_00537f78;
-extern unsigned int g_audioBankSel_00537f94;
-extern unsigned int g_data_005380e0;
+extern s32 g_dlNalt2;
 extern unsigned int g_data_0053a318;
-extern unsigned int g_active_0053a408;
-extern unsigned int g_data_0053a510;
-extern unsigned int g_data_00541de8;
-extern unsigned int g_data_00541dec;
-extern unsigned int g_framePauseFlag;
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_xformEntityIdx;
-extern unsigned int g_fightGroupHead;
-extern unsigned int g_eventQueueWorkType;
+extern u32 g_dlSomeFlag1;
+extern unsigned int g_zerotriple_00541de8;
+extern unsigned int g_zerotriple_00541dec;
 extern unsigned int g_data_00543564;
 extern unsigned int g_data_00543594;
 extern void CallSetPause_0041f830(void);
@@ -153,38 +130,38 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
 {
     __asm {
         /* === Helper 1 (0x42eaf0): death-pose install + post-rotation === */
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [g_xformEntityIdx]
         inc      eax
         push     esi
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         xor      esi, esi
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_004d57ac]
-        mov      edx, dword ptr [g_data_00541dec]
-        mov      ecx, dword ptr [g_data_00541de8]
+        mov      eax, dword ptr [g_matrixStackTop]
+        mov      edx, dword ptr [g_zerotriple_00541dec]
+        mov      ecx, dword ptr [g_zerotriple_00541de8]
         inc      eax
         mov      dword ptr [g_eventQueueCurrent], edx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      edx, dword ptr [g_eventQueueCurrent]
         inc      eax
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_data_0053a318]
         cmp      eax, 1
-        mov      dword ptr [g_data_00541de8], esi
-        mov      dword ptr [g_data_00541dec], esi
+        mov      dword ptr [g_zerotriple_00541de8], esi
+        mov      dword ptr [g_zerotriple_00541dec], esi
         je       short L_eb75
-        mov      eax, dword ptr [g_data_00537f48]
-        mov      ecx, dword ptr [g_data_0053a510]
+        mov      eax, dword ptr [g_dlNalt1]
+        mov      ecx, dword ptr [g_dlSomeFlag1]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
         jmp      short L_eb8b
     L_eb75:
-        mov      edx, dword ptr [g_data_005380e0]
-        mov      eax, dword ptr [g_data_0052aafc]
+        mov      edx, dword ptr [g_dlNalt2]
+        mov      eax, dword ptr [g_dlSomeFlag2]
         mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_eventQueueWorkType], eax
     L_eb8b:
@@ -192,17 +169,17 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         call     GuardedDualPushTailJmp_004231f0
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_eventQueueCurrent], ecx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_walkCallback], edx
-        mov      dword ptr [g_data_004d57ac], eax
-        mov      dword ptr [g_data_00541de8], edx
-        mov      dword ptr [g_data_00541dec], ecx
+        mov      dword ptr [g_matrixStackTop], eax
+        mov      dword ptr [g_zerotriple_00541de8], edx
+        mov      dword ptr [g_zerotriple_00541dec], ecx
         call     GameMusicState4Way_00426d90
         cmp      dword ptr [g_framePauseFlag], esi
         jne      L_ed0b
@@ -225,7 +202,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         cmp      ecx, 2
         mov      dword ptr [g_walkCallback], eax
         jne      short L_ec66
-        cmp      dword ptr [g_data_00537f48], edx
+        cmp      dword ptr [g_dlNalt1], edx
         jne      short L_ec66
         mov      eax, OFFSET g_data_00501970
         shr      eax, 2
@@ -233,7 +210,7 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
     L_ec66:
         cmp      ecx, 1
         jne      short L_ec80
-        cmp      dword ptr [g_data_005380e0], edx
+        cmp      dword ptr [g_dlNalt2], edx
         jne      short L_ec80
         mov      eax, OFFSET g_data_00501970
         shr      eax, 2
@@ -259,11 +236,11 @@ __declspec(naked) void DeathAnimCluster_0042eaf0(void)
         mov      eax, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_xformEntityIdx]
         mov      dword ptr [eax*4 + 0x3c], edx
-        mov      eax, dword ptr [g_data_004d57ac]
+        mov      eax, dword ptr [g_matrixStackTop]
         mov      ecx, dword ptr [eax*4]
         dec      eax
         mov      dword ptr [g_xformEntityIdx], ecx
-        mov      dword ptr [g_data_004d57ac], eax
+        mov      dword ptr [g_matrixStackTop], eax
     L_ed0b:
         pop      esi
         ret
